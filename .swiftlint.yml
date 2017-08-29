@@ -1,0 +1,33 @@
+opt_in_rules:
+  - attributes
+  - closure_end_indentation
+  - closure_spacing
+  - conditional_returns_on_newline
+  - empty_count
+  - explicit_init
+  - extension_access_modifier
+  - fatal_error_message
+  - first_where
+  - implicit_return
+  - let_var_whitespace
+  - multiline_parameters
+  - nimble_operator
+  - no_extension_access_modifier
+  - number_separator
+  - object_literal
+  - operator_usage_whitespace
+  - overridden_super_call
+  - private_outlet
+  - prohibited_super_call
+  - redundant_nil_coalescing
+  - sorted_imports
+  - switch_case_on_newline
+  - vertical_parameter_alignment_on_call
+
+line_length:
+  warning: 175
+  error: 200
+
+identifier_name:
+  max_length:
+    warning: 45
