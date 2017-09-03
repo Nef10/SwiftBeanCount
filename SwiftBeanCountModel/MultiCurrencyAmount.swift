@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol MultiCurrencyAmountRepresentable {
+public protocol MultiCurrencyAmountRepresentable {
     var multiAccountAmount: MultiCurrencyAmount { get }
 }
 
-struct MultiCurrencyAmount {
+public struct MultiCurrencyAmount {
     var amounts: [Commodity : Decimal]
     var decimalDigits: [Commodity : Int]
 }
@@ -25,13 +25,13 @@ extension MultiCurrencyAmount {
 }
 
 extension MultiCurrencyAmount : MultiCurrencyAmountRepresentable {
-    var multiAccountAmount: MultiCurrencyAmount {
+    public var multiAccountAmount: MultiCurrencyAmount {
         return self
     }
 }
 
 extension MultiCurrencyAmount : Equatable {
-    static func == (lhs: MultiCurrencyAmount, rhs: MultiCurrencyAmount) -> Bool {
+    public static func == (lhs: MultiCurrencyAmount, rhs: MultiCurrencyAmount) -> Bool {
         return lhs.amounts == rhs.amounts && lhs.decimalDigits == rhs.decimalDigits
     }
 }

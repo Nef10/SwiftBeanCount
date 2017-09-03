@@ -8,11 +8,11 @@
 
 import Foundation
 
-enum Flag: String {
+public enum Flag: String {
     case complete = "*"
     case incomplete = "!"
 }
 
 extension Flag : CustomStringConvertible {
-    var description: String { return self.rawValue }
+    public var description: String { return self.rawValue }
 }

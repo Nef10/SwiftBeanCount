@@ -8,10 +8,10 @@
 
 import Foundation
 
-class Ledger {
+public class Ledger {
 
-    var transactions = [Transaction]()
-    var errors = [String]()
+    public var transactions = [Transaction]()
+    public var errors = [String]()
 
     private var commodity = [String: Commodity]()
     private var account = [String: Account]()
@@ -21,12 +21,15 @@ class Ledger {
     var accounts: [Account] { return Array(account.values) }
     var tags: [Tag] { return Array(tag.values) }
 
+    public init() {
+    }
+
     /// Gets Commodity object for the Commodity with the given string
     /// This function ensures that there is exactly one object per Commodity
     ///
     /// - Parameter name: commodity name
     /// - Returns: Commodity
-    func getCommodityBy(symbol: String) -> Commodity {
+    public func getCommodityBy(symbol: String) -> Commodity {
         if self.commodity[symbol] == nil {
             let commodity = Commodity(symbol:symbol)
             self.commodity[symbol] = commodity
@@ -39,7 +42,7 @@ class Ledger {
     ///
     /// - Parameter name: account name
     /// - Returns: Account
-    func getAccountBy(name: String) -> Account {
+    public func getAccountBy(name: String) -> Account {
         if self.account[name] == nil {
             let account = Account(name:name)
             self.account[name] = account
@@ -52,7 +55,7 @@ class Ledger {
     ///
     /// - Parameter name: tag name
     /// - Returns: Tag
-    func getTagBy(name: String) -> Tag {
+    public func getTagBy(name: String) -> Tag {
         if self.tag[name] == nil {
             let tag = Tag(name:name)
             self.tag[name] = tag
@@ -63,7 +66,7 @@ class Ledger {
 }
 
 extension Ledger : CustomStringConvertible {
-    var description: String {
+    public var description: String {
         var string = ""
         string.append(self.transactions.map({ String(describing: $0) }).joined(separator: "\n"))
         if !string.isEmpty && !self.accounts.isEmpty {
@@ -77,7 +80,7 @@ extension Ledger : CustomStringConvertible {
 extension Ledger : Equatable {
 
     /// erros are not taken into account
-    static func == (lhs: Ledger, rhs: Ledger) -> Bool {
+    public static func == (lhs: Ledger, rhs: Ledger) -> Bool {
         return lhs.account == rhs.account && rhs.commodity == lhs.commodity && rhs.tag == lhs.tag && rhs.transactions == lhs.transactions
     }
 

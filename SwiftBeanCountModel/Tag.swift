@@ -8,27 +8,27 @@
 
 import Foundation
 
-class Tag {
+public class Tag {
 
-    let name: String
+    public let name: String
 
-    init(name: String) {
+    public init(name: String) {
         self.name = name
     }
 
 }
 
 extension Tag : CustomStringConvertible {
-    var description: String { return "#\(name)" }
+    public var description: String { return "#\(name)" }
 }
 
 extension Tag : Comparable {
 
-    static func < (lhs: Tag, rhs: Tag) -> Bool {
+    public static func < (lhs: Tag, rhs: Tag) -> Bool {
         return lhs.name < rhs.name
     }
 
-    static func == (lhs: Tag, rhs: Tag) -> Bool {
+    public static func == (lhs: Tag, rhs: Tag) -> Bool {
         return lhs.name == rhs.name
     }
 

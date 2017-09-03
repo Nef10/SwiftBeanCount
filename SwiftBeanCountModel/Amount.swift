@@ -8,12 +8,13 @@
 
 import Foundation
 
-struct Amount {
-    let number: Decimal
-    let commodity: Commodity
-    let decimalDigits: Int
+public struct Amount {
 
-    init(number: Decimal, commodity: Commodity, decimalDigits: Int = 0) {
+    public let number: Decimal
+    public let commodity: Commodity
+    public let decimalDigits: Int
+
+    public init(number: Decimal, commodity: Commodity, decimalDigits: Int = 0) {
         self.number = number
         self.commodity = commodity
         self.decimalDigits = decimalDigits
@@ -22,7 +23,7 @@ struct Amount {
 
 extension Amount : CustomStringConvertible {
 
-    var description: String { return "\(amountString) \(commodity)" }
+    public var description: String { return "\(amountString) \(commodity)" }
 
     private var amountString: String { return type(of: self).numberFormatter(fractionDigits: decimalDigits).string(from:number as NSDecimalNumber)! }
 
@@ -44,13 +45,13 @@ extension Amount : CustomStringConvertible {
 }
 
 extension Amount : MultiCurrencyAmountRepresentable {
-    var multiAccountAmount: MultiCurrencyAmount {
+    public var multiAccountAmount: MultiCurrencyAmount {
         return MultiCurrencyAmount(amounts: [commodity: number], decimalDigits: [commodity: decimalDigits])
     }
 }
 
 extension Amount : Equatable {
-    static func == (lhs: Amount, rhs: Amount) -> Bool {
+    public static func == (lhs: Amount, rhs: Amount) -> Bool {
         return lhs.number == rhs.number && lhs.commodity == rhs.commodity && lhs.decimalDigits == rhs.decimalDigits
     }
 }

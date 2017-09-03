@@ -8,18 +8,18 @@
 
 import Foundation
 
-class Account {
+public class Account {
 
-    let name: String
-    var commodity: Commodity?
-    var opening: Date?
-    var closing: Date?
+    public let name: String
+    public var commodity: Commodity?
+    public var opening: Date?
+    public var closing: Date?
 
-    init(name: String) {
+    public init(name: String) {
         self.name = name
     }
 
-    func isPostingValid(_ posting: Posting) -> Bool {
+    public func isPostingValid(_ posting: Posting) -> Bool {
         return posting.account == self && self.allowsPosting(in: posting.amount.commodity) && self.wasOpen(at: posting.transaction.metaData.date)
     }
 
@@ -44,7 +44,7 @@ class Account {
 
 extension Account : CustomStringConvertible {
 
-    var description: String {
+    public var description: String {
         var string = ""
         if let opening = self.opening {
             string += "\(type(of: self).dateFormatter.string(from: opening)) open \(name)"
@@ -68,7 +68,7 @@ extension Account : CustomStringConvertible {
 
 extension Account : Equatable {
 
-    static func == (lhs: Account, rhs: Account) -> Bool {
+    public static func == (lhs: Account, rhs: Account) -> Bool {
         return rhs.name == lhs.name && rhs.commodity == lhs.commodity && rhs.opening == lhs.opening && rhs.closing == lhs.closing
     }
 

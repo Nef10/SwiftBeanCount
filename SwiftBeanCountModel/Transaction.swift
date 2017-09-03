@@ -8,12 +8,12 @@
 
 import Foundation
 
-class Transaction {
+public class Transaction {
 
-    let metaData: TransactionMetaData
-    var postings: [Posting]
+    public let metaData: TransactionMetaData
+    public var postings: [Posting]
 
-    init(metaData: TransactionMetaData, postings: [Posting] = []) {
+    public init(metaData: TransactionMetaData, postings: [Posting] = []) {
         self.metaData = metaData
         self.postings = postings
     }
@@ -69,7 +69,7 @@ class Transaction {
 }
 
 extension Transaction : CustomStringConvertible {
-    var description: String {
+    public var description: String {
         var string = String(describing: metaData)
         postings.forEach({ string += "\n\(String(describing: $0))" })
         return string
@@ -77,7 +77,7 @@ extension Transaction : CustomStringConvertible {
 }
 
 extension Transaction : Equatable {
-    static func == (lhs: Transaction, rhs: Transaction) -> Bool {
+    public static func == (lhs: Transaction, rhs: Transaction) -> Bool {
         return lhs.metaData == rhs.metaData && lhs.postings == rhs.postings
     }
 }

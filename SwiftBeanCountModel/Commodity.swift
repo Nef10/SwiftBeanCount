@@ -8,36 +8,36 @@
 
 import Foundation
 
-class Commodity {
+public class Commodity {
 
-    static let noCommodity = Commodity(symbol: "")
+    public static let noCommodity = Commodity(symbol: "")
 
-    let symbol: String
+    public let symbol: String
 
-    init(symbol: String) {
+    public init(symbol: String) {
         self.symbol = symbol
     }
 
 }
 
 extension Commodity : CustomStringConvertible {
-    var description: String { return symbol }
+    public var description: String { return symbol }
 }
 
 extension Commodity : Comparable {
 
-    static func < (lhs: Commodity, rhs: Commodity) -> Bool {
+    public static func < (lhs: Commodity, rhs: Commodity) -> Bool {
         return lhs.symbol < rhs.symbol
     }
 
-    static func == (lhs: Commodity, rhs: Commodity) -> Bool {
+    public static func == (lhs: Commodity, rhs: Commodity) -> Bool {
         return lhs.symbol == rhs.symbol
     }
 
 }
 
 extension Commodity : Hashable {
-    var hashValue: Int {
+    public var hashValue: Int {
         return symbol.hashValue
     }
 }

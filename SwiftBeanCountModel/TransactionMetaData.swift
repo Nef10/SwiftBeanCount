@@ -8,19 +8,27 @@
 
 import Foundation
 
-struct TransactionMetaData {
+public struct TransactionMetaData {
 
-    let date: Date
-    let payee: String
-    let narration: String
-    let flag: Flag
-    let tags: [Tag]
+    public let date: Date
+    public let payee: String
+    public let narration: String
+    public let flag: Flag
+    public let tags: [Tag]
+
+    public init(date: Date, payee: String, narration: String, flag: Flag, tags: [Tag]) {
+        self.date = date
+        self.payee = payee
+        self.narration = narration
+        self.flag = flag
+        self.tags = tags
+    }
 
 }
 
 extension TransactionMetaData : CustomStringConvertible {
 
-    var description: String {
+    public var description: String {
         var tagString =  ""
         tags.forEach({ tagString += " \(String(describing: $0))" })
         return "\(self.dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\"\(tagString)"
@@ -37,7 +45,7 @@ extension TransactionMetaData : CustomStringConvertible {
 }
 
 extension TransactionMetaData : Equatable {
-    static func == (lhs: TransactionMetaData, rhs: TransactionMetaData) -> Bool {
+    public static func == (lhs: TransactionMetaData, rhs: TransactionMetaData) -> Bool {
         return lhs.date == rhs.date && lhs.payee == rhs.payee && lhs.narration == rhs.narration && lhs.flag == rhs.flag && lhs.tags == rhs.tags
     }
 }

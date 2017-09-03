@@ -8,14 +8,14 @@
 
 import Foundation
 
-struct Posting {
+public struct Posting {
 
-    let account: Account
-    let amount: Amount
-    unowned let transaction: Transaction
-    let price: Amount?
+    public let account: Account
+    public let amount: Amount
+    public unowned let transaction: Transaction
+    public let price: Amount?
 
-    init(account: Account, amount: Amount, transaction: Transaction, price: Amount? = nil) {
+    public init(account: Account, amount: Amount, transaction: Transaction, price: Amount? = nil) {
         self.account = account
         self.amount = amount
         self.transaction = transaction
@@ -25,7 +25,7 @@ struct Posting {
 }
 
 extension Posting : CustomStringConvertible {
-    var description: String {
+    public var description: String {
         var result = "  \(account.name) \(String(describing: amount))"
         if let price = price {
             result += " @ \(String(describing: price))"
@@ -35,7 +35,7 @@ extension Posting : CustomStringConvertible {
 }
 
 extension Posting : Equatable {
-    static func == (lhs: Posting, rhs: Posting) -> Bool {
+    public static func == (lhs: Posting, rhs: Posting) -> Bool {
         return lhs.account == rhs.account && lhs.amount == rhs.amount && lhs.price == rhs.price
     }
 }
