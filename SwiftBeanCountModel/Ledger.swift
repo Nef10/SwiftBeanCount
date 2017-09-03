@@ -17,9 +17,9 @@ public class Ledger {
     private var account = [String: Account]()
     private var tag = [String: Tag]()
 
-    var commodities: [Commodity] { return Array(commodity.values) }
-    var accounts: [Account] { return Array(account.values) }
-    var tags: [Tag] { return Array(tag.values) }
+    public var commodities: [Commodity] { return Array(commodity.values) }
+    public var accounts: [Account] { return Array(account.values) }
+    public var tags: [Tag] { return Array(tag.values) }
 
     public init() {
     }
