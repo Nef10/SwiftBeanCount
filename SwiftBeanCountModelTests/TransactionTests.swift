@@ -24,8 +24,8 @@ class TransactionTests: XCTestCase {
     override func setUp() {
         super.setUp()
         date = Date(timeIntervalSince1970: 1_496_905_200)
-        account1 = Account(name: "Assets:Cash")
-        account2 = Account(name: "Assets:Checking")
+        account1 = Account(name: "Assets:Cash", accountType: .asset)
+        account2 = Account(name: "Assets:Checking", accountType: .asset)
         let transactionMetaData1 = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let transactionMetaData2 = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let transactionMetaData3 = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.incomplete, tags: [])

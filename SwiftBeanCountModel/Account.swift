@@ -8,15 +8,58 @@
 
 import Foundation
 
-public class Account {
+public enum AccountType: String {
+    case asset = "Assets"
+    case liability = "Liabilities"
+    case income = "Income"
+    case expense = "Expenses"
+    case equity = "Equity"
+
+    static func allValues() -> [AccountType] {
+        return [.asset, .liability, .income, .expense, .equity]
+    }
+}
+
+public protocol AccountItem {
+    var nameItem: String { get }
+    var accountType: AccountType { get }
+}
+
+public class AccountGroup: AccountItem {
+    public let nameItem: String
+    public let baseGroup: Bool
+    public let accountType: AccountType
+    var accounts = [String: Account]()
+    var accountGroups = [String: AccountGroup]()
+
+    public init(nameItem: String, accountType: AccountType, baseGroup: Bool = false) {
+        self.nameItem = nameItem
+        self.accountType = accountType
+        self.baseGroup = baseGroup
+    }
+
+    public func children() -> [AccountItem] {
+        var result = [AccountItem]()
+        result.append(contentsOf: Array(accountGroups.values) as [AccountItem])
+        result.append(contentsOf: Array(accounts.values) as [AccountItem])
+        return result.sorted { $0.nameItem < $1.nameItem }
+    }
+}
+
+public class Account: AccountItem {
 
     public let name: String
+    public let accountType: AccountType
     public var commodity: Commodity?
     public var opening: Date?
     public var closing: Date?
+    public var nameItem: String {
+        return String(describing: name.split(separator: ":").last!)
+    }
 
-    public init(name: String) {
+    public init(name: String, accountType: AccountType) {
         self.name = name
+        self.accountType = accountType
     }
 
     public func isPostingValid(_ posting: Posting) -> Bool {

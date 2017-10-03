@@ -16,12 +16,19 @@ public class Ledger {
     private var commodity = [String: Commodity]()
     private var account = [String: Account]()
     private var tag = [String: Tag]()
+    private let accountGroup: [String: AccountGroup]
 
     public var commodities: [Commodity] { return Array(commodity.values) }
     public var accounts: [Account] { return Array(account.values) }
     public var tags: [Tag] { return Array(tag.values) }
+    public var accountGroups: [AccountGroup] { return Array(accountGroup.values) }
 
     public init() {
+        var groups = [String: AccountGroup]()
+        for accountType in AccountType.allValues() {
+            groups[accountType.rawValue] = AccountGroup(nameItem: accountType.rawValue, accountType: accountType, baseGroup: true)
+        }
+        accountGroup = groups
     }
 
     /// Gets Commodity object for the Commodity with the given string
@@ -42,9 +49,28 @@ public class Ledger {
     ///
     /// - Parameter name: account name
     /// - Returns: Account
-    public func getAccountBy(name: String) -> Account {
+    public func getAccountBy(name: String) -> Account? {
         if self.account[name] == nil {
-            let account = Account(name: name)
+            var account: Account!
+            var group: AccountGroup!
+            let nameItems = name.split(separator: ":").map { String($0) }
+            for (index, nameItem) in nameItems.enumerated() {
+                switch index {
+                case 0:
+                    guard let accountGroup = accountGroup[nameItem] else {
+                        return nil
+                    }
+                    group = accountGroup
+                    account = Account(name: name, accountType: accountGroup.accountType)
+                case nameItems.count - 1:
+                    group.accounts[name] = account
+                default:
+                    if group.accountGroups[nameItem] == nil {
+                        group.accountGroups[nameItem] = AccountGroup(nameItem: nameItem, accountType: group.accountType)
+                    }
+                    group = group.accountGroups[nameItem]!
+                }
+            }
             self.account[name] = account
         }
         return self.account[name]!

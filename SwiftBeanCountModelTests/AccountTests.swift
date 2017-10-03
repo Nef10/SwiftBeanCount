@@ -19,7 +19,7 @@ class AccountTests: XCTestCase {
 
     func testDescription() {
         let name = "Assets:Cash"
-        let accout = Account(name: name)
+        let accout = Account(name: name, accountType: .asset)
         XCTAssertEqual(String(describing: accout), "")
         accout.opening = date20170608
         XCTAssertEqual(String(describing: accout), "2017-06-08 open \(name)")
@@ -32,7 +32,7 @@ class AccountTests: XCTestCase {
 
     func testDescriptionSpecialCharacters() {
         let name = "Assets:💰"
-        let accout = Account(name: name)
+        let accout = Account(name: name, accountType: .asset)
         XCTAssertEqual(String(describing: accout), "")
         accout.opening = date20170608
         XCTAssertEqual(String(describing: accout), "2017-06-08 open \(name)")
@@ -43,8 +43,14 @@ class AccountTests: XCTestCase {
         XCTAssertEqual(String(describing: accout), "2017-06-08 open \(name) \(symbol)\n2017-06-09 close \(name)")
     }
 
+    func testNameItem() {
+        XCTAssertEqual(Account(name: "Assets:Cash", accountType: .asset).nameItem, "Cash")
+        XCTAssertEqual(Account(name: "Assets:A:B:C:D:E:Cash", accountType: .asset).nameItem, "Cash")
+        XCTAssertEqual(Account(name: "Assets:💰", accountType: .asset).nameItem, "💰")
+    }
+
     func testIsPostingValid_NotOpenPast() {
-        let account = Account(name: "name")
+        let account = Account(name: "name", accountType: .asset)
         let transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 0),
                                                                     payee: "Payee",
                                                                     narration: "Narration",
@@ -55,14 +61,14 @@ class AccountTests: XCTestCase {
     }
 
     func testIsPostingValid_NotOpenPresent() {
-        let account = Account(name: "name")
+        let account = Account(name: "name", accountType: .asset)
         let transaction = Transaction(metaData: TransactionMetaData(date: Date(), payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
         let posting = Posting(account: account, amount: Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR")), transaction: transaction)
         XCTAssertFalse(account.isPostingValid(posting))
     }
 
     func testIsPostingValid_BeforeOpening() {
-        let account = Account(name: "name")
+        let account = Account(name: "name", accountType: .asset)
         account.opening = date20170609
 
         let transaction1 = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 0),
@@ -79,7 +85,7 @@ class AccountTests: XCTestCase {
     }
 
     func testIsPostingValid_AfterOpening() {
-        let account = Account(name: "name")
+        let account = Account(name: "name", accountType: .asset)
         account.opening = date20170609
 
         let transaction1 = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
@@ -92,7 +98,7 @@ class AccountTests: XCTestCase {
     }
 
     func testIsPostingValid_BeforeClosing() {
-        let account = Account(name: "name")
+        let account = Account(name: "name", accountType: .asset)
         account.opening = date20170609
         account.closing = date20170609
         let transaction = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
@@ -101,7 +107,7 @@ class AccountTests: XCTestCase {
     }
 
     func testIsPostingValid_AfterClosing() {
-        let account = Account(name: "name")
+        let account = Account(name: "name", accountType: .asset)
         account.opening = date20170609
         account.closing = date20170609
         let transaction = Transaction(metaData: TransactionMetaData(date: date20170610, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
@@ -110,7 +116,7 @@ class AccountTests: XCTestCase {
     }
 
     func testIsPostingValid_WithoutCommodity() {
-        let account = Account(name: "name")
+        let account = Account(name: "name", accountType: .asset)
         account.opening = date20170608
 
         let transaction1 = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
@@ -123,7 +129,7 @@ class AccountTests: XCTestCase {
     }
 
     func testIsPostingValid_CorrectCommodity() {
-        let account = Account(name: "name")
+        let account = Account(name: "name", accountType: .asset)
         account.commodity = amount.commodity
         account.opening = date20170608
         let transaction = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
@@ -132,7 +138,7 @@ class AccountTests: XCTestCase {
     }
 
     func testIsPostingValid_WrongCommodity() {
-        let account = Account(name: "name")
+        let account = Account(name: "name", accountType: .asset)
         account.commodity = Commodity(symbol: "\(amount.commodity.symbol)1")
         account.opening = date20170608
         let transaction = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
@@ -148,9 +154,9 @@ class AccountTests: XCTestCase {
         let date1 = date20170608
         let date2 = date20170609
 
-        let account1 = Account(name: name1)
-        let account2 = Account(name: name1)
-        let account3 = Account(name: name2)
+        let account1 = Account(name: name1, accountType: .asset)
+        let account2 = Account(name: name1, accountType: .asset)
+        let account3 = Account(name: name2, accountType: .asset)
 
         // equal
         XCTAssertEqual(account1, account2)
