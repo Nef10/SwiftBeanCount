@@ -31,7 +31,7 @@ public class Ledger {
     /// - Returns: Commodity
     public func getCommodityBy(symbol: String) -> Commodity {
         if self.commodity[symbol] == nil {
-            let commodity = Commodity(symbol:symbol)
+            let commodity = Commodity(symbol: symbol)
             self.commodity[symbol] = commodity
         }
         return self.commodity[symbol]!
@@ -44,7 +44,7 @@ public class Ledger {
     /// - Returns: Account
     public func getAccountBy(name: String) -> Account {
         if self.account[name] == nil {
-            let account = Account(name:name)
+            let account = Account(name: name)
             self.account[name] = account
         }
         return self.account[name]!
@@ -57,7 +57,7 @@ public class Ledger {
     /// - Returns: Tag
     public func getTagBy(name: String) -> Tag {
         if self.tag[name] == nil {
-            let tag = Tag(name:name)
+            let tag = Tag(name: name)
             self.tag[name] = tag
         }
         return self.tag[name]!
@@ -65,19 +65,19 @@ public class Ledger {
 
 }
 
-extension Ledger : CustomStringConvertible {
+extension Ledger: CustomStringConvertible {
     public var description: String {
         var string = ""
-        string.append(self.transactions.map({ String(describing: $0) }).joined(separator: "\n"))
+        string.append(self.transactions.map { String(describing: $0) }.joined(separator: "\n"))
         if !string.isEmpty && !self.accounts.isEmpty {
             string.append("\n")
         }
-        string.append(self.accounts.map({ String(describing: $0) }).joined(separator: "\n"))
+        string.append(self.accounts.map { String(describing: $0) }.joined(separator: "\n"))
         return string
     }
 }
 
-extension Ledger : Equatable {
+extension Ledger: Equatable {
 
     /// erros are not taken into account
     public static func == (lhs: Ledger, rhs: Ledger) -> Bool {

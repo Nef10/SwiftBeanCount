@@ -18,11 +18,11 @@ public class Tag {
 
 }
 
-extension Tag : CustomStringConvertible {
+extension Tag: CustomStringConvertible {
     public var description: String { return "#\(name)" }
 }
 
-extension Tag : Comparable {
+extension Tag: Comparable {
 
     public static func < (lhs: Tag, rhs: Tag) -> Bool {
         return lhs.name < rhs.name

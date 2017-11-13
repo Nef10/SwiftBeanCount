@@ -20,11 +20,11 @@ public class Commodity {
 
 }
 
-extension Commodity : CustomStringConvertible {
+extension Commodity: CustomStringConvertible {
     public var description: String { return symbol }
 }
 
-extension Commodity : Comparable {
+extension Commodity: Comparable {
 
     public static func < (lhs: Commodity, rhs: Commodity) -> Bool {
         return lhs.symbol < rhs.symbol
@@ -36,7 +36,7 @@ extension Commodity : Comparable {
 
 }
 
-extension Commodity : Hashable {
+extension Commodity: Hashable {
     public var hashValue: Int {
         return symbol.hashValue
     }

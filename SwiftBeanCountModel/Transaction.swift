@@ -68,15 +68,15 @@ public class Transaction {
 
 }
 
-extension Transaction : CustomStringConvertible {
+extension Transaction: CustomStringConvertible {
     public var description: String {
         var string = String(describing: metaData)
-        postings.forEach({ string += "\n\(String(describing: $0))" })
+        postings.forEach { string += "\n\(String(describing: $0))" }
         return string
     }
 }
 
-extension Transaction : Equatable {
+extension Transaction: Equatable {
     public static func == (lhs: Transaction, rhs: Transaction) -> Bool {
         return lhs.metaData == rhs.metaData && lhs.postings == rhs.postings
     }

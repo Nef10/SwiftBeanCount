@@ -13,8 +13,8 @@ public protocol MultiCurrencyAmountRepresentable {
 }
 
 public struct MultiCurrencyAmount {
-    var amounts: [Commodity : Decimal]
-    var decimalDigits: [Commodity : Int]
+    var amounts: [Commodity: Decimal]
+    var decimalDigits: [Commodity: Int]
 }
 
 extension MultiCurrencyAmount {
@@ -24,13 +24,13 @@ extension MultiCurrencyAmount {
     }
 }
 
-extension MultiCurrencyAmount : MultiCurrencyAmountRepresentable {
+extension MultiCurrencyAmount: MultiCurrencyAmountRepresentable {
     public var multiAccountAmount: MultiCurrencyAmount {
         return self
     }
 }
 
-extension MultiCurrencyAmount : Equatable {
+extension MultiCurrencyAmount: Equatable {
     public static func == (lhs: MultiCurrencyAmount, rhs: MultiCurrencyAmount) -> Bool {
         return lhs.amounts == rhs.amounts && lhs.decimalDigits == rhs.decimalDigits
     }

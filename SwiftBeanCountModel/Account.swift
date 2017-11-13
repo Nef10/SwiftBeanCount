@@ -42,7 +42,7 @@ public class Account {
 
 }
 
-extension Account : CustomStringConvertible {
+extension Account: CustomStringConvertible {
 
     public var description: String {
         var string = ""
@@ -66,7 +66,7 @@ extension Account : CustomStringConvertible {
 
 }
 
-extension Account : Equatable {
+extension Account: Equatable {
 
     public static func == (lhs: Account, rhs: Account) -> Bool {
         return rhs.name == lhs.name && rhs.commodity == lhs.commodity && rhs.opening == lhs.opening && rhs.closing == lhs.closing

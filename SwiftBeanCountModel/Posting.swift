@@ -24,7 +24,7 @@ public struct Posting {
 
 }
 
-extension Posting : CustomStringConvertible {
+extension Posting: CustomStringConvertible {
     public var description: String {
         var result = "  \(account.name) \(String(describing: amount))"
         if let price = price {
@@ -34,7 +34,7 @@ extension Posting : CustomStringConvertible {
     }
 }
 
-extension Posting : Equatable {
+extension Posting: Equatable {
     public static func == (lhs: Posting, rhs: Posting) -> Bool {
         return lhs.account == rhs.account && lhs.amount == rhs.amount && lhs.price == rhs.price
     }

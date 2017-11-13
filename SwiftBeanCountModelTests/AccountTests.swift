@@ -46,7 +46,10 @@ class AccountTests: XCTestCase {
     func testIsPostingValid_NotOpenPast() {
         let account = Account(name: "name")
         let transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 0),
-                                                                    payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
+                                                                    payee: "Payee",
+                                                                    narration: "Narration",
+                                                                    flag: Flag.complete,
+                                                                    tags: []))
         let posting = Posting(account: account, amount: Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR")), transaction: transaction)
         XCTAssertFalse(account.isPostingValid(posting))
     }
@@ -65,7 +68,8 @@ class AccountTests: XCTestCase {
         let transaction1 = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 0),
                                                                      payee: "Payee",
                                                                      narration: "Narration",
-                                                                     flag: Flag.complete, tags: []))
+                                                                     flag: Flag.complete,
+                                                                     tags: []))
         let posting1 = Posting(account: account, amount: Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR")), transaction: transaction1)
         XCTAssertFalse(account.isPostingValid(posting1))
 

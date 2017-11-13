@@ -74,7 +74,7 @@ class LedgerTests: XCTestCase {
 
     func testEqual() {
         let name = "Name1"
-        let transaction1 = Transaction(metaData: TransactionMetaData(date:Date(), payee:name, narration:name, flag:Flag.complete, tags: []))
+        let transaction1 = Transaction(metaData: TransactionMetaData(date: Date(), payee: name, narration: name, flag: Flag.complete, tags: []))
 
         let ledger1 = Ledger()
         let ledger2 = Ledger()

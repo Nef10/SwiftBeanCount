@@ -13,6 +13,6 @@ public enum Flag: String {
     case incomplete = "!"
 }
 
-extension Flag : CustomStringConvertible {
+extension Flag: CustomStringConvertible {
     public var description: String { return self.rawValue }
 }

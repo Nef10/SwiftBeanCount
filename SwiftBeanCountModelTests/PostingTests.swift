@@ -57,8 +57,10 @@ class PostingTests: XCTestCase {
     }
 
     func testEqualRespectsAmount() {
-        let posting2 = Posting(account: account1!, amount: Amount(number: Decimal(amountInteger),
-                                                                  commodity: Commodity(symbol: "\(commoditySymbol)1")), transaction: transaction)
+        let posting2 = Posting(account: account1!,
+                               amount: Amount(number: Decimal(amountInteger),
+                                              commodity: Commodity(symbol: "\(commoditySymbol)1")),
+                               transaction: transaction)
         XCTAssertNotEqual(posting1, posting2)
     }
 

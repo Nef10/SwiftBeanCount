@@ -1,3 +1,5 @@
+# Updated for 0.24.0
+
 opt_in_rules:
   - attributes
   - closure_end_indentation
@@ -23,11 +25,21 @@ opt_in_rules:
   - sorted_imports
   - switch_case_on_newline
   - vertical_parameter_alignment_on_call
+  - unneeded_parentheses_in_closure_argument
+  - trailing_closure
+  - joined_default_parameter
+  - single_test_class
+  - pattern_matching_keywords
+  - contains_over_first_not_nil
+  - array_init
+  - multiline_arguments
+  - literal_expression_end_indentation
+  - strict_fileprivate
+  - sorted_first_last
+  - override_in_extension
 
-line_length:
-  warning: 175
-  error: 200
+disabled_rules:
+  - trailing_comma
 
-identifier_name:
-  max_length:
-    warning: 45
+line_length: 175
+function_body_length: 30
