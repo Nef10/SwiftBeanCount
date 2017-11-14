@@ -6,8 +6,8 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
-import XCTest
 @testable import SwiftBeanCountParser
+import XCTest
 
 class SwiftBeanCountParserTests: XCTestCase {
 
