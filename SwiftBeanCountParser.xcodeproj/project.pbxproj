@@ -8,13 +8,33 @@
 
 /* Begin PBXBuildFile section */
 		F9BDC3721FBA815100393578 /* SwiftBeanCountParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9BDC3681FBA815100393578 /* SwiftBeanCountParser.framework */; };
-		F9BDC3771FBA815100393578 /* SwiftBeanCountParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3761FBA815100393578 /* SwiftBeanCountParserTests.swift */; };
 		F9BDC3841FBA839900393578 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3831FBA839900393578 /* Parser.swift */; };
 		F9BDC3871FBA880900393578 /* SwiftBeanCountModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9BDC3861FBA880900393578 /* SwiftBeanCountModel.framework */; };
 		F9BDC38A1FBA883E00393578 /* SwiftBeanCountModel.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = F9BDC3891FBA883E00393578 /* SwiftBeanCountModel.framework.dSYM */; };
 		F9BDC38B1FBA8C5400393578 /* SwiftBeanCountModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9BDC3861FBA880900393578 /* SwiftBeanCountModel.framework */; };
 		F9BDC38D1FBA8CAF00393578 /* SwiftBeanCountModel.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = F9BDC3891FBA883E00393578 /* SwiftBeanCountModel.framework.dSYM */; };
 		F9BDC38F1FBA8D2B00393578 /* SwiftBeanCountModel.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F9BDC3861FBA880900393578 /* SwiftBeanCountModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F9BDC3971FBAB02200393578 /* DateParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3921FBAB02200393578 /* DateParser.swift */; };
+		F9BDC3981FBAB02200393578 /* AccountParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3931FBAB02200393578 /* AccountParser.swift */; };
+		F9BDC39A1FBAB02200393578 /* PostingParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3951FBAB02200393578 /* PostingParser.swift */; };
+		F9BDC39B1FBAB02200393578 /* TransactionMetaDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3961FBAB02200393578 /* TransactionMetaDataParser.swift */; };
+		F9BDC3A21FBAB03600393578 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC39E1FBAB03600393578 /* TestUtils.swift */; };
+		F9BDC3A61FBAB0C600393578 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3A51FBAB0C600393578 /* Collection.swift */; };
+		F9BDC3A81FBAB0C800393578 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3A71FBAB0C800393578 /* String.swift */; };
+		F9BDC3AC1FBAB0ED00393578 /* CollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3AA1FBAB0ED00393578 /* CollectionTests.swift */; };
+		F9BDC3AD1FBAB0ED00393578 /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3AB1FBAB0ED00393578 /* StringTests.swift */; };
+		F9BDC3B31FBAB10A00393578 /* ParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3AE1FBAB10A00393578 /* ParserTests.swift */; };
+		F9BDC3B41FBAB10A00393578 /* DateParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3AF1FBAB10A00393578 /* DateParserTests.swift */; };
+		F9BDC3B51FBAB10A00393578 /* PostingParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3B01FBAB10A00393578 /* PostingParserTests.swift */; };
+		F9BDC3B61FBAB10A00393578 /* AccountParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3B11FBAB10A00393578 /* AccountParserTests.swift */; };
+		F9BDC3B71FBAB10A00393578 /* TransactionMetaDataParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3B21FBAB10A00393578 /* TransactionMetaDataParserTests.swift */; };
+		F9BDC3C11FBAB13E00393578 /* Whitespace.beancount in Resources */ = {isa = PBXBuildFile; fileRef = F9BDC3B91FBAB13E00393578 /* Whitespace.beancount */; };
+		F9BDC3C21FBAB13E00393578 /* CommentsEndOfLine.beancount in Resources */ = {isa = PBXBuildFile; fileRef = F9BDC3BA1FBAB13E00393578 /* CommentsEndOfLine.beancount */; };
+		F9BDC3C41FBAB13E00393578 /* Big.beancount in Resources */ = {isa = PBXBuildFile; fileRef = F9BDC3BC1FBAB13E00393578 /* Big.beancount */; };
+		F9BDC3C51FBAB13E00393578 /* PostingWithoutTransaction.beancount in Resources */ = {isa = PBXBuildFile; fileRef = F9BDC3BD1FBAB13E00393578 /* PostingWithoutTransaction.beancount */; };
+		F9BDC3C61FBAB13E00393578 /* TransactionWithoutPosting.beancount in Resources */ = {isa = PBXBuildFile; fileRef = F9BDC3BE1FBAB13E00393578 /* TransactionWithoutPosting.beancount */; };
+		F9BDC3C71FBAB13E00393578 /* Comments.beancount in Resources */ = {isa = PBXBuildFile; fileRef = F9BDC3BF1FBAB13E00393578 /* Comments.beancount */; };
+		F9BDC3C81FBAB13E00393578 /* Minimal.beancount in Resources */ = {isa = PBXBuildFile; fileRef = F9BDC3C01FBAB13E00393578 /* Minimal.beancount */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,11 +84,31 @@
 		F9BDC3681FBA815100393578 /* SwiftBeanCountParser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftBeanCountParser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9BDC36C1FBA815100393578 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9BDC3711FBA815100393578 /* SwiftBeanCountParserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftBeanCountParserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F9BDC3761FBA815100393578 /* SwiftBeanCountParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftBeanCountParserTests.swift; sourceTree = "<group>"; };
-		F9BDC3781FBA815100393578 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9BDC3831FBA839900393578 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		F9BDC3861FBA880900393578 /* SwiftBeanCountModel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftBeanCountModel.framework; path = Carthage/Build/Mac/SwiftBeanCountModel.framework; sourceTree = "<group>"; };
 		F9BDC3891FBA883E00393578 /* SwiftBeanCountModel.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SwiftBeanCountModel.framework.dSYM; path = Carthage/Build/Mac/SwiftBeanCountModel.framework.dSYM; sourceTree = "<group>"; };
+		F9BDC3921FBAB02200393578 /* DateParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateParser.swift; sourceTree = "<group>"; };
+		F9BDC3931FBAB02200393578 /* AccountParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountParser.swift; sourceTree = "<group>"; };
+		F9BDC3951FBAB02200393578 /* PostingParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostingParser.swift; sourceTree = "<group>"; };
+		F9BDC3961FBAB02200393578 /* TransactionMetaDataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionMetaDataParser.swift; sourceTree = "<group>"; };
+		F9BDC39E1FBAB03600393578 /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
+		F9BDC3A51FBAB0C600393578 /* Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
+		F9BDC3A71FBAB0C800393578 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		F9BDC3AA1FBAB0ED00393578 /* CollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionTests.swift; sourceTree = "<group>"; };
+		F9BDC3AB1FBAB0ED00393578 /* StringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringTests.swift; sourceTree = "<group>"; };
+		F9BDC3AE1FBAB10A00393578 /* ParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParserTests.swift; sourceTree = "<group>"; };
+		F9BDC3AF1FBAB10A00393578 /* DateParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateParserTests.swift; sourceTree = "<group>"; };
+		F9BDC3B01FBAB10A00393578 /* PostingParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostingParserTests.swift; sourceTree = "<group>"; };
+		F9BDC3B11FBAB10A00393578 /* AccountParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountParserTests.swift; sourceTree = "<group>"; };
+		F9BDC3B21FBAB10A00393578 /* TransactionMetaDataParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionMetaDataParserTests.swift; sourceTree = "<group>"; };
+		F9BDC3B91FBAB13E00393578 /* Whitespace.beancount */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Whitespace.beancount; sourceTree = "<group>"; };
+		F9BDC3BA1FBAB13E00393578 /* CommentsEndOfLine.beancount */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CommentsEndOfLine.beancount; sourceTree = "<group>"; };
+		F9BDC3BB1FBAB13E00393578 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F9BDC3BC1FBAB13E00393578 /* Big.beancount */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Big.beancount; sourceTree = "<group>"; };
+		F9BDC3BD1FBAB13E00393578 /* PostingWithoutTransaction.beancount */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PostingWithoutTransaction.beancount; sourceTree = "<group>"; };
+		F9BDC3BE1FBAB13E00393578 /* TransactionWithoutPosting.beancount */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TransactionWithoutPosting.beancount; sourceTree = "<group>"; };
+		F9BDC3BF1FBAB13E00393578 /* Comments.beancount */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Comments.beancount; sourceTree = "<group>"; };
+		F9BDC3C01FBAB13E00393578 /* Minimal.beancount */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Minimal.beancount; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,7 +154,12 @@
 		F9BDC36A1FBA815100393578 /* SwiftBeanCountParser */ = {
 			isa = PBXGroup;
 			children = (
+				F9BDC3931FBAB02200393578 /* AccountParser.swift */,
+				F9BDC3921FBAB02200393578 /* DateParser.swift */,
+				F9BDC3951FBAB02200393578 /* PostingParser.swift */,
+				F9BDC3961FBAB02200393578 /* TransactionMetaDataParser.swift */,
 				F9BDC3831FBA839900393578 /* Parser.swift */,
+				F9BDC3A41FBAB0B700393578 /* Extensions */,
 				F9BDC36C1FBA815100393578 /* Info.plist */,
 			);
 			path = SwiftBeanCountParser;
@@ -123,8 +168,14 @@
 		F9BDC3751FBA815100393578 /* SwiftBeanCountParserTests */ = {
 			isa = PBXGroup;
 			children = (
-				F9BDC3761FBA815100393578 /* SwiftBeanCountParserTests.swift */,
-				F9BDC3781FBA815100393578 /* Info.plist */,
+				F9BDC3B11FBAB10A00393578 /* AccountParserTests.swift */,
+				F9BDC3AF1FBAB10A00393578 /* DateParserTests.swift */,
+				F9BDC3AE1FBAB10A00393578 /* ParserTests.swift */,
+				F9BDC3B01FBAB10A00393578 /* PostingParserTests.swift */,
+				F9BDC3B21FBAB10A00393578 /* TransactionMetaDataParserTests.swift */,
+				F9BDC39E1FBAB03600393578 /* TestUtils.swift */,
+				F9BDC3A91FBAB0E400393578 /* Extensions */,
+				F9BDC3B81FBAB13500393578 /* Resources */,
 			);
 			path = SwiftBeanCountParserTests;
 			sourceTree = "<group>";
@@ -136,6 +187,39 @@
 				F9BDC3891FBA883E00393578 /* SwiftBeanCountModel.framework.dSYM */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F9BDC3A41FBAB0B700393578 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F9BDC3A51FBAB0C600393578 /* Collection.swift */,
+				F9BDC3A71FBAB0C800393578 /* String.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F9BDC3A91FBAB0E400393578 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F9BDC3AA1FBAB0ED00393578 /* CollectionTests.swift */,
+				F9BDC3AB1FBAB0ED00393578 /* StringTests.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F9BDC3B81FBAB13500393578 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F9BDC3BB1FBAB13E00393578 /* Info.plist */,
+				F9BDC3BC1FBAB13E00393578 /* Big.beancount */,
+				F9BDC3BF1FBAB13E00393578 /* Comments.beancount */,
+				F9BDC3BA1FBAB13E00393578 /* CommentsEndOfLine.beancount */,
+				F9BDC3C01FBAB13E00393578 /* Minimal.beancount */,
+				F9BDC3BD1FBAB13E00393578 /* PostingWithoutTransaction.beancount */,
+				F9BDC3BE1FBAB13E00393578 /* TransactionWithoutPosting.beancount */,
+				F9BDC3B91FBAB13E00393578 /* Whitespace.beancount */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,6 +292,7 @@
 					};
 					F9BDC3701FBA815100393578 = {
 						CreatedOnToolsVersion = 9.1;
+						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -242,6 +327,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9BDC3C21FBAB13E00393578 /* CommentsEndOfLine.beancount in Resources */,
+				F9BDC3C81FBAB13E00393578 /* Minimal.beancount in Resources */,
+				F9BDC3C51FBAB13E00393578 /* PostingWithoutTransaction.beancount in Resources */,
+				F9BDC3C11FBAB13E00393578 /* Whitespace.beancount in Resources */,
+				F9BDC3C71FBAB13E00393578 /* Comments.beancount in Resources */,
+				F9BDC3C41FBAB13E00393578 /* Big.beancount in Resources */,
+				F9BDC3C61FBAB13E00393578 /* TransactionWithoutPosting.beancount in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,7 +361,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9BDC3971FBAB02200393578 /* DateParser.swift in Sources */,
 				F9BDC3841FBA839900393578 /* Parser.swift in Sources */,
+				F9BDC3981FBAB02200393578 /* AccountParser.swift in Sources */,
+				F9BDC3A61FBAB0C600393578 /* Collection.swift in Sources */,
+				F9BDC3A81FBAB0C800393578 /* String.swift in Sources */,
+				F9BDC39B1FBAB02200393578 /* TransactionMetaDataParser.swift in Sources */,
+				F9BDC39A1FBAB02200393578 /* PostingParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,7 +375,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9BDC3771FBA815100393578 /* SwiftBeanCountParserTests.swift in Sources */,
+				F9BDC3B31FBAB10A00393578 /* ParserTests.swift in Sources */,
+				F9BDC3B51FBAB10A00393578 /* PostingParserTests.swift in Sources */,
+				F9BDC3A21FBAB03600393578 /* TestUtils.swift in Sources */,
+				F9BDC3B41FBAB10A00393578 /* DateParserTests.swift in Sources */,
+				F9BDC3B61FBAB10A00393578 /* AccountParserTests.swift in Sources */,
+				F9BDC3AD1FBAB0ED00393578 /* StringTests.swift in Sources */,
+				F9BDC3B71FBAB10A00393578 /* TransactionMetaDataParserTests.swift in Sources */,
+				F9BDC3AC1FBAB0ED00393578 /* CollectionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,6 +568,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -471,10 +577,11 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
-				INFOPLIST_FILE = SwiftBeanCountParserTests/Info.plist;
+				INFOPLIST_FILE = "SwiftBeanCountParserTests/Resources//Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.steffenkoette.SwiftBeanCountParserTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -483,6 +590,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -491,7 +599,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
-				INFOPLIST_FILE = SwiftBeanCountParserTests/Info.plist;
+				INFOPLIST_FILE = "SwiftBeanCountParserTests/Resources//Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.steffenkoette.SwiftBeanCountParserTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

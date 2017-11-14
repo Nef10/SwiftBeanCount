@@ -46,3 +46,6 @@ disabled_rules:
 
 line_length: 175
 function_body_length: 30
+identifier_name:
+  max_length:
+    warning: 45
