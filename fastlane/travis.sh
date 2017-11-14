@@ -1,4 +1,4 @@
 #!/bin/sh
 
-bundle exec fastlane test
+bundle exec fastlane ci
 exit $?

@@ -29,12 +29,27 @@ xcode-select --install
 </table>
 
 # Available Actions
-## iOS
-### ios test
+## Mac
+### mac test
 ```
-fastlane ios test
+fastlane mac test
 ```
-Run all the tests
+Run tests
+### mac dependencies
+```
+fastlane mac dependencies
+```
+Install dependencies
+### mac lint
+```
+fastlane mac lint
+```
+Run linter
+### mac ci
+```
+fastlane mac ci
+```
+
 
 ----
 

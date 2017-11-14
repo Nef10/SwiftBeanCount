@@ -1,7 +1,7 @@
 fastlane_version "2.55.0"
-default_platform :ios
+default_platform :mac
 
-platform :ios do
+platform :mac do
 
   before_all do
     unless ENV["CI"]
@@ -9,9 +9,25 @@ platform :ios do
     end
   end
 
-  desc "Run all the tests"
+  desc "Run tests"
   lane :test do
     scan()
+  end
+
+  desc "Install dependencies"
+  lane :dependencies do
+    carthage(command: "bootstrap", use_ssh: true, cache_builds: true)
+  end
+
+  desc "Run linter"
+  lane :lint do
+    swiftlint(strict: true, config_file: ".swiftlint.yml")
+  end
+
+  lane :ci do
+    dependencies
+    lint
+    test
   end
 
   after_all do |lane|
