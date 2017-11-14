@@ -41,6 +41,14 @@ class AmountTests: XCTestCase {
         XCTAssertEqual(String(describing: amount), "\(amountInteger) \(String(describing: commodity))")
     }
 
+    func testDescriptionThousandsSeperator() {
+        let amountInteger = 1_234_567_890.00
+        let commodity = Commodity(symbol: "💵")
+        let amount = Amount(number: Decimal(amountInteger), commodity: commodity, decimalDigits: 2)
+
+        XCTAssertEqual(String(describing: amount), "1,234,567,890.00 \(String(describing: commodity))")
+    }
+
     func testDescriptionFloat() {
         let commodity = Commodity(symbol: "💵")
 
