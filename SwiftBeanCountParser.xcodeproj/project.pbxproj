@@ -12,6 +12,9 @@
 		F9BDC3841FBA839900393578 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3831FBA839900393578 /* Parser.swift */; };
 		F9BDC3871FBA880900393578 /* SwiftBeanCountModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9BDC3861FBA880900393578 /* SwiftBeanCountModel.framework */; };
 		F9BDC38A1FBA883E00393578 /* SwiftBeanCountModel.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = F9BDC3891FBA883E00393578 /* SwiftBeanCountModel.framework.dSYM */; };
+		F9BDC38B1FBA8C5400393578 /* SwiftBeanCountModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9BDC3861FBA880900393578 /* SwiftBeanCountModel.framework */; };
+		F9BDC38D1FBA8CAF00393578 /* SwiftBeanCountModel.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = F9BDC3891FBA883E00393578 /* SwiftBeanCountModel.framework.dSYM */; };
+		F9BDC38F1FBA8D2B00393578 /* SwiftBeanCountModel.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F9BDC3861FBA880900393578 /* SwiftBeanCountModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +38,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F9BDC38C1FBA8CAA00393578 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				F9BDC38D1FBA8CAF00393578 /* SwiftBeanCountModel.framework.dSYM in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F9BDC38E1FBA8D2400393578 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F9BDC38F1FBA8D2B00393578 /* SwiftBeanCountModel.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +68,7 @@
 		F9BDC3781FBA815100393578 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9BDC3831FBA839900393578 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		F9BDC3861FBA880900393578 /* SwiftBeanCountModel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftBeanCountModel.framework; path = Carthage/Build/Mac/SwiftBeanCountModel.framework; sourceTree = "<group>"; };
-		F9BDC3891FBA883E00393578 /* SwiftBeanCountModel.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = SwiftBeanCountModel.framework.dSYM; sourceTree = "<group>"; };
+		F9BDC3891FBA883E00393578 /* SwiftBeanCountModel.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SwiftBeanCountModel.framework.dSYM; path = Carthage/Build/Mac/SwiftBeanCountModel.framework.dSYM; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9BDC38B1FBA8C5400393578 /* SwiftBeanCountModel.framework in Frameworks */,
 				F9BDC3721FBA815100393578 /* SwiftBeanCountParser.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -154,6 +178,8 @@
 				F9BDC36D1FBA815100393578 /* Sources */,
 				F9BDC36E1FBA815100393578 /* Frameworks */,
 				F9BDC36F1FBA815100393578 /* Resources */,
+				F9BDC38C1FBA8CAA00393578 /* CopyFiles */,
+				F9BDC38E1FBA8D2400393578 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -386,7 +412,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = D99VYUJN25;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -414,7 +440,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = D99VYUJN25;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -437,11 +463,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = D99VYUJN25;
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = SwiftBeanCountParserTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.steffenkoette.SwiftBeanCountParserTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -452,11 +483,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = D99VYUJN25;
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = SwiftBeanCountParserTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.steffenkoette.SwiftBeanCountParserTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
