@@ -9,7 +9,7 @@
 import Foundation
 import SwiftBeanCountModel
 
-class Parser {
+public class Parser {
 
     static let accountGroup = "([^\\s]+:[^\\s]+)"
 
@@ -18,7 +18,7 @@ class Parser {
     /// - Parameter contentOf: URL to parse Encoding has to be UTF-8
     /// - Returns: Array of parsed Transactions
     /// - Throws: Exceptions from opening the file
-    static func parse(contentOf path: URL) throws -> Ledger {
+    public static func parse(contentOf path: URL) throws -> Ledger {
         let text = try String(contentsOf: path)
         return self.parse(string: text)
     }
@@ -37,7 +37,7 @@ class Parser {
     ///
     /// - Parameter string: String to parse
     /// - Returns: Array of parsed Transactions
-    static func parse(string: String) -> Ledger {
+    public static func parse(string: String) -> Ledger {
 
         let ledger = Ledger()
 
