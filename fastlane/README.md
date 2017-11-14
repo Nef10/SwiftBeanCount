@@ -12,9 +12,9 @@ xcode-select --install
 
 <table width="100%" >
 <tr>
-<th width="33%"><a href="http://brew.sh">Homebrew</a></td>
-<th width="33%">Installer Script</td>
-<th width="33%">Rubygems</td>
+<th width="33%"><a href="http://brew.sh">Homebrew</a></th>
+<th width="33%">Installer Script</th>
+<th width="33%">RubyGems</th>
 </tr>
 <tr>
 <td width="33%" align="center">macOS</td>
@@ -45,11 +45,26 @@ Install dependencies
 fastlane mac lint
 ```
 Run linter
+### mac coverage_report
+```
+fastlane mac coverage_report
+```
+Code coverage report
+### mac pr_comment
+```
+fastlane mac pr_comment
+```
+Danger comment on PR
+### mac coverage
+```
+fastlane mac coverage
+```
+Test and gather coverage report
 ### mac ci
 ```
 fastlane mac ci
 ```
-
+Test, lint and run danger for coverage comment
 
 ----
 
