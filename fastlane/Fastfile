@@ -11,7 +11,7 @@ platform :mac do
 
   desc "Run tests"
   lane :test do
-    scan()
+    scan(formatter: 'xcpretty-json-formatter')
   end
 
   desc "Install dependencies"
@@ -24,10 +24,29 @@ platform :mac do
     swiftlint(strict: true, config_file: ".swiftlint.yml")
   end
 
+  desc "Code coverage report"
+  lane :coverage_report do
+    xcov(minimum_coverage_percentage: 100.0)
+  end
+
+  desc "Danger comment on PR"
+  lane :pr_comment do
+    danger(fail_on_errors: true)
+  end
+
+  desc "Test and gather coverage report"
+  lane :coverage do
+    dependencies
+    test
+    coverage_report
+  end
+
+  desc "Test, lint and run danger for coverage comment"
   lane :ci do
     dependencies
     lint
     test
+    pr_comment # includes coverage
   end
 
   after_all do |lane|

@@ -2,4 +2,11 @@ os: osx
 osx_image: xcode9.1
 language: objective-c
 install: bundle install
-script: ./fastlane/travis.sh
+script: bundle exec fastlane ci
+branches:
+  only:
+    - master
+    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+cache:
+  directories:
+  - Carthage

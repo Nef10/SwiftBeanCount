@@ -45,11 +45,26 @@ Install dependencies
 fastlane mac lint
 ```
 Run linter
+### mac coverage_report
+```
+fastlane mac coverage_report
+```
+Code coverage report
+### mac pr_comment
+```
+fastlane mac pr_comment
+```
+Danger comment on PR
+### mac coverage
+```
+fastlane mac coverage
+```
+Test and gather coverage report
 ### mac ci
 ```
 fastlane mac ci
 ```
-
+Test, lint and run danger for coverage comment
 
 ----
 
