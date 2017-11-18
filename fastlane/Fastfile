@@ -4,9 +4,8 @@ default_platform :mac
 platform :mac do
 
   before_all do
-    unless ENV["CI"]
-      ensure_git_status_clean
-    end
+    #ensure_git_status_clean
+    #verify_xcode
   end
 
   desc "Run tests"
@@ -34,14 +33,18 @@ platform :mac do
     danger(fail_on_errors: true)
   end
 
+  desc "Generate documentation"
+  lane :documentation do
+    jazzy
+  end
+
   desc "Test and gather coverage report"
   lane :coverage do
-    dependencies
     test
     coverage_report
   end
 
-  desc "Test, lint and run danger for coverage comment"
+  desc "Install dependencies, test, lint and write PR comment"
   lane :ci do
     dependencies
     lint

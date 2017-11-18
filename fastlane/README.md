@@ -55,6 +55,11 @@ Code coverage report
 fastlane mac pr_comment
 ```
 Danger comment on PR
+### mac documentation
+```
+fastlane mac documentation
+```
+Generate documentation
 ### mac coverage
 ```
 fastlane mac coverage
@@ -64,7 +69,7 @@ Test and gather coverage report
 ```
 fastlane mac ci
 ```
-Test, lint and run danger for coverage comment
+Install dependencies, test, lint and write PR comment
 
 ----
 

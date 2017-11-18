@@ -1,0 +1,635 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": null,
+      "symbol": "Account",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": null,
+      "symbol": "Account",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 11,
+      "symbol": "AccountType",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 12,
+      "symbol": "AccountType.asset",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 13,
+      "symbol": "AccountType.liability",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 14,
+      "symbol": "AccountType.income",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 15,
+      "symbol": "AccountType.expense",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 16,
+      "symbol": "AccountType.equity",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 23,
+      "symbol": "AccountItem",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 24,
+      "symbol": "AccountItem.nameItem",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 25,
+      "symbol": "AccountItem.accountType",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 28,
+      "symbol": "AccountGroup",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 29,
+      "symbol": "AccountGroup.nameItem",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 30,
+      "symbol": "AccountGroup.baseGroup",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 31,
+      "symbol": "AccountGroup.accountType",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 35,
+      "symbol": "AccountGroup.init(nameItem:accountType:baseGroup:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 41,
+      "symbol": "AccountGroup.children()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 49,
+      "symbol": "Account",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 51,
+      "symbol": "Account.name",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 52,
+      "symbol": "Account.accountType",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 53,
+      "symbol": "Account.commodity",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 54,
+      "symbol": "Account.opening",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 55,
+      "symbol": "Account.closing",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 56,
+      "symbol": "Account.nameItem",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 60,
+      "symbol": "Account.init(name:accountType:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Account.swift",
+      "line": 65,
+      "symbol": "Account.isPostingValid(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Amount.swift",
+      "line": null,
+      "symbol": "Amount",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Amount.swift",
+      "line": null,
+      "symbol": "Amount",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Amount.swift",
+      "line": null,
+      "symbol": "Amount",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Amount.swift",
+      "line": 11,
+      "symbol": "Amount",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Amount.swift",
+      "line": 13,
+      "symbol": "Amount.number",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Amount.swift",
+      "line": 14,
+      "symbol": "Amount.commodity",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Amount.swift",
+      "line": 15,
+      "symbol": "Amount.decimalDigits",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Amount.swift",
+      "line": 17,
+      "symbol": "Amount.init(number:commodity:decimalDigits:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Amount.swift",
+      "line": 48,
+      "symbol": "Amount.multiAccountAmount",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Commodity.swift",
+      "line": null,
+      "symbol": "Commodity",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Commodity.swift",
+      "line": null,
+      "symbol": "Commodity",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Commodity.swift",
+      "line": null,
+      "symbol": "Commodity",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Commodity.swift",
+      "line": 11,
+      "symbol": "Commodity",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Commodity.swift",
+      "line": 13,
+      "symbol": "Commodity.noCommodity",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Commodity.swift",
+      "line": 15,
+      "symbol": "Commodity.symbol",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Commodity.swift",
+      "line": 17,
+      "symbol": "Commodity.init(symbol:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Flag.swift",
+      "line": null,
+      "symbol": "Flag",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Flag.swift",
+      "line": 11,
+      "symbol": "Flag",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Flag.swift",
+      "line": 12,
+      "symbol": "Flag.complete",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Flag.swift",
+      "line": 13,
+      "symbol": "Flag.incomplete",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Ledger.swift",
+      "line": null,
+      "symbol": "Ledger",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Ledger.swift",
+      "line": null,
+      "symbol": "Ledger",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Ledger.swift",
+      "line": 11,
+      "symbol": "Ledger",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Ledger.swift",
+      "line": 13,
+      "symbol": "Ledger.transactions",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Ledger.swift",
+      "line": 14,
+      "symbol": "Ledger.errors",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Ledger.swift",
+      "line": 21,
+      "symbol": "Ledger.commodities",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Ledger.swift",
+      "line": 22,
+      "symbol": "Ledger.accounts",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Ledger.swift",
+      "line": 23,
+      "symbol": "Ledger.tags",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Ledger.swift",
+      "line": 24,
+      "symbol": "Ledger.accountGroups",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Ledger.swift",
+      "line": 26,
+      "symbol": "Ledger.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/MultiCurrencyAmount.swift",
+      "line": null,
+      "symbol": "MultiCurrencyAmount",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/MultiCurrencyAmount.swift",
+      "line": null,
+      "symbol": "MultiCurrencyAmount",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/MultiCurrencyAmount.swift",
+      "line": 11,
+      "symbol": "MultiCurrencyAmountRepresentable",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/MultiCurrencyAmount.swift",
+      "line": 12,
+      "symbol": "MultiCurrencyAmountRepresentable.multiAccountAmount",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/MultiCurrencyAmount.swift",
+      "line": 15,
+      "symbol": "MultiCurrencyAmount",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/MultiCurrencyAmount.swift",
+      "line": 28,
+      "symbol": "MultiCurrencyAmount.multiAccountAmount",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Posting.swift",
+      "line": null,
+      "symbol": "Posting",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Posting.swift",
+      "line": null,
+      "symbol": "Posting",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Posting.swift",
+      "line": 11,
+      "symbol": "Posting",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Posting.swift",
+      "line": 13,
+      "symbol": "Posting.account",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Posting.swift",
+      "line": 14,
+      "symbol": "Posting.amount",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Posting.swift",
+      "line": 15,
+      "symbol": "Posting.transaction",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Posting.swift",
+      "line": 16,
+      "symbol": "Posting.price",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Posting.swift",
+      "line": 18,
+      "symbol": "Posting.init(account:amount:transaction:price:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Tag.swift",
+      "line": null,
+      "symbol": "Tag",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Tag.swift",
+      "line": null,
+      "symbol": "Tag",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Tag.swift",
+      "line": 11,
+      "symbol": "Tag",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Tag.swift",
+      "line": 13,
+      "symbol": "Tag.name",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Tag.swift",
+      "line": 15,
+      "symbol": "Tag.init(name:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Transaction.swift",
+      "line": null,
+      "symbol": "Transaction",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Transaction.swift",
+      "line": null,
+      "symbol": "Transaction",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Transaction.swift",
+      "line": 11,
+      "symbol": "Transaction",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Transaction.swift",
+      "line": 13,
+      "symbol": "Transaction.metaData",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Transaction.swift",
+      "line": 14,
+      "symbol": "Transaction.postings",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/Transaction.swift",
+      "line": 16,
+      "symbol": "Transaction.init(metaData:postings:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/TransactionMetaData.swift",
+      "line": null,
+      "symbol": "TransactionMetaData",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/TransactionMetaData.swift",
+      "line": null,
+      "symbol": "TransactionMetaData",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/TransactionMetaData.swift",
+      "line": 11,
+      "symbol": "TransactionMetaData",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/TransactionMetaData.swift",
+      "line": 13,
+      "symbol": "TransactionMetaData.date",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/TransactionMetaData.swift",
+      "line": 14,
+      "symbol": "TransactionMetaData.payee",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/TransactionMetaData.swift",
+      "line": 15,
+      "symbol": "TransactionMetaData.narration",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/TransactionMetaData.swift",
+      "line": 16,
+      "symbol": "TransactionMetaData.flag",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/TransactionMetaData.swift",
+      "line": 17,
+      "symbol": "TransactionMetaData.tags",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Steffen/Projects/SwiftBeanCountModel/SwiftBeanCountModel/TransactionMetaData.swift",
+      "line": 19,
+      "symbol": "TransactionMetaData.init(date:payee:narration:flag:tags:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/Steffen/Projects/SwiftBeanCountModel"
+}
