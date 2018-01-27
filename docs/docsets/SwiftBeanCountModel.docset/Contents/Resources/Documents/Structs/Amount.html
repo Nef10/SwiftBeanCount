@@ -14,7 +14,7 @@
     <a title="Amount Structure Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">SwiftBeanCountModel Docs</a> (21% documented)</p>
+        <p><a href="../index.html">SwiftBeanCountModel Docs</a> (100% documented)</p>
         <p class="header-right"><a href="https://github.com/Nef10/SwiftBeanCountModel"><img src="../img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2FNef10%2FSwiftBeanCountModel%2Fblob%2Fmaster%2Fdocsets%2FSwiftBeanCountModel%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -103,7 +103,7 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>Represents an Amount - a number with a commodity</p>
 
           </section>
           <section class="section task-group-section">
@@ -122,7 +122,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Mumeric value of the amount</p>
 
                       </div>
                       <div class="declaration">
@@ -134,7 +134,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Amount.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Amount.swift#L15">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -152,7 +152,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Commodity the number is in</p>
 
                       </div>
                       <div class="declaration">
@@ -164,7 +164,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Amount.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Amount.swift#L18">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -182,7 +182,10 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Number of decimal digits the number has</p>
+
+<p>This is used to maintain the accuracy the number was recorded in to correctly print it and
+do checks with the correct tolerance.</p>
 
                       </div>
                       <div class="declaration">
@@ -194,7 +197,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Amount.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Amount.swift#L24">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -212,7 +215,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Creates an amount with the given parameters</p>
 
                       </div>
                       <div class="declaration">
@@ -223,8 +226,51 @@
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>number</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>numeric value</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>commodity</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Classes/Commodity.html">Commodity</a></code></p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>decimalDigits</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>number of decimal digits the number has</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Amount.swift#L17-L21">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Amount.swift#L32-L36">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -236,9 +282,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:s23CustomStringConvertibleP11descriptionSSv"></a>
+                    <a name="/s:19SwiftBeanCountModel6AmountV11descriptionSSv"></a>
                     <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
-                    <a class="token" href="#/s:s23CustomStringConvertibleP11descriptionSSv">description</a>
+                    <a class="token" href="#/s:19SwiftBeanCountModel6AmountV11descriptionSSv">description</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -246,7 +292,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>Returns a <code>String</code> for the ledger which contains the number with the correct number of decimal digits as well as the <code><a href="../Structs/Amount.html#/s:19SwiftBeanCountModel6AmountV9commodityAA9CommodityCv">commodity</a></code></p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -257,7 +304,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Amount.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Amount.swift#L42">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -279,7 +326,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>the ammount represented as <code><a href="../Structs/MultiCurrencyAmount.html">MultiCurrencyAmount</a></code></p>
 
                       </div>
                       <div class="declaration">
@@ -291,7 +338,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Amount.swift#L48-L50">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Amount.swift#L66-L68">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -303,9 +350,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:s9EquatableP2eeoiSbx_xtFZ"></a>
+                    <a name="/s:19SwiftBeanCountModel6AmountV2eeoiSbAC_ACtFZ"></a>
                     <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:s9EquatableP2eeoiSbx_xtFZ">==(_:_:)</a>
+                    <a class="token" href="#/s:19SwiftBeanCountModel6AmountV2eeoiSbAC_ACtFZ">==(_:_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -313,7 +360,10 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>Compares two <code>Amount</code>s</p>
+
+<p>Note that the number of decimal digits is compared as well. This means <em>1.0</em> and <em>1.00</em> is <strong>not</strong> the same.</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -323,8 +373,43 @@
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>lhs</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>first amount</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>rhs</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>second amount</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>True if the amounts are the same, false otherwise</p>
+                      </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Amount.swift#L54-L56">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Amount.swift#L82-L84">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -334,7 +419,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/Nef10" target="_blank" rel="external">Nef10</a>. All rights reserved. (Last updated: 2017-11-18)</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/Nef10" target="_blank" rel="external">Nef10</a>. All rights reserved. (Last updated: 2018-01-27)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

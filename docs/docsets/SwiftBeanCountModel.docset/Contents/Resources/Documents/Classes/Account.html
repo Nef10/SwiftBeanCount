@@ -14,7 +14,7 @@
     <a title="Account Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">SwiftBeanCountModel Docs</a> (21% documented)</p>
+        <p><a href="../index.html">SwiftBeanCountModel Docs</a> (100% documented)</p>
         <p class="header-right"><a href="https://github.com/Nef10/SwiftBeanCountModel"><img src="../img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2FNef10%2FSwiftBeanCountModel%2Fblob%2Fmaster%2Fdocsets%2FSwiftBeanCountModel%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -103,7 +103,9 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>Class with represents an Account with a name, commodity, opening and closing date, as well as a type.</p>
+
+<p>It does hot hold any <code><a href="../Classes/Transaction.html">Transaction</a></code>s</p>
 
           </section>
           <section class="section task-group-section">
@@ -122,7 +124,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Full quilified name of the account, e.g. Assets:Cash:CAD</p>
 
                       </div>
                       <div class="declaration">
@@ -134,7 +136,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L97">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -152,7 +154,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Type, see <code><a href="../Enums/AccountType.html">AccountType</a></code></p>
 
                       </div>
                       <div class="declaration">
@@ -164,7 +166,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L100">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -182,7 +184,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p><code><a href="../Classes/Commodity.html">Commodity</a></code> of this account</p>
 
                       </div>
                       <div class="declaration">
@@ -194,7 +196,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L103">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -212,7 +214,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Optional date of opening.
+If it exists <code>isPostingValid(:)</code> checks that the transaction is on or after this date</p>
 
                       </div>
                       <div class="declaration">
@@ -224,7 +227,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L107">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -242,7 +245,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Optional closing date.
+If it exists <code>isPostingValid(:)</code> checks that the transaction is before or on this date</p>
 
                       </div>
                       <div class="declaration">
@@ -254,7 +258,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L111">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -272,7 +276,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Last part of the name, for <strong>Assets:Cash:CAD</strong> this would be <strong>CAD</strong></p>
 
                       </div>
                       <div class="declaration">
@@ -284,7 +288,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L56-L58">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L114-L116">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -302,7 +306,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Creates an Account</p>
 
                       </div>
                       <div class="declaration">
@@ -313,8 +317,39 @@
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>name</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>full name of the account</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>accountType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>type of the account</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L60-L63">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L123-L126">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -332,7 +367,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Checks if the given <code><a href="../Structs/Posting.html">Posting</a></code> is a valid posting for this account.
+This includes that the account of the posting is this one, the commodity matches and the account was open at the day of posting</p>
 
                       </div>
                       <div class="declaration">
@@ -343,8 +379,31 @@
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>posting</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>posting to check</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>true if the posting is valid, otherwise false</p>
+                      </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L65-L67">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L135-L137">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -356,9 +415,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:s23CustomStringConvertibleP11descriptionSSv"></a>
+                    <a name="/s:19SwiftBeanCountModel7AccountC11descriptionSSv"></a>
                     <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
-                    <a class="token" href="#/s:s23CustomStringConvertibleP11descriptionSSv">description</a>
+                    <a class="token" href="#/s:19SwiftBeanCountModel7AccountC11descriptionSSv">description</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -366,7 +425,10 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>Returns the Acount opening and closing string for the ledger.</p>
+
+<p>If no open date is set it returns an empty string, if only the opening is set the closing line is ommitted</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -377,7 +439,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L90-L102">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L163-L175">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -389,9 +451,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:s9EquatableP2eeoiSbx_xtFZ"></a>
+                    <a name="/s:19SwiftBeanCountModel7AccountC2eeoiSbAC_ACtFZ"></a>
                     <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:s9EquatableP2eeoiSbx_xtFZ">==(_:_:)</a>
+                    <a class="token" href="#/s:19SwiftBeanCountModel7AccountC2eeoiSbAC_ACtFZ">==(_:_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -399,7 +461,10 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>Compare the name, commodity as well as the opening and closing of two Accounts.</p>
+
+<p>This does not compare <code><a href="../Classes/Transaction.html">Transaction</a></code>s as they are not part of Accounts</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -410,7 +475,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L114-L116">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L190-L192">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -420,7 +485,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/Nef10" target="_blank" rel="external">Nef10</a>. All rights reserved. (Last updated: 2017-11-18)</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/Nef10" target="_blank" rel="external">Nef10</a>. All rights reserved. (Last updated: 2018-01-27)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

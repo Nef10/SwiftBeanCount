@@ -8,21 +8,33 @@
 
 import Foundation
 
+/// A Ledger is the main part of the model, it contains all necessary information.
 public class Ledger {
 
+    /// Array of all `Transaction`s in this ledger
     public var transactions = [Transaction]()
+
+    /// Errors which this ledger contains
     public var errors = [String]()
+
+    /// Array of all `Commodity`s in this ledger
+    public var commodities: [Commodity] { return Array(commodity.values) }
+
+    /// Array of all `Account`s in this ledger
+    public var accounts: [Account] { return Array(account.values) }
+
+    /// Array of all `Tag`s in this ledger
+    public var tags: [Tag] { return Array(tag.values) }
+
+    /// Array of the main `AccountGroup`s (all five `AccountType`s) in this ledger
+    public var accountGroups: [AccountGroup] { return Array(accountGroup.values) }
 
     private var commodity = [String: Commodity]()
     private var account = [String: Account]()
     private var tag = [String: Tag]()
     private let accountGroup: [String: AccountGroup]
 
-    public var commodities: [Commodity] { return Array(commodity.values) }
-    public var accounts: [Account] { return Array(account.values) }
-    public var tags: [Tag] { return Array(tag.values) }
-    public var accountGroups: [AccountGroup] { return Array(accountGroup.values) }
-
+    /// Creates an empty ledget with the `accountGroups` set up
     public init() {
         var groups = [String: AccountGroup]()
         for accountType in AccountType.allValues() {
@@ -31,7 +43,7 @@ public class Ledger {
         accountGroup = groups
     }
 
-    /// Gets Commodity object for the Commodity with the given string
+    /// Gets `Commodity` object for the Commodity with the given string
     /// This function ensures that there is exactly one object per Commodity
     ///
     /// - Parameter name: commodity name
@@ -44,7 +56,7 @@ public class Ledger {
         return self.commodity[symbol]!
     }
 
-    /// Gets Account object for Account with the given string
+    /// Gets the `Account` object for Account with the given string
     /// This function ensures that there is exactly one object per Account
     ///
     /// - Parameter name: account name
@@ -76,7 +88,7 @@ public class Ledger {
         return self.account[name]!
     }
 
-    /// Gets Tag object for Tag with the given string
+    /// Gets the `Tag` object for Tag with the given string
     /// This function ensures that there is exactly one object per Tag
     ///
     /// - Parameter name: tag name
@@ -92,20 +104,32 @@ public class Ledger {
 }
 
 extension Ledger: CustomStringConvertible {
+
+    /// Retuns the ledger file for this ledger.
+    ///
+    /// It consists of all `Account` and `Transaction` statements, but does not include `errors`
     public var description: String {
         var string = ""
-        string.append(self.transactions.map { String(describing: $0) }.joined(separator: "\n"))
-        if !string.isEmpty && !self.accounts.isEmpty {
+        string.append(self.accounts.map { String(describing: $0) }.joined(separator: "\n"))
+        if !string.isEmpty && !self.transactions.isEmpty {
             string.append("\n")
         }
-        string.append(self.accounts.map { String(describing: $0) }.joined(separator: "\n"))
+        string.append(self.transactions.map { String(describing: $0) }.joined(separator: "\n"))
         return string
     }
+
 }
 
 extension Ledger: Equatable {
 
-    /// erros are not taken into account
+    /// Compares two Ledgers
+    ///
+    /// Compared are the `Account`s, `Commodity`s, `Tag`s and `Transaction`s but not the `errors`
+    ///
+    /// - Parameters:
+    ///   - lhs: ledger one
+    ///   - rhs: ledger two
+    /// - Returns: true if they hold the same information, otherwise false
     public static func == (lhs: Ledger, rhs: Ledger) -> Bool {
         return lhs.account == rhs.account && rhs.commodity == lhs.commodity && rhs.tag == lhs.tag && rhs.transactions == lhs.transactions
     }

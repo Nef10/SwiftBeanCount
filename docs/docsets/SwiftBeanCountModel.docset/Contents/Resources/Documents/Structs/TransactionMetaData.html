@@ -14,7 +14,7 @@
     <a title="TransactionMetaData Structure Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">SwiftBeanCountModel Docs</a> (21% documented)</p>
+        <p><a href="../index.html">SwiftBeanCountModel Docs</a> (100% documented)</p>
         <p class="header-right"><a href="https://github.com/Nef10/SwiftBeanCountModel"><img src="../img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2FNef10%2FSwiftBeanCountModel%2Fblob%2Fmaster%2Fdocsets%2FSwiftBeanCountModel%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -103,7 +103,9 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>TransactionMetaData is data which is or can be attatched to an <code><a href="../Classes/Transaction.html">Transaction</a></code>.</p>
+
+<p>It consists of date, payee, narration as well as a flag and tags.</p>
 
           </section>
           <section class="section task-group-section">
@@ -122,7 +124,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Date of the <code><a href="../Classes/Transaction.html">Transaction</a></code></p>
 
                       </div>
                       <div class="declaration">
@@ -134,7 +136,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/TransactionMetaData.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/TransactionMetaData.swift#L17">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -152,7 +154,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p><code>String</code> describing the payee</p>
 
                       </div>
                       <div class="declaration">
@@ -164,7 +166,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/TransactionMetaData.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/TransactionMetaData.swift#L20">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -182,7 +184,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p><code>String</code> with a comment for the <code><a href="../Classes/Transaction.html">Transaction</a></code></p>
 
                       </div>
                       <div class="declaration">
@@ -194,7 +196,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/TransactionMetaData.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/TransactionMetaData.swift#L23">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -212,7 +214,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p><code><a href="../Enums/Flag.html">Flag</a></code> of the <code><a href="../Classes/Transaction.html">Transaction</a></code></p>
 
                       </div>
                       <div class="declaration">
@@ -224,7 +226,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/TransactionMetaData.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/TransactionMetaData.swift#L26">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -242,7 +244,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Array of <code><a href="../Classes/Tag.html">Tag</a></code>s, can be empty</p>
 
                       </div>
                       <div class="declaration">
@@ -254,7 +256,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/TransactionMetaData.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/TransactionMetaData.swift#L29">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -272,7 +274,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Creates an transaction with the given parameters</p>
 
                       </div>
                       <div class="declaration">
@@ -283,8 +285,75 @@
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>date</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>date of the transaction</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>payee</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>String</code> describing the payee</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>narration</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>String</code> with a comment for the <code><a href="../Classes/Transaction.html">Transaction</a></code></p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>flag</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Enums/Flag.html">Flag</a></code></p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tags</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Array of <code><a href="../Classes/Tag.html">Tag</a></code>s, can be empty</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/TransactionMetaData.swift#L19-L25">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/TransactionMetaData.swift#L39-L45">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -296,9 +365,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:s23CustomStringConvertibleP11descriptionSSv"></a>
+                    <a name="/s:19SwiftBeanCountModel19TransactionMetaDataV11descriptionSSv"></a>
                     <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
-                    <a class="token" href="#/s:s23CustomStringConvertibleP11descriptionSSv">description</a>
+                    <a class="token" href="#/s:19SwiftBeanCountModel19TransactionMetaDataV11descriptionSSv">description</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -306,7 +375,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p><code>String</code> to represent the meta data of the <code><a href="../Classes/Transaction.html">Transaction</a></code> in the ledger file (e.g. the first line above the <code><a href="../Structs/Posting.html">Posting</a></code>s</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -317,7 +387,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/TransactionMetaData.swift#L31-L35">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/TransactionMetaData.swift#L52-L56">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -329,9 +399,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:s9EquatableP2eeoiSbx_xtFZ"></a>
+                    <a name="/s:19SwiftBeanCountModel19TransactionMetaDataV2eeoiSbAC_ACtFZ"></a>
                     <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:s9EquatableP2eeoiSbx_xtFZ">==(_:_:)</a>
+                    <a class="token" href="#/s:19SwiftBeanCountModel19TransactionMetaDataV2eeoiSbAC_ACtFZ">==(_:_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -339,7 +409,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>Compares two TransactionMetaData</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -349,8 +420,43 @@
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>lhs</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>first TransactionMetaData</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>rhs</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>second TransactionMetaData</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>true if all properties are the same, false otherwise</p>
+                      </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/TransactionMetaData.swift#L48-L50">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/TransactionMetaData.swift#L76-L78">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -360,7 +466,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/Nef10" target="_blank" rel="external">Nef10</a>. All rights reserved. (Last updated: 2017-11-18)</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/Nef10" target="_blank" rel="external">Nef10</a>. All rights reserved. (Last updated: 2018-01-27)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

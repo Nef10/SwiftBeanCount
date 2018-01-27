@@ -14,7 +14,7 @@
     <a title="Posting Structure Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">SwiftBeanCountModel Docs</a> (21% documented)</p>
+        <p><a href="../index.html">SwiftBeanCountModel Docs</a> (100% documented)</p>
         <p class="header-right"><a href="https://github.com/Nef10/SwiftBeanCountModel"><img src="../img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2FNef10%2FSwiftBeanCountModel%2Fblob%2Fmaster%2Fdocsets%2FSwiftBeanCountModel%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -103,7 +103,8 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>A Posting is part of an <code><a href="../Classes/Transaction.html">Transaction</a></code>. It contains an <code><a href="../Classes/Account.html">Account</a></code> with the corresponding <code><a href="../Structs/Amount.html">Amount</a></code>,
+as well as the <code>price</code> (if applicable) and a link back to the <code><a href="../Classes/Transaction.html">Transaction</a></code>.</p>
 
           </section>
           <section class="section task-group-section">
@@ -122,7 +123,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p><code><a href="../Classes/Account.html">Account</a></code> the posting is in</p>
 
                       </div>
                       <div class="declaration">
@@ -134,7 +135,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Posting.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Posting.swift#L16">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -152,7 +153,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p><code><a href="../Structs/Amount.html">Amount</a></code> of the posting</p>
 
                       </div>
                       <div class="declaration">
@@ -164,7 +165,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Posting.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Posting.swift#L19">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -182,7 +183,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>unowned* link back to the <code>Transcation</code></p>
 
                       </div>
                       <div class="declaration">
@@ -194,7 +195,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Posting.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Posting.swift#L22">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -212,7 +213,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>optional <code><a href="../Structs/Amount.html">Amount</a></code> which was paid to get this amount (should be in another <code><a href="../Classes/Commodity.html">Commodity</a></code>)</p>
 
                       </div>
                       <div class="declaration">
@@ -224,7 +225,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Posting.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Posting.swift#L25">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -242,7 +243,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Creats an posting with the given parameters</p>
 
                       </div>
                       <div class="declaration">
@@ -253,8 +254,63 @@
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>account</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Classes/Account.html">Account</a></code></p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>amount</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Structs/Amount.html">Amount</a></code></p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>transaction</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the <code><a href="../Classes/Transaction.html">Transaction</a></code> the posting is in - an <em>unowned</em> reference will be stored</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>price</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>optional <code><a href="../Structs/Amount.html">Amount</a></code> which was paid to get this <code><a href="../Structs/Posting.html#/s:19SwiftBeanCountModel7PostingV6amountAA6AmountVv">amount</a></code></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Posting.swift#L18-L23">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Posting.swift#L34-L39">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -266,9 +322,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:s23CustomStringConvertibleP11descriptionSSv"></a>
+                    <a name="/s:19SwiftBeanCountModel7PostingV11descriptionSSv"></a>
                     <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
-                    <a class="token" href="#/s:s23CustomStringConvertibleP11descriptionSSv">description</a>
+                    <a class="token" href="#/s:19SwiftBeanCountModel7PostingV11descriptionSSv">description</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -276,7 +332,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>String to describe the posting in the ledget file</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -287,7 +344,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Posting.swift#L28-L34">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Posting.swift#L46-L52">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -299,9 +356,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:s9EquatableP2eeoiSbx_xtFZ"></a>
+                    <a name="/s:19SwiftBeanCountModel7PostingV2eeoiSbAC_ACtFZ"></a>
                     <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:s9EquatableP2eeoiSbx_xtFZ">==(_:_:)</a>
+                    <a class="token" href="#/s:19SwiftBeanCountModel7PostingV2eeoiSbAC_ACtFZ">==(_:_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -309,7 +366,10 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>Compares two postings</p>
+
+<p>If a <code><a href="../Structs/Posting.html#/s:19SwiftBeanCountModel7PostingV5priceAA6AmountVSgv">price</a></code> is set it must match</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -319,8 +379,43 @@
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>lhs</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>first posting</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>rhs</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>second posting</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>if the account ammount and price are the same on both postings</p>
+                      </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Posting.swift#L38-L40">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Posting.swift#L66-L68">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -330,7 +425,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/Nef10" target="_blank" rel="external">Nef10</a>. All rights reserved. (Last updated: 2017-11-18)</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/Nef10" target="_blank" rel="external">Nef10</a>. All rights reserved. (Last updated: 2018-01-27)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

@@ -97,7 +97,7 @@ class LedgerTests: XCTestCase {
         XCTAssertEqual(String(describing: ledger), String(describing: transaction))
         // Ledger with transactions and account openings
         ledger.getAccountBy(name: accountName)!.opening = Date(timeIntervalSince1970: 1_496_991_600)
-        XCTAssertEqual(String(describing: ledger), String(describing: transaction) + "\n" + String(describing: ledger.getAccountBy(name: accountName)!))
+        XCTAssertEqual(String(describing: ledger), "\(String(describing: ledger.getAccountBy(name: accountName)!))\n\(String(describing: transaction))")
         // ledger with only account openings
         let ledger2 = Ledger()
         ledger2.getAccountBy(name: accountName)!.opening = Date(timeIntervalSince1970: 1_496_991_600)
