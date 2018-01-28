@@ -27,6 +27,8 @@ class PostingParserTests: XCTestCase {
 
     let basicPostingString = "  Assets:Checking 1.23 EUR"
     let integerPostingString = "  Assets:Checking 1 EUR"
+    let noThousandsSeparatorPostingString = "  Assets:Checking 100000 EUR"
+    let thousandsSeparatorPostingString = "  Assets:Checking 100,000 EUR"
     let negativePostingString = "  Assets:Checking -1.2 EUR"
     let positivePostingString = "  Assets:Checking +1.23 EUR"
     let separatorPostingString = "  Assets:Checking -1,000.23 EUR"
@@ -45,6 +47,16 @@ class PostingParserTests: XCTestCase {
     func testInteger() {
         let posting = PostingParser.parseFrom(line: integerPostingString, into: transaction, for: Ledger())!
         XCTAssertEqual(posting.amount, Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR"), decimalDigits: 0))
+    }
+
+    func testNoThousandsSeparator() {
+        let posting = PostingParser.parseFrom(line: noThousandsSeparatorPostingString, into: transaction, for: Ledger())!
+        XCTAssertEqual(posting.amount, Amount(number: Decimal(100_000), commodity: Commodity(symbol: "EUR"), decimalDigits: 0))
+    }
+
+    func testThousandsSeparator() {
+        let posting = PostingParser.parseFrom(line: thousandsSeparatorPostingString, into: transaction, for: Ledger())!
+        XCTAssertEqual(posting.amount, Amount(number: Decimal(100_000), commodity: Commodity(symbol: "EUR"), decimalDigits: 0))
     }
 
     func testNegative() {
