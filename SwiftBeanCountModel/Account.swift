@@ -38,10 +38,12 @@ public enum AccountType: String {
 
 /// AccountItems have a name item, which is the last part of the name and and `AccountType`
 public protocol AccountItem {
+
     /// Last part of the name, for **Assets:Cash:CAD** this would be **CAD**
     var nameItem: String { get }
     /// Type, see `AccountType`
     var accountType: AccountType { get }
+
 }
 
 /// A group of accounts.
@@ -93,6 +95,14 @@ public class AccountGroup: AccountItem {
 /// It does hot hold any `Transaction`s
 public class Account: AccountItem {
 
+    /// Errors an account can throw
+    public enum AccoutError: Error {
+        /// an invalid account name
+        case invaildName(String)
+    }
+
+    static let nameSeperator = Character(":")
+
     /// Full quilified name of the account, e.g. Assets:Cash:CAD
     public let name: String
 
@@ -112,17 +122,20 @@ public class Account: AccountItem {
 
     /// Last part of the name, for **Assets:Cash:CAD** this would be **CAD**
     public var nameItem: String {
-        return String(describing: name.split(separator: ":").last!)
+        return String(describing: name.split(separator: Account.nameSeperator).last!)
     }
 
     /// Creates an Account
     ///
     /// - Parameters:
-    ///   - name: full name of the account
-    ///   - accountType: type of the account
-    public init(name: String, accountType: AccountType) {
+    ///   - name: a vaild name for the account
+    /// - Throws: AccoutError.invaildName in case the account name is invalid
+    public init(name: String) throws {
+        guard Account.isNameValid(name) else {
+            throw AccoutError.invaildName(name)
+        }
         self.name = name
-        self.accountType = accountType
+        self.accountType = Account.getAccountType(for: name)
     }
 
     ///
@@ -151,6 +164,42 @@ public class Account: AccountItem {
             return ownCommodity == commodity
         }
         return true
+    }
+
+    /// Checks if a given name for an account is valid
+    ///
+    /// This includes that the name start with one of the base groups and is correctly formattet with seperators
+    ///
+    /// - Parameter name: String to check
+    /// - Returns: if the name is valid
+    public class func isNameValid(_ name: String) -> Bool {
+        guard !name.isEmpty else {
+            return false
+        }
+        for type in AccountType.allValues() {
+            if name.starts(with: type.rawValue + String(Account.nameSeperator)) // has to start with one base account followed by a seperator
+                && name.last != Account.nameSeperator //  is not allowed to end in a seperator
+                && name.range(of: "\(Account.nameSeperator)\(Account.nameSeperator)") == nil { // no account item is allowed to be empty
+                return true
+            }
+        }
+        return false
+    }
+
+    /// Gets the `AccountType` from a name string
+    ///
+    /// In case of an invalid account name the function might just return .assets
+    ///
+    /// - Parameter name: valid account name
+    /// - Returns: `AccountType` of the account with this name
+    private class func getAccountType(for name: String) -> AccountType {
+        var type = AccountType.asset
+        for accountType in AccountType.allValues() {
+            if name.starts(with: accountType.rawValue ) {
+                type = accountType
+            }
+        }
+        return type
     }
 
 }

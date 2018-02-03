@@ -41,6 +41,10 @@ class LedgerTests: XCTestCase {
         XCTAssertEqual(cash1, cash2)
         XCTAssertNil(ledger.getAccountBy(name: "Invalid"))
         XCTAssertEqual(ledger.accounts.count, 2)
+        XCTAssertNil(ledger.getAccountBy(name: "Assets:Invalid:"))
+        XCTAssertEqual(ledger.accounts.count, 2)
+        XCTAssertNil(ledger.getAccountBy(name: "Assets::Invalid"))
+        XCTAssertEqual(ledger.accounts.count, 2)
     }
 
     func testAccountGroups() {
@@ -85,7 +89,7 @@ class LedgerTests: XCTestCase {
         let accountName = "Assets:Cash"
         let transactionMetaData = TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_991_600), payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let transaction = Transaction(metaData: transactionMetaData)
-        let account = Account(name: accountName, accountType: .asset)
+        let account = try! Account(name: accountName)
         let posting = Posting(account: account, amount: Amount(number: Decimal(10), commodity: Commodity(symbol: "EUR")), transaction: transaction)
         transaction.postings.append(posting)
         let ledger = Ledger()

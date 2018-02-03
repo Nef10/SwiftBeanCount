@@ -60,22 +60,20 @@ public class Ledger {
     /// This function ensures that there is exactly one object per Account
     ///
     /// - Parameter name: account name
-    /// - Returns: Account
+    /// - Returns: Account or nil if the name is invalid
     public func getAccountBy(name: String) -> Account? {
         if self.account[name] == nil {
-            var account: Account!
+            guard let account = try? Account(name: name) else {
+                return nil
+            }
             var group: AccountGroup!
-            let nameItems = name.split(separator: ":").map { String($0) }
+            let nameItems = name.split(separator: Account.nameSeperator).map { String($0) }
             for (index, nameItem) in nameItems.enumerated() {
                 switch index {
                 case 0:
-                    guard let accountGroup = accountGroup[nameItem] else {
-                        return nil
-                    }
-                    group = accountGroup
-                    account = Account(name: name, accountType: accountGroup.accountType)
+                    group = accountGroup[nameItem]
                 case nameItems.count - 1:
-                    group.accounts[name] = account
+                    group.accounts[nameItem] = account
                 default:
                     if group.accountGroups[nameItem] == nil {
                         group.accountGroups[nameItem] = AccountGroup(nameItem: nameItem, accountType: group.accountType)

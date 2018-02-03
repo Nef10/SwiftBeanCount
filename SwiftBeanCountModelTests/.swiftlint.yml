@@ -1,0 +1,49 @@
+# Updated for 0.24.0
+
+excluded:
+  - Carthage
+
+opt_in_rules:
+  - attributes
+  - closure_end_indentation
+  - closure_spacing
+  - conditional_returns_on_newline
+  - empty_count
+  - explicit_init
+  - extension_access_modifier
+  - fatal_error_message
+  - first_where
+  - implicit_return
+  - let_var_whitespace
+  - multiline_parameters
+  - nimble_operator
+  - no_extension_access_modifier
+  - number_separator
+  - object_literal
+  - operator_usage_whitespace
+  - overridden_super_call
+  - private_outlet
+  - prohibited_super_call
+  - redundant_nil_coalescing
+  - sorted_imports
+  - switch_case_on_newline
+  - vertical_parameter_alignment_on_call
+  - unneeded_parentheses_in_closure_argument
+  - trailing_closure
+  - joined_default_parameter
+  - single_test_class
+  - pattern_matching_keywords
+  - contains_over_first_not_nil
+  - array_init
+  - multiline_arguments
+  - literal_expression_end_indentation
+  - strict_fileprivate
+  - sorted_first_last
+  - override_in_extension
+
+disabled_rules:
+  - trailing_comma
+  - force_try
+
+line_length: 175
+function_body_length: 30
