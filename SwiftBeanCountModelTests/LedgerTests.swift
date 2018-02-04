@@ -14,36 +14,45 @@ class LedgerTests: XCTestCase {
     func testCommodities() {
         let ledger = Ledger()
         XCTAssertEqual(ledger.commodities.count, 0)
-        let eur1 = ledger.getCommodityBy(symbol: "EUR")
+
+        let commodity1 = Commodity(symbol: "EUR")
+        try! ledger.add(commodity1)
         XCTAssertEqual(ledger.commodities.count, 1)
-        let eur2 = ledger.getCommodityBy(symbol: "EUR")
+        XCTAssertThrowsError(try ledger.add(commodity1))
         XCTAssertEqual(ledger.commodities.count, 1)
-        XCTAssertEqual(eur1, eur2)
-        let dollar1 = ledger.getCommodityBy(symbol: "💵")
+        XCTAssertEqual(ledger.commodities.first, commodity1)
+
+        let commodity2 = Commodity(symbol: "💵")
+        try! ledger.add(commodity2)
         XCTAssertEqual(ledger.commodities.count, 2)
-        let dollar2 = ledger.getCommodityBy(symbol: "💵")
+        XCTAssertThrowsError(try ledger.add(commodity2))
         XCTAssertEqual(ledger.commodities.count, 2)
-        XCTAssertEqual(dollar1, dollar2)
+        XCTAssert(ledger.commodities.contains(commodity2))
     }
 
     func testAccounts() {
         let ledger = Ledger()
         XCTAssertEqual(ledger.accounts.count, 0)
-        let checking1 = ledger.getAccountBy(name: "Assets:Checking")
+
+        let account1 = try! Account(name: "Assets:Checking")
+        try! ledger.add(account1)
         XCTAssertEqual(ledger.accounts.count, 1)
-        let checking2 = ledger.getAccountBy(name: "Assets:Checking")
+        XCTAssertThrowsError(try ledger.add(account1))
         XCTAssertEqual(ledger.accounts.count, 1)
-        XCTAssertEqual(checking1, checking2)
-        let cash1 = ledger.getAccountBy(name: "Assets:💰")
+        XCTAssertEqual(ledger.accounts.first, account1)
+
+        let account2 = try! Account(name: "Assets:💰")
+        try! ledger.add(account2)
         XCTAssertEqual(ledger.accounts.count, 2)
-        let cash2 = ledger.getAccountBy(name: "Assets:💰")
+        XCTAssertThrowsError(try ledger.add(account2))
         XCTAssertEqual(ledger.accounts.count, 2)
-        XCTAssertEqual(cash1, cash2)
-        XCTAssertNil(ledger.getAccountBy(name: "Invalid"))
+        XCTAssert(ledger.accounts.contains(account2))
+
+        XCTAssertThrowsError(try ledger.add(Account(name: "Invalid")))
         XCTAssertEqual(ledger.accounts.count, 2)
-        XCTAssertNil(ledger.getAccountBy(name: "Assets:Invalid:"))
+        XCTAssertThrowsError(try ledger.add(Account(name: "Assets:Invalid:")))
         XCTAssertEqual(ledger.accounts.count, 2)
-        XCTAssertNil(ledger.getAccountBy(name: "Assets::Invalid"))
+        XCTAssertThrowsError(try ledger.add(Account(name: "Assets::Invalid")))
         XCTAssertEqual(ledger.accounts.count, 2)
     }
 
@@ -57,8 +66,10 @@ class LedgerTests: XCTestCase {
 
     func testAccountGroup() {
         let ledger = Ledger()
-        let account1 = ledger.getAccountBy(name: "Assets:Checking:RBC")
-        let account2 = ledger.getAccountBy(name: "Assets:Cash")
+        let account1 = try! Account(name: "Assets:Checking:RBC")
+        try! ledger.add(account1)
+        let account2 = try! Account(name: "Assets:Cash")
+        try! ledger.add(account2)
         let accountGroup = ledger.accountGroups.first { $0.nameItem == "Assets" }!
         XCTAssertEqual(accountGroup.accountGroups.count, 1)
         XCTAssertEqual(accountGroup.accounts.count, 1)
@@ -73,16 +84,53 @@ class LedgerTests: XCTestCase {
     func testTags() {
         let ledger = Ledger()
         XCTAssertEqual(ledger.tags.count, 0)
-        let tag1 = ledger.getTagBy(name: "tag")
+
+        let tag1 = Tag(name: "tag")
+        try! ledger.add(tag1)
         XCTAssertEqual(ledger.tags.count, 1)
-        let tag2 = ledger.getTagBy(name: "tag")
+        XCTAssertThrowsError(try ledger.add(tag1))
         XCTAssertEqual(ledger.tags.count, 1)
-        XCTAssertEqual(tag1, tag2)
-        let ski1 = ledger.getTagBy(name: "🎿")
+        XCTAssertEqual(ledger.tags.first, tag1)
+
+        let tag2 = Tag(name: "🎿")
+        try! ledger.add(tag2)
         XCTAssertEqual(ledger.tags.count, 2)
-        let ski2 = ledger.getTagBy(name: "🎿")
+        XCTAssertThrowsError(try ledger.add(tag2))
         XCTAssertEqual(ledger.tags.count, 2)
-        XCTAssertEqual(ski1, ski2)
+        XCTAssert(ledger.tags.contains(tag2))
+    }
+
+    func testTransactions() {
+        let ledger = Ledger()
+        let date = Date(timeIntervalSince1970: 1_496_991_600)
+        let transactionMetaData = TransactionMetaData(date: date,
+                                                      payee: "Payee",
+                                                      narration: "Narration",
+                                                      flag: Flag.complete,
+                                                      tags: [Tag(name: "test")])
+        let transaction = Transaction(metaData: transactionMetaData)
+        let account = try! Account(name: "Assets:Cash")
+        let posting = Posting(account: account,
+                              amount: Amount(number: Decimal(10), commodity: Commodity(symbol: "EUR")),
+                              transaction: transaction,
+                              price: Amount(number: Decimal(15), commodity: Commodity(symbol: "USD")))
+        transaction.postings.append(posting)
+
+        let addedTransaction = ledger.add(transaction)
+        XCTAssertEqual(addedTransaction, transaction)
+        XCTAssert(ledger.transactions.contains(addedTransaction))
+        XCTAssertEqual(ledger.commodities.count, 2)
+        XCTAssertEqual(ledger.accounts.count, 1)
+        XCTAssertEqual(ledger.tags.count, 1)
+
+        // Test that properties on accounts are not overridden
+        let ledger2 = Ledger()
+        let account2 = try! Account(name: "Assets:Cash")
+        account2.opening = date
+        account.opening = date.addingTimeInterval(1_000_000)
+        try! ledger2.add(account2)
+        _ = ledger2.add(transaction)
+        XCTAssertEqual(ledger2.accounts.first!.opening, date)
     }
 
     func testDescription() {
@@ -96,21 +144,27 @@ class LedgerTests: XCTestCase {
 
         // Empty leder
         XCTAssertEqual(String(describing: ledger), "")
+
         // Ledger with only transactions
-        ledger.transactions.append(transaction)
+        _ = ledger.add(transaction)
         XCTAssertEqual(String(describing: ledger), String(describing: transaction))
+
         // Ledger with transactions and account openings
-        ledger.getAccountBy(name: accountName)!.opening = Date(timeIntervalSince1970: 1_496_991_600)
-        XCTAssertEqual(String(describing: ledger), "\(String(describing: ledger.getAccountBy(name: accountName)!))\n\(String(describing: transaction))")
+        ledger.accounts.first { $0.name == accountName }!.opening = Date(timeIntervalSince1970: 1_496_991_600)
+        XCTAssertEqual(String(describing: ledger), "\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
+
         // ledger with only account openings
         let ledger2 = Ledger()
-        ledger2.getAccountBy(name: accountName)!.opening = Date(timeIntervalSince1970: 1_496_991_600)
-        XCTAssertEqual(String(describing: ledger2), String(describing: ledger.getAccountBy(name: accountName)!))
+        let account2 = try! Account(name: accountName)
+        account2.opening = Date(timeIntervalSince1970: 1_496_991_600)
+        try! ledger2.add(account2)
+        XCTAssertEqual(String(describing: ledger2), String(describing: ledger2.accounts.first!))
     }
 
     func testEqual() {
-        let name = "Name1"
-        let accountName = "Assets:Cash"
+        let tag = Tag(name: "Name1")
+        let commodity = Commodity(symbol: "Name1")
+        let account = try! Account(name: "Assets:Cash")
         let transaction1 = Transaction(metaData: TransactionMetaData(date: Date(), payee: name, narration: name, flag: Flag.complete, tags: []))
 
         let ledger1 = Ledger()
@@ -118,24 +172,34 @@ class LedgerTests: XCTestCase {
 
         // equal
         XCTAssertEqual(ledger1, ledger2)
+
         // test errors are ignored
         ledger1.errors.append("String")
         XCTAssertEqual(ledger1, ledger2)
+
         // different tags
-        _ = ledger1.getTagBy(name: name)
+        try! ledger1.add(tag)
         XCTAssertNotEqual(ledger1, ledger2)
-        _ = ledger2.getTagBy(name: name)
+        try! ledger2.add(tag)
+        XCTAssertEqual(ledger1, ledger2)
+
         // different transactions
-        ledger1.transactions.append(transaction1)
+        _ = ledger1.add(transaction1)
         XCTAssertNotEqual(ledger1, ledger2)
-        ledger2.transactions.append(transaction1)
+        _ = ledger2.add(transaction1)
+        XCTAssertEqual(ledger1, ledger2)
+
         // different commodities
-        _ = ledger1.getCommodityBy(symbol: name)
+        try! ledger1.add(commodity)
         XCTAssertNotEqual(ledger1, ledger2)
-        _ = ledger2.getCommodityBy(symbol: name)
+        try! ledger2.add(commodity)
+        XCTAssertEqual(ledger1, ledger2)
+
         // different accounts
-        _ = ledger1.getAccountBy(name: accountName)
+        try! ledger1.add(account)
         XCTAssertNotEqual(ledger1, ledger2)
+        try! ledger2.add(account)
+        XCTAssertEqual(ledger1, ledger2)
     }
 
 }

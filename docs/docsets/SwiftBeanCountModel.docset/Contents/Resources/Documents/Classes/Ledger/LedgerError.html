@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>AccoutError Enumeration Reference</title>
+    <title>LedgerError Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Enum/AccoutError" class="dashAnchor"></a>
-    <a title="AccoutError Enumeration Reference"></a>
+    <a name="//apple_ref/swift/Enum/LedgerError" class="dashAnchor"></a>
+    <a title="LedgerError Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../../index.html">SwiftBeanCountModel Docs</a> (100% documented)</p>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../../index.html">SwiftBeanCountModel Reference</a>
         <img id="carat" src="../../img/carat.png" />
-        AccoutError Enumeration Reference
+        LedgerError Enumeration Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -102,14 +102,14 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>AccoutError</h1>
+            <h1>LedgerError</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">AccoutError</span><span class="p">:</span> <span class="kt">Error</span></code></pre>
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">LedgerError</span><span class="p">:</span> <span class="kt">Error</span></code></pre>
 
                 </div>
               </div>
-            <p>Errors an account can throw</p>
+            <p>Errors which can occur when working with the ledger</p>
 
           </section>
           <section class="section task-group-section">
@@ -118,9 +118,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:19SwiftBeanCountModel7AccountC11AccoutErrorO11invaildNameAESScAEmF"></a>
-                    <a name="//apple_ref/swift/Element/invaildName" class="dashAnchor"></a>
-                    <a class="token" href="#/s:19SwiftBeanCountModel7AccountC11AccoutErrorO11invaildNameAESScAEmF">invaildName</a>
+                    <a name="/s:19SwiftBeanCountModel6LedgerC0E5ErrorO13alreadyExistsAESScAEmF"></a>
+                    <a name="//apple_ref/swift/Element/alreadyExists" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SwiftBeanCountModel6LedgerC0E5ErrorO13alreadyExistsAESScAEmF">alreadyExists</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -128,19 +128,19 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>an invalid account name</p>
+                        <p>Error if the object your try to add already exists in the ledger</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="k">case</span> <span class="nf">invaildName</span><span class="p">(</span><span class="kt">String</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="k">case</span> <span class="nf">alreadyExists</span><span class="p">(</span><span class="kt">String</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Account.swift#L101">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Ledger.swift#L17">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

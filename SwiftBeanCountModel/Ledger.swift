@@ -11,8 +11,14 @@ import Foundation
 /// A Ledger is the main part of the model, it contains all necessary information.
 public class Ledger {
 
+    /// Errors which can occur when working with the ledger
+    public enum LedgerError: Error {
+        /// Error if the object your try to add already exists in the ledger
+        case alreadyExists(String)
+    }
+
     /// Array of all `Transaction`s in this ledger
-    public var transactions = [Transaction]()
+    public private(set) var transactions = [Transaction]()
 
     /// Errors which this ledger contains
     public var errors = [String]()
@@ -34,7 +40,7 @@ public class Ledger {
     private var tag = [String: Tag]()
     private let accountGroup: [String: AccountGroup]
 
-    /// Creates an empty ledget with the `accountGroups` set up
+    /// Creates an empty ledger with the `accountGroups` set up
     public init() {
         var groups = [String: AccountGroup]()
         for accountType in AccountType.allValues() {
@@ -43,29 +49,98 @@ public class Ledger {
         accountGroup = groups
     }
 
-    /// Gets `Commodity` object for the Commodity with the given string
-    /// This function ensures that there is exactly one object per Commodity
+    /// Adds a `Transcaction` to the ledger
     ///
-    /// - Parameter name: commodity name
-    /// - Returns: Commodity
-    public func getCommodityBy(symbol: String) -> Commodity {
-        if self.commodity[symbol] == nil {
-            let commodity = Commodity(symbol: symbol)
-            self.commodity[symbol] = commodity
-        }
-        return self.commodity[symbol]!
+    /// This function does not preserve properties of the accounts,
+    /// tags or commodities added other than name/symbol.
+    ///
+    /// Please note that this function internally copies the object,
+    /// therefore you should not keep a copy. However the old object
+    /// is equal to the new one if the contained accouts are either coming from
+    /// the ledger or have all properties set correctly.
+    ///
+    /// - Parameter transaction: transaction to add
+    /// - Returns: added transaction
+    public func add(_ transaction: Transaction) -> Transaction {
+        let newTransaction = Transaction(metaData: getTransactionMetaData(for: transaction.metaData))
+        newTransaction.postings = transaction.postings.map { try! getPosting(for: $0, transaction: newTransaction) } // swiftlint:disable:this force_try
+        transactions.append(newTransaction)
+        return newTransaction
     }
 
-    /// Gets the `Account` object for Account with the given string
-    /// This function ensures that there is exactly one object per Account
+    /// Adds an `Account` to the ledger
     ///
-    /// - Parameter name: account name
-    /// - Returns: Account or nil if the name is invalid
-    public func getAccountBy(name: String) -> Account? {
+    /// - Parameter account: account to add
+    /// - Throws: If the account already exists
+    public func add(_ account: Account) throws {
+        self.account[account.name] = try getAccount(for: account, keepProperties: true)
+    }
+
+    /// Adds a `Commodity` to the ledger
+    ///
+    /// - Parameter commodity: commodity to add
+    /// - Throws: If the commodity already exists
+    public func add(_ commodity: Commodity) throws {
+        self.commodity[commodity.symbol] = try getCommodityWithProperties(for: commodity)
+    }
+
+    /// Adds a `Tag` to the ledger
+    ///
+    /// - Parameter tag: tag to add
+    /// - Throws: If the tag already exists
+    public func add(_ tag: Tag) throws {
+        self.tag[tag.name] = try getTagWithProperties(for: tag)
+    }
+
+    /// Converts `TransactionMetaData` so that the new one uses the correct `Tag` objects.
+    /// Properties of these objects are not maintained.
+    ///
+    /// - Parameter metaData: TransactionMetaData to convert
+    /// - Returns: TransactionMetaData which can be added to the ledger
+    private func getTransactionMetaData(for metaData: TransactionMetaData) -> TransactionMetaData {
+        return TransactionMetaData(date: metaData.date,
+                                   payee: metaData.payee,
+                                   narration: metaData.narration,
+                                   flag: metaData.flag,
+                                   tags: metaData.tags.map { getTag(for: $0) })
+    }
+
+    /// Converts `Posting`s so that the new one uses the correct `Account` and `Commodity` objects.
+    /// Properties of these objects are not maintained.
+    ///
+    /// - Parameter posting: Posting to convert
+    /// - Returns: Posting which can be added to the ledger
+    /// - Throws: If the account name is invalid
+    private func getPosting(for posting: Posting, transaction: Transaction) throws -> Posting {
+        return Posting(account: try getAccount(for: posting.account),
+                       amount: getLedgerAmount(for: posting.amount),
+                       transaction: transaction,
+                       price: posting.price != nil ? getLedgerAmount(for: posting.price!) : nil)
+    }
+
+    /// Converts `Amount`s so that the new one uses the correct `Commodity` objects.
+    /// Properties of these objects are not maintained.
+    ///
+    /// - Parameter metaData: amount to convert
+    /// - Returns: Amount which can be added to the ledger
+    private func getLedgerAmount(for amount: Amount) -> Amount {
+        return Amount(number: amount.number,
+                      commodity: getCommodity(for: amount.commodity),
+                      decimalDigits: amount.decimalDigits)
+    }
+
+    /// Converts `Account`s so that all accounts exists only once in a ledger
+    ///
+    /// - Parameters:
+    ///   - account: account to convert
+    ///   - keepProperties: if true all properties of the accounts are added to the return object, otherwise only the name
+    ///                     Note: You cannot keep properties if an account with this name already exists in the ledger
+    /// - Returns: Account to add to the ledger
+    /// - Throws: If the account name is invalid or you try to keep properties of an account which already exists
+    private func getAccount(for account: Account, keepProperties: Bool = false) throws -> Account {
+        let name = account.name
         if self.account[name] == nil {
-            guard let account = try? Account(name: name) else {
-                return nil
-            }
+            let account = keepProperties ? account : try Account(name: name)
             var group: AccountGroup!
             let nameItems = name.split(separator: Account.nameSeperator).map { String($0) }
             for (index, nameItem) in nameItems.enumerated() {
@@ -82,21 +157,64 @@ public class Ledger {
                 }
             }
             self.account[name] = account
+        } else if keepProperties {
+            throw LedgerError.alreadyExists(String(describing: account))
         }
         return self.account[name]!
     }
 
-    /// Gets the `Tag` object for Tag with the given string
-    /// This function ensures that there is exactly one object per Tag
+    /// Converts `Tag`s so that all tags exists only once in a ledger. This function only keeps the name of the tag.
     ///
-    /// - Parameter name: tag name
-    /// - Returns: Tag
-    public func getTagBy(name: String) -> Tag {
+    /// - Parameter tag: tag to convert
+    /// - Returns: Tag to add to the ledger
+    private func getTag(for tag: Tag) -> Tag {
+        let name = tag.name
         if self.tag[name] == nil {
-            let tag = Tag(name: name)
-            self.tag[name] = tag
+            self.tag[name] = Tag(name: name)
         }
         return self.tag[name]!
+    }
+
+    /// Converts `Tag`s so that all tags exists only once in a ledger. This function keeps all properties.
+    ///
+    /// Note: You can only do this if a tag with the name does not yet exists in the ledger.
+    ///
+    /// - Parameter tag: tag to convert
+    /// - Returns: Tag to add to the ledger
+    /// - Throws: If a tag with the name does exists in the ledger
+    private func getTagWithProperties(for tag: Tag) throws -> Tag {
+        guard self.tag[tag.name] == nil else {
+            throw LedgerError.alreadyExists(String(describing: tag))
+        }
+        self.tag[tag.name] = tag
+        return tag
+    }
+
+    /// Converts `Commodity`s so that all commodities exists only once in a ledger. This function only keeps the symbol
+    ///
+    /// - Parameter commodity: commodity to convert
+    /// - Returns: Commodity to add to the ledger
+    private func getCommodity(for commodity: Commodity) -> Commodity {
+        let symbol = commodity.symbol
+        if self.commodity[symbol] == nil {
+            self.commodity[symbol] = Commodity(symbol: symbol)
+        }
+        return self.commodity[symbol]!
+    }
+
+    /// Converts `Commodity`s so that all commodities exists only once in a ledger. This function keeps all properties
+    ///
+    /// Note: You can only do this if a commodity with the symbol does not yet exists in the ledger.
+    ///
+    /// - Parameter commodity: commodity to convert
+    /// - Returns: Commodity to add to the ledger
+    /// - Throws: If a commodity with the symbol does exists in the ledger
+    private func getCommodityWithProperties(for commodity: Commodity) throws -> Commodity {
+        guard self.commodity[commodity.symbol] == nil else {
+            throw LedgerError.alreadyExists(String(describing: commodity))
+        }
+        self.commodity[commodity.symbol] = commodity
+        return commodity
     }
 
 }
