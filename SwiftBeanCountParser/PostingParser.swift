@@ -24,19 +24,19 @@ struct PostingParser {
     ///
     /// - Parameter line: String of one line
     /// - Returns: a Posting or nil if the line does not contain a valid Posting
-    static func parseFrom(line: String, into transaction: Transaction, for ledger: Ledger) -> Posting? {
+    static func parseFrom(line: String, into transaction: Transaction) -> Posting? {
         let postingMatches = line.matchingStrings(regex: self.regex)
         guard let match = postingMatches[safe: 0] else {
             return nil
         }
         let (amount, decimalDigits) = self.parseAmountDecimalFrom(string: match[2])
-        guard let account = ledger.getAccountBy(name: match[1]) else {
+        guard let account = try? Account(name: match[1]) else {
             return nil
         }
-        let commodity = ledger.getCommodityBy(symbol: match[5])
+        let commodity = Commodity(symbol: match[5])
         var price: Amount?
         if !match[6].isEmpty {
-            let priceCommodity = ledger.getCommodityBy(symbol: match[12])
+            let priceCommodity = Commodity(symbol: match[12])
             var priceAmount: Decimal
             var priceDecimalDigits: Int
             if match[7] == "@" {

@@ -26,7 +26,7 @@ public class Parser {
     private static func closeOpen(transaction openTransaction: Transaction?, inLedger ledger: Ledger, onLine line: Int) {
         if let transaction = openTransaction { // Need to close last transaction
             if !transaction.postings.isEmpty {
-                ledger.transactions.append(transaction)
+                _ = ledger.add(transaction)
             } else {
                 ledger.errors.append("Invalid format in line \(line): previous Transaction \(transaction) without postings")
             }
@@ -54,7 +54,7 @@ public class Parser {
 
             // Posting
             if let transaction = openTransaction {
-                if let posting = PostingParser.parseFrom(line: line, into: transaction, for: ledger) {
+                if let posting = PostingParser.parseFrom(line: line, into: transaction) {
                     transaction.postings.append(posting)
                     continue
                 } else { // No posting, need to close previous transaction
@@ -69,7 +69,20 @@ public class Parser {
                 continue
             }
 
-            if AccountParser.parseFrom(line: line, for: ledger) {
+            if let account = AccountParser.parseFrom(line: line) {
+                if let ledgerAccount = ledger.accounts.first(where: { $0.name == account.name }) {
+                    if ledgerAccount.opening == nil && account.opening != nil {
+                        ledgerAccount.opening = account.opening
+                    }
+                    if ledgerAccount.commodity == nil && account.commodity != nil {
+                        ledgerAccount.commodity = account.commodity
+                    }
+                    if ledgerAccount.closing == nil && account.closing != nil {
+                        ledgerAccount.closing = account.closing
+                    }
+                } else {
+                    try? ledger.add(account)
+                }
                 continue
             }
 

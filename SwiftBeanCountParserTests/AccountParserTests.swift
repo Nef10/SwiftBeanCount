@@ -44,47 +44,44 @@ class AccountParserTests: XCTestCase {
     }
 
     func testInvalidCloseWithCommodity() {
-        XCTAssertFalse(AccountParser.parseFrom(line: invalidCloseWithCommodityString, for: Ledger()))
+        XCTAssertNil(AccountParser.parseFrom(line: invalidCloseWithCommodityString))
     }
 
     func testInvalidCloseDate() {
-        XCTAssertFalse(AccountParser.parseFrom(line: invalidCloseDateString, for: Ledger()))
+        XCTAssertNil(AccountParser.parseFrom(line: invalidCloseDateString))
     }
 
     func testPerformance() {
         self.measure {
             for _ in 0...1_000 {
-                let basicLedger = Ledger()
-                _ = AccountParser.parseFrom(line: basicOpeningString, for: basicLedger)
-                _ = AccountParser.parseFrom(line: basicClosingString, for: basicLedger)
+                _ = AccountParser.parseFrom(line: basicOpeningString)
+                _ = AccountParser.parseFrom(line: basicClosingString)
 
-                let whitespaceLedger = Ledger()
-                _ = AccountParser.parseFrom(line: whitespaceOpeningString, for: whitespaceLedger)
-                _ = AccountParser.parseFrom(line: whitespaceClosingString, for: whitespaceLedger)
+                _ = AccountParser.parseFrom(line: whitespaceOpeningString)
+                _ = AccountParser.parseFrom(line: whitespaceClosingString)
 
-                let endOfLineCommentLedger = Ledger()
-                _ = AccountParser.parseFrom(line: endOfLineCommentOpeningString, for: endOfLineCommentLedger)
-                _ = AccountParser.parseFrom(line: endOfLineCommentClosingString, for: endOfLineCommentLedger)
+                _ = AccountParser.parseFrom(line: endOfLineCommentOpeningString)
+                _ = AccountParser.parseFrom(line: endOfLineCommentClosingString)
 
-                let specialCharacterLedger = Ledger()
-                _ = AccountParser.parseFrom(line: specialCharacterOpeningString, for: specialCharacterLedger)
-                _ = AccountParser.parseFrom(line: specialCharacterClosingString, for: specialCharacterLedger)
+                _ = AccountParser.parseFrom(line: specialCharacterOpeningString)
+                _ = AccountParser.parseFrom(line: specialCharacterClosingString)
             }
         }
     }
 
     // Helper
     private func testWith(openingString: String, closingString: String, commodity: Commodity?) {
-        let ledger = Ledger()
+        let account1 = AccountParser.parseFrom(line: openingString)
 
-        XCTAssert(AccountParser.parseFrom(line: openingString, for: ledger))
-        XCTAssertEqual(ledger.accounts[0].opening!, TestUtils.date20170609)
-        XCTAssertEqual(ledger.accounts[0].closing, nil)
-        XCTAssertEqual(ledger.accounts[0].commodity, commodity)
+        XCTAssertNotNil(account1)
+        XCTAssertEqual(account1!.opening!, TestUtils.date20170609)
+        XCTAssertNil(account1!.closing)
+        XCTAssertEqual(account1!.commodity, commodity)
 
-        XCTAssert(AccountParser.parseFrom(line: closingString, for: ledger))
-        XCTAssertEqual(ledger.accounts[0].opening!, TestUtils.date20170609)
-        XCTAssertEqual(ledger.accounts[0].closing!, TestUtils.date20170609)
+        let account2 = AccountParser.parseFrom(line: closingString)
+        XCTAssertNotNil(account2)
+        XCTAssertNil(account2!.opening)
+        XCTAssertEqual(account2!.closing!, TestUtils.date20170609)
     }
 
 }

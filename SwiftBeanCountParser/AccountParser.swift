@@ -20,25 +20,25 @@ struct AccountParser {
     ///
     /// - Parameter line: String of one line
     /// - Returns: Bool if the line could be parsed
-    static func parseFrom(line: String, for ledger: Ledger) -> Bool {
+    static func parseFrom(line: String) -> Account? {
         let transactionMatches = line.matchingStrings(regex: self.regex)
         guard
             let match = transactionMatches[safe: 0],
             let date = DateParser.parseFrom(string: match[1]),
-            let account = ledger.getAccountBy(name: match[3])
+            let account = try? Account(name: match[3])
         else {
-            return false
+            return nil
         }
         if match[2] == "open" && account.opening == nil {
-            let commodity = match[4] != "" ? ledger.getCommodityBy(symbol: match[5]) : nil
+            let commodity = match[4] != "" ? Commodity(symbol: match[5]) : nil
             account.opening = date
             account.commodity = commodity
-            return true
+            return account
         } else if match[2] == "close" && match[5] == "" && account.closing == nil {
             account.closing = date
-            return true
+            return account
         }
-        return false
+        return nil
     }
 
 }

@@ -62,6 +62,7 @@ option "operating_currency" "USD"
 
 * Equity Accounts
 
+2018-01-01 close Equity:Opening-Balances
 1980-05-12 open Equity:Opening-Balances
 1980-05-12 open Liabilities:AccountsPayable
 

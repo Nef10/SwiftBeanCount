@@ -105,11 +105,11 @@ class ParserTests: XCTestCase {
             XCTAssertEqual(transaction.metaData.narration, "Narration")
             XCTAssertEqual(transaction.metaData.date, TestUtils.date20170608)
             let posting1 = transaction.postings.first { $0.amount.number == Decimal(-1) }!
-            XCTAssert(posting1.account === ledger.getAccountBy(name: "Equity:OpeningBalance"))
-            XCTAssert(posting1.amount.commodity === ledger.getCommodityBy(symbol: "EUR"))
+            XCTAssertEqual(posting1.account, try! Account(name: "Equity:OpeningBalance"))
+            XCTAssertEqual(posting1.amount.commodity, Commodity(symbol: "EUR"))
             let posting2 = transaction.postings.first { $0.amount.number == Decimal(1) }!
-            XCTAssert(posting2.account === ledger.getAccountBy(name: "Assets:Checking"))
-            XCTAssert(posting2.amount.commodity === ledger.getCommodityBy(symbol: "EUR"))
+            XCTAssertEqual(posting2.account, try! Account(name: "Assets:Checking"))
+            XCTAssertEqual(posting2.amount.commodity, Commodity(symbol: "EUR"))
         } catch let error {
             XCTFail(String(describing: error))
         }
