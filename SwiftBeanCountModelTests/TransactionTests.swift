@@ -46,16 +46,16 @@ class TransactionTests: XCTestCase {
         transaction3WithPosting1?.postings.append(transaction3Posting1)
 
         transaction1WithPosting1And2 = Transaction(metaData: transactionMetaData1)
-        let transaction1_12Posting1 = Posting(account: account1!, amount: amount1, transaction: transaction1WithPosting1And2!)
-        let transaction1_12Posting2 = Posting(account: account2!, amount: amount2, transaction: transaction1WithPosting1And2!)
-        transaction1WithPosting1And2?.postings.append(transaction1_12Posting1)
-        transaction1WithPosting1And2?.postings.append(transaction1_12Posting2)
+        let transaction1WithPosting1And2Posting1 = Posting(account: account1!, amount: amount1, transaction: transaction1WithPosting1And2!)
+        let transaction1WithPosting1And2Posting2 = Posting(account: account2!, amount: amount2, transaction: transaction1WithPosting1And2!)
+        transaction1WithPosting1And2?.postings.append(transaction1WithPosting1And2Posting1)
+        transaction1WithPosting1And2?.postings.append(transaction1WithPosting1And2Posting2)
 
         transaction2WithPosting1And2 = Transaction(metaData: transactionMetaData1)
-        let transaction2_12Posting1 = Posting(account: account1!, amount: amount1, transaction: transaction2WithPosting1And2!)
-        let transaction2_12Posting2 = Posting(account: account2!, amount: amount2, transaction: transaction2WithPosting1And2!)
-        transaction2WithPosting1And2?.postings.append(transaction2_12Posting1)
-        transaction2WithPosting1And2?.postings.append(transaction2_12Posting2)
+        let transaction2WithPosting1And2Posting1 = Posting(account: account1!, amount: amount1, transaction: transaction2WithPosting1And2!)
+        let transaction2WithPosting1And2Posting2 = Posting(account: account2!, amount: amount2, transaction: transaction2WithPosting1And2!)
+        transaction2WithPosting1And2?.postings.append(transaction2WithPosting1And2Posting1)
+        transaction2WithPosting1And2?.postings.append(transaction2WithPosting1And2Posting2)
 
     }
 

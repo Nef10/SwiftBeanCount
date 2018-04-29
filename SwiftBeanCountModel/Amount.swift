@@ -44,11 +44,11 @@ extension Amount: CustomStringConvertible {
     private var amountString: String { return type(of: self).numberFormatter(fractionDigits: decimalDigits).string(from: number as NSDecimalNumber)! }
 
     static private let numberFormatter: NumberFormatter = {
-        let _formatter = NumberFormatter()
-        _formatter.numberStyle = .decimal
-        _formatter.minimumFractionDigits = 2
-        _formatter.maximumFractionDigits = 100
-        return _formatter
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 100
+        return formatter
     }()
 
     static private func numberFormatter(fractionDigits: Int) -> NumberFormatter {
