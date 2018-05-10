@@ -133,6 +133,23 @@ class LedgerTests: XCTestCase {
         XCTAssertEqual(ledger2.accounts.first!.opening, date)
     }
 
+    func testValidate() {
+        let ledger = Ledger()
+        ledger.validate()
+        XCTAssertTrue(ledger.errors.isEmpty)
+
+        // add invalid transaction without postings
+        let transactionMetaData = TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_991_600),
+                                                      payee: "Payee",
+                                                      narration: "Narration",
+                                                      flag: Flag.complete,
+                                                      tags: [Tag(name: "test")])
+        let transaction = Transaction(metaData: transactionMetaData)
+        _ = ledger.add(transaction)
+        ledger.validate()
+        XCTAssertFalse(ledger.errors.isEmpty)
+    }
+
     func testDescription() {
         let accountName = "Assets:Cash"
         let transactionMetaData = TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_991_600), payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])

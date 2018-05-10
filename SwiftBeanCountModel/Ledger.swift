@@ -92,6 +92,13 @@ public class Ledger {
         self.tag[tag.name] = try getTagWithProperties(for: tag)
     }
 
+    /// Validates ledger and adds all validation errors to the error array
+    ///
+    /// Note: If called multiple times, the error will show up multiple times
+    public func validate() {
+        errors.append(contentsOf: transactions.compactMap { $0.isValid() ? nil : "Transaction \($0) is invalid" })
+    }
+
     /// Converts `TransactionMetaData` so that the new one uses the correct `Tag` objects.
     /// Properties of these objects are not maintained.
     ///
