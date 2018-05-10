@@ -22,8 +22,10 @@ class ParserTests: XCTestCase {
         case big = "Big"
 
         static let withoutError = [minimal, comments, commentsEndOfLine, whitespace, big]
-
     }
+
+    let basicAccountOpeningString = "2017-06-09 open Assets:Cash"
+    let basicAccountClosingString = "2017-06-09 close Assets:Cash"
 
     func testMinimal() {
         ensureMinimal(testFile: .minimal)
@@ -51,6 +53,32 @@ class ParserTests: XCTestCase {
 
     func testCommentsEndOfLine() {
         ensureMinimal(testFile: .commentsEndOfLine)
+    }
+
+    func testAccounts() {
+        // open and close is ok
+        var ledger = Parser.parse(string: "\(basicAccountOpeningString)\n\(basicAccountClosingString)")
+        XCTAssertTrue(ledger.errors.isEmpty)
+
+        // only open is ok
+        ledger = Parser.parse(string: "\(basicAccountOpeningString)")
+        XCTAssertTrue(ledger.errors.isEmpty)
+
+        // only close is not ok
+        ledger = Parser.parse(string: "\(basicAccountClosingString)")
+        XCTAssertFalse(ledger.errors.isEmpty)
+
+        // open twice is not ok
+        ledger = Parser.parse(string: "\(basicAccountOpeningString)\n\(basicAccountOpeningString)")
+        XCTAssertFalse(ledger.errors.isEmpty)
+
+        // close twice is not ok
+        ledger = Parser.parse(string: "\(basicAccountClosingString)\n\(basicAccountClosingString)")
+        XCTAssertFalse(ledger.errors.isEmpty)
+
+        // close twice (+ normal open) is not ok
+        ledger = Parser.parse(string: "\(basicAccountOpeningString)\n\(basicAccountClosingString)\n\(basicAccountClosingString)")
+        XCTAssertFalse(ledger.errors.isEmpty)
     }
 
     func testRoundTrip() {
@@ -105,10 +133,12 @@ class ParserTests: XCTestCase {
             XCTAssertEqual(transaction.metaData.narration, "Narration")
             XCTAssertEqual(transaction.metaData.date, TestUtils.date20170608)
             let posting1 = transaction.postings.first { $0.amount.number == Decimal(-1) }!
-            XCTAssertEqual(posting1.account, try! Account(name: "Equity:OpeningBalance"))
+            XCTAssertEqual(posting1.account.name, "Equity:OpeningBalance")
+            XCTAssertEqual(posting1.account.opening, TestUtils.date20170608)
             XCTAssertEqual(posting1.amount.commodity, Commodity(symbol: "EUR"))
             let posting2 = transaction.postings.first { $0.amount.number == Decimal(1) }!
-            XCTAssertEqual(posting2.account, try! Account(name: "Assets:Checking"))
+            XCTAssertEqual(posting2.account.name, "Assets:Checking")
+            XCTAssertEqual(posting2.account.opening, TestUtils.date20170608)
             XCTAssertEqual(posting2.amount.commodity, Commodity(symbol: "EUR"))
         } catch let error {
             XCTFail(String(describing: error))

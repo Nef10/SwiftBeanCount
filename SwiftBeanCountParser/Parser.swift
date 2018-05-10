@@ -33,6 +33,38 @@ public class Parser {
         }
     }
 
+    private static func add(_ account: Account, to ledger: Ledger, line: String, lineNumber: Int) {
+        if let ledgerAccount = ledger.accounts.first(where: { $0.name == account.name }) {
+            if account.opening != nil {
+                if ledgerAccount.opening == nil {
+                    ledgerAccount.opening = account.opening
+                } else {
+                    ledger.errors.append("Second opening for account \(account.name) in line \(lineNumber + 1): \(line)")
+                }
+            }
+            if account.commodity != nil {
+                if ledgerAccount.commodity == nil {
+                    ledgerAccount.commodity = account.commodity
+                } else {
+                    assertionFailure("Cannot have a duplicated commodity without a duplicate opening")
+                }
+            }
+            if account.closing != nil {
+                if ledgerAccount.closing == nil {
+                    ledgerAccount.closing = account.closing
+                } else {
+                    ledger.errors.append("Second closing for account \(account.name) in line \(lineNumber + 1): \(line)")
+                }
+            }
+        } else {
+            do {
+                try ledger.add(account)
+            } catch let error {
+                ledger.errors.append("Error with account \(account.name): \(error.localizedDescription) in line \(lineNumber + 1): \(line)")
+            }
+        }
+    }
+
     /// Parses a given String into an array of Transactions
     ///
     /// - Parameter string: String to parse
@@ -70,19 +102,7 @@ public class Parser {
             }
 
             if let account = AccountParser.parseFrom(line: line) {
-                if let ledgerAccount = ledger.accounts.first(where: { $0.name == account.name }) {
-                    if ledgerAccount.opening == nil && account.opening != nil {
-                        ledgerAccount.opening = account.opening
-                    }
-                    if ledgerAccount.commodity == nil && account.commodity != nil {
-                        ledgerAccount.commodity = account.commodity
-                    }
-                    if ledgerAccount.closing == nil && account.closing != nil {
-                        ledgerAccount.closing = account.closing
-                    }
-                } else {
-                    try? ledger.add(account)
-                }
+                add(account, to: ledger, line: line, lineNumber: lineNumber)
                 continue
             }
 
@@ -91,6 +111,8 @@ public class Parser {
         }
 
         closeOpen(transaction: openTransaction, inLedger: ledger, onLine: lines.count)
+
+        ledger.validate()
 
         return ledger
     }
