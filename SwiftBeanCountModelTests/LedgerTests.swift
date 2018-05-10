@@ -133,7 +133,7 @@ class LedgerTests: XCTestCase {
         XCTAssertEqual(ledger2.accounts.first!.opening, date)
     }
 
-    func testValidate() {
+    func testValidateTransactions() {
         let ledger = Ledger()
         ledger.validate()
         XCTAssertTrue(ledger.errors.isEmpty)
@@ -148,6 +148,23 @@ class LedgerTests: XCTestCase {
         _ = ledger.add(transaction)
         ledger.validate()
         XCTAssertFalse(ledger.errors.isEmpty)
+    }
+
+    func testValidateAccounts() {
+        let account = try! Account(name: "Assets:Test")
+
+        // valid account
+        let validLedger = Ledger()
+        try! validLedger.add(account)
+        validLedger.validate()
+        XCTAssertTrue(validLedger.errors.isEmpty)
+
+        // invalid account with only a closing date
+        let invalidLedger = Ledger()
+        account.closing = Date(timeIntervalSince1970: 1_496_991_600)
+        try! invalidLedger.add(account)
+        invalidLedger.validate()
+        XCTAssertFalse(invalidLedger.errors.isEmpty)
     }
 
     func testDescription() {

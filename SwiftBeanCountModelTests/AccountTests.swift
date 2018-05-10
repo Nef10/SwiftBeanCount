@@ -166,6 +166,35 @@ class AccountTests: XCTestCase {
         XCTAssertFalse(account.isPostingValid(posting))
     }
 
+    func testIsValid() {
+        let account = try! Account(name: accountName)
+
+        // neither closing nor opening
+        XCTAssertTrue(account.isValid())
+
+        // only opening
+        account.opening = date20170608
+        XCTAssertTrue(account.isValid())
+
+        // Closing == opening
+        account.closing = date20170608
+        XCTAssertTrue(account.isValid())
+
+        // Closing > opening
+        account.closing = date20170609
+        XCTAssertTrue(account.isValid())
+
+        // Closing < opening
+        account.opening = date20170609
+        account.closing = date20170608
+        XCTAssertFalse(account.isValid())
+
+        // only closing
+        account.opening = nil
+        account.closing = date20170608
+        XCTAssertFalse(account.isValid())
+    }
+
     func testEqual() {
         let name1 = "Assets:Cash"
         let name2 = "Assets:💰"

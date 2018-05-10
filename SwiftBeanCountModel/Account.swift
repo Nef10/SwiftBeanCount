@@ -149,6 +149,22 @@ public class Account: AccountItem {
         return posting.account == self && self.allowsPosting(in: posting.amount.commodity) && self.wasOpen(at: posting.transaction.metaData.date)
     }
 
+    /// Checks if the account is valid
+    ///
+    /// This does not check any postings.
+    /// An account is valid if it has no closing date or a closing date which is >=- the opening date
+    ///
+    /// - Returns: If the account is valid
+    func isValid() -> Bool {
+        if let closing = closing {
+            guard let opening = opening else {
+                return false
+            }
+            return opening <= closing
+        }
+        return true
+    }
+
     private func wasOpen(at date: Date) -> Bool {
         if let opening = self.opening, opening <= date {
             if let closing = self.closing {
