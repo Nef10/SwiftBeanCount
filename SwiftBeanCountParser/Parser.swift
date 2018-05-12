@@ -40,6 +40,7 @@ public class Parser {
                     ledgerAccount.opening = account.opening
                 } else {
                     ledger.errors.append("Second opening for account \(account.name) in line \(lineNumber + 1): \(line)")
+                    return
                 }
             }
             if account.commodity != nil {

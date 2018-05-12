@@ -25,6 +25,7 @@ class ParserTests: XCTestCase {
     }
 
     let basicAccountOpeningString = "2017-06-09 open Assets:Cash"
+    let accountOpeningStringCommodity = "2017-06-09 open Assets:Cash EUR"
     let basicAccountClosingString = "2017-06-09 close Assets:Cash"
 
     func testMinimal() {
@@ -70,6 +71,8 @@ class ParserTests: XCTestCase {
 
         // open twice is not ok
         ledger = Parser.parse(string: "\(basicAccountOpeningString)\n\(basicAccountOpeningString)")
+        XCTAssertFalse(ledger.errors.isEmpty)
+        ledger = Parser.parse(string: "\(accountOpeningStringCommodity)\n\(accountOpeningStringCommodity)")
         XCTAssertFalse(ledger.errors.isEmpty)
 
         // close twice is not ok
