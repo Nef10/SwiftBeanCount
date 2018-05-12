@@ -156,6 +156,21 @@ class TransactionTests: XCTestCase {
         XCTAssertFalse(transaction.isValid())
     }
 
+    func testIsValidUnusedCommodity() {
+        //Assets:Checking 10.00000 CAD @ 0.85251 EUR
+
+        account1!.opening = date
+        let transactionMetaData = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
+        let transaction = Transaction(metaData: transactionMetaData)
+        let amount1 = Amount(number: Decimal(10.000_00), commodity: Commodity(symbol: "CAD"), decimalDigits: 5)
+        // 0.85251
+        let price = Amount(number: Decimal(sign: FloatingPointSign.plus, exponent: -5, significand: Decimal(85_251)), commodity: Commodity(symbol: "EUR"), decimalDigits: 5)
+        let posting1 = Posting(account: account1!, amount: amount1, transaction: transaction, price: price)
+        transaction.postings.append(posting1)
+
+        XCTAssertFalse(transaction.isValid())
+    }
+
     func testIsValidBalancedTolerance() {
         //Assets:Cash     -8.52  EUR
         //Assets:Checking 10.00000 CAD @ 0.85250 EUR

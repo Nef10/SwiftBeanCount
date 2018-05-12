@@ -64,7 +64,7 @@ public class Transaction {
             }
         }
         for (commodity, decimal) in amount.amounts {
-            let decimalDigits = amount.decimalDigits[commodity]!
+            let decimalDigits = amount.decimalDigits[commodity] ?? 0
             var tolerance = Decimal()
             if decimalDigits != 0 {
                 tolerance = Decimal(sign: FloatingPointSign.plus, exponent: -(decimalDigits + 1), significand: Decimal(5))
