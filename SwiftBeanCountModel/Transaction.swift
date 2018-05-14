@@ -17,16 +17,14 @@ public class Transaction {
     /// Arrary of the `Posting`s of the transaction.
     ///
     /// Should at least have two elements, otherwise the Transaction is not valid
-    public var postings: [Posting]
+    public var postings = [Posting]()
 
     /// Creates a transaction
     ///
     /// - Parameters:
     ///   - metaData: `TransactionMetaData`
-    ///   - postings: Array with the `Posting`s
-    public init(metaData: TransactionMetaData, postings: [Posting] = []) {
+    public init(metaData: TransactionMetaData) {
         self.metaData = metaData
-        self.postings = postings
     }
 
     func isValid() -> Bool {
