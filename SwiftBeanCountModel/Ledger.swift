@@ -32,12 +32,17 @@ public class Ledger {
     /// Array of all `Tag`s in this ledger
     public var tags: [Tag] { return Array(tag.values) }
 
+    public var prices: [Price] {
+        return Array(price.values.map { Array($0.values) }.map { $0.map { Array($0.values) } }.joined().joined())
+    }
+
     /// Array of the main `AccountGroup`s (all five `AccountType`s) in this ledger
     public var accountGroups: [AccountGroup] { return Array(accountGroup.values) }
 
     private var commodity = [String: Commodity]()
     private var account = [String: Account]()
     private var tag = [String: Tag]()
+    private var price = [Commodity: [Commodity: [Date: Price]]]()
     private let accountGroup: [String: AccountGroup]
 
     /// Creates an empty ledger with the `accountGroups` set up
@@ -90,6 +95,23 @@ public class Ledger {
     /// - Throws: If the tag already exists
     public func add(_ tag: Tag) throws {
         self.tag[tag.name] = try getTagWithProperties(for: tag)
+    }
+
+    /// Adds a `Price` to the ledger
+    ///
+    /// - Parameter price: `Price` to add
+    /// - Throws: If the price already exists
+    public func add(_ price: Price) throws {
+        guard self.price[price.commodity]?[price.amount.commodity]?[price.date] == nil else {
+            throw LedgerError.alreadyExists(String(describing: price))
+        }
+        if self.price[price.commodity] == nil {
+            self.price[price.commodity] = [Commodity: [Date: Price]]()
+        }
+        if self.price[price.commodity]![price.amount.commodity] == nil {
+            self.price[price.commodity]![price.amount.commodity] = [Date: Price]()
+        }
+        self.price[price.commodity]![price.amount.commodity]![price.date] = price
     }
 
     /// Validates ledger and adds all validation errors to the error array

@@ -133,6 +133,50 @@ class LedgerTests: XCTestCase {
         XCTAssertEqual(ledger2.accounts.first!.opening, date)
     }
 
+    func testPrices() {
+        let ledger = Ledger()
+
+        let date = Date(timeIntervalSince1970: 1_496_905_200)
+        let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "CAD"))
+        let commodity = Commodity(symbol: "EUR")
+
+        let price = Price(date: date, commodity: commodity, amount: amount)
+
+        XCTAssertNoThrow(try ledger.add(price))
+        XCTAssertThrowsError(try ledger.add(price))
+
+        // Date different
+        let date2 = Date(timeIntervalSince1970: 1_496_991_600)
+        let price2 = Price(date: date2, commodity: commodity, amount: amount)
+        XCTAssertNoThrow(try ledger.add(price2))
+        XCTAssertThrowsError(try ledger.add(price2))
+
+        // Commodity different
+        let commodity2 = Commodity(symbol: "USD")
+        let price3 = Price(date: date, commodity: commodity2, amount: amount)
+        XCTAssertNoThrow(try ledger.add(price3))
+        XCTAssertThrowsError(try ledger.add(price3))
+
+        // Amount commodity different
+        let amount2 = Amount(number: Decimal(1), commodity: Commodity(symbol: "USD"))
+        let price4 = Price(date: date, commodity: commodity, amount: amount2)
+        XCTAssertNoThrow(try ledger.add(price4))
+        XCTAssertThrowsError(try ledger.add(price4))
+
+        // Amount number different
+        let amount3 = Amount(number: Decimal(2), commodity: Commodity(symbol: "CAD"))
+        let price5 = Price(date: date, commodity: commodity, amount: amount3)
+        XCTAssertThrowsError(try ledger.add(price5))
+
+        XCTAssertEqual(ledger.prices.count, 4)
+
+        XCTAssertTrue(ledger.prices.contains(price))
+        XCTAssertTrue(ledger.prices.contains(price2))
+        XCTAssertTrue(ledger.prices.contains(price3))
+        XCTAssertTrue(ledger.prices.contains(price4))
+
+    }
+
     func testValidateTransactions() {
         let ledger = Ledger()
         ledger.validate()

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		F991CD191F5534C000EE31E5 /* SwiftBeanCountModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F991CD0F1F5534C000EE31E5 /* SwiftBeanCountModel.framework */; };
+		F99E58A520A9089000A05AFE /* Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99E58A420A9089000A05AFE /* Price.swift */; };
+		F99E58A720A90F3100A05AFE /* PriceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99E58A620A90F3100A05AFE /* PriceTests.swift */; };
 		F9B7A87D1F553AB90062B1CB /* AccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD371F5534FB00EE31E5 /* AccountTests.swift */; };
 		F9B7A87E1F553AB90062B1CB /* AmountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD361F5534FB00EE31E5 /* AmountTests.swift */; };
 		F9B7A87F1F553AB90062B1CB /* CommodityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD3A1F5534FB00EE31E5 /* CommodityTests.swift */; };
@@ -65,6 +67,8 @@
 		F991CD3A1F5534FB00EE31E5 /* CommodityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommodityTests.swift; sourceTree = "<group>"; };
 		F991CD3B1F5534FB00EE31E5 /* TransactionMetaDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionMetaDataTests.swift; sourceTree = "<group>"; };
 		F991CD3C1F5534FB00EE31E5 /* TransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTests.swift; sourceTree = "<group>"; };
+		F99E58A420A9089000A05AFE /* Price.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Price.swift; sourceTree = "<group>"; };
+		F99E58A620A90F3100A05AFE /* PriceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,7 +111,6 @@
 		F991CD111F5534C000EE31E5 /* SwiftBeanCountModel */ = {
 			isa = PBXGroup;
 			children = (
-				F991CD131F5534C000EE31E5 /* Info.plist */,
 				F991CD301F5534ED00EE31E5 /* Account.swift */,
 				F991CD2A1F5534ED00EE31E5 /* Amount.swift */,
 				F991CD2F1F5534ED00EE31E5 /* Commodity.swift */,
@@ -118,6 +121,8 @@
 				F991CD2D1F5534ED00EE31E5 /* Tag.swift */,
 				F991CD2B1F5534ED00EE31E5 /* Transaction.swift */,
 				F991CD291F5534ED00EE31E5 /* TransactionMetaData.swift */,
+				F99E58A420A9089000A05AFE /* Price.swift */,
+				F991CD131F5534C000EE31E5 /* Info.plist */,
 			);
 			path = SwiftBeanCountModel;
 			sourceTree = "<group>";
@@ -135,6 +140,7 @@
 				F991CD391F5534FB00EE31E5 /* TagTests.swift */,
 				F991CD3B1F5534FB00EE31E5 /* TransactionMetaDataTests.swift */,
 				F991CD3C1F5534FB00EE31E5 /* TransactionTests.swift */,
+				F99E58A620A90F3100A05AFE /* PriceTests.swift */,
 				F991CD1F1F5534C000EE31E5 /* Info.plist */,
 			);
 			path = SwiftBeanCountModelTests;
@@ -277,6 +283,7 @@
 				F9B7A88B1F553ABE0062B1CB /* Ledger.swift in Sources */,
 				F9B7A8891F553ABE0062B1CB /* Commodity.swift in Sources */,
 				F9B7A88A1F553ABE0062B1CB /* Flag.swift in Sources */,
+				F99E58A520A9089000A05AFE /* Price.swift in Sources */,
 				F9B7A88F1F553ABE0062B1CB /* Transaction.swift in Sources */,
 				F9B7A8901F553ABE0062B1CB /* TransactionMetaData.swift in Sources */,
 			);
@@ -286,6 +293,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F99E58A720A90F3100A05AFE /* PriceTests.swift in Sources */,
 				F9B7A8841F553AB90062B1CB /* TagTests.swift in Sources */,
 				F9B7A8831F553AB90062B1CB /* PostingTests.swift in Sources */,
 				F9B7A87D1F553AB90062B1CB /* AccountTests.swift in Sources */,
