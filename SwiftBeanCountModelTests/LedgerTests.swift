@@ -177,6 +177,20 @@ class LedgerTests: XCTestCase {
 
     }
 
+    func testBalances() {
+        let ledger = Ledger()
+        let account = try! Account(name: "Assets:Test")
+        let date = Date(timeIntervalSince1970: 1_496_905_200)
+        let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "CAD"))
+        let balance = Balance(date: date, account: account, amount: amount)
+
+        try! ledger.add(account)
+        XCTAssertTrue(ledger.accounts.first!.balances.isEmpty)
+
+        try! ledger.add(balance)
+        XCTAssertTrue(ledger.accounts.first!.balances.first! == balance)
+    }
+
     func testValidateTransactions() {
         let ledger = Ledger()
         ledger.validate()

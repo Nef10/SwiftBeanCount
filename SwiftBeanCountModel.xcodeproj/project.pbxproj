@@ -10,6 +10,8 @@
 		F991CD191F5534C000EE31E5 /* SwiftBeanCountModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F991CD0F1F5534C000EE31E5 /* SwiftBeanCountModel.framework */; };
 		F99E58A520A9089000A05AFE /* Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99E58A420A9089000A05AFE /* Price.swift */; };
 		F99E58A720A90F3100A05AFE /* PriceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99E58A620A90F3100A05AFE /* PriceTests.swift */; };
+		F99E58AC20A91B8D00A05AFE /* Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99E58AB20A91B8D00A05AFE /* Balance.swift */; };
+		F99E58AE20A91BA500A05AFE /* BalanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99E58AD20A91BA500A05AFE /* BalanceTests.swift */; };
 		F9B7A87D1F553AB90062B1CB /* AccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD371F5534FB00EE31E5 /* AccountTests.swift */; };
 		F9B7A87E1F553AB90062B1CB /* AmountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD361F5534FB00EE31E5 /* AmountTests.swift */; };
 		F9B7A87F1F553AB90062B1CB /* CommodityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD3A1F5534FB00EE31E5 /* CommodityTests.swift */; };
@@ -69,6 +71,8 @@
 		F991CD3C1F5534FB00EE31E5 /* TransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTests.swift; sourceTree = "<group>"; };
 		F99E58A420A9089000A05AFE /* Price.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Price.swift; sourceTree = "<group>"; };
 		F99E58A620A90F3100A05AFE /* PriceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceTests.swift; sourceTree = "<group>"; };
+		F99E58AB20A91B8D00A05AFE /* Balance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Balance.swift; sourceTree = "<group>"; };
+		F99E58AD20A91BA500A05AFE /* BalanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +126,7 @@
 				F991CD2B1F5534ED00EE31E5 /* Transaction.swift */,
 				F991CD291F5534ED00EE31E5 /* TransactionMetaData.swift */,
 				F99E58A420A9089000A05AFE /* Price.swift */,
+				F99E58AB20A91B8D00A05AFE /* Balance.swift */,
 				F991CD131F5534C000EE31E5 /* Info.plist */,
 			);
 			path = SwiftBeanCountModel;
@@ -141,6 +146,7 @@
 				F991CD3B1F5534FB00EE31E5 /* TransactionMetaDataTests.swift */,
 				F991CD3C1F5534FB00EE31E5 /* TransactionTests.swift */,
 				F99E58A620A90F3100A05AFE /* PriceTests.swift */,
+				F99E58AD20A91BA500A05AFE /* BalanceTests.swift */,
 				F991CD1F1F5534C000EE31E5 /* Info.plist */,
 			);
 			path = SwiftBeanCountModelTests;
@@ -208,7 +214,7 @@
 				TargetAttributes = {
 					F991CD0E1F5534C000EE31E5 = {
 						CreatedOnToolsVersion = 9.0;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 0930;
 						ProvisioningStyle = Automatic;
 					};
 					F991CD171F5534C000EE31E5 = {
@@ -285,6 +291,7 @@
 				F9B7A88A1F553ABE0062B1CB /* Flag.swift in Sources */,
 				F99E58A520A9089000A05AFE /* Price.swift in Sources */,
 				F9B7A88F1F553ABE0062B1CB /* Transaction.swift in Sources */,
+				F99E58AC20A91B8D00A05AFE /* Balance.swift in Sources */,
 				F9B7A8901F553ABE0062B1CB /* TransactionMetaData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,6 +302,7 @@
 			files = (
 				F99E58A720A90F3100A05AFE /* PriceTests.swift in Sources */,
 				F9B7A8841F553AB90062B1CB /* TagTests.swift in Sources */,
+				F99E58AE20A91BA500A05AFE /* BalanceTests.swift in Sources */,
 				F9B7A8831F553AB90062B1CB /* PostingTests.swift in Sources */,
 				F9B7A87D1F553AB90062B1CB /* AccountTests.swift in Sources */,
 				F9B7A87E1F553AB90062B1CB /* AmountTests.swift in Sources */,

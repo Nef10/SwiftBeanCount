@@ -114,6 +114,14 @@ public class Ledger {
         self.price[price.commodity]![price.amount.commodity]![price.date] = price
     }
 
+    /// Adds a `Balance` to the ledger
+    ///
+    /// - Parameter balance: `Balance` to add
+    /// - Throws: If the account name is invalid
+    public func add(_ balance: Balance) throws {
+        try getAccount(for: balance.account).balances.append(balance)
+    }
+
     /// Validates ledger and adds all validation errors to the error array
     ///
     /// Note: If called multiple times, the error will show up multiple times

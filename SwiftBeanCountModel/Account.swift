@@ -120,6 +120,8 @@ public class Account: AccountItem {
     /// If it exists `isPostingValid(:)` checks that the transaction is before or on this date
     public var closing: Date?
 
+    public internal(set) var balances = [Balance]()
+
     /// Last part of the name, for **Assets:Cash:CAD** this would be **CAD**
     public var nameItem: String {
         return String(describing: name.split(separator: Account.nameSeperator).last!)
