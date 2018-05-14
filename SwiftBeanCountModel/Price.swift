@@ -10,6 +10,12 @@ import Foundation
 
 public struct Price {
 
+    /// Errors a price can throw
+    public enum PriceError: Error {
+        /// the price is listed in its own commodity
+        case sameCommodity(String)
+    }
+
     /// Date of the Price
     public let date: Date
 
@@ -18,6 +24,15 @@ public struct Price {
 
     /// `Amount` of the Price
     public let amount: Amount
+
+    init(date: Date, commodity: Commodity, amount: Amount) throws {
+        self.date = date
+        self.commodity = commodity
+        self.amount = amount
+        guard commodity != amount.commodity else {
+            throw PriceError.sameCommodity(String(describing: self))
+        }
+    }
 
 }
 
