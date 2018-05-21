@@ -141,6 +141,11 @@ public class Ledger {
                 errors.append(error)
             }
         }
+        accounts.forEach {
+            if case .invalid(let error) = $0.validateBalance(in: self) {
+                errors.append(error)
+            }
+        }
     }
 
     /// Converts `TransactionMetaData` so that the new one uses the correct `Tag` objects.
