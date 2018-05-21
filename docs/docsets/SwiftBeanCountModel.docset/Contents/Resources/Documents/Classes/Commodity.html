@@ -87,10 +87,19 @@
                 <a href="../Structs/Amount.html">Amount</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/Balance.html">Balance</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/MultiCurrencyAmount.html">MultiCurrencyAmount</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Posting.html">Posting</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Price.html">Price</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Price/PriceError.html">– PriceError</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/TransactionMetaData.html">TransactionMetaData</a>
@@ -148,6 +157,96 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:19SwiftBeanCountModel9CommodityC7opening10Foundation4DateVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/opening" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SwiftBeanCountModel9CommodityC7opening10Foundation4DateVSgvp">opening</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>opening of the commodity</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">opening</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Commodity.swift#L18">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SwiftBeanCountModel9CommodityC4nameSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/name" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SwiftBeanCountModel9CommodityC4nameSSSgvp">name</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>full name of the commodity</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Commodity.swift#L21">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SwiftBeanCountModel9CommodityC5priceSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/price" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SwiftBeanCountModel9CommodityC5priceSSSgvp">price</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>string describing how to get the price of the commodity</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">price</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Commodity.swift#L24">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:19SwiftBeanCountModel9CommodityCACSS6symbol_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(symbol:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:19SwiftBeanCountModel9CommodityCACSS6symbol_tcfc">init(symbol:)</a>
@@ -158,7 +257,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Creates an commodity with the given symbol</p>
+                        <p>Creates an commodity with the given symbol, all other properties are set to nil</p>
 
                       </div>
                       <div class="declaration">
@@ -181,7 +280,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>symbol for the commodity</p>
+                                  <p>symbol of the commodity</p>
                                 </div>
                               </td>
                             </tr>
@@ -189,7 +288,92 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Commodity.swift#L20-L22">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Commodity.swift#L29-L34">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SwiftBeanCountModel9CommodityCACSS6symbol_10Foundation4DateVSg7openingSSSg4nameAJ5pricetcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(symbol:opening:name:price:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SwiftBeanCountModel9CommodityCACSS6symbol_10Foundation4DateVSg7openingSSSg4nameAJ5pricetcfc">init(symbol:opening:name:price:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates an commodity with the given parameters</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">symbol</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">opening</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?,</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">price</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>symbol</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>symbol of the commodity</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>opening</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>date the commodity was opened</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>name</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>full name of the commodity</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>price</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>string describing how to get the price of the commodity</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Commodity.swift#L43-L48">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -211,7 +395,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Just returns the symbol</p>
+                        <p>String of the commodity definition</p>
 
                       </div>
                       <div class="declaration">
@@ -223,7 +407,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Commodity.swift#L29">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Commodity.swift#L67-L80">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -292,7 +476,7 @@
                         <p>lhs.symbol &lt; rhs.symbol</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Commodity.swift#L40-L42">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Commodity.swift#L98-L100">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -357,7 +541,7 @@
                         <p>true if the sybols are equal, false otherwise</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Commodity.swift#L50-L52">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Commodity.swift#L108-L110">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -391,7 +575,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Commodity.swift#L59-L61">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Commodity.swift#L117-L119">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -401,7 +585,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/Nef10" target="_blank" rel="external">Nef10</a>. All rights reserved. (Last updated: 2018-05-10)</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/Nef10" target="_blank" rel="external">Nef10</a>. All rights reserved. (Last updated: 2018-05-21)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

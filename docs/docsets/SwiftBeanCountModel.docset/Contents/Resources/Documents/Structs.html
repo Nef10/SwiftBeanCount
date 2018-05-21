@@ -86,10 +86,19 @@
                 <a href="Structs/Amount.html">Amount</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/Balance.html">Balance</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/MultiCurrencyAmount.html">MultiCurrencyAmount</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Posting.html">Posting</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Price.html">Price</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Price/PriceError.html">– PriceError</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/TransactionMetaData.html">TransactionMetaData</a>
@@ -123,6 +132,8 @@
                       <div class="abstract">
                         <p>Represents an amout which consists of amouts in multiple currencies</p>
 
+<p><strong>Tolerance</strong> for validation: Half of the last digit of precision provided separately for each currency</p>
+
                         <a href="Structs/MultiCurrencyAmount.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
@@ -134,7 +145,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/MultiCurrencyAmount.swift#L20-L23">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/MultiCurrencyAmount.swift#L23-L74">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -217,6 +228,76 @@ as well as the <code>price</code> (if applicable) and a link back to the <code><
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:19SwiftBeanCountModel5PriceV"></a>
+                    <a name="//apple_ref/swift/Struct/Price" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SwiftBeanCountModel5PriceV">Price</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Price of a commodity in another commodity on a given date</p>
+
+                        <a href="Structs/Price.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Price</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Price.swift#L12-L45">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SwiftBeanCountModel7BalanceV"></a>
+                    <a name="//apple_ref/swift/Struct/Balance" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SwiftBeanCountModel7BalanceV">Balance</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An assert that the balance of a given commodity is correct for the accout at the end of the given day</p>
+
+                        <a href="Structs/Balance.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Balance</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/Nef10/SwiftBeanCountModel/blob/master/SwiftBeanCountModel/Balance.swift#L12-L23">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:19SwiftBeanCountModel19TransactionMetaDataV"></a>
                     <a name="//apple_ref/swift/Struct/TransactionMetaData" class="dashAnchor"></a>
                     <a class="token" href="#/s:19SwiftBeanCountModel19TransactionMetaDataV">TransactionMetaData</a>
@@ -252,7 +333,7 @@ as well as the <code>price</code> (if applicable) and a link back to the <code><
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/Nef10" target="_blank" rel="external">Nef10</a>. All rights reserved. (Last updated: 2018-05-10)</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/Nef10" target="_blank" rel="external">Nef10</a>. All rights reserved. (Last updated: 2018-05-21)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
