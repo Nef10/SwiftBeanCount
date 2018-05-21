@@ -60,14 +60,22 @@ class MultiCurrencyAmountTests: XCTestCase {
 
     func testPlusDecimalDigits() {
         let fiveEuro = MultiCurrencyAmount(amounts: [euro: Decimal(5)], decimalDigits: [euro: 0])
+        let fiveEuroZero = MultiCurrencyAmount(amounts: [euro: Decimal(5.0)], decimalDigits: [euro: 1])
         let fiveEuroZeroZero = MultiCurrencyAmount(amounts: [euro: Decimal(5.00)], decimalDigits: [euro: 2])
         let fiveCanadianDollar = MultiCurrencyAmount(amounts: [canadianDollar: Decimal(5)], decimalDigits: [canadianDollar: 0])
-        let fiveCanadianDollarZero = MultiCurrencyAmount(amounts: [canadianDollar: Decimal(5.0)], decimalDigits: [canadianDollar: 1])
 
         var result = fiveEuro + fiveEuroZeroZero
         XCTAssertEqual(result.amounts[euro]!, 10)
-        XCTAssertEqual(result.decimalDigits[euro]!, 2)
+        XCTAssertEqual(result.decimalDigits[euro]!, 0)
         result = fiveEuro
+        result += fiveEuroZeroZero
+        XCTAssertEqual(result.amounts[euro]!, 10)
+        XCTAssertEqual(result.decimalDigits[euro]!, 0)
+
+        result = fiveEuroZero + fiveEuroZeroZero
+        XCTAssertEqual(result.amounts[euro]!, 10)
+        XCTAssertEqual(result.decimalDigits[euro]!, 2)
+        result = fiveEuroZero
         result += fiveEuroZeroZero
         XCTAssertEqual(result.amounts[euro]!, 10)
         XCTAssertEqual(result.decimalDigits[euro]!, 2)
@@ -79,15 +87,6 @@ class MultiCurrencyAmountTests: XCTestCase {
         result += fiveEuroZeroZero
         XCTAssertEqual(result.decimalDigits[euro]!, 2)
         XCTAssertEqual(result.decimalDigits[canadianDollar]!, 0)
-
-        result = fiveCanadianDollarZero + fiveEuroZeroZero
-        XCTAssertEqual(result.decimalDigits[euro]!, 2)
-        XCTAssertEqual(result.decimalDigits[canadianDollar]!, 1)
-        result = fiveCanadianDollarZero
-        result += fiveEuroZeroZero
-        XCTAssertEqual(result.decimalDigits[euro]!, 2)
-        XCTAssertEqual(result.decimalDigits[canadianDollar]!, 1)
-
     }
 
     func testPlusKeepsDecimalDigits() {

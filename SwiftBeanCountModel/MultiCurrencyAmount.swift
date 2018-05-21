@@ -86,7 +86,8 @@ extension MultiCurrencyAmount: Equatable {
 /// Adds two `MultiCurrencyAmountRepresentable`s into a MultiCurrencyAmount
 ///
 /// If the MultiCurrencyAmount of both MultiCurrencyAmountRepresentable contain an `Amount` in the same `Commodity`
-/// the higher number of decimalDigits will be used to ensure the tolerance is correct
+/// the higher number of decimalDigits will be used to ensure the tolerance is correct, except one is 0 than 0 is used
+/// as it is more precise
 ///
 /// - Parameters:
 ///   - left: first MultiCurrencyAmountRepresentable, the multiAccountAmount will be added
@@ -98,8 +99,17 @@ func + (left: MultiCurrencyAmountRepresentable, right: MultiCurrencyAmountRepres
     for (commodity, decimal) in right.multiCurrencyAmount.amounts {
         result[commodity] = (result[commodity] ?? Decimal(0)) + decimal
     }
-    for (commodity, digits) in right.multiCurrencyAmount.decimalDigits {
-        decimalDigits[commodity] = max((decimalDigits[commodity] ?? 0), digits)
+    for (commodity, rightDigits) in right.multiCurrencyAmount.decimalDigits {
+        if let leftDigits = decimalDigits[commodity] {
+            if min(leftDigits, rightDigits) == 0 {
+                decimalDigits[commodity] = 0
+            } else {
+                decimalDigits[commodity] = max(leftDigits, rightDigits)
+            }
+        } else {
+            decimalDigits[commodity] = rightDigits
+        }
+
     }
     return MultiCurrencyAmount(amounts: result, decimalDigits: decimalDigits)
 }
