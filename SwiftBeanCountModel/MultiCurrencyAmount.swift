@@ -12,7 +12,7 @@ import Foundation
 public protocol MultiCurrencyAmountRepresentable {
 
     /// the `MultiCurrencyAmount` representation of the current object
-    var multiAccountAmount: MultiCurrencyAmount { get }
+    var multiCurrencyAmount: MultiCurrencyAmount { get }
 
 }
 
@@ -71,7 +71,7 @@ extension MultiCurrencyAmount {
 extension MultiCurrencyAmount: MultiCurrencyAmountRepresentable {
 
     /// returns self to conform to the `MultiCurrencyAmountRepresentable` protocol
-    public var multiAccountAmount: MultiCurrencyAmount {
+    public var multiCurrencyAmount: MultiCurrencyAmount {
         return self
     }
 
@@ -93,12 +93,12 @@ extension MultiCurrencyAmount: Equatable {
 ///   - right: second MultiCurrencyAmountRepresentable, the multiAccountAmount will be added
 /// - Returns: MultiCurrencyAmount which includes both amounts
 func + (left: MultiCurrencyAmountRepresentable, right: MultiCurrencyAmountRepresentable) -> MultiCurrencyAmount {
-    var result = left.multiAccountAmount.amounts
-    var decimalDigits = left.multiAccountAmount.decimalDigits
-    for (commodity, decimal) in right.multiAccountAmount.amounts {
+    var result = left.multiCurrencyAmount.amounts
+    var decimalDigits = left.multiCurrencyAmount.decimalDigits
+    for (commodity, decimal) in right.multiCurrencyAmount.amounts {
         result[commodity] = (result[commodity] ?? Decimal(0)) + decimal
     }
-    for (commodity, digits) in right.multiAccountAmount.decimalDigits {
+    for (commodity, digits) in right.multiCurrencyAmount.decimalDigits {
         decimalDigits[commodity] = max((decimalDigits[commodity] ?? 0), digits)
     }
     return MultiCurrencyAmount(amounts: result, decimalDigits: decimalDigits)

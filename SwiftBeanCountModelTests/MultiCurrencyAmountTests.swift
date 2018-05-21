@@ -21,7 +21,7 @@ class MultiCurrencyAmountTests: XCTestCase {
 
     func testMultiCurrencyAmount() {
         let multiCurrencyAmount = MultiCurrencyAmount(amounts: [euro: Decimal(10)], decimalDigits: [euro: 0])
-        XCTAssertEqual(multiCurrencyAmount.multiAccountAmount, multiCurrencyAmount)
+        XCTAssertEqual(multiCurrencyAmount.multiCurrencyAmount, multiCurrencyAmount)
     }
 
     func testPlusSameCurrency() {

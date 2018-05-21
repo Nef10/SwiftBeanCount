@@ -63,7 +63,7 @@ extension Amount: CustomStringConvertible {
 extension Amount: MultiCurrencyAmountRepresentable {
 
     /// the ammount represented as `MultiCurrencyAmount`
-    public var multiAccountAmount: MultiCurrencyAmount {
+    public var multiCurrencyAmount: MultiCurrencyAmount {
         return MultiCurrencyAmount(amounts: [commodity: number], decimalDigits: [commodity: decimalDigits])
     }
 

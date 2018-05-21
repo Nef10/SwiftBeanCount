@@ -70,16 +70,16 @@ class AmountTests: XCTestCase {
         let decimal = Decimal(10)
         let commodity = Commodity(symbol: "EUR")
         let amount = Amount(number: decimal, commodity: commodity)
-        XCTAssertEqual(amount.multiAccountAmount.amounts, [commodity: decimal])
-        XCTAssertEqual(amount.multiAccountAmount.decimalDigits, [commodity: 0])
+        XCTAssertEqual(amount.multiCurrencyAmount.amounts, [commodity: decimal])
+        XCTAssertEqual(amount.multiCurrencyAmount.decimalDigits, [commodity: 0])
     }
 
     func testMultiCurrencyAmountDecimalDigits() {
         let decimal = Decimal(10.25)
         let commodity = Commodity(symbol: "EUR")
         let amount = Amount(number: decimal, commodity: commodity, decimalDigits: 2)
-        XCTAssertEqual(amount.multiAccountAmount.amounts, [commodity: decimal])
-        XCTAssertEqual(amount.multiAccountAmount.decimalDigits, [commodity: 2])
+        XCTAssertEqual(amount.multiCurrencyAmount.amounts, [commodity: decimal])
+        XCTAssertEqual(amount.multiCurrencyAmount.decimalDigits, [commodity: 2])
     }
 
 }
