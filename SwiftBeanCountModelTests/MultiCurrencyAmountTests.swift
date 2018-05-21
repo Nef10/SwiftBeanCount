@@ -140,4 +140,39 @@ class MultiCurrencyAmountTests: XCTestCase {
         XCTAssertNotEqual(fiveTwentyFife1, fiveTwentyFifeZero)
     }
 
+    func testValidateZeroWithTolerance() {
+        let commodity = Commodity(symbol: "CAD")
+        var amount = MultiCurrencyAmount(amounts: [:], decimalDigits: [:])
+        guard case .valid = amount.validateZeroWithTolerance() else {
+            XCTFail("\(amount) is not valid")
+            return
+        }
+
+        amount.amounts[commodity] = 0
+        guard case .valid = amount.validateZeroWithTolerance() else {
+            XCTFail("\(amount) is not valid")
+            return
+        }
+
+        amount.amounts[commodity] = 0.000_05
+        if case .invalid(let error) = amount.validateZeroWithTolerance() {
+            XCTAssertEqual(error, "0.00005 CAD too much (0 tolerance)")
+        } else {
+            XCTFail("\(amount) is valid")
+        }
+
+        amount.decimalDigits[commodity] = 5
+        if case .invalid(let error) = amount.validateZeroWithTolerance() {
+            XCTAssertEqual(error, "0.00005 CAD too much (0.000005 tolerance)")
+        } else {
+            XCTFail("\(amount) is valid")
+        }
+
+        amount.decimalDigits[commodity] = 4
+        guard case .valid = amount.validateZeroWithTolerance() else {
+            XCTFail("\(amount) is not valid")
+            return
+        }
+    }
+
 }

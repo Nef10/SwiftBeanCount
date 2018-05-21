@@ -44,10 +44,9 @@ public class Transaction {
         return .valid
     }
 
-    /// Checks if a Transaction is balanced
+    /// Checks if a Transaction is balanced within the allowed Tolerance
     ///
-    /// **Tolerance**: Half of the last digit of precision provided separately for each currency
-    ///  (if multiple postings are in the same currency the percision of the number with the best precision is used)
+    /// **Tolerance**: If multiple postings are in the same currency the percision of the number with the best precision is used
     ///  *Note*: Price and cost values are ignored
     ///  *Note*: Tolerance for interger amounts is zero
     ///
@@ -63,17 +62,11 @@ public class Transaction {
                 amount += posting.amount
             }
         }
-        for (commodity, decimal) in amount.amounts {
-            let decimalDigits = amount.decimalDigits[commodity] ?? 0
-            var tolerance = Decimal()
-            if decimalDigits != 0 {
-                tolerance = Decimal(sign: FloatingPointSign.plus, exponent: -(decimalDigits + 1), significand: Decimal(5))
-            }
-            if decimal > tolerance || decimal < -tolerance {
-                return .invalid("\(self) is not balanced - \(decimal) \(commodity.symbol) too much (\(tolerance) tolerance)")
-            }
+        let validation = amount.validateZeroWithTolerance()
+        if case .invalid(let error) = validation {
+            return .invalid("\(self) is not balanced - \(error)")
         }
-        return .valid
+        return validation
     }
 
 }
