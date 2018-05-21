@@ -12,14 +12,52 @@ import XCTest
 class CommodityTests: XCTestCase {
 
     func testDescription() {
-        let string = "String"
-        let commodity = Commodity(symbol: string)
+        let symbol = "String"
+        let string = "commodity \(symbol)"
+        let commodity = Commodity(symbol: symbol)
         XCTAssertEqual(String(describing: commodity), string)
     }
 
     func testDescriptionSpecialCharacters() {
-        let string = "💵"
-        let commodity = Commodity(symbol: string)
+        let symbol = "💵"
+        let string = "commodity \(symbol)"
+        let commodity = Commodity(symbol: symbol)
+        XCTAssertEqual(String(describing: commodity), string)
+    }
+
+    func testDescriptionOpening() {
+        let symbol = "CAD"
+        let string = "2017-06-08 commodity \(symbol)"
+        let date = Date(timeIntervalSince1970: 1_496_905_200)
+        let commodity = Commodity(symbol: symbol, opening: date)
+        XCTAssertEqual(String(describing: commodity), string)
+    }
+
+    func testDescriptionName() {
+        let symbol = "CAD"
+        let name = "TEST"
+        let string = "2017-06-08 commodity \(symbol)\n  name: \(name)"
+        let date = Date(timeIntervalSince1970: 1_496_905_200)
+        let commodity = Commodity(symbol: symbol, opening: date, name: name)
+        XCTAssertEqual(String(describing: commodity), string)
+    }
+
+    func testDescriptionNamePrice() {
+        let symbol = "CAD"
+        let name = "TEST"
+        let price = "💵"
+        let string = "2017-06-08 commodity \(symbol)\n  name: \(name)\n  price: \(price)"
+        let date = Date(timeIntervalSince1970: 1_496_905_200)
+        let commodity = Commodity(symbol: symbol, opening: date, name: name, price: price)
+        XCTAssertEqual(String(describing: commodity), string)
+    }
+
+    func testDescriptionPrice() {
+        let symbol = "CAD"
+        let price = "💵"
+        let string = "2017-06-08 commodity \(symbol)\n  price: \(price)"
+        let date = Date(timeIntervalSince1970: 1_496_905_200)
+        let commodity = Commodity(symbol: symbol, opening: date, name: nil, price: price)
         XCTAssertEqual(String(describing: commodity), string)
     }
 
