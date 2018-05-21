@@ -91,12 +91,16 @@ class AccountTests: XCTestCase {
 
     func testIsPostingValid_NotOpenPresent() {
         let account = try! Account(name: accountName)
-        let transaction = Transaction(metaData: TransactionMetaData(date: Date(), payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
+        let transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 0),
+                                                                    payee: "Payee",
+                                                                    narration: "Narration",
+                                                                    flag: Flag.complete,
+                                                                    tags: []))
         let posting = Posting(account: account, amount: Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR")), transaction: transaction)
         transaction.postings.append(posting)
         if case .invalid(let error) = account.validate(posting) {
             XCTAssertEqual(error, """
-                2018-05-20 * "Payee" "Narration"
+                1969-12-31 * "Payee" "Narration"
                   Assets:Cash 1 EUR was posted while the accout Assets:Cash was closed
                 """)
         } else {
