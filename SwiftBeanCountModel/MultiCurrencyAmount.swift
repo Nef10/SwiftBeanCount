@@ -32,6 +32,18 @@ public struct MultiCurrencyAmount {
         return MultiCurrencyAmount.equalWithinTolerance(amount1: self, amount2: zero)
     }
 
+    /// Validates that the amount is the same in the MultiCurrencyAmount
+    ///
+    /// Ignores other currencies in the MultiCurrencyAmount
+    ///
+    /// - Parameter amount: amount to validate
+    /// - Returns: `ValidationResult`
+    func validateOneAmountWithTolerance(amount: Amount) -> ValidationResult {
+        var multiCurrencyAmount = amount.multiCurrencyAmount
+        multiCurrencyAmount.decimalDigits[amount.commodity] = decimalDigitToKeep(multiCurrencyAmount.decimalDigits[amount.commodity]!, decimalDigits[amount.commodity])
+        return MultiCurrencyAmount.equalWithinTolerance(amount1: multiCurrencyAmount, amount2: self)
+    }
+
     /// Checks if all amounts of the first one are equal to the one in the second
     ///
     /// In the second amount contains amounts in currencies which are not in the first one,
@@ -52,7 +64,7 @@ public struct MultiCurrencyAmount {
             if decimalDigits != 0 {
                 tolerance = Decimal(sign: FloatingPointSign.plus, exponent: -(decimalDigits + 1), significand: Decimal(5))
             }
-            if result > tolerance || result < -tolerance {
+            if result > tolerance || result < (tolerance == 0 ? tolerance : -tolerance) {
                 return .invalid("\(result) \(commodity.symbol) too much (\(tolerance) tolerance)")
             }
         }

@@ -174,4 +174,48 @@ class MultiCurrencyAmountTests: XCTestCase {
         }
     }
 
+    func testValidateOneAmountWithTolerance() {
+        let commodity = Commodity(symbol: "CAD")
+        var multiCurrencyAmount = MultiCurrencyAmount(amounts: [:], decimalDigits: [:])
+
+        var amount = Amount(number: 0, commodity: commodity, decimalDigits: 0)
+        guard case .valid = multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount) else {
+            XCTFail("\(multiCurrencyAmount) is not valid")
+            return
+        }
+
+        multiCurrencyAmount.amounts[commodity] = 0
+        guard case .valid = multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount) else {
+            XCTFail("\(multiCurrencyAmount) is not valid")
+            return
+        }
+
+        multiCurrencyAmount.amounts[commodity] = 0.000_05
+        multiCurrencyAmount.decimalDigits[commodity] = 5
+        if case .invalid(let error) = multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount) {
+            XCTAssertEqual(error, "-0.00005 CAD too much (0 tolerance)")
+        } else {
+            XCTFail("\(multiCurrencyAmount) is valid")
+        }
+
+        amount = Amount(number: 0, commodity: commodity, decimalDigits: 1)
+        if case .invalid(let error) = multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount) {
+            XCTAssertEqual(error, "-0.00005 CAD too much (0.000005 tolerance)")
+        } else {
+            XCTFail("\(multiCurrencyAmount) is valid")
+        }
+
+        amount = Amount(number: 0.000_05, commodity: commodity, decimalDigits: 5)
+        guard case .valid = multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount) else {
+            XCTFail("\(multiCurrencyAmount) is not valid")
+            return
+        }
+
+        multiCurrencyAmount.amounts[commodity] = 0.000_055
+        guard case .valid = multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount) else {
+            XCTFail("\(multiCurrencyAmount) is not valid")
+            return
+        }
+    }
+
 }
