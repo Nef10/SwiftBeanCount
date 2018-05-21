@@ -100,16 +100,7 @@ func + (left: MultiCurrencyAmountRepresentable, right: MultiCurrencyAmountRepres
         result[commodity] = (result[commodity] ?? Decimal(0)) + decimal
     }
     for (commodity, rightDigits) in right.multiCurrencyAmount.decimalDigits {
-        if let leftDigits = decimalDigits[commodity] {
-            if min(leftDigits, rightDigits) == 0 {
-                decimalDigits[commodity] = 0
-            } else {
-                decimalDigits[commodity] = max(leftDigits, rightDigits)
-            }
-        } else {
-            decimalDigits[commodity] = rightDigits
-        }
-
+        decimalDigits[commodity] = decimalDigitToKeep(rightDigits, decimalDigits[commodity])
     }
     return MultiCurrencyAmount(amounts: result, decimalDigits: decimalDigits)
 }
@@ -122,4 +113,23 @@ func + (left: MultiCurrencyAmountRepresentable, right: MultiCurrencyAmountRepres
 func += (left: inout MultiCurrencyAmount, right: MultiCurrencyAmountRepresentable) {
     // swiftlint:disable:next shorthand_operator
     left = left + right
+}
+
+/// Returns the number of decimals digits which is more precise
+///
+/// If one of the numbers is zero it returns zero as this indicats no tolerance.
+/// Otherwise the higher number is more precise.
+///
+/// - Parameters:
+///   - decimal1: first decimal
+///   - decimal2: secons decimal
+/// - Returns: the decimal which indicats higher precision
+private func decimalDigitToKeep(_ decimal1: Int, _ decimal2: Int?) -> Int {
+    guard let decimal2 = decimal2 else {
+        return decimal1
+    }
+    if min(decimal1, decimal2) == 0 {
+        return 0
+    }
+    return max(decimal1, decimal2)
 }
