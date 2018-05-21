@@ -226,6 +226,20 @@ class LedgerTests: XCTestCase {
         XCTAssertFalse(invalidLedger.errors.isEmpty)
     }
 
+    func testValidateCommodities() {
+        let validCommodity = Commodity(symbol: "EUR", opening: Date(timeIntervalSince1970: 1_496_905_200))
+        let validLedger = Ledger()
+        try! validLedger.add(validCommodity)
+        validLedger.validate()
+        XCTAssertTrue(validLedger.errors.isEmpty)
+
+        let invalidCommodity = Commodity(symbol: "EUR")
+        let invalidLedger = Ledger()
+        try! invalidLedger.add(invalidCommodity)
+        invalidLedger.validate()
+        XCTAssertFalse(invalidLedger.errors.isEmpty)
+    }
+
     func testDescription() {
         let accountName = "Assets:Cash"
         let transactionMetaData = TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_991_600), payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])

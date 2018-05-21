@@ -136,6 +136,11 @@ public class Ledger {
                 errors.append(error)
             }
         }
+        commodities.forEach {
+            if case .invalid(let error) = $0.validate() {
+                errors.append(error)
+            }
+        }
     }
 
     /// Converts `TransactionMetaData` so that the new one uses the correct `Tag` objects.
