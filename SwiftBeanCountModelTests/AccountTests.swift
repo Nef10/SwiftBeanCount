@@ -73,16 +73,12 @@ class AccountTests: XCTestCase {
 
     func testIsPostingValid_NotOpenPast() {
         let account = try! Account(name: accountName)
-        let transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 0),
-                                                                    payee: "Payee",
-                                                                    narration: "Narration",
-                                                                    flag: Flag.complete,
-                                                                    tags: []))
+        let transaction = Transaction(metaData: TransactionMetaData(date: date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
         let posting = Posting(account: account, amount: Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR")), transaction: transaction)
         transaction.postings.append(posting)
         if case .invalid(let error) = account.validate(posting) {
             XCTAssertEqual(error, """
-                1969-12-31 * "Payee" "Narration"
+                2017-06-08 * "Payee" "Narration"
                   Assets:Cash 1 EUR was posted while the accout Assets:Cash was closed
                 """)
         } else {
@@ -90,18 +86,14 @@ class AccountTests: XCTestCase {
         }
     }
 
-    func testIsPostingValid_NotOpenPresent() {
+    func testIsPostingValid_NoOpenPresent() {
         let account = try! Account(name: accountName)
-        let transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 0),
-                                                                    payee: "Payee",
-                                                                    narration: "Narration",
-                                                                    flag: Flag.complete,
-                                                                    tags: []))
+        let transaction = Transaction(metaData: TransactionMetaData(date: date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
         let posting = Posting(account: account, amount: Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR")), transaction: transaction)
         transaction.postings.append(posting)
         if case .invalid(let error) = account.validate(posting) {
             XCTAssertEqual(error, """
-                1969-12-31 * "Payee" "Narration"
+                2017-06-08 * "Payee" "Narration"
                   Assets:Cash 1 EUR was posted while the accout Assets:Cash was closed
                 """)
         } else {
@@ -113,32 +105,16 @@ class AccountTests: XCTestCase {
         let account = try! Account(name: accountName)
         account.opening = date20170609
 
-        let transaction1 = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 0),
-                                                                     payee: "Payee",
-                                                                     narration: "Narration",
-                                                                     flag: Flag.complete,
-                                                                     tags: []))
-        let posting1 = Posting(account: account, amount: Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR")), transaction: transaction1)
-        transaction1.postings.append(posting1)
-        if case .invalid(let error) = account.validate(posting1) {
-            XCTAssertEqual(error, """
-                1969-12-31 * "Payee" "Narration"
-                  Assets:Cash 1 EUR was posted while the accout Assets:Cash was closed
-                """)
-        } else {
-            XCTFail("\(posting1) is valid on \(account)")
-        }
-
-        let transaction2 = Transaction(metaData: TransactionMetaData(date: date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
-        let posting2 = Posting(account: account, amount: Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR")), transaction: transaction2)
-        transaction2.postings.append(posting2)
-        if case .invalid(let error) = account.validate(posting2) {
+        let transaction = Transaction(metaData: TransactionMetaData(date: date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
+        let posting = Posting(account: account, amount: Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR")), transaction: transaction)
+        transaction.postings.append(posting)
+        if case .invalid(let error) = account.validate(posting) {
             XCTAssertEqual(error, """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash 1 EUR was posted while the accout Assets:Cash was closed
                 """)
         } else {
-            XCTFail("\(posting2) is valid on \(account)")
+            XCTFail("\(posting) is valid on \(account)")
         }
     }
 
