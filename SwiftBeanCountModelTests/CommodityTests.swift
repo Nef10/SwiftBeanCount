@@ -61,6 +61,47 @@ class CommodityTests: XCTestCase {
         XCTAssertEqual(String(describing: commodity), string)
     }
 
+    func testValidate() {
+        let commodity = Commodity(symbol: "EUR", opening: Date(timeIntervalSince1970: 1_496_905_200), name: "EURO", price: "TEST")
+        guard case .valid = commodity.validate() else {
+            XCTFail("\(commodity) is not valid")
+            return
+        }
+    }
+
+    func testValidateWithoutPrice() {
+        let commodity = Commodity(symbol: "EUR", opening: Date(timeIntervalSince1970: 1_496_905_200), name: "EURO")
+        guard case .valid = commodity.validate() else {
+            XCTFail("\(commodity) is not valid")
+            return
+        }
+    }
+
+    func testValidateWithoutName() {
+        let commodity = Commodity(symbol: "EUR", opening: Date(timeIntervalSince1970: 1_496_905_200), name: nil, price: "TEST")
+        guard case .valid = commodity.validate() else {
+            XCTFail("\(commodity) is not valid")
+            return
+        }
+    }
+
+    func testValidateWithoutPriceAndName() {
+        let commodity = Commodity(symbol: "EUR", opening: Date(timeIntervalSince1970: 1_496_905_200))
+        guard case .valid = commodity.validate() else {
+            XCTFail("\(commodity) is not valid")
+            return
+        }
+    }
+
+    func testValidateWithoutDate() {
+        let commodity = Commodity(symbol: "EUR")
+        if case .invalid(let error) = commodity.validate() {
+            XCTAssertEqual(error, "Commodity EUR does not have an opening date")
+        } else {
+            XCTFail("\(commodity) is valid")
+        }
+    }
+
     func testEqual() {
         let eur = Commodity(symbol: "EUR")
         let eur2 = Commodity(symbol: "EUR")

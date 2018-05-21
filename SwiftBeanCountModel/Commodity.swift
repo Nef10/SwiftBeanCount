@@ -47,6 +47,18 @@ public class Commodity {
         self.price = price
     }
 
+    /// Validates the commodity
+    ///
+    /// A commodity is valid if it has an opening date. Name and price are optional
+    ///
+    /// - Returns: `ValidationResult`
+    func validate() -> ValidationResult {
+        guard opening != nil else {
+            return .invalid("Commodity \(symbol) does not have an opening date")
+        }
+        return .valid
+    }
+
 }
 
 extension Commodity: CustomStringConvertible {
