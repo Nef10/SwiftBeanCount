@@ -12,6 +12,7 @@ import SwiftBeanCountModel
 public class Parser {
 
     static let accountGroup = "([^\\s]+:[^\\s]+)"
+    static let comment: Character = ";"
 
     /// Parses a given file into an array of Transactions
     ///
@@ -23,6 +24,67 @@ public class Parser {
         return self.parse(string: text)
     }
 
+    /// Parses a given String into an array of Transactions
+    ///
+    /// - Parameter string: String to parse
+    /// - Returns: Array of parsed Transactions
+    public static func parse(string: String) -> Ledger {
+
+        let ledger = Ledger()
+
+        let lines = string.components(separatedBy: .newlines)
+
+        var openTransaction: Transaction?
+
+        for (lineNumber, line) in lines.enumerated() {
+
+            if line.isEmpty || line[line.startIndex] == Parser.comment {
+                // Ignore empty lines and comments
+                continue
+            }
+
+            // Posting
+            if let transaction = openTransaction {
+                if let posting = PostingParser.parseFrom(line: line, into: transaction) {
+                    transaction.postings.append(posting)
+                    continue
+                } else { // No posting, need to close previous transaction
+                    closeOpen(transaction: openTransaction, inLedger: ledger, onLine: lineNumber + 1)
+                    openTransaction = nil
+                }
+            }
+
+            // Transaction
+            if let transactionMetaData = TransactionMetaDataParser.parseFrom(line: line) {
+                openTransaction = Transaction(metaData: transactionMetaData)
+                continue
+            }
+
+            // Account
+            if let account = AccountParser.parseFrom(line: line) {
+                add(account, to: ledger, line: line, lineNumber: lineNumber)
+                continue
+            }
+
+            ledger.errors.append("Invalid format in line \(lineNumber + 1): \(line)")
+
+        }
+
+        closeOpen(transaction: openTransaction, inLedger: ledger, onLine: lines.count)
+
+        ledger.validate()
+
+        return ledger
+    }
+
+    /// Tries to close an open transaction if any
+    ///
+    /// Adds an error to the ledger if the transaction does not have any postings
+    ///
+    /// - Parameters:
+    ///   - openTransaction: the open transaction if any
+    ///   - ledger: ledger to add the tranaction to
+    ///   - line: line number which should be included in the error if the transaction cannot be closed
     private static func closeOpen(transaction openTransaction: Transaction?, inLedger ledger: Ledger, onLine line: Int) {
         if let transaction = openTransaction { // Need to close last transaction
             if !transaction.postings.isEmpty {
@@ -33,6 +95,15 @@ public class Parser {
         }
     }
 
+    /// Tries to add an account to the ledger
+    ///
+    /// Adds an error to the ledger if the account cannot be added
+    ///
+    /// - Parameters:
+    ///   - account: account to add
+    ///   - ledger: ledger to add the account into
+    ///   - line: line which should be included in the error if the account cannot be added
+    ///   - lineNumber: line number which should be included in the error if the account cannot be added
     private static func add(_ account: Account, to ledger: Ledger, line: String, lineNumber: Int) {
         if let ledgerAccount = ledger.accounts.first(where: { $0.name == account.name }) {
             if account.opening != nil {
@@ -64,58 +135,6 @@ public class Parser {
                 ledger.errors.append("Error with account \(account.name): \(error.localizedDescription) in line \(lineNumber + 1): \(line)")
             }
         }
-    }
-
-    /// Parses a given String into an array of Transactions
-    ///
-    /// - Parameter string: String to parse
-    /// - Returns: Array of parsed Transactions
-    public static func parse(string: String) -> Ledger {
-
-        let ledger = Ledger()
-
-        let lines = string.components(separatedBy: .newlines)
-
-        var openTransaction: Transaction?
-
-        for (lineNumber, line) in lines.enumerated() {
-
-            if line.isEmpty || line[line.startIndex] == ";" {
-                // Ignore empty lines and comments
-                continue
-            }
-
-            // Posting
-            if let transaction = openTransaction {
-                if let posting = PostingParser.parseFrom(line: line, into: transaction) {
-                    transaction.postings.append(posting)
-                    continue
-                } else { // No posting, need to close previous transaction
-                    closeOpen(transaction: openTransaction, inLedger: ledger, onLine: lineNumber + 1)
-                    openTransaction = nil
-                }
-            }
-
-            // Transaction
-            if let transactionMetaData = TransactionMetaDataParser.parseFrom(line: line) {
-                openTransaction = Transaction(metaData: transactionMetaData)
-                continue
-            }
-
-            if let account = AccountParser.parseFrom(line: line) {
-                add(account, to: ledger, line: line, lineNumber: lineNumber)
-                continue
-            }
-
-            ledger.errors.append("Invalid format in line \(lineNumber + 1): \(line)")
-
-        }
-
-        closeOpen(transaction: openTransaction, inLedger: ledger, onLine: lines.count)
-
-        ledger.validate()
-
-        return ledger
     }
 
 }
