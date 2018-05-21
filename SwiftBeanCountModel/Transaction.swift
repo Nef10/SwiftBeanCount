@@ -27,19 +27,21 @@ public class Transaction {
         self.metaData = metaData
     }
 
-    func isValid() -> Bool {
+    func validate() -> ValidationResult {
         guard !postings.isEmpty else {
-            return false
+            return .invalid("\(self) has no postings")
         }
-        guard isBalanced() else {
-            return false
+        let balanced = validateBalance()
+        guard case .valid = balanced else {
+            return balanced
         }
         for posting in postings {
-            if !posting.account.isPostingValid(posting) {
-                return false
+            let validationResult = posting.account.validate(posting)
+            guard case .valid = validationResult else {
+                return validationResult
             }
         }
-        return true
+        return .valid
     }
 
     /// Checks if a Transaction is balanced
@@ -49,8 +51,8 @@ public class Transaction {
     ///  *Note*: Price and cost values are ignored
     ///  *Note*: Tolerance for interger amounts is zero
     ///
-    /// - Returns: if the Transaction is balanced
-    private func isBalanced() -> Bool {
+    /// - Returns: `ValidationResult`
+    private func validateBalance() -> ValidationResult {
         var amount = MultiCurrencyAmount()
         for posting in postings {
             if let price = posting.price {
@@ -68,10 +70,10 @@ public class Transaction {
                 tolerance = Decimal(sign: FloatingPointSign.plus, exponent: -(decimalDigits + 1), significand: Decimal(5))
             }
             if decimal > tolerance || decimal < -tolerance {
-                return false
+                return .invalid("\(self) is not balanced - \(decimal) \(commodity.symbol) too much (\(tolerance) tolerance)")
             }
         }
-        return true
+        return .valid
     }
 
 }

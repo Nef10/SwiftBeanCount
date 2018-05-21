@@ -9,6 +9,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
+//swiftlint:disable:next type_body_length
 class AccountTests: XCTestCase {
 
     let date20170608 = Date(timeIntervalSince1970: 1_496_905_200)
@@ -77,14 +78,30 @@ class AccountTests: XCTestCase {
                                                                     flag: Flag.complete,
                                                                     tags: []))
         let posting = Posting(account: account, amount: Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR")), transaction: transaction)
-        XCTAssertFalse(account.isPostingValid(posting))
+        transaction.postings.append(posting)
+        if case .invalid(let error) = account.validate(posting) {
+            XCTAssertEqual(error, """
+                1969-12-31 * "Payee" "Narration"
+                  Assets:Cash 1 EUR was posted while the accout Assets:Cash was closed
+                """)
+        } else {
+            XCTFail("\(posting) is valid on \(account)")
+        }
     }
 
     func testIsPostingValid_NotOpenPresent() {
         let account = try! Account(name: accountName)
         let transaction = Transaction(metaData: TransactionMetaData(date: Date(), payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
         let posting = Posting(account: account, amount: Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR")), transaction: transaction)
-        XCTAssertFalse(account.isPostingValid(posting))
+        transaction.postings.append(posting)
+        if case .invalid(let error) = account.validate(posting) {
+            XCTAssertEqual(error, """
+                2018-05-20 * "Payee" "Narration"
+                  Assets:Cash 1 EUR was posted while the accout Assets:Cash was closed
+                """)
+        } else {
+            XCTFail("\(posting) is valid on \(account)")
+        }
     }
 
     func testIsPostingValid_BeforeOpening() {
@@ -97,11 +114,27 @@ class AccountTests: XCTestCase {
                                                                      flag: Flag.complete,
                                                                      tags: []))
         let posting1 = Posting(account: account, amount: Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR")), transaction: transaction1)
-        XCTAssertFalse(account.isPostingValid(posting1))
+        transaction1.postings.append(posting1)
+        if case .invalid(let error) = account.validate(posting1) {
+            XCTAssertEqual(error, """
+                1969-12-31 * "Payee" "Narration"
+                  Assets:Cash 1 EUR was posted while the accout Assets:Cash was closed
+                """)
+        } else {
+            XCTFail("\(posting1) is valid on \(account)")
+        }
 
         let transaction2 = Transaction(metaData: TransactionMetaData(date: date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
         let posting2 = Posting(account: account, amount: Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR")), transaction: transaction2)
-        XCTAssertFalse(account.isPostingValid(posting2))
+        transaction2.postings.append(posting2)
+        if case .invalid(let error) = account.validate(posting2) {
+            XCTAssertEqual(error, """
+                2017-06-08 * "Payee" "Narration"
+                  Assets:Cash 1 EUR was posted while the accout Assets:Cash was closed
+                """)
+        } else {
+            XCTFail("\(posting2) is valid on \(account)")
+        }
     }
 
     func testIsPostingValid_AfterOpening() {
@@ -110,11 +143,19 @@ class AccountTests: XCTestCase {
 
         let transaction1 = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
         let posting1 = Posting(account: account, amount: amount, transaction: transaction1)
-        XCTAssert(account.isPostingValid(posting1))
+        transaction1.postings.append(posting1)
+        guard case .valid = account.validate(posting1) else {
+            XCTFail("\(posting1) is not valid on \(account)")
+            return
+        }
 
         let transaction2 = Transaction(metaData: TransactionMetaData(date: Date(), payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
         let posting2 = Posting(account: account, amount: amount, transaction: transaction2)
-        XCTAssert(account.isPostingValid(posting2))
+        transaction2.postings.append(posting2)
+        guard case .valid = account.validate(posting2) else {
+            XCTFail("\(posting2) is not valid on \(account)")
+            return
+        }
     }
 
     func testIsPostingValid_BeforeClosing() {
@@ -123,7 +164,11 @@ class AccountTests: XCTestCase {
         account.closing = date20170609
         let transaction = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
         let posting = Posting(account: account, amount: amount, transaction: transaction)
-        XCTAssert(account.isPostingValid(posting))
+        transaction.postings.append(posting)
+        guard case .valid = account.validate(posting) else {
+            XCTFail("\(posting) is not valid on \(account)")
+            return
+        }
     }
 
     func testIsPostingValid_AfterClosing() {
@@ -132,7 +177,15 @@ class AccountTests: XCTestCase {
         account.closing = date20170609
         let transaction = Transaction(metaData: TransactionMetaData(date: date20170610, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
         let posting = Posting(account: account, amount: amount, transaction: transaction)
-        XCTAssertFalse(account.isPostingValid(posting))
+        transaction.postings.append(posting)
+        if case .invalid(let error) = account.validate(posting) {
+            XCTAssertEqual(error, """
+                2017-06-10 * "Payee" "Narration"
+                  Assets:Cash 1 EUR was posted while the accout Assets:Cash was closed
+                """)
+        } else {
+            XCTFail("\(posting) is valid on \(account)")
+        }
     }
 
     func testIsPostingValid_WithoutCommodity() {
@@ -141,11 +194,19 @@ class AccountTests: XCTestCase {
 
         let transaction1 = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
         let posting1 = Posting(account: account, amount: amount, transaction: transaction1)
-        XCTAssert(account.isPostingValid(posting1))
+        transaction1.postings.append(posting1)
+        guard case .valid = account.validate(posting1) else {
+            XCTFail("\(posting1) is not valid on \(account)")
+            return
+        }
 
         let transaction2 = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
         let posting2 = Posting(account: account, amount: amount, transaction: transaction2)
-        XCTAssert(account.isPostingValid(posting2))
+        transaction2.postings.append(posting2)
+        guard case .valid = account.validate(posting2) else {
+            XCTFail("\(posting2) is not valid on \(account)")
+            return
+        }
     }
 
     func testIsPostingValid_CorrectCommodity() {
@@ -154,7 +215,11 @@ class AccountTests: XCTestCase {
         account.opening = date20170608
         let transaction = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
         let posting = Posting(account: account, amount: amount, transaction: transaction)
-        XCTAssert(account.isPostingValid(posting))
+        transaction.postings.append(posting)
+        guard case .valid = account.validate(posting) else {
+            XCTFail("\(posting) is not valid on \(account)")
+            return
+        }
     }
 
     func testIsPostingValid_WrongCommodity() {
@@ -163,36 +228,64 @@ class AccountTests: XCTestCase {
         account.opening = date20170608
         let transaction = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
         let posting = Posting(account: account, amount: amount, transaction: transaction)
-        XCTAssertFalse(account.isPostingValid(posting))
+        transaction.postings.append(posting)
+        if case .invalid(let error) = account.validate(posting) {
+            XCTAssertEqual(error, """
+                2017-06-09 * "Payee" "Narration"
+                  Assets:Cash 1 EUR uses a wrong commodiy for account Assets:Cash - Only EUR1 is allowed
+                """)
+        } else {
+            XCTFail("\(posting) is valid on \(account)")
+        }
     }
 
     func testIsValid() {
         let account = try! Account(name: accountName)
 
         // neither closing nor opening
-        XCTAssertTrue(account.isValid())
+        guard case .valid = account.validate() else {
+            XCTFail("\(account) is not valid")
+            return
+        }
 
         // only opening
         account.opening = date20170608
-        XCTAssertTrue(account.isValid())
+        guard case .valid = account.validate() else {
+            XCTFail("\(account) is not valid")
+            return
+        }
 
         // Closing == opening
         account.closing = date20170608
-        XCTAssertTrue(account.isValid())
+        guard case .valid = account.validate() else {
+            XCTFail("\(account) is not valid")
+            return
+        }
 
         // Closing > opening
         account.closing = date20170609
-        XCTAssertTrue(account.isValid())
+        guard case .valid = account.validate() else {
+            XCTFail("\(account) is not valid")
+            return
+        }
 
         // Closing < opening
         account.opening = date20170609
         account.closing = date20170608
-        XCTAssertFalse(account.isValid())
+        if case .invalid(let error) = account.validate() {
+            XCTAssertEqual(error, "Account Assets:Cash was closed on 2017-06-08 before it was opened on 2017-06-09")
+        } else {
+            XCTFail("\(account) is valid")
+        }
 
         // only closing
         account.opening = nil
         account.closing = date20170608
-        XCTAssertFalse(account.isValid())
+        if case .invalid(let error) = account.validate() {
+            XCTAssertEqual(error, "Account Assets:Cash has a closing date but no opening")
+        } else {
+            XCTFail("\(account) is valid")
+        }
     }
 
     func testEqual() {

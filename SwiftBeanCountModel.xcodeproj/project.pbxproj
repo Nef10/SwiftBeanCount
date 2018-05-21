@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F940339920B251CC00DAC55F /* ValidationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F940339820B251CC00DAC55F /* ValidationResult.swift */; };
 		F991CD191F5534C000EE31E5 /* SwiftBeanCountModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F991CD0F1F5534C000EE31E5 /* SwiftBeanCountModel.framework */; };
 		F99E58A520A9089000A05AFE /* Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99E58A420A9089000A05AFE /* Price.swift */; };
 		F99E58A720A90F3100A05AFE /* PriceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99E58A620A90F3100A05AFE /* PriceTests.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F940339820B251CC00DAC55F /* ValidationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationResult.swift; sourceTree = "<group>"; };
 		F991CD0F1F5534C000EE31E5 /* SwiftBeanCountModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftBeanCountModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F991CD131F5534C000EE31E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F991CD181F5534C000EE31E5 /* SwiftBeanCountModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftBeanCountModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,6 +129,7 @@
 				F991CD291F5534ED00EE31E5 /* TransactionMetaData.swift */,
 				F99E58A420A9089000A05AFE /* Price.swift */,
 				F99E58AB20A91B8D00A05AFE /* Balance.swift */,
+				F940339820B251CC00DAC55F /* ValidationResult.swift */,
 				F991CD131F5534C000EE31E5 /* Info.plist */,
 			);
 			path = SwiftBeanCountModel;
@@ -282,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9B7A88E1F553ABE0062B1CB /* Tag.swift in Sources */,
+				F940339920B251CC00DAC55F /* ValidationResult.swift in Sources */,
 				F9B7A88C1F553ABE0062B1CB /* MultiCurrencyAmount.swift in Sources */,
 				F9B7A8871F553ABE0062B1CB /* Account.swift in Sources */,
 				F9B7A88D1F553ABE0062B1CB /* Posting.swift in Sources */,

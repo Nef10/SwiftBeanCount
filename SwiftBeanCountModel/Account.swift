@@ -140,31 +140,39 @@ public class Account: AccountItem {
         self.accountType = Account.getAccountType(for: name)
     }
 
-    ///
-    ///
     /// Checks if the given `Posting` is a valid posting for this account.
     /// This includes that the account of the posting is this one, the commodity matches and the account was open at the day of posting
     ///
     /// - Parameter posting: posting to check
-    /// - Returns: true if the posting is valid, otherwise false
-    public func isPostingValid(_ posting: Posting) -> Bool {
-        return posting.account == self && self.allowsPosting(in: posting.amount.commodity) && self.wasOpen(at: posting.transaction.metaData.date)
+    /// - Returns: `ValidationResult`
+    func validate(_ posting: Posting) -> ValidationResult {
+        assert(posting.account == self, "Checking Posting \(posting) on wrong Account \(self)")
+        guard self.allowsPosting(in: posting.amount.commodity) else {
+            return .invalid("\(posting.transaction) uses a wrong commodiy for account \(self.name) - Only \(self.commodity!.symbol) is allowed")
+        }
+        guard self.wasOpen(at: posting.transaction.metaData.date) else {
+            return .invalid("\(posting.transaction) was posted while the accout \(self.name) was closed")
+        }
+        return .valid
     }
 
     /// Checks if the account is valid
     ///
-    /// This does not check any postings.
-    /// An account is valid if it has no closing date or a closing date which is >=- the opening date
+    /// An account is valid if it has no closing date or a closing date which is >= the opening date
     ///
-    /// - Returns: If the account is valid
-    func isValid() -> Bool {
+    /// - Returns: `ValidationResult`
+    func validate() -> ValidationResult {
         if let closing = closing {
             guard let opening = opening else {
-                return false
+                return .invalid("Account \(self.name) has a closing date but no opening")
             }
-            return opening <= closing
+            guard opening <= closing else {
+                let closingString = type(of: self).dateFormatter.string(from: closing)
+                let openingString = type(of: self).dateFormatter.string(from: opening)
+                return .invalid("Account \(self.name) was closed on \(closingString) before it was opened on \(openingString)")
+            }
         }
-        return true
+        return .valid
     }
 
     private func wasOpen(at date: Date) -> Bool {

@@ -126,8 +126,16 @@ public class Ledger {
     ///
     /// Note: If called multiple times, the error will show up multiple times
     public func validate() {
-        errors.append(contentsOf: transactions.compactMap { $0.isValid() ? nil : "Transaction \($0) is invalid" })
-        errors.append(contentsOf: accounts.compactMap { $0.isValid() ? nil : "Account \($0) is invalid" })
+        transactions.forEach {
+            if case .invalid(let error) = $0.validate() {
+                errors.append(error)
+            }
+        }
+        accounts.forEach {
+            if case .invalid(let error) = $0.validate() {
+                errors.append(error)
+            }
+        }
     }
 
     /// Converts `TransactionMetaData` so that the new one uses the correct `Tag` objects.
