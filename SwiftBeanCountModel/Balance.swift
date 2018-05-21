@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// An assert that the balance of a given commodity is correct for the accout at the end of the given day
 public struct Balance {
 
     /// Date of the Balance

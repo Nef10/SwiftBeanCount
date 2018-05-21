@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Price of a commodity in another commodity on a given date
 public struct Price {
 
     /// Errors a price can throw
@@ -25,6 +26,13 @@ public struct Price {
     /// `Amount` of the Price
     public let amount: Amount
 
+    /// Create a price
+    ///
+    /// - Parameters:
+    ///   - date: date of the price
+    ///   - commodity: commodity
+    ///   - amount: amount
+    /// - Throws: PriceError.sameCommodity if the commodity and the commodity of the amount are the same
     init(date: Date, commodity: Commodity, amount: Amount) throws {
         self.date = date
         self.commodity = commodity

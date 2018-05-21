@@ -120,6 +120,7 @@ public class Account: AccountItem {
     /// If it exists `isPostingValid(:)` checks that the transaction is before or on this date
     public var closing: Date?
 
+    /// Balance asserts for this account
     public internal(set) var balances = [Balance]()
 
     /// Last part of the name, for **Assets:Cash:CAD** this would be **CAD**

@@ -32,6 +32,7 @@ public class Ledger {
     /// Array of all `Tag`s in this ledger
     public var tags: [Tag] { return Array(tag.values) }
 
+    ///  Array of all `Price`s in this ledger
     public var prices: [Price] {
         return Array(price.values.map { Array($0.values) }.map { $0.map { Array($0.values) } }.joined().joined())
     }
