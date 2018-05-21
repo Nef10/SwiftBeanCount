@@ -240,7 +240,7 @@ extension Account: CustomStringConvertible {
         if let opening = self.opening {
             string += "\(type(of: self).dateFormatter.string(from: opening)) open \(name)"
             if let commodity = self.commodity {
-                string += " \(String(describing: commodity))"
+                string += " \(commodity.symbol)"
             }
             if let closing = self.closing {
                 string += "\n\(type(of: self).dateFormatter.string(from: closing)) close \(name)"

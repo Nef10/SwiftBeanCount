@@ -40,7 +40,7 @@ extension Price: CustomStringConvertible {
 
     /// Returns the price string for the ledger.
     public var description: String {
-        return "\(type(of: self).dateFormatter.string(from: date)) price \(commodity) \(amount)"
+        return "\(type(of: self).dateFormatter.string(from: date)) price \(commodity.symbol) \(amount)"
     }
 
     static private let dateFormatter: DateFormatter = {

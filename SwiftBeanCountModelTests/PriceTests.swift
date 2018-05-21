@@ -26,7 +26,7 @@ class PriceTests: XCTestCase {
         let commodity = Commodity(symbol: "EUR")
 
         let price = try! Price(date: date, commodity: commodity, amount: amount)
-        XCTAssertEqual(String(describing: price), "2017-06-08 price \(String(describing: commodity)) \(String(describing: amount))")
+        XCTAssertEqual(String(describing: price), "2017-06-08 price \(commodity.symbol) \(String(describing: amount))")
     }
 
     func testEqual() {

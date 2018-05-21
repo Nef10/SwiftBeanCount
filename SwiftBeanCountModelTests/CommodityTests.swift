@@ -13,14 +13,14 @@ class CommodityTests: XCTestCase {
 
     func testDescription() {
         let string = "String"
-        let tag = Commodity(symbol: string)
-        XCTAssertEqual(String(describing: tag), string)
+        let commodity = Commodity(symbol: string)
+        XCTAssertEqual(String(describing: commodity), string)
     }
 
     func testDescriptionSpecialCharacters() {
         let string = "💵"
-        let tag = Commodity(symbol: string)
-        XCTAssertEqual(String(describing: tag), string)
+        let commodity = Commodity(symbol: string)
+        XCTAssertEqual(String(describing: commodity), string)
     }
 
     func testEqual() {

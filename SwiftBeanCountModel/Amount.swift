@@ -39,7 +39,7 @@ public struct Amount {
 extension Amount: CustomStringConvertible {
 
     /// Returns a `String` for the ledger which contains the number with the correct number of decimal digits as well as the `commodity`
-    public var description: String { return "\(amountString) \(commodity)" }
+    public var description: String { return "\(amountString) \(commodity.symbol)" }
 
     private var amountString: String { return type(of: self).numberFormatter(fractionDigits: decimalDigits).string(from: number as NSDecimalNumber)! }
 
