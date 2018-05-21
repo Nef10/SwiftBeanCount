@@ -175,6 +175,38 @@ public class Account: AccountItem {
         return .valid
     }
 
+    /// Checks if the balance assertions of the account are correct
+    ///
+    /// - Parameter ledger: ledger with the Transactions
+    /// - Returns: `ValidationResult`
+    func validateBalance(in ledger: Ledger) -> ValidationResult {
+        var postingIterator = postings(in: ledger).makeIterator()
+        var nextPosting = postingIterator.next()
+        var amount = MultiCurrencyAmount(amounts: [:], decimalDigits: [:])
+        for balance in balances.sorted(by: { $0.date < $1.date }) {
+            while let posting = nextPosting, posting.transaction.metaData.date <= balance.date {
+                amount += posting.amount
+                nextPosting = postingIterator.next()
+            }
+            let validation = amount.validateOneAmountWithTolerance(amount: balance.amount)
+            if case .invalid(let error) = validation {
+                return .invalid("Balance failed for \(balance) - \(error)")
+            }
+        }
+        return .valid
+    }
+
+    /// Returns all posting for this account ordered by date from the oldest to the newest
+    ///
+    /// - Parameter ledger: leder with the transactions with the postings
+    /// - Returns: all posting for this account ordered by date from the oldest to the newest
+    private func postings(in ledger: Ledger) -> [Posting] {
+        var postings = [Posting]()
+        ledger.transactions.forEach { postings.append(contentsOf: $0.postings.filter { $0.account == self }) }
+        postings.sort { $0.transaction.metaData.date < $1.transaction.metaData.date }
+        return postings
+    }
+
     private func wasOpen(at date: Date) -> Bool {
         if let opening = self.opening, opening <= date {
             if let closing = self.closing {
