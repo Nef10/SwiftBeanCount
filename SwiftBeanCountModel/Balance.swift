@@ -20,6 +20,18 @@ public struct Balance {
     /// `Amount` of the Balance
     public let amount: Amount
 
+    /// Create a Balance
+    ///
+    /// - Parameters:
+    ///   - date: date of the balance
+    ///   - account: account
+    ///   - amount: amount
+    public init(date: Date, account: Account, amount: Amount) {
+        self.date = date
+        self.account = account
+        self.amount = amount
+    }
+
 }
 
 extension Balance: CustomStringConvertible {

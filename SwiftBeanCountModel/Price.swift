@@ -33,7 +33,7 @@ public struct Price {
     ///   - commodity: commodity
     ///   - amount: amount
     /// - Throws: PriceError.sameCommodity if the commodity and the commodity of the amount are the same
-    init(date: Date, commodity: Commodity, amount: Amount) throws {
+    public init(date: Date, commodity: Commodity, amount: Amount) throws {
         self.date = date
         self.commodity = commodity
         self.amount = amount
