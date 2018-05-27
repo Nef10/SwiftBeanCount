@@ -19,7 +19,7 @@ struct AccountParser {
     /// Parse account openings and closings from a line String
     ///
     /// - Parameter line: String of one line
-    /// - Returns: Bool if the line could be parsed
+    /// - Returns: Account if the line could be parsed, otherwise nil
     static func parseFrom(line: String) -> Account? {
         let transactionMatches = line.matchingStrings(regex: self.regex)
         guard
