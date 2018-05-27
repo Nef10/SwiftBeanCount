@@ -65,6 +65,16 @@ public class Parser {
                 continue
             }
 
+            // Price
+            if let price = PriceParser.parseFrom(line: line) {
+                do {
+                    try ledger.add(price)
+                } catch let error {
+                    ledger.errors.append("Error with price \(price): \(error.localizedDescription) in line \(lineNumber + 1)")
+                }
+                continue
+            }
+
             ledger.errors.append("Invalid format in line \(lineNumber + 1): \(line)")
 
         }

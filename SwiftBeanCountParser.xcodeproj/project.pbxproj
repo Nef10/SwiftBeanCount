@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F95FF99020BA3D0D005F8B2F /* PriceParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95FF98F20BA3D0D005F8B2F /* PriceParserTests.swift */; };
+		F95FF99220BA3F2E005F8B2F /* PriceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95FF99120BA3F2E005F8B2F /* PriceParser.swift */; };
 		F95FF99420BA4052005F8B2F /* ParserUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95FF99320BA4052005F8B2F /* ParserUtils.swift */; };
 		F9BDC3721FBA815100393578 /* SwiftBeanCountParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9BDC3681FBA815100393578 /* SwiftBeanCountParser.framework */; };
 		F9BDC3841FBA839900393578 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3831FBA839900393578 /* Parser.swift */; };
@@ -82,6 +84,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F95FF98F20BA3D0D005F8B2F /* PriceParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceParserTests.swift; sourceTree = "<group>"; };
+		F95FF99120BA3F2E005F8B2F /* PriceParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceParser.swift; sourceTree = "<group>"; };
 		F95FF99320BA4052005F8B2F /* ParserUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserUtils.swift; sourceTree = "<group>"; };
 		F9BDC3681FBA815100393578 /* SwiftBeanCountParser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftBeanCountParser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9BDC36C1FBA815100393578 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -160,6 +164,7 @@
 				F9BDC3921FBAB02200393578 /* DateParser.swift */,
 				F9BDC3951FBAB02200393578 /* PostingParser.swift */,
 				F9BDC3961FBAB02200393578 /* TransactionMetaDataParser.swift */,
+				F95FF99120BA3F2E005F8B2F /* PriceParser.swift */,
 				F9BDC3831FBA839900393578 /* Parser.swift */,
 				F95FF99320BA4052005F8B2F /* ParserUtils.swift */,
 				F9BDC3A41FBAB0B700393578 /* Extensions */,
@@ -176,6 +181,7 @@
 				F9BDC3AE1FBAB10A00393578 /* ParserTests.swift */,
 				F9BDC3B01FBAB10A00393578 /* PostingParserTests.swift */,
 				F9BDC3B21FBAB10A00393578 /* TransactionMetaDataParserTests.swift */,
+				F95FF98F20BA3D0D005F8B2F /* PriceParserTests.swift */,
 				F9BDC39E1FBAB03600393578 /* TestUtils.swift */,
 				F9BDC3A91FBAB0E400393578 /* Extensions */,
 				F9BDC3B81FBAB13500393578 /* Resources */,
@@ -369,6 +375,7 @@
 				F9BDC3841FBA839900393578 /* Parser.swift in Sources */,
 				F9BDC3981FBAB02200393578 /* AccountParser.swift in Sources */,
 				F9BDC3A61FBAB0C600393578 /* Collection.swift in Sources */,
+				F95FF99220BA3F2E005F8B2F /* PriceParser.swift in Sources */,
 				F9BDC3A81FBAB0C800393578 /* String.swift in Sources */,
 				F9BDC39B1FBAB02200393578 /* TransactionMetaDataParser.swift in Sources */,
 				F9BDC39A1FBAB02200393578 /* PostingParser.swift in Sources */,
@@ -385,6 +392,7 @@
 				F9BDC3B41FBAB10A00393578 /* DateParserTests.swift in Sources */,
 				F9BDC3B61FBAB10A00393578 /* AccountParserTests.swift in Sources */,
 				F9BDC3AD1FBAB0ED00393578 /* StringTests.swift in Sources */,
+				F95FF99020BA3D0D005F8B2F /* PriceParserTests.swift in Sources */,
 				F9BDC3B71FBAB10A00393578 /* TransactionMetaDataParserTests.swift in Sources */,
 				F9BDC3AC1FBAB0ED00393578 /* CollectionTests.swift in Sources */,
 			);
