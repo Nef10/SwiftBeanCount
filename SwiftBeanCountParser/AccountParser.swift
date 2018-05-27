@@ -13,7 +13,7 @@ struct AccountParser {
 
     static private let regex: NSRegularExpression = {
         // swiftlint:disable:next force_try
-        try! NSRegularExpression(pattern: "^\(DateParser.dateGroup)\\s+(open|close)\\s+\(Parser.accountGroup)(\\s+([^;\\s][^\\s]*))?\\s*(;.*)?$", options: [])
+        try! NSRegularExpression(pattern: "^\(DateParser.dateGroup)\\s+(open|close)\\s+\(ParserUtils.accountGroup)(\\s+([^;\\s][^\\s]*))?\\s*(;.*)?$", options: [])
     }()
 
     /// Parse account openings and closings from a line String

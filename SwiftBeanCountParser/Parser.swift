@@ -11,7 +11,6 @@ import SwiftBeanCountModel
 
 public class Parser {
 
-    static let accountGroup = "([^\\s]+:[^\\s]+)"
     static let comment: Character = ";"
 
     /// Parses a given file into an array of Transactions

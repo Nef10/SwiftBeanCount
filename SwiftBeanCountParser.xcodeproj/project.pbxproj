@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F95FF99420BA4052005F8B2F /* ParserUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95FF99320BA4052005F8B2F /* ParserUtils.swift */; };
 		F9BDC3721FBA815100393578 /* SwiftBeanCountParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9BDC3681FBA815100393578 /* SwiftBeanCountParser.framework */; };
 		F9BDC3841FBA839900393578 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3831FBA839900393578 /* Parser.swift */; };
 		F9BDC3871FBA880900393578 /* SwiftBeanCountModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9BDC3861FBA880900393578 /* SwiftBeanCountModel.framework */; };
@@ -81,6 +82,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F95FF99320BA4052005F8B2F /* ParserUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserUtils.swift; sourceTree = "<group>"; };
 		F9BDC3681FBA815100393578 /* SwiftBeanCountParser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftBeanCountParser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9BDC36C1FBA815100393578 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9BDC3711FBA815100393578 /* SwiftBeanCountParserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftBeanCountParserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,6 +161,7 @@
 				F9BDC3951FBAB02200393578 /* PostingParser.swift */,
 				F9BDC3961FBAB02200393578 /* TransactionMetaDataParser.swift */,
 				F9BDC3831FBA839900393578 /* Parser.swift */,
+				F95FF99320BA4052005F8B2F /* ParserUtils.swift */,
 				F9BDC3A41FBAB0B700393578 /* Extensions */,
 				F9BDC36C1FBA815100393578 /* Info.plist */,
 			);
@@ -362,6 +365,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9BDC3971FBAB02200393578 /* DateParser.swift in Sources */,
+				F95FF99420BA4052005F8B2F /* ParserUtils.swift in Sources */,
 				F9BDC3841FBA839900393578 /* Parser.swift in Sources */,
 				F9BDC3981FBAB02200393578 /* AccountParser.swift in Sources */,
 				F9BDC3A61FBAB0C600393578 /* Collection.swift in Sources */,
