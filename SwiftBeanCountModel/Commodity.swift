@@ -113,9 +113,8 @@ extension Commodity: Comparable {
 
 extension Commodity: Hashable {
 
-    /// Hash of the `symbol`
-    public var hashValue: Int {
-        return symbol.hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(symbol)
     }
 
 }
