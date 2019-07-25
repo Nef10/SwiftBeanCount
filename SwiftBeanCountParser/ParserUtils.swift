@@ -18,7 +18,7 @@ struct ParserUtils {
     static func parseAmountDecimalFrom(string: String) -> (Decimal, Int) {
         var amountString = string
         var sign = FloatingPointSign.plus
-        while let index = amountString.index(of: ",") {
+        while let index = amountString.firstIndex(of: ",") {
             amountString.remove(at: index)
         }
         if amountString.prefix(1) == "-" {
@@ -28,7 +28,7 @@ struct ParserUtils {
             amountString = String(amountString.suffix(amountString.count - 1))
         }
         var exponent = 0
-        if let range = amountString.index(of: ".") {
+        if let range = amountString.firstIndex(of: ".") {
             let beforeDot = amountString[..<range]
             let afterDot = amountString[amountString.index(range, offsetBy: 1)...]
             amountString = String(beforeDot + afterDot)
