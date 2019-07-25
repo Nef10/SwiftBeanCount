@@ -127,7 +127,7 @@ class ParserTests: XCTestCase {
         do {
             let ledger = try Parser.parse(contentOf: urlFor(testFile: testFile))
             XCTAssertEqual(ledger.transactions.count, 1)
-            XCTAssertEqual(ledger.errors.count, 0)
+            XCTAssert(ledger.errors.isEmpty)
             XCTAssertEqual(ledger.commodities.count, 1)
             XCTAssertEqual(ledger.accounts.count, 2)
             let transaction = ledger.transactions[0]
