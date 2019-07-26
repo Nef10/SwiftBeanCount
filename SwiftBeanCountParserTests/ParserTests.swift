@@ -89,7 +89,8 @@ class ParserTests: XCTestCase {
             for testFile in TestFile.withoutError {
                 let ledger1 = try Parser.parse(contentOf: urlFor(testFile: testFile))
                 let ledger2 = Parser.parse(string: String(describing: ledger1))
-                XCTAssertEqual(ledger1, ledger2)
+                let result = ledger1 == ledger2
+                XCTAssert(result)
             }
         } catch let error {
             XCTFail(String(describing: error))

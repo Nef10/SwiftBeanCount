@@ -71,6 +71,12 @@ public class Parser {
                 continue
             }
 
+            // Commodity
+            if let commodity = CommodityParser.parseFrom(line: line) {
+                add(commodity, to: ledger, lineNumber: lineNumber)
+                continue
+            }
+
             ledger.errors.append("Invalid format in line \(lineNumber + 1): \(line)")
 
         }
@@ -155,6 +161,22 @@ public class Parser {
             try ledger.add(price)
         } catch let error {
             ledger.errors.append("Error with price \(price): \(error.localizedDescription) in line \(lineNumber + 1)")
+        }
+    }
+
+    /// Tries to add a commodity to the ledger
+    ///
+    /// Adds an error to the ledger if the commodity cannot be added
+    ///
+    /// - Parameters:
+    ///   - commodity: commodity to add
+    ///   - ledger: ledger to add the account into
+    ///   - lineNumber: line number which should be included in the error if the commodity cannot be added
+    private static func add(_ commodity: Commodity, to ledger: Ledger, lineNumber: Int) {
+        do {
+            try ledger.add(commodity)
+        } catch let error {
+            ledger.errors.append("Error with commodity \(commodity): \(error.localizedDescription) in line \(lineNumber + 1)")
         }
     }
 
