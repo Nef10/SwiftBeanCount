@@ -40,6 +40,8 @@
 		F9BDC3C81FBAB13E00393578 /* Minimal.beancount in Resources */ = {isa = PBXBuildFile; fileRef = F9BDC3C01FBAB13E00393578 /* Minimal.beancount */; };
 		F9ED3BC222EAA758005A6469 /* CommodityParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ED3BC122EAA758005A6469 /* CommodityParser.swift */; };
 		F9ED3BC422EAA89A005A6469 /* CommodityParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ED3BC322EAA89A005A6469 /* CommodityParserTests.swift */; };
+		F9ED3BC722EADC26005A6469 /* BalanceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ED3BC622EADC26005A6469 /* BalanceParser.swift */; };
+		F9ED3BC922EAE018005A6469 /* BalanceParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ED3BC822EAE018005A6469 /* BalanceParserTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +121,8 @@
 		F9BDC3C01FBAB13E00393578 /* Minimal.beancount */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Minimal.beancount; sourceTree = "<group>"; };
 		F9ED3BC122EAA758005A6469 /* CommodityParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommodityParser.swift; sourceTree = "<group>"; };
 		F9ED3BC322EAA89A005A6469 /* CommodityParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommodityParserTests.swift; sourceTree = "<group>"; };
+		F9ED3BC622EADC26005A6469 /* BalanceParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceParser.swift; sourceTree = "<group>"; };
+		F9ED3BC822EAE018005A6469 /* BalanceParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceParserTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +170,7 @@
 			children = (
 				F9BDC3931FBAB02200393578 /* AccountParser.swift */,
 				F9ED3BC122EAA758005A6469 /* CommodityParser.swift */,
+				F9ED3BC622EADC26005A6469 /* BalanceParser.swift */,
 				F9BDC3921FBAB02200393578 /* DateParser.swift */,
 				F9BDC3951FBAB02200393578 /* PostingParser.swift */,
 				F9BDC3961FBAB02200393578 /* TransactionMetaDataParser.swift */,
@@ -183,6 +188,7 @@
 			children = (
 				F9BDC3B11FBAB10A00393578 /* AccountParserTests.swift */,
 				F9ED3BC322EAA89A005A6469 /* CommodityParserTests.swift */,
+				F9ED3BC822EAE018005A6469 /* BalanceParserTests.swift */,
 				F9BDC3AF1FBAB10A00393578 /* DateParserTests.swift */,
 				F9BDC3AE1FBAB10A00393578 /* ParserTests.swift */,
 				F9BDC3B01FBAB10A00393578 /* PostingParserTests.swift */,
@@ -376,6 +382,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9ED3BC722EADC26005A6469 /* BalanceParser.swift in Sources */,
 				F9BDC3971FBAB02200393578 /* DateParser.swift in Sources */,
 				F95FF99420BA4052005F8B2F /* ParserUtils.swift in Sources */,
 				F9BDC3841FBA839900393578 /* Parser.swift in Sources */,
@@ -403,6 +410,7 @@
 				F95FF99020BA3D0D005F8B2F /* PriceParserTests.swift in Sources */,
 				F9BDC3B71FBAB10A00393578 /* TransactionMetaDataParserTests.swift in Sources */,
 				F9BDC3AC1FBAB0ED00393578 /* CollectionTests.swift in Sources */,
+				F9ED3BC922EAE018005A6469 /* BalanceParserTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

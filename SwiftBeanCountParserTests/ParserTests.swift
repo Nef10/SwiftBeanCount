@@ -30,6 +30,8 @@ class ParserTests: XCTestCase {
 
     let commodityString = "2017-06-09 commodity EUR"
     let priceString = "2017-06-09 price EUR 1.50 CAD"
+    let balanceString = "2017-06-09 balance Assets:Cash 0.00 CAD"
+    let invalidBalanceString = "2017-06-09 balance TEST:Cash 0.00 CAD"
 
     func testMinimal() {
         ensureMinimal(testFile: .minimal)
@@ -100,6 +102,14 @@ class ParserTests: XCTestCase {
         XCTAssertTrue(ledger.errors.isEmpty)
 
         ledger = Parser.parse(string: "\(priceString)\n\(priceString)")
+        XCTAssertFalse(ledger.errors.isEmpty)
+    }
+
+    func testBalance() {
+        var ledger = Parser.parse(string: "\(balanceString)")
+        XCTAssertTrue(ledger.errors.isEmpty)
+
+        ledger = Parser.parse(string: "\(invalidBalanceString)")
         XCTAssertFalse(ledger.errors.isEmpty)
     }
 

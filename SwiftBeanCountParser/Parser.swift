@@ -13,20 +13,20 @@ public class Parser {
 
     static let comment: Character = ";"
 
-    /// Parses a given file into an array of Transactions
+    /// Parses a given file into a Ledger
     ///
     /// - Parameter contentOf: URL to parse Encoding has to be UTF-8
-    /// - Returns: Array of parsed Transactions
+    /// - Returns: Ledger with parsed content
     /// - Throws: Exceptions from opening the file
     public static func parse(contentOf path: URL) throws -> Ledger {
         let text = try String(contentsOf: path)
         return self.parse(string: text)
     }
 
-    /// Parses a given String into an array of Transactions
+    /// Parses a given String into a Ledger
     ///
     /// - Parameter string: String to parse
-    /// - Returns: Array of parsed Transactions
+    /// - Returns: Ledger with parsed content
     public static func parse(string: String) -> Ledger {
 
         let ledger = Ledger()
@@ -36,49 +36,7 @@ public class Parser {
         var openTransaction: Transaction?
 
         for (lineNumber, line) in lines.enumerated() {
-
-            if line.isEmpty || line[line.startIndex] == Parser.comment {
-                // Ignore empty lines and comments
-                continue
-            }
-
-            // Posting
-            if let transaction = openTransaction {
-                if let posting = PostingParser.parseFrom(line: line, into: transaction) {
-                    transaction.postings.append(posting)
-                    continue
-                } else { // No posting, need to close previous transaction
-                    closeOpen(transaction: openTransaction, inLedger: ledger, onLine: lineNumber + 1)
-                    openTransaction = nil
-                }
-            }
-
-            // Transaction
-            if let transactionMetaData = TransactionMetaDataParser.parseFrom(line: line) {
-                openTransaction = Transaction(metaData: transactionMetaData)
-                continue
-            }
-
-            // Account
-            if let account = AccountParser.parseFrom(line: line) {
-                add(account, to: ledger, line: line, lineNumber: lineNumber)
-                continue
-            }
-
-            // Price
-            if let price = PriceParser.parseFrom(line: line) {
-                add(price, to: ledger, lineNumber: lineNumber)
-                continue
-            }
-
-            // Commodity
-            if let commodity = CommodityParser.parseFrom(line: line) {
-                add(commodity, to: ledger, lineNumber: lineNumber)
-                continue
-            }
-
-            ledger.errors.append("Invalid format in line \(lineNumber + 1): \(line)")
-
+            openTransaction = parse(line, number: lineNumber, into: ledger, openTransaction: openTransaction)
         }
 
         closeOpen(transaction: openTransaction, inLedger: ledger, onLine: lines.count)
@@ -86,6 +44,63 @@ public class Parser {
         ledger.validate()
 
         return ledger
+    }
+
+    /// Parses a single line
+    ///
+    /// - Parameters:
+    ///   - line: string of the line
+    ///   - lineNumber: number of the line for error messages
+    ///   - ledger: ledger where result will be saved into
+    ///   - openTransaction: currently open transaction from last line
+    /// - Returns: new open transaction or nil if no transaction open
+    private static func parse(_ line: String, number lineNumber: Int, into ledger: Ledger, openTransaction: Transaction?) -> Transaction? {
+        if line.isEmpty || line[line.startIndex] == Parser.comment {
+            // Ignore empty lines and comments
+            return openTransaction
+        }
+
+        // Posting
+        if let transaction = openTransaction {
+            if let posting = PostingParser.parseFrom(line: line, into: transaction) {
+                transaction.postings.append(posting)
+                return transaction
+            } else { // No posting, need to close previous transaction
+                closeOpen(transaction: openTransaction, inLedger: ledger, onLine: lineNumber + 1)
+            }
+        }
+
+        // Transaction
+        if let transactionMetaData = TransactionMetaDataParser.parseFrom(line: line) {
+            return Transaction(metaData: transactionMetaData)
+        }
+
+        // Account
+        if let account = AccountParser.parseFrom(line: line) {
+            add(account, to: ledger, line: line, lineNumber: lineNumber)
+            return nil
+        }
+
+        // Price
+        if let price = PriceParser.parseFrom(line: line) {
+            add(price, to: ledger, lineNumber: lineNumber)
+            return nil
+        }
+
+        // Commodity
+        if let commodity = CommodityParser.parseFrom(line: line) {
+            add(commodity, to: ledger, lineNumber: lineNumber)
+            return nil
+        }
+
+        // Balance
+        if let balance = BalanceParser.parseFrom(line: line) {
+            add(balance, to: ledger, lineNumber: lineNumber)
+            return nil
+        }
+
+        ledger.errors.append("Invalid format in line \(lineNumber + 1): \(line)")
+        return nil
     }
 
     /// Tries to close an open transaction if any
@@ -170,13 +185,29 @@ public class Parser {
     ///
     /// - Parameters:
     ///   - commodity: commodity to add
-    ///   - ledger: ledger to add the account into
+    ///   - ledger: ledger to add the commodity into
     ///   - lineNumber: line number which should be included in the error if the commodity cannot be added
     private static func add(_ commodity: Commodity, to ledger: Ledger, lineNumber: Int) {
         do {
             try ledger.add(commodity)
         } catch let error {
             ledger.errors.append("Error with commodity \(commodity): \(error.localizedDescription) in line \(lineNumber + 1)")
+        }
+    }
+
+    /// Tries to add a balance to the ledger
+    ///
+    /// Adds an error to the ledger if the balance cannot be added
+    ///
+    /// - Parameters:
+    ///   - balance: balance to add
+    ///   - ledger: ledger to add the balance into
+    ///   - lineNumber: line number which should be included in the error if the balance cannot be added
+    private static func add(_ balance: Balance, to ledger: Ledger, lineNumber: Int) {
+        do {
+            try ledger.add(balance)
+        } catch let error {
+            ledger.errors.append("Error with balance \(balance): \(error.localizedDescription) in line \(lineNumber + 1)")
         }
     }
 
