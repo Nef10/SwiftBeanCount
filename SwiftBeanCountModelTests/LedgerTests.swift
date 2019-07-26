@@ -259,21 +259,28 @@ class LedgerTests: XCTestCase {
         let accountName = "Assets:Cash"
         let transactionMetaData = TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_991_600), payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let transaction = Transaction(metaData: transactionMetaData)
+        let commodity = Commodity(symbol: "EUR", opening: Date(timeIntervalSince1970: 1_496_991_600))
         let account = try! Account(name: accountName)
-        let posting = Posting(account: account, amount: Amount(number: Decimal(10), commodity: Commodity(symbol: "EUR")), transaction: transaction)
+        let posting = Posting(account: account, amount: Amount(number: Decimal(10), commodity: commodity), transaction: transaction)
         transaction.postings.append(posting)
         let ledger = Ledger()
 
         // Empty leder
         XCTAssertEqual(String(describing: ledger), "")
 
-        // Ledger with only transactions
-        _ = ledger.add(transaction)
-        XCTAssertEqual(String(describing: ledger), String(describing: transaction))
+        // Ledger with commodity only
+        try! ledger.add(commodity)
+        XCTAssertEqual(String(describing: ledger), String(describing: commodity))
 
-        // Ledger with transactions and account openings
+        // Ledger with account openings and commodity
+        try! ledger.add(account)
         ledger.accounts.first { $0.name == accountName }!.opening = Date(timeIntervalSince1970: 1_496_991_600)
-        XCTAssertEqual(String(describing: ledger), "\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
+        XCTAssertEqual(String(describing: ledger), "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))")
+
+        // Ledger with transactions, account openings and commodity
+        _ = ledger.add(transaction)
+        XCTAssertEqual(String(describing: ledger),
+                       "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
 
         // ledger with only account openings
         let ledger2 = Ledger()

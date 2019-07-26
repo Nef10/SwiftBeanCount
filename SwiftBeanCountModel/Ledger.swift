@@ -283,6 +283,10 @@ extension Ledger: CustomStringConvertible {
     /// It consists of all `Account` and `Transaction` statements, but does not include `errors`
     public var description: String {
         var string = ""
+        string.append(self.commodities.map { String(describing: $0) }.joined(separator: "\n"))
+        if !string.isEmpty && !self.accounts.isEmpty {
+            string.append("\n")
+        }
         string.append(self.accounts.map { String(describing: $0) }.joined(separator: "\n"))
         if !string.isEmpty && !self.transactions.isEmpty {
             string.append("\n")
