@@ -21,9 +21,9 @@ struct AccountParser {
     /// - Parameter line: String of one line
     /// - Returns: Account if the line could be parsed, otherwise nil
     static func parseFrom(line: String) -> Account? {
-        let transactionMatches = line.matchingStrings(regex: self.regex)
+        let accountMatches = line.matchingStrings(regex: self.regex)
         guard
-            let match = transactionMatches[safe: 0],
+            let match = accountMatches[safe: 0],
             let date = DateParser.parseFrom(string: match[1]),
             let account = try? Account(name: match[3])
         else {
