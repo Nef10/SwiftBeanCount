@@ -28,6 +28,9 @@ class ParserTests: XCTestCase {
     let accountOpeningStringCommodity = "2017-06-09 open Assets:Cash EUR"
     let basicAccountClosingString = "2017-06-09 close Assets:Cash"
 
+    let commodityString = "2017-06-09 commodity EUR"
+    let priceString = "2017-06-09 price EUR 1.50 CAD"
+
     func testMinimal() {
         ensureMinimal(testFile: .minimal)
     }
@@ -81,6 +84,22 @@ class ParserTests: XCTestCase {
 
         // close twice (+ normal open) is not ok
         ledger = Parser.parse(string: "\(basicAccountOpeningString)\n\(basicAccountClosingString)\n\(basicAccountClosingString)")
+        XCTAssertFalse(ledger.errors.isEmpty)
+    }
+
+    func testCommodity() {
+        var ledger = Parser.parse(string: "\(commodityString)")
+        XCTAssertTrue(ledger.errors.isEmpty)
+
+        ledger = Parser.parse(string: "\(commodityString)\n\(commodityString)")
+        XCTAssertFalse(ledger.errors.isEmpty)
+    }
+
+    func testPrice() {
+        var ledger = Parser.parse(string: "\(priceString)")
+        XCTAssertTrue(ledger.errors.isEmpty)
+
+        ledger = Parser.parse(string: "\(priceString)\n\(priceString)")
         XCTAssertFalse(ledger.errors.isEmpty)
     }
 
