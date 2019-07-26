@@ -67,11 +67,7 @@ public class Parser {
 
             // Price
             if let price = PriceParser.parseFrom(line: line) {
-                do {
-                    try ledger.add(price)
-                } catch let error {
-                    ledger.errors.append("Error with price \(price): \(error.localizedDescription) in line \(lineNumber + 1)")
-                }
+                add(price, to: ledger, lineNumber: lineNumber)
                 continue
             }
 
@@ -143,6 +139,22 @@ public class Parser {
             } catch let error {
                 ledger.errors.append("Error with account \(account.name): \(error.localizedDescription) in line \(lineNumber + 1): \(line)")
             }
+        }
+    }
+
+    /// Tries to add a price to the ledger
+    ///
+    /// Adds an error to the ledger if the price cannot be added
+    ///
+    /// - Parameters:
+    ///   - price: price to add
+    ///   - ledger: ledger to add the account into
+    ///   - lineNumber: line number which should be included in the error if the price cannot be added
+    private static func add(_ price: Price, to ledger: Ledger, lineNumber: Int) {
+        do {
+            try ledger.add(price)
+        } catch let error {
+            ledger.errors.append("Error with price \(price): \(error.localizedDescription) in line \(lineNumber + 1)")
         }
     }
 
