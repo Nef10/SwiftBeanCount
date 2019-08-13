@@ -10,9 +10,7 @@ on:
 
 jobs:
   build:
-
     runs-on: macOS-latest
-    
     steps:
     - uses: actions/checkout@master
     - name: Brew
@@ -20,4 +18,4 @@ jobs:
     - name: Bundle
       run: bundle install
     - name: Fastlane
-      run: ./fastlane/travis.sh
+      run: bundle exec fastlane ci
