@@ -14,8 +14,10 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Brew
-      run: brew update && brew bundle
+      run: brew bundle
     - name: Bundle
       run: bundle install
     - name: Fastlane
       run: bundle exec fastlane ci
+      env:
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
