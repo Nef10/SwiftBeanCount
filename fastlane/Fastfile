@@ -16,7 +16,7 @@ platform :mac do
 
   desc "Install dependencies"
   lane :dependencies do
-    carthage(command: "bootstrap", use_ssh: true, cache_builds: true)
+    carthage(command: "bootstrap", cache_builds: true)
   end
 
   desc "Run linter"
