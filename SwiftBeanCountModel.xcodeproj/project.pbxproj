@@ -33,6 +33,8 @@
 		F9B7A88E1F553ABE0062B1CB /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD2D1F5534ED00EE31E5 /* Tag.swift */; };
 		F9B7A88F1F553ABE0062B1CB /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD2B1F5534ED00EE31E5 /* Transaction.swift */; };
 		F9B7A8901F553ABE0062B1CB /* TransactionMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD291F5534ED00EE31E5 /* TransactionMetaData.swift */; };
+		F9B9E1522326213B00811B3F /* Cost.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9E1512326213B00811B3F /* Cost.swift */; };
+		F9B9E1542326266400811B3F /* CostTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9E1532326266400811B3F /* CostTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +77,8 @@
 		F99E58A620A90F3100A05AFE /* PriceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceTests.swift; sourceTree = "<group>"; };
 		F99E58AB20A91B8D00A05AFE /* Balance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Balance.swift; sourceTree = "<group>"; };
 		F99E58AD20A91BA500A05AFE /* BalanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceTests.swift; sourceTree = "<group>"; };
+		F9B9E1512326213B00811B3F /* Cost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cost.swift; sourceTree = "<group>"; };
+		F9B9E1532326266400811B3F /* CostTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +134,7 @@
 				F99E58A420A9089000A05AFE /* Price.swift */,
 				F99E58AB20A91B8D00A05AFE /* Balance.swift */,
 				F940339820B251CC00DAC55F /* ValidationResult.swift */,
+				F9B9E1512326213B00811B3F /* Cost.swift */,
 				F991CD131F5534C000EE31E5 /* Info.plist */,
 			);
 			path = SwiftBeanCountModel;
@@ -150,6 +155,7 @@
 				F991CD3C1F5534FB00EE31E5 /* TransactionTests.swift */,
 				F99E58A620A90F3100A05AFE /* PriceTests.swift */,
 				F99E58AD20A91BA500A05AFE /* BalanceTests.swift */,
+				F9B9E1532326266400811B3F /* CostTests.swift */,
 				F991CD1F1F5534C000EE31E5 /* Info.plist */,
 			);
 			path = SwiftBeanCountModelTests;
@@ -290,6 +296,7 @@
 				F9B7A8871F553ABE0062B1CB /* Account.swift in Sources */,
 				F9B7A88D1F553ABE0062B1CB /* Posting.swift in Sources */,
 				F9B7A8881F553ABE0062B1CB /* Amount.swift in Sources */,
+				F9B9E1522326213B00811B3F /* Cost.swift in Sources */,
 				F9B7A88B1F553ABE0062B1CB /* Ledger.swift in Sources */,
 				F9B7A8891F553ABE0062B1CB /* Commodity.swift in Sources */,
 				F9B7A88A1F553ABE0062B1CB /* Flag.swift in Sources */,
@@ -310,6 +317,7 @@
 				F9B7A8831F553AB90062B1CB /* PostingTests.swift in Sources */,
 				F9B7A87D1F553AB90062B1CB /* AccountTests.swift in Sources */,
 				F9B7A87E1F553AB90062B1CB /* AmountTests.swift in Sources */,
+				F9B9E1542326266400811B3F /* CostTests.swift in Sources */,
 				F9B7A8861F553AB90062B1CB /* TransactionTests.swift in Sources */,
 				F9B7A8821F553AB90062B1CB /* MultiCurrencyAmountTests.swift in Sources */,
 				F9B7A8851F553AB90062B1CB /* TransactionMetaDataTests.swift in Sources */,

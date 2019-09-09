@@ -232,6 +232,13 @@ public class Account: AccountItem {
     /// - Parameter name: String to check
     /// - Returns: if the name is valid
     public class func isNameValid(_ name: String) -> Bool {
+        // swiftlint:disable:next nesting
+        struct Cache { // https://stackoverflow.com/a/25354915/3386893
+            static var validNames = Set<String>()
+        }
+        if Cache.validNames.contains(name) {
+            return true
+        }
         guard !name.isEmpty else {
             return false
         }
@@ -239,6 +246,7 @@ public class Account: AccountItem {
             if name.starts(with: type.rawValue + String(Account.nameSeperator)) // has to start with one base account followed by a seperator
                 && name.last != Account.nameSeperator //  is not allowed to end in a seperator
                 && name.range(of: "\(Account.nameSeperator)\(Account.nameSeperator)") == nil { // no account item is allowed to be empty
+                Cache.validNames.insert(name)
                 return true
             }
         }

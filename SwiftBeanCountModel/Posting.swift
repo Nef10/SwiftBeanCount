@@ -24,6 +24,9 @@ public struct Posting {
     /// optional `Amount` which was paid to get this amount (should be in another `Commodity`)
     public let price: Amount?
 
+    /// optional `Cost` if the amount was aquired on a cost basis
+    public let cost: Cost?
+
     /// Creats an posting with the given parameters
     ///
     /// - Parameters:
@@ -31,11 +34,12 @@ public struct Posting {
     ///   - amount: `Amount`
     ///   - transaction: the `Transaction` the posting is in - an *unowned* reference will be stored
     ///   - price: optional `Amount` which was paid to get this `amount`
-    public init(account: Account, amount: Amount, transaction: Transaction, price: Amount? = nil) {
+    public init(account: Account, amount: Amount, transaction: Transaction, price: Amount? = nil, cost: Cost? = nil) {
         self.account = account
         self.amount = amount
         self.transaction = transaction
         self.price = price
+        self.cost = cost
     }
 
 }
@@ -45,6 +49,9 @@ extension Posting: CustomStringConvertible {
     /// String to describe the posting in the ledget file
     public var description: String {
         var result = "  \(account.name) \(String(describing: amount))"
+        if let cost = cost {
+            result += " \(String(describing: cost))"
+        }
         if let price = price {
             result += " @ \(String(describing: price))"
         }
@@ -64,7 +71,7 @@ extension Posting: Equatable {
     ///   - rhs: second posting
     /// - Returns: if the account ammount and price are the same on both postings
     public static func == (lhs: Posting, rhs: Posting) -> Bool {
-        return lhs.account == rhs.account && lhs.amount == rhs.amount && lhs.price == rhs.price
+        return lhs.account == rhs.account && lhs.amount == rhs.amount && lhs.price == rhs.price && lhs.cost == rhs.cost
     }
 
 }
