@@ -11,9 +11,11 @@ import SwiftBeanCountModel
 
 struct PostingParser {
 
+    static private let priceGroup = "(\\s+(@@?)\\s+(\(ParserUtils.amountGroup)))"
     static private let regex: NSRegularExpression = {
         // swiftlint:disable:next force_try
-        try! NSRegularExpression(pattern: "^\\s+\(ParserUtils.accountGroup)\\s+\(ParserUtils.amountGroup)(\\s+(@@?)\\s+(\(ParserUtils.amountGroup)))?\\s*(;.*)?$", options: [])
+        try! NSRegularExpression(pattern: "^\\s+\(ParserUtils.accountGroup)\\s+\(ParserUtils.amountGroup)\\s*\(CostParser.costGroup)?\\s*\(priceGroup)?\\s*(;.*)?$",
+                                 options: [])
     }()
 
     /// Parse a Posting from a line String
@@ -31,19 +33,24 @@ struct PostingParser {
         }
         let commodity = Commodity(symbol: match[5])
         var price: Amount?
-        if !match[6].isEmpty {
-            let priceCommodity = Commodity(symbol: match[12])
+        let cost = CostParser.parseFrom(match: match, startIndex: 6)
+        if !match[24].isEmpty {  // price
+            let priceCommodity = Commodity(symbol: match[30])
             var priceAmount: Decimal
             var priceDecimalDigits: Int
-            if match[7] == "@" {
-                (priceAmount, priceDecimalDigits) = ParserUtils.parseAmountDecimalFrom(string: match[9])
-            } else { // match[7] == "@@"
-                (priceAmount, priceDecimalDigits) = ParserUtils.parseAmountDecimalFrom(string: match[9])
+            if match[25] == "@" {
+                (priceAmount, priceDecimalDigits) = ParserUtils.parseAmountDecimalFrom(string: match[27])
+            } else { // match[25] == "@@"
+                (priceAmount, priceDecimalDigits) = ParserUtils.parseAmountDecimalFrom(string: match[27])
                 priceAmount /= amount
             }
             price = Amount(number: priceAmount, commodity: priceCommodity, decimalDigits: priceDecimalDigits)
         }
-        return Posting(account: account, amount: Amount(number: amount, commodity: commodity, decimalDigits: decimalDigits), transaction: transaction, price: price)
+        return Posting(account: account,
+                       amount: Amount(number: amount, commodity: commodity, decimalDigits: decimalDigits),
+                       transaction: transaction,
+                       price: price,
+                       cost: cost)
     }
 
 }

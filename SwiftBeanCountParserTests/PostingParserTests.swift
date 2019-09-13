@@ -38,6 +38,9 @@ class PostingParserTests: XCTestCase {
     let specialCharacterPostingString = "  Assets:💰 1.00 💵"
     let totalPricePostingString = "  Assets:💰 2.00 💵 @@ 2.0 EUR"
     let unitPricePostingString = "  Assets:💰 2.0 💵 @ 1.003 EUR"
+    let costPostingString = "  Assets:💰 2.0 💵 {2017-06-09, 1.003 EUR, \"TEST\"}"
+    let costAndUnitPricePostingString = "  Assets:💰 2.0 💵 {2017-06-09, 1.003 EUR} @ 1.003 EUR"
+    let costAndTotalPricePostingString = "  Assets:💰 2.0 💵 {1.003 EUR, \"TEST\"} @@ 2.0 EUR"
 
     func testBasic() {
         let posting = PostingParser.parseFrom(line: basicPostingString, into: transaction)!
@@ -104,6 +107,25 @@ class PostingParserTests: XCTestCase {
         let posting = PostingParser.parseFrom(line: unitPricePostingString, into: transaction)!
         XCTAssertEqual(posting.amount, Amount(number: Decimal(2), commodity: Commodity(symbol: "💵"), decimalDigits: 1))
         XCTAssertEqual(posting.price, Amount(number: Decimal(1.003), commodity: Commodity(symbol: "EUR"), decimalDigits: 3))
+    }
+
+    func testCost() {
+        let posting = PostingParser.parseFrom(line: costPostingString, into: transaction)!
+        XCTAssertEqual(posting.cost!,
+                       Cost(amount: Amount(number: Decimal(1.003), commodity: Commodity(symbol: "EUR"), decimalDigits: 3), date: TestUtils.date20170609, label: "TEST"))
+    }
+
+    func testCostAndUnitPrice() {
+        let posting = PostingParser.parseFrom(line: costAndUnitPricePostingString, into: transaction)!
+        XCTAssertEqual(posting.cost!,
+                       Cost(amount: Amount(number: Decimal(1.003), commodity: Commodity(symbol: "EUR"), decimalDigits: 3), date: TestUtils.date20170609, label: nil))
+        XCTAssertEqual(posting.price, Amount(number: Decimal(1.003), commodity: Commodity(symbol: "EUR"), decimalDigits: 3))
+    }
+
+    func testCostAndTotalPrice() {
+        let posting = PostingParser.parseFrom(line: costAndTotalPricePostingString, into: transaction)!
+        XCTAssertEqual(posting.cost!, Cost(amount: Amount(number: Decimal(1.003), commodity: Commodity(symbol: "EUR"), decimalDigits: 3), date: nil, label: "TEST"))
+        XCTAssertEqual(posting.price, Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR"), decimalDigits: 1))
     }
 
     func testPerformance() {
