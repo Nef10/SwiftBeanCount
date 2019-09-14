@@ -243,4 +243,71 @@ class TransactionTests: XCTestCase {
         }
     }
 
+    func testIsValidBalancedToleranceCost() {
+        //Assets:Cash     -8.52  EUR
+        //Assets:Checking 10.00000 CAD { 0.85250 EUR }
+
+        account1!.opening = date
+        account2!.opening = date
+        let transactionMetaData = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
+        let transaction = Transaction(metaData: transactionMetaData)
+        let amount1 = Amount(number: Decimal(sign: FloatingPointSign.minus, exponent: -2, significand: Decimal(852)), commodity: Commodity(symbol: "EUR"), decimalDigits: 2)
+        let amount2 = Amount(number: Decimal(10.000_00), commodity: Commodity(symbol: "CAD"), decimalDigits: 5)
+        let costAmount = Amount(number: Decimal(sign: FloatingPointSign.plus, exponent: -5, significand: Decimal(85_250)),
+                                commodity: Commodity(symbol: "EUR"),
+                                decimalDigits: 5)
+        let cost = Cost(amount: costAmount, date: date, label: nil)
+        let posting1 = Posting(account: account1!, amount: amount1, transaction: transaction)
+        let posting2 = Posting(account: account2!, amount: amount2, transaction: transaction, price: nil, cost: cost)
+        transaction.postings.append(posting1)
+        transaction.postings.append(posting2)
+
+        // 10 * 0.8525  = 8.525
+        // |8.52 - 8.525| = 0.005
+        // -8.52 EUR has 2 decimal digits -> tolerance is 0.005
+        // (Percision of price is irrelevant, percision of CAD is not used because no posting in CAD)
+        // 0.005 <= 0.005 -> is valid
+        guard case .valid = transaction.validate() else {
+            XCTFail("\(transaction) is not valid")
+            return
+        }
+    }
+
+    func testIsValidUnbalancedToleranceCost() {
+        //Assets:Cash     -8.52  EUR
+        //Assets:Checking 10.00000 CAD { 0.85251 EUR }
+
+        account1!.opening = date
+        account2!.opening = date
+        let transactionMetaData = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
+        let transaction = Transaction(metaData: transactionMetaData)
+        // -8.52
+        let amount1 = Amount(number: Decimal(sign: FloatingPointSign.minus, exponent: -2, significand: Decimal(852)), commodity: Commodity(symbol: "EUR"), decimalDigits: 2)
+        let amount2 = Amount(number: Decimal(10.000_00), commodity: Commodity(symbol: "CAD"), decimalDigits: 5)
+        // 0.85251
+        let costAmount = Amount(number: Decimal(sign: FloatingPointSign.plus, exponent: -5, significand: Decimal(85_251)),
+                                commodity: Commodity(symbol: "EUR"),
+                                decimalDigits: 5)
+        let cost = Cost(amount: costAmount, date: nil, label: nil)
+        let posting1 = Posting(account: account1!, amount: amount1, transaction: transaction)
+        let posting2 = Posting(account: account2!, amount: amount2, transaction: transaction, price: nil, cost: cost)
+        transaction.postings.append(posting1)
+        transaction.postings.append(posting2)
+
+        // 10 * 0.85251  = 8.5251
+        // |8.52 - 8.5251| = 0.0051
+        // -8.52 EUR has 2 decimal digits -> tolerance is 0.005
+        // (Percision of cost is irrelevant, percision of CAD is not used because no posting in CAD)
+        // 0.0051 > 0.005 -> is invalid
+        if case .invalid(let error) = transaction.validate() {
+            XCTAssertEqual(error, """
+                2017-06-08 * "Payee" "Narration"
+                  Assets:Cash -8.52 EUR
+                  Assets:Checking 10.00000 CAD {0.85251 EUR} is not balanced - 0.0051 EUR too much (0.005 tolerance)
+                """)
+        } else {
+            XCTFail("\(transaction) is valid")
+        }
+    }
+
 }

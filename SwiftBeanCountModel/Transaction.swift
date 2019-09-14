@@ -54,7 +54,11 @@ public class Transaction {
     private func validateBalance() -> ValidationResult {
         var amount = MultiCurrencyAmount()
         for posting in postings {
-            if let price = posting.price {
+            if let cost = posting.cost, let costAmount = cost.amount, costAmount.number > 0 {
+                let postingAmount = MultiCurrencyAmount(amounts: [costAmount.commodity: costAmount.number * posting.amount.number],
+                                                        decimalDigits: [posting.amount.commodity: posting.amount.decimalDigits])
+                amount += postingAmount
+            } else if let price = posting.price {
                 let postingAmount = MultiCurrencyAmount(amounts: [price.commodity: price.number * posting.amount.number],
                                                         decimalDigits: [posting.amount.commodity: posting.amount.decimalDigits])
                 amount += postingAmount
