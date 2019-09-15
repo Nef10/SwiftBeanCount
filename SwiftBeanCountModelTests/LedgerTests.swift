@@ -114,13 +114,14 @@ class LedgerTests: XCTestCase {
         let posting = Posting(account: account,
                               amount: Amount(number: Decimal(10), commodity: Commodity(symbol: "EUR")),
                               transaction: transaction,
-                              price: Amount(number: Decimal(15), commodity: Commodity(symbol: "USD")))
+                              price: Amount(number: Decimal(15), commodity: Commodity(symbol: "USD")),
+                              cost: Cost(amount: Amount(number: Decimal(5), commodity: Commodity(symbol: "CAD")), date: date, label: "TEST"))
         transaction.postings.append(posting)
 
         let addedTransaction = ledger.add(transaction)
         XCTAssertEqual(addedTransaction, transaction)
         XCTAssert(ledger.transactions.contains(addedTransaction))
-        XCTAssertEqual(ledger.commodities.count, 2)
+        XCTAssertEqual(ledger.commodities.count, 3)
         XCTAssertEqual(ledger.accounts.count, 1)
         XCTAssertEqual(ledger.tags.count, 1)
 
