@@ -35,6 +35,8 @@
 		F9B7A8901F553ABE0062B1CB /* TransactionMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD291F5534ED00EE31E5 /* TransactionMetaData.swift */; };
 		F9B9E1522326213B00811B3F /* Cost.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9E1512326213B00811B3F /* Cost.swift */; };
 		F9B9E1542326266400811B3F /* CostTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9E1532326266400811B3F /* CostTests.swift */; };
+		F9B9E15A232DB45B00811B3F /* Inventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9E159232DB45B00811B3F /* Inventory.swift */; };
+		F9B9E15C232DBCB000811B3F /* InventoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9E15B232DBCB000811B3F /* InventoryTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +81,8 @@
 		F99E58AD20A91BA500A05AFE /* BalanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceTests.swift; sourceTree = "<group>"; };
 		F9B9E1512326213B00811B3F /* Cost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cost.swift; sourceTree = "<group>"; };
 		F9B9E1532326266400811B3F /* CostTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostTests.swift; sourceTree = "<group>"; };
+		F9B9E159232DB45B00811B3F /* Inventory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inventory.swift; sourceTree = "<group>"; };
+		F9B9E15B232DBCB000811B3F /* InventoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +139,7 @@
 				F99E58AB20A91B8D00A05AFE /* Balance.swift */,
 				F940339820B251CC00DAC55F /* ValidationResult.swift */,
 				F9B9E1512326213B00811B3F /* Cost.swift */,
+				F9B9E159232DB45B00811B3F /* Inventory.swift */,
 				F991CD131F5534C000EE31E5 /* Info.plist */,
 			);
 			path = SwiftBeanCountModel;
@@ -156,6 +161,7 @@
 				F99E58A620A90F3100A05AFE /* PriceTests.swift */,
 				F99E58AD20A91BA500A05AFE /* BalanceTests.swift */,
 				F9B9E1532326266400811B3F /* CostTests.swift */,
+				F9B9E15B232DBCB000811B3F /* InventoryTests.swift */,
 				F991CD1F1F5534C000EE31E5 /* Info.plist */,
 			);
 			path = SwiftBeanCountModelTests;
@@ -302,6 +308,7 @@
 				F9B7A88A1F553ABE0062B1CB /* Flag.swift in Sources */,
 				F99E58A520A9089000A05AFE /* Price.swift in Sources */,
 				F9B7A88F1F553ABE0062B1CB /* Transaction.swift in Sources */,
+				F9B9E15A232DB45B00811B3F /* Inventory.swift in Sources */,
 				F99E58AC20A91B8D00A05AFE /* Balance.swift in Sources */,
 				F9B7A8901F553ABE0062B1CB /* TransactionMetaData.swift in Sources */,
 			);
@@ -313,6 +320,7 @@
 			files = (
 				F99E58A720A90F3100A05AFE /* PriceTests.swift in Sources */,
 				F9B7A8841F553AB90062B1CB /* TagTests.swift in Sources */,
+				F9B9E15C232DBCB000811B3F /* InventoryTests.swift in Sources */,
 				F99E58AE20A91BA500A05AFE /* BalanceTests.swift in Sources */,
 				F9B7A8831F553AB90062B1CB /* PostingTests.swift in Sources */,
 				F9B7A87D1F553AB90062B1CB /* AccountTests.swift in Sources */,
