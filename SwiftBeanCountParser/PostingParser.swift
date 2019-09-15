@@ -42,7 +42,7 @@ struct PostingParser {
                 (priceAmount, priceDecimalDigits) = ParserUtils.parseAmountDecimalFrom(string: match[27])
             } else { // match[25] == "@@"
                 (priceAmount, priceDecimalDigits) = ParserUtils.parseAmountDecimalFrom(string: match[27])
-                priceAmount /= amount
+                priceAmount /= abs(amount)
             }
             price = Amount(number: priceAmount, commodity: priceCommodity, decimalDigits: priceDecimalDigits)
         }

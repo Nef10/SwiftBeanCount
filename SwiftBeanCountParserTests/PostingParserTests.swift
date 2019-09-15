@@ -36,7 +36,7 @@ class PostingParserTests: XCTestCase {
     let invalidAccountPostingString = "  Invalid:Checking 1.23 EUR"
     let endOfLineCommentPostingString = " Assets:Checking 1.23 EUR    ;gfdsg f gfds   "
     let specialCharacterPostingString = "  Assets:💰 1.00 💵"
-    let totalPricePostingString = "  Assets:💰 2.00 💵 @@ 2.0 EUR"
+    let totalPricePostingString = "  Assets:💰 -2.00 💵 @@ 2.0 EUR"
     let unitPricePostingString = "  Assets:💰 2.0 💵 @ 1.003 EUR"
     let costPostingString = "  Assets:💰 2.0 💵 {2017-06-09, 1.003 EUR, \"TEST\"}"
     let costAndUnitPricePostingString = "  Assets:💰 2.0 💵 {2017-06-09, 1.003 EUR} @ 1.003 EUR"
@@ -99,7 +99,7 @@ class PostingParserTests: XCTestCase {
 
     func testTotalPrice() {
         let posting = PostingParser.parseFrom(line: totalPricePostingString, into: transaction)!
-        XCTAssertEqual(posting.amount, Amount(number: Decimal(2.00), commodity: Commodity(symbol: "💵"), decimalDigits: 2))
+        XCTAssertEqual(posting.amount, Amount(number: Decimal(-2.00), commodity: Commodity(symbol: "💵"), decimalDigits: 2))
         XCTAssertEqual(posting.price, Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR"), decimalDigits: 1))
     }
 
