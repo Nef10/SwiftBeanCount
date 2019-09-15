@@ -26,6 +26,33 @@ public class Cost {
         self.label = label
     }
 
+    /// Checks if this price should match another one for inventory booking
+    ///
+    /// If a property is present in this cost, if needs to be equal to the
+    /// on of the given cost. If a property is not present in this cost
+    /// the value of the other property does not matter.
+    ///
+    /// - Parameter cost: cost which should be matched
+    /// - Returns: true if the cost matches, false otherwise
+    func matches(cost: Cost) -> Bool {
+        if let amount = self.amount {
+            if amount != cost.amount {
+                return false
+            }
+        }
+        if let date = self.date {
+            if date != cost.date {
+                return false
+            }
+        }
+        if let label = self.label {
+            if label != cost.label {
+                return false
+            }
+        }
+        return true
+    }
+
 }
 
 extension Cost: CustomStringConvertible {
