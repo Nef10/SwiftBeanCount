@@ -136,14 +136,15 @@ public class Ledger {
             if case .invalid(let error) = $0.validate() {
                 errors.append(error)
             }
-        }
-        commodities.forEach {
-            if case .invalid(let error) = $0.validate() {
+            if case .invalid(let error) = $0.validateBalance(in: self) {
+                errors.append(error)
+            }
+            if case .invalid(let error) = $0.validateInventory(in: self) {
                 errors.append(error)
             }
         }
-        accounts.forEach {
-            if case .invalid(let error) = $0.validateBalance(in: self) {
+        commodities.forEach {
+            if case .invalid(let error) = $0.validate() {
                 errors.append(error)
             }
         }

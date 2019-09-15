@@ -197,6 +197,27 @@ public class Account: AccountItem {
         return .valid
     }
 
+    /// Checks if units booked by cost have correct lots
+    ///
+    /// - Parameter ledger: ledger with the Transactions
+    /// - Returns: `ValidationResult`
+    func validateInventory(in ledger: Ledger) -> ValidationResult {
+        var postingIterator = postings(in: ledger).makeIterator()
+        var nextPosting = postingIterator.next()
+        let inventory = Inventory(bookingMethod: .strict)
+        while let posting = nextPosting {
+            if posting.cost != nil {
+                do {
+                    try inventory.book(posting: posting)
+                } catch {
+                    return .invalid(error.localizedDescription)
+                }
+            }
+            nextPosting = postingIterator.next()
+        }
+        return .valid
+    }
+
     /// Returns all posting for this account ordered by date from the oldest to the newest
     ///
     /// - Parameter ledger: leder with the transactions with the postings

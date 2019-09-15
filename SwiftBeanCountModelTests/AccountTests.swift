@@ -420,6 +420,92 @@ class AccountTests: XCTestCase {
         }
     }
 
+    func testValidateInventoryEmpty() {
+        let ledger = Ledger()
+        let commodity = Commodity(symbol: "CAD")
+        let account = try! Account(name: accountName)
+        account.commodity = commodity
+        try! ledger.add(account)
+
+        guard case .valid = account.validateInventory(in: ledger) else {
+            XCTFail("\(account) is not valid")
+            return
+        }
+    }
+
+    func testValidateInventory() {
+        let ledger = Ledger()
+        let commodity = Commodity(symbol: "CAD")
+        let account = try! Account(name: accountName)
+        account.commodity = commodity
+        try! ledger.add(account)
+
+        var transaction = Transaction(metaData: TransactionMetaData(date: date20170608, payee: "", narration: "", flag: .complete, tags: []))
+        transaction.postings.append(Posting(account: account,
+                                            amount: Amount(number: 1.1, commodity: commodity, decimalDigits: 1),
+                                            transaction: transaction,
+                                            price: nil,
+                                            cost: Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: "1")))
+        _ = ledger.add(transaction)
+
+        transaction = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "", narration: "", flag: .complete, tags: []))
+        transaction.postings.append(Posting(account: account,
+                                            amount: Amount(number: 1.1, commodity: commodity, decimalDigits: 1),
+                                            transaction: transaction,
+                                            price: nil,
+                                            cost: Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: nil)))
+        _ = ledger.add(transaction)
+
+        transaction = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "", narration: "", flag: .complete, tags: []))
+        transaction.postings.append(Posting(account: account,
+                                            amount: Amount(number: -1, commodity: commodity, decimalDigits: 0),
+                                            transaction: transaction,
+                                            price: nil,
+                                            cost: Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: "1")))
+        _ = ledger.add(transaction)
+
+        guard case .valid = account.validateInventory(in: ledger) else {
+            XCTFail("\(account) is not valid")
+            return
+        }
+    }
+
+    func testValidateInvalidInventory() {
+        let ledger = Ledger()
+        let commodity = Commodity(symbol: "CAD")
+        let account = try! Account(name: accountName)
+        let amount = Amount(number: 1.1, commodity: commodity, decimalDigits: 1)
+        let cost = Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: "1")
+        account.commodity = commodity
+        try! ledger.add(account)
+
+        var transaction = Transaction(metaData: TransactionMetaData(date: date20170608, payee: "", narration: "", flag: .complete, tags: []))
+        transaction.postings.append(Posting(account: account, amount: amount, transaction: transaction, price: nil, cost: cost))
+        _ = ledger.add(transaction)
+
+        transaction = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "", narration: "", flag: .complete, tags: []))
+        transaction.postings.append(Posting(account: account, amount: amount, transaction: transaction, price: nil, cost: cost))
+        _ = ledger.add(transaction)
+
+        transaction = Transaction(metaData: TransactionMetaData(date: date20170610, payee: "", narration: "", flag: .complete, tags: []))
+        transaction.postings.append(Posting(account: account,
+                                            amount: Amount(number: -1.0, commodity: commodity, decimalDigits: 0),
+                                            transaction: transaction,
+                                            price: nil,
+                                            cost: Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: nil)))
+        _ = ledger.add(transaction)
+
+        if case .invalid(let error) = account.validateInventory(in: ledger) {
+            XCTAssertEqual(error, """
+                Ambigious Booking: -1 CAD {5 CAD}, matches: 1.1 CAD {2017-06-08, 5 CAD, "1"}
+                1.1 CAD {2017-06-09, 5 CAD, "1"}, inventory: 1.1 CAD {2017-06-08, 5 CAD, "1"}
+                1.1 CAD {2017-06-09, 5 CAD, "1"}
+                """)
+        } else {
+            XCTFail("\(account) is valid")
+        }
+    }
+
     func testEqual() {
         let name1 = "Assets:Cash"
         let name2 = "Assets:💰"
