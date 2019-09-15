@@ -20,6 +20,15 @@ public enum InventoryError: Error {
     case ambiguousBooking(String)
 }
 
+extension InventoryError: LocalizedError {
+    public var errorDescription: String? {
+        if case let InventoryError.ambiguousBooking(error) = self {
+            return error
+        }
+        return nil
+    }
+}
+
 /// Inventory of lots for things held at cost
 class Inventory {
 
@@ -45,12 +54,14 @@ class Inventory {
             assertionFailure("Trying to book a posting without cost")
             return
         }
-        let lot = Lot(units: posting.amount, cost: cost)
-        let existingLotForCommodity = inventory.first { $0.units.commodity == lot.units.commodity }
+        let existingLotForCommodity = inventory.first { $0.units.commodity == posting.amount.commodity }
         // inventories can either have all positive or all negative lots
-        if !(existingLotForCommodity != nil) || existingLotForCommodity?.units.number.sign == lot.units.number.sign {
+        if !(existingLotForCommodity != nil) || existingLotForCommodity?.units.number.sign == posting.amount.number.sign {
+            // When have a cost without date in the posting add we need to add it, use the date from the transaction
+            let lot = Lot(units: posting.amount, cost: Cost(amount: cost.amount, date: cost.date != nil ? cost.date : posting.transaction.metaData.date, label: cost.label))
             add(lot)
         } else {
+            let lot = Lot(units: posting.amount, cost: cost)
             try reduce(lot)
         }
     }
