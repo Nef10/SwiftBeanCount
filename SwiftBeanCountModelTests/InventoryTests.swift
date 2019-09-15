@@ -145,4 +145,31 @@ class InventoryTests: XCTestCase {
         XCTAssertEqual(inventory.inventory.first?.cost, cost)
     }
 
+    func testDescription() {
+        let inventory = Inventory(bookingMethod: .strict)
+
+        let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
+        let cost1 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
+        let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
+
+        let amount2 = Amount(number: 3.0, commodity: commodity1, decimalDigits: 2)
+        let cost2 = Cost(amount: Amount(number: 5.0, commodity: commodity2, decimalDigits: 2), date: nil, label: nil)
+        let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
+
+        inventory.book(posting: posting1)
+        inventory.book(posting: posting2)
+
+        XCTAssertEqual(String(describing: inventory), """
+            \(amount1) \(cost1)
+            \(amount2) \(cost2)
+            """)
+    }
+
+    func testEntryDescription() {
+        let amount = Amount(number: -2.0, commodity: commodity1, decimalDigits: 1)
+        let cost = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
+        let entry = Inventory.Entry(units: amount, cost: cost)
+        XCTAssertEqual(String(describing: entry), "\(amount) \(cost)")
+    }
+
 }

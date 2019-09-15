@@ -73,3 +73,21 @@ class Inventory {
     }
 
 }
+
+extension Inventory: CustomStringConvertible {
+
+    /// String with all inventory entries
+    public var description: String {
+        return inventory.map { "\($0)" }.joined(separator: "\n")
+    }
+
+}
+
+extension Inventory.Entry: CustomStringConvertible {
+
+    /// String with units and cost
+    public var description: String {
+        return "\(units) \(cost)"
+    }
+
+}

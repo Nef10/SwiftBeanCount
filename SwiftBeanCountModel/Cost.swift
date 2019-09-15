@@ -30,7 +30,7 @@ public class Cost {
 
 extension Cost: CustomStringConvertible {
 
-    /// String to describe the cost in the ledget file
+    /// String to describe the cost in the ledger file
     public var description: String {
         var results = [String]()
         if let date = date {
