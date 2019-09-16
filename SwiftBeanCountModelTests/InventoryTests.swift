@@ -375,8 +375,7 @@ extension InventoryTests { // Test Reduce
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
         let amount3 = Amount(number: -1.0, commodity: commodity1, decimalDigits: 2)
-        let cost3 = try! Cost(amount: nil, date: nil, label: nil)
-        let posting3 = Posting(account: account, amount: amount3, transaction: transaction, price: nil, cost: cost3)
+        let posting3 = Posting(account: account, amount: amount3, transaction: transaction, price: nil, cost: try! Cost(amount: nil, date: nil, label: nil))
 
         do {
             let result1 = try inventory.book(posting: posting1)
@@ -388,6 +387,15 @@ extension InventoryTests { // Test Reduce
         }
 
         XCTAssertThrowsError(try inventory.book(posting: posting3))
+        do {
+            _ = try inventory.book(posting: posting3)
+        } catch {
+            XCTAssertEqual(error.localizedDescription, """
+                Ambigious Booking: -1.00 EUR {}, matches: 2.0 EUR {2017-06-08, 3.0 CAD}
+                2.0 EUR {2017-06-08, 2.0 CAD}, inventory: 2.0 EUR {2017-06-08, 3.0 CAD}
+                2.0 EUR {2017-06-08, 2.0 CAD}
+                """)
+        }
 
         XCTAssertEqual(inventory.inventory.count, 2)
         XCTAssertEqual(inventory.inventory.first?.units, amount1)

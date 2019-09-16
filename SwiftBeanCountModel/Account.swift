@@ -90,16 +90,25 @@ public class AccountGroup: AccountItem {
     }
 }
 
+/// Errors an account can throw
+public enum AccountError: Error {
+    /// an invalid account name
+    case invaildName(String)
+}
+
+extension AccountError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case let AccountError.invaildName(error):
+            return "Invalid Account name: \(error)"
+        }
+    }
+}
+
 /// Class with represents an Account with a name, commodity, opening and closing date, as well as a type.
 ///
 /// It does hot hold any `Transaction`s
 public class Account: AccountItem {
-
-    /// Errors an account can throw
-    public enum AccoutError: Error {
-        /// an invalid account name
-        case invaildName(String)
-    }
 
     static let nameSeperator = Character(":")
 
@@ -132,10 +141,10 @@ public class Account: AccountItem {
     ///
     /// - Parameters:
     ///   - name: a vaild name for the account
-    /// - Throws: AccoutError.invaildName in case the account name is invalid
+    /// - Throws: AccountError.invaildName in case the account name is invalid
     public init(name: String) throws {
         guard Account.isNameValid(name) else {
-            throw AccoutError.invaildName(name)
+            throw AccountError.invaildName(name)
         }
         self.name = name
         self.accountType = Account.getAccountType(for: name)

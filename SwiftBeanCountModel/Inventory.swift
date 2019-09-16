@@ -22,10 +22,10 @@ public enum InventoryError: Error {
 
 extension InventoryError: LocalizedError {
     public var errorDescription: String? {
-        if case let InventoryError.ambiguousBooking(error) = self {
+        switch self {
+        case let .ambiguousBooking(error):
             return error
         }
-        return nil
     }
 }
 

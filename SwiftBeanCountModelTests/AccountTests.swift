@@ -28,6 +28,11 @@ class AccountTests: XCTestCase {
         }
         for name in invalidNames {
             XCTAssertThrowsError(try Account(name: name))
+            do {
+                _ = try Account(name: name)
+            } catch {
+                XCTAssertEqual(error.localizedDescription, "Invalid Account name: \(name)")
+            }
         }
     }
 

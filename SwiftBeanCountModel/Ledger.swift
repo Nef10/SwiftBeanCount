@@ -8,14 +8,23 @@
 
 import Foundation
 
+/// Errors which can occur when working with the ledger
+public enum LedgerError: Error {
+    /// Error if the object your try to add already exists in the ledger
+    case alreadyExists(String)
+}
+
+extension LedgerError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case let .alreadyExists(error):
+            return "Entry already exists in Ledger: \(error)"
+        }
+    }
+}
+
 /// A Ledger is the main part of the model, it contains all necessary information.
 public class Ledger {
-
-    /// Errors which can occur when working with the ledger
-    public enum LedgerError: Error {
-        /// Error if the object your try to add already exists in the ledger
-        case alreadyExists(String)
-    }
 
     /// Array of all `Transaction`s in this ledger
     public private(set) var transactions = [Transaction]()

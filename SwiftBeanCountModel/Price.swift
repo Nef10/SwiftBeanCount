@@ -8,14 +8,23 @@
 
 import Foundation
 
+/// Errors a price can throw
+public enum PriceError: Error {
+    /// the price is listed in its own commodity
+    case sameCommodity(String)
+}
+
+extension PriceError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case let .sameCommodity(error):
+            return "Invalid Price, using same commodity: \(error)"
+        }
+    }
+}
+
 /// Price of a commodity in another commodity on a given date
 public struct Price {
-
-    /// Errors a price can throw
-    public enum PriceError: Error {
-        /// the price is listed in its own commodity
-        case sameCommodity(String)
-    }
 
     /// Date of the Price
     public let date: Date

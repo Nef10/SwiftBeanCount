@@ -22,6 +22,11 @@ class CostTests: XCTestCase {
 
     func testNegativeAmount() {
         XCTAssertThrowsError(try Cost(amount: Amount(number: -1, commodity: Commodity(symbol: "EUR")), date: nil, label: nil))
+        do {
+            _ = try Cost(amount: Amount(number: -1, commodity: Commodity(symbol: "EUR")), date: nil, label: nil)
+        } catch {
+            XCTAssertEqual(error.localizedDescription, "Invalid Cost, negative amount: {-1 EUR}")
+        }
     }
 
     func testEqual() {

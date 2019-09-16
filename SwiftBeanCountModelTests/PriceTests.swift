@@ -18,6 +18,11 @@ class PriceTests: XCTestCase {
         let differentCommodity = Commodity(symbol: "EUR")
         XCTAssertNoThrow(try Price(date: date, commodity: differentCommodity, amount: amount))
         XCTAssertThrowsError(try Price(date: date, commodity: sameCommodity, amount: amount))
+        do {
+            _ = try Price(date: date, commodity: sameCommodity, amount: amount)
+        } catch {
+            XCTAssertEqual(error.localizedDescription, "Invalid Price, using same commodity: 2017-06-08 price CAD 1 CAD")
+        }
     }
 
     func testDescription() {
