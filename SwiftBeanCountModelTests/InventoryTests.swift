@@ -6,6 +6,7 @@
 //  Copyright © 2019 Steffen Kötte. All rights reserved.
 //
 
+// swiftlint:disable file_length
 @testable import SwiftBeanCountModel
 import XCTest
 
@@ -36,8 +37,14 @@ class InventoryTests: XCTestCase {
         let cost2 = Cost(amount: Amount(number: 5.0, commodity: commodity2, decimalDigits: 2), date: date, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting1))
-        XCTAssertNoThrow(try inventory.book(posting: posting2))
+        do {
+            let result1 = try inventory.book(posting: posting1)
+            let result2 = try inventory.book(posting: posting2)
+            XCTAssertNil(result1)
+            XCTAssertNil(result2)
+        } catch {
+            XCTFail("Error thrown")
+        }
 
         XCTAssertEqual(String(describing: inventory), """
             \(amount1) \(cost1)
@@ -55,7 +62,13 @@ extension InventoryTests { // Test Adding
         let cost = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting = Posting(account: account, amount: amount, transaction: transaction, price: nil, cost: cost)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting))
+        do {
+            let result = try inventory.book(posting: posting)
+            XCTAssertNil(result)
+        } catch {
+            XCTFail("Error thrown")
+        }
+
         XCTAssertEqual(inventory.inventory.count, 1)
         XCTAssertEqual(inventory.inventory.first?.units, amount)
         XCTAssertEqual(inventory.inventory.first?.cost, cost)
@@ -67,7 +80,13 @@ extension InventoryTests { // Test Adding
         let cost = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
         let posting = Posting(account: account, amount: amount, transaction: transaction, price: nil, cost: cost)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting))
+        do {
+            let result = try inventory.book(posting: posting)
+            XCTAssertNil(result)
+        } catch {
+            XCTFail("Error thrown")
+        }
+
         XCTAssertEqual(inventory.inventory.first?.cost.date, date)
     }
 
@@ -82,8 +101,15 @@ extension InventoryTests { // Test Adding
         let cost2 = Cost(amount: Amount(number: 5.0, commodity: commodity2, decimalDigits: 2), date: date, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting1))
-        XCTAssertNoThrow(try inventory.book(posting: posting2))
+        do {
+            let result1 = try inventory.book(posting: posting1)
+            let result2 = try inventory.book(posting: posting2)
+            XCTAssertNil(result1)
+            XCTAssertNil(result2)
+        } catch {
+            XCTFail("Error thrown")
+        }
+
         XCTAssertEqual(inventory.inventory.count, 2)
         XCTAssertEqual(inventory.inventory.first?.units, amount1)
         XCTAssertEqual(inventory.inventory.first?.cost, cost1)
@@ -101,8 +127,15 @@ extension InventoryTests { // Test Adding
         let amount2 = Amount(number: 3.0, commodity: commodity1, decimalDigits: 2)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting1))
-        XCTAssertNoThrow(try inventory.book(posting: posting2))
+        do {
+            let result1 = try inventory.book(posting: posting1)
+            let result2 = try inventory.book(posting: posting2)
+            XCTAssertNil(result1)
+            XCTAssertNil(result2)
+        } catch {
+            XCTFail("Error thrown")
+        }
+
         XCTAssertEqual(inventory.inventory.count, 1)
         XCTAssertEqual(inventory.inventory.first?.units.commodity, commodity1)
         XCTAssertEqual(inventory.inventory.first?.units.decimalDigits, 2)
@@ -120,8 +153,15 @@ extension InventoryTests { // Test Adding
         let amount2 = Amount(number: 3.0, commodity: commodity2, decimalDigits: 2)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting1))
-        XCTAssertNoThrow(try inventory.book(posting: posting2))
+        do {
+            let result1 = try inventory.book(posting: posting1)
+            let result2 = try inventory.book(posting: posting2)
+            XCTAssertNil(result1)
+            XCTAssertNil(result2)
+        } catch {
+            XCTFail("Error thrown")
+        }
+
         XCTAssertEqual(inventory.inventory.count, 2)
         XCTAssertEqual(inventory.inventory.first?.units, amount1)
         XCTAssertEqual(inventory.inventory.first?.cost, cost)
@@ -135,7 +175,13 @@ extension InventoryTests { // Test Adding
         let cost = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting = Posting(account: account, amount: amount, transaction: transaction, price: nil, cost: cost)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting))
+        do {
+            let result = try inventory.book(posting: posting)
+            XCTAssertNil(result)
+        } catch {
+            XCTFail("Error thrown")
+        }
+
         XCTAssertEqual(inventory.inventory.count, 1)
         XCTAssertEqual(inventory.inventory.first?.units, amount)
         XCTAssertEqual(inventory.inventory.first?.cost, cost)
@@ -152,8 +198,15 @@ extension InventoryTests { // Test Adding
         let cost2 = Cost(amount: Amount(number: 5.0, commodity: commodity2, decimalDigits: 2), date: date, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting1))
-        XCTAssertNoThrow(try inventory.book(posting: posting2))
+        do {
+            let result1 = try inventory.book(posting: posting1)
+            let result2 = try inventory.book(posting: posting2)
+            XCTAssertNil(result1)
+            XCTAssertNil(result2)
+        } catch {
+            XCTFail("Error thrown")
+        }
+
         XCTAssertEqual(inventory.inventory.count, 2)
         XCTAssertEqual(inventory.inventory.first?.units, amount1)
         XCTAssertEqual(inventory.inventory.first?.cost, cost1)
@@ -171,8 +224,15 @@ extension InventoryTests { // Test Adding
         let amount2 = Amount(number: -3.0, commodity: commodity1, decimalDigits: 2)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting1))
-        XCTAssertNoThrow(try inventory.book(posting: posting2))
+        do {
+            let result1 = try inventory.book(posting: posting1)
+            let result2 = try inventory.book(posting: posting2)
+            XCTAssertNil(result1)
+            XCTAssertNil(result2)
+        } catch {
+            XCTFail("Error thrown")
+        }
+
         XCTAssertEqual(inventory.inventory.count, 1)
         XCTAssertEqual(inventory.inventory.first?.units.commodity, commodity1)
         XCTAssertEqual(inventory.inventory.first?.units.decimalDigits, 2)
@@ -191,13 +251,44 @@ extension InventoryTests { // Test Reduce
         let cost1 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting1))
-
         let amount2 = Amount(number: -1.0, commodity: commodity1, decimalDigits: 2)
         let cost2 = Cost(amount: nil, date: nil, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting2))
+        do {
+            let result1 = try inventory.book(posting: posting1)
+            let result2 = try inventory.book(posting: posting2)
+            XCTAssertNil(result1)
+            XCTAssertEqual(result2, Amount(number: -cost1.amount!.number, commodity: cost1.amount!.commodity, decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
+        } catch {
+            XCTFail("Error thrown")
+        }
+
+        XCTAssertEqual(inventory.inventory.count, 1)
+        XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number - amount2.number)
+        XCTAssertEqual(inventory.inventory.first?.units.decimalDigits, 2)
+        XCTAssertEqual(inventory.inventory.first?.cost, cost1)
+    }
+
+    func testReducePositive() {
+        let inventory = Inventory(bookingMethod: .strict)
+
+        let amount1 = Amount(number: -2.0, commodity: commodity1, decimalDigits: 1)
+        let cost1 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
+
+        let amount2 = Amount(number: 1.0, commodity: commodity1, decimalDigits: 2)
+        let cost2 = Cost(amount: nil, date: nil, label: nil)
+        let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
+
+        do {
+            let result1 = try inventory.book(posting: posting1)
+            let result2 = try inventory.book(posting: posting2)
+            XCTAssertNil(result1)
+            XCTAssertEqual(result2, cost1.amount?.multiCurrencyAmount)
+        } catch {
+            XCTFail("Error thrown")
+        }
 
         XCTAssertEqual(inventory.inventory.count, 1)
         XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number - amount2.number)
@@ -209,22 +300,27 @@ extension InventoryTests { // Test Reduce
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let cost1 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let cost1 = Cost(amount: Amount(number: 3.567, commodity: commodity2, decimalDigits: 3), date: date, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
-
-        XCTAssertNoThrow(try inventory.book(posting: posting1))
 
         let amount2 = Amount(number: 1.0, commodity: commodity2, decimalDigits: 2)
         let cost2 = Cost(amount: nil, date: date, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting2))
-
         let amount3 = Amount(number: -1.0, commodity: commodity1, decimalDigits: 2)
         let cost3 = Cost(amount: nil, date: nil, label: nil)
         let posting3 = Posting(account: account, amount: amount3, transaction: transaction, price: nil, cost: cost3)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting3))
+        do {
+            let result1 = try inventory.book(posting: posting1)
+            let result2 = try inventory.book(posting: posting2)
+            let result3 = try inventory.book(posting: posting3)
+            XCTAssertNil(result1)
+            XCTAssertNil(result2)
+            XCTAssertEqual(result3, Amount(number: -cost1.amount!.number, commodity: cost1.amount!.commodity, decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
+        } catch {
+            XCTFail("Error thrown")
+        }
 
         XCTAssertEqual(inventory.inventory.count, 2)
         XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number - amount3.number)
@@ -238,21 +334,26 @@ extension InventoryTests { // Test Reduce
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let cost1 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let cost1 = Cost(amount: Amount(number: 5.5, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
-
-        XCTAssertNoThrow(try inventory.book(posting: posting1))
 
         let amount2 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
         let cost2 = Cost(amount: Amount(number: 2.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting2))
-
         let amount3 = Amount(number: -1.0, commodity: commodity1, decimalDigits: 2)
         let posting3 = Posting(account: account, amount: amount3, transaction: transaction, price: nil, cost: cost1)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting3))
+        do {
+            let result1 = try inventory.book(posting: posting1)
+            let result2 = try inventory.book(posting: posting2)
+            let result3 = try inventory.book(posting: posting3)
+            XCTAssertNil(result1)
+            XCTAssertNil(result2)
+            XCTAssertEqual(result3, Amount(number: -cost1.amount!.number, commodity: cost1.amount!.commodity, decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
+        } catch {
+            XCTFail("Error thrown")
+        }
 
         XCTAssertEqual(inventory.inventory.count, 2)
         XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number - amount3.number)
@@ -269,17 +370,22 @@ extension InventoryTests { // Test Reduce
         let cost1 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting1))
-
         let amount2 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
         let cost2 = Cost(amount: Amount(number: 2.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting2))
-
         let amount3 = Amount(number: -1.0, commodity: commodity1, decimalDigits: 2)
         let cost3 = Cost(amount: nil, date: nil, label: nil)
         let posting3 = Posting(account: account, amount: amount3, transaction: transaction, price: nil, cost: cost3)
+
+        do {
+            let result1 = try inventory.book(posting: posting1)
+            let result2 = try inventory.book(posting: posting2)
+            XCTAssertNil(result1)
+            XCTAssertNil(result2)
+        } catch {
+            XCTFail("Error thrown")
+        }
 
         XCTAssertThrowsError(try inventory.book(posting: posting3))
 
@@ -297,13 +403,49 @@ extension InventoryTests { // Test Reduce
         let cost1 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting1))
-
         let amount2 = Amount(number: -2.0, commodity: commodity1, decimalDigits: 2)
         let cost2 = Cost(amount: nil, date: nil, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting2))
+        do {
+            let result1 = try inventory.book(posting: posting1)
+            let result2 = try inventory.book(posting: posting2)
+            XCTAssertNil(result1)
+            XCTAssertEqual(result2, Amount(number: amount2.number * cost1.amount!.number,
+                                           commodity: cost1.amount!.commodity,
+                                           decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
+        } catch {
+            XCTFail("Error thrown")
+        }
+
+        XCTAssertEqual(inventory.inventory.count, 0)
+    }
+
+    func testTotalReduceMultipleLots() {
+        let inventory = Inventory(bookingMethod: .strict)
+
+        let amount1 = Amount(number: 2.5, commodity: commodity1, decimalDigits: 1)
+        let cost1 = Cost(amount: Amount(number: 2.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
+        let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
+
+        let amount2 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
+        let cost2 = Cost(amount: Amount(number: 3.05, commodity: commodity2, decimalDigits: 2), date: date, label: nil)
+        let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
+
+        let amount3 = Amount(number: -4.5, commodity: commodity1, decimalDigits: 2)
+        let cost3 = Cost(amount: nil, date: nil, label: nil)
+        let posting3 = Posting(account: account, amount: amount3, transaction: transaction, price: nil, cost: cost3)
+
+        do {
+            let result1 = try inventory.book(posting: posting1)
+            let result2 = try inventory.book(posting: posting2)
+            let result3 = try inventory.book(posting: posting3)
+            XCTAssertNil(result1)
+            XCTAssertNil(result2)
+            XCTAssertEqual(result3, MultiCurrencyAmount(amounts: [commodity2: -11.1], decimalDigits: [commodity2: 2]))
+        } catch {
+            XCTFail("Error thrown")
+        }
 
         XCTAssertEqual(inventory.inventory.count, 0)
     }
@@ -315,19 +457,26 @@ extension InventoryTests { // Test Reduce
         let cost1 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting1))
-
         let amount2 = Amount(number: 2.0, commodity: commodity2, decimalDigits: 1)
         let cost2 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
-
-        XCTAssertNoThrow(try inventory.book(posting: posting2))
 
         let amount3 = Amount(number: -2.0, commodity: commodity1, decimalDigits: 2)
         let cost3 = Cost(amount: nil, date: nil, label: nil)
         let posting3 = Posting(account: account, amount: amount3, transaction: transaction, price: nil, cost: cost3)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting3))
+        do {
+            let result1 = try inventory.book(posting: posting1)
+            let result2 = try inventory.book(posting: posting2)
+            let result3 = try inventory.book(posting: posting3)
+            XCTAssertNil(result1)
+            XCTAssertNil(result2)
+            XCTAssertEqual(result3, Amount(number: amount3.number * cost1.amount!.number,
+                                           commodity: cost1.amount!.commodity,
+                                           decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
+        } catch {
+            XCTFail("Error thrown")
+        }
 
         XCTAssertEqual(inventory.inventory.count, 1)
         XCTAssertEqual(inventory.inventory.first?.units, amount2)
@@ -341,24 +490,59 @@ extension InventoryTests { // Test Reduce
         let cost1 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting1))
-
         let amount2 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
         let cost2 = Cost(amount: Amount(number: 2.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting2))
-
         let amount3 = Amount(number: -2.0, commodity: commodity1, decimalDigits: 2)
         let posting3 = Posting(account: account, amount: amount3, transaction: transaction, price: nil, cost: cost1)
 
-        XCTAssertNoThrow(try inventory.book(posting: posting3))
+        do {
+            let result1 = try inventory.book(posting: posting1)
+            let result2 = try inventory.book(posting: posting2)
+            let result3 = try inventory.book(posting: posting3)
+            XCTAssertNil(result1)
+            XCTAssertNil(result2)
+            XCTAssertEqual(result3, Amount(number: amount3.number * cost1.amount!.number,
+                                           commodity: cost1.amount!.commodity,
+                                           decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
+        } catch {
+            XCTFail("Error thrown")
+        }
 
         XCTAssertEqual(inventory.inventory.count, 1)
         XCTAssertEqual(inventory.inventory.first?.units, amount2)
         XCTAssertEqual(inventory.inventory.first?.cost, cost2)
     }
 
+    func testAmountDifferentCurrency() {
+        let inventory = Inventory(bookingMethod: .strict)
+
+        let amount1 = Amount(number: 2.5, commodity: commodity1, decimalDigits: 1)
+        let cost1 = Cost(amount: Amount(number: 2.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
+        let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
+
+        let amount2 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
+        let cost2 = Cost(amount: Amount(number: 3.05, commodity: commodity1, decimalDigits: 2), date: date, label: nil)
+        let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
+
+        let amount3 = Amount(number: -4.5, commodity: commodity1, decimalDigits: 2)
+        let cost3 = Cost(amount: nil, date: nil, label: nil)
+        let posting3 = Posting(account: account, amount: amount3, transaction: transaction, price: nil, cost: cost3)
+
+        do {
+            let result1 = try inventory.book(posting: posting1)
+            let result2 = try inventory.book(posting: posting2)
+            let result3 = try inventory.book(posting: posting3)
+            XCTAssertNil(result1)
+            XCTAssertNil(result2)
+            XCTAssertEqual(result3, MultiCurrencyAmount(amounts: [commodity1: -6.10, commodity2: -5.0], decimalDigits: [commodity1: 2, commodity2: 1]))
+        } catch {
+            XCTFail("Error thrown")
+        }
+
+        XCTAssertEqual(inventory.inventory.count, 0)
+    }
 }
 
 extension InventoryTests { // Inventory.Lot Tests
