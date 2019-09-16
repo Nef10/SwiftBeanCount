@@ -75,3 +75,11 @@ extension Posting: Equatable {
     }
 
 }
+
+extension Posting: Hashable {
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(description)
+    }
+
+}

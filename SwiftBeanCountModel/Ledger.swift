@@ -46,6 +46,8 @@ public class Ledger {
     private var price = [Commodity: [Commodity: [Date: Price]]]()
     private let accountGroup: [String: AccountGroup]
 
+    var postingPrices = [Transaction: [Posting: MultiCurrencyAmount]]()
+
     /// Creates an empty ledger with the `accountGroups` set up
     public init() {
         var groups = [String: AccountGroup]()
@@ -127,11 +129,6 @@ public class Ledger {
     ///
     /// Note: If called multiple times, the error will show up multiple times
     public func validate() {
-        transactions.forEach {
-            if case .invalid(let error) = $0.validate() {
-                errors.append(error)
-            }
-        }
         accounts.forEach {
             if case .invalid(let error) = $0.validate() {
                 errors.append(error)
@@ -140,6 +137,11 @@ public class Ledger {
                 errors.append(error)
             }
             if case .invalid(let error) = $0.validateInventory(in: self) {
+                errors.append(error)
+            }
+        }
+        transactions.forEach {
+            if case .invalid(let error) = $0.validate(in: self) {
                 errors.append(error)
             }
         }

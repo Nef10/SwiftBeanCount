@@ -208,7 +208,13 @@ public class Account: AccountItem {
         while let posting = nextPosting {
             if posting.cost != nil {
                 do {
-                    try inventory.book(posting: posting)
+                    let pricePaid = try inventory.book(posting: posting)
+                    if let pricePaid = pricePaid {
+                        if ledger.postingPrices[posting.transaction] != nil {
+                            ledger.postingPrices[posting.transaction]![posting] = pricePaid
+                        }
+                        ledger.postingPrices[posting.transaction] = [posting: pricePaid]
+                    }
                 } catch {
                     return .invalid(error.localizedDescription)
                 }

@@ -27,11 +27,11 @@ public class Transaction {
         self.metaData = metaData
     }
 
-    func validate() -> ValidationResult {
+    func validate(in ledger: Ledger) -> ValidationResult {
         guard !postings.isEmpty else {
             return .invalid("\(self) has no postings")
         }
-        let balanced = validateBalance()
+        let balanced = validateBalance(in: ledger)
         guard case .valid = balanced else {
             return balanced
         }
@@ -51,13 +51,19 @@ public class Transaction {
     ///  *Note*: Tolerance for interger amounts is zero
     ///
     /// - Returns: `ValidationResult`
-    private func validateBalance() -> ValidationResult {
+    private func validateBalance(in ledger: Ledger) -> ValidationResult {
         var amount = MultiCurrencyAmount()
         for posting in postings {
-            if let cost = posting.cost, let costAmount = cost.amount, costAmount.number > 0 {
-                let postingAmount = MultiCurrencyAmount(amounts: [costAmount.commodity: costAmount.number * posting.amount.number],
-                                                        decimalDigits: [posting.amount.commodity: posting.amount.decimalDigits])
-                amount += postingAmount
+            if let cost = posting.cost {
+                if let postingAmount = ledger.postingPrices[self]?[posting] {
+                    amount += postingAmount
+                } else if let costAmount = cost.amount, costAmount.number > 0 {
+                    let postingAmount = MultiCurrencyAmount(amounts: [costAmount.commodity: costAmount.number * posting.amount.number],
+                                                            decimalDigits: [posting.amount.commodity: posting.amount.decimalDigits])
+                    amount += postingAmount
+                } else {
+                    return .invalid("Posting \(posting) of transaction \(self) does not have an amount in the cost and add to the inventory")
+                }
             } else if let price = posting.price {
                 let postingAmount = MultiCurrencyAmount(amounts: [price.commodity: price.number * posting.amount.number],
                                                         decimalDigits: [posting.amount.commodity: posting.amount.decimalDigits])
@@ -98,6 +104,14 @@ extension Transaction: Equatable {
     /// - Returns: if they are the same
     public static func == (lhs: Transaction, rhs: Transaction) -> Bool {
         return lhs.metaData == rhs.metaData && lhs.postings == rhs.postings
+    }
+
+}
+
+extension Transaction: Hashable {
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(description)
     }
 
 }

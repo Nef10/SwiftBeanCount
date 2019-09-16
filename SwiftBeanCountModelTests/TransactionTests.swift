@@ -20,6 +20,7 @@ class TransactionTests: XCTestCase {
     var account1: Account?
     var account2: Account?
     var date: Date?
+    let ledger = Ledger()
 
     override func setUp() {
         super.setUp()
@@ -89,14 +90,14 @@ class TransactionTests: XCTestCase {
     func testIsValid() {
         account1!.opening = date
         account2!.opening = date
-        guard case .valid = transaction2WithPosting1And2!.validate() else {
+        guard case .valid = transaction2WithPosting1And2!.validate(in: ledger) else {
             XCTFail("\(transaction2WithPosting1And2!) is not valid")
             return
         }
     }
 
     func testIsValidWithoutPosting() {
-        if case .invalid(let error) = transaction1WithoutPosting!.validate() {
+        if case .invalid(let error) = transaction1WithoutPosting!.validate(in: ledger) {
             XCTAssertEqual(error, "2017-06-08 * \"Payee\" \"Narration\" has no postings")
         } else {
             XCTFail("\(transaction1WithoutPosting!) is valid")
@@ -105,7 +106,7 @@ class TransactionTests: XCTestCase {
 
     func testIsValidInvalidPosting() {
         // Accounts are not opened
-        if case .invalid(let error) = transaction1WithPosting1And2!.validate() {
+        if case .invalid(let error) = transaction1WithPosting1And2!.validate(in: ledger) {
             XCTAssertEqual(error, """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash 10 EUR
@@ -117,7 +118,7 @@ class TransactionTests: XCTestCase {
     }
 
     func testIsValidUnbalanced() {
-        if case .invalid(let error) = transaction1WithPosting1!.validate() {
+        if case .invalid(let error) = transaction1WithPosting1!.validate(in: ledger) {
             XCTAssertEqual(error, """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash 10 EUR is not balanced - 10 EUR too much (0 tolerance)
@@ -149,7 +150,7 @@ class TransactionTests: XCTestCase {
         // -1 EUR has 0 decimal digits -> tolerance is 0 !
         // (Percision of price is irrelevant, percision of CAD is not used because no posting in CAD)
         // 0.01 > 0 -> is invalid
-        if case .invalid(let error) = transaction.validate() {
+        if case .invalid(let error) = transaction.validate(in: ledger) {
             XCTAssertEqual(error, """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash -1 EUR
@@ -183,7 +184,7 @@ class TransactionTests: XCTestCase {
         // -8.52 EUR has 2 decimal digits -> tolerance is 0.005
         // (Percision of price is irrelevant, percision of CAD is not used because no posting in CAD)
         // 0.0051 > 0.005 -> is invalid
-        if case .invalid(let error) = transaction.validate() {
+        if case .invalid(let error) = transaction.validate(in: ledger) {
             XCTAssertEqual(error, """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash -8.52 EUR
@@ -206,7 +207,7 @@ class TransactionTests: XCTestCase {
         let posting1 = Posting(account: account1!, amount: amount1, transaction: transaction, price: price)
         transaction.postings.append(posting1)
 
-        if case .invalid(let error) = transaction.validate() {
+        if case .invalid(let error) = transaction.validate(in: ledger) {
             XCTAssertEqual(error, """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash 10.00000 CAD @ 0.85251 EUR is not balanced - 8.5251 EUR too much (0 tolerance)
@@ -237,7 +238,7 @@ class TransactionTests: XCTestCase {
         // -8.52 EUR has 2 decimal digits -> tolerance is 0.005
         // (Percision of price is irrelevant, percision of CAD is not used because no posting in CAD)
         // 0.005 <= 0.005 -> is valid
-        guard case .valid = transaction.validate() else {
+        guard case .valid = transaction.validate(in: ledger) else {
             XCTFail("\(transaction) is not valid")
             return
         }
@@ -267,7 +268,7 @@ class TransactionTests: XCTestCase {
         // -8.52 EUR has 2 decimal digits -> tolerance is 0.005
         // (Percision of price is irrelevant, percision of CAD is not used because no posting in CAD)
         // 0.005 <= 0.005 -> is valid
-        guard case .valid = transaction.validate() else {
+        guard case .valid = transaction.validate(in: ledger) else {
             XCTFail("\(transaction) is not valid")
             return
         }
@@ -299,7 +300,7 @@ class TransactionTests: XCTestCase {
         // -8.52 EUR has 2 decimal digits -> tolerance is 0.005
         // (Percision of cost is irrelevant, percision of CAD is not used because no posting in CAD)
         // 0.0051 > 0.005 -> is invalid
-        if case .invalid(let error) = transaction.validate() {
+        if case .invalid(let error) = transaction.validate(in: ledger) {
             XCTAssertEqual(error, """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash -8.52 EUR
