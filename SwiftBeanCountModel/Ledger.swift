@@ -176,9 +176,9 @@ public class Ledger {
                        amount: getLedgerAmount(for: posting.amount),
                        transaction: transaction,
                        price: posting.price != nil ? getLedgerAmount(for: posting.price!) : nil,
-                       cost: posting.cost != nil ? Cost(amount: posting.cost?.amount != nil ? getLedgerAmount(for: posting.cost!.amount!) : nil,
-                                                        date: posting.cost?.date,
-                                                        label: posting.cost?.label) : nil)
+                       cost: posting.cost != nil ? try Cost(amount: posting.cost?.amount != nil ? getLedgerAmount(for: posting.cost!.amount!) : nil,
+                                                            date: posting.cost?.date,
+                                                            label: posting.cost?.label) : nil)
     }
 
     /// Converts `Amount`s so that the new one uses the correct `Commodity` objects.

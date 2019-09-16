@@ -115,7 +115,7 @@ class LedgerTests: XCTestCase {
                               amount: Amount(number: Decimal(10), commodity: Commodity(symbol: "EUR")),
                               transaction: transaction,
                               price: Amount(number: Decimal(15), commodity: Commodity(symbol: "USD")),
-                              cost: Cost(amount: Amount(number: Decimal(5), commodity: Commodity(symbol: "CAD")), date: date, label: "TEST"))
+                              cost: try! Cost(amount: Amount(number: Decimal(5), commodity: Commodity(symbol: "CAD")), date: date, label: "TEST"))
         transaction.postings.append(posting)
 
         let addedTransaction = ledger.add(transaction)
@@ -229,7 +229,7 @@ class LedgerTests: XCTestCase {
         let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
         let costAmount = Amount(number: 3.0, commodity: commodity2, decimalDigits: 1)
         let amount2 = Amount(number: -6.0, commodity: commodity2, decimalDigits: 1)
-        let posting1 = Posting(account: account2, amount: amount1, transaction: transaction1, price: nil, cost: Cost(amount: costAmount, date: nil, label: nil))
+        let posting1 = Posting(account: account2, amount: amount1, transaction: transaction1, price: nil, cost: try! Cost(amount: costAmount, date: nil, label: nil))
         let posting2 = Posting(account: account1, amount: amount2, transaction: transaction1)
         transaction1.postings.append(contentsOf: [posting1, posting2])
 
@@ -240,7 +240,7 @@ class LedgerTests: XCTestCase {
         let transaction2 = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_596_991_600), payee: "3", narration: "4", flag: .complete, tags: []))
         let amount3 = Amount(number: -2.0, commodity: commodity1, decimalDigits: 1)
         let amount4 = Amount(number: 6.0, commodity: commodity2, decimalDigits: 1)
-        let posting3 = Posting(account: account2, amount: amount3, transaction: transaction2, price: nil, cost: Cost(amount: nil, date: nil, label: nil))
+        let posting3 = Posting(account: account2, amount: amount3, transaction: transaction2, price: nil, cost: try! Cost(amount: nil, date: nil, label: nil))
         let posting4 = Posting(account: account1, amount: amount4, transaction: transaction2)
         transaction2.postings.append(contentsOf: [posting3, posting4])
 

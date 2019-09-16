@@ -445,7 +445,7 @@ class AccountTests: XCTestCase {
                                             amount: Amount(number: 1.1, commodity: commodity, decimalDigits: 1),
                                             transaction: transaction,
                                             price: nil,
-                                            cost: Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: "1")))
+                                            cost: try! Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: "1")))
         _ = ledger.add(transaction)
 
         transaction = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "", narration: "", flag: .complete, tags: []))
@@ -453,7 +453,7 @@ class AccountTests: XCTestCase {
                                             amount: Amount(number: 1.1, commodity: commodity, decimalDigits: 1),
                                             transaction: transaction,
                                             price: nil,
-                                            cost: Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: nil)))
+                                            cost: try! Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: nil)))
         _ = ledger.add(transaction)
 
         transaction = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "", narration: "", flag: .complete, tags: []))
@@ -461,7 +461,7 @@ class AccountTests: XCTestCase {
                                             amount: Amount(number: -1, commodity: commodity, decimalDigits: 0),
                                             transaction: transaction,
                                             price: nil,
-                                            cost: Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: "1")))
+                                            cost: try! Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: "1")))
         _ = ledger.add(transaction)
 
         guard case .valid = account.validateInventory(in: ledger) else {
@@ -475,7 +475,7 @@ class AccountTests: XCTestCase {
         let commodity = Commodity(symbol: "CAD")
         let account = try! Account(name: accountName)
         let amount = Amount(number: 1.1, commodity: commodity, decimalDigits: 1)
-        let cost = Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: "1")
+        let cost = try! Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: "1")
         account.commodity = commodity
         try! ledger.add(account)
 
@@ -492,7 +492,7 @@ class AccountTests: XCTestCase {
                                             amount: Amount(number: -1.0, commodity: commodity, decimalDigits: 0),
                                             transaction: transaction,
                                             price: nil,
-                                            cost: Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: nil)))
+                                            cost: try! Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: nil)))
         _ = ledger.add(transaction)
 
         if case .invalid(let error) = account.validateInventory(in: ledger) {

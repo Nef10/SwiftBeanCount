@@ -59,7 +59,8 @@ class Inventory {
         // inventories can either have all positive or all negative lots
         if !(existingLotForCommodity != nil) || existingLotForCommodity?.units.number.sign == posting.amount.number.sign {
             // When have a cost without date in the posting add we need to add it, use the date from the transaction
-            let lot = Lot(units: posting.amount, cost: Cost(amount: cost.amount, date: cost.date != nil ? cost.date : posting.transaction.metaData.date, label: cost.label))
+            let lot = Lot(units: posting.amount,
+                          cost: try Cost(amount: cost.amount, date: cost.date != nil ? cost.date : posting.transaction.metaData.date, label: cost.label))
             add(lot)
         } else {
             let lot = Lot(units: posting.amount, cost: cost)

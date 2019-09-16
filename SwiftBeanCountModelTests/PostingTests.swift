@@ -49,7 +49,7 @@ class PostingTests: XCTestCase {
         let accountName = "Assets:💰"
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "💵"))
         let account = try! Account(name: accountName)
-        let cost = Cost(amount: amount, date: nil, label: "label")
+        let cost = try! Cost(amount: amount, date: nil, label: "label")
         let posting = Posting(account: account, amount: amount, transaction: transaction, price: nil, cost: cost)
 
         XCTAssertEqual(String(describing: posting), "  \(accountName) \(String(describing: amount)) \(String(describing: cost))")
@@ -60,7 +60,7 @@ class PostingTests: XCTestCase {
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "💵"))
         let price = Amount(number: Decimal(1.555), commodity: Commodity(symbol: "EUR"))
         let account = try! Account(name: accountName)
-        let cost = Cost(amount: amount, date: nil, label: "label")
+        let cost = try! Cost(amount: amount, date: nil, label: "label")
         let posting = Posting(account: account, amount: amount, transaction: transaction, price: price, cost: cost)
 
         XCTAssertEqual(String(describing: posting), "  \(accountName) \(String(describing: amount)) \(String(describing: cost)) @ \(price)")
@@ -92,7 +92,7 @@ class PostingTests: XCTestCase {
 
     func testEqualRespectsCost() {
         let amount = Amount(number: Decimal(1.555), commodity: Commodity(symbol: "EUR"))
-        let cost = Cost(amount: amount, date: nil, label: "label")
+        let cost = try! Cost(amount: amount, date: nil, label: "label")
         let posting2 = Posting(account: account1!, amount: amount1!, transaction: transaction, price: nil, cost: cost)
         XCTAssertNotEqual(posting1, posting2)
     }

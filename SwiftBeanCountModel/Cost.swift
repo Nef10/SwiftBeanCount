@@ -11,6 +11,12 @@ import Foundation
 /// Cost of a posting
 public class Cost {
 
+    /// Errors Cost can throw
+    public enum CostError: Error {
+        /// an invalid account name
+        case negativeAmount(String)
+    }
+
     // Amount
     public let amount: Amount?
 
@@ -20,10 +26,15 @@ public class Cost {
     /// Optional label to identify a lot in the inventory
     public let label: String?
 
-    public init(amount: Amount?, date: Date?, label: String?) {
+    public init(amount: Amount?, date: Date?, label: String?) throws {
         self.amount = amount
         self.date = date
         self.label = label
+        if let amount = amount {
+            guard amount.number.sign == .plus else {
+                throw CostError.negativeAmount("Cost \(self) has a negative amount!")
+            }
+        }
     }
 
     /// Checks if this price should match another one for inventory booking

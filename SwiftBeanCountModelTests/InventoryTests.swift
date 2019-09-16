@@ -30,11 +30,11 @@ class InventoryTests: XCTestCase {
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let cost1 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let cost1 = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
 
         let amount2 = Amount(number: 3.0, commodity: commodity1, decimalDigits: 2)
-        let cost2 = Cost(amount: Amount(number: 5.0, commodity: commodity2, decimalDigits: 2), date: date, label: nil)
+        let cost2 = try! Cost(amount: Amount(number: 5.0, commodity: commodity2, decimalDigits: 2), date: date, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
         do {
@@ -59,7 +59,7 @@ extension InventoryTests { // Test Adding
     func testAdding() {
         let inventory = Inventory(bookingMethod: .strict)
         let amount = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let cost = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let cost = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting = Posting(account: account, amount: amount, transaction: transaction, price: nil, cost: cost)
 
         do {
@@ -77,7 +77,7 @@ extension InventoryTests { // Test Adding
     func testAddingTransactionDateUsed() {
         let inventory = Inventory(bookingMethod: .strict)
         let amount = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let cost = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
+        let cost = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
         let posting = Posting(account: account, amount: amount, transaction: transaction, price: nil, cost: cost)
 
         do {
@@ -94,11 +94,11 @@ extension InventoryTests { // Test Adding
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let cost1 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let cost1 = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
 
         let amount2 = Amount(number: 3.0, commodity: commodity1, decimalDigits: 2)
-        let cost2 = Cost(amount: Amount(number: 5.0, commodity: commodity2, decimalDigits: 2), date: date, label: nil)
+        let cost2 = try! Cost(amount: Amount(number: 5.0, commodity: commodity2, decimalDigits: 2), date: date, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
         do {
@@ -121,7 +121,7 @@ extension InventoryTests { // Test Adding
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let cost = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let cost = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost)
 
         let amount2 = Amount(number: 3.0, commodity: commodity1, decimalDigits: 2)
@@ -147,7 +147,7 @@ extension InventoryTests { // Test Adding
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let cost = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let cost = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost)
 
         let amount2 = Amount(number: 3.0, commodity: commodity2, decimalDigits: 2)
@@ -172,7 +172,7 @@ extension InventoryTests { // Test Adding
     func testAddingNegative() {
         let inventory = Inventory(bookingMethod: .strict)
         let amount = Amount(number: -2.0, commodity: commodity1, decimalDigits: 1)
-        let cost = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let cost = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting = Posting(account: account, amount: amount, transaction: transaction, price: nil, cost: cost)
 
         do {
@@ -191,11 +191,11 @@ extension InventoryTests { // Test Adding
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: -2.0, commodity: commodity1, decimalDigits: 1)
-        let cost1 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let cost1 = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
 
         let amount2 = Amount(number: -3.0, commodity: commodity1, decimalDigits: 2)
-        let cost2 = Cost(amount: Amount(number: 5.0, commodity: commodity2, decimalDigits: 2), date: date, label: nil)
+        let cost2 = try! Cost(amount: Amount(number: 5.0, commodity: commodity2, decimalDigits: 2), date: date, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
         do {
@@ -218,7 +218,7 @@ extension InventoryTests { // Test Adding
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: -2.0, commodity: commodity1, decimalDigits: 1)
-        let cost = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let cost = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost)
 
         let amount2 = Amount(number: -3.0, commodity: commodity1, decimalDigits: 2)
@@ -248,11 +248,11 @@ extension InventoryTests { // Test Reduce
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let cost1 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let cost1 = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
 
         let amount2 = Amount(number: -1.0, commodity: commodity1, decimalDigits: 2)
-        let cost2 = Cost(amount: nil, date: nil, label: nil)
+        let cost2 = try! Cost(amount: nil, date: nil, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
         do {
@@ -274,11 +274,11 @@ extension InventoryTests { // Test Reduce
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: -2.0, commodity: commodity1, decimalDigits: 1)
-        let cost1 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let cost1 = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
 
         let amount2 = Amount(number: 1.0, commodity: commodity1, decimalDigits: 2)
-        let cost2 = Cost(amount: nil, date: nil, label: nil)
+        let cost2 = try! Cost(amount: nil, date: nil, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
         do {
@@ -300,15 +300,15 @@ extension InventoryTests { // Test Reduce
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let cost1 = Cost(amount: Amount(number: 3.567, commodity: commodity2, decimalDigits: 3), date: date, label: nil)
+        let cost1 = try! Cost(amount: Amount(number: 3.567, commodity: commodity2, decimalDigits: 3), date: date, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
 
         let amount2 = Amount(number: 1.0, commodity: commodity2, decimalDigits: 2)
-        let cost2 = Cost(amount: nil, date: date, label: nil)
+        let cost2 = try! Cost(amount: nil, date: date, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
         let amount3 = Amount(number: -1.0, commodity: commodity1, decimalDigits: 2)
-        let cost3 = Cost(amount: nil, date: nil, label: nil)
+        let cost3 = try! Cost(amount: nil, date: nil, label: nil)
         let posting3 = Posting(account: account, amount: amount3, transaction: transaction, price: nil, cost: cost3)
 
         do {
@@ -334,11 +334,11 @@ extension InventoryTests { // Test Reduce
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let cost1 = Cost(amount: Amount(number: 5.5, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let cost1 = try! Cost(amount: Amount(number: 5.5, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
 
         let amount2 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let cost2 = Cost(amount: Amount(number: 2.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let cost2 = try! Cost(amount: Amount(number: 2.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
         let amount3 = Amount(number: -1.0, commodity: commodity1, decimalDigits: 2)
@@ -367,15 +367,15 @@ extension InventoryTests { // Test Reduce
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let cost1 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let cost1 = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
 
         let amount2 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let cost2 = Cost(amount: Amount(number: 2.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let cost2 = try! Cost(amount: Amount(number: 2.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
         let amount3 = Amount(number: -1.0, commodity: commodity1, decimalDigits: 2)
-        let cost3 = Cost(amount: nil, date: nil, label: nil)
+        let cost3 = try! Cost(amount: nil, date: nil, label: nil)
         let posting3 = Posting(account: account, amount: amount3, transaction: transaction, price: nil, cost: cost3)
 
         do {
@@ -400,11 +400,11 @@ extension InventoryTests { // Test Reduce
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let cost1 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
+        let cost1 = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
 
         let amount2 = Amount(number: -2.0, commodity: commodity1, decimalDigits: 2)
-        let cost2 = Cost(amount: nil, date: nil, label: nil)
+        let cost2 = try! Cost(amount: nil, date: nil, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
         do {
@@ -425,15 +425,15 @@ extension InventoryTests { // Test Reduce
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: 2.5, commodity: commodity1, decimalDigits: 1)
-        let cost1 = Cost(amount: Amount(number: 2.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
+        let cost1 = try! Cost(amount: Amount(number: 2.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
 
         let amount2 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let cost2 = Cost(amount: Amount(number: 3.05, commodity: commodity2, decimalDigits: 2), date: date, label: nil)
+        let cost2 = try! Cost(amount: Amount(number: 3.05, commodity: commodity2, decimalDigits: 2), date: date, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
         let amount3 = Amount(number: -4.5, commodity: commodity1, decimalDigits: 2)
-        let cost3 = Cost(amount: nil, date: nil, label: nil)
+        let cost3 = try! Cost(amount: nil, date: nil, label: nil)
         let posting3 = Posting(account: account, amount: amount3, transaction: transaction, price: nil, cost: cost3)
 
         do {
@@ -454,15 +454,15 @@ extension InventoryTests { // Test Reduce
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let cost1 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
+        let cost1 = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
 
         let amount2 = Amount(number: 2.0, commodity: commodity2, decimalDigits: 1)
-        let cost2 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let cost2 = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
         let amount3 = Amount(number: -2.0, commodity: commodity1, decimalDigits: 2)
-        let cost3 = Cost(amount: nil, date: nil, label: nil)
+        let cost3 = try! Cost(amount: nil, date: nil, label: nil)
         let posting3 = Posting(account: account, amount: amount3, transaction: transaction, price: nil, cost: cost3)
 
         do {
@@ -487,11 +487,11 @@ extension InventoryTests { // Test Reduce
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let cost1 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
+        let cost1 = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
 
         let amount2 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let cost2 = Cost(amount: Amount(number: 2.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let cost2 = try! Cost(amount: Amount(number: 2.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
         let amount3 = Amount(number: -2.0, commodity: commodity1, decimalDigits: 2)
@@ -519,15 +519,15 @@ extension InventoryTests { // Test Reduce
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: 2.5, commodity: commodity1, decimalDigits: 1)
-        let cost1 = Cost(amount: Amount(number: 2.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
+        let cost1 = try! Cost(amount: Amount(number: 2.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
         let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
 
         let amount2 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let cost2 = Cost(amount: Amount(number: 3.05, commodity: commodity1, decimalDigits: 2), date: date, label: nil)
+        let cost2 = try! Cost(amount: Amount(number: 3.05, commodity: commodity1, decimalDigits: 2), date: date, label: nil)
         let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
 
         let amount3 = Amount(number: -4.5, commodity: commodity1, decimalDigits: 2)
-        let cost3 = Cost(amount: nil, date: nil, label: nil)
+        let cost3 = try! Cost(amount: nil, date: nil, label: nil)
         let posting3 = Posting(account: account, amount: amount3, transaction: transaction, price: nil, cost: cost3)
 
         do {
@@ -549,14 +549,14 @@ extension InventoryTests { // Inventory.Lot Tests
 
     func testLotDescription() {
         let amount = Amount(number: -2.0, commodity: commodity1, decimalDigits: 1)
-        let cost = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
+        let cost = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
         let lot = Inventory.Lot(units: amount, cost: cost)
         XCTAssertEqual(String(describing: lot), "\(amount) \(cost)")
     }
 
     func testLotEqual() {
         let amount = Amount(number: -2.0, commodity: commodity1, decimalDigits: 1)
-        let cost = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
+        let cost = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
         let lot1 = Inventory.Lot(units: amount, cost: cost)
         let lot2 = Inventory.Lot(units: amount, cost: cost)
         XCTAssertTrue(lot1 == lot2)
@@ -565,7 +565,7 @@ extension InventoryTests { // Inventory.Lot Tests
     func testLotEqualRespectsAmount() {
         let amount1 = Amount(number: -2.0, commodity: commodity1, decimalDigits: 1)
         let amount2 = Amount(number: -2.0, commodity: commodity1, decimalDigits: 2)
-        let cost = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
+        let cost = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
         let lot1 = Inventory.Lot(units: amount1, cost: cost)
         let lot2 = Inventory.Lot(units: amount2, cost: cost)
         XCTAssertFalse(lot1 == lot2)
@@ -573,8 +573,8 @@ extension InventoryTests { // Inventory.Lot Tests
 
     func testLotEqualRespectsCost() {
         let amount = Amount(number: -2.0, commodity: commodity1, decimalDigits: 1)
-        let cost1 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 2), date: nil, label: nil)
-        let cost2 = Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
+        let cost1 = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 2), date: nil, label: nil)
+        let cost2 = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
         let lot1 = Inventory.Lot(units: amount, cost: cost1)
         let lot2 = Inventory.Lot(units: amount, cost: cost2)
         XCTAssertFalse(lot1 == lot2)

@@ -257,7 +257,7 @@ class TransactionTests: XCTestCase {
         let costAmount = Amount(number: Decimal(sign: FloatingPointSign.plus, exponent: -5, significand: Decimal(85_250)),
                                 commodity: Commodity(symbol: "EUR"),
                                 decimalDigits: 5)
-        let cost = Cost(amount: costAmount, date: date, label: nil)
+        let cost = try! Cost(amount: costAmount, date: date, label: nil)
         let posting1 = Posting(account: account1!, amount: amount1, transaction: transaction)
         let posting2 = Posting(account: account2!, amount: amount2, transaction: transaction, price: nil, cost: cost)
         transaction.postings.append(posting1)
@@ -289,7 +289,7 @@ class TransactionTests: XCTestCase {
         let costAmount = Amount(number: Decimal(sign: FloatingPointSign.plus, exponent: -5, significand: Decimal(85_251)),
                                 commodity: Commodity(symbol: "EUR"),
                                 decimalDigits: 5)
-        let cost = Cost(amount: costAmount, date: nil, label: nil)
+        let cost = try! Cost(amount: costAmount, date: nil, label: nil)
         let posting1 = Posting(account: account1!, amount: amount1, transaction: transaction)
         let posting2 = Posting(account: account2!, amount: amount2, transaction: transaction, price: nil, cost: cost)
         transaction.postings.append(posting1)
