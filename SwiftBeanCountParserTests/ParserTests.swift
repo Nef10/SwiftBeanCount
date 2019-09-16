@@ -20,6 +20,7 @@ class ParserTests: XCTestCase {
         case commentsEndOfLine = "CommentsEndOfLine"
         case whitespace = "Whitespace"
         case big = "Big"
+        case invalidCost = "InvalidCost"
 
         static let withoutError = [minimal, comments, commentsEndOfLine, whitespace, big]
     }
@@ -59,6 +60,18 @@ class ParserTests: XCTestCase {
 
     func testCommentsEndOfLine() {
         ensureMinimal(testFile: .commentsEndOfLine)
+    }
+
+    func testInvalidCost() {
+        var errorMessage = "" // do not check for the exact error message from library, just check that the parser correctly copies it
+        do {
+            _ = try Cost(amount: Amount(number: Decimal(-1), commodity: Commodity(symbol: "EUR"), decimalDigits: 2), date: nil, label: nil)
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+        let ledger1 = try! Parser.parse(contentOf: urlFor(testFile: TestFile.invalidCost))
+        XCTAssertEqual(ledger1.errors.count, 1)
+        XCTAssertEqual(ledger1.errors[0], "\(errorMessage) (line 7)")
     }
 
     func testAccounts() {

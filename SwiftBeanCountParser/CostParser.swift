@@ -19,7 +19,7 @@ struct CostParser {
     static private let costDateGroup = "\(lookahedStart)\(DateParser.dateGroup)\(lookahedEnd)"
     static let costGroup = "(\\{\\s*\(costLabelGroup)\(costPriceGroup)\(costDateGroup).*\\})"
 
-    static func parseFrom(match: [String], startIndex: Int) -> Cost? {
+    static func parseFrom(match: [String], startIndex: Int) throws -> Cost? {
         var cost: Cost?
         if !match[startIndex].isEmpty { // cost
             var amount: Amount?
@@ -36,7 +36,7 @@ struct CostParser {
                 let costCommodity = Commodity(symbol: match[startIndex + 12])
                 amount = Amount(number: costAmount, commodity: costCommodity, decimalDigits: costDecimalDigits)
             }
-            cost = Cost(amount: amount, date: date, label: label)
+            cost = try Cost(amount: amount, date: date, label: label)
         }
         return cost
     }

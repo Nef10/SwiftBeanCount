@@ -62,11 +62,16 @@ public class Parser {
 
         // Posting
         if let transaction = openTransaction {
-            if let posting = PostingParser.parseFrom(line: line, into: transaction) {
-                transaction.postings.append(posting)
-                return transaction
-            } else { // No posting, need to close previous transaction
-                closeOpen(transaction: openTransaction, inLedger: ledger, onLine: lineNumber + 1)
+            do {
+                if let posting = try PostingParser.parseFrom(line: line, into: transaction) {
+                    transaction.postings.append(posting)
+                    return transaction
+                } else { // No posting, need to close previous transaction
+                    closeOpen(transaction: openTransaction, inLedger: ledger, onLine: lineNumber + 1)
+                }
+            } catch {
+                ledger.errors.append("\(error.localizedDescription) (line \(lineNumber + 1))")
+                return nil
             }
         }
 

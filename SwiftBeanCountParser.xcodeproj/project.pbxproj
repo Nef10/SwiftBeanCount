@@ -12,6 +12,7 @@
 		F95FF99420BA4052005F8B2F /* ParserUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95FF99320BA4052005F8B2F /* ParserUtils.swift */; };
 		F9B9E156232B78D700811B3F /* CostParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9E155232B78D700811B3F /* CostParser.swift */; };
 		F9B9E158232B7A7500811B3F /* CostParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9E157232B7A7500811B3F /* CostParserTests.swift */; };
+		F9B9E15E232FEB5600811B3F /* InvalidCost.beancount in Resources */ = {isa = PBXBuildFile; fileRef = F9B9E15D232FEB5600811B3F /* InvalidCost.beancount */; };
 		F9BDC3721FBA815100393578 /* SwiftBeanCountParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9BDC3681FBA815100393578 /* SwiftBeanCountParser.framework */; };
 		F9BDC3841FBA839900393578 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3831FBA839900393578 /* Parser.swift */; };
 		F9BDC3871FBA880900393578 /* SwiftBeanCountModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9BDC3861FBA880900393578 /* SwiftBeanCountModel.framework */; };
@@ -95,6 +96,7 @@
 		F95FF99320BA4052005F8B2F /* ParserUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserUtils.swift; sourceTree = "<group>"; };
 		F9B9E155232B78D700811B3F /* CostParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostParser.swift; sourceTree = "<group>"; };
 		F9B9E157232B7A7500811B3F /* CostParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostParserTests.swift; sourceTree = "<group>"; };
+		F9B9E15D232FEB5600811B3F /* InvalidCost.beancount */ = {isa = PBXFileReference; lastKnownFileType = text; path = InvalidCost.beancount; sourceTree = "<group>"; };
 		F9BDC3681FBA815100393578 /* SwiftBeanCountParser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftBeanCountParser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9BDC36C1FBA815100393578 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9BDC3711FBA815100393578 /* SwiftBeanCountParserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftBeanCountParserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -245,6 +247,7 @@
 				F9BDC3BD1FBAB13E00393578 /* PostingWithoutTransaction.beancount */,
 				F9BDC3BE1FBAB13E00393578 /* TransactionWithoutPosting.beancount */,
 				F9BDC3B91FBAB13E00393578 /* Whitespace.beancount */,
+				F9B9E15D232FEB5600811B3F /* InvalidCost.beancount */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 			files = (
 				F9BDC3C21FBAB13E00393578 /* CommentsEndOfLine.beancount in Resources */,
 				F9BDC3C81FBAB13E00393578 /* Minimal.beancount in Resources */,
+				F9B9E15E232FEB5600811B3F /* InvalidCost.beancount in Resources */,
 				F9BDC3C51FBAB13E00393578 /* PostingWithoutTransaction.beancount in Resources */,
 				F9BDC3C11FBAB13E00393578 /* Whitespace.beancount in Resources */,
 				F9BDC3C71FBAB13E00393578 /* Comments.beancount in Resources */,

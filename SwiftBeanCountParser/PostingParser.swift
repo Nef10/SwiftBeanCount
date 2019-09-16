@@ -20,9 +20,12 @@ struct PostingParser {
 
     /// Parse a Posting from a line String
     ///
-    /// - Parameter line: String of one line
+    /// - Parameters:
+    ///   - line: string of one line
+    ///   - transaction: transaction into which the posting belongs
     /// - Returns: a Posting or nil if the line does not contain a valid Posting
-    static func parseFrom(line: String, into transaction: Transaction) -> Posting? {
+    /// - Throws: When it is a valid posting string with invalid values
+    static func parseFrom(line: String, into transaction: Transaction) throws -> Posting? {
         let postingMatches = line.matchingStrings(regex: self.regex)
         guard let match = postingMatches[safe: 0] else {
             return nil
@@ -33,7 +36,7 @@ struct PostingParser {
         }
         let commodity = Commodity(symbol: match[5])
         var price: Amount?
-        let cost = CostParser.parseFrom(match: match, startIndex: 6)
+        let cost = try CostParser.parseFrom(match: match, startIndex: 6)
         if !match[24].isEmpty {  // price
             let priceCommodity = Commodity(symbol: match[30])
             var priceAmount: Decimal

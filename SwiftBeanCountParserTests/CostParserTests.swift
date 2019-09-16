@@ -22,88 +22,97 @@ class CostParserTests: XCTestCase {
         guard let match = postingMatches[safe: 0] else {
             return nil
         }
-        return CostParser.parseFrom(match: match, startIndex: 1)
+        return try! CostParser.parseFrom(match: match, startIndex: 1)
     }
 
     func testCost() {
-        XCTAssertEqual(Cost(amount: Amount(number: Decimal(1.003),
-                                           commodity: Commodity(symbol: "EUR"),
-                                           decimalDigits: 3),
-                            date: TestUtils.date20170609,
-                            label: "TEST"),
+        XCTAssertEqual(try! Cost(amount: Amount(number: Decimal(1.003),
+                                                commodity: Commodity(symbol: "EUR"),
+                                                decimalDigits: 3),
+                                 date: TestUtils.date20170609,
+                                 label: "TEST"),
                        cost(from: "{2017-06-09, 1.003 EUR, \"TEST\"}"))
     }
 
     func testInvalid() {
+        let postingMatches = "{2017-06-09, -1.003 EUR, \"TEST\"}".matchingStrings(regex: type(of: self).regex)
+        guard let match = postingMatches[safe: 0] else {
+            XCTFail("Invalid string")
+            return
+        }
+        XCTAssertThrowsError(try CostParser.parseFrom(match: match, startIndex: 1))
+    }
+
+    func testNegativeAmount() {
         XCTAssertEqual(nil, cost(from: "2017-06-09, 1.003 EUR, \"TEST\"}"))
         XCTAssertEqual(nil, cost(from: "{2017-06-09, 1.003 EUR, \"TEST\""))
         XCTAssertEqual(nil, cost(from: "2017-06-09, 1.003 EUR, \"TEST\""))
     }
 
     func testEmpty() {
-        XCTAssertEqual(Cost(amount: nil, date: nil, label: nil), cost(from: "{}"))
+        XCTAssertEqual(try! Cost(amount: nil, date: nil, label: nil), cost(from: "{}"))
     }
 
     func testEmptyStringLabel() {
         let parsedCost = cost(from: "{\"\"}")
-        XCTAssertEqual(Cost(amount: nil, date: nil, label: ""), parsedCost)
-        XCTAssertNotEqual(Cost(amount: nil, date: nil, label: nil), parsedCost)
+        XCTAssertEqual(try! Cost(amount: nil, date: nil, label: ""), parsedCost)
+        XCTAssertNotEqual(try! Cost(amount: nil, date: nil, label: nil), parsedCost)
     }
 
     func testWithoutDate() {
-        XCTAssertEqual(Cost(amount: Amount(number: Decimal(1.003),
-                                           commodity: Commodity(symbol: "EUR"),
-                                           decimalDigits: 3),
+        XCTAssertEqual(try! Cost(amount: Amount(number: Decimal(1.003),
+                                                commodity: Commodity(symbol: "EUR"),
+                                                decimalDigits: 3),
                             date: nil,
                             label: "TEST"),
                        cost(from: "{1.003 EUR, \"TEST\"}"))
     }
 
     func testWithoutLabel() {
-        XCTAssertEqual(Cost(amount: Amount(number: Decimal(1.003),
-                                           commodity: Commodity(symbol: "EUR"),
-                                           decimalDigits: 3),
-                            date: TestUtils.date20170609,
-                            label: nil),
+        XCTAssertEqual(try! Cost(amount: Amount(number: Decimal(1.003),
+                                                commodity: Commodity(symbol: "EUR"),
+                                                decimalDigits: 3),
+                                 date: TestUtils.date20170609,
+                                 label: nil),
                        cost(from: "{2017-06-09, 1.003 EUR}"))
     }
 
     func testWithoutAmount() {
-        XCTAssertEqual(Cost(amount: nil,
-                            date: TestUtils.date20170609,
-                            label: "TEST"),
+        XCTAssertEqual(try! Cost(amount: nil,
+                                 date: TestUtils.date20170609,
+                                 label: "TEST"),
                        cost(from: "{2017-06-09, \"TEST\"}"))
     }
 
     func testOnlyDate() {
-        XCTAssertEqual(Cost(amount: nil,
-                            date: TestUtils.date20170609,
-                            label: nil),
+        XCTAssertEqual(try! Cost(amount: nil,
+                                 date: TestUtils.date20170609,
+                                 label: nil),
                        cost(from: "{2017-06-09}"))
     }
 
     func testOnlyLabel() {
-        XCTAssertEqual(Cost(amount: nil,
-                            date: nil,
-                            label: "TEST"),
+        XCTAssertEqual(try! Cost(amount: nil,
+                                 date: nil,
+                                 label: "TEST"),
                        cost(from: "{\"TEST\"}"))
     }
 
     func testOnlyAmount() {
-        XCTAssertEqual(Cost(amount: Amount(number: Decimal(1.003),
-                                           commodity: Commodity(symbol: "EUR"),
-                                           decimalDigits: 3),
+        XCTAssertEqual(try! Cost(amount: Amount(number: Decimal(1.003),
+                                                commodity: Commodity(symbol: "EUR"),
+                                                decimalDigits: 3),
                             date: nil,
                             label: nil),
                        cost(from: "{1.003 EUR}"))
     }
 
     func testOrder() {
-        let result = Cost(amount: Amount(number: Decimal(1.003),
-                                         commodity: Commodity(symbol: "EUR"),
-                                         decimalDigits: 3),
-                          date: TestUtils.date20170609,
-                          label: "TEST")
+        let result = try! Cost(amount: Amount(number: Decimal(1.003),
+                                              commodity: Commodity(symbol: "EUR"),
+                                              decimalDigits: 3),
+                               date: TestUtils.date20170609,
+                               label: "TEST")
         XCTAssertEqual(result, cost(from: "{2017-06-09, 1.003 EUR, \"TEST\"}"))
         XCTAssertEqual(result, cost(from: "{2017-06-09, \"TEST\", 1.003 EUR}"))
         XCTAssertEqual(result, cost(from: "{1.003 EUR, 2017-06-09, \"TEST\"}"))
@@ -113,11 +122,11 @@ class CostParserTests: XCTestCase {
     }
 
     func testWhitespace() {
-        let result = Cost(amount: Amount(number: Decimal(1.003),
-                                         commodity: Commodity(symbol: "EUR"),
-                                         decimalDigits: 3),
-                          date: TestUtils.date20170609,
-                          label: "TEST")
+        let result = try! Cost(amount: Amount(number: Decimal(1.003),
+                                              commodity: Commodity(symbol: "EUR"),
+                                              decimalDigits: 3),
+                               date: TestUtils.date20170609,
+                               label: "TEST")
         // Note: Because a commodity may contain commas there must be a space a either before or after the comma which follows the commodity
         XCTAssertEqual(result, cost(from: "{2017-06-09, 1.003 EUR, \"TEST\"}"))
         XCTAssertEqual(result, cost(from: "{2017-06-09,1.003 EUR, \"TEST\"}"))
@@ -133,22 +142,22 @@ class CostParserTests: XCTestCase {
     }
 
     func testCommaCommodity() {
-        let result = Cost(amount: Amount(number: Decimal(1.003),
-                                         commodity: Commodity(symbol: "EUR,AB"),
-                                         decimalDigits: 3),
-                          date: TestUtils.date20170609,
-                          label: "TEST")
+        let result = try! Cost(amount: Amount(number: Decimal(1.003),
+                                              commodity: Commodity(symbol: "EUR,AB"),
+                                              decimalDigits: 3),
+                               date: TestUtils.date20170609,
+                               label: "TEST")
         XCTAssertEqual(result, cost(from: "{2017-06-09, 1.003 EUR,AB, \"TEST\"}"))
         XCTAssertEqual(result, cost(from: "{2017-06-09, 1.003 EUR,AB , \"TEST\"}"))
         XCTAssertEqual(result, cost(from: "{2017-06-09, 1.003 EUR,AB ,\"TEST\"}"))
     }
 
     func testSpecialCharacters() {
-        XCTAssertEqual(Cost(amount: Amount(number: Decimal(1.003),
-                                           commodity: Commodity(symbol: "💰"),
-                                           decimalDigits: 3),
-                            date: TestUtils.date20170609,
-                            label: "TES😀"),
+        XCTAssertEqual(try! Cost(amount: Amount(number: Decimal(1.003),
+                                                commodity: Commodity(symbol: "💰"),
+                                                decimalDigits: 3),
+                                 date: TestUtils.date20170609,
+                                 label: "TES😀"),
                        cost(from: "{2017-06-09, 1.003 💰, \"TES😀\"}"))
     }
 
