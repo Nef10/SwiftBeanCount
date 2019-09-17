@@ -18,12 +18,16 @@ public enum BookingMethod {
 public enum InventoryError: Error {
     /// an ambiguous match when trying to reduce the inventory
     case ambiguousBooking(String)
+    /// trying to reduce a lot by more units than it has
+    case lotNotBigEnough(String)
+    /// no matching lot to reduce was found
+    case noLotFound(String)
 }
 
 extension InventoryError: LocalizedError {
     public var errorDescription: String? {
         switch self {
-        case let .ambiguousBooking(error):
+        case let .ambiguousBooking(error), let .lotNotBigEnough(error), let .noLotFound(error):
             return error
         }
     }
@@ -104,9 +108,14 @@ class Inventory {
         }
         if matches.count == 1 {
             let index = inventory.firstIndex { $0 == matches.first! }!
+            guard abs(lot.units.number) < abs(inventory[index].units.number) else {
+                throw InventoryError.lotNotBigEnough("Lot not big enough: Trying to reduce \(inventory[index]) by \(lot)")
+            }
             inventory[index].adjustUnits(lot.units)
             let amount = inventory[index].cost.amount!
             return Amount(number: amount.number * lot.units.number, commodity: amount.commodity, decimalDigits: amount.decimalDigits).multiCurrencyAmount
+        } else if matches.isEmpty {
+            throw InventoryError.noLotFound("No Lot matching \(lot) found, inventory: \(self)")
         }
         return try reduceAmbigious(lot, matches: matches)
     }

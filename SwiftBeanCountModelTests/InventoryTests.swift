@@ -270,6 +270,52 @@ extension InventoryTests { // Test Reduce
         XCTAssertEqual(inventory.inventory.first?.cost, cost1)
     }
 
+    func testReduceMoreThanExist() {
+        let inventory = Inventory(bookingMethod: .strict)
+
+        let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
+        let cost1 = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
+
+        let amount2 = Amount(number: -3.0, commodity: commodity1, decimalDigits: 2)
+        let cost2 = try! Cost(amount: nil, date: nil, label: nil)
+        let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
+
+        var errorMessage = ""
+        do {
+            let result1 = try inventory.book(posting: posting1)
+            XCTAssertNil(result1)
+            _ = try inventory.book(posting: posting2)
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+
+        XCTAssertEqual(errorMessage, "Lot not big enough: Trying to reduce 2.0 EUR {2017-06-08, 3.0 CAD} by -3.00 EUR {}")
+    }
+
+    func testReduceNoLot() {
+        let inventory = Inventory(bookingMethod: .strict)
+
+        let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
+        let cost1 = try! Cost(amount: Amount(number: 3.0, commodity: commodity2, decimalDigits: 1), date: date, label: nil)
+        let posting1 = Posting(account: account, amount: amount1, transaction: transaction, price: nil, cost: cost1)
+
+        let amount2 = Amount(number: -1.0, commodity: commodity1, decimalDigits: 2)
+        let cost2 = try! Cost(amount: Amount(number: 4.0, commodity: commodity2, decimalDigits: 1), date: nil, label: nil)
+        let posting2 = Posting(account: account, amount: amount2, transaction: transaction, price: nil, cost: cost2)
+
+        var errorMessage = ""
+        do {
+            let result1 = try inventory.book(posting: posting1)
+            XCTAssertNil(result1)
+            _ = try inventory.book(posting: posting2)
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+
+        XCTAssertEqual(errorMessage, "No Lot matching -1.00 EUR {4.0 CAD} found, inventory: 2.0 EUR {2017-06-08, 3.0 CAD}")
+    }
+
     func testReducePositive() {
         let inventory = Inventory(bookingMethod: .strict)
 
