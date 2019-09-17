@@ -77,7 +77,7 @@ class Inventory {
     /// - Parameter lot: lot to add
     private func add(_ lot: Lot) {
         if let matchingLotIndex = inventory.firstIndex(where: { $0.units.commodity == lot.units.commodity && $0.cost == lot.cost }) {
-            inventory[matchingLotIndex].addUnits(lot.units)
+            inventory[matchingLotIndex].adjustUnits(lot.units)
         } else {
             inventory.append(lot)
         }
@@ -104,7 +104,7 @@ class Inventory {
         }
         if matches.count == 1 {
             let index = inventory.firstIndex { $0 == matches.first! }!
-            inventory[index].removeUnits(lot.units)
+            inventory[index].adjustUnits(lot.units)
             let amount = inventory[index].cost.amount!
             return Amount(number: amount.number * lot.units.number, commodity: amount.commodity, decimalDigits: amount.decimalDigits).multiCurrencyAmount
         }
@@ -144,24 +144,13 @@ class Inventory {
             self.cost = cost
         }
 
-        /// Adds Units into the lot
+        /// Adjusts the units in the lot
         ///
         /// The max of the decimalDigits is used
         ///
         /// - Parameter amount: amount to add
-        mutating func addUnits(_ amount: Amount) {
+        mutating func adjustUnits(_ amount: Amount) {
             units = Amount(number: units.number + amount.number,
-                           commodity: units.commodity,
-                           decimalDigits: max(units.decimalDigits, amount.decimalDigits))
-        }
-
-        /// Removes Units from the lot
-        ///
-        /// The max of the decimalDigits is used
-        ///
-        /// - Parameter amount: amount to remove
-        mutating func removeUnits(_ amount: Amount) {
-            units = Amount(number: units.number - amount.number,
                            commodity: units.commodity,
                            decimalDigits: max(units.decimalDigits, amount.decimalDigits))
         }

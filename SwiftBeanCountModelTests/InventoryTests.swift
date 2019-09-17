@@ -265,7 +265,7 @@ extension InventoryTests { // Test Reduce
         }
 
         XCTAssertEqual(inventory.inventory.count, 1)
-        XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number - amount2.number)
+        XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number + amount2.number)
         XCTAssertEqual(inventory.inventory.first?.units.decimalDigits, 2)
         XCTAssertEqual(inventory.inventory.first?.cost, cost1)
     }
@@ -291,7 +291,7 @@ extension InventoryTests { // Test Reduce
         }
 
         XCTAssertEqual(inventory.inventory.count, 1)
-        XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number - amount2.number)
+        XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number + amount2.number)
         XCTAssertEqual(inventory.inventory.first?.units.decimalDigits, 2)
         XCTAssertEqual(inventory.inventory.first?.cost, cost1)
     }
@@ -323,7 +323,7 @@ extension InventoryTests { // Test Reduce
         }
 
         XCTAssertEqual(inventory.inventory.count, 2)
-        XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number - amount3.number)
+        XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number + amount3.number)
         XCTAssertEqual(inventory.inventory.first?.units.decimalDigits, 2)
         XCTAssertEqual(inventory.inventory.first?.cost, cost1)
         XCTAssertEqual(inventory.inventory.last?.units, amount2)
@@ -356,7 +356,7 @@ extension InventoryTests { // Test Reduce
         }
 
         XCTAssertEqual(inventory.inventory.count, 2)
-        XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number - amount3.number)
+        XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number + amount3.number)
         XCTAssertEqual(inventory.inventory.first?.units.decimalDigits, 2)
         XCTAssertEqual(inventory.inventory.first?.cost, cost1)
         XCTAssertEqual(inventory.inventory.last?.units, amount2)
