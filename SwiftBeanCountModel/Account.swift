@@ -221,8 +221,9 @@ public class Account: AccountItem {
                     if let pricePaid = pricePaid {
                         if ledger.postingPrices[posting.transaction] != nil {
                             ledger.postingPrices[posting.transaction]![posting] = pricePaid
+                        } else {
+                            ledger.postingPrices[posting.transaction] = [posting: pricePaid]
                         }
-                        ledger.postingPrices[posting.transaction] = [posting: pricePaid]
                     }
                 } catch {
                     return .invalid(error.localizedDescription)
