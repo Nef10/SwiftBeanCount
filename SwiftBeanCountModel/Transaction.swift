@@ -56,6 +56,8 @@ public class Transaction {
         for posting in postings {
             if let cost = posting.cost {
                 if let postingAmount = ledger.postingPrices[self]?[posting] {
+                    let postingAmount = MultiCurrencyAmount(amounts: postingAmount.amounts,
+                                                            decimalDigits: [posting.amount.commodity: posting.amount.decimalDigits])
                     amount += postingAmount
                 } else if let costAmount = cost.amount, costAmount.number > 0 {
                     let postingAmount = MultiCurrencyAmount(amounts: [costAmount.commodity: costAmount.number * posting.amount.number],
