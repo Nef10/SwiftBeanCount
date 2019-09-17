@@ -58,7 +58,7 @@ class Inventory {
         let existingLotForCommodity = inventory.first { $0.units.commodity == posting.amount.commodity }
         // inventories can either have all positive or all negative lots
         if !(existingLotForCommodity != nil) || existingLotForCommodity?.units.number.sign == posting.amount.number.sign {
-            // When have a cost without date in the posting add we need to add it, use the date from the transaction
+            // When we have a cost without date in the posting and we need to add it, use the date from the transaction
             let lot = Lot(units: posting.amount,
                           cost: try Cost(amount: cost.amount, date: cost.date != nil ? cost.date : posting.transaction.metaData.date, label: cost.label))
             add(lot)
@@ -89,9 +89,9 @@ class Inventory {
     /// the sign of the units in the lot can be positive
     ///
     /// - Parameter lot: lot to reduce
-    /// - Returns: The price which should be used for the posting of the lot (negative of the amount paid for the units) or nil if the posting cannot be booked
+    /// - Returns: The price which should be used for the posting of the lot (negative of the amount paid for the units)
     /// - Throws: InventoryError if the lot cannot be reduced (e.g. ambiguous lot match)
-    private func reduce(_ lot: Lot) throws -> MultiCurrencyAmount? {
+    private func reduce(_ lot: Lot) throws -> MultiCurrencyAmount {
         let matches = inventory.filter { $0.units.commodity == lot.units.commodity && lot.cost.matches(cost: $0.cost) }
         let isTotalReduction = matches.reduce(Decimal()) { $0 + $1.units.number } == -lot.units.number
         if isTotalReduction {
@@ -116,9 +116,9 @@ class Inventory {
     /// - Parameters:
     ///   - lot: lot to reduce
     ///   - matches: matches in the inventory for the cost of the lot to reduce
-    /// - Returns: The price which should be used for the posting of the lot (negative of the amount paid for the units) or nil if it cannot be booked
+    /// - Returns: The price which should be used for the posting of the lot (negative of the amount paid for the units)
     /// - Throws: InventoryError, e.g. for the strict booking method
-    private func reduceAmbigious(_ lot: Lot, matches: [Inventory.Lot]) throws -> MultiCurrencyAmount? {
+    private func reduceAmbigious(_ lot: Lot, matches: [Inventory.Lot]) throws -> MultiCurrencyAmount {
         switch bookingMethod {
         case .strict:
             throw InventoryError.ambiguousBooking("Ambigious Booking: \(lot), matches: \(matches.map { "\($0)" }.joined(separator: "\n")), inventory: \(self)")
