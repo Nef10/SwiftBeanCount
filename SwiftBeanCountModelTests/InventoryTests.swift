@@ -472,11 +472,8 @@ extension InventoryTests { // Test Reduce
             XCTFail("Error thrown")
         }
 
-        XCTAssertThrowsError(try inventory.book(posting: posting3))
-        do {
-            _ = try inventory.book(posting: posting3)
-        } catch {
-            XCTAssertEqual(error.localizedDescription, """
+        XCTAssertThrowsError(try inventory.book(posting: posting3)) {
+            XCTAssertEqual($0.localizedDescription, """
             Ambigious Booking: -1.00 EUR {}, matches: 2.0 EUR {2017-06-08, 3.0 CAD}
             2.0 EUR {2017-06-08, 2.0 CAD}, inventory: 2.0 EUR {2017-06-08, 3.0 CAD}
             2.0 EUR {2017-06-08, 2.0 CAD}

@@ -19,11 +19,8 @@ class LedgerTests: XCTestCase {
         let commodity1 = Commodity(symbol: "EUR")
         try! ledger.add(commodity1)
         XCTAssertEqual(ledger.commodities.count, 1)
-        XCTAssertThrowsError(try ledger.add(commodity1))
-        do {
-            _ = try ledger.add(commodity1)
-        } catch {
-            XCTAssertEqual(error.localizedDescription, "Entry already exists in Ledger: \(commodity1)")
+        XCTAssertThrowsError(try ledger.add(commodity1)) {
+            XCTAssertEqual($0.localizedDescription, "Entry already exists in Ledger: \(commodity1)")
         }
         XCTAssertEqual(ledger.commodities.count, 1)
         XCTAssertEqual(ledger.commodities.first, commodity1)
