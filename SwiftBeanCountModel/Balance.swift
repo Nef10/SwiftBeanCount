@@ -36,16 +36,16 @@ public struct Balance {
 
 extension Balance: CustomStringConvertible {
 
-    /// Returns the price string for the ledger.
-    public var description: String {
-        return "\(type(of: self).dateFormatter.string(from: date)) balance \(account.name) \(amount)"
-    }
-
-    static private let dateFormatter: DateFormatter = {
+    private static let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter
     }()
+
+    /// Returns the price string for the ledger.
+    public var description: String {
+        return "\(type(of: self).dateFormatter.string(from: date)) balance \(account.name) \(amount)"
+    }
 
 }
 

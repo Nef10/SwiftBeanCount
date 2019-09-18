@@ -48,6 +48,12 @@ public struct TransactionMetaData {
 
 extension TransactionMetaData: CustomStringConvertible {
 
+    private static let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter
+    }()
+
     /// `String` to represent the meta data of the `Transaction` in the ledger file (e.g. the first line above the `Posting`s
     public var description: String {
         var tagString =  ""
@@ -56,12 +62,6 @@ extension TransactionMetaData: CustomStringConvertible {
     }
 
     private var dateString: String { return type(of: self).dateFormatter.string(from: date) }
-
-    static private let dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter
-    }()
 
 }
 

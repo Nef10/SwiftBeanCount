@@ -18,19 +18,6 @@ public enum BookingMethod {
     case fifo
 }
 
-extension BookingMethod: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .strict:
-            return "STRICT"
-        case .lifo:
-            return "LIFO"
-        case .fifo:
-            return "FIFO"
-        }
-    }
-}
-
 /// Errors an inventory booking can throw
 public enum InventoryError: Error {
     /// an ambiguous match when trying to reduce the inventory
@@ -41,17 +28,40 @@ public enum InventoryError: Error {
     case noLotFound(String)
 }
 
-extension InventoryError: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        case let .ambiguousBooking(error), let .lotNotBigEnough(error), let .noLotFound(error):
-            return error
-        }
-    }
-}
-
 /// Inventory of lots for things held at cost
 class Inventory {
+
+    /// Lot, one entry in the inventory
+    struct Lot {
+
+        /// units in this lot, including commodity
+        private(set) var units: Amount
+
+        /// Cost of the lot
+        let cost: Cost
+
+        /// Creates a lot
+        ///
+        /// - Parameters:
+        ///   - units: units in the lot
+        ///   - cost: cost if the lot
+        init(units: Amount, cost: Cost) {
+            self.units = units
+            self.cost = cost
+        }
+
+        /// Adjusts the units in the lot
+        ///
+        /// The max of the decimalDigits is used
+        ///
+        /// - Parameter amount: amount to add
+        mutating func adjustUnits(_ amount: Amount) {
+            units = Amount(number: units.number + amount.number,
+                           commodity: units.commodity,
+                           decimalDigits: max(units.decimalDigits, amount.decimalDigits))
+        }
+
+    }
 
     /// `BookingMethod` used for the Inventory
     let bookingMethod: BookingMethod
@@ -196,38 +206,28 @@ class Inventory {
         }
     }
 
-    /// Lot, one entry in the inventory
-    struct Lot {
+}
 
-        /// units in this lot, including commodity
-        private(set) var units: Amount
-
-        /// Cost of the lot
-        let cost: Cost
-
-        /// Creates a lot
-        ///
-        /// - Parameters:
-        ///   - units: units in the lot
-        ///   - cost: cost if the lot
-        init(units: Amount, cost: Cost) {
-            self.units = units
-            self.cost = cost
+extension InventoryError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case let .ambiguousBooking(error), let .lotNotBigEnough(error), let .noLotFound(error):
+            return error
         }
-
-        /// Adjusts the units in the lot
-        ///
-        /// The max of the decimalDigits is used
-        ///
-        /// - Parameter amount: amount to add
-        mutating func adjustUnits(_ amount: Amount) {
-            units = Amount(number: units.number + amount.number,
-                           commodity: units.commodity,
-                           decimalDigits: max(units.decimalDigits, amount.decimalDigits))
-        }
-
     }
+}
 
+extension BookingMethod: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .strict:
+            return "STRICT"
+        case .lifo:
+            return "LIFO"
+        case .fifo:
+            return "FIFO"
+        }
+    }
 }
 
 extension Inventory: CustomStringConvertible {

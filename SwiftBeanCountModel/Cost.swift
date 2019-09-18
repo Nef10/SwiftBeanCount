@@ -14,19 +14,10 @@ public enum CostError: Error {
     case negativeAmount(String)
 }
 
-extension CostError: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        case let .negativeAmount(error):
-            return "Invalid Cost, negative amount: \(error)"
-        }
-    }
-}
-
 /// Cost of a posting
 public class Cost {
 
-    // Amount
+    /// Amount
     public let amount: Amount?
 
     /// Optional date to identify a lot in the inventory - if no date is set for positive amount, the transactions date is used
@@ -35,6 +26,13 @@ public class Cost {
     /// Optional label to identify a lot in the inventory
     public let label: String?
 
+    /// Creates a Cost
+    ///
+    /// - Parameters:
+    ///   - amount: optional `Amount`
+    ///   - date: optinal Date
+    ///   - label: optinal label String
+    /// - Throws: if the cost cannot be created, e.g. if the amount is negative
     public init(amount: Amount?, date: Date?, label: String?) throws {
         self.amount = amount
         self.date = date
@@ -75,7 +73,22 @@ public class Cost {
 
 }
 
+extension CostError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case let .negativeAmount(error):
+            return "Invalid Cost, negative amount: \(error)"
+        }
+    }
+}
+
 extension Cost: CustomStringConvertible {
+
+    private static let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter
+    }()
 
     /// String to describe the cost in the ledger file
     public var description: String {
@@ -91,12 +104,6 @@ extension Cost: CustomStringConvertible {
         }
         return "{\(results.joined(separator: ", "))}"
     }
-
-    static private let dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter
-    }()
 
 }
 

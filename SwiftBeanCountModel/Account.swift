@@ -96,15 +96,6 @@ public enum AccountError: Error {
     case invaildName(String)
 }
 
-extension AccountError: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        case let AccountError.invaildName(error):
-            return "Invalid Account name: \(error)"
-        }
-    }
-}
-
 /// Class with represents an Account with a name, commodity, opening and closing date, as well as a type.
 ///
 /// It does hot hold any `Transaction`s
@@ -153,6 +144,50 @@ public class Account: AccountItem {
         self.name = name
         self.bookingMethod = bookingMethod
         self.accountType = Account.getAccountType(for: name)
+    }
+
+    /// Checks if a given name for an account is valid
+    ///
+    /// This includes that the name start with one of the base groups and is correctly formattet with seperators
+    ///
+    /// - Parameter name: String to check
+    /// - Returns: if the name is valid
+    public class func isNameValid(_ name: String) -> Bool {
+        // swiftlint:disable:next nesting
+        struct Cache { // https://stackoverflow.com/a/25354915/3386893 // swiftlint:disable:this convenience_type
+            static var validNames = Set<String>()
+        }
+        if Cache.validNames.contains(name) {
+            return true
+        }
+        guard !name.isEmpty else {
+            return false
+        }
+        for type in AccountType.allValues() {
+            if name.starts(with: type.rawValue + String(Account.nameSeperator)) // has to start with one base account followed by a seperator
+                && name.last != Account.nameSeperator //  is not allowed to end in a seperator
+                && name.range(of: "\(Account.nameSeperator)\(Account.nameSeperator)") == nil { // no account item is allowed to be empty
+                Cache.validNames.insert(name)
+                return true
+            }
+        }
+        return false
+    }
+
+    /// Gets the `AccountType` from a name string
+    ///
+    /// In case of an invalid account name the function might just return .assets
+    ///
+    /// - Parameter name: valid account name
+    /// - Returns: `AccountType` of the account with this name
+    private class func getAccountType(for name: String) -> AccountType {
+        var type = AccountType.asset
+        for accountType in AccountType.allValues() {
+            if name.starts(with: accountType.rawValue ) {
+                type = accountType
+            }
+        }
+        return type
     }
 
     /// Checks if the given `Posting` is a valid posting for this account.
@@ -267,53 +302,24 @@ public class Account: AccountItem {
         return true
     }
 
-    /// Checks if a given name for an account is valid
-    ///
-    /// This includes that the name start with one of the base groups and is correctly formattet with seperators
-    ///
-    /// - Parameter name: String to check
-    /// - Returns: if the name is valid
-    public class func isNameValid(_ name: String) -> Bool {
-        // swiftlint:disable:next nesting
-        struct Cache { // https://stackoverflow.com/a/25354915/3386893
-            static var validNames = Set<String>()
-        }
-        if Cache.validNames.contains(name) {
-            return true
-        }
-        guard !name.isEmpty else {
-            return false
-        }
-        for type in AccountType.allValues() {
-            if name.starts(with: type.rawValue + String(Account.nameSeperator)) // has to start with one base account followed by a seperator
-                && name.last != Account.nameSeperator //  is not allowed to end in a seperator
-                && name.range(of: "\(Account.nameSeperator)\(Account.nameSeperator)") == nil { // no account item is allowed to be empty
-                Cache.validNames.insert(name)
-                return true
-            }
-        }
-        return false
-    }
+}
 
-    /// Gets the `AccountType` from a name string
-    ///
-    /// In case of an invalid account name the function might just return .assets
-    ///
-    /// - Parameter name: valid account name
-    /// - Returns: `AccountType` of the account with this name
-    private class func getAccountType(for name: String) -> AccountType {
-        var type = AccountType.asset
-        for accountType in AccountType.allValues() {
-            if name.starts(with: accountType.rawValue ) {
-                type = accountType
-            }
+extension AccountError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case let AccountError.invaildName(error):
+            return "Invalid Account name: \(error)"
         }
-        return type
     }
-
 }
 
 extension Account: CustomStringConvertible {
+
+    private static let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter
+    }()
 
     /// Returns the Acount opening and closing string for the ledger.
     ///
@@ -334,12 +340,6 @@ extension Account: CustomStringConvertible {
         }
         return string
     }
-
-    static private let dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter
-    }()
 
 }
 

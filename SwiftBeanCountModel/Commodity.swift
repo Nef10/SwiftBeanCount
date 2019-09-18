@@ -63,6 +63,12 @@ public class Commodity {
 
 extension Commodity: CustomStringConvertible {
 
+    private static let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter
+    }()
+
     /// String of the commodity definition
     public var description: String {
         var result = ""
@@ -78,12 +84,6 @@ extension Commodity: CustomStringConvertible {
         }
         return result
     }
-
-    static private let dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter
-    }()
 
 }
 

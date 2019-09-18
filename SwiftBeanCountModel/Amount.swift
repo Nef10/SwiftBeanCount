@@ -38,12 +38,7 @@ public struct Amount {
 
 extension Amount: CustomStringConvertible {
 
-    /// Returns a `String` for the ledger which contains the number with the correct number of decimal digits as well as the `commodity`
-    public var description: String { return "\(amountString) \(commodity.symbol)" }
-
-    private var amountString: String { return type(of: self).numberFormatter(fractionDigits: decimalDigits).string(from: number as NSDecimalNumber)! }
-
-    static private let numberFormatter: NumberFormatter = {
+    private static let numberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.minimumFractionDigits = 2
@@ -51,7 +46,12 @@ extension Amount: CustomStringConvertible {
         return formatter
     }()
 
-    static private func numberFormatter(fractionDigits: Int) -> NumberFormatter {
+    /// Returns a `String` for the ledger which contains the number with the correct number of decimal digits as well as the `commodity`
+    public var description: String { return "\(amountString) \(commodity.symbol)" }
+
+    private var amountString: String { return type(of: self).numberFormatter(fractionDigits: decimalDigits).string(from: number as NSDecimalNumber)! }
+
+    private static func numberFormatter(fractionDigits: Int) -> NumberFormatter {
         let numberFormatter = self.numberFormatter
         numberFormatter.maximumFractionDigits = fractionDigits
         numberFormatter.minimumFractionDigits = fractionDigits

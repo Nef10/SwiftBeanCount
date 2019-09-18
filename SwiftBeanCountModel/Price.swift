@@ -14,15 +14,6 @@ public enum PriceError: Error {
     case sameCommodity(String)
 }
 
-extension PriceError: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        case let .sameCommodity(error):
-            return "Invalid Price, using same commodity: \(error)"
-        }
-    }
-}
-
 /// Price of a commodity in another commodity on a given date
 public struct Price {
 
@@ -55,17 +46,26 @@ public struct Price {
 
 extension Price: CustomStringConvertible {
 
-    /// Returns the price string for the ledger.
-    public var description: String {
-        return "\(type(of: self).dateFormatter.string(from: date)) price \(commodity.symbol) \(amount)"
-    }
-
-    static private let dateFormatter: DateFormatter = {
+    private static let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter
     }()
 
+    /// Returns the price string for the ledger.
+    public var description: String {
+        return "\(type(of: self).dateFormatter.string(from: date)) price \(commodity.symbol) \(amount)"
+    }
+
+}
+
+extension PriceError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case let .sameCommodity(error):
+            return "Invalid Price, using same commodity: \(error)"
+        }
+    }
 }
 
 extension Price: Equatable {

@@ -49,8 +49,8 @@ class TagTests: XCTestCase {
         XCTAssert(tag1 < tag2)
         XCTAssertFalse(tag1 > tag2)
 
-        XCTAssertFalse(tag1 > tag1)
-        XCTAssertFalse(tag2 < tag2)
+        XCTAssertFalse(tag1 > tag1) // swiftlint:disable:this identical_operands
+        XCTAssertFalse(tag2 < tag2) // swiftlint:disable:this identical_operands
     }
 
 }

@@ -14,15 +14,6 @@ public enum LedgerError: Error {
     case alreadyExists(String)
 }
 
-extension LedgerError: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        case let .alreadyExists(error):
-            return "Entry already exists in Ledger: \(error)"
-        }
-    }
-}
-
 /// A Ledger is the main part of the model, it contains all necessary information.
 public class Ledger {
 
@@ -289,6 +280,15 @@ public class Ledger {
         return commodity
     }
 
+}
+
+extension LedgerError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case let .alreadyExists(error):
+            return "Entry already exists in Ledger: \(error)"
+        }
+    }
 }
 
 extension Ledger: CustomStringConvertible {

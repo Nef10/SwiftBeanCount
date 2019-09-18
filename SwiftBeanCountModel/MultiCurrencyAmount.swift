@@ -24,26 +24,6 @@ public struct MultiCurrencyAmount {
     var amounts: [Commodity: Decimal]
     var decimalDigits: [Commodity: Int]
 
-    /// Validates that the amount is zero within the allowed tolerance
-    ///
-    /// - Returns: `ValidationResult`
-    func validateZeroWithTolerance() -> ValidationResult {
-        let zero = MultiCurrencyAmount(amounts: [:], decimalDigits: self.decimalDigits)
-        return MultiCurrencyAmount.equalWithinTolerance(amount1: self, amount2: zero)
-    }
-
-    /// Validates that the amount is the same in the MultiCurrencyAmount
-    ///
-    /// Ignores other currencies in the MultiCurrencyAmount
-    ///
-    /// - Parameter amount: amount to validate
-    /// - Returns: `ValidationResult`
-    func validateOneAmountWithTolerance(amount: Amount) -> ValidationResult {
-        var multiCurrencyAmount = amount.multiCurrencyAmount
-        multiCurrencyAmount.decimalDigits[amount.commodity] = decimalDigitToKeep(multiCurrencyAmount.decimalDigits[amount.commodity]!, decimalDigits[amount.commodity])
-        return MultiCurrencyAmount.equalWithinTolerance(amount1: multiCurrencyAmount, amount2: self)
-    }
-
     /// Checks if all amounts of the first one are equal to the one in the second
     ///
     /// In the second amount contains amounts in currencies which are not in the first one,
@@ -69,6 +49,26 @@ public struct MultiCurrencyAmount {
             }
         }
         return .valid
+    }
+
+    /// Validates that the amount is zero within the allowed tolerance
+    ///
+    /// - Returns: `ValidationResult`
+    func validateZeroWithTolerance() -> ValidationResult {
+        let zero = MultiCurrencyAmount(amounts: [:], decimalDigits: self.decimalDigits)
+        return MultiCurrencyAmount.equalWithinTolerance(amount1: self, amount2: zero)
+    }
+
+    /// Validates that the amount is the same in the MultiCurrencyAmount
+    ///
+    /// Ignores other currencies in the MultiCurrencyAmount
+    ///
+    /// - Parameter amount: amount to validate
+    /// - Returns: `ValidationResult`
+    func validateOneAmountWithTolerance(amount: Amount) -> ValidationResult {
+        var multiCurrencyAmount = amount.multiCurrencyAmount
+        multiCurrencyAmount.decimalDigits[amount.commodity] = decimalDigitToKeep(multiCurrencyAmount.decimalDigits[amount.commodity]!, decimalDigits[amount.commodity])
+        return MultiCurrencyAmount.equalWithinTolerance(amount1: multiCurrencyAmount, amount2: self)
     }
 
 }
