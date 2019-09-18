@@ -325,6 +325,9 @@ extension Account: CustomStringConvertible {
             if let commodity = self.commodity {
                 string += " \(commodity.symbol)"
             }
+            if bookingMethod != .strict {
+                string += " \"\(bookingMethod)\""
+            }
             if let closing = self.closing {
                 string += "\n\(type(of: self).dateFormatter.string(from: closing)) close \(name)"
             }

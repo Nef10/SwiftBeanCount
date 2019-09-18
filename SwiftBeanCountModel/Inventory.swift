@@ -18,6 +18,19 @@ public enum BookingMethod {
     case fifo
 }
 
+extension BookingMethod: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .strict:
+            return "STRICT"
+        case .lifo:
+            return "LIFO"
+        case .fifo:
+            return "FIFO"
+        }
+    }
+}
+
 /// Errors an inventory booking can throw
 public enum InventoryError: Error {
     /// an ambiguous match when trying to reduce the inventory

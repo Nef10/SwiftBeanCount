@@ -57,6 +57,21 @@ class AccountTests: XCTestCase {
         XCTAssertEqual(String(describing: accout), "2017-06-08 open \(name) \(symbol)\n2017-06-09 close \(name)")
     }
 
+    func testDescriptionBookingMethod() {
+        for bookingMethod in [BookingMethod.fifo, BookingMethod.lifo] {
+            let name = "Assets:Cash"
+            let accout = try! Account(name: name, bookingMethod: bookingMethod)
+            XCTAssertEqual(String(describing: accout), "")
+            accout.opening = date20170608
+            XCTAssertEqual(String(describing: accout), "2017-06-08 open \(name) \"\(bookingMethod)\"")
+            let symbol = "EUR"
+            accout.commodity = Commodity(symbol: symbol)
+            XCTAssertEqual(String(describing: accout), "2017-06-08 open \(name) \(symbol) \"\(bookingMethod)\"")
+            accout.closing = date20170609
+            XCTAssertEqual(String(describing: accout), "2017-06-08 open \(name) \(symbol) \"\(bookingMethod)\"\n2017-06-09 close \(name)")
+        }
+    }
+
     func testDescriptionSpecialCharacters() {
         let name = "Assets:💰"
         let accout = try! Account(name: name)
