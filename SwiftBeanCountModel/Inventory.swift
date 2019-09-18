@@ -12,6 +12,10 @@ import Foundation
 public enum BookingMethod {
     /// throw error for ambiguous matches
     case strict
+    /// last in first out
+    case lifo
+    /// first in first out
+    case fifo
 }
 
 /// Errors an inventory booking can throw
@@ -96,18 +100,19 @@ class Inventory {
     /// - Returns: The price which should be used for the posting of the lot (negative of the amount paid for the units)
     /// - Throws: InventoryError if the lot cannot be reduced (e.g. ambiguous lot match)
     private func reduce(_ lot: Lot) throws -> MultiCurrencyAmount {
-        let matches = inventory.filter { $0.units.commodity == lot.units.commodity && lot.cost.matches(cost: $0.cost) }
-        let isTotalReduction = matches.reduce(Decimal()) { $0 + $1.units.number } == -lot.units.number
+        let matches = inventory.indices.filter { inventory[$0].units.commodity == lot.units.commodity && lot.cost.matches(cost: inventory[$0].cost) }
+        let isTotalReduction = matches.reduce(Decimal()) { $0 + inventory[$1].units.number } == -lot.units.number
         if isTotalReduction {
-            inventory.removeAll { $0.units.commodity == lot.units.commodity && lot.cost.matches(cost: $0.cost) }
-            return matches.reduce(MultiCurrencyAmount(amounts: [:], decimalDigits: [:])) {
-                $0 + Amount(number: $1.cost.amount!.number * -$1.units.number,
-                            commodity: $1.cost.amount!.commodity,
-                            decimalDigits: $1.cost.amount!.decimalDigits).multiCurrencyAmount
+            let result = matches.reduce(MultiCurrencyAmount(amounts: [:], decimalDigits: [:])) {
+                $0 + Amount(number: inventory[$1].cost.amount!.number * -inventory[$1].units.number,
+                            commodity: inventory[$1].cost.amount!.commodity,
+                            decimalDigits: inventory[$1].cost.amount!.decimalDigits).multiCurrencyAmount
             }
+            inventory.removeAll { $0.units.commodity == lot.units.commodity && lot.cost.matches(cost: $0.cost) }
+            return result
         }
         if matches.count == 1 {
-            let index = inventory.firstIndex { $0 == matches.first! }!
+            let index = matches.first!
             guard abs(lot.units.number) < abs(inventory[index].units.number) else {
                 throw InventoryError.lotNotBigEnough("Lot not big enough: Trying to reduce \(inventory[index]) by \(lot)")
             }
@@ -124,13 +129,57 @@ class Inventory {
     ///
     /// - Parameters:
     ///   - lot: lot to reduce
-    ///   - matches: matches in the inventory for the cost of the lot to reduce
+    ///   - matches: indices of matches in the inventory for the cost of the lot to reduce
     /// - Returns: The price which should be used for the posting of the lot (negative of the amount paid for the units)
     /// - Throws: InventoryError, e.g. for the strict booking method
-    private func reduceAmbigious(_ lot: Lot, matches: [Inventory.Lot]) throws -> MultiCurrencyAmount {
+    private func reduceAmbigious(_ lot: Lot, matches: [Int]) throws -> MultiCurrencyAmount {
         switch bookingMethod {
         case .strict:
-            throw InventoryError.ambiguousBooking("Ambigious Booking: \(lot), matches: \(matches.map { "\($0)" }.joined(separator: "\n")), inventory: \(self)")
+            throw InventoryError.ambiguousBooking("Ambigious Booking: \(lot), matches: \(matches.map { "\(inventory[$0])" }.joined(separator: "\n")), inventory: \(self)")
+        case .lifo:
+            let matches = matches.sorted(by: > )
+            return try reduceAmbigious(lot, fromMatchesInOrder: matches)
+        case .fifo:
+            let matches = matches.sorted(by: < )
+            return try reduceAmbigious(lot, fromMatchesInOrder: matches)
+        }
+    }
+
+    /// Reduce a ambigious lot match by going through the matches in the supplied order
+    ///
+    /// - Parameters:
+    ///   - lot: lot to reduce
+    ///   - matches: indices of the matches which should be reduced
+    /// - Returns: The price which should be used for the posting of the lot (negative of the amount paid for the units)
+    /// - Throws: InventoryError, e.g. if not enough units exist in the inventory
+    private func reduceAmbigious(_ lot: Lot, fromMatchesInOrder matches: [Int]) throws -> MultiCurrencyAmount {
+        var matches = matches
+        var toRemove = [Int]()
+        var number = lot.units.number
+        var cost = MultiCurrencyAmount(amounts: [:], decimalDigits: [:])
+        while number != 0 && !matches.isEmpty {
+            if abs(inventory[matches.first!].units.number) > abs(number) {
+                inventory[matches.first!].adjustUnits(Amount(number: number, commodity: lot.units.commodity, decimalDigits: lot.units.decimalDigits))
+                cost += Amount(number: inventory[matches.first!].cost.amount!.number * number,
+                               commodity: inventory[matches.first!].cost.amount!.commodity,
+                               decimalDigits: inventory[matches.first!].cost.amount!.decimalDigits)
+                number = 0
+            } else {
+                number += inventory[matches.first!].units.number
+                cost += Amount(number: inventory[matches.first!].cost.amount!.number * inventory[matches.first!].units.number * -1,
+                               commodity: inventory[matches.first!].cost.amount!.commodity,
+                               decimalDigits: inventory[matches.first!].cost.amount!.decimalDigits)
+                toRemove.append(matches.first!)
+                matches.removeFirst()
+            }
+        }
+        for index in toRemove.sorted(by: > ) {
+            inventory.remove(at: index)
+        }
+        if number == 0 {
+            return cost
+        } else {
+            throw InventoryError.lotNotBigEnough("Not enough units: Trying to reduce by \(lot)")
         }
     }
 
