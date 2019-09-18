@@ -134,7 +134,7 @@ class ParserTests: XCTestCase {
                 let result = ledger1 == ledger2
                 XCTAssert(result)
             }
-        } catch let error {
+        } catch {
             XCTFail(String(describing: error))
         }
     }
@@ -143,7 +143,7 @@ class ParserTests: XCTestCase {
         self.measure {
             do {
                 _ = try Parser.parse(contentOf: urlFor(testFile: .big))
-            } catch let error {
+            } catch {
                 XCTFail(String(describing: error))
             }
         }
@@ -160,7 +160,7 @@ class ParserTests: XCTestCase {
             let ledger = try Parser.parse(contentOf: urlFor(testFile: testFile))
             XCTAssertEqual(ledger.transactions.count, 0)
             return ledger
-        } catch let error {
+        } catch {
             XCTFail(String(describing: error))
         }
         return Ledger()
@@ -186,7 +186,7 @@ class ParserTests: XCTestCase {
             XCTAssertEqual(posting2.account.name, "Assets:Checking")
             XCTAssertEqual(posting2.account.opening, TestUtils.date20170608)
             XCTAssertEqual(posting2.amount.commodity, Commodity(symbol: "EUR"))
-        } catch let error {
+        } catch {
             XCTFail(String(describing: error))
         }
     }

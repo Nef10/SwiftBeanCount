@@ -16,15 +16,6 @@ class PostingParserTests: XCTestCase {
 
     var basicPosting: Posting?
 
-    override func setUp() {
-        super.setUp()
-        basicPosting = Posting(account: try! Account(name: "Assets:Checking"),
-                               amount: Amount(number: Decimal(1.23),
-                                              commodity: Commodity(symbol: "EUR"),
-                                              decimalDigits: 2),
-                               transaction: transaction)
-    }
-
     let basicPostingString = "  Assets:Checking 1.23 EUR"
     let integerPostingString = "  Assets:Checking 1 EUR"
     let noThousandsSeparatorPostingString = "  Assets:Checking 100000 EUR"
@@ -42,6 +33,15 @@ class PostingParserTests: XCTestCase {
     let invalidCostPostingString = "  Assets:💰 2.0 💵 {2017-06-09, -1.003 EUR, \"TEST\"}"
     let costAndUnitPricePostingString = "  Assets:💰 2.0 💵 {2017-06-09, 1.003 EUR} @ 1.003 EUR"
     let costAndTotalPricePostingString = "  Assets:💰 2.0 💵 {1.003 EUR, \"TEST\"} @@ 2.0 EUR"
+
+    override func setUp() {
+        super.setUp()
+        basicPosting = Posting(account: try! Account(name: "Assets:Checking"),
+                               amount: Amount(number: Decimal(1.23),
+                                              commodity: Commodity(symbol: "EUR"),
+                                              decimalDigits: 2),
+                               transaction: transaction)
+    }
 
     func testBasic() {
         let posting = try! PostingParser.parseFrom(line: basicPostingString, into: transaction)!

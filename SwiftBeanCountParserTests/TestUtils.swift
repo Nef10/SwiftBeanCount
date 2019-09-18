@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TestUtils {
+enum TestUtils {
 
     static let calendar = Calendar.current
 

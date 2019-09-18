@@ -9,7 +9,8 @@
 import Foundation
 import SwiftBeanCountModel
 
-public class Parser {
+/// Parser to parse a string of a file into a Ledger
+enum Parser {
 
     static let comment: Character = ";"
 
@@ -162,7 +163,7 @@ public class Parser {
         } else {
             do {
                 try ledger.add(account)
-            } catch let error {
+            } catch {
                 ledger.errors.append("Error with account \(account.name): \(error.localizedDescription) in line \(lineNumber + 1): \(line)")
             }
         }
@@ -179,7 +180,7 @@ public class Parser {
     private static func add(_ price: Price, to ledger: Ledger, lineNumber: Int) {
         do {
             try ledger.add(price)
-        } catch let error {
+        } catch {
             ledger.errors.append("Error with price \(price): \(error.localizedDescription) in line \(lineNumber + 1)")
         }
     }
@@ -195,7 +196,7 @@ public class Parser {
     private static func add(_ commodity: Commodity, to ledger: Ledger, lineNumber: Int) {
         do {
             try ledger.add(commodity)
-        } catch let error {
+        } catch {
             ledger.errors.append("Error with commodity \(commodity): \(error.localizedDescription) in line \(lineNumber + 1)")
         }
     }
@@ -211,7 +212,7 @@ public class Parser {
     private static func add(_ balance: Balance, to ledger: Ledger, lineNumber: Int) {
         do {
             try ledger.add(balance)
-        } catch let error {
+        } catch {
             ledger.errors.append("Error with balance \(balance): \(error.localizedDescription) in line \(lineNumber + 1)")
         }
     }

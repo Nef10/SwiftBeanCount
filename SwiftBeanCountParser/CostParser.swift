@@ -9,14 +9,16 @@
 import Foundation
 import SwiftBeanCountModel
 
-struct CostParser {
+enum CostParser {
 
-    static private let labelGroup = "(\"([^\"]*)\")"
-    static private let lookahedStart = "(?=((.*?,\\s*)?"
-    static private let lookahedEnd = "\\s*(,|\\}))?)"
-    static private let costLabelGroup = "\(lookahedStart)\(labelGroup)\(lookahedEnd)"
-    static private let costPriceGroup = "\(lookahedStart)(\(ParserUtils.amountGroup))\(lookahedEnd)"
-    static private let costDateGroup = "\(lookahedStart)\(DateParser.dateGroup)\(lookahedEnd)"
+    private static let labelGroup = "(\"([^\"]*)\")"
+    private static let lookahedStart = "(?=((.*?,\\s*)?"
+    private static let lookahedEnd = "\\s*(,|\\}))?)"
+
+    private static let costLabelGroup = "\(lookahedStart)\(labelGroup)\(lookahedEnd)"
+    private static let costPriceGroup = "\(lookahedStart)(\(ParserUtils.amountGroup))\(lookahedEnd)" // allow normal amount - negative amount will throw exception in Cost init
+    private static let costDateGroup = "\(lookahedStart)\(DateParser.dateGroup)\(lookahedEnd)"
+
     static let costGroup = "(\\{\\s*\(costLabelGroup)\(costPriceGroup)\(costDateGroup).*\\})"
 
     static func parseFrom(match: [String], startIndex: Int) throws -> Cost? {

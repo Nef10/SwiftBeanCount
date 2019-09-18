@@ -1,4 +1,4 @@
-# Updated for 0.24.0
+# Updated for 0.35.0
 
 excluded:
   - Carthage
@@ -40,6 +40,43 @@ opt_in_rules:
   - strict_fileprivate
   - sorted_first_last
   - override_in_extension
+  - private_action
+  - yoda_condition
+  - discouraged_optional_boolean
+  - empty_string
+  - untyped_error_in_catch
+  - discouraged_optional_collection
+  - fallthrough
+  - modifier_order
+  - unavailable_function
+  - multiline_function_chains
+  - redundant_set_access_control
+  - empty_xctest_method
+  - function_default_parameter_at_end
+  - file_name
+  - convenience_type
+  - missing_docs
+  - unused_import
+  - legacy_random
+  - closure_body_length
+  - toggle_bool
+  - identical_operands
+  - collection_alignment
+  - multiline_literal_brackets
+  - multiline_parameters_brackets
+  - xct_specific_matcher
+  - last_where
+  - strong_iboutlet
+  - reduce_into
+  - file_types_order
+  - type_contents_order
+  - nslocalizedstring_require_bundle
+  - unowned_variable_capture
+  - legacy_multiple
+  - unused_declaration
+  - contains_over_filter_count
+  - contains_over_filter_is_empty
+  - empty_collection_literal
 
 disabled_rules:
   - trailing_comma

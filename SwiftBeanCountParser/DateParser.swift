@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DateParser {
+enum DateParser {
 
     static let dateGroup = "([0-9]{4}-[0-9]{2}-[0-9]{2})"
 

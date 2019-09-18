@@ -9,9 +9,9 @@
 import Foundation
 import SwiftBeanCountModel
 
-struct TransactionMetaDataParser {
+enum TransactionMetaDataParser {
 
-    static private let regex: NSRegularExpression = {
+    private static let regex: NSRegularExpression = {
         // swiftlint:disable:next force_try
         try! NSRegularExpression(pattern: "^\(DateParser.dateGroup)\\s+([*!])\\s+(\"([^\"]*)\"\\s+)\"([^\"]*)\"\\s*((#([^\\s#]*)\\s*)*)(;.*)?$", options: [])
     }()

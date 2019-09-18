@@ -9,9 +9,9 @@
 import Foundation
 import SwiftBeanCountModel
 
-struct BalanceParser {
+enum BalanceParser {
 
-    static private let regex: NSRegularExpression = {
+    private static let regex: NSRegularExpression = {
         // swiftlint:disable:next force_try
         try! NSRegularExpression(pattern: "^\(DateParser.dateGroup)\\s+balance\\s+\(ParserUtils.accountGroup)\\s+\(ParserUtils.amountGroup)\\s*(;.*)?$", options: [])
     }()

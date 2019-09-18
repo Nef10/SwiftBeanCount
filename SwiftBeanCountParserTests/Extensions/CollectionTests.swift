@@ -13,10 +13,10 @@ class CollectionTests: XCTestCase {
 
     func testSafeArray() {
         var array = [String]()
-        XCTAssertEqual(array[safe: 0], nil)
+        XCTAssertNil(array[safe: 0])
         array.append("value")
         XCTAssertEqual(array[safe: 0], "value")
-        XCTAssertEqual(array[safe: 1], nil)
+        XCTAssertNil(array[safe: 1])
     }
 
 }

@@ -9,10 +9,11 @@
 import Foundation
 import SwiftBeanCountModel
 
-struct PostingParser {
+enum PostingParser {
 
-    static private let priceGroup = "(\\s+(@@?)\\s+(\(ParserUtils.amountGroup)))"
-    static private let regex: NSRegularExpression = {
+    private static let priceGroup = "(\\s+(@@?)\\s+(\(ParserUtils.amountGroup)))"
+
+    private static let regex: NSRegularExpression = {
         // swiftlint:disable:next force_try
         try! NSRegularExpression(pattern: "^\\s+\(ParserUtils.accountGroup)\\s+\(ParserUtils.amountGroup)\\s*\(CostParser.costGroup)?\\s*\(priceGroup)?\\s*(;.*)?$",
                                  options: [])

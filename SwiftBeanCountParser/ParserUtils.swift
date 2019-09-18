@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ParserUtils {
+enum ParserUtils {
 
     static let accountGroup = "([^\\s]+:[^\\s]+)"
     static let decimalGroup = "([-+]?[0-9]+(,[0-9]{3})*(.[0-9]+)?)"

@@ -44,9 +44,9 @@ class CostParserTests: XCTestCase {
     }
 
     func testNegativeAmount() {
-        XCTAssertEqual(nil, cost(from: "2017-06-09, 1.003 EUR, \"TEST\"}"))
-        XCTAssertEqual(nil, cost(from: "{2017-06-09, 1.003 EUR, \"TEST\""))
-        XCTAssertEqual(nil, cost(from: "2017-06-09, 1.003 EUR, \"TEST\""))
+        XCTAssertNil(cost(from: "2017-06-09, 1.003 EUR, \"TEST\"}"))
+        XCTAssertNil(cost(from: "{2017-06-09, 1.003 EUR, \"TEST\""))
+        XCTAssertNil(cost(from: "2017-06-09, 1.003 EUR, \"TEST\""))
     }
 
     func testEmpty() {
