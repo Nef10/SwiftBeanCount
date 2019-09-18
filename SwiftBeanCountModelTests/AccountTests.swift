@@ -33,6 +33,17 @@ class AccountTests: XCTestCase {
         }
     }
 
+    func testBookingMethod() {
+        let defaultAccount = try! Account(name: validNames.first!)
+        XCTAssertEqual(defaultAccount.bookingMethod, .strict)
+
+        let fifoAccount = try! Account(name: validNames.first!, bookingMethod: .fifo)
+        XCTAssertEqual(fifoAccount.bookingMethod, .fifo)
+
+        let lifoAccount = try! Account(name: validNames.first!, bookingMethod: .lifo)
+        XCTAssertEqual(lifoAccount.bookingMethod, .lifo)
+    }
+
     func testDescription() {
         let name = "Assets:Cash"
         let accout = try! Account(name: name)

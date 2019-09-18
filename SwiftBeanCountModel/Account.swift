@@ -118,6 +118,9 @@ public class Account: AccountItem {
     /// Type, see `AccountType`
     public let accountType: AccountType
 
+    // `BookingMethod` of the account
+    public let bookingMethod: BookingMethod
+
     /// `Commodity` of this account
     public var commodity: Commodity?
 
@@ -141,12 +144,14 @@ public class Account: AccountItem {
     ///
     /// - Parameters:
     ///   - name: a vaild name for the account
+    ///   - bookingMethod: bookingMethods, defaults to .strict
     /// - Throws: AccountError.invaildName in case the account name is invalid
-    public init(name: String) throws {
+    public init(name: String, bookingMethod: BookingMethod = .strict) throws {
         guard Account.isNameValid(name) else {
             throw AccountError.invaildName(name)
         }
         self.name = name
+        self.bookingMethod = bookingMethod
         self.accountType = Account.getAccountType(for: name)
     }
 
@@ -213,7 +218,7 @@ public class Account: AccountItem {
     func validateInventory(in ledger: Ledger) -> ValidationResult {
         var postingIterator = postings(in: ledger).makeIterator()
         var nextPosting = postingIterator.next()
-        let inventory = Inventory(bookingMethod: .strict)
+        let inventory = Inventory(bookingMethod: bookingMethod)
         while let posting = nextPosting {
             if posting.cost != nil {
                 do {
