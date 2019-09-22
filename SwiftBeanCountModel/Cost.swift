@@ -94,7 +94,7 @@ extension Cost: CustomStringConvertible {
     public var description: String {
         var results = [String]()
         if let date = date {
-            results.append(type(of: self).dateFormatter.string(from: date))
+            results.append(Self.dateFormatter.string(from: date))
         }
         if let amount = amount {
             results.append(amount.description)
@@ -116,7 +116,7 @@ extension Cost: Equatable {
     ///   - rhs: second const
     /// - Returns: True if the costs are the same, false otherwise
     public static func == (lhs: Cost, rhs: Cost) -> Bool {
-        return lhs.amount == rhs.amount && lhs.date == rhs.date && lhs.label == rhs.label
+        lhs.amount == rhs.amount && lhs.date == rhs.date && lhs.label == rhs.label
     }
 
 }

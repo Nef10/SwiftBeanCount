@@ -39,7 +39,7 @@ extension Tag: Comparable {
     ///   - rhs: second tag
     /// - Returns: if the name of tag 1 is < name of tag 2
     public static func < (lhs: Tag, rhs: Tag) -> Bool {
-        return lhs.name < rhs.name
+        lhs.name < rhs.name
     }
 
     /// Compares the name of two tags
@@ -49,7 +49,7 @@ extension Tag: Comparable {
     ///   - rhs: second tag
     /// - Returns: if name of both tags match
     public static func == (lhs: Tag, rhs: Tag) -> Bool {
-        return lhs.name == rhs.name
+        lhs.name == rhs.name
     }
 
 }

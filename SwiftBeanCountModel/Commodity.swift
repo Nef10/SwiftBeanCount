@@ -73,7 +73,7 @@ extension Commodity: CustomStringConvertible {
     public var description: String {
         var result = ""
         if let opening = opening {
-            result += "\(type(of: self).dateFormatter.string(from: opening)) "
+            result += "\(Self.dateFormatter.string(from: opening)) "
         }
         result += "commodity \(symbol)"
         if let name = name {
@@ -96,7 +96,7 @@ extension Commodity: Comparable {
     ///   - rhs: commodity 1
     /// - Returns: lhs.symbol < rhs.symbol
     public static func < (lhs: Commodity, rhs: Commodity) -> Bool {
-        return lhs.symbol < rhs.symbol
+        lhs.symbol < rhs.symbol
     }
 
     /// Retuns if the two commodities are equal, meaning their `symbol`s are equal
@@ -106,7 +106,7 @@ extension Commodity: Comparable {
     ///   - rhs: commodity 1
     /// - Returns: true if the sybols are equal, false otherwise
     public static func == (lhs: Commodity, rhs: Commodity) -> Bool {
-        return lhs.symbol == rhs.symbol
+        lhs.symbol == rhs.symbol
     }
 
 }

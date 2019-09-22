@@ -105,7 +105,7 @@ extension Transaction: Equatable {
     ///   - rhs: second transaction
     /// - Returns: if they are the same
     public static func == (lhs: Transaction, rhs: Transaction) -> Bool {
-        return lhs.metaData == rhs.metaData && lhs.postings == rhs.postings
+        lhs.metaData == rhs.metaData && lhs.postings == rhs.postings
     }
 
 }

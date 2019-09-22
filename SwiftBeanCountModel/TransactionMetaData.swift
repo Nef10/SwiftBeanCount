@@ -61,7 +61,7 @@ extension TransactionMetaData: CustomStringConvertible {
         return "\(self.dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\"\(tagString)"
     }
 
-    private var dateString: String { return type(of: self).dateFormatter.string(from: date) }
+    private var dateString: String { return Self.dateFormatter.string(from: date) }
 
 }
 
@@ -74,7 +74,7 @@ extension TransactionMetaData: Equatable {
     ///   - rhs: second TransactionMetaData
     /// - Returns: true if all properties are the same, false otherwise
     public static func == (lhs: TransactionMetaData, rhs: TransactionMetaData) -> Bool {
-        return lhs.date == rhs.date && lhs.payee == rhs.payee && lhs.narration == rhs.narration && lhs.flag == rhs.flag && lhs.tags == rhs.tags
+        lhs.date == rhs.date && lhs.payee == rhs.payee && lhs.narration == rhs.narration && lhs.flag == rhs.flag && lhs.tags == rhs.tags
     }
 
 }

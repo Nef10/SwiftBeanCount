@@ -71,7 +71,7 @@ extension Posting: Equatable {
     ///   - rhs: second posting
     /// - Returns: if the account ammount and price are the same on both postings
     public static func == (lhs: Posting, rhs: Posting) -> Bool {
-        return lhs.account == rhs.account && lhs.amount == rhs.amount && lhs.price == rhs.price && lhs.cost == rhs.cost
+        lhs.account == rhs.account && lhs.amount == rhs.amount && lhs.price == rhs.price && lhs.cost == rhs.cost
     }
 
 }

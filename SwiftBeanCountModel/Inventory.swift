@@ -234,7 +234,7 @@ extension Inventory: CustomStringConvertible {
 
     /// String with all lots
     public var description: String {
-        return inventory.map { "\($0)" }.joined(separator: "\n")
+        inventory.map { "\($0)" }.joined(separator: "\n")
     }
 
 }
@@ -243,7 +243,7 @@ extension Inventory.Lot: CustomStringConvertible {
 
     /// String with units and cost
     public var description: String {
-        return "\(units) \(cost)"
+        "\(units) \(cost)"
     }
 
 }
@@ -257,7 +257,7 @@ extension Inventory.Lot: Equatable {
     ///   - rhs: Lot 2
     /// - Returns: true if the units and cost is the same, false otherwise
     public static func == (lhs: Inventory.Lot, rhs: Inventory.Lot) -> Bool {
-        return lhs.units == rhs.units && lhs.cost == rhs.cost
+        lhs.units == rhs.units && lhs.cost == rhs.cost
     }
 
 }

@@ -44,7 +44,7 @@ extension Balance: CustomStringConvertible {
 
     /// Returns the price string for the ledger.
     public var description: String {
-        return "\(type(of: self).dateFormatter.string(from: date)) balance \(account.name) \(amount)"
+        "\(Self.dateFormatter.string(from: date)) balance \(account.name) \(amount)"
     }
 
 }
@@ -58,7 +58,7 @@ extension Balance: Equatable {
     ///   - rhs: price 2
     /// - Returns: true if the prices are equal, false otherwise
     public static func == (lhs: Balance, rhs: Balance) -> Bool {
-        return lhs.date == rhs.date && lhs.account == rhs.account && lhs.amount == rhs.amount
+        lhs.date == rhs.date && lhs.account == rhs.account && lhs.amount == rhs.amount
     }
 
 }

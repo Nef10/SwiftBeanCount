@@ -323,7 +323,7 @@ extension Ledger: Equatable {
     ///   - rhs: ledger two
     /// - Returns: true if they hold the same information, otherwise false
     public static func == (lhs: Ledger, rhs: Ledger) -> Bool {
-        return lhs.account == rhs.account && rhs.commodity == lhs.commodity && rhs.tag == lhs.tag && rhs.transactions == lhs.transactions
+        lhs.account == rhs.account && rhs.commodity == lhs.commodity && rhs.tag == lhs.tag && rhs.transactions == lhs.transactions
     }
 
 }

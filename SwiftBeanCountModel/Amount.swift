@@ -49,7 +49,7 @@ extension Amount: CustomStringConvertible {
     /// Returns a `String` for the ledger which contains the number with the correct number of decimal digits as well as the `commodity`
     public var description: String { return "\(amountString) \(commodity.symbol)" }
 
-    private var amountString: String { return type(of: self).numberFormatter(fractionDigits: decimalDigits).string(from: number as NSDecimalNumber)! }
+    private var amountString: String { return Self.numberFormatter(fractionDigits: decimalDigits).string(from: number as NSDecimalNumber)! }
 
     private static func numberFormatter(fractionDigits: Int) -> NumberFormatter {
         let numberFormatter = self.numberFormatter
@@ -64,7 +64,7 @@ extension Amount: MultiCurrencyAmountRepresentable {
 
     /// the ammount represented as `MultiCurrencyAmount`
     public var multiCurrencyAmount: MultiCurrencyAmount {
-        return MultiCurrencyAmount(amounts: [commodity: number], decimalDigits: [commodity: decimalDigits])
+        MultiCurrencyAmount(amounts: [commodity: number], decimalDigits: [commodity: decimalDigits])
     }
 
 }
@@ -80,7 +80,7 @@ extension Amount: Equatable {
     ///   - rhs: second amount
     /// - Returns: True if the amounts are the same, false otherwise
     public static func == (lhs: Amount, rhs: Amount) -> Bool {
-        return lhs.number == rhs.number && lhs.commodity == rhs.commodity && lhs.decimalDigits == rhs.decimalDigits
+        lhs.number == rhs.number && lhs.commodity == rhs.commodity && lhs.decimalDigits == rhs.decimalDigits
     }
 
 }

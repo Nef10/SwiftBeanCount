@@ -54,7 +54,7 @@ extension Price: CustomStringConvertible {
 
     /// Returns the price string for the ledger.
     public var description: String {
-        return "\(type(of: self).dateFormatter.string(from: date)) price \(commodity.symbol) \(amount)"
+        "\(Self.dateFormatter.string(from: date)) price \(commodity.symbol) \(amount)"
     }
 
 }
@@ -77,7 +77,7 @@ extension Price: Equatable {
     ///   - rhs: price 1
     /// - Returns: true if the prices are equal, false otherwise
     public static func == (lhs: Price, rhs: Price) -> Bool {
-        return lhs.date == rhs.date && lhs.commodity == rhs.commodity && lhs.amount == rhs.amount
+        lhs.date == rhs.date && lhs.commodity == rhs.commodity && lhs.amount == rhs.amount
     }
 
 }

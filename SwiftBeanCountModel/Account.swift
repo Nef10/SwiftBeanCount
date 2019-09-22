@@ -32,7 +32,7 @@ public enum AccountType: String {
     ///
     /// - Returns: `Array` with all five AccountTypes
     public static func allValues() -> [AccountType] {
-        return [.asset, .liability, .income, .expense, .equity]
+        [.asset, .liability, .income, .expense, .equity]
     }
 }
 
@@ -217,8 +217,8 @@ public class Account: AccountItem {
                 return .invalid("Account \(self.name) has a closing date but no opening")
             }
             guard opening <= closing else {
-                let closingString = type(of: self).dateFormatter.string(from: closing)
-                let openingString = type(of: self).dateFormatter.string(from: opening)
+                let closingString = Self.dateFormatter.string(from: closing)
+                let openingString = Self.dateFormatter.string(from: opening)
                 return .invalid("Account \(self.name) was closed on \(closingString) before it was opened on \(openingString)")
             }
         }
@@ -327,7 +327,7 @@ extension Account: CustomStringConvertible {
     public var description: String {
         var string = ""
         if let opening = self.opening {
-            string += "\(type(of: self).dateFormatter.string(from: opening)) open \(name)"
+            string += "\(Self.dateFormatter.string(from: opening)) open \(name)"
             if let commodity = self.commodity {
                 string += " \(commodity.symbol)"
             }
@@ -335,7 +335,7 @@ extension Account: CustomStringConvertible {
                 string += " \"\(bookingMethod)\""
             }
             if let closing = self.closing {
-                string += "\n\(type(of: self).dateFormatter.string(from: closing)) close \(name)"
+                string += "\n\(Self.dateFormatter.string(from: closing)) close \(name)"
             }
         }
         return string
@@ -349,7 +349,7 @@ extension Account: Equatable {
     ///
     /// This does not compare `Transaction`s as they are not part of Accounts
     public static func == (lhs: Account, rhs: Account) -> Bool {
-        return rhs.name == lhs.name && rhs.commodity == lhs.commodity && rhs.opening == lhs.opening && rhs.closing == lhs.closing
+        rhs.name == lhs.name && rhs.commodity == lhs.commodity && rhs.opening == lhs.opening && rhs.closing == lhs.closing
     }
 
 }
