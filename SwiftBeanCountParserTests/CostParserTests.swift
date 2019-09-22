@@ -18,7 +18,7 @@ class CostParserTests: XCTestCase {
     }()
 
     func cost(from line: String) -> Cost? {
-        let postingMatches = line.matchingStrings(regex: type(of: self).regex)
+        let postingMatches = line.matchingStrings(regex: Self.regex)
         guard let match = postingMatches[safe: 0] else {
             return nil
         }
@@ -35,7 +35,7 @@ class CostParserTests: XCTestCase {
     }
 
     func testInvalid() {
-        let postingMatches = "{2017-06-09, -1.003 EUR, \"TEST\"}".matchingStrings(regex: type(of: self).regex)
+        let postingMatches = "{2017-06-09, -1.003 EUR, \"TEST\"}".matchingStrings(regex: Self.regex)
         guard let match = postingMatches[safe: 0] else {
             XCTFail("Invalid string")
             return
