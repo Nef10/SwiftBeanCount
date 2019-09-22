@@ -18,7 +18,6 @@
 		F9BDC3871FBA880900393578 /* SwiftBeanCountModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9BDC3861FBA880900393578 /* SwiftBeanCountModel.framework */; };
 		F9BDC38A1FBA883E00393578 /* SwiftBeanCountModel.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = F9BDC3891FBA883E00393578 /* SwiftBeanCountModel.framework.dSYM */; };
 		F9BDC38B1FBA8C5400393578 /* SwiftBeanCountModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9BDC3861FBA880900393578 /* SwiftBeanCountModel.framework */; };
-		F9BDC38D1FBA8CAF00393578 /* SwiftBeanCountModel.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = F9BDC3891FBA883E00393578 /* SwiftBeanCountModel.framework.dSYM */; };
 		F9BDC38F1FBA8D2B00393578 /* SwiftBeanCountModel.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F9BDC3861FBA880900393578 /* SwiftBeanCountModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F9BDC3971FBAB02200393578 /* DateParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3921FBAB02200393578 /* DateParser.swift */; };
 		F9BDC3981FBAB02200393578 /* AccountParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDC3931FBAB02200393578 /* AccountParser.swift */; };
@@ -65,16 +64,6 @@
 			dstSubfolderSpec = 16;
 			files = (
 				F9BDC38A1FBA883E00393578 /* SwiftBeanCountModel.framework.dSYM in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F9BDC38C1FBA8CAA00393578 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 16;
-			files = (
-				F9BDC38D1FBA8CAF00393578 /* SwiftBeanCountModel.framework.dSYM in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,7 +281,6 @@
 				F9BDC36D1FBA815100393578 /* Sources */,
 				F9BDC36E1FBA815100393578 /* Frameworks */,
 				F9BDC36F1FBA815100393578 /* Resources */,
-				F9BDC38C1FBA8CAA00393578 /* CopyFiles */,
 				F9BDC38E1FBA8D2400393578 /* CopyFiles */,
 			);
 			buildRules = (
