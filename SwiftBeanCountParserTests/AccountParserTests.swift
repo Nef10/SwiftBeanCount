@@ -27,8 +27,24 @@ class AccountParserTests: XCTestCase {
     let invalidCloseWithCommodityString = "2017-06-09 close Assets:Cash CAD"
     let invalidCloseDateString = "2017-02-30 close Assets:Cash CAD"
 
+    let commodityWithSemicolonOpeningString = "2017-06-09 open Assets:Cash EUR;test ;gfsd"
+    let commodityWithSemicolonClosingString = "2017-06-09 close Assets:Cash ;gfsd"
+
+    let invalidNameOpeningString = "2017-06-09 open Assets::Cash"
+
+    let bookingMethodStrictOpeningString = "2017-06-09 open Assets:Cash EUR;test \"STRICT\" ;gfsd" // Commodity with Semicolon
+    let bookingMethodLifoOpeningString = "2017-06-09    open    Assets:Cash    EUR      \"LIFO\"     ;gfsd" // Whitespace
+    let bookingMethodFifoOpeningString = "2017-06-09 open Assets:Cash 💵 \"FIFO\" ;gfsd" // Special Character
+    let bookingMethodClosingString = "2017-06-09 close Assets:Cash ;gfsd"
+    let bookingMethodInClosingString = "2017-06-09 close Assets:Cash \"FIFO\" ;gfsd"
+
     func testBasic() {
         testWith(openingString: basicOpeningString, closingString: basicClosingString, commodity: nil)
+    }
+
+    func testInvalidName() {
+        let account = AccountParser.parseFrom(line: invalidNameOpeningString)
+        XCTAssertNil(account)
     }
 
     func testWhitespace() {
@@ -51,6 +67,27 @@ class AccountParserTests: XCTestCase {
         XCTAssertNil(AccountParser.parseFrom(line: invalidCloseDateString))
     }
 
+    func testCommodityWithSemicolon() {
+        testWith(openingString: commodityWithSemicolonOpeningString, closingString: commodityWithSemicolonClosingString, commodity: Commodity(symbol: "EUR;test"))
+    }
+
+    func testBookingMethodStrict() {
+        testWith(openingString: bookingMethodStrictOpeningString, closingString: bookingMethodClosingString, commodity: Commodity(symbol: "EUR;test"), bookingMethod: .strict)
+    }
+
+    func testBookingMethodLifo() {
+        testWith(openingString: bookingMethodLifoOpeningString, closingString: bookingMethodClosingString, commodity: Commodity(symbol: "EUR"), bookingMethod: .lifo)
+    }
+
+    func testBookingMethodFifo() {
+        testWith(openingString: bookingMethodFifoOpeningString, closingString: bookingMethodClosingString, commodity: Commodity(symbol: "💵"), bookingMethod: .fifo)
+    }
+
+    func testBookingMethodInClosingString() {
+        let account = AccountParser.parseFrom(line: bookingMethodInClosingString)
+        XCTAssertNil(account)
+    }
+
     func testPerformance() {
         self.measure {
             for _ in 0...1_000 {
@@ -70,13 +107,17 @@ class AccountParserTests: XCTestCase {
     }
 
     // Helper
-    private func testWith(openingString: String, closingString: String, commodity: Commodity?) {
+    private func testWith(openingString: String, closingString: String, commodity: Commodity?, bookingMethod: BookingMethod? = nil) {
         let account1 = AccountParser.parseFrom(line: openingString)
 
         XCTAssertNotNil(account1)
         XCTAssertEqual(account1!.opening!, TestUtils.date20170609)
         XCTAssertNil(account1!.closing)
         XCTAssertEqual(account1!.commodity, commodity)
+
+        if let bookingMethod = bookingMethod {
+            XCTAssertEqual(account1!.bookingMethod, bookingMethod)
+        }
 
         let account2 = AccountParser.parseFrom(line: closingString)
         XCTAssertNotNil(account2)
