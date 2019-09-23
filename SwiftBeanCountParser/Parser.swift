@@ -10,7 +10,7 @@ import Foundation
 import SwiftBeanCountModel
 
 /// Parser to parse a string of a file into a Ledger
-enum Parser {
+public enum Parser {
 
     static let comment: Character = ";"
 
