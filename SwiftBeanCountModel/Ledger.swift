@@ -46,6 +46,12 @@ public class Ledger {
     /// Array of all options
     public var option = [String: [String]]()
 
+    /// Array of all events
+    public var events = [Event]()
+
+    /// Array of all Custom directives
+    public var custom = [Custom]()
+
     private var commodity = [String: Commodity]()
     private var account = [String: Account]()
     private var tag = [String: Tag]()
