@@ -337,6 +337,9 @@ extension Account: CustomStringConvertible {
             if bookingMethod != .strict {
                 string += " \"\(bookingMethod)\""
             }
+            if !metaData.isEmpty {
+                string += "\n\(metaData.map { "  \($0): \"\($1)\"" }.joined(separator: "\n"))"
+            }
             if let closing = self.closing {
                 string += "\n\(Self.dateFormatter.string(from: closing)) close \(name)"
             }

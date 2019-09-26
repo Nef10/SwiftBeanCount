@@ -58,6 +58,9 @@ extension Posting: CustomStringConvertible {
         if let price = price {
             result += " @ \(String(describing: price))"
         }
+        if !metaData.isEmpty {
+            result += "\n\(metaData.map { "    \($0): \"\($1)\"" }.joined(separator: "\n"))"
+        }
         return result
     }
 

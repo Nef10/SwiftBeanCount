@@ -61,7 +61,11 @@ extension TransactionMetaData: CustomStringConvertible {
     public var description: String {
         var tagString =  ""
         tags.forEach { tagString += " \(String(describing: $0))" }
-        return "\(self.dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\"\(tagString)"
+        var result = "\(self.dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\"\(tagString)"
+        if !metaData.isEmpty {
+            result += "\n\(metaData.map { "  \($0): \"\($1)\"" }.joined(separator: "\n"))"
+        }
+        return result
     }
 
     private var dateString: String { return Self.dateFormatter.string(from: date) }

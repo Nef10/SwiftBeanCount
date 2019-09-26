@@ -16,8 +16,11 @@ class BalanceTests: XCTestCase {
         let account = try! Account(name: "Assets:Test")
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "CAD"))
 
-        let balance = Balance(date: date, account: account, amount: amount)
+        var balance = Balance(date: date, account: account, amount: amount)
         XCTAssertEqual(String(describing: balance), "2017-06-08 balance \(account.name) \(amount)")
+
+        balance.metaData["A"] = "B"
+        XCTAssertEqual(String(describing: balance), "2017-06-08 balance \(account.name) \(amount)\n  A: \"B\"")
     }
 
     func testEqual() {

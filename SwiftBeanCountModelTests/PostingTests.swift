@@ -35,6 +35,16 @@ class PostingTests: XCTestCase {
         XCTAssertEqual(String(describing: posting), "  \(accountName) \(String(describing: amount))")
     }
 
+    func testDescriptionMetaData() {
+        let accountName = "Assets:💰"
+        let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "💵"))
+        let account = try! Account(name: accountName)
+        var posting = Posting(account: account, amount: amount, transaction: transaction)
+        posting.metaData["A"] = "B"
+
+        XCTAssertEqual(String(describing: posting), "  \(accountName) \(String(describing: amount))\n    A: \"B\"")
+    }
+
     func testDescriptionPrice() {
         let accountName = "Assets:💰"
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "💵"))

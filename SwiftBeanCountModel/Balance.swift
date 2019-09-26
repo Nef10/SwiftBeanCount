@@ -47,7 +47,11 @@ extension Balance: CustomStringConvertible {
 
     /// Returns the price string for the ledger.
     public var description: String {
-        "\(Self.dateFormatter.string(from: date)) balance \(account.name) \(amount)"
+        var result = "\(Self.dateFormatter.string(from: date)) balance \(account.name) \(amount)"
+        if !metaData.isEmpty {
+            result += "\n\(metaData.map { "  \($0): \"\($1)\"" }.joined(separator: "\n"))"
+        }
+        return result
     }
 
 }

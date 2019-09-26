@@ -47,7 +47,11 @@ extension Custom: CustomStringConvertible {
 
     /// Returns the custom directive string for the ledger.
     public var description: String {
-        "\(Self.dateFormatter.string(from: date)) custom \"\(name)\" \(values.map { "\"\($0)\"" }.joined(separator: " "))"
+        var result = "\(Self.dateFormatter.string(from: date)) custom \"\(name)\" \(values.map { "\"\($0)\"" }.joined(separator: " "))"
+        if !metaData.isEmpty {
+            result += "\n\(metaData.map { "  \($0): \"\($1)\"" }.joined(separator: "\n"))"
+        }
+        return result
     }
 
 }

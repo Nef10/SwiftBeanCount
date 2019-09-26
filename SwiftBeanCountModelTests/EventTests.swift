@@ -45,8 +45,11 @@ class EventTests: XCTestCase {
     }
 
     func testDescription() {
-        let event = Event(date: date1, name: "name", value: "B")
+        var event = Event(date: date1, name: "name", value: "B")
         XCTAssertEqual(String(describing: event), "2017-06-08 event \"name\" \"B\"")
+        event.metaData["A"] = "B"
+        XCTAssertEqual(String(describing: event), "2017-06-08 event \"name\" \"B\"\n  A: \"B\"")
+
     }
 
 }

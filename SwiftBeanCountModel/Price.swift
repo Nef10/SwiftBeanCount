@@ -57,7 +57,11 @@ extension Price: CustomStringConvertible {
 
     /// Returns the price string for the ledger.
     public var description: String {
-        "\(Self.dateFormatter.string(from: date)) price \(commodity.symbol) \(amount)"
+        var result = "\(Self.dateFormatter.string(from: date)) price \(commodity.symbol) \(amount)"
+        if !metaData.isEmpty {
+            result += "\n\(metaData.map { "  \($0): \"\($1)\"" }.joined(separator: "\n"))"
+        }
+        return result
     }
 
 }

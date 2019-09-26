@@ -45,8 +45,10 @@ class CustomTests: XCTestCase {
     }
 
     func testDescription() {
-        let custom = Custom(date: date1, name: "name", values: ["B"])
+        var custom = Custom(date: date1, name: "name", values: ["B"])
         XCTAssertEqual(String(describing: custom), "2017-06-08 custom \"name\" \"B\"")
+        custom.metaData["A"] = "B"
+        XCTAssertEqual(String(describing: custom), "2017-06-08 custom \"name\" \"B\"\n  A: \"B\"")
     }
 
     func testDescriptionMultipleValues() {

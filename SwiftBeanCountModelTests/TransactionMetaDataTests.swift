@@ -27,6 +27,12 @@ class TransactionMetaDataTests: XCTestCase {
         XCTAssertEqual(String(describing: transactionMetaData!), "\(dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\"")
     }
 
+    func testDescriptionMetaData() {
+        var transactionMetaData = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [])
+        transactionMetaData.metaData["A"] = "B"
+        XCTAssertEqual(String(describing: transactionMetaData), "\(dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\"\n  A: \"B\"")
+    }
+
     func testDescriptionSpecialCharacters() {
         let payee = "🏫"
         let narration = "🎓"

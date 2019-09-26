@@ -47,7 +47,11 @@ extension Event: CustomStringConvertible {
 
     /// Returns the event string for the ledger.
     public var description: String {
-        "\(Self.dateFormatter.string(from: date)) event \"\(name)\" \"\(value)\""
+        var result = "\(Self.dateFormatter.string(from: date)) event \"\(name)\" \"\(value)\""
+        if !metaData.isEmpty {
+            result += "\n\(metaData.map { "  \($0): \"\($1)\"" }.joined(separator: "\n"))"
+        }
+        return result
     }
 
 }

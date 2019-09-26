@@ -55,6 +55,8 @@ class AccountTests: XCTestCase {
         XCTAssertEqual(String(describing: accout), "2017-06-08 open \(name) \(symbol)")
         accout.closing = date20170609
         XCTAssertEqual(String(describing: accout), "2017-06-08 open \(name) \(symbol)\n2017-06-09 close \(name)")
+        accout.metaData["A"] = "B"
+        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(name) \(symbol)\n  A: \"B\"\n2017-06-09 close \(name)")
     }
 
     func testDescriptionBookingMethod() {

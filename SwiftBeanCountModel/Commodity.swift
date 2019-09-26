@@ -17,37 +17,17 @@ public class Commodity: MetaDataAttachable {
     /// opening of the commodity
     public let opening: Date?
 
-    /// full name of the commodity
-    public let name: String?
-
-    /// string describing how to get the price of the commodity
-    public let price: String?
-
     /// MetaData of the Commodity
     public var metaData = [String: String]()
 
-    /// Creates an commodity with the given symbol, all other properties are set to nil
-    ///
-    /// - Parameter symbol: symbol of the commodity
-    public init(symbol: String) {
-        self.symbol = symbol
-        self.opening = nil
-        self.name = nil
-        self.price = nil
-    }
-
-    /// Creates an commodity with the given parameters
+    /// Creates an commodity with the given symbol, and an optinal opening date
     ///
     /// - Parameters:
     ///   - symbol: symbol of the commodity
     ///   - opening: date the commodity was opened
-    ///   - name: full name of the commodity
-    ///   - price: string describing how to get the price of the commodity
-    public init(symbol: String, opening: Date?, name: String? = nil, price: String? = nil) {
+    public init(symbol: String, opening: Date? = nil) {
         self.symbol = symbol
         self.opening = opening
-        self.name = name
-        self.price = price
     }
 
     /// Validates the commodity
@@ -79,11 +59,8 @@ extension Commodity: CustomStringConvertible {
             result += "\(Self.dateFormatter.string(from: opening)) "
         }
         result += "commodity \(symbol)"
-        if let name = name {
-            result += "\n  name: \(name)"
-        }
-        if let price = price {
-            result += "\n  price: \(price)"
+        if !metaData.isEmpty {
+            result += "\n\(metaData.map { "  \($0): \"\($1)\"" }.joined(separator: "\n"))"
         }
         return result
     }
