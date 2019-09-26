@@ -348,11 +348,13 @@ extension Account: CustomStringConvertible {
 
 extension Account: Equatable {
 
-    /// Compare the name, commodity as well as the opening and closing of two Accounts.
+    /// Compare the name, commodity and meta data as well as the opening and closing of two Accounts.
     ///
     /// This does not compare `Transaction`s as they are not part of Accounts
+    ///
+    /// - Returns: if the accounts are equal
     public static func == (lhs: Account, rhs: Account) -> Bool {
-        rhs.name == lhs.name && rhs.commodity == lhs.commodity && rhs.opening == lhs.opening && rhs.closing == lhs.closing
+        rhs.name == lhs.name && rhs.commodity == lhs.commodity && rhs.opening == lhs.opening && rhs.closing == lhs.closing && lhs.metaData == rhs.metaData
     }
 
 }

@@ -61,7 +61,7 @@ extension Custom: Equatable {
     ///   - rhs: custom 2
     /// - Returns: true if the custom directives are equal, false otherwise
     public static func == (lhs: Custom, rhs: Custom) -> Bool {
-        lhs.date == rhs.date && lhs.name == rhs.name && lhs.values == rhs.values
+        lhs.date == rhs.date && lhs.name == rhs.name && lhs.values == rhs.values && lhs.metaData == rhs.metaData
     }
 
 }

@@ -61,6 +61,12 @@ class TransactionMetaDataTests: XCTestCase {
         XCTAssertEqual(transactionMetaData1, transactionMetaData2)
     }
 
+    func testEqualRespectsMetaData() {
+        var transactionMetaData1 = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [])
+        transactionMetaData1.metaData["A"] = "B"
+        XCTAssertNotEqual(transactionMetaData, transactionMetaData1)
+    }
+
     func testEqualRespectsDate() {
         let transactionMetaData1 = TransactionMetaData(date: date.addingTimeInterval(TimeInterval(1)), payee: payee, narration: narration, flag: flag, tags: [])
         XCTAssertNotEqual(transactionMetaData, transactionMetaData1)

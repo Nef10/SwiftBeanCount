@@ -61,7 +61,7 @@ extension Event: Equatable {
     ///   - rhs: event 2
     /// - Returns: true if the events are equal, false otherwise
     public static func == (lhs: Event, rhs: Event) -> Bool {
-        lhs.date == rhs.date && lhs.name == rhs.name && lhs.value == rhs.value
+        lhs.date == rhs.date && lhs.name == rhs.name && lhs.value == rhs.value && lhs.metaData == rhs.metaData
     }
 
 }

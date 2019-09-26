@@ -77,10 +77,10 @@ extension Price: Equatable {
     ///
     /// - Parameters:
     ///   - lhs: price 1
-    ///   - rhs: price 1
+    ///   - rhs: price 2
     /// - Returns: true if the prices are equal, false otherwise
     public static func == (lhs: Price, rhs: Price) -> Bool {
-        lhs.date == rhs.date && lhs.commodity == rhs.commodity && lhs.amount == rhs.amount
+        lhs.date == rhs.date && lhs.commodity == rhs.commodity && lhs.amount == rhs.amount && lhs.metaData == rhs.metaData
     }
 
 }

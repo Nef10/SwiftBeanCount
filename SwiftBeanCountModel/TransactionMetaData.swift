@@ -77,7 +77,7 @@ extension TransactionMetaData: Equatable {
     ///   - rhs: second TransactionMetaData
     /// - Returns: true if all properties are the same, false otherwise
     public static func == (lhs: TransactionMetaData, rhs: TransactionMetaData) -> Bool {
-        lhs.date == rhs.date && lhs.payee == rhs.payee && lhs.narration == rhs.narration && lhs.flag == rhs.flag && lhs.tags == rhs.tags
+        lhs.date == rhs.date && lhs.payee == rhs.payee && lhs.narration == rhs.narration && lhs.flag == rhs.flag && lhs.tags == rhs.tags && lhs.metaData == rhs.metaData
     }
 
 }

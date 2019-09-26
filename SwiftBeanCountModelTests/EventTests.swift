@@ -15,8 +15,14 @@ class EventTests: XCTestCase {
     let date2 = Date(timeIntervalSince1970: 1_496_991_600)
 
     func testEqual() {
-        let event1 = Event(date: date1, name: "A", value: "B")
-        let event2 = Event(date: date1, name: "A", value: "B")
+        var event1 = Event(date: date1, name: "A", value: "B")
+        var event2 = Event(date: date1, name: "A", value: "B")
+        XCTAssertEqual(event1, event2)
+
+        // meta data
+        event1.metaData["A"] = "B"
+        XCTAssertNotEqual(event1, event2)
+        event2.metaData["A"] = "B"
         XCTAssertEqual(event1, event2)
     }
 

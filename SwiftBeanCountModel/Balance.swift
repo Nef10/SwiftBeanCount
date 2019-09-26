@@ -61,7 +61,7 @@ extension Balance: Equatable {
     ///   - rhs: price 2
     /// - Returns: true if the prices are equal, false otherwise
     public static func == (lhs: Balance, rhs: Balance) -> Bool {
-        lhs.date == rhs.date && lhs.account == rhs.account && lhs.amount == rhs.amount
+        lhs.date == rhs.date && lhs.account == rhs.account && lhs.amount == rhs.amount && lhs.metaData == rhs.metaData
     }
 
 }

@@ -24,29 +24,36 @@ class BalanceTests: XCTestCase {
         let date = Date(timeIntervalSince1970: 1_496_905_200)
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "CAD"))
         let account = try! Account(name: "Assets:Test")
-        let balance = Balance(date: date, account: account, amount: amount)
+        var balance = Balance(date: date, account: account, amount: amount)
+        var balance2 = Balance(date: date, account: account, amount: amount)
+        XCTAssertEqual(balance, balance2)
 
-        XCTAssertEqual(balance, balance)
+        // Meta Data
+        balance.metaData["A"] = "B"
+        balance2.metaData["A"] = "C"
+        XCTAssertNotEqual(balance, balance2)
+        balance2.metaData["A"] = "B"
+        XCTAssertEqual(balance, balance2)
 
         // Date different
         let date2 = Date(timeIntervalSince1970: 1_496_991_600)
-        let balance2 = Balance(date: date2, account: account, amount: amount)
-        XCTAssertNotEqual(balance, balance2)
+        let balance3 = Balance(date: date2, account: account, amount: amount)
+        XCTAssertNotEqual(balance, balance3)
 
         // Account different
         let account2 = try! Account(name: "Assets:Tests")
-        let balance3 = Balance(date: date, account: account2, amount: amount)
-        XCTAssertNotEqual(balance, balance3)
+        let balance4 = Balance(date: date, account: account2, amount: amount)
+        XCTAssertNotEqual(balance, balance4)
 
         // Amount commodity different
         let amount2 = Amount(number: Decimal(1), commodity: Commodity(symbol: "USD"))
-        let balance4 = Balance(date: date, account: account, amount: amount2)
-        XCTAssertNotEqual(balance, balance4)
+        let balance5 = Balance(date: date, account: account, amount: amount2)
+        XCTAssertNotEqual(balance, balance5)
 
         // Amount number different
         let amount3 = Amount(number: Decimal(2), commodity: Commodity(symbol: "CAD"))
-        let balance5 = Balance(date: date, account: account, amount: amount3)
-        XCTAssertNotEqual(balance, balance5)
+        let balance6 = Balance(date: date, account: account, amount: amount3)
+        XCTAssertNotEqual(balance, balance6)
     }
 
 }

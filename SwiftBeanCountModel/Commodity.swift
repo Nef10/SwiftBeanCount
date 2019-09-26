@@ -102,14 +102,14 @@ extension Commodity: Comparable {
         lhs.symbol < rhs.symbol
     }
 
-    /// Retuns if the two commodities are equal, meaning their `symbol`s are equal
+    /// Retuns if the two commodities are equal, meaning their `symbol`s and meta data are equal
     ///
     /// - Parameters:
     ///   - lhs: commodity 1
-    ///   - rhs: commodity 1
-    /// - Returns: true if the sybols are equal, false otherwise
+    ///   - rhs: commodity 2
+    /// - Returns: true if the sybols and meta data are equal, false otherwise
     public static func == (lhs: Commodity, rhs: Commodity) -> Bool {
-        lhs.symbol == rhs.symbol
+        lhs.symbol == rhs.symbol && lhs.metaData == rhs.metaData
     }
 
 }

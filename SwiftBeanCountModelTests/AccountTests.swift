@@ -534,9 +534,16 @@ class AccountTests: XCTestCase {
         }
     }
 
-    func testEqual() {
+    func testEqualName() {
         let name1 = "Assets:Cash"
         let name2 = "Assets:💰"
+        let account1 = try! Account(name: name1)
+        let account2 = try! Account(name: name2)
+        XCTAssertNotEqual(account1, account2)
+    }
+
+    func testEqualProperties() {
+        let name1 = "Assets:Cash"
         let commodity1 = Commodity(symbol: "EUR")
         let commodity2 = Commodity(symbol: "💵")
         let date1 = date20170608
@@ -544,12 +551,9 @@ class AccountTests: XCTestCase {
 
         let account1 = try! Account(name: name1)
         let account2 = try! Account(name: name1)
-        let account3 = try! Account(name: name2)
 
         // equal
         XCTAssertEqual(account1, account2)
-        // different name
-        XCTAssertNotEqual(account1, account3)
 
         account1.commodity = commodity1
         account2.commodity = commodity1
@@ -559,6 +563,13 @@ class AccountTests: XCTestCase {
         account2.closing = date1
 
         // equal
+        XCTAssertEqual(account1, account2)
+        // different meta data
+        account1.metaData["A"] = "B"
+        account2.metaData["A"] = "C"
+        XCTAssertNotEqual(account1, account2)
+        // same meta data
+        account2.metaData["A"] = "B"
         XCTAssertEqual(account1, account2)
         // different commodity
         account2.commodity = commodity2

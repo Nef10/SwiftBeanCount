@@ -106,14 +106,14 @@ class CommodityTests: XCTestCase {
         let eur = Commodity(symbol: "EUR")
         let eur2 = Commodity(symbol: "EUR")
         let cad = Commodity(symbol: "CAD")
-        XCTAssert(eur == eur) // swiftlint:disable:this identical_operands
-        XCTAssert(eur == eur2)
-        XCTAssertFalse(eur != eur) // swiftlint:disable:this identical_operands
-        XCTAssertFalse(eur != eur2)
-        XCTAssert(eur != cad)
-        XCTAssert(eur2 != cad)
-        XCTAssertFalse(eur == cad)
-        XCTAssertFalse(eur2 == cad)
+        XCTAssertEqual(eur, eur2)
+        XCTAssertNotEqual(eur, cad)
+
+        // meta data
+        eur2.metaData["A"] = "B"
+        XCTAssertNotEqual(eur, eur2)
+        eur.metaData["A"] = "B"
+        XCTAssertEqual(eur, eur2)
     }
 
     func testGreater() {

@@ -15,8 +15,14 @@ class CustomTests: XCTestCase {
     let date2 = Date(timeIntervalSince1970: 1_496_991_600)
 
     func testEqual() {
-        let custom1 = Custom(date: date1, name: "A", values: ["B"])
-        let custom2 = Custom(date: date1, name: "A", values: ["B"])
+        var custom1 = Custom(date: date1, name: "A", values: ["B"])
+        var custom2 = Custom(date: date1, name: "A", values: ["B"])
+        XCTAssertEqual(custom1, custom2)
+
+        // meta data
+        custom1.metaData["A"] = "B"
+        XCTAssertNotEqual(custom1, custom2)
+        custom2.metaData["A"] = "B"
         XCTAssertEqual(custom1, custom2)
     }
 
