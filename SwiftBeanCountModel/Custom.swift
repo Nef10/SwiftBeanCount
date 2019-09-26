@@ -17,19 +17,19 @@ public struct Custom {
     /// Name of the custom directive
     public let name: String
 
-    /// Value of the custom directives
-    public let value: String
+    /// Values of the custom directive
+    public let values: [String]
 
     /// Create a Custom directive
     ///
     /// - Parameters:
     ///   - date: date
     ///   - name: name
-    ///   - value: value
-    public init(date: Date, name: String, value: String) {
+    ///   - values: values
+    public init(date: Date, name: String, values: [String]) {
         self.date = date
         self.name = name
-        self.value = value
+        self.values = values
     }
 
 }
@@ -42,9 +42,9 @@ extension Custom: CustomStringConvertible {
         return dateFormatter
     }()
 
-    /// Returns the price string for the ledger.
+    /// Returns the custom directive string for the ledger.
     public var description: String {
-        "\(Self.dateFormatter.string(from: date)) custom \"\(name)\" \(value)"
+        "\(Self.dateFormatter.string(from: date)) custom \"\(name)\" \(values.map { "\"\($0)\"" }.joined(separator: " "))"
     }
 
 }
@@ -55,10 +55,10 @@ extension Custom: Equatable {
     ///
     /// - Parameters:
     ///   - lhs: custom 1
-    ///   - rhs: custom 1
+    ///   - rhs: custom 2
     /// - Returns: true if the custom directives are equal, false otherwise
     public static func == (lhs: Custom, rhs: Custom) -> Bool {
-        lhs.date == rhs.date && lhs.name == rhs.name && lhs.value == rhs.value
+        lhs.date == rhs.date && lhs.name == rhs.name && lhs.values == rhs.values
     }
 
 }
