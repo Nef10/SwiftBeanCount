@@ -10,7 +10,7 @@ import Foundation
 
 /// A Posting is part of an `Transaction`. It contains an `Account` with the corresponding `Amount`,
 /// as well as the `price` (if applicable) and a link back to the `Transaction`.
-public struct Posting {
+public struct Posting: MetaDataAttachable {
 
     /// `Account` the posting is in
     public let account: Account
@@ -26,6 +26,9 @@ public struct Posting {
 
     /// optional `Cost` if the amount was aquired on a cost basis
     public let cost: Cost?
+
+    /// MetaData of the Posting
+    public var metaData = [String: String]()
 
     /// Creats an posting with the given parameters
     ///

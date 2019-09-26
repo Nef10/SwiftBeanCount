@@ -11,7 +11,7 @@ import Foundation
 /// TransactionMetaData is data which is or can be attatched to an `Transaction`.
 ///
 /// It consists of date, payee, narration as well as a flag and tags.
-public struct TransactionMetaData {
+public struct TransactionMetaData: MetaDataAttachable {
 
     /// Date of the `Transaction`
     public let date: Date
@@ -27,6 +27,9 @@ public struct TransactionMetaData {
 
     /// Array of `Tag`s, can be empty
     public let tags: [Tag]
+
+    /// MetaData of the Transaction
+    public var metaData = [String: String]()
 
     /// Creates an transaction with the given parameters
     ///

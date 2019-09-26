@@ -39,6 +39,7 @@
 		F9B9E15C232DBCB000811B3F /* InventoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9E15B232DBCB000811B3F /* InventoryTests.swift */; };
 		F9C1F372233C7E5400357FF0 /* Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1F371233C7E5400357FF0 /* Custom.swift */; };
 		F9C1F374233C8C6D00357FF0 /* CustomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1F373233C8C6D00357FF0 /* CustomTests.swift */; };
+		F9C1F376233C916700357FF0 /* MetaDataAttachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1F375233C916700357FF0 /* MetaDataAttachable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		F9B9E15B232DBCB000811B3F /* InventoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryTests.swift; sourceTree = "<group>"; };
 		F9C1F371233C7E5400357FF0 /* Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Custom.swift; sourceTree = "<group>"; };
 		F9C1F373233C8C6D00357FF0 /* CustomTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTests.swift; sourceTree = "<group>"; };
+		F9C1F375233C916700357FF0 /* MetaDataAttachable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataAttachable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +147,7 @@
 				F9B9E1512326213B00811B3F /* Cost.swift */,
 				F9B9E159232DB45B00811B3F /* Inventory.swift */,
 				F9C1F371233C7E5400357FF0 /* Custom.swift */,
+				F9C1F375233C916700357FF0 /* MetaDataAttachable.swift */,
 				F991CD131F5534C000EE31E5 /* Info.plist */,
 			);
 			path = SwiftBeanCountModel;
@@ -315,6 +318,7 @@
 				F9B7A88A1F553ABE0062B1CB /* Flag.swift in Sources */,
 				F99E58A520A9089000A05AFE /* Price.swift in Sources */,
 				F9B7A88F1F553ABE0062B1CB /* Transaction.swift in Sources */,
+				F9C1F376233C916700357FF0 /* MetaDataAttachable.swift in Sources */,
 				F9B9E15A232DB45B00811B3F /* Inventory.swift in Sources */,
 				F99E58AC20A91B8D00A05AFE /* Balance.swift in Sources */,
 				F9B7A8901F553ABE0062B1CB /* TransactionMetaData.swift in Sources */,

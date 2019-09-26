@@ -9,7 +9,7 @@
 import Foundation
 
 /// A commodity just consists of a symbol
-public class Commodity {
+public class Commodity: MetaDataAttachable {
 
     /// symbol of the commodity
     public let symbol: String
@@ -22,6 +22,9 @@ public class Commodity {
 
     /// string describing how to get the price of the commodity
     public let price: String?
+
+    /// MetaData of the Commodity
+    public var metaData = [String: String]()
 
     /// Creates an commodity with the given symbol, all other properties are set to nil
     ///

@@ -15,7 +15,7 @@ public enum PriceError: Error {
 }
 
 /// Price of a commodity in another commodity on a given date
-public struct Price {
+public struct Price: MetaDataAttachable {
 
     /// Date of the Price
     public let date: Date
@@ -25,6 +25,9 @@ public struct Price {
 
     /// `Amount` of the Price
     public let amount: Amount
+
+    /// MetaData of the Price
+    public var metaData = [String: String]()
 
     /// Create a price
     ///

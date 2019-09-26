@@ -99,7 +99,7 @@ public enum AccountError: Error {
 /// Class with represents an Account with a name, commodity, opening and closing date, as well as a type.
 ///
 /// It does hot hold any `Transaction`s
-public class Account: AccountItem {
+public class Account: AccountItem, MetaDataAttachable {
 
     static let nameSeperator = Character(":")
 
@@ -114,6 +114,9 @@ public class Account: AccountItem {
 
     /// `Commodity` of this account
     public var commodity: Commodity?
+
+    /// MetaData of the Account
+    public var metaData = [String: String]()
 
     /// Optional date of opening.
     /// If it exists `isPostingValid(:)` checks that the transaction is on or after this date
