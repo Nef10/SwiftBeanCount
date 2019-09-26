@@ -17,6 +17,7 @@ class LedgerTests: XCTestCase {
         XCTAssertEqual(ledger.commodities.count, 0)
 
         let commodity1 = Commodity(symbol: "EUR")
+        commodity1.metaData["A"] = "B"
         try! ledger.add(commodity1)
         XCTAssertEqual(ledger.commodities.count, 1)
         XCTAssertThrowsError(try ledger.add(commodity1)) {
@@ -38,6 +39,7 @@ class LedgerTests: XCTestCase {
         XCTAssertEqual(ledger.accounts.count, 0)
 
         let account1 = try! Account(name: "Assets:Checking")
+        account1.metaData["A"] = "B"
         try! ledger.add(account1)
         XCTAssertEqual(ledger.accounts.count, 1)
         XCTAssertThrowsError(try ledger.add(account1))
@@ -106,18 +108,20 @@ class LedgerTests: XCTestCase {
     func testTransactions() {
         let ledger = Ledger()
         let date = Date(timeIntervalSince1970: 1_496_991_600)
-        let transactionMetaData = TransactionMetaData(date: date,
+        var transactionMetaData = TransactionMetaData(date: date,
                                                       payee: "Payee",
                                                       narration: "Narration",
                                                       flag: Flag.complete,
                                                       tags: [Tag(name: "test")])
+        transactionMetaData.metaData["A"] = "B"
         let transaction = Transaction(metaData: transactionMetaData)
         let account = try! Account(name: "Assets:Cash")
-        let posting = Posting(account: account,
+        var posting = Posting(account: account,
                               amount: Amount(number: Decimal(10), commodity: Commodity(symbol: "EUR")),
                               transaction: transaction,
                               price: Amount(number: Decimal(15), commodity: Commodity(symbol: "USD")),
                               cost: try! Cost(amount: Amount(number: Decimal(5), commodity: Commodity(symbol: "CAD")), date: date, label: "TEST"))
+        posting.metaData["C"] = "D"
         transaction.postings.append(posting)
 
         let addedTransaction = ledger.add(transaction)
@@ -144,7 +148,8 @@ class LedgerTests: XCTestCase {
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "CAD"))
         let commodity = Commodity(symbol: "EUR")
 
-        let price = try! Price(date: date, commodity: commodity, amount: amount)
+        var price = try! Price(date: date, commodity: commodity, amount: amount)
+        price.metaData["A"] = "B"
 
         XCTAssertNoThrow(try ledger.add(price))
         XCTAssertThrowsError(try ledger.add(price))
@@ -186,7 +191,8 @@ class LedgerTests: XCTestCase {
         let account = try! Account(name: "Assets:Test")
         let date = Date(timeIntervalSince1970: 1_496_905_200)
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "CAD"))
-        let balance = Balance(date: date, account: account, amount: amount)
+        var balance = Balance(date: date, account: account, amount: amount)
+        balance.metaData["A"] = "B"
 
         try! ledger.add(account)
         XCTAssertTrue(ledger.accounts.first!.balances.isEmpty)

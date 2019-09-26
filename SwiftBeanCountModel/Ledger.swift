@@ -170,11 +170,13 @@ public class Ledger {
     /// - Parameter metaData: TransactionMetaData to convert
     /// - Returns: TransactionMetaData which can be added to the ledger
     private func getTransactionMetaData(for metaData: TransactionMetaData) -> TransactionMetaData {
-        return TransactionMetaData(date: metaData.date,
-                                   payee: metaData.payee,
-                                   narration: metaData.narration,
-                                   flag: metaData.flag,
-                                   tags: metaData.tags.map { getTag(for: $0) })
+        var result = TransactionMetaData(date: metaData.date,
+                                         payee: metaData.payee,
+                                         narration: metaData.narration,
+                                         flag: metaData.flag,
+                                         tags: metaData.tags.map { getTag(for: $0) })
+        result.metaData = metaData.metaData
+        return result
     }
 
     /// Converts `Posting`s so that the new one uses the correct `Account` and `Commodity` objects.
@@ -184,13 +186,15 @@ public class Ledger {
     /// - Returns: Posting which can be added to the ledger
     /// - Throws: If the account name is invalid
     private func getPosting(for posting: Posting, transaction: Transaction) throws -> Posting {
-        return Posting(account: try getAccount(for: posting.account),
-                       amount: getLedgerAmount(for: posting.amount),
-                       transaction: transaction,
-                       price: posting.price != nil ? getLedgerAmount(for: posting.price!) : nil,
-                       cost: posting.cost != nil ? try Cost(amount: posting.cost?.amount != nil ? getLedgerAmount(for: posting.cost!.amount!) : nil,
-                                                            date: posting.cost?.date,
-                                                            label: posting.cost?.label) : nil)
+        var result = Posting(account: try getAccount(for: posting.account),
+                             amount: getLedgerAmount(for: posting.amount),
+                             transaction: transaction,
+                             price: posting.price != nil ? getLedgerAmount(for: posting.price!) : nil,
+                             cost: posting.cost != nil ? try Cost(amount: posting.cost?.amount != nil ? getLedgerAmount(for: posting.cost!.amount!) : nil,
+                                                                  date: posting.cost?.date,
+                                                                  label: posting.cost?.label) : nil)
+        result.metaData = posting.metaData
+        return result
     }
 
     /// Converts `Amount`s so that the new one uses the correct `Commodity` objects.
