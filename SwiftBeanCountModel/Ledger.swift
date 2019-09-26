@@ -40,6 +40,12 @@ public class Ledger {
     /// Array of the main `AccountGroup`s (all five `AccountType`s) in this ledger
     public var accountGroups: [AccountGroup] { return Array(accountGroup.values) }
 
+    /// Array of all plugins
+    public var plugins = [String]()
+
+    /// Array of all options
+    public var option = [String: [String]]()
+
     private var commodity = [String: Commodity]()
     private var account = [String: Account]()
     private var tag = [String: Tag]()
