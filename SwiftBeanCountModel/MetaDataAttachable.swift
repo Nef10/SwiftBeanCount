@@ -8,6 +8,9 @@
 
 import Foundation
 
-protocol MetaDataAttachable {
+/// protocol for types where meta data can be attached
+public protocol MetaDataAttachable {
+
+    /// meta data in form of a string to string dict
     var metaData: [String: String] { get set }
 }
