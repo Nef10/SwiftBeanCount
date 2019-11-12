@@ -82,26 +82,22 @@ public enum Parser {
         }
 
         // Account
-        if let account = AccountParser.parseFrom(line: line) {
-            add(account, to: ledger, line: line, lineNumber: lineNumber)
+        if parseAccount(from: line, to: ledger, lineNumber: lineNumber) {
             return nil
         }
 
         // Price
-        if let price = PriceParser.parseFrom(line: line) {
-            add(price, to: ledger, lineNumber: lineNumber)
+        if parsePrice(from: line, to: ledger, lineNumber: lineNumber) {
             return nil
         }
 
         // Commodity
-        if let commodity = CommodityParser.parseFrom(line: line) {
-            add(commodity, to: ledger, lineNumber: lineNumber)
+        if parseCommodity(from: line, to: ledger, lineNumber: lineNumber) {
             return nil
         }
 
         // Balance
-        if let balance = BalanceParser.parseFrom(line: line) {
-            add(balance, to: ledger, lineNumber: lineNumber)
+        if parseBalance(from: line, to: ledger, lineNumber: lineNumber) {
             return nil
         }
 
@@ -127,23 +123,27 @@ public enum Parser {
         }
     }
 
-    /// Tries to add an account to the ledger
+    /// Tries to parse and account from a line and add it to the ledger
     ///
     /// Adds an error to the ledger if the account cannot be added
     ///
     /// - Parameters:
-    ///   - account: account to add
+    ///   - line: line to parse from
     ///   - ledger: ledger to add the account into
-    ///   - line: line which should be included in the error if the account cannot be added
     ///   - lineNumber: line number which should be included in the error if the account cannot be added
-    private static func add(_ account: Account, to ledger: Ledger, line: String, lineNumber: Int) {
+    /// - Returns: true if there was an account in the line (even if it could not be added to the ledger), false otherwise
+    private static func parseAccount(from line: String, to ledger: Ledger, lineNumber: Int) -> Bool {
+        guard let account = AccountParser.parseFrom(line: line) else {
+            return false
+        }
+
         if let ledgerAccount = ledger.accounts.first(where: { $0.name == account.name }) {
             if account.opening != nil {
                 if ledgerAccount.opening == nil {
                     ledgerAccount.opening = account.opening
                 } else {
                     ledger.errors.append("Second opening for account \(account.name) in line \(lineNumber + 1): \(line)")
-                    return
+                    return true
                 }
             }
             if account.commodity != nil {
@@ -167,54 +167,70 @@ public enum Parser {
                 ledger.errors.append("Error with account \(account.name): \(error.localizedDescription) in line \(lineNumber + 1): \(line)")
             }
         }
+        return true
     }
 
-    /// Tries to add a price to the ledger
+    /// Tries to parse a price from a line and add it to the ledger
     ///
     /// Adds an error to the ledger if the price cannot be added
     ///
     /// - Parameters:
-    ///   - price: price to add
+    ///   - line: line to parse from
     ///   - ledger: ledger to add the account into
     ///   - lineNumber: line number which should be included in the error if the price cannot be added
-    private static func add(_ price: Price, to ledger: Ledger, lineNumber: Int) {
+    /// - Returns: true if there was a price in the line (even if it could not be added to the ledger), false otherwise
+    private static func parsePrice(from line: String, to ledger: Ledger, lineNumber: Int) -> Bool {
+        guard let price = PriceParser.parseFrom(line: line) else {
+            return false
+        }
         do {
             try ledger.add(price)
         } catch {
             ledger.errors.append("Error with price \(price): \(error.localizedDescription) in line \(lineNumber + 1)")
         }
+        return true
     }
 
-    /// Tries to add a commodity to the ledger
+    /// Tries to parse a commodity from a line and add it to the ledger
     ///
     /// Adds an error to the ledger if the commodity cannot be added
     ///
     /// - Parameters:
-    ///   - commodity: commodity to add
+    ///   - line: line to parse from
     ///   - ledger: ledger to add the commodity into
     ///   - lineNumber: line number which should be included in the error if the commodity cannot be added
-    private static func add(_ commodity: Commodity, to ledger: Ledger, lineNumber: Int) {
+    /// - Returns: true if there was a commodity in the line (even if it could not be added to the ledger), false otherwise
+    private static func parseCommodity(from line: String, to ledger: Ledger, lineNumber: Int) -> Bool {
+        guard let commodity = CommodityParser.parseFrom(line: line) else {
+            return false
+        }
         do {
             try ledger.add(commodity)
         } catch {
             ledger.errors.append("Error with commodity \(commodity): \(error.localizedDescription) in line \(lineNumber + 1)")
         }
+        return true
     }
 
-    /// Tries to add a balance to the ledger
+    /// Tries to parse a balance from a line and add it to the ledger
     ///
     /// Adds an error to the ledger if the balance cannot be added
     ///
     /// - Parameters:
-    ///   - balance: balance to add
+    ///   - line: line to parse
     ///   - ledger: ledger to add the balance into
     ///   - lineNumber: line number which should be included in the error if the balance cannot be added
-    private static func add(_ balance: Balance, to ledger: Ledger, lineNumber: Int) {
+    /// - Returns: true if there was a balance in the line (even if it could not be added to the ledger), false otherwise
+    private static func parseBalance(from line: String, to ledger: Ledger, lineNumber: Int) -> Bool {
+        guard let balance = BalanceParser.parseFrom(line: line) else {
+            return false
+        }
         do {
             try ledger.add(balance)
         } catch {
             ledger.errors.append("Error with balance \(balance): \(error.localizedDescription) in line \(lineNumber + 1)")
         }
+        return true
     }
 
 }
