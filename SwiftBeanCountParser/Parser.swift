@@ -101,6 +101,11 @@ public enum Parser {
             return nil
         }
 
+        // Plugin
+        if parsePlugin(from: line, to: ledger) {
+            return nil
+        }
+
         ledger.errors.append("Invalid format in line \(lineNumber + 1): \(line)")
         return nil
     }
@@ -231,6 +236,20 @@ public enum Parser {
             ledger.errors.append("Error with balance \(balance): \(error.localizedDescription) in line \(lineNumber + 1)")
         }
         return true
+    }
+
+    /// Tries to parse a plugin from a line and add it to the ledger
+    ///
+    /// - Parameters:
+    ///   - line: line to parse
+    ///   - ledger: ledger to add the plugin into
+    /// - Returns: true if there was a plugin in the line (even if it could not be added to the ledger), false otherwise
+    private static func parsePlugin(from line: String, to ledger: Ledger) -> Bool {
+        if let plugin = PluginParser.parseFrom(line: line) {
+            ledger.plugins.append(plugin)
+            return true
+        }
+        return false
     }
 
 }

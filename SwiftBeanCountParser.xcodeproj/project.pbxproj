@@ -10,6 +10,8 @@
 		F95FF99020BA3D0D005F8B2F /* PriceParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95FF98F20BA3D0D005F8B2F /* PriceParserTests.swift */; };
 		F95FF99220BA3F2E005F8B2F /* PriceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95FF99120BA3F2E005F8B2F /* PriceParser.swift */; };
 		F95FF99420BA4052005F8B2F /* ParserUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95FF99320BA4052005F8B2F /* ParserUtils.swift */; };
+		F9928679237A69B300FD50CB /* PluginParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9928678237A69B300FD50CB /* PluginParser.swift */; };
+		F992867B237A6F0700FD50CB /* PluginParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F992867A237A6F0700FD50CB /* PluginParserTests.swift */; };
 		F9B9E156232B78D700811B3F /* CostParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9E155232B78D700811B3F /* CostParser.swift */; };
 		F9B9E158232B7A7500811B3F /* CostParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9E157232B7A7500811B3F /* CostParserTests.swift */; };
 		F9B9E15E232FEB5600811B3F /* InvalidCost.beancount in Resources */ = {isa = PBXBuildFile; fileRef = F9B9E15D232FEB5600811B3F /* InvalidCost.beancount */; };
@@ -83,6 +85,8 @@
 		F95FF98F20BA3D0D005F8B2F /* PriceParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceParserTests.swift; sourceTree = "<group>"; };
 		F95FF99120BA3F2E005F8B2F /* PriceParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceParser.swift; sourceTree = "<group>"; };
 		F95FF99320BA4052005F8B2F /* ParserUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserUtils.swift; sourceTree = "<group>"; };
+		F9928678237A69B300FD50CB /* PluginParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginParser.swift; sourceTree = "<group>"; };
+		F992867A237A6F0700FD50CB /* PluginParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginParserTests.swift; sourceTree = "<group>"; };
 		F9B9E155232B78D700811B3F /* CostParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostParser.swift; sourceTree = "<group>"; };
 		F9B9E157232B7A7500811B3F /* CostParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostParserTests.swift; sourceTree = "<group>"; };
 		F9B9E15D232FEB5600811B3F /* InvalidCost.beancount */ = {isa = PBXFileReference; lastKnownFileType = text; path = InvalidCost.beancount; sourceTree = "<group>"; };
@@ -173,6 +177,7 @@
 				F9BDC3831FBA839900393578 /* Parser.swift */,
 				F95FF99320BA4052005F8B2F /* ParserUtils.swift */,
 				F9B9E155232B78D700811B3F /* CostParser.swift */,
+				F9928678237A69B300FD50CB /* PluginParser.swift */,
 				F9BDC3A41FBAB0B700393578 /* Extensions */,
 				F9BDC36C1FBA815100393578 /* Info.plist */,
 			);
@@ -194,6 +199,7 @@
 				F9BDC39E1FBAB03600393578 /* TestUtils.swift */,
 				F9BDC3A91FBAB0E400393578 /* Extensions */,
 				F9BDC3B81FBAB13500393578 /* Resources */,
+				F992867A237A6F0700FD50CB /* PluginParserTests.swift */,
 			);
 			path = SwiftBeanCountParserTests;
 			sourceTree = "<group>";
@@ -381,6 +387,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9ED3BC722EADC26005A6469 /* BalanceParser.swift in Sources */,
+				F9928679237A69B300FD50CB /* PluginParser.swift in Sources */,
 				F9BDC3971FBAB02200393578 /* DateParser.swift in Sources */,
 				F95FF99420BA4052005F8B2F /* ParserUtils.swift in Sources */,
 				F9BDC3841FBA839900393578 /* Parser.swift in Sources */,
@@ -409,6 +416,7 @@
 				F9ED3BC422EAA89A005A6469 /* CommodityParserTests.swift in Sources */,
 				F95FF99020BA3D0D005F8B2F /* PriceParserTests.swift in Sources */,
 				F9BDC3B71FBAB10A00393578 /* TransactionMetaDataParserTests.swift in Sources */,
+				F992867B237A6F0700FD50CB /* PluginParserTests.swift in Sources */,
 				F9BDC3AC1FBAB0ED00393578 /* CollectionTests.swift in Sources */,
 				F9ED3BC922EAE018005A6469 /* BalanceParserTests.swift in Sources */,
 			);
