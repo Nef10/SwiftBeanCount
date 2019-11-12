@@ -101,6 +101,11 @@ public enum Parser {
             return nil
         }
 
+        // Option
+        if parseOption(from: line, to: ledger) {
+            return nil
+        }
+
         // Plugin
         if parsePlugin(from: line, to: ledger) {
             return nil
@@ -236,6 +241,24 @@ public enum Parser {
             ledger.errors.append("Error with balance \(balance): \(error.localizedDescription) in line \(lineNumber + 1)")
         }
         return true
+    }
+
+    /// Tries to parse an option from a line and add it to the ledger
+    ///
+    /// - Parameters:
+    ///   - line: line to parse
+    ///   - ledger: ledger to add the option into
+    /// - Returns: true if there was a option in the line (even if it could not be added to the ledger), false otherwise
+    private static func parseOption(from line: String, to ledger: Ledger) -> Bool {
+        if let (option, value) = OptionParser.parseFrom(line: line) {
+            if ledger.option[option] == nil {
+                ledger.option[option] = [value]
+            } else {
+                ledger.option[option]?.append(value)
+            }
+            return true
+        }
+        return false
     }
 
     /// Tries to parse a plugin from a line and add it to the ledger
