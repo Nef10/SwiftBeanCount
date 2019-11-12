@@ -46,10 +46,10 @@ class CommodityParserTests: XCTestCase {
     func testPerformance() {
         self.measure {
             for _ in 0...1_000 {
-                _ = AccountParser.parseFrom(line: basicString)
-                _ = AccountParser.parseFrom(line: whitespaceString)
-                _ = AccountParser.parseFrom(line: endOfLineCommentString)
-                _ = AccountParser.parseFrom(line: specialCharacterString)
+                _ = CommodityParser.parseFrom(line: basicString)
+                _ = CommodityParser.parseFrom(line: whitespaceString)
+                _ = CommodityParser.parseFrom(line: endOfLineCommentString)
+                _ = CommodityParser.parseFrom(line: specialCharacterString)
             }
         }
     }
