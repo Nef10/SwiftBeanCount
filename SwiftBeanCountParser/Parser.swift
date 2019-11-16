@@ -111,6 +111,11 @@ public enum Parser {
             return nil
         }
 
+        // Event
+        if parseEvent(from: line, to: ledger) {
+            return nil
+        }
+
         ledger.errors.append("Invalid format in line \(lineNumber + 1): \(line)")
         return nil
     }
@@ -270,6 +275,20 @@ public enum Parser {
     private static func parsePlugin(from line: String, to ledger: Ledger) -> Bool {
         if let plugin = PluginParser.parseFrom(line: line) {
             ledger.plugins.append(plugin)
+            return true
+        }
+        return false
+    }
+
+    /// Tries to parse an event from a line and add it to the ledger
+    ///
+    /// - Parameters:
+    ///   - line: line to parse
+    ///   - ledger: ledger to add the event into
+    /// - Returns: true if there was a event in the line, false otherwise
+    private static func parseEvent(from line: String, to ledger: Ledger) -> Bool {
+        if let event = EventParser.parseFrom(line: line) {
+            ledger.events.append(event)
             return true
         }
         return false
