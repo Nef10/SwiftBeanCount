@@ -37,6 +37,10 @@ public enum Parser {
         var openTransaction: Transaction?
 
         for (lineNumber, line) in lines.enumerated() {
+            if line.isEmpty || line[line.startIndex] == Parser.comment {
+                // Ignore empty lines and comments
+                continue
+            }
             openTransaction = parse(line, number: lineNumber, into: ledger, openTransaction: openTransaction)
         }
 
@@ -56,24 +60,11 @@ public enum Parser {
     ///   - openTransaction: currently open transaction from last line
     /// - Returns: new open transaction or nil if no transaction open
     private static func parse(_ line: String, number lineNumber: Int, into ledger: Ledger, openTransaction: Transaction?) -> Transaction? {
-        if line.isEmpty || line[line.startIndex] == Parser.comment {
-            // Ignore empty lines and comments
-            return openTransaction
-        }
 
         // Posting
-        if let transaction = openTransaction {
-            do {
-                if let posting = try PostingParser.parseFrom(line: line, into: transaction) {
-                    transaction.postings.append(posting)
-                    return transaction
-                } else { // No posting, need to close previous transaction
-                    closeOpen(transaction: openTransaction, inLedger: ledger, onLine: lineNumber + 1)
-                }
-            } catch {
-                ledger.errors.append("\(error.localizedDescription) (line \(lineNumber + 1))")
-                return nil
-            }
+        let (shouldReturn, returnValue) = parsePosting(from: line, to: ledger, lineNumber: lineNumber, openTransaction: openTransaction)
+        if shouldReturn {
+            return returnValue
         }
 
         // Transaction
@@ -143,7 +134,35 @@ public enum Parser {
         }
     }
 
-    /// Tries to parse and account from a line and add it to the ledger
+    /// Tries to parse a posting from a line and add it to the open transaction
+    ///
+    /// Adds an error to the ledger if the posting cannot be added
+    /// If the is no posting in the line it closes the open transcation
+    ///
+    /// - Parameters:
+    ///   - line: line to parse from
+    ///   - ledger: ledger to add the transaction into
+    ///   - lineNumber: line number which should be included in the error if the transaction cannot be added
+    ///   - openTransaction: transaction which is still open
+    /// - Returns: a tuple out of bool and an optional transaction. The boolean indicaties if the line was handled. The optional tansaction is the new open transaction.
+    private static func parsePosting(from line: String, to ledger: Ledger, lineNumber: Int, openTransaction: Transaction?) -> (Bool, Transaction?) {
+        if let transaction = openTransaction {
+           do {
+               if let posting = try PostingParser.parseFrom(line: line, into: transaction) {
+                   transaction.postings.append(posting)
+                   return (true, transaction)
+               } else { // No posting, need to close previous transaction
+                   closeOpen(transaction: openTransaction, inLedger: ledger, onLine: lineNumber + 1)
+               }
+           } catch {
+               ledger.errors.append("\(error.localizedDescription) (line \(lineNumber + 1))")
+               return (true, nil)
+           }
+        }
+        return (false, nil)
+    }
+
+    /// Tries to parse an account from a line and add it to the ledger
     ///
     /// Adds an error to the ledger if the account cannot be added
     ///
