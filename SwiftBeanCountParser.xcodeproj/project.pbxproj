@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		93C48B422385C5C9009B2FF0 /* CustomsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C48B412385C5C9009B2FF0 /* CustomsParser.swift */; };
+		93C48B442385C66A009B2FF0 /* CustomsParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C48B432385C66A009B2FF0 /* CustomsParserTests.swift */; };
 		F95FF99020BA3D0D005F8B2F /* PriceParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95FF98F20BA3D0D005F8B2F /* PriceParserTests.swift */; };
 		F95FF99220BA3F2E005F8B2F /* PriceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95FF99120BA3F2E005F8B2F /* PriceParser.swift */; };
 		F95FF99420BA4052005F8B2F /* ParserUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95FF99320BA4052005F8B2F /* ParserUtils.swift */; };
@@ -86,6 +88,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		93C48B412385C5C9009B2FF0 /* CustomsParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomsParser.swift; sourceTree = "<group>"; };
+		93C48B432385C66A009B2FF0 /* CustomsParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomsParserTests.swift; sourceTree = "<group>"; };
 		F95FF98F20BA3D0D005F8B2F /* PriceParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceParserTests.swift; sourceTree = "<group>"; };
 		F95FF99120BA3F2E005F8B2F /* PriceParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceParser.swift; sourceTree = "<group>"; };
 		F95FF99320BA4052005F8B2F /* ParserUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserUtils.swift; sourceTree = "<group>"; };
@@ -188,6 +192,7 @@
 				F9928676237A661500FD50CB /* OptionParser.swift */,
 				F9928678237A69B300FD50CB /* PluginParser.swift */,
 				F9B292F3237FB37000228A2A /* EventParser.swift */,
+				93C48B412385C5C9009B2FF0 /* CustomsParser.swift */,
 				F9BDC3A41FBAB0B700393578 /* Extensions */,
 				F9BDC36C1FBA815100393578 /* Info.plist */,
 			);
@@ -209,6 +214,7 @@
 				F992867A237A6F0700FD50CB /* PluginParserTests.swift */,
 				F992867C237A714400FD50CB /* OptionParserTests.swift */,
 				F9B292F5237FB44D00228A2A /* EventParserTests.swift */,
+				93C48B432385C66A009B2FF0 /* CustomsParserTests.swift */,
 				F9BDC39E1FBAB03600393578 /* TestUtils.swift */,
 				F9BDC3A91FBAB0E400393578 /* Extensions */,
 				F9BDC3B81FBAB13500393578 /* Resources */,
@@ -407,6 +413,7 @@
 				F9928677237A661500FD50CB /* OptionParser.swift in Sources */,
 				F9ED3BC222EAA758005A6469 /* CommodityParser.swift in Sources */,
 				F9BDC3A61FBAB0C600393578 /* Collection.swift in Sources */,
+				93C48B422385C5C9009B2FF0 /* CustomsParser.swift in Sources */,
 				F95FF99220BA3F2E005F8B2F /* PriceParser.swift in Sources */,
 				F9BDC3A81FBAB0C800393578 /* String.swift in Sources */,
 				F9B9E156232B78D700811B3F /* CostParser.swift in Sources */,
@@ -421,6 +428,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9BDC3B31FBAB10A00393578 /* ParserTests.swift in Sources */,
+				93C48B442385C66A009B2FF0 /* CustomsParserTests.swift in Sources */,
 				F9BDC3B51FBAB10A00393578 /* PostingParserTests.swift in Sources */,
 				F9BDC3A21FBAB03600393578 /* TestUtils.swift in Sources */,
 				F9BDC3B41FBAB10A00393578 /* DateParserTests.swift in Sources */,
