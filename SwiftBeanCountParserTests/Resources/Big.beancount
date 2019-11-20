@@ -2,13 +2,19 @@
 ;; Birth: 1980-05-12
 ;; Dates: 2015-01-01 - 2017-09-02
 ;; THIS FILE HAS BEEN AUTO-GENERATED.
+
 * Options
 
 option "title" "Example Beancount file"
 option "operating_currency" "USD"
 
+* Plugins
 
+plugin "beancount.plugins.nounused"
 
+* Custom
+
+1994-12-21 custom "fava-option" "journal-show" "transaction balance note document custom budget open close"=
 
 * Commodities
 
