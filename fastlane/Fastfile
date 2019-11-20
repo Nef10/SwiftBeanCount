@@ -3,12 +3,6 @@ default_platform :mac
 
 platform :mac do
 
-  before_all do
-    unless ENV["CI"]
-      ensure_git_status_clean
-    end
-  end
-
   desc "Run tests"
   lane :test do
     scan(formatter: 'xcpretty-json-formatter')
