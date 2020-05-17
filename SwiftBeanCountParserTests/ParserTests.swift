@@ -152,7 +152,7 @@ class ParserTests: XCTestCase {
     //  Helper
 
     private func urlFor(testFile: TestFile) -> URL {
-        return NSURL.fileURL(withPath: Bundle(for: type(of: self)).path(forResource: testFile.rawValue, ofType: "beancount")!)
+        NSURL.fileURL(withPath: Bundle(for: type(of: self)).path(forResource: testFile.rawValue, ofType: "beancount")!)
     }
 
     private func ensureEmpty(testFile: TestFile) -> Ledger {
