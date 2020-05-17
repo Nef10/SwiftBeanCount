@@ -319,17 +319,17 @@ public enum Parser {
     }
 
     /// Tries to parse a custom directive from a line and add it to the ledger
-       ///
-       /// - Parameters:
-       ///   - line: line to parse
-       ///   - ledger: ledger to add the custom directive into
-       /// - Returns: true if there was a custom directive in the line, false otherwise
-       private static func parseCustom(from line: String, to ledger: Ledger) -> Bool {
-           if let event = CustomsParser.parseFrom(line: line) {
-               ledger.custom.append(event)
-               return true
-           }
-           return false
-       }
+    ///
+    /// - Parameters:
+    ///   - line: line to parse
+    ///   - ledger: ledger to add the custom directive into
+    /// - Returns: true if there was a custom directive in the line, false otherwise
+    private static func parseCustom(from line: String, to ledger: Ledger) -> Bool {
+        if let event = CustomsParser.parseFrom(line: line) {
+            ledger.custom.append(event)
+            return true
+        }
+        return false
+    }
 
 }
