@@ -237,7 +237,7 @@ public class Account: AccountItem, MetaDataAttachable {
         var nextPosting = postingIterator.next()
         var amount = MultiCurrencyAmount(amounts: [:], decimalDigits: [:])
         for balance in balances.sorted(by: { $0.date < $1.date }) {
-            while let posting = nextPosting, posting.transaction.metaData.date <= balance.date {
+            while let posting = nextPosting, posting.transaction.metaData.date < balance.date {
                 amount += posting.amount
                 nextPosting = postingIterator.next()
             }

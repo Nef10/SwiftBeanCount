@@ -319,7 +319,7 @@ class AccountTests: XCTestCase {
             XCTFail("\(account) is valid")
         }
 
-        var transaction = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "", narration: "", flag: .complete, tags: []))
+        var transaction = Transaction(metaData: TransactionMetaData(date: date20170608, payee: "", narration: "", flag: .complete, tags: []))
         var posting = Posting(account: account, amount: Amount(number: 1, commodity: commodity), transaction: transaction)
         transaction.postings.append(posting)
         _ = ledger.add(transaction)
@@ -329,7 +329,7 @@ class AccountTests: XCTestCase {
             return
         }
 
-        transaction = Transaction(metaData: TransactionMetaData(date: date20170610, payee: "", narration: "", flag: .complete, tags: []))
+        transaction = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "", narration: "", flag: .complete, tags: []))
         posting = Posting(account: account, amount: Amount(number: 10, commodity: commodity), transaction: transaction)
         transaction.postings.append(posting)
         _ = ledger.add(transaction)
@@ -379,7 +379,7 @@ class AccountTests: XCTestCase {
             XCTFail("\(account) is valid")
         }
 
-        var transaction = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "", narration: "", flag: .complete, tags: []))
+        var transaction = Transaction(metaData: TransactionMetaData(date: date20170608, payee: "", narration: "", flag: .complete, tags: []))
         transaction.postings.append(Posting(account: account, amount: Amount(number: 1, commodity: commodity1), transaction: transaction))
         _ = ledger.add(transaction)
 
@@ -398,7 +398,7 @@ class AccountTests: XCTestCase {
         }
 
         account.balances.append(Balance(date: date20170609, account: account, amount: Amount(number: 1, commodity: commodity2)))
-        transaction = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "", narration: "", flag: .complete, tags: []))
+        transaction = Transaction(metaData: TransactionMetaData(date: date20170608, payee: "", narration: "", flag: .complete, tags: []))
         transaction.postings.append(Posting(account: account, amount: Amount(number: 1, commodity: commodity2), transaction: transaction))
         _ = ledger.add(transaction)
         guard case .valid = account.validateBalance(in: ledger) else {
@@ -414,7 +414,7 @@ class AccountTests: XCTestCase {
         account.commodity = commodity
         try! ledger.add(account)
 
-        var transaction = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "", narration: "", flag: .complete, tags: []))
+        var transaction = Transaction(metaData: TransactionMetaData(date: date20170608, payee: "", narration: "", flag: .complete, tags: []))
         transaction.postings.append(Posting(account: account, amount: Amount(number: 1.1, commodity: commodity, decimalDigits: 1), transaction: transaction))
         _ = ledger.add(transaction)
 
@@ -431,7 +431,7 @@ class AccountTests: XCTestCase {
             return
         }
 
-        transaction = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "", narration: "", flag: .complete, tags: []))
+        transaction = Transaction(metaData: TransactionMetaData(date: date20170608, payee: "", narration: "", flag: .complete, tags: []))
         transaction.postings.append(Posting(account: account, amount: Amount(number: 0.055, commodity: commodity, decimalDigits: 3), transaction: transaction))
         _ = ledger.add(transaction)
 
