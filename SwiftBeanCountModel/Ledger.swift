@@ -24,21 +24,21 @@ public class Ledger {
     public var errors = [String]()
 
     /// Array of all `Commodity`s in this ledger
-    public var commodities: [Commodity] { return Array(commodity.values) }
+    public var commodities: [Commodity] { Array(commodity.values) }
 
     /// Array of all `Account`s in this ledger
-    public var accounts: [Account] { return Array(account.values) }
+    public var accounts: [Account] { Array(account.values) }
 
     /// Array of all `Tag`s in this ledger
-    public var tags: [Tag] { return Array(tag.values) }
+    public var tags: [Tag] { Array(tag.values) }
 
     ///  Array of all `Price`s in this ledger
     public var prices: [Price] {
-        return Array(price.values.map { Array($0.values) }.map { $0.map { Array($0.values) } }.joined().joined())
+        Array(price.values.map { Array($0.values) }.map { $0.map { Array($0.values) } }.joined().joined())
     }
 
     /// Array of the main `AccountGroup`s (all five `AccountType`s) in this ledger
-    public var accountGroups: [AccountGroup] { return Array(accountGroup.values) }
+    public var accountGroups: [AccountGroup] { Array(accountGroup.values) }
 
     /// Array of all plugins
     public var plugins = [String]()
@@ -203,9 +203,9 @@ public class Ledger {
     /// - Parameter metaData: amount to convert
     /// - Returns: Amount which can be added to the ledger
     private func getLedgerAmount(for amount: Amount) -> Amount {
-        return Amount(number: amount.number,
-                      commodity: getCommodity(for: amount.commodity),
-                      decimalDigits: amount.decimalDigits)
+        Amount(number: amount.number,
+               commodity: getCommodity(for: amount.commodity),
+               decimalDigits: amount.decimalDigits)
     }
 
     /// Converts `Account`s so that all accounts exists only once in a ledger

@@ -131,7 +131,7 @@ public class Account: AccountItem, MetaDataAttachable {
 
     /// Last part of the name, for **Assets:Cash:CAD** this would be **CAD**
     public var nameItem: String {
-        return String(describing: name.split(separator: Account.nameSeperator).last!)
+        String(describing: name.split(separator: Account.nameSeperator).last!)
     }
 
     /// Creates an Account

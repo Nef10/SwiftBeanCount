@@ -84,14 +84,14 @@ extension MultiCurrencyAmount: MultiCurrencyAmountRepresentable {
 
     /// returns self to conform to the `MultiCurrencyAmountRepresentable` protocol
     public var multiCurrencyAmount: MultiCurrencyAmount {
-        return self
+        self
     }
 
 }
 
 extension MultiCurrencyAmount: Equatable {
     public static func == (lhs: MultiCurrencyAmount, rhs: MultiCurrencyAmount) -> Bool {
-        return lhs.amounts == rhs.amounts && lhs.decimalDigits == rhs.decimalDigits
+        lhs.amounts == rhs.amounts && lhs.decimalDigits == rhs.decimalDigits
     }
 }
 

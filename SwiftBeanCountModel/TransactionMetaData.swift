@@ -68,7 +68,7 @@ extension TransactionMetaData: CustomStringConvertible {
         return result
     }
 
-    private var dateString: String { return Self.dateFormatter.string(from: date) }
+    private var dateString: String { Self.dateFormatter.string(from: date) }
 
 }
 

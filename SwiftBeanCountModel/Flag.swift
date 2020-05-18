@@ -21,6 +21,6 @@ public enum Flag: String {
 extension Flag: CustomStringConvertible {
 
     /// Retuns the `String` which represents the flag in the ledger file
-    public var description: String { return self.rawValue }
+    public var description: String { self.rawValue }
 
 }

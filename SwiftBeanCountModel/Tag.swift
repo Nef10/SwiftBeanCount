@@ -26,7 +26,7 @@ public class Tag {
 extension Tag: CustomStringConvertible {
 
     /// the string of how to represent the tag in the ledger file, e.g. with **#** at the beginning
-    public var description: String { return "#\(name)" }
+    public var description: String { "#\(name)" }
 
 }
 
