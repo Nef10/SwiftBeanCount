@@ -314,6 +314,22 @@ extension Ledger: CustomStringConvertible {
     /// It consists of all `Account` and `Transaction` statements, but does not include `errors`
     public var description: String {
         var string = ""
+        string.append(self.option.map { key, values in "option \"\(key)\" \(values.map { "\"\($0)\"" }.joined(separator: " "))" }.joined(separator: "\n"))
+        if !string.isEmpty && !self.plugins.isEmpty {
+            string.append("\n")
+        }
+        string.append(self.plugins.map { "plugin \"\($0)\"" }.joined(separator: "\n"))
+        if !string.isEmpty && !self.custom.isEmpty {
+            string.append("\n")
+        }
+        string.append(self.custom.map { String(describing: $0) }.joined(separator: "\n"))
+        if !string.isEmpty && !self.events.isEmpty {
+            string.append("\n")
+        }
+        string.append(self.events.map { String(describing: $0) }.joined(separator: "\n"))
+        if !string.isEmpty && !self.commodities.isEmpty {
+            string.append("\n")
+        }
         string.append(self.commodities.map { String(describing: $0) }.joined(separator: "\n"))
         if !string.isEmpty && !self.accounts.isEmpty {
             string.append("\n")

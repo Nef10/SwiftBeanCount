@@ -304,7 +304,7 @@ class LedgerTests: XCTestCase {
         XCTAssertFalse(invalidLedger.errors.isEmpty)
     }
 
-    func testDescription() {
+    func testDescriptionTransactionsAccountsCommodities() {
         let accountName = "Assets:Cash"
         let transactionMetaData = TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_991_600), payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let transaction = Transaction(metaData: transactionMetaData)
@@ -314,7 +314,7 @@ class LedgerTests: XCTestCase {
         transaction.postings.append(posting)
         let ledger = Ledger()
 
-        // Empty leder
+        // Empty ledger
         XCTAssertEqual(String(describing: ledger), "")
 
         // Ledger with commodity only
@@ -331,17 +331,80 @@ class LedgerTests: XCTestCase {
         XCTAssertEqual(String(describing: ledger),
                        "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
 
-        // Ledger with transactions, account opening as well as closing and commodity
+        // Ledger with transaction, account opening as well as closing and commodity
         ledger.accounts.first { $0.name == accountName }!.closing = Date(timeIntervalSince1970: 1_497_078_000)
         XCTAssertEqual(String(describing: ledger),
                        "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
 
-        // ledger with only account openings
+        // ledger with only account opening
         let ledger2 = Ledger()
         let account2 = try! Account(name: accountName)
         account2.opening = Date(timeIntervalSince1970: 1_496_991_600)
         try! ledger2.add(account2)
         XCTAssertEqual(String(describing: ledger2), String(describing: ledger2.accounts.first!))
+    }
+
+    func testDescriptionOptions() {
+        let ledger = Ledger()
+        ledger.option["a"] = ["b", "c"]
+        XCTAssertEqual(String(describing: ledger), "option \"a\" \"b\" \"c\"")
+        ledger.option["z"] = ["y"]
+        let string1 = "option \"a\" \"b\" \"c\"\noption \"z\" \"y\""
+        let string2 = "option \"z\" \"y\"\noption \"a\" \"b\" \"c\""
+        let ledgerString1 = String(describing: ledger)
+        XCTAssert(ledgerString1 == string1 || ledgerString1 == string2)
+        ledger.plugins.insert("p") // Test new line after options
+        let ledgerString2 = String(describing: ledger)
+        XCTAssert(ledgerString2 == "\(string1)\nplugin \"p\"" || ledgerString2 == "\(string2)\nplugin \"p\"")
+    }
+
+    func testDescriptionPlugins() {
+        let ledger = Ledger()
+        ledger.plugins.insert("p")
+        XCTAssertEqual(String(describing: ledger), "plugin \"p\"")
+        ledger.plugins.insert("p1")
+        let string1 = "plugin \"p\"\nplugin \"p1\""
+        let string2 = "plugin \"p1\"\nplugin \"p\""
+        let ledgerString1 = String(describing: ledger)
+        XCTAssert(ledgerString1 == string1 || ledgerString1 == string2)
+        let custom = Custom(date: Date(timeIntervalSince1970: 1_497_078_000), name: "a", values: ["b"])
+        ledger.custom.insert(custom) // Test new line after plugins
+        let ledgerString2 = String(describing: ledger)
+        XCTAssert(ledgerString2 == "\(string1)\n\(String(describing: custom))" || ledgerString2 == "\(string2)\n\(String(describing: custom))")
+    }
+
+    func testDescriptionCustoms() {
+        let ledger = Ledger()
+        let custom1 = Custom(date: Date(timeIntervalSince1970: 1_497_078_000), name: "a", values: ["b"])
+        let custom2 = Custom(date: Date(timeIntervalSince1970: 1_496_991_600), name: "c", values: ["d", "e"])
+        ledger.custom.insert(custom1)
+        XCTAssertEqual(String(describing: ledger), String(describing: custom1))
+        ledger.custom.insert(custom2)
+        let ledgerString1 = String(describing: ledger)
+        XCTAssert(ledgerString1 == "\(String(describing: custom1))\n\(String(describing: custom2))"
+            || ledgerString1 == "\(String(describing: custom2))\n\(String(describing: custom1))")
+        let event = Event(date: Date(timeIntervalSince1970: 1_497_078_000), name: "e", value: "e1")
+        ledger.events.insert(event) // Test new line after customs
+        let ledgerString2 = String(describing: ledger)
+        XCTAssert(ledgerString2 == "\(String(describing: custom1))\n\(String(describing: custom2))\n\(String(describing: event))"
+            || ledgerString2 == "\(String(describing: custom2))\n\(String(describing: custom1))\n\(String(describing: event))")
+    }
+
+    func testDescriptionEvents() {
+        let ledger = Ledger()
+        let event1 = Event(date: Date(timeIntervalSince1970: 1_497_078_000), name: "e", value: "e1")
+        let event2 = Event(date: Date(timeIntervalSince1970: 1_496_991_600), name: "c", value: "d")
+        ledger.events.insert(event1)
+        XCTAssertEqual(String(describing: ledger), String(describing: event1))
+        ledger.events.insert(event2)
+        let ledgerString1 = String(describing: ledger)
+        XCTAssert(ledgerString1 == "\(String(describing: event1))\n\(String(describing: event2))"
+            || ledgerString1 == "\(String(describing: event2))\n\(String(describing: event1))")
+        let commodity = Commodity(symbol: "EUR", opening: Date(timeIntervalSince1970: 1_496_991_600))
+        try! ledger.add(commodity) // Test new line after events
+        let ledgerString2 = String(describing: ledger)
+        XCTAssert(ledgerString2 == "\(String(describing: event1))\n\(String(describing: event2))\n\(String(describing: commodity))"
+            || ledgerString2 == "\(String(describing: event2))\n\(String(describing: event1))\n\(String(describing: commodity))")
     }
 
     func testEqualEmpty() {
