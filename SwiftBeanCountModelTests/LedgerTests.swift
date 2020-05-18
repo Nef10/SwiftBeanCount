@@ -321,13 +321,18 @@ class LedgerTests: XCTestCase {
         try! ledger.add(commodity)
         XCTAssertEqual(String(describing: ledger), String(describing: commodity))
 
-        // Ledger with account openings and commodity
+        // Ledger with account opening and commodity
         try! ledger.add(account)
         ledger.accounts.first { $0.name == accountName }!.opening = Date(timeIntervalSince1970: 1_496_991_600)
         XCTAssertEqual(String(describing: ledger), "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))")
 
-        // Ledger with transactions, account openings and commodity
+        // Ledger with transactions, account opening and commodity
         _ = ledger.add(transaction)
+        XCTAssertEqual(String(describing: ledger),
+                       "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
+
+        // Ledger with transactions, account opening as well as closing and commodity
+        ledger.accounts.first { $0.name == accountName }!.closing = Date(timeIntervalSince1970: 1_497_078_000)
         XCTAssertEqual(String(describing: ledger),
                        "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
 
