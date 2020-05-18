@@ -1,3 +1,4 @@
+// swiftlint:disable file_length
 //
 //  LedgerTests.swift
 //  SwiftBeanCountModelTests
@@ -338,44 +339,179 @@ class LedgerTests: XCTestCase {
         XCTAssertEqual(String(describing: ledger2), String(describing: ledger2.accounts.first!))
     }
 
-    func testEqual() {
-        let tag = Tag(name: "Name1")
-        let commodity = Commodity(symbol: "Name1")
-        let account = try! Account(name: "Assets:Cash")
-        let transaction1 = Transaction(metaData: TransactionMetaData(date: Date(), payee: name, narration: name, flag: Flag.complete, tags: []))
-
+    func testEqualEmpty() {
         let ledger1 = Ledger()
         let ledger2 = Ledger()
 
-        // equal
         XCTAssertEqual(ledger1, ledger2)
+    }
+
+    func testEqualErrors() {
+        let ledger1 = Ledger()
+        let ledger2 = Ledger()
 
         // test errors are ignored
         ledger1.errors.append("String")
         XCTAssertEqual(ledger1, ledger2)
+    }
 
-        // different tags
-        try! ledger1.add(tag)
+    func testEqualTags() {
+        let ledger1 = Ledger()
+        let ledger2 = Ledger()
+
+        let tag1 = Tag(name: "Name1")
+        let tag2 = Tag(name: "Name2")
+
+        try! ledger1.add(tag1)
         XCTAssertNotEqual(ledger1, ledger2)
-        try! ledger2.add(tag)
+        try! ledger2.add(tag2)
+        XCTAssertNotEqual(ledger1, ledger2)
+        try! ledger1.add(tag2)
+        XCTAssertNotEqual(ledger1, ledger2)
+        try! ledger2.add(tag1)
         XCTAssertEqual(ledger1, ledger2)
+    }
 
-        // different transactions
+    func testEqualTransactions() {
+        let ledger1 = Ledger()
+        let ledger2 = Ledger()
+
+        let commodity = Commodity(symbol: "Name1")
+        let account = try! Account(name: "Assets:Cash")
+        let amount1 = Amount(number: 1, commodity: commodity, decimalDigits: 1)
+        let amount2 = Amount(number: 1, commodity: commodity, decimalDigits: 2)
+
+        // same meta data but different posting
+        let transactionMetaData = TransactionMetaData(date: Date(), payee: name, narration: name, flag: Flag.complete, tags: [])
+        let transaction1 = Transaction(metaData: transactionMetaData)
+        let transaction2 = Transaction(metaData: transactionMetaData)
+        let posting1 = Posting(account: account, amount: amount1, transaction: transaction1)
+        transaction1.postings.append(posting1)
+        let posting2 = Posting(account: account, amount: amount2, transaction: transaction1)
+        transaction2.postings.append(posting2)
+
         _ = ledger1.add(transaction1)
+        XCTAssertNotEqual(ledger1, ledger2)
+        _ = ledger2.add(transaction2)
+        XCTAssertNotEqual(ledger1, ledger2)
+        _ = ledger1.add(transaction2)
         XCTAssertNotEqual(ledger1, ledger2)
         _ = ledger2.add(transaction1)
         XCTAssertEqual(ledger1, ledger2)
+    }
 
-        // different commodities
-        try! ledger1.add(commodity)
+    func testEqualCommodities() {
+        let ledger1 = Ledger()
+        let ledger2 = Ledger()
+
+        let commodity1 = Commodity(symbol: "Name1")
+        let commodity2 = Commodity(symbol: "Name2")
+
+        try! ledger1.add(commodity1)
         XCTAssertNotEqual(ledger1, ledger2)
-        try! ledger2.add(commodity)
+        try! ledger2.add(commodity2)
+        XCTAssertNotEqual(ledger1, ledger2)
+        try! ledger1.add(commodity2)
+        XCTAssertNotEqual(ledger1, ledger2)
+        try! ledger2.add(commodity1)
         XCTAssertEqual(ledger1, ledger2)
+    }
 
-        // different accounts
-        try! ledger1.add(account)
+    func testEqualAccounts() {
+        let ledger1 = Ledger()
+        let ledger2 = Ledger()
+
+        let account1 = try! Account(name: "Assets:Cash")
+        let account2 = try! Account(name: "Assets:Cash1")
+
+        try! ledger1.add(account1)
         XCTAssertNotEqual(ledger1, ledger2)
-        try! ledger2.add(account)
+        try! ledger2.add(account2)
+        XCTAssertNotEqual(ledger1, ledger2)
+        try! ledger1.add(account2)
+        XCTAssertNotEqual(ledger1, ledger2)
+        try! ledger2.add(account1)
+        XCTAssertEqual(ledger1, ledger2)
+    }
+
+    func testEqualPrices() {
+        let ledger1 = Ledger()
+        let ledger2 = Ledger()
+
+        let commodity1 = Commodity(symbol: "Name1")
+        let commodity2 = Commodity(symbol: "Name2")
+        let amount1 = Amount(number: 1, commodity: commodity1, decimalDigits: 1)
+        let amount2 = Amount(number: 1, commodity: commodity1, decimalDigits: 2)
+        let price1 = try! Price(date: Date(), commodity: commodity2, amount: amount1)
+        let price2 = try! Price(date: Date(), commodity: commodity2, amount: amount2)
+
+        try! ledger1.add(price1)
+        XCTAssertNotEqual(ledger1, ledger2)
+        try! ledger2.add(price2)
+        XCTAssertNotEqual(ledger1, ledger2)
+        try! ledger1.add(price2)
+        XCTAssertNotEqual(ledger1, ledger2)
+        try! ledger2.add(price1)
+        XCTAssertEqual(ledger1, ledger2)
+    }
+
+    func testEqualCustom() {
+        let ledger1 = Ledger()
+        let ledger2 = Ledger()
+
+        let custom1 = Custom(date: Date(), name: "test", values: ["test1"])
+        let custom2 = Custom(date: Date(), name: "test", values: ["test1", "test2"])
+
+        ledger1.custom.insert(custom1)
+        XCTAssertNotEqual(ledger1, ledger2)
+        ledger2.custom.insert(custom2)
+        XCTAssertNotEqual(ledger1, ledger2)
+        ledger1.custom.insert(custom2)
+        XCTAssertNotEqual(ledger1, ledger2)
+        ledger2.custom.insert(custom1)
+        XCTAssertEqual(ledger1, ledger2)
+    }
+
+    func testEqualOptions() {
+        let ledger1 = Ledger()
+        let ledger2 = Ledger()
+
+        ledger1.option["a"] = ["b", "c"]
+        XCTAssertNotEqual(ledger1, ledger2)
+        ledger2.option["a"] = ["b", "c", "d"]
+        XCTAssertNotEqual(ledger1, ledger2)
+        ledger1.option["a"] = ["b", "c", "d"]
+        XCTAssertEqual(ledger1, ledger2)
+    }
+
+    func testEqualEvents() {
+        let ledger1 = Ledger()
+        let ledger2 = Ledger()
+
+        let event1 = Event(date: Date(), name: "event", value: "event_value1")
+        let event2 = Event(date: Date(), name: "event", value: "event_value2")
+
+        ledger1.events.insert(event1)
+        XCTAssertNotEqual(ledger1, ledger2)
+        ledger2.events.insert(event2)
+        XCTAssertNotEqual(ledger1, ledger2)
+        ledger1.events.insert(event2)
+        XCTAssertNotEqual(ledger1, ledger2)
+        ledger2.events.insert(event1)
+        XCTAssertEqual(ledger1, ledger2)
+    }
+
+    func testEqualPlugins() {
+        let ledger1 = Ledger()
+        let ledger2 = Ledger()
+
+        ledger1.plugins.insert("New Plugin")
+        XCTAssertNotEqual(ledger1, ledger2)
+        ledger2.plugins.insert("New Plugin1")
+        XCTAssertNotEqual(ledger1, ledger2)
+        ledger1.plugins.insert("New Plugin1")
+        XCTAssertNotEqual(ledger1, ledger2)
+        ledger2.plugins.insert("New Plugin")
         XCTAssertEqual(ledger1, ledger2)
     }
 

@@ -332,14 +332,22 @@ extension Ledger: Equatable {
 
     /// Compares two Ledgers
     ///
-    /// Compared are the `Account`s, `Commodity`s, `Tag`s and `Transaction`s but not the `errors`
+    /// Compared are the `Account`s, `Transaction`s, `Commodity`s, `Tag`s, `Event`s, `Custom`s, as well `option`s and `plugins`, but not the `errors`
     ///
     /// - Parameters:
     ///   - lhs: ledger one
     ///   - rhs: ledger two
     /// - Returns: true if they hold the same information, otherwise false
     public static func == (lhs: Ledger, rhs: Ledger) -> Bool {
-        lhs.account == rhs.account && rhs.commodity == lhs.commodity && rhs.tag == lhs.tag && rhs.transactions == lhs.transactions
+        lhs.account == rhs.account
+            && rhs.commodity == lhs.commodity
+            && rhs.tag == lhs.tag
+            && rhs.transactions == lhs.transactions
+            && rhs.price == lhs.price
+            && rhs.custom == lhs.custom
+            && rhs.option == lhs.option
+            && rhs.events == lhs.events
+            && rhs.plugins == lhs.plugins
     }
 
 }
