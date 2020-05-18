@@ -18,7 +18,7 @@ public enum LedgerError: Error {
 public class Ledger {
 
     /// Array of all `Transaction`s in this ledger
-    public private(set) var transactions = [Transaction]()
+    public private(set) var transactions = Set<Transaction>()
 
     /// Errors which this ledger contains
     public var errors = [String]()
@@ -41,16 +41,16 @@ public class Ledger {
     public var accountGroups: [AccountGroup] { Array(accountGroup.values) }
 
     /// Array of all plugins
-    public var plugins = [String]()
+    public var plugins = Set<String>()
 
     /// Array of all options
     public var option = [String: [String]]()
 
     /// Array of all events
-    public var events = [Event]()
+    public var events = Set<Event>()
 
     /// Array of all Custom directives
-    public var custom = [Custom]()
+    public var custom = Set<Custom>()
 
     private var commodity = [String: Commodity]()
     private var account = [String: Account]()
@@ -84,7 +84,7 @@ public class Ledger {
     public func add(_ transaction: Transaction) -> Transaction {
         let newTransaction = Transaction(metaData: getTransactionMetaData(for: transaction.metaData))
         newTransaction.postings = transaction.postings.map { try! getPosting(for: $0, transaction: newTransaction) } // swiftlint:disable:this force_try
-        transactions.append(newTransaction)
+        transactions.insert(newTransaction)
         return newTransaction
     }
 

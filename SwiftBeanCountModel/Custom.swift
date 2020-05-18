@@ -69,3 +69,6 @@ extension Custom: Equatable {
     }
 
 }
+
+extension Custom: Hashable {
+}

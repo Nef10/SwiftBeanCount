@@ -69,3 +69,6 @@ extension Event: Equatable {
     }
 
 }
+
+extension Event: Hashable {
+}
