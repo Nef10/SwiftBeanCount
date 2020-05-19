@@ -16,6 +16,15 @@ public struct Option {
     /// value the option should be set to
     public let value: String
 
+    /// Initializes a Option
+    /// - Parameters:
+    ///   - name: name of the option
+    ///   - value: value the option should be set to
+    public init(name: String, value: String) {
+        self.name = name
+        self.value = value
+    }
+
 }
 
 extension Option: CustomStringConvertible {
