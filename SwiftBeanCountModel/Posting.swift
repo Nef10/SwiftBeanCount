@@ -8,12 +8,12 @@
 
 import Foundation
 
-/// A Posting is part of an `Transaction`. It contains an `Account` with the corresponding `Amount`,
+/// A Posting is part of an `Transaction`. It contains an `AccountName` with the corresponding `Amount`,
 /// as well as the `price` (if applicable) and a link back to the `Transaction`.
 public struct Posting: MetaDataAttachable {
 
-    /// `Account` the posting is in
-    public let account: Account
+    /// `AccountName` of the account the posting is in
+    public let accountName: AccountName
 
     /// `Amount` of the posting
     public let amount: Amount
@@ -33,12 +33,12 @@ public struct Posting: MetaDataAttachable {
     /// Creats an posting with the given parameters
     ///
     /// - Parameters:
-    ///   - account: `Account`
+    ///   - accountName: `AccountName`
     ///   - amount: `Amount`
     ///   - transaction: the `Transaction` the posting is in - an *unowned* reference will be stored
     ///   - price: optional `Amount` which was paid to get this `amount`
-    public init(account: Account, amount: Amount, transaction: Transaction, price: Amount? = nil, cost: Cost? = nil) {
-        self.account = account
+    public init(accountName: AccountName, amount: Amount, transaction: Transaction, price: Amount? = nil, cost: Cost? = nil) {
+        self.accountName = accountName
         self.amount = amount
         self.transaction = transaction
         self.price = price
@@ -51,7 +51,7 @@ extension Posting: CustomStringConvertible {
 
     /// String to describe the posting in the ledget file
     public var description: String {
-        var result = "  \(account.name) \(String(describing: amount))"
+        var result = "  \(accountName) \(String(describing: amount))"
         if let cost = cost {
             result += " \(String(describing: cost))"
         }
@@ -75,9 +75,9 @@ extension Posting: Equatable {
     /// - Parameters:
     ///   - lhs: first posting
     ///   - rhs: second posting
-    /// - Returns: if the account, ammount, meta data and price are the same on both postings
+    /// - Returns: if the accountName, ammount, meta data and price are the same on both postings
     public static func == (lhs: Posting, rhs: Posting) -> Bool {
-        lhs.account == rhs.account && lhs.amount == rhs.amount && lhs.price == rhs.price && lhs.cost == rhs.cost && lhs.metaData == rhs.metaData
+        lhs.accountName == rhs.accountName && lhs.amount == rhs.amount && lhs.price == rhs.price && lhs.cost == rhs.cost && lhs.metaData == rhs.metaData
     }
 
 }

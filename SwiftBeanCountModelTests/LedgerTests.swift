@@ -97,9 +97,10 @@ class LedgerTests: XCTestCase {
                                                       tags: [Tag(name: "test")])
         transactionMetaData.metaData["A"] = "B"
         let transaction = Transaction(metaData: transactionMetaData)
-        let account = try! Account(name: AccountName("Assets:Cash"), opening: date)
+        let accountName = try! AccountName("Assets:Cash")
+        let account = Account(name: accountName, opening: date)
         try! ledger.add(account)
-        var posting = Posting(account: account,
+        var posting = Posting(accountName: accountName,
                               amount: Amount(number: Decimal(10), commodity: Commodity(symbol: "EUR")),
                               transaction: transaction,
                               price: Amount(number: Decimal(15), commodity: Commodity(symbol: "USD")),
@@ -214,8 +215,10 @@ class LedgerTests: XCTestCase {
 
         let commodity1 = Commodity(symbol: "STOCK", opening: Date(timeIntervalSince1970: 1_396_991_600))
         let commodity2 = Commodity(symbol: "CAD", opening: Date(timeIntervalSince1970: 1_396_991_600))
-        let account1 = try! Account(name: AccountName("Assets:Cash"), opening: Date(timeIntervalSince1970: 1_396_991_600))
-        let account2 = try! Account(name: AccountName("Assets:Holding"), opening: Date(timeIntervalSince1970: 1_396_991_600))
+        let accountName1 = try! AccountName("Assets:Cash")
+        let accountName2 = try! AccountName("Assets:Holding")
+        let account1 = Account(name: accountName1, opening: Date(timeIntervalSince1970: 1_396_991_600))
+        let account2 = Account(name: accountName2, opening: Date(timeIntervalSince1970: 1_396_991_600))
 
         try! ledger.add(commodity1)
         try! ledger.add(commodity2)
@@ -226,8 +229,8 @@ class LedgerTests: XCTestCase {
         let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
         let costAmount = Amount(number: 3.0, commodity: commodity2, decimalDigits: 1)
         let amount2 = Amount(number: -6.0, commodity: commodity2, decimalDigits: 1)
-        let posting1 = Posting(account: account2, amount: amount1, transaction: transaction1, price: nil, cost: try! Cost(amount: costAmount, date: nil, label: nil))
-        let posting2 = Posting(account: account1, amount: amount2, transaction: transaction1)
+        let posting1 = Posting(accountName: accountName2, amount: amount1, transaction: transaction1, price: nil, cost: try! Cost(amount: costAmount, date: nil, label: nil))
+        let posting2 = Posting(accountName: accountName1, amount: amount2, transaction: transaction1)
         transaction1.postings.append(contentsOf: [posting1, posting2])
 
         _ = ledger.add(transaction1)
@@ -236,8 +239,8 @@ class LedgerTests: XCTestCase {
         let transaction2 = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_596_991_600), payee: "3", narration: "4", flag: .complete, tags: []))
         let amount3 = Amount(number: -2.0, commodity: commodity1, decimalDigits: 1)
         let amount4 = Amount(number: 6.0, commodity: commodity2, decimalDigits: 1)
-        let posting3 = Posting(account: account2, amount: amount3, transaction: transaction2, price: nil, cost: try! Cost(amount: nil, date: nil, label: nil))
-        let posting4 = Posting(account: account1, amount: amount4, transaction: transaction2)
+        let posting3 = Posting(accountName: accountName2, amount: amount3, transaction: transaction2, price: nil, cost: try! Cost(amount: nil, date: nil, label: nil))
+        let posting4 = Posting(accountName: accountName1, amount: amount4, transaction: transaction2)
         transaction2.postings.append(contentsOf: [posting3, posting4])
 
         _ = ledger.add(transaction2)
@@ -275,21 +278,22 @@ class LedgerTests: XCTestCase {
     func testValidateAccountInventory() {
         let ledger = Ledger()
         let commodity = Commodity(symbol: "CAD")
-        let account = try! Account(name: AccountName("Assets:Test"), commodity: commodity)
+        let accountName = try! AccountName("Assets:Test")
+        let account = Account(name: accountName, commodity: commodity)
         let amount = Amount(number: 1.1, commodity: commodity, decimalDigits: 1)
         let cost = try! Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: "1")
         try! ledger.add(account)
 
         var transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_905_200), payee: "", narration: "", flag: .complete, tags: []))
-        transaction.postings.append(Posting(account: account, amount: amount, transaction: transaction, price: nil, cost: cost))
+        transaction.postings.append(Posting(accountName: accountName, amount: amount, transaction: transaction, price: nil, cost: cost))
         _ = ledger.add(transaction)
 
         transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_991_600), payee: "", narration: "", flag: .complete, tags: []))
-        transaction.postings.append(Posting(account: account, amount: amount, transaction: transaction, price: nil, cost: cost))
+        transaction.postings.append(Posting(accountName: accountName, amount: amount, transaction: transaction, price: nil, cost: cost))
         _ = ledger.add(transaction)
 
         transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_497_078_000), payee: "", narration: "", flag: .complete, tags: []))
-        transaction.postings.append(Posting(account: account,
+        transaction.postings.append(Posting(accountName: accountName,
                                             amount: Amount(number: -1.0, commodity: commodity, decimalDigits: 0),
                                             transaction: transaction,
                                             price: nil,
@@ -316,7 +320,7 @@ class LedgerTests: XCTestCase {
         let transaction = Transaction(metaData: transactionMetaData)
         let commodity = Commodity(symbol: "EUR", opening: Date(timeIntervalSince1970: 1_496_991_600))
         let account = Account(name: accountName, opening: Date(timeIntervalSince1970: 1_496_991_600))
-        let posting = Posting(account: account, amount: Amount(number: Decimal(10), commodity: commodity), transaction: transaction)
+        let posting = Posting(accountName: accountName, amount: Amount(number: Decimal(10), commodity: commodity), transaction: transaction)
         transaction.postings.append(posting)
         let ledger = Ledger()
 
@@ -418,7 +422,7 @@ class LedgerTests: XCTestCase {
         let ledger2 = Ledger()
 
         let commodity = Commodity(symbol: "Name1")
-        let account = try! Account(name: AccountName("Assets:Cash"))
+        let accountName = try! AccountName("Assets:Cash")
         let amount1 = Amount(number: 1, commodity: commodity, decimalDigits: 1)
         let amount2 = Amount(number: 1, commodity: commodity, decimalDigits: 2)
 
@@ -426,9 +430,9 @@ class LedgerTests: XCTestCase {
         let transactionMetaData = TransactionMetaData(date: Date(), payee: name, narration: name, flag: Flag.complete, tags: [])
         let transaction1 = Transaction(metaData: transactionMetaData)
         let transaction2 = Transaction(metaData: transactionMetaData)
-        let posting1 = Posting(account: account, amount: amount1, transaction: transaction1)
+        let posting1 = Posting(accountName: accountName, amount: amount1, transaction: transaction1)
         transaction1.postings.append(posting1)
-        let posting2 = Posting(account: account, amount: amount2, transaction: transaction1)
+        let posting2 = Posting(accountName: accountName, amount: amount2, transaction: transaction1)
         transaction2.postings.append(posting2)
 
         _ = ledger1.add(transaction1)

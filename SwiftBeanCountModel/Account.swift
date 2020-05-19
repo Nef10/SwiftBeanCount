@@ -217,7 +217,7 @@ public class Account: AccountItem, MetaDataAttachable {
     /// - Parameter posting: posting to check
     /// - Returns: `ValidationResult`
     func validate(_ posting: Posting) -> ValidationResult {
-        assert(posting.account == self, "Checking Posting \(posting) on wrong Account \(self)")
+        assert(posting.accountName == self.name, "Checking Posting \(posting) on wrong Account \(self)")
         guard self.allowsPosting(in: posting.amount.commodity) else {
             return .invalid("\(posting.transaction) uses a wrong commodiy for account \(self.name) - Only \(self.commodity!.symbol) is allowed")
         }
@@ -301,7 +301,7 @@ public class Account: AccountItem, MetaDataAttachable {
     /// - Returns: all posting for this account ordered by date from the oldest to the newest
     private func postings(in ledger: Ledger) -> [Posting] {
         var postings = [Posting]()
-        ledger.transactions.forEach { postings.append(contentsOf: $0.postings.filter { $0.account == self }) }
+        ledger.transactions.forEach { postings.append(contentsOf: $0.postings.filter { $0.accountName == self.name }) }
         postings.sort { $0.transaction.metaData.date < $1.transaction.metaData.date }
         return postings
     }

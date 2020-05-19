@@ -36,8 +36,8 @@ public class Transaction {
             return balanced
         }
         for posting in postings {
-            guard let account = ledger.accounts.first(where: { $0 == posting.account }) else {
-                return .invalid("Account \(posting.account.name) does not exist in the ledger. Make sure to use a transaction from the ledger")
+            guard let account = ledger.accounts.first(where: { $0.name == posting.accountName }) else {
+                return .invalid("Account \(posting.accountName) does not exist in the ledger")
             }
             let validationResult = account.validate(posting)
             guard case .valid = validationResult else {

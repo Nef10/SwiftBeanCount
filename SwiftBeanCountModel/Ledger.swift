@@ -193,7 +193,7 @@ public class Ledger {
     /// - Returns: Posting which can be added to the ledger
     /// - Throws: If the account name is invalid
     private func getPosting(for posting: Posting, transaction: Transaction) throws -> Posting {
-        var result = Posting(account: try getAccount(for: posting.account),
+        var result = Posting(accountName: posting.accountName,
                              amount: getLedgerAmount(for: posting.amount),
                              transaction: transaction,
                              price: posting.price != nil ? getLedgerAmount(for: posting.price!) : nil,
