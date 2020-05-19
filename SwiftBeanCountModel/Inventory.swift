@@ -199,11 +199,10 @@ class Inventory {
         for index in toRemove.sorted(by: > ) {
             inventory.remove(at: index)
         }
-        if number == 0 {
-            return cost
-        } else {
+        guard number == 0 else {
             throw InventoryError.lotNotBigEnough("Not enough units: Trying to reduce by \(lot)")
         }
+        return cost
     }
 
 }
