@@ -98,8 +98,7 @@ class LedgerTests: XCTestCase {
         transactionMetaData.metaData["A"] = "B"
         let transaction = Transaction(metaData: transactionMetaData)
         let accountName = try! AccountName("Assets:Cash")
-        let account = Account(name: accountName, opening: date)
-        try! ledger.add(account)
+        try! ledger.add(Account(name: accountName, opening: date))
         var posting = Posting(accountName: accountName,
                               amount: Amount(number: Decimal(10), commodity: Commodity(symbol: "EUR")),
                               transaction: transaction,
