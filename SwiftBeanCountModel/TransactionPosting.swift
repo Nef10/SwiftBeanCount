@@ -51,19 +51,6 @@ public class TransactionPosting: Posting {
     /// *unowned* link back to the `Transaction`
     public unowned let transaction: Transaction
 
-    /// Creats an TransactionPosting with the given parameters
-    ///
-    /// - Parameters:
-    ///   - accountName: `AccountName`
-    ///   - amount: `Amount`
-    ///   - transaction: the `Transaction` the posting is in - an *unowned* reference will be stored
-    ///   - price: optional `Amount` which was paid to get this `amount`
-    ///   - cost: optional `Cost` which was paid to get this `amount`
-    init(accountName: AccountName, amount: Amount, transaction: Transaction, price: Amount? = nil, cost: Cost? = nil) {
-        self.transaction = transaction
-        super.init(accountName: accountName, amount: amount, price: price, cost: cost)
-    }
-
     /// Creats an TransactionPosting based on an existing `Posting`
     ///
     /// - Parameters:
