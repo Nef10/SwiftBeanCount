@@ -19,7 +19,7 @@ class BalanceTests: XCTestCase {
         var balance = Balance(date: date, account: account, amount: amount)
         XCTAssertEqual(String(describing: balance), "2017-06-08 balance \(account.name) \(amount)")
 
-        balance.metaData["A"] = "B"
+        balance = Balance(date: date, account: account, amount: amount, metaData: ["A": "B"])
         XCTAssertEqual(String(describing: balance), "2017-06-08 balance \(account.name) \(amount)\n  A: \"B\"")
     }
 
@@ -32,10 +32,10 @@ class BalanceTests: XCTestCase {
         XCTAssertEqual(balance, balance2)
 
         // Meta Data
-        balance.metaData["A"] = "B"
-        balance2.metaData["A"] = "C"
+        balance = Balance(date: date, account: account, amount: amount, metaData: ["A": "B"])
+        balance2 = Balance(date: date, account: account, amount: amount, metaData: ["A": "C"])
         XCTAssertNotEqual(balance, balance2)
-        balance2.metaData["A"] = "B"
+        balance2 = Balance(date: date, account: account, amount: amount, metaData: ["A": "B"])
         XCTAssertEqual(balance, balance2)
 
         // Date different

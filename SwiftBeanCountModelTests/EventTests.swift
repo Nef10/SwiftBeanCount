@@ -47,13 +47,12 @@ class EventTests: XCTestCase {
     }
 
     func testEqualRespectsMetaData() {
-        var event1 = Event(date: date1, name: "A", value: "B")
+        let event1 = Event(date: date1, name: "A", value: "B", metaData: ["A": "B"])
         var event2 = Event(date: date1, name: "A", value: "B")
-        event1.metaData["A"] = "B"
         XCTAssertNotEqual(event1, event2)
         XCTAssertFalse(event1 < event2)
         XCTAssert(event2 < event1)
-        event2.metaData["A"] = "B"
+        event2 = Event(date: date1, name: "A", value: "B", metaData: ["A": "B"])
         XCTAssertEqual(event1, event2)
         XCTAssertFalse(event1 < event2)
         XCTAssertFalse(event2 < event1)
@@ -62,7 +61,7 @@ class EventTests: XCTestCase {
     func testDescription() {
         var event = Event(date: date1, name: "name", value: "B")
         XCTAssertEqual(String(describing: event), "2017-06-08 event \"name\" \"B\"")
-        event.metaData["A"] = "B"
+        event = Event(date: date1, name: "name", value: "B", metaData: ["A": "B"])
         XCTAssertEqual(String(describing: event), "2017-06-08 event \"name\" \"B\"\n  A: \"B\"")
 
     }

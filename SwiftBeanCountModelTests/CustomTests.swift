@@ -20,9 +20,9 @@ class CustomTests: XCTestCase {
         XCTAssertEqual(custom1, custom2)
 
         // meta data
-        custom1.metaData["A"] = "B"
+        custom1 = Custom(date: date1, name: "A", values: ["B"], metaData: ["A": "B"])
         XCTAssertNotEqual(custom1, custom2)
-        custom2.metaData["A"] = "B"
+        custom2 = Custom(date: date1, name: "A", values: ["B"], metaData: ["A": "B"])
         XCTAssertEqual(custom1, custom2)
         XCTAssertFalse(custom1 < custom2)
         XCTAssertFalse(custom2 < custom1)
@@ -55,7 +55,7 @@ class CustomTests: XCTestCase {
     func testDescription() {
         var custom = Custom(date: date1, name: "name", values: ["B"])
         XCTAssertEqual(String(describing: custom), "2017-06-08 custom \"name\" \"B\"")
-        custom.metaData["A"] = "B"
+        custom = Custom(date: date1, name: "name", values: ["B"], metaData: ["A": "B"])
         XCTAssertEqual(String(describing: custom), "2017-06-08 custom \"name\" \"B\"\n  A: \"B\"")
     }
 

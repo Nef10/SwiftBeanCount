@@ -9,7 +9,7 @@
 import Foundation
 
 /// Event
-public struct Event: MetaDataAttachable {
+public struct Event {
 
     /// Date of the event
     public let date: Date
@@ -21,7 +21,7 @@ public struct Event: MetaDataAttachable {
     public let value: String
 
     /// MetaData of the event
-    public var metaData = [String: String]()
+    public let metaData: [String: String]
 
     /// Create an Event
     ///
@@ -29,10 +29,11 @@ public struct Event: MetaDataAttachable {
     ///   - date: date
     ///   - name: name
     ///   - value: value
-    public init(date: Date, name: String, value: String) {
+    public init(date: Date, name: String, value: String, metaData: [String: String] = [:]) {
         self.date = date
         self.name = name
         self.value = value
+        self.metaData = metaData
     }
 
 }

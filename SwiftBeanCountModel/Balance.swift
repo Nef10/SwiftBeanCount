@@ -9,7 +9,7 @@
 import Foundation
 
 /// An assert that the balance of a given commodity is correct for the accout at the end of the given day
-public struct Balance: MetaDataAttachable {
+public struct Balance {
 
     /// Date of the Balance
     public let date: Date
@@ -21,7 +21,7 @@ public struct Balance: MetaDataAttachable {
     public let amount: Amount
 
     /// MetaData of the Balance
-    public var metaData = [String: String]()
+    public let metaData: [String: String]
 
     /// Create a Balance
     ///
@@ -29,10 +29,11 @@ public struct Balance: MetaDataAttachable {
     ///   - date: date of the balance
     ///   - account: account
     ///   - amount: amount
-    public init(date: Date, account: Account, amount: Amount) {
+    public init(date: Date, account: Account, amount: Amount, metaData: [String: String] = [:]) {
         self.date = date
         self.account = account
         self.amount = amount
+        self.metaData = metaData
     }
 
 }

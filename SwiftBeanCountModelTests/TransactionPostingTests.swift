@@ -38,8 +38,7 @@ class TransactionPostingTests: XCTestCase {
 
     func testDescriptionMetaData() {
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "💵"))
-        let posting = Posting(accountName: accountName2, amount: amount)
-        posting.metaData["A"] = "B"
+        let posting = Posting(accountName: accountName2, amount: amount, metaData: ["A": "B"])
 
         XCTAssertEqual(String(describing: posting), "  \(String(describing: accountName2!)) \(String(describing: amount))\n    A: \"B\"")
     }
@@ -75,8 +74,7 @@ class TransactionPostingTests: XCTestCase {
     }
 
     func testEqualRespectsMetaData() {
-        let posting2 = Posting(accountName: accountName1, amount: amount1!)
-        posting2.metaData["A"] = "B"
+        let posting2 = Posting(accountName: accountName1, amount: amount1!, metaData: ["A": "B"])
         XCTAssertNotEqual(posting1, posting2)
    }
 

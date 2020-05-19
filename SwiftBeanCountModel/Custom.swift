@@ -9,7 +9,7 @@
 import Foundation
 
 /// Custom directive
-public struct Custom: MetaDataAttachable {
+public struct Custom {
 
     /// Date of the directive
     public let date: Date
@@ -21,7 +21,7 @@ public struct Custom: MetaDataAttachable {
     public let values: [String]
 
     /// MetaData of the custom directive
-    public var metaData = [String: String]()
+    public let metaData: [String: String]
 
     /// Create a Custom directive
     ///
@@ -29,10 +29,11 @@ public struct Custom: MetaDataAttachable {
     ///   - date: date
     ///   - name: name
     ///   - values: values
-    public init(date: Date, name: String, values: [String]) {
+    public init(date: Date, name: String, values: [String], metaData: [String: String] = [:]) {
         self.date = date
         self.name = name
         self.values = values
+        self.metaData = metaData
     }
 
 }

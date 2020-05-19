@@ -170,7 +170,7 @@ public struct AccountName: AccountItem {
 /// Class with represents an Account with a name, commodity, opening and closing date, as well as a type.
 ///
 /// It does hot hold any `Transaction`s
-public class Account: AccountItem, MetaDataAttachable {
+public class Account: AccountItem {
 
     static let nameSeperator = Character(":")
 
@@ -184,7 +184,7 @@ public class Account: AccountItem, MetaDataAttachable {
     public let commodity: Commodity?
 
     /// MetaData of the Account
-    public var metaData = [String: String]()
+    public let metaData: [String: String]
 
     /// Optional date of opening.
     /// If it exists `isPostingValid(:)` checks that the transaction is on or after this date
@@ -204,11 +204,12 @@ public class Account: AccountItem, MetaDataAttachable {
     /// - Parameters:
     ///   - name: a vaild name for the account
     ///   - bookingMethod: bookingMethods, defaults to .strict
-    public init(name: AccountName, bookingMethod: BookingMethod = .strict, commodity: Commodity? = nil, opening: Date? = nil) {
+    public init(name: AccountName, bookingMethod: BookingMethod = .strict, commodity: Commodity? = nil, opening: Date? = nil, metaData: [String: String] = [:]) {
         self.name = name
         self.bookingMethod = bookingMethod
         self.commodity = commodity
         self.opening = opening
+        self.metaData = metaData
     }
 
     /// Checks if the given `Posting` is a valid posting for this account.

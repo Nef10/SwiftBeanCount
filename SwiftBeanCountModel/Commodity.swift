@@ -9,7 +9,7 @@
 import Foundation
 
 /// A commodity just consists of a symbol
-public class Commodity: MetaDataAttachable {
+public class Commodity {
 
     /// symbol of the commodity
     public let symbol: String
@@ -18,16 +18,17 @@ public class Commodity: MetaDataAttachable {
     public let opening: Date?
 
     /// MetaData of the Commodity
-    public var metaData = [String: String]()
+    public let metaData: [String: String]
 
     /// Creates an commodity with the given symbol, and an optinal opening date
     ///
     /// - Parameters:
     ///   - symbol: symbol of the commodity
     ///   - opening: date the commodity was opened
-    public init(symbol: String, opening: Date? = nil) {
+    public init(symbol: String, opening: Date? = nil, metaData: [String: String] = [:]) {
         self.symbol = symbol
         self.opening = opening
+        self.metaData = metaData
     }
 
     /// Validates the commodity

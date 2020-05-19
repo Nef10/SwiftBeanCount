@@ -15,7 +15,7 @@ public enum PriceError: Error {
 }
 
 /// Price of a commodity in another commodity on a given date
-public struct Price: MetaDataAttachable {
+public struct Price {
 
     /// Date of the Price
     public let date: Date
@@ -27,7 +27,7 @@ public struct Price: MetaDataAttachable {
     public let amount: Amount
 
     /// MetaData of the Price
-    public var metaData = [String: String]()
+    public let metaData: [String: String]
 
     /// Create a price
     ///
@@ -36,10 +36,11 @@ public struct Price: MetaDataAttachable {
     ///   - commodity: commodity
     ///   - amount: amount
     /// - Throws: PriceError.sameCommodity if the commodity and the commodity of the amount are the same
-    public init(date: Date, commodity: Commodity, amount: Amount) throws {
+    public init(date: Date, commodity: Commodity, amount: Amount, metaData: [String: String] = [:]) throws {
         self.date = date
         self.commodity = commodity
         self.amount = amount
+        self.metaData = metaData
         guard commodity != amount.commodity else {
             throw PriceError.sameCommodity(String(describing: self))
         }

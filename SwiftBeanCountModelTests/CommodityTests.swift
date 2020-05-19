@@ -37,8 +37,7 @@ class CommodityTests: XCTestCase {
         let symbol = "CAD"
         let string = "2017-06-08 commodity \(symbol)\n  A: \"B\""
         let date = Date(timeIntervalSince1970: 1_496_905_200)
-        let commodity = Commodity(symbol: symbol, opening: date)
-        commodity.metaData["A"] = "B"
+        let commodity = Commodity(symbol: symbol, opening: date, metaData: ["A": "B"])
         XCTAssertEqual(String(describing: commodity), string)
     }
 
@@ -60,16 +59,16 @@ class CommodityTests: XCTestCase {
     }
 
     func testEqual() {
-        let eur = Commodity(symbol: "EUR")
-        let eur2 = Commodity(symbol: "EUR")
+        var eur = Commodity(symbol: "EUR")
+        var eur2 = Commodity(symbol: "EUR")
         let cad = Commodity(symbol: "CAD")
         XCTAssertEqual(eur, eur2)
         XCTAssertNotEqual(eur, cad)
 
         // meta data
-        eur2.metaData["A"] = "B"
+        eur2 = Commodity(symbol: "EUR", metaData: ["A": "B"])
         XCTAssertNotEqual(eur, eur2)
-        eur.metaData["A"] = "B"
+        eur = Commodity(symbol: "EUR", metaData: ["A": "B"])
         XCTAssertEqual(eur, eur2)
     }
 

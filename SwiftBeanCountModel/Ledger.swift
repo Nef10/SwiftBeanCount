@@ -177,12 +177,12 @@ public class Ledger {
     /// - Parameter metaData: TransactionMetaData to convert
     /// - Returns: TransactionMetaData which can be added to the ledger
     private func getTransactionMetaData(for metaData: TransactionMetaData) -> TransactionMetaData {
-        var result = TransactionMetaData(date: metaData.date,
+        let result = TransactionMetaData(date: metaData.date,
                                          payee: metaData.payee,
                                          narration: metaData.narration,
                                          flag: metaData.flag,
-                                         tags: metaData.tags.map { getTag(for: $0) })
-        result.metaData = metaData.metaData
+                                         tags: metaData.tags.map { getTag(for: $0) },
+                                         metaData: metaData.metaData)
         return result
     }
 
@@ -198,8 +198,8 @@ public class Ledger {
                              price: posting.price != nil ? getLedgerAmount(for: posting.price!) : nil,
                              cost: posting.cost != nil ? try Cost(amount: posting.cost?.amount != nil ? getLedgerAmount(for: posting.cost!.amount!) : nil,
                                                                   date: posting.cost?.date,
-                                                                  label: posting.cost?.label) : nil)
-        result.metaData = posting.metaData
+                                                                  label: posting.cost?.label) : nil,
+                             metaData: posting.metaData)
         return result
     }
 

@@ -10,7 +10,7 @@ import Foundation
 
 /// A Posting contains an `AccountName` with the corresponding `Amount`,
 /// as well as the `price` and `cost` (if applicable).
-public class Posting: MetaDataAttachable {
+public class Posting {
 
     /// `AccountName` of the account the posting is in
     public let accountName: AccountName
@@ -25,7 +25,7 @@ public class Posting: MetaDataAttachable {
     public let cost: Cost?
 
     /// MetaData of the Posting
-    public var metaData = [String: String]()
+    public let metaData: [String: String]
 
     /// Creats an posting with the given parameters
     ///
@@ -34,11 +34,12 @@ public class Posting: MetaDataAttachable {
     ///   - amount: `Amount`
     ///   - price: optional `Amount` which was paid to get this `amount`
     ///   - cost: optional `Cost` which was paid to get this `amount`
-    public init(accountName: AccountName, amount: Amount, price: Amount? = nil, cost: Cost? = nil) {
+    public init(accountName: AccountName, amount: Amount, price: Amount? = nil, cost: Cost? = nil, metaData: [String: String] = [:]) {
         self.accountName = accountName
         self.amount = amount
         self.price = price
         self.cost = cost
+        self.metaData = metaData
     }
 
 }

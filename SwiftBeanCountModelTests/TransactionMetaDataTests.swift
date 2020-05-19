@@ -28,8 +28,7 @@ class TransactionMetaDataTests: XCTestCase {
     }
 
     func testDescriptionMetaData() {
-        var transactionMetaData = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [])
-        transactionMetaData.metaData["A"] = "B"
+        let transactionMetaData = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [], metaData: ["A": "B"])
         XCTAssertEqual(String(describing: transactionMetaData), "\(dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\"\n  A: \"B\"")
     }
 
@@ -68,8 +67,7 @@ class TransactionMetaDataTests: XCTestCase {
     }
 
     func testEqualRespectsMetaData() {
-        var transactionMetaData1 = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [])
-        transactionMetaData1.metaData["A"] = "B"
+        let transactionMetaData1 = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [], metaData: ["A": "B"])
         XCTAssertNotEqual(transactionMetaData, transactionMetaData1)
     }
 

@@ -30,7 +30,7 @@ class PriceTests: XCTestCase {
         var price = try! Price(date: date, commodity: commodity, amount: amount)
         XCTAssertEqual(String(describing: price), "2017-06-08 price \(commodity.symbol) \(String(describing: amount))")
 
-        price.metaData["A"] = "B"
+        price = try! Price(date: date, commodity: commodity, amount: amount, metaData: ["A": "B"])
         XCTAssertEqual(String(describing: price), "2017-06-08 price \(commodity.symbol) \(String(describing: amount))\n  A: \"B\"")
 
     }
@@ -45,9 +45,9 @@ class PriceTests: XCTestCase {
         XCTAssertEqual(price, price2)
 
         // Meta Data
-        price.metaData["A"] = "B"
+        price = try! Price(date: date, commodity: commodity, amount: amount, metaData: ["A": "B"])
         XCTAssertNotEqual(price, price2)
-        price2.metaData["A"] = "B"
+        price2 = try! Price(date: date, commodity: commodity, amount: amount, metaData: ["A": "B"])
         XCTAssertEqual(price, price2)
 
         // Date different

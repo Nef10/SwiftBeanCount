@@ -49,7 +49,8 @@ class AccountTests: XCTestCase {
         XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountName!) \(symbol)")
         accout.closing = date20170609
         XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountName!) \(symbol)\n2017-06-09 close \(accountName!)")
-        accout.metaData["A"] = "B"
+        accout = Account(name: accountName, commodity: Commodity(symbol: symbol), opening: date20170608, metaData: ["A": "B"])
+        accout.closing = date20170609
         XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountName!) \(symbol)\n  A: \"B\"\n2017-06-09 close \(accountName!)")
     }
 
@@ -518,11 +519,11 @@ class AccountTests: XCTestCase {
         // equal
         XCTAssertEqual(account1, account2)
         // different meta data
-        account1.metaData["A"] = "B"
-        account2.metaData["A"] = "C"
+        account1 = Account(name: accountName, commodity: commodity1, opening: date1, metaData: ["A": "B"])
+        account2 = Account(name: accountName, commodity: commodity1, opening: date1, metaData: ["A": "C"])
         XCTAssertNotEqual(account1, account2)
         // same meta data
-        account2.metaData["A"] = "B"
+        account2 = Account(name: accountName, commodity: commodity1, opening: date1, metaData: ["A": "B"])
         XCTAssertEqual(account1, account2)
         // different commodity
         account1 = Account(name: accountName, commodity: commodity1)
@@ -535,7 +536,8 @@ class AccountTests: XCTestCase {
         // different closing
         account2.closing = date2
         XCTAssertNotEqual(account1, account2)
-        account2.closing = date1
+        account1.closing = date1
+        XCTAssertNotEqual(account1, account2)
     }
 
 }
