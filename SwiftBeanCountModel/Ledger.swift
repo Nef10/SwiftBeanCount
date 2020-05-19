@@ -18,7 +18,7 @@ public enum LedgerError: Error {
 public class Ledger {
 
     /// Array of all `Transaction`s in this ledger
-    public private(set) var transactions = Set<Transaction>()
+    public private(set) var transactions = [Transaction]()
 
     /// Errors which this ledger contains
     public var errors = [String]()
@@ -41,16 +41,16 @@ public class Ledger {
     public var accountGroups: [AccountGroup] { Array(accountGroup.values) }
 
     /// Array of all plugins
-    public var plugins = Set<String>()
+    public var plugins = [String]()
 
     /// Array of all options
-    public var option = [String: [String]]()
+    public var option = [Option]()
 
     /// Array of all events
-    public var events = Set<Event>()
+    public var events = [Event]()
 
     /// Array of all Custom directives
-    public var custom = Set<Custom>()
+    public var custom = [Custom]()
 
     private var commodity = [String: Commodity]()
     private var account = [String: Account]()
@@ -84,7 +84,7 @@ public class Ledger {
     public func add(_ transaction: Transaction) -> Transaction {
         let newTransaction = Transaction(metaData: getTransactionMetaData(for: transaction.metaData))
         newTransaction.postings = transaction.postings.map { try! getPosting(for: $0, transaction: newTransaction) } // swiftlint:disable:this force_try
-        transactions.insert(newTransaction)
+        transactions.append(newTransaction)
         return newTransaction
     }
 
@@ -314,7 +314,7 @@ extension Ledger: CustomStringConvertible {
     /// It consists of all `Account` and `Transaction` statements, but does not include `errors`
     public var description: String {
         var string = ""
-        string.append(self.option.map { key, values in "option \"\(key)\" \(values.map { "\"\($0)\"" }.joined(separator: " "))" }.joined(separator: "\n"))
+        string.append(self.option.map { String(describing: $0) }.joined(separator: "\n"))
         if !string.isEmpty && !self.plugins.isEmpty {
             string.append("\n")
         }
@@ -358,12 +358,12 @@ extension Ledger: Equatable {
         lhs.account == rhs.account
             && rhs.commodity == lhs.commodity
             && rhs.tag == lhs.tag
-            && rhs.transactions == lhs.transactions
+            && rhs.transactions.sorted() == lhs.transactions.sorted()
             && rhs.price == lhs.price
-            && rhs.custom == lhs.custom
-            && rhs.option == lhs.option
-            && rhs.events == lhs.events
-            && rhs.plugins == lhs.plugins
+            && rhs.custom.sorted() == lhs.custom.sorted()
+            && rhs.option.sorted() == lhs.option.sorted()
+            && rhs.events.sorted() == lhs.events.sorted()
+            && rhs.plugins.sorted() == lhs.plugins.sorted()
     }
 
 }

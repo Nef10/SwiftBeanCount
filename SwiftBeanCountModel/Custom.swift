@@ -70,5 +70,10 @@ extension Custom: Equatable {
 
 }
 
-extension Custom: Hashable {
+extension Custom: Comparable {
+
+    public static func < (lhs: Custom, rhs: Custom) -> Bool {
+       String(describing: lhs) < String(describing: rhs)
+    }
+
 }

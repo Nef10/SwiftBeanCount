@@ -11,12 +11,12 @@ import XCTest
 
 class TransactionTests: XCTestCase {
 
-    var transaction1WithoutPosting: Transaction?
-    var transaction2WithoutPosting: Transaction?
-    var transaction1WithPosting1: Transaction?
-    var transaction3WithPosting1: Transaction?
-    var transaction1WithPosting1And2: Transaction?
-    var transaction2WithPosting1And2: Transaction?
+    var transaction1WithoutPosting: Transaction!
+    var transaction2WithoutPosting: Transaction!
+    var transaction1WithPosting1: Transaction!
+    var transaction3WithPosting1: Transaction!
+    var transaction1WithPosting1And2: Transaction!
+    var transaction2WithPosting1And2: Transaction!
     var account1: Account?
     var account2: Account?
     var date: Date?
@@ -73,18 +73,26 @@ class TransactionTests: XCTestCase {
 
     func testEqual() {
         XCTAssertEqual(transaction1WithoutPosting, transaction2WithoutPosting)
+        XCTAssertFalse(transaction1WithoutPosting < transaction2WithoutPosting)
+        XCTAssertFalse(transaction2WithoutPosting < transaction1WithoutPosting)
     }
 
     func testEqualWithPostings() {
         XCTAssertEqual(transaction1WithPosting1And2, transaction2WithPosting1And2)
+        XCTAssertFalse(transaction1WithPosting1And2 < transaction2WithPosting1And2)
+        XCTAssertFalse(transaction2WithPosting1And2 < transaction1WithPosting1And2)
     }
 
     func testEqualRespectsPostings() {
         XCTAssertNotEqual(transaction1WithPosting1, transaction1WithPosting1And2)
+        XCTAssert(transaction1WithPosting1 < transaction1WithPosting1And2)
+        XCTAssertFalse(transaction1WithPosting1And2 < transaction1WithPosting1)
     }
 
     func testEqualRespectsTransactionMetaData() {
         XCTAssertNotEqual(transaction1WithPosting1, transaction3WithPosting1)
+        XCTAssertFalse(transaction1WithPosting1 < transaction3WithPosting1)
+        XCTAssert(transaction3WithPosting1 < transaction1WithPosting1)
     }
 
     func testIsValid() {

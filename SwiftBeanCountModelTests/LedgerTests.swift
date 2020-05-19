@@ -346,65 +346,51 @@ class LedgerTests: XCTestCase {
 
     func testDescriptionOptions() {
         let ledger = Ledger()
-        ledger.option["a"] = ["b", "c"]
-        XCTAssertEqual(String(describing: ledger), "option \"a\" \"b\" \"c\"")
-        ledger.option["z"] = ["y"]
-        let string1 = "option \"a\" \"b\" \"c\"\noption \"z\" \"y\""
-        let string2 = "option \"z\" \"y\"\noption \"a\" \"b\" \"c\""
-        let ledgerString1 = String(describing: ledger)
-        XCTAssert(ledgerString1 == string1 || ledgerString1 == string2)
-        ledger.plugins.insert("p") // Test new line after options
-        let ledgerString2 = String(describing: ledger)
-        XCTAssert(ledgerString2 == "\(string1)\nplugin \"p\"" || ledgerString2 == "\(string2)\nplugin \"p\"")
+        let option1 = Option(name: "a", value: "b")
+        ledger.option.append(option1)
+        XCTAssertEqual(String(describing: ledger), String(describing: option1))
+        let option2 = Option(name: "z", value: "y")
+        ledger.option.append(option2)
+        XCTAssert(String(describing: ledger) == "\(String(describing: option1))\n\(String(describing: option2))")
+        ledger.plugins.append("p") // Test new line after options
+        XCTAssert(String(describing: ledger) == "\(String(describing: option1))\n\(String(describing: option2))\nplugin \"p\"")
     }
 
     func testDescriptionPlugins() {
         let ledger = Ledger()
-        ledger.plugins.insert("p")
+        ledger.plugins.append("p")
         XCTAssertEqual(String(describing: ledger), "plugin \"p\"")
-        ledger.plugins.insert("p1")
-        let string1 = "plugin \"p\"\nplugin \"p1\""
-        let string2 = "plugin \"p1\"\nplugin \"p\""
-        let ledgerString1 = String(describing: ledger)
-        XCTAssert(ledgerString1 == string1 || ledgerString1 == string2)
+        ledger.plugins.append("p1")
+        XCTAssert(String(describing: ledger) == "plugin \"p\"\nplugin \"p1\"")
         let custom = Custom(date: Date(timeIntervalSince1970: 1_497_078_000), name: "a", values: ["b"])
-        ledger.custom.insert(custom) // Test new line after plugins
-        let ledgerString2 = String(describing: ledger)
-        XCTAssert(ledgerString2 == "\(string1)\n\(String(describing: custom))" || ledgerString2 == "\(string2)\n\(String(describing: custom))")
+        ledger.custom.append(custom) // Test new line after plugins
+        XCTAssert(String(describing: ledger) == "plugin \"p\"\nplugin \"p1\"\n\(String(describing: custom))")
     }
 
     func testDescriptionCustoms() {
         let ledger = Ledger()
         let custom1 = Custom(date: Date(timeIntervalSince1970: 1_497_078_000), name: "a", values: ["b"])
         let custom2 = Custom(date: Date(timeIntervalSince1970: 1_496_991_600), name: "c", values: ["d", "e"])
-        ledger.custom.insert(custom1)
+        ledger.custom.append(custom1)
         XCTAssertEqual(String(describing: ledger), String(describing: custom1))
-        ledger.custom.insert(custom2)
-        let ledgerString1 = String(describing: ledger)
-        XCTAssert(ledgerString1 == "\(String(describing: custom1))\n\(String(describing: custom2))"
-            || ledgerString1 == "\(String(describing: custom2))\n\(String(describing: custom1))")
+        ledger.custom.append(custom2)
+        XCTAssert(String(describing: ledger) == "\(String(describing: custom1))\n\(String(describing: custom2))")
         let event = Event(date: Date(timeIntervalSince1970: 1_497_078_000), name: "e", value: "e1")
-        ledger.events.insert(event) // Test new line after customs
-        let ledgerString2 = String(describing: ledger)
-        XCTAssert(ledgerString2 == "\(String(describing: custom1))\n\(String(describing: custom2))\n\(String(describing: event))"
-            || ledgerString2 == "\(String(describing: custom2))\n\(String(describing: custom1))\n\(String(describing: event))")
+        ledger.events.append(event) // Test new line after customs
+        XCTAssert(String(describing: ledger) == "\(String(describing: custom1))\n\(String(describing: custom2))\n\(String(describing: event))")
     }
 
     func testDescriptionEvents() {
         let ledger = Ledger()
         let event1 = Event(date: Date(timeIntervalSince1970: 1_497_078_000), name: "e", value: "e1")
         let event2 = Event(date: Date(timeIntervalSince1970: 1_496_991_600), name: "c", value: "d")
-        ledger.events.insert(event1)
+        ledger.events.append(event1)
         XCTAssertEqual(String(describing: ledger), String(describing: event1))
-        ledger.events.insert(event2)
-        let ledgerString1 = String(describing: ledger)
-        XCTAssert(ledgerString1 == "\(String(describing: event1))\n\(String(describing: event2))"
-            || ledgerString1 == "\(String(describing: event2))\n\(String(describing: event1))")
+        ledger.events.append(event2)
+        XCTAssert(String(describing: ledger) == "\(String(describing: event1))\n\(String(describing: event2))")
         let commodity = Commodity(symbol: "EUR", opening: Date(timeIntervalSince1970: 1_496_991_600))
         try! ledger.add(commodity) // Test new line after events
-        let ledgerString2 = String(describing: ledger)
-        XCTAssert(ledgerString2 == "\(String(describing: event1))\n\(String(describing: event2))\n\(String(describing: commodity))"
-            || ledgerString2 == "\(String(describing: event2))\n\(String(describing: event1))\n\(String(describing: commodity))")
+        XCTAssert(String(describing: ledger) == "\(String(describing: event1))\n\(String(describing: event2))\n\(String(describing: commodity))")
     }
 
     func testEqualEmpty() {
@@ -530,13 +516,13 @@ class LedgerTests: XCTestCase {
         let custom1 = Custom(date: Date(), name: "test", values: ["test1"])
         let custom2 = Custom(date: Date(), name: "test", values: ["test1", "test2"])
 
-        ledger1.custom.insert(custom1)
+        ledger1.custom.append(custom1)
         XCTAssertNotEqual(ledger1, ledger2)
-        ledger2.custom.insert(custom2)
+        ledger2.custom.append(custom2)
         XCTAssertNotEqual(ledger1, ledger2)
-        ledger1.custom.insert(custom2)
+        ledger1.custom.append(custom2)
         XCTAssertNotEqual(ledger1, ledger2)
-        ledger2.custom.insert(custom1)
+        ledger2.custom.append(custom1)
         XCTAssertEqual(ledger1, ledger2)
     }
 
@@ -544,11 +530,15 @@ class LedgerTests: XCTestCase {
         let ledger1 = Ledger()
         let ledger2 = Ledger()
 
-        ledger1.option["a"] = ["b", "c"]
+        let option1 = Option(name: "a", value: "b")
+        let option2 = Option(name: "a", value: "c")
+
+        ledger1.option.append(option1)
         XCTAssertNotEqual(ledger1, ledger2)
-        ledger2.option["a"] = ["b", "c", "d"]
+        ledger2.option.append(option2)
         XCTAssertNotEqual(ledger1, ledger2)
-        ledger1.option["a"] = ["b", "c", "d"]
+        ledger2.option.append(option1)
+        ledger1.option.append(option2)
         XCTAssertEqual(ledger1, ledger2)
     }
 
@@ -559,13 +549,13 @@ class LedgerTests: XCTestCase {
         let event1 = Event(date: Date(), name: "event", value: "event_value1")
         let event2 = Event(date: Date(), name: "event", value: "event_value2")
 
-        ledger1.events.insert(event1)
+        ledger1.events.append(event1)
         XCTAssertNotEqual(ledger1, ledger2)
-        ledger2.events.insert(event2)
+        ledger2.events.append(event2)
         XCTAssertNotEqual(ledger1, ledger2)
-        ledger1.events.insert(event2)
+        ledger1.events.append(event2)
         XCTAssertNotEqual(ledger1, ledger2)
-        ledger2.events.insert(event1)
+        ledger2.events.append(event1)
         XCTAssertEqual(ledger1, ledger2)
     }
 
@@ -573,13 +563,13 @@ class LedgerTests: XCTestCase {
         let ledger1 = Ledger()
         let ledger2 = Ledger()
 
-        ledger1.plugins.insert("New Plugin")
+        ledger1.plugins.append("New Plugin")
         XCTAssertNotEqual(ledger1, ledger2)
-        ledger2.plugins.insert("New Plugin1")
+        ledger2.plugins.append("New Plugin1")
         XCTAssertNotEqual(ledger1, ledger2)
-        ledger1.plugins.insert("New Plugin1")
+        ledger1.plugins.append("New Plugin1")
         XCTAssertNotEqual(ledger1, ledger2)
-        ledger2.plugins.insert("New Plugin")
+        ledger2.plugins.append("New Plugin")
         XCTAssertEqual(ledger1, ledger2)
     }
 

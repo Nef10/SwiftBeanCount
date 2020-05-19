@@ -70,5 +70,10 @@ extension Event: Equatable {
 
 }
 
-extension Event: Hashable {
+extension Event: Comparable {
+
+    public static func < (lhs: Event, rhs: Event) -> Bool {
+        String(describing: lhs) < String(describing: rhs)
+    }
+
 }

@@ -24,24 +24,32 @@ class CustomTests: XCTestCase {
         XCTAssertNotEqual(custom1, custom2)
         custom2.metaData["A"] = "B"
         XCTAssertEqual(custom1, custom2)
+        XCTAssertFalse(custom1 < custom2)
+        XCTAssertFalse(custom2 < custom1)
     }
 
     func testEqualRespectsDate() {
         let custom1 = Custom(date: date1, name: "A", values: ["B"])
         let custom2 = Custom(date: date2, name: "A", values: ["B"])
         XCTAssertNotEqual(custom1, custom2)
+        XCTAssert(custom1 < custom2)
+        XCTAssertFalse(custom2 < custom1)
     }
 
     func testEqualRespectsName() {
         let custom1 = Custom(date: date1, name: "A", values: ["B"])
         let custom2 = Custom(date: date1, name: "C", values: ["B"])
         XCTAssertNotEqual(custom1, custom2)
+        XCTAssert(custom1 < custom2)
+        XCTAssertFalse(custom2 < custom1)
     }
 
     func testEqualRespectsValue() {
         let custom1 = Custom(date: date1, name: "A", values: ["B"])
         let custom2 = Custom(date: date1, name: "A", values: ["B", "C"])
         XCTAssertNotEqual(custom1, custom2)
+        XCTAssert(custom1 < custom2)
+        XCTAssertFalse(custom2 < custom1)
     }
 
     func testDescription() {

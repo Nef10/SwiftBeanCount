@@ -117,3 +117,11 @@ extension Transaction: Hashable {
     }
 
 }
+
+extension Transaction: Comparable {
+
+    public static func < (lhs: Transaction, rhs: Transaction) -> Bool {
+        String(describing: lhs) < String(describing: rhs)
+    }
+
+}

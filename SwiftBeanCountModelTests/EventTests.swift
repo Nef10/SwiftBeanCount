@@ -15,33 +15,48 @@ class EventTests: XCTestCase {
     let date2 = Date(timeIntervalSince1970: 1_496_991_600)
 
     func testEqual() {
-        var event1 = Event(date: date1, name: "A", value: "B")
-        var event2 = Event(date: date1, name: "A", value: "B")
+        let event1 = Event(date: date1, name: "A", value: "B")
+        let event2 = Event(date: date1, name: "A", value: "B")
         XCTAssertEqual(event1, event2)
-
-        // meta data
-        event1.metaData["A"] = "B"
-        XCTAssertNotEqual(event1, event2)
-        event2.metaData["A"] = "B"
-        XCTAssertEqual(event1, event2)
+        XCTAssertFalse(event1 < event2)
+        XCTAssertFalse(event2 < event1)
     }
 
     func testEqualRespectsDate() {
         let event1 = Event(date: date1, name: "A", value: "B")
         let event2 = Event(date: date2, name: "A", value: "B")
         XCTAssertNotEqual(event1, event2)
+        XCTAssert(event1 < event2)
+        XCTAssertFalse(event2 < event1)
     }
 
     func testEqualRespectsName() {
         let event1 = Event(date: date1, name: "A", value: "B")
         let event2 = Event(date: date1, name: "C", value: "B")
         XCTAssertNotEqual(event1, event2)
+        XCTAssert(event1 < event2)
+        XCTAssertFalse(event2 < event1)
     }
 
     func testEqualRespectsValue() {
         let event1 = Event(date: date1, name: "A", value: "B")
         let event2 = Event(date: date1, name: "A", value: "C")
         XCTAssertNotEqual(event1, event2)
+        XCTAssert(event1 < event2)
+        XCTAssertFalse(event2 < event1)
+    }
+
+    func testEqualRespectsMetaData() {
+        var event1 = Event(date: date1, name: "A", value: "B")
+        var event2 = Event(date: date1, name: "A", value: "B")
+        event1.metaData["A"] = "B"
+        XCTAssertNotEqual(event1, event2)
+        XCTAssertFalse(event1 < event2)
+        XCTAssert(event2 < event1)
+        event2.metaData["A"] = "B"
+        XCTAssertEqual(event1, event2)
+        XCTAssertFalse(event1 < event2)
+        XCTAssertFalse(event2 < event1)
     }
 
     func testDescription() {
