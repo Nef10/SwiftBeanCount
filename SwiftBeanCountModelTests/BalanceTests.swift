@@ -13,7 +13,7 @@ class BalanceTests: XCTestCase {
 
     func testDescription() {
         let date = Date(timeIntervalSince1970: 1_496_905_200)
-        let account = try! Account(name: "Assets:Test")
+        let account = try! Account(name: AccountName("Assets:Test"))
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "CAD"))
 
         var balance = Balance(date: date, account: account, amount: amount)
@@ -26,7 +26,7 @@ class BalanceTests: XCTestCase {
     func testEqual() {
         let date = Date(timeIntervalSince1970: 1_496_905_200)
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "CAD"))
-        let account = try! Account(name: "Assets:Test")
+        let account = try! Account(name: AccountName("Assets:Test"))
         var balance = Balance(date: date, account: account, amount: amount)
         var balance2 = Balance(date: date, account: account, amount: amount)
         XCTAssertEqual(balance, balance2)
@@ -44,7 +44,7 @@ class BalanceTests: XCTestCase {
         XCTAssertNotEqual(balance, balance3)
 
         // Account different
-        let account2 = try! Account(name: "Assets:Tests")
+        let account2 = try! Account(name: AccountName("Assets:Tests"))
         let balance4 = Balance(date: date, account: account2, amount: amount)
         XCTAssertNotEqual(balance, balance4)
 

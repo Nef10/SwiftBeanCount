@@ -25,8 +25,8 @@ class TransactionTests: XCTestCase { // swiftlint:disable:this type_body_length
     override func setUp() { // swiftlint:disable:this function_body_length
         super.setUp()
         date = Date(timeIntervalSince1970: 1_496_905_200)
-        account1 = try! Account(name: "Assets:Cash", opening: date)
-        account2 = try! Account(name: "Assets:Checking", opening: date)
+        account1 = try! Account(name: AccountName("Assets:Cash"), opening: date)
+        account2 = try! Account(name: AccountName("Assets:Checking"), opening: date)
         try! ledger.add(account1!)
         try! ledger.add(account2!)
         let transactionMetaData1 = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
@@ -130,8 +130,8 @@ class TransactionTests: XCTestCase { // swiftlint:disable:this type_body_length
     func testIsValidInvalidPosting() {
         // Accounts are not opened
         let ledger = Ledger()
-        try! ledger.add(try! Account(name: "Assets:Cash"))
-        try! ledger.add(try! Account(name: "Assets:Checking", opening: date))
+        try! ledger.add(try! Account(name: AccountName("Assets:Cash")))
+        try! ledger.add(try! Account(name: AccountName("Assets:Checking"), opening: date))
         let transaction = ledger.add(transaction1WithPosting1And2)
         if case .invalid(let error) = transaction.validate(in: ledger) {
             XCTAssertEqual(error, """

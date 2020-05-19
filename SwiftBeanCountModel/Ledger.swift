@@ -108,7 +108,7 @@ public class Ledger {
     /// - Parameter account: account to add
     /// - Throws: If the account already exists
     public func add(_ account: Account) throws {
-        self.account[account.name] = try getAccount(for: account, keepProperties: true)
+        self.account[account.name.fullName] = try getAccount(for: account, keepProperties: true)
     }
 
     /// Adds a `Commodity` to the ledger
@@ -224,9 +224,9 @@ public class Ledger {
     /// - Returns: Account to add to the ledger
     /// - Throws: If the account name is invalid or you try to keep properties of an account which already exists
     private func getAccount(for account: Account, keepProperties: Bool = false) throws -> Account {
-        let name = account.name
+        let name = account.name.fullName
         if self.account[name] == nil {
-            let account = keepProperties ? account : try Account(name: name)
+            let account = keepProperties ? account : try Account(name: AccountName(name))
             var group: AccountGroup!
             let nameItems = name.split(separator: Account.nameSeperator).map { String($0) }
             for (index, nameItem) in nameItems.enumerated() {

@@ -13,7 +13,8 @@ class PostingTests: XCTestCase {
 
     let transaction = Transaction(metaData: TransactionMetaData(date: Date(), payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
     let commoditySymbol = "EUR"
-    let accountName = "Assets:Cash"
+    var accountName1: AccountName!
+    var accountName2: AccountName!
     let amountInteger = 1
     var amount1: Amount?
     var account1: Account?
@@ -21,59 +22,56 @@ class PostingTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+        accountName1 = try! AccountName("Assets:Cash")
+        accountName2 = try! AccountName("Assets:💰")
         amount1 = Amount(number: Decimal(amountInteger), commodity: Commodity(symbol: commoditySymbol))
-        account1 = try! Account(name: accountName)
+        account1 = Account(name: accountName1)
         posting1 = Posting(account: account1!, amount: amount1!, transaction: transaction)
     }
 
     func testDescription() {
-        let accountName = "Assets:💰"
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "💵"))
-        let account = try! Account(name: accountName)
+        let account = Account(name: accountName2)
         let posting = Posting(account: account, amount: amount, transaction: transaction)
 
-        XCTAssertEqual(String(describing: posting), "  \(accountName) \(String(describing: amount))")
+        XCTAssertEqual(String(describing: posting), "  \(String(describing: accountName2!)) \(String(describing: amount))")
     }
 
     func testDescriptionMetaData() {
-        let accountName = "Assets:💰"
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "💵"))
-        let account = try! Account(name: accountName)
+        let account = Account(name: accountName2)
         var posting = Posting(account: account, amount: amount, transaction: transaction)
         posting.metaData["A"] = "B"
 
-        XCTAssertEqual(String(describing: posting), "  \(accountName) \(String(describing: amount))\n    A: \"B\"")
+        XCTAssertEqual(String(describing: posting), "  \(String(describing: accountName2!)) \(String(describing: amount))\n    A: \"B\"")
     }
 
     func testDescriptionPrice() {
-        let accountName = "Assets:💰"
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "💵"))
         let price = Amount(number: Decimal(1.555), commodity: Commodity(symbol: "EUR"))
-        let account = try! Account(name: accountName)
+        let account = Account(name: accountName2)
         let posting = Posting(account: account, amount: amount, transaction: transaction, price: price)
 
-        XCTAssertEqual(String(describing: posting), "  \(accountName) \(String(describing: amount)) @ \(price)")
+        XCTAssertEqual(String(describing: posting), "  \(String(describing: accountName2!)) \(String(describing: amount)) @ \(price)")
     }
 
     func testDescriptionCost() {
-        let accountName = "Assets:💰"
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "💵"))
-        let account = try! Account(name: accountName)
+        let account = Account(name: accountName2)
         let cost = try! Cost(amount: amount, date: nil, label: "label")
         let posting = Posting(account: account, amount: amount, transaction: transaction, price: nil, cost: cost)
 
-        XCTAssertEqual(String(describing: posting), "  \(accountName) \(String(describing: amount)) \(String(describing: cost))")
+        XCTAssertEqual(String(describing: posting), "  \(String(describing: accountName2!)) \(String(describing: amount)) \(String(describing: cost))")
     }
 
     func testDescriptionCostAndPrice() {
-        let accountName = "Assets:💰"
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "💵"))
         let price = Amount(number: Decimal(1.555), commodity: Commodity(symbol: "EUR"))
-        let account = try! Account(name: accountName)
+        let account = Account(name: accountName2)
         let cost = try! Cost(amount: amount, date: nil, label: "label")
         let posting = Posting(account: account, amount: amount, transaction: transaction, price: price, cost: cost)
 
-        XCTAssertEqual(String(describing: posting), "  \(accountName) \(String(describing: amount)) \(String(describing: cost)) @ \(price)")
+        XCTAssertEqual(String(describing: posting), "  \(String(describing: accountName2!)) \(String(describing: amount)) \(String(describing: cost)) @ \(price)")
     }
 
     func testEqual() {
@@ -88,7 +86,7 @@ class PostingTests: XCTestCase {
    }
 
     func testEqualRespectsAccount() {
-        let posting2 = Posting(account: try! Account(name: "\(accountName):💰"), amount: amount1!, transaction: transaction)
+        let posting2 = Posting(account: try! Account(name: AccountName("\(String(describing: accountName1!)):💰")), amount: amount1!, transaction: transaction)
         XCTAssertNotEqual(posting1, posting2)
     }
 

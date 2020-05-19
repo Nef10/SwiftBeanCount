@@ -36,13 +36,11 @@ public enum AccountType: String {
     }
 }
 
-/// AccountItems have a name item, which is the last part of the name and and `AccountType`
+/// AccountItems have a name item, which is the last part of the name
 public protocol AccountItem {
 
     /// Last part of the name, for **Assets:Cash:CAD** this would be **CAD**
     var nameItem: String { get }
-    /// Type, see `AccountType`
-    var accountType: AccountType { get }
 
 }
 
@@ -91,64 +89,52 @@ public class AccountGroup: AccountItem {
 }
 
 /// Errors an account can throw
-public enum AccountError: Error {
+public enum AccountNameError: Error {
     /// an invalid account name
     case invaildName(String)
 }
 
-/// Class with represents an Account with a name, commodity, opening and closing date, as well as a type.
-///
-/// It does hot hold any `Transaction`s
-public class Account: AccountItem, MetaDataAttachable {
-
-    static let nameSeperator = Character(":")
+/// Struct with represents just the name of an Account
+public struct AccountName: AccountItem {
 
     /// Full quilified name of the account, e.g. Assets:Cash:CAD
-    public let name: String
+    public let fullName: String
 
     /// Type, see `AccountType`
     public let accountType: AccountType
 
-    // `BookingMethod` of the account
-    public let bookingMethod: BookingMethod
-
-    /// `Commodity` of this account
-    public let commodity: Commodity?
-
-    /// MetaData of the Account
-    public var metaData = [String: String]()
-
-    /// Optional date of opening.
-    /// If it exists `isPostingValid(:)` checks that the transaction is on or after this date
-    public let opening: Date?
-
-    /// Optional closing date.
-    /// If it exists `isPostingValid(:)` checks that the transaction is before or on this date
-    public var closing: Date?
-
-    /// Balance asserts for this account
-    public internal(set) var balances = [Balance]()
-
     /// Last part of the name, for **Assets:Cash:CAD** this would be **CAD**
     public var nameItem: String {
-        String(describing: name.split(separator: Account.nameSeperator).last!)
+        String(describing: fullName.split(separator: Account.nameSeperator).last!)
     }
 
-    /// Creates an Account
+    /// Creates an Account Name
     ///
     /// - Parameters:
     ///   - name: a vaild name for the account
-    ///   - bookingMethod: bookingMethods, defaults to .strict
-    /// - Throws: AccountError.invaildName in case the account name is invalid
-    public init(name: String, bookingMethod: BookingMethod = .strict, commodity: Commodity? = nil, opening: Date? = nil) throws {
-        guard Account.isNameValid(name) else {
-            throw AccountError.invaildName(name)
+    /// - Throws: AccountNameError.invaildName in case the account name is invalid
+    public init(_ name: String) throws {
+        guard Self.isNameValid(name) else {
+            throw AccountNameError.invaildName(name)
         }
-        self.name = name
-        self.bookingMethod = bookingMethod
-        self.commodity = commodity
-        self.opening = opening
-        self.accountType = Account.getAccountType(for: name)
+        self.fullName = name
+        self.accountType = Self.getAccountType(for: name)
+    }
+
+    /// Gets the `AccountType` from a name string
+    ///
+    /// In case of an invalid account name the function might just return .assets
+    ///
+    /// - Parameter name: valid account name
+    /// - Returns: `AccountType` of the account with this name
+    private static func getAccountType(for name: String) -> AccountType {
+        var type = AccountType.asset
+        for accountType in AccountType.allValues() {
+            if name.starts(with: accountType.rawValue ) {
+                type = accountType
+            }
+        }
+        return type
     }
 
     /// Checks if a given name for an account is valid
@@ -157,7 +143,7 @@ public class Account: AccountItem, MetaDataAttachable {
     ///
     /// - Parameter name: String to check
     /// - Returns: if the name is valid
-    public class func isNameValid(_ name: String) -> Bool {
+    public static func isNameValid(_ name: String) -> Bool {
         // swiftlint:disable:next nesting
         struct Cache { // https://stackoverflow.com/a/25354915/3386893 // swiftlint:disable:this convenience_type
             static var validNames = Set<String>()
@@ -179,20 +165,50 @@ public class Account: AccountItem, MetaDataAttachable {
         return false
     }
 
-    /// Gets the `AccountType` from a name string
+}
+
+/// Class with represents an Account with a name, commodity, opening and closing date, as well as a type.
+///
+/// It does hot hold any `Transaction`s
+public class Account: AccountItem, MetaDataAttachable {
+
+    static let nameSeperator = Character(":")
+
+    /// Name of the account
+    public let name: AccountName
+
+    // `BookingMethod` of the account
+    public let bookingMethod: BookingMethod
+
+    /// `Commodity` of this account
+    public let commodity: Commodity?
+
+    /// MetaData of the Account
+    public var metaData = [String: String]()
+
+    /// Optional date of opening.
+    /// If it exists `isPostingValid(:)` checks that the transaction is on or after this date
+    public let opening: Date?
+
+    /// Optional closing date.
+    /// If it exists `isPostingValid(:)` checks that the transaction is before or on this date
+    public var closing: Date?
+
+    /// Balance asserts for this account
+    public internal(set) var balances = [Balance]()
+
+    public var nameItem: String { name.nameItem }
+
+    /// Creates an Account
     ///
-    /// In case of an invalid account name the function might just return .assets
-    ///
-    /// - Parameter name: valid account name
-    /// - Returns: `AccountType` of the account with this name
-    private class func getAccountType(for name: String) -> AccountType {
-        var type = AccountType.asset
-        for accountType in AccountType.allValues() {
-            if name.starts(with: accountType.rawValue ) {
-                type = accountType
-            }
-        }
-        return type
+    /// - Parameters:
+    ///   - name: a vaild name for the account
+    ///   - bookingMethod: bookingMethods, defaults to .strict
+    public init(name: AccountName, bookingMethod: BookingMethod = .strict, commodity: Commodity? = nil, opening: Date? = nil) {
+        self.name = name
+        self.bookingMethod = bookingMethod
+        self.commodity = commodity
+        self.opening = opening
     }
 
     /// Checks if the given `Posting` is a valid posting for this account.
@@ -309,13 +325,29 @@ public class Account: AccountItem, MetaDataAttachable {
 
 }
 
-extension AccountError: LocalizedError {
+extension AccountNameError: LocalizedError {
     public var errorDescription: String? {
         switch self {
-        case let AccountError.invaildName(error):
+        case let AccountNameError.invaildName(error):
             return "Invalid Account name: \(error)"
         }
     }
+}
+
+extension AccountName: Equatable {
+
+    /// Compare the full name of the two Account names.
+    ///
+    /// - Returns: if the account names are equal
+    public static func == (lhs: AccountName, rhs: AccountName) -> Bool {
+        rhs.fullName == lhs.fullName
+    }
+
+}
+
+extension AccountName: CustomStringConvertible {
+
+    public var description: String { fullName }
 }
 
 extension Account: CustomStringConvertible {

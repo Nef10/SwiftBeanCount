@@ -20,7 +20,7 @@ class InventoryTests: XCTestCase {
                                                                 narration: "Narration",
                                                                 flag: Flag.complete,
                                                                 tags: []))
-    let account = try! Account(name: "Assets:Inventory")
+    let account = try! Account(name: AccountName("Assets:Inventory"))
     let commodity1 = Commodity(symbol: "EUR")
     let commodity2 = Commodity(symbol: "CAD")
 
