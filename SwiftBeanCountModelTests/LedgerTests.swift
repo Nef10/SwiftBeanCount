@@ -183,9 +183,19 @@ class LedgerTests: XCTestCase {
         XCTAssertTrue(ledger.accounts.first!.balances.first! == balance)
     }
 
+    func testParsingErrors() {
+        let error = "TEST"
+        let ledger = Ledger()
+        ledger.parsingErrors.append(error)
+        XCTAssertEqual(ledger.errors.count, 1)
+        XCTAssertEqual(ledger.parsingErrors.count, 1)
+        XCTAssertEqual(ledger.errors[0], error)
+        XCTAssertEqual(ledger.parsingErrors[0], error)
+        XCTAssertEqual(String(describing: ledger), "")
+    }
+
     func testValidateTransactions() {
         let ledger = Ledger()
-        ledger.validate()
         XCTAssertTrue(ledger.errors.isEmpty)
 
         // add invalid transaction without postings
@@ -196,7 +206,6 @@ class LedgerTests: XCTestCase {
                                                       tags: [Tag(name: "test")])
         let transaction = Transaction(metaData: transactionMetaData)
         _ = ledger.add(transaction)
-        ledger.validate()
         XCTAssertFalse(ledger.errors.isEmpty)
     }
 
@@ -222,7 +231,6 @@ class LedgerTests: XCTestCase {
         transaction1.postings.append(contentsOf: [posting1, posting2])
 
         _ = ledger.add(transaction1)
-        ledger.validate()
         XCTAssertTrue(ledger.errors.isEmpty)
 
         let transaction2 = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_596_991_600), payee: "3", narration: "4", flag: .complete, tags: []))
@@ -233,7 +241,6 @@ class LedgerTests: XCTestCase {
         transaction2.postings.append(contentsOf: [posting3, posting4])
 
         _ = ledger.add(transaction2)
-        ledger.validate()
         XCTAssertTrue(ledger.errors.isEmpty)
     }
 
@@ -243,14 +250,12 @@ class LedgerTests: XCTestCase {
         // valid account
         let validLedger = Ledger()
         try! validLedger.add(account)
-        validLedger.validate()
         XCTAssertTrue(validLedger.errors.isEmpty)
 
         // invalid account with only a closing date
         let invalidLedger = Ledger()
         account.closing = Date(timeIntervalSince1970: 1_496_991_600)
         try! invalidLedger.add(account)
-        invalidLedger.validate()
         XCTAssertFalse(invalidLedger.errors.isEmpty)
     }
 
@@ -259,13 +264,11 @@ class LedgerTests: XCTestCase {
 
         let validLedger = Ledger()
         try! validLedger.add(account)
-        validLedger.validate()
         XCTAssertTrue(validLedger.errors.isEmpty)
 
         let invalidLedger = Ledger()
         account.balances = [Balance(date: Date(timeIntervalSince1970: 1_496_905_200), account: account, amount: Amount(number: 1, commodity: Commodity(symbol: "CAD")))]
         try! invalidLedger.add(account)
-        invalidLedger.validate()
         XCTAssertFalse(invalidLedger.errors.isEmpty)
     }
 
@@ -273,13 +276,11 @@ class LedgerTests: XCTestCase {
         let validCommodity = Commodity(symbol: "EUR", opening: Date(timeIntervalSince1970: 1_496_905_200))
         let validLedger = Ledger()
         try! validLedger.add(validCommodity)
-        validLedger.validate()
         XCTAssertTrue(validLedger.errors.isEmpty)
 
         let invalidCommodity = Commodity(symbol: "EUR")
         let invalidLedger = Ledger()
         try! invalidLedger.add(invalidCommodity)
-        invalidLedger.validate()
         XCTAssertFalse(invalidLedger.errors.isEmpty)
     }
 
@@ -382,7 +383,7 @@ class LedgerTests: XCTestCase {
         let ledger2 = Ledger()
 
         // test errors are ignored
-        ledger1.errors.append("String")
+        ledger1.parsingErrors.append("String")
         XCTAssertEqual(ledger1, ledger2)
     }
 

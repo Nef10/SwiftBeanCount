@@ -20,8 +20,23 @@ public class Ledger {
     /// Array of all `Transaction`s in this ledger
     public private(set) var transactions = [Transaction]()
 
+    /// Errors from the ledger and the parsing
+    ///
+    /// Returns `ledgerErrors` and `parsingErrors`
+    /// Note: This property is computed, so please cache the result
+    public var errors: [String] { parsingErrors + ledgerErrors }
+
     /// Errors which this ledger contains
-    public var errors = [String]()
+    ///
+    /// This includes failed balances assertions, ...
+    /// Note: This property is computed, so please cache the result
+    public var ledgerErrors: [String] { validate() }
+
+    /// Errors while reading the ledger
+    ///
+    /// This can be used by a parser to store errors which occurred while trying
+    /// to fill in the ledger. The ledger itself will not put anything inside.
+    public var parsingErrors = [String]()
 
     /// Array of all `Commodity`s in this ledger
     public var commodities: [Commodity] { Array(commodity.values) }
@@ -129,31 +144,31 @@ public class Ledger {
         try getAccount(for: balance.account).balances.append(balance)
     }
 
-    /// Validates ledger and adds all validation errors to the error array
-    ///
-    /// Note: If called multiple times, the error will show up multiple times
-    public func validate() {
+    /// Validates ledger and returns all validation errors
+    private func validate() -> [String] {
+        var result = [String]()
         accounts.forEach {
             if case .invalid(let error) = $0.validate() {
-                errors.append(error)
+                result.append(error)
             }
             if case .invalid(let error) = $0.validateBalance(in: self) {
-                errors.append(error)
+                result.append(error)
             }
             if case .invalid(let error) = $0.validateInventory(in: self) {
-                errors.append(error)
+                result.append(error)
             }
         }
         transactions.forEach {
             if case .invalid(let error) = $0.validate(in: self) {
-                errors.append(error)
+                result.append(error)
             }
         }
         commodities.forEach {
             if case .invalid(let error) = $0.validate() {
-                errors.append(error)
+                result.append(error)
             }
         }
+        return result
     }
 
     /// Converts `TransactionMetaData` so that the new one uses the correct `Tag` objects.
