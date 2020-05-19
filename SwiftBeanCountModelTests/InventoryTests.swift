@@ -939,3 +939,13 @@ extension InventoryTests { // Inventory.Lot Tests
     }
 
 }
+
+extension InventoryTests { // BookingMethod tests
+
+    func testBookingMethodDescription() {
+        XCTAssertEqual(String(describing: BookingMethod.fifo), "FIFO")
+        XCTAssertEqual(String(describing: BookingMethod.lifo), "LIFO")
+        XCTAssertEqual(String(describing: BookingMethod.strict), "STRICT")
+    }
+
+}
