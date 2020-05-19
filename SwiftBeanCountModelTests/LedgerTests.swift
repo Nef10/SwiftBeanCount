@@ -272,6 +272,32 @@ class LedgerTests: XCTestCase {
         XCTAssertFalse(invalidLedger.errors.isEmpty)
     }
 
+    func testValidateAccountInventory() {
+        let ledger = Ledger()
+        let commodity = Commodity(symbol: "CAD")
+        let account = try! Account(name: "Assets:Test", commodity: commodity)
+        let amount = Amount(number: 1.1, commodity: commodity, decimalDigits: 1)
+        let cost = try! Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: "1")
+        try! ledger.add(account)
+
+        var transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_905_200), payee: "", narration: "", flag: .complete, tags: []))
+        transaction.postings.append(Posting(account: account, amount: amount, transaction: transaction, price: nil, cost: cost))
+        _ = ledger.add(transaction)
+
+        transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_991_600), payee: "", narration: "", flag: .complete, tags: []))
+        transaction.postings.append(Posting(account: account, amount: amount, transaction: transaction, price: nil, cost: cost))
+        _ = ledger.add(transaction)
+
+        transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_497_078_000), payee: "", narration: "", flag: .complete, tags: []))
+        transaction.postings.append(Posting(account: account,
+                                            amount: Amount(number: -1.0, commodity: commodity, decimalDigits: 0),
+                                            transaction: transaction,
+                                            price: nil,
+                                            cost: try! Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: nil)))
+        _ = ledger.add(transaction)
+        XCTAssertFalse(ledger.errors.isEmpty)
+    }
+
     func testValidateCommodities() {
         let validCommodity = Commodity(symbol: "EUR", opening: Date(timeIntervalSince1970: 1_496_905_200))
         let validLedger = Ledger()
