@@ -23,7 +23,7 @@
 		F9B7A8801F553AB90062B1CB /* FlagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD381F5534FB00EE31E5 /* FlagTests.swift */; };
 		F9B7A8811F553AB90062B1CB /* LedgerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD341F5534FB00EE31E5 /* LedgerTests.swift */; };
 		F9B7A8821F553AB90062B1CB /* MultiCurrencyAmountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD351F5534FB00EE31E5 /* MultiCurrencyAmountTests.swift */; };
-		F9B7A8831F553AB90062B1CB /* PostingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD331F5534FB00EE31E5 /* PostingTests.swift */; };
+		F9B7A8831F553AB90062B1CB /* TransactionPostingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD331F5534FB00EE31E5 /* TransactionPostingTests.swift */; };
 		F9B7A8841F553AB90062B1CB /* TagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD391F5534FB00EE31E5 /* TagTests.swift */; };
 		F9B7A8851F553AB90062B1CB /* TransactionMetaDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD3B1F5534FB00EE31E5 /* TransactionMetaDataTests.swift */; };
 		F9B7A8861F553AB90062B1CB /* TransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD3C1F5534FB00EE31E5 /* TransactionTests.swift */; };
@@ -33,7 +33,7 @@
 		F9B7A88A1F553ABE0062B1CB /* Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD321F5534ED00EE31E5 /* Flag.swift */; };
 		F9B7A88B1F553ABE0062B1CB /* Ledger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD2E1F5534ED00EE31E5 /* Ledger.swift */; };
 		F9B7A88C1F553ABE0062B1CB /* MultiCurrencyAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD2C1F5534ED00EE31E5 /* MultiCurrencyAmount.swift */; };
-		F9B7A88D1F553ABE0062B1CB /* Posting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD311F5534ED00EE31E5 /* Posting.swift */; };
+		F9B7A88D1F553ABE0062B1CB /* TransactionPosting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD311F5534ED00EE31E5 /* TransactionPosting.swift */; };
 		F9B7A88E1F553ABE0062B1CB /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD2D1F5534ED00EE31E5 /* Tag.swift */; };
 		F9B7A88F1F553ABE0062B1CB /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD2B1F5534ED00EE31E5 /* Transaction.swift */; };
 		F9B7A8901F553ABE0062B1CB /* TransactionMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F991CD291F5534ED00EE31E5 /* TransactionMetaData.swift */; };
@@ -74,9 +74,9 @@
 		F991CD2E1F5534ED00EE31E5 /* Ledger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ledger.swift; sourceTree = "<group>"; };
 		F991CD2F1F5534ED00EE31E5 /* Commodity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commodity.swift; sourceTree = "<group>"; };
 		F991CD301F5534ED00EE31E5 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
-		F991CD311F5534ED00EE31E5 /* Posting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Posting.swift; sourceTree = "<group>"; };
+		F991CD311F5534ED00EE31E5 /* TransactionPosting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionPosting.swift; sourceTree = "<group>"; };
 		F991CD321F5534ED00EE31E5 /* Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flag.swift; sourceTree = "<group>"; };
-		F991CD331F5534FB00EE31E5 /* PostingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingTests.swift; sourceTree = "<group>"; };
+		F991CD331F5534FB00EE31E5 /* TransactionPostingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionPostingTests.swift; sourceTree = "<group>"; };
 		F991CD341F5534FB00EE31E5 /* LedgerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LedgerTests.swift; sourceTree = "<group>"; };
 		F991CD351F5534FB00EE31E5 /* MultiCurrencyAmountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiCurrencyAmountTests.swift; sourceTree = "<group>"; };
 		F991CD361F5534FB00EE31E5 /* AmountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountTests.swift; sourceTree = "<group>"; };
@@ -145,7 +145,7 @@
 				F991CD321F5534ED00EE31E5 /* Flag.swift */,
 				F991CD2E1F5534ED00EE31E5 /* Ledger.swift */,
 				F991CD2C1F5534ED00EE31E5 /* MultiCurrencyAmount.swift */,
-				F991CD311F5534ED00EE31E5 /* Posting.swift */,
+				F991CD311F5534ED00EE31E5 /* TransactionPosting.swift */,
 				F991CD2D1F5534ED00EE31E5 /* Tag.swift */,
 				F991CD2B1F5534ED00EE31E5 /* Transaction.swift */,
 				F991CD291F5534ED00EE31E5 /* TransactionMetaData.swift */,
@@ -172,7 +172,7 @@
 				F991CD381F5534FB00EE31E5 /* FlagTests.swift */,
 				F991CD341F5534FB00EE31E5 /* LedgerTests.swift */,
 				F991CD351F5534FB00EE31E5 /* MultiCurrencyAmountTests.swift */,
-				F991CD331F5534FB00EE31E5 /* PostingTests.swift */,
+				F991CD331F5534FB00EE31E5 /* TransactionPostingTests.swift */,
 				F991CD391F5534FB00EE31E5 /* TagTests.swift */,
 				F991CD3B1F5534FB00EE31E5 /* TransactionMetaDataTests.swift */,
 				F991CD3C1F5534FB00EE31E5 /* TransactionTests.swift */,
@@ -322,7 +322,7 @@
 				F9C1F372233C7E5400357FF0 /* Custom.swift in Sources */,
 				F9B7A88C1F553ABE0062B1CB /* MultiCurrencyAmount.swift in Sources */,
 				F9B7A8871F553ABE0062B1CB /* Account.swift in Sources */,
-				F9B7A88D1F553ABE0062B1CB /* Posting.swift in Sources */,
+				F9B7A88D1F553ABE0062B1CB /* TransactionPosting.swift in Sources */,
 				F90E0C3E24737BCA00F4C3B6 /* Option.swift in Sources */,
 				F9B7A8881F553ABE0062B1CB /* Amount.swift in Sources */,
 				F9B9E1522326213B00811B3F /* Cost.swift in Sources */,
@@ -349,7 +349,7 @@
 				F9B7A8841F553AB90062B1CB /* TagTests.swift in Sources */,
 				F9B9E15C232DBCB000811B3F /* InventoryTests.swift in Sources */,
 				F99E58AE20A91BA500A05AFE /* BalanceTests.swift in Sources */,
-				F9B7A8831F553AB90062B1CB /* PostingTests.swift in Sources */,
+				F9B7A8831F553AB90062B1CB /* TransactionPostingTests.swift in Sources */,
 				F9B7A87D1F553AB90062B1CB /* AccountTests.swift in Sources */,
 				F9C1F374233C8C6D00357FF0 /* CustomTests.swift in Sources */,
 				F9B7A87E1F553AB90062B1CB /* AmountTests.swift in Sources */,

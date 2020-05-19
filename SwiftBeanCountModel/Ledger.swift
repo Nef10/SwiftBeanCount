@@ -98,7 +98,9 @@ public class Ledger {
     /// - Returns: added transaction
     public func add(_ transaction: Transaction) -> Transaction {
         let newTransaction = Transaction(metaData: getTransactionMetaData(for: transaction.metaData))
-        newTransaction.postings = transaction.postings.map { try! getPosting(for: $0, transaction: newTransaction) } // swiftlint:disable:this force_try
+        for posting in transaction.postings {
+            newTransaction.add(try! getPosting(for: posting, transaction: newTransaction)) // swiftlint:disable:this force_try
+        }
         transactions.append(newTransaction)
         return newTransaction
     }
@@ -192,14 +194,14 @@ public class Ledger {
     /// - Parameter posting: Posting to convert
     /// - Returns: Posting which can be added to the ledger
     /// - Throws: If the account name is invalid
-    private func getPosting(for posting: Posting, transaction: Transaction) throws -> Posting {
-        var result = Posting(accountName: posting.accountName,
-                             amount: getLedgerAmount(for: posting.amount),
-                             transaction: transaction,
-                             price: posting.price != nil ? getLedgerAmount(for: posting.price!) : nil,
-                             cost: posting.cost != nil ? try Cost(amount: posting.cost?.amount != nil ? getLedgerAmount(for: posting.cost!.amount!) : nil,
-                                                                  date: posting.cost?.date,
-                                                                  label: posting.cost?.label) : nil)
+    private func getPosting(for posting: Posting, transaction: Transaction) throws -> TransactionPosting {
+        let result = TransactionPosting(accountName: posting.accountName,
+                                        amount: getLedgerAmount(for: posting.amount),
+                                        transaction: transaction,
+                                        price: posting.price != nil ? getLedgerAmount(for: posting.price!) : nil,
+                                        cost: posting.cost != nil ? try Cost(amount: posting.cost?.amount != nil ? getLedgerAmount(for: posting.cost!.amount!) : nil,
+                                                                             date: posting.cost?.date,
+                                                                             label: posting.cost?.label) : nil)
         result.metaData = posting.metaData
         return result
     }

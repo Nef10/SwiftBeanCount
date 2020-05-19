@@ -81,7 +81,7 @@ class Inventory {
     /// - Parameter posting: posting to book
     /// - Returns: The price which should be used for the posting (negative of the amount paid for the units) or nil if the posting is the buy or cannot be booked
     /// - Throws: InventoryError if the posting cannot be booked (e.g. ambiguous lot match)
-    func book(posting: Posting) throws -> MultiCurrencyAmount? {
+    func book(posting: TransactionPosting) throws -> MultiCurrencyAmount? {
         guard let cost = posting.cost else {
             assertionFailure("Trying to book a posting without cost")
             return nil

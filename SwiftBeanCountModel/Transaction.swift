@@ -17,7 +17,9 @@ public class Transaction {
     /// Arrary of the `Posting`s of the transaction.
     ///
     /// Should at least have two elements, otherwise the Transaction is not valid
-    public var postings = [Posting]()
+    public var postings: [TransactionPosting] { internalPostings }
+
+    private var internalPostings = [TransactionPosting]()
 
     /// Creates a transaction
     ///
@@ -25,6 +27,13 @@ public class Transaction {
     ///   - metaData: `TransactionMetaData`
     public init(metaData: TransactionMetaData) {
         self.metaData = metaData
+    }
+
+    /// Add a posting to the transaction
+    /// - Parameter posting: Posting to add
+    public func add(_ posting: Posting) {
+        let transactionPosting = TransactionPosting(posting: posting, transaction: self)
+        internalPostings.append(transactionPosting)
     }
 
     func validate(in ledger: Ledger) -> ValidationResult {
