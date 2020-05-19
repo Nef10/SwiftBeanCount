@@ -87,25 +87,6 @@ class LedgerTests: XCTestCase {
         XCTAssertEqual(accountSubGroup.accounts.values.first!, account1)
     }
 
-    func testTags() {
-        let ledger = Ledger()
-        XCTAssertEqual(ledger.tags.count, 0)
-
-        let tag1 = Tag(name: "tag")
-        try! ledger.add(tag1)
-        XCTAssertEqual(ledger.tags.count, 1)
-        XCTAssertThrowsError(try ledger.add(tag1))
-        XCTAssertEqual(ledger.tags.count, 1)
-        XCTAssertEqual(ledger.tags.first, tag1)
-
-        let tag2 = Tag(name: "🎿")
-        try! ledger.add(tag2)
-        XCTAssertEqual(ledger.tags.count, 2)
-        XCTAssertThrowsError(try ledger.add(tag2))
-        XCTAssertEqual(ledger.tags.count, 2)
-        XCTAssert(ledger.tags.contains(tag2))
-    }
-
     func testTransactions() {
         let ledger = Ledger()
         let date = Date(timeIntervalSince1970: 1_496_991_600)
@@ -402,23 +383,6 @@ class LedgerTests: XCTestCase {
 
         // test errors are ignored
         ledger1.errors.append("String")
-        XCTAssertEqual(ledger1, ledger2)
-    }
-
-    func testEqualTags() {
-        let ledger1 = Ledger()
-        let ledger2 = Ledger()
-
-        let tag1 = Tag(name: "Name1")
-        let tag2 = Tag(name: "Name2")
-
-        try! ledger1.add(tag1)
-        XCTAssertNotEqual(ledger1, ledger2)
-        try! ledger2.add(tag2)
-        XCTAssertNotEqual(ledger1, ledger2)
-        try! ledger1.add(tag2)
-        XCTAssertNotEqual(ledger1, ledger2)
-        try! ledger2.add(tag1)
         XCTAssertEqual(ledger1, ledger2)
     }
 

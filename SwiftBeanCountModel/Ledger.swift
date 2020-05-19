@@ -104,14 +104,6 @@ public class Ledger {
         self.commodity[commodity.symbol] = try getCommodityWithProperties(for: commodity)
     }
 
-    /// Adds a `Tag` to the ledger
-    ///
-    /// - Parameter tag: tag to add
-    /// - Throws: If the tag already exists
-    public func add(_ tag: Tag) throws {
-        self.tag[tag.name] = try getTagWithProperties(for: tag)
-    }
-
     /// Adds a `Price` to the ledger
     ///
     /// - Parameter price: `Price` to add
@@ -252,21 +244,6 @@ public class Ledger {
             self.tag[name] = Tag(name: name)
         }
         return self.tag[name]!
-    }
-
-    /// Converts `Tag`s so that all tags exists only once in a ledger. This function keeps all properties.
-    ///
-    /// Note: You can only do this if a tag with the name does not yet exists in the ledger.
-    ///
-    /// - Parameter tag: tag to convert
-    /// - Returns: Tag to add to the ledger
-    /// - Throws: If a tag with the name does exists in the ledger
-    private func getTagWithProperties(for tag: Tag) throws -> Tag {
-        guard self.tag[tag.name] == nil else {
-            throw LedgerError.alreadyExists(String(describing: tag))
-        }
-        self.tag[tag.name] = tag
-        return tag
     }
 
     /// Converts `Commodity`s so that all commodities exists only once in a ledger. This function only keeps the symbol
