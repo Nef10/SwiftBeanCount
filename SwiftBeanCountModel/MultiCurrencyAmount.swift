@@ -21,8 +21,8 @@ public protocol MultiCurrencyAmountRepresentable {
 /// **Tolerance** for validation: Half of the last digit of precision provided separately for each currency
 ///
 public struct MultiCurrencyAmount {
-    var amounts: [Commodity: Decimal]
-    var decimalDigits: [Commodity: Int]
+    let amounts: [Commodity: Decimal]
+    let decimalDigits: [Commodity: Int]
 
     /// Checks if all amounts of the first one are equal to the one in the second
     ///
@@ -66,9 +66,9 @@ public struct MultiCurrencyAmount {
     /// - Parameter amount: amount to validate
     /// - Returns: `ValidationResult`
     func validateOneAmountWithTolerance(amount: Amount) -> ValidationResult {
-        var multiCurrencyAmount = amount.multiCurrencyAmount
-        multiCurrencyAmount.decimalDigits[amount.commodity] = decimalDigitToKeep(multiCurrencyAmount.decimalDigits[amount.commodity]!, decimalDigits[amount.commodity])
-        return MultiCurrencyAmount.equalWithinTolerance(amount1: multiCurrencyAmount, amount2: self)
+        var decimalDigits = amount.multiCurrencyAmount.decimalDigits
+        decimalDigits[amount.commodity] = decimalDigitToKeep(amount.multiCurrencyAmount.decimalDigits[amount.commodity]!, self.decimalDigits[amount.commodity])
+        return MultiCurrencyAmount.equalWithinTolerance(amount1: MultiCurrencyAmount(amounts: amount.multiCurrencyAmount.amounts, decimalDigits: decimalDigits), amount2: self)
     }
 
 }
