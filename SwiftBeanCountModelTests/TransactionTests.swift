@@ -111,6 +111,14 @@ class TransactionTests: XCTestCase { // swiftlint:disable:this type_body_length
         }
     }
 
+    func testIsValidFromOutsideLedger() {
+        let ledger = Ledger()
+        guard case .invalid = transaction2WithPosting1And2!.validate(in: ledger) else {
+            XCTFail("\(transaction2WithPosting1And2!) is valid")
+            return
+        }
+    }
+
     func testIsValidWithoutPosting() {
         if case .invalid(let error) = transaction1WithoutPosting!.validate(in: ledger) {
             XCTAssertEqual(error, "2017-06-08 * \"Payee\" \"Narration\" has no postings")
