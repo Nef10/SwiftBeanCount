@@ -113,14 +113,14 @@ public class Account: AccountItem, MetaDataAttachable {
     public let bookingMethod: BookingMethod
 
     /// `Commodity` of this account
-    public var commodity: Commodity?
+    public let commodity: Commodity?
 
     /// MetaData of the Account
     public var metaData = [String: String]()
 
     /// Optional date of opening.
     /// If it exists `isPostingValid(:)` checks that the transaction is on or after this date
-    public var opening: Date?
+    public let opening: Date?
 
     /// Optional closing date.
     /// If it exists `isPostingValid(:)` checks that the transaction is before or on this date
@@ -140,12 +140,14 @@ public class Account: AccountItem, MetaDataAttachable {
     ///   - name: a vaild name for the account
     ///   - bookingMethod: bookingMethods, defaults to .strict
     /// - Throws: AccountError.invaildName in case the account name is invalid
-    public init(name: String, bookingMethod: BookingMethod = .strict) throws {
+    public init(name: String, bookingMethod: BookingMethod = .strict, commodity: Commodity? = nil, opening: Date? = nil) throws {
         guard Account.isNameValid(name) else {
             throw AccountError.invaildName(name)
         }
         self.name = name
         self.bookingMethod = bookingMethod
+        self.commodity = commodity
+        self.opening = opening
         self.accountType = Account.getAccountType(for: name)
     }
 

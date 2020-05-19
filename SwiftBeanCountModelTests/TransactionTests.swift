@@ -9,7 +9,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
-class TransactionTests: XCTestCase {
+class TransactionTests: XCTestCase { // swiftlint:disable:this type_body_length
 
     var transaction1WithoutPosting: Transaction!
     var transaction2WithoutPosting: Transaction!
@@ -22,11 +22,13 @@ class TransactionTests: XCTestCase {
     var date: Date?
     let ledger = Ledger()
 
-    override func setUp() {
+    override func setUp() { // swiftlint:disable:this function_body_length
         super.setUp()
         date = Date(timeIntervalSince1970: 1_496_905_200)
-        account1 = try! Account(name: "Assets:Cash")
-        account2 = try! Account(name: "Assets:Checking")
+        account1 = try! Account(name: "Assets:Cash", opening: date)
+        account2 = try! Account(name: "Assets:Checking", opening: date)
+        try! ledger.add(account1!)
+        try! ledger.add(account2!)
         let transactionMetaData1 = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let transactionMetaData2 = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let transactionMetaData3 = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.incomplete, tags: [])
@@ -57,6 +59,13 @@ class TransactionTests: XCTestCase {
         let transaction2WithPosting1And2Posting2 = Posting(account: account2!, amount: amount2, transaction: transaction2WithPosting1And2!)
         transaction2WithPosting1And2?.postings.append(transaction2WithPosting1And2Posting1)
         transaction2WithPosting1And2?.postings.append(transaction2WithPosting1And2Posting2)
+
+        transaction1WithoutPosting = ledger.add(transaction1WithoutPosting)
+        transaction2WithoutPosting = ledger.add(transaction2WithoutPosting)
+        transaction1WithPosting1 = ledger.add(transaction1WithPosting1)
+        transaction3WithPosting1 = ledger.add(transaction3WithPosting1)
+        transaction1WithPosting1And2 = ledger.add(transaction1WithPosting1And2)
+        transaction2WithPosting1And2 = ledger.add(transaction2WithPosting1And2)
 
     }
 
@@ -96,8 +105,6 @@ class TransactionTests: XCTestCase {
     }
 
     func testIsValid() {
-        account1!.opening = date
-        account2!.opening = date
         guard case .valid = transaction2WithPosting1And2!.validate(in: ledger) else {
             XCTFail("\(transaction2WithPosting1And2!) is not valid")
             return
@@ -114,7 +121,11 @@ class TransactionTests: XCTestCase {
 
     func testIsValidInvalidPosting() {
         // Accounts are not opened
-        if case .invalid(let error) = transaction1WithPosting1And2!.validate(in: ledger) {
+        let ledger = Ledger()
+        try! ledger.add(try! Account(name: "Assets:Cash"))
+        try! ledger.add(try! Account(name: "Assets:Checking", opening: date))
+        let transaction = ledger.add(transaction1WithPosting1And2)
+        if case .invalid(let error) = transaction.validate(in: ledger) {
             XCTAssertEqual(error, """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash 10 EUR
@@ -140,8 +151,6 @@ class TransactionTests: XCTestCase {
         //Assets:Cash     -1  EUR
         //Assets:Checking 10.00000 CAD @ 0.101 EUR
 
-        account1!.opening = date
-        account2!.opening = date
         let transactionMetaData = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let transaction = Transaction(metaData: transactionMetaData)
         let amount1 = Amount(number: Decimal(-1), commodity: Commodity(symbol: "EUR"), decimalDigits: 0)
@@ -173,8 +182,6 @@ class TransactionTests: XCTestCase {
         //Assets:Cash     -8.52  EUR
         //Assets:Checking 10.00000 CAD @ 0.85251 EUR
 
-        account1!.opening = date
-        account2!.opening = date
         let transactionMetaData = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let transaction = Transaction(metaData: transactionMetaData)
         // -8.52
@@ -206,7 +213,6 @@ class TransactionTests: XCTestCase {
     func testIsValidUnusedCommodity() {
         //Assets:Checking 10.00000 CAD @ 0.85251 EUR
 
-        account1!.opening = date
         let transactionMetaData = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let transaction = Transaction(metaData: transactionMetaData)
         let amount1 = Amount(number: Decimal(10.000_00), commodity: Commodity(symbol: "CAD"), decimalDigits: 5)
@@ -229,10 +235,8 @@ class TransactionTests: XCTestCase {
         //Assets:Cash     -8.52  EUR
         //Assets:Checking 10.00000 CAD @ 0.85250 EUR
 
-        account1!.opening = date
-        account2!.opening = date
         let transactionMetaData = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
-        let transaction = Transaction(metaData: transactionMetaData)
+        var transaction = Transaction(metaData: transactionMetaData)
         let amount1 = Amount(number: Decimal(sign: FloatingPointSign.minus, exponent: -2, significand: Decimal(852)), commodity: Commodity(symbol: "EUR"), decimalDigits: 2)
         let amount2 = Amount(number: Decimal(10.000_00), commodity: Commodity(symbol: "CAD"), decimalDigits: 5)
         let price = Amount(number: Decimal(sign: FloatingPointSign.plus, exponent: -5, significand: Decimal(85_250)), commodity: Commodity(symbol: "EUR"), decimalDigits: 5)
@@ -240,6 +244,7 @@ class TransactionTests: XCTestCase {
         let posting2 = Posting(account: account2!, amount: amount2, transaction: transaction, price: price)
         transaction.postings.append(posting1)
         transaction.postings.append(posting2)
+        transaction = ledger.add(transaction)
 
         // 10 * 0.8525  = 8.525
         // |8.52 - 8.525| = 0.005
@@ -256,10 +261,8 @@ class TransactionTests: XCTestCase {
         //Assets:Cash     -8.52  EUR
         //Assets:Checking 10.00000 CAD { 0.85250 EUR }
 
-        account1!.opening = date
-        account2!.opening = date
         let transactionMetaData = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
-        let transaction = Transaction(metaData: transactionMetaData)
+        var transaction = Transaction(metaData: transactionMetaData)
         let amount1 = Amount(number: Decimal(sign: FloatingPointSign.minus, exponent: -2, significand: Decimal(852)), commodity: Commodity(symbol: "EUR"), decimalDigits: 2)
         let amount2 = Amount(number: Decimal(10.000_00), commodity: Commodity(symbol: "CAD"), decimalDigits: 5)
         let costAmount = Amount(number: Decimal(sign: FloatingPointSign.plus, exponent: -5, significand: Decimal(85_250)),
@@ -270,6 +273,7 @@ class TransactionTests: XCTestCase {
         let posting2 = Posting(account: account2!, amount: amount2, transaction: transaction, price: nil, cost: cost)
         transaction.postings.append(posting1)
         transaction.postings.append(posting2)
+        transaction = ledger.add(transaction)
 
         // 10 * 0.8525  = 8.525
         // |8.52 - 8.525| = 0.005
@@ -286,8 +290,6 @@ class TransactionTests: XCTestCase {
         //Assets:Cash     -8.52  EUR
         //Assets:Checking 10.00000 CAD { 0.85251 EUR }
 
-        account1!.opening = date
-        account2!.opening = date
         let transactionMetaData = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let transaction = Transaction(metaData: transactionMetaData)
         // -8.52
