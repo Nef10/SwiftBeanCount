@@ -1,5 +1,5 @@
 //
-//  TransactionTests.swift
+//  LedgerTransactionTests.swift
 //  SwiftBeanCountModelTests
 //
 //  Created by Steffen Kötte on 2017-06-18.
@@ -9,7 +9,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
-class TransactionTests: XCTestCase { // swiftlint:disable:this type_body_length
+class LedgerTransactionTests: XCTestCase { // swiftlint:disable:this type_body_length
 
     var transaction1WithoutPosting: Transaction!
     var transaction2WithoutPosting: Transaction!

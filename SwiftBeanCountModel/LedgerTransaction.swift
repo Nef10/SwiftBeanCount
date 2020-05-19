@@ -1,5 +1,5 @@
 //
-//  Transaction.swift
+//  LedgerTransaction.swift
 //  SwiftBeanCountModel
 //
 //  Created by Steffen Kötte on 2017-06-07.
@@ -17,16 +17,30 @@ public class Transaction {
     /// Arrary of the `Posting`s of the transaction.
     ///
     /// Should at least have two elements, otherwise the Transaction is not valid
-    public var postings: [TransactionPosting] { internalPostings }
+    public var postings: [TransactionPosting] {
+        internalPostings
+    }
 
+    // can only be set in the init, but must not be let because otherwise not all required lets are set in init
+    // before calling out to create the TransactionPostings
     private var internalPostings = [TransactionPosting]()
 
     /// Creates a transaction
     ///
     /// - Parameters:
     ///   - metaData: `TransactionMetaData`
-    public init(metaData: TransactionMetaData) {
+    public convenience init(metaData: TransactionMetaData) {
+        self.init(metaData: metaData, postings: [])
+    }
+
+    /// Creates a transaction
+    ///
+    /// - Parameters:
+    ///   - metaData: `TransactionMetaData`
+    ///   - postings: `Postings`
+    public init(metaData: TransactionMetaData, postings: [Posting]) {
         self.metaData = metaData
+        self.internalPostings = postings.map { TransactionPosting(posting: $0, transaction: self) }
     }
 
     /// Add a posting to the transaction
@@ -91,6 +105,17 @@ public class Transaction {
             return .invalid("\(self) is not balanced - \(error)")
         }
         return validation
+    }
+
+}
+
+public class LedgerTransaction: Transaction {
+
+    /// Add a posting to the transaction
+    /// - Parameter posting: Posting to add
+    @available(*, unavailable)
+    override public func add(_ posting: Posting) {
+        fatalError("Must not add a posting to a transaction after it has been added to the ledger")
     }
 
 }

@@ -18,7 +18,7 @@ public enum LedgerError: Error {
 public class Ledger {
 
     /// Array of all `Transaction`s in this ledger
-    public private(set) var transactions = [Transaction]()
+    public private(set) var transactions = [LedgerTransaction]()
 
     /// Errors from the ledger and the parsing
     ///
@@ -96,11 +96,9 @@ public class Ledger {
     ///
     /// - Parameter transaction: transaction to add
     /// - Returns: added transaction
-    public func add(_ transaction: Transaction) -> Transaction {
-        let newTransaction = Transaction(metaData: getTransactionMetaData(for: transaction.metaData))
-        for posting in transaction.postings {
-            newTransaction.add(try! getPosting(for: posting, transaction: newTransaction)) // swiftlint:disable:this force_try
-        }
+    public func add(_ transaction: Transaction) -> LedgerTransaction {
+        let newTransaction = LedgerTransaction(metaData: getTransactionMetaData(for: transaction.metaData),
+                                               postings: transaction.postings.map { try! getPosting(for: $0) }) // swiftlint:disable:this force_try
         transactions.append(newTransaction)
         return newTransaction
     }
@@ -194,14 +192,13 @@ public class Ledger {
     /// - Parameter posting: Posting to convert
     /// - Returns: Posting which can be added to the ledger
     /// - Throws: If the account name is invalid
-    private func getPosting(for posting: Posting, transaction: Transaction) throws -> TransactionPosting {
-        let result = TransactionPosting(accountName: posting.accountName,
-                                        amount: getLedgerAmount(for: posting.amount),
-                                        transaction: transaction,
-                                        price: posting.price != nil ? getLedgerAmount(for: posting.price!) : nil,
-                                        cost: posting.cost != nil ? try Cost(amount: posting.cost?.amount != nil ? getLedgerAmount(for: posting.cost!.amount!) : nil,
-                                                                             date: posting.cost?.date,
-                                                                             label: posting.cost?.label) : nil)
+    private func getPosting(for posting: Posting) throws -> Posting {
+        let result = Posting(accountName: posting.accountName,
+                             amount: getLedgerAmount(for: posting.amount),
+                             price: posting.price != nil ? getLedgerAmount(for: posting.price!) : nil,
+                             cost: posting.cost != nil ? try Cost(amount: posting.cost?.amount != nil ? getLedgerAmount(for: posting.cost!.amount!) : nil,
+                                                                  date: posting.cost?.date,
+                                                                  label: posting.cost?.label) : nil)
         result.metaData = posting.metaData
         return result
     }

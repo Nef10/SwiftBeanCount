@@ -47,7 +47,7 @@ public class Posting: MetaDataAttachable {
 /// as well as the `price` (if applicable) and a link back to the `Transaction`.
 public class TransactionPosting: Posting {
 
-    /// *unowned* link back to the `Transcation`
+    /// *unowned* link back to the `Transaction`
     public unowned let transaction: Transaction
 
     /// Creats an TransactionPosting with the given parameters
