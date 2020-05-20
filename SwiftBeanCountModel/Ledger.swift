@@ -330,6 +330,10 @@ extension Ledger: CustomStringConvertible {
             string.append("\n")
         }
         string.append(self.transactions.map { String(describing: $0) }.joined(separator: "\n"))
+        if !string.isEmpty && !self.prices.isEmpty {
+            string.append("\n")
+        }
+        string.append(self.prices.sorted { $0.date < $1.date }.map { String(describing: $0) }.joined(separator: "\n"))
         return string
     }
 

@@ -347,6 +347,18 @@ class LedgerTests: XCTestCase {
         XCTAssertEqual(String(describing: ledger2), String(describing: ledger2.accounts.first!))
     }
 
+    func testDescriptionPrice() {
+        let ledger = Ledger()
+        let commodity1 = Commodity(symbol: "EUR", opening: Date(timeIntervalSince1970: 1_496_905_200))
+        let commodity2 = Commodity(symbol: "CAD", opening: Date(timeIntervalSince1970: 1_496_905_200))
+        let price1 = try! Price(date: Date(timeIntervalSince1970: 1_496_991_600), commodity: commodity1, amount: Amount(number: 10, commodity: commodity2, decimalDigits: 2))
+        let price2 = try! Price(date: Date(timeIntervalSince1970: 1_497_078_000), commodity: commodity1, amount: Amount(number: 10, commodity: commodity2, decimalDigits: 2))
+        try! ledger.add(price1)
+        XCTAssertEqual(String(describing: ledger), String(describing: price1))
+        try! ledger.add(price2)
+        XCTAssertEqual(String(describing: ledger), "\(String(describing: price1))\n\(String(describing: price2))")
+    }
+
     func testDescriptionOptions() {
         let ledger = Ledger()
         let option1 = Option(name: "a", value: "b")
