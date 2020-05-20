@@ -10,45 +10,142 @@ import Foundation
 import SwiftBeanCountModel
 
 /// Parser to parse a string of a file into a Ledger
-public enum Parser {
+public class Parser {
 
     static let comment: Character = ";"
 
-    /// Parses a given file into a Ledger
+    private let string: String
+    private let ledger = Ledger()
+
+    private var openTransaction: Transaction?
+
+    private var accounts = [(Int, String, Account)]()
+    private var transactions = [(Int, Transaction)]()
+    private var balances = [(Int, Balance)]()
+    private var commodities = [(Int, Commodity)]()
+    private var prices = [(Int, Price)]()
+
+    /// Creates a parser for a file
     ///
-    /// - Parameter contentOf: URL to parse Encoding has to be UTF-8
-    /// - Returns: Ledger with parsed content
+    /// - Parameter contentOf: URL to parse (Encoding has to be UTF-8)
     /// - Throws: Exceptions from opening the file
-    public static func parse(contentOf path: URL) throws -> Ledger {
-        let text = try String(contentsOf: path)
-        return self.parse(string: text)
+    public convenience init(url: URL) throws {
+        let text = try String(contentsOf: url)
+        self.init(string: text)
     }
 
-    /// Parses a given String into a Ledger
+    /// Creates a parser for a string
     ///
     /// - Parameter string: String to parse
-    /// - Returns: Ledger with parsed content
-    public static func parse(string: String) -> Ledger {
+    public init(string: String) {
+        self.string = string
+    }
 
-        let ledger = Ledger()
+    /// Parses the given content into a Ledger
+    ///
+    /// - Returns: Ledger with parsed content
+    public func parse() -> Ledger {
 
         let lines = string.components(separatedBy: .newlines)
-
-        var openTransaction: Transaction?
 
         for (lineNumber, line) in lines.enumerated() {
             if line.isEmpty || line[line.startIndex] == Parser.comment {
                 // Ignore empty lines and comments
                 continue
             }
-            openTransaction = parse(line, number: lineNumber, into: ledger, openTransaction: openTransaction)
+            openTransaction = parse(line, number: lineNumber)
         }
 
-        closeOpen(transaction: openTransaction, inLedger: ledger, onLine: lines.count)
-
-        ledger.validate()
+        closeOpenTransaction(onLine: lines.count)
+        sortParsedData()
+        importParsedData()
 
         return ledger
+
+    }
+
+    private func sortParsedData() {
+        accounts.sort {
+            let (_, _, account1) = $0
+            let (_, _, account2) = $1
+            let date1 = account1.opening != nil ? account1.opening : account1.closing
+            let date2 = account2.opening != nil ? account2.opening : account2.closing
+            return date1! < date2!
+        }
+
+        transactions.sort {
+            let (_, transaction1) = $0
+            let (_, transaction2) = $1
+            return transaction1.metaData.date < transaction2.metaData.date
+        }
+
+        balances.sort {
+            let (_, balance1) = $0
+            let (_, balance2) = $1
+            return balance1.date < balance2.date
+        }
+
+        commodities.sort {
+            let (_, commodity1) = $0
+            let (_, commodity2) = $1
+            return commodity1.opening! < commodity2.opening!
+        }
+
+        prices.sort {
+            let (_, price1) = $0
+            let (_, price2) = $1
+            return price1.date < price2.date
+        }
+    }
+
+    private func importParsedData() {
+        for (lineNumber, commodity) in commodities {
+            do {
+                try ledger.add(commodity)
+            } catch {
+                ledger.parsingErrors.append("Error with commodity \(commodity): \(error.localizedDescription) in line \(lineNumber + 1)")
+            }
+        }
+        for (lineNumber, line, account) in accounts {
+            addAccount(lineNumber: lineNumber, line: line, account: account)
+        }
+        for (lineNumber, price) in prices {
+            do {
+                try ledger.add(price)
+            } catch {
+                ledger.parsingErrors.append("Error with price \(price): \(error.localizedDescription) in line \(lineNumber + 1)")
+            }
+        }
+        for (lineNumber, balance) in balances {
+            do {
+                try ledger.add(balance)
+            } catch {
+                ledger.parsingErrors.append("Error with balance \(balance): \(error.localizedDescription) in line \(lineNumber + 1)")
+            }
+        }
+        for (_, transaction) in transactions {
+            _ = ledger.add(transaction)
+        }
+    }
+
+    private func addAccount(lineNumber: Int, line: String, account: Account) {
+        if let ledgerAccount = ledger.accounts.first(where: { $0.name == account.name }) {
+            if account.closing != nil {
+                if ledgerAccount.closing == nil {
+                    ledgerAccount.closing = account.closing
+                } else {
+                    ledger.parsingErrors.append("Second closing for account \(account.name) in line \(lineNumber + 1): \(line)")
+                }
+            } else {
+                ledger.parsingErrors.append("Second open for account \(account.name) in line \(lineNumber + 1): \(line)")
+            }
+        } else {
+            do {
+                try ledger.add(account)
+            } catch {
+                ledger.parsingErrors.append("Error with account \(account.name): \(error.localizedDescription) in line \(lineNumber + 1): \(line)")
+            }
+        }
     }
 
     /// Parses a single line
@@ -56,13 +153,11 @@ public enum Parser {
     /// - Parameters:
     ///   - line: string of the line
     ///   - lineNumber: number of the line for error messages
-    ///   - ledger: ledger where result will be saved into
-    ///   - openTransaction: currently open transaction from last line
     /// - Returns: new open transaction or nil if no transaction open
-    private static func parse(_ line: String, number lineNumber: Int, into ledger: Ledger, openTransaction: Transaction?) -> Transaction? {
+    private func parse(_ line: String, number lineNumber: Int) -> Transaction? {
 
         // Posting
-        let (shouldReturn, returnValue) = parsePosting(from: line, to: ledger, lineNumber: lineNumber, openTransaction: openTransaction)
+        let (shouldReturn, returnValue) = parsePosting(from: line, lineNumber: lineNumber, openTransaction: openTransaction)
         if shouldReturn {
             return returnValue
         }
@@ -73,46 +168,46 @@ public enum Parser {
         }
 
         // Account
-        if parseAccount(from: line, to: ledger, lineNumber: lineNumber) {
+        if parseAccount(from: line, lineNumber: lineNumber) {
             return nil
         }
 
         // Price
-        if parsePrice(from: line, to: ledger, lineNumber: lineNumber) {
+        if parsePrice(from: line, lineNumber: lineNumber) {
             return nil
         }
 
         // Commodity
-        if parseCommodity(from: line, to: ledger, lineNumber: lineNumber) {
+        if parseCommodity(from: line, lineNumber: lineNumber) {
             return nil
         }
 
         // Balance
-        if parseBalance(from: line, to: ledger, lineNumber: lineNumber) {
+        if parseBalance(from: line, lineNumber: lineNumber) {
             return nil
         }
 
         // Option
-        if parseOption(from: line, to: ledger) {
+        if parseOption(from: line) {
             return nil
         }
 
         // Plugin
-        if parsePlugin(from: line, to: ledger) {
+        if parsePlugin(from: line) {
             return nil
         }
 
         // Event
-        if parseEvent(from: line, to: ledger) {
+        if parseEvent(from: line) {
             return nil
         }
 
         // Custom
-        if parseCustom(from: line, to: ledger) {
+        if parseCustom(from: line) {
             return nil
         }
 
-        ledger.errors.append("Invalid format in line \(lineNumber + 1): \(line)")
+        ledger.parsingErrors.append("Invalid format in line \(lineNumber + 1): \(line)")
         return nil
     }
 
@@ -121,15 +216,13 @@ public enum Parser {
     /// Adds an error to the ledger if the transaction does not have any postings
     ///
     /// - Parameters:
-    ///   - openTransaction: the open transaction if any
-    ///   - ledger: ledger to add the tranaction to
     ///   - line: line number which should be included in the error if the transaction cannot be closed
-    private static func closeOpen(transaction openTransaction: Transaction?, inLedger ledger: Ledger, onLine line: Int) {
-        if let transaction = openTransaction { // Need to close last transaction
+    private func closeOpenTransaction(onLine line: Int) {
+        if let transaction = openTransaction {
             if !transaction.postings.isEmpty {
-                _ = ledger.add(transaction)
+                transactions.append((line, transaction))
             } else {
-                ledger.errors.append("Invalid format in line \(line): previous Transaction \(transaction) without postings")
+                ledger.parsingErrors.append("Invalid format in line \(line): previous Transaction \(transaction) without postings")
             }
         }
     }
@@ -141,21 +234,20 @@ public enum Parser {
     ///
     /// - Parameters:
     ///   - line: line to parse from
-    ///   - ledger: ledger to add the transaction into
     ///   - lineNumber: line number which should be included in the error if the transaction cannot be added
     ///   - openTransaction: transaction which is still open
     /// - Returns: a tuple out of bool and an optional transaction. The boolean indicaties if the line was handled. The optional tansaction is the new open transaction.
-    private static func parsePosting(from line: String, to ledger: Ledger, lineNumber: Int, openTransaction: Transaction?) -> (Bool, Transaction?) {
+    private func parsePosting(from line: String, lineNumber: Int, openTransaction: Transaction?) -> (Bool, Transaction?) {
         if let transaction = openTransaction {
            do {
-               if let posting = try PostingParser.parseFrom(line: line, into: transaction) {
-                   transaction.postings.append(posting)
+               if let posting = try PostingParser.parseFrom(line: line) {
+                   transaction.add(posting)
                    return (true, transaction)
                } else { // No posting, need to close previous transaction
-                   closeOpen(transaction: openTransaction, inLedger: ledger, onLine: lineNumber + 1)
+                   closeOpenTransaction(onLine: lineNumber + 1)
                }
            } catch {
-               ledger.errors.append("\(error.localizedDescription) (line \(lineNumber + 1))")
+               ledger.parsingErrors.append("\(error.localizedDescription) (line \(lineNumber + 1))")
                return (true, nil)
            }
         }
@@ -168,44 +260,13 @@ public enum Parser {
     ///
     /// - Parameters:
     ///   - line: line to parse from
-    ///   - ledger: ledger to add the account into
     ///   - lineNumber: line number which should be included in the error if the account cannot be added
     /// - Returns: true if there was an account in the line (even if it could not be added to the ledger), false otherwise
-    private static func parseAccount(from line: String, to ledger: Ledger, lineNumber: Int) -> Bool {
+    private func parseAccount(from line: String, lineNumber: Int) -> Bool {
         guard let account = AccountParser.parseFrom(line: line) else {
             return false
         }
-
-        if let ledgerAccount = ledger.accounts.first(where: { $0.name == account.name }) {
-            if account.opening != nil {
-                if ledgerAccount.opening == nil {
-                    ledgerAccount.opening = account.opening
-                } else {
-                    ledger.errors.append("Second opening for account \(account.name) in line \(lineNumber + 1): \(line)")
-                    return true
-                }
-            }
-            if account.commodity != nil {
-                if ledgerAccount.commodity == nil {
-                    ledgerAccount.commodity = account.commodity
-                } else {
-                    assertionFailure("Cannot have a duplicated commodity without a duplicate opening")
-                }
-            }
-            if account.closing != nil {
-                if ledgerAccount.closing == nil {
-                    ledgerAccount.closing = account.closing
-                } else {
-                    ledger.errors.append("Second closing for account \(account.name) in line \(lineNumber + 1): \(line)")
-                }
-            }
-        } else {
-            do {
-                try ledger.add(account)
-            } catch {
-                ledger.errors.append("Error with account \(account.name): \(error.localizedDescription) in line \(lineNumber + 1): \(line)")
-            }
-        }
+        accounts.append((lineNumber, line, account))
         return true
     }
 
@@ -215,18 +276,13 @@ public enum Parser {
     ///
     /// - Parameters:
     ///   - line: line to parse from
-    ///   - ledger: ledger to add the account into
     ///   - lineNumber: line number which should be included in the error if the price cannot be added
     /// - Returns: true if there was a price in the line (even if it could not be added to the ledger), false otherwise
-    private static func parsePrice(from line: String, to ledger: Ledger, lineNumber: Int) -> Bool {
+    private func parsePrice(from line: String, lineNumber: Int) -> Bool {
         guard let price = PriceParser.parseFrom(line: line) else {
             return false
         }
-        do {
-            try ledger.add(price)
-        } catch {
-            ledger.errors.append("Error with price \(price): \(error.localizedDescription) in line \(lineNumber + 1)")
-        }
+        prices.append((lineNumber, price))
         return true
     }
 
@@ -236,18 +292,13 @@ public enum Parser {
     ///
     /// - Parameters:
     ///   - line: line to parse from
-    ///   - ledger: ledger to add the commodity into
     ///   - lineNumber: line number which should be included in the error if the commodity cannot be added
     /// - Returns: true if there was a commodity in the line (even if it could not be added to the ledger), false otherwise
-    private static func parseCommodity(from line: String, to ledger: Ledger, lineNumber: Int) -> Bool {
+    private func parseCommodity(from line: String, lineNumber: Int) -> Bool {
         guard let commodity = CommodityParser.parseFrom(line: line) else {
             return false
         }
-        do {
-            try ledger.add(commodity)
-        } catch {
-            ledger.errors.append("Error with commodity \(commodity): \(error.localizedDescription) in line \(lineNumber + 1)")
-        }
+        commodities.append((lineNumber, commodity))
         return true
     }
 
@@ -257,18 +308,13 @@ public enum Parser {
     ///
     /// - Parameters:
     ///   - line: line to parse
-    ///   - ledger: ledger to add the balance into
     ///   - lineNumber: line number which should be included in the error if the balance cannot be added
     /// - Returns: true if there was a balance in the line (even if it could not be added to the ledger), false otherwise
-    private static func parseBalance(from line: String, to ledger: Ledger, lineNumber: Int) -> Bool {
+    private func parseBalance(from line: String, lineNumber: Int) -> Bool {
         guard let balance = BalanceParser.parseFrom(line: line) else {
             return false
         }
-        do {
-            try ledger.add(balance)
-        } catch {
-            ledger.errors.append("Error with balance \(balance): \(error.localizedDescription) in line \(lineNumber + 1)")
-        }
+        balances.append((lineNumber, balance))
         return true
     }
 
@@ -276,27 +322,21 @@ public enum Parser {
     ///
     /// - Parameters:
     ///   - line: line to parse
-    ///   - ledger: ledger to add the option into
     /// - Returns: true if there was a option in the line (even if it could not be added to the ledger), false otherwise
-    private static func parseOption(from line: String, to ledger: Ledger) -> Bool {
-        if let (option, value) = OptionParser.parseFrom(line: line) {
-            if ledger.option[option] == nil {
-                ledger.option[option] = [value]
-            } else {
-                ledger.option[option]?.append(value)
-            }
-            return true
+    private func parseOption(from line: String) -> Bool {
+        guard let option = OptionParser.parseFrom(line: line) else {
+            return false
         }
-        return false
+        ledger.option.append(option)
+        return true
     }
 
     /// Tries to parse a plugin from a line and add it to the ledger
     ///
     /// - Parameters:
     ///   - line: line to parse
-    ///   - ledger: ledger to add the plugin into
     /// - Returns: true if there was a plugin in the line (even if it could not be added to the ledger), false otherwise
-    private static func parsePlugin(from line: String, to ledger: Ledger) -> Bool {
+    private func parsePlugin(from line: String) -> Bool {
         if let plugin = PluginParser.parseFrom(line: line) {
             ledger.plugins.append(plugin)
             return true
@@ -308,9 +348,8 @@ public enum Parser {
     ///
     /// - Parameters:
     ///   - line: line to parse
-    ///   - ledger: ledger to add the event into
     /// - Returns: true if there was a event in the line, false otherwise
-    private static func parseEvent(from line: String, to ledger: Ledger) -> Bool {
+    private func parseEvent(from line: String) -> Bool {
         if let event = EventParser.parseFrom(line: line) {
             ledger.events.append(event)
             return true
@@ -322,9 +361,8 @@ public enum Parser {
     ///
     /// - Parameters:
     ///   - line: line to parse
-    ///   - ledger: ledger to add the custom directive into
     /// - Returns: true if there was a custom directive in the line, false otherwise
-    private static func parseCustom(from line: String, to ledger: Ledger) -> Bool {
+    private func parseCustom(from line: String) -> Bool {
         if let event = CustomsParser.parseFrom(line: line) {
             ledger.custom.append(event)
             return true

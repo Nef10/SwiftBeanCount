@@ -23,16 +23,15 @@ enum PostingParser {
     ///
     /// - Parameters:
     ///   - line: string of one line
-    ///   - transaction: transaction into which the posting belongs
     /// - Returns: a Posting or nil if the line does not contain a valid Posting
     /// - Throws: When it is a valid posting string with invalid values
-    static func parseFrom(line: String, into transaction: Transaction) throws -> Posting? {
+    static func parseFrom(line: String) throws -> Posting? {
         let postingMatches = line.matchingStrings(regex: self.regex)
         guard let match = postingMatches[safe: 0] else {
             return nil
         }
         let (amount, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: match[2])
-        guard let account = try? Account(name: match[1]) else {
+        guard let accountName = try? AccountName(match[1]) else {
             return nil
         }
         let commodity = Commodity(symbol: match[5])
@@ -50,9 +49,8 @@ enum PostingParser {
             }
             price = Amount(number: priceAmount, commodity: priceCommodity, decimalDigits: priceDecimalDigits)
         }
-        return Posting(account: account,
+        return Posting(accountName: accountName,
                        amount: Amount(number: amount, commodity: commodity, decimalDigits: decimalDigits),
-                       transaction: transaction,
                        price: price,
                        cost: cost)
     }

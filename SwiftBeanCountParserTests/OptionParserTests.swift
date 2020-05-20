@@ -18,27 +18,27 @@ class OptionParserTests: XCTestCase {
     let specialCharacterString = "option \"ABC💵\" \"DEF💵\""
 
     func testBasic() {
-        let (option, value) = OptionParser.parseFrom(line: basicString)!
-        XCTAssertEqual(option, "ABC")
-        XCTAssertEqual(value, "DEF")
+        let option = OptionParser.parseFrom(line: basicString)!
+        XCTAssertEqual(option.name, "ABC")
+        XCTAssertEqual(option.value, "DEF")
     }
 
     func testWhitespace() {
-        let (option, value) = OptionParser.parseFrom(line: whitespaceString)!
-        XCTAssertEqual(option, "ABC")
-        XCTAssertEqual(value, "DEF")
+        let option = OptionParser.parseFrom(line: whitespaceString)!
+        XCTAssertEqual(option.name, "ABC")
+        XCTAssertEqual(option.value, "DEF")
     }
 
     func testEndOfLineComment() {
-        let (option, value) = OptionParser.parseFrom(line: endOfLineCommentString)!
-        XCTAssertEqual(option, "ABC")
-        XCTAssertEqual(value, "DEF")
+        let option = OptionParser.parseFrom(line: endOfLineCommentString)!
+        XCTAssertEqual(option.name, "ABC")
+        XCTAssertEqual(option.value, "DEF")
     }
 
     func testSpecialCharacter() {
-        let (option, value) = OptionParser.parseFrom(line: specialCharacterString)!
-        XCTAssertEqual(option, "ABC💵")
-        XCTAssertEqual(value, "DEF💵")
+        let option = OptionParser.parseFrom(line: specialCharacterString)!
+        XCTAssertEqual(option.name, "ABC💵")
+        XCTAssertEqual(option.value, "DEF💵")
     }
 
     func testPerformance() {

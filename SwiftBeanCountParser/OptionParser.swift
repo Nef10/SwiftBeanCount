@@ -16,12 +16,12 @@ enum OptionParser {
         try! NSRegularExpression(pattern: "^option\\s+\"([^\"]*)\"\\s+\"([^\"]*)\"\\s*(;.*)?$", options: [])
     }()
 
-    static func parseFrom(line: String) -> (String, String)? {
+    static func parseFrom(line: String) -> Option? {
         let matches = line.matchingStrings(regex: self.regex)
         guard let match = matches[safe: 0] else {
             return nil
         }
-        return (match[1], match[2])
+        return Option(name: match[1], value: match[2])
     }
 
 }

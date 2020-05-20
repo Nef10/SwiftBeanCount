@@ -25,7 +25,7 @@ enum BalanceParser {
         guard
             let match = balanceMatches[safe: 0],
             let date = DateParser.parseFrom(string: match[1]),
-            let account = try? Account(name: match[2])
+            let account = try? Account(name: AccountName(match[2]))
         else {
             return nil
         }

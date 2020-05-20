@@ -69,68 +69,84 @@ class ParserTests: XCTestCase {
         } catch {
             errorMessage = error.localizedDescription
         }
-        let ledger1 = try! Parser.parse(contentOf: urlFor(testFile: TestFile.invalidCost))
+        let parser = try! Parser(url: urlFor(testFile: TestFile.invalidCost))
+        let ledger1 = parser.parse()
         XCTAssertEqual(ledger1.errors.count, 1)
         XCTAssertEqual(ledger1.errors[0], "\(errorMessage) (line 7)")
     }
 
     func testAccounts() {
         // open and close is ok
-        var ledger = Parser.parse(string: "\(basicAccountOpeningString)\n\(basicAccountClosingString)")
+        var parser = Parser(string: "\(basicAccountOpeningString)\n\(basicAccountClosingString)")
+        var ledger = parser.parse()
         XCTAssertTrue(ledger.errors.isEmpty)
 
         // only open is ok
-        ledger = Parser.parse(string: "\(basicAccountOpeningString)")
+        parser = Parser(string: "\(basicAccountOpeningString)")
+        ledger = parser.parse()
         XCTAssertTrue(ledger.errors.isEmpty)
 
         // only close is not ok
-        ledger = Parser.parse(string: "\(basicAccountClosingString)")
+        parser = Parser(string: "\(basicAccountClosingString)")
+        ledger = parser.parse()
         XCTAssertFalse(ledger.errors.isEmpty)
 
         // open twice is not ok
-        ledger = Parser.parse(string: "\(basicAccountOpeningString)\n\(basicAccountOpeningString)")
+        parser = Parser(string: "\(basicAccountOpeningString)\n\(basicAccountOpeningString)")
+        ledger = parser.parse()
         XCTAssertFalse(ledger.errors.isEmpty)
-        ledger = Parser.parse(string: "\(accountOpeningStringCommodity)\n\(accountOpeningStringCommodity)")
+        parser = Parser(string: "\(accountOpeningStringCommodity)\n\(accountOpeningStringCommodity)")
+        ledger = parser.parse()
         XCTAssertFalse(ledger.errors.isEmpty)
 
         // close twice is not ok
-        ledger = Parser.parse(string: "\(basicAccountClosingString)\n\(basicAccountClosingString)")
+        parser = Parser(string: "\(basicAccountClosingString)\n\(basicAccountClosingString)")
+        ledger = parser.parse()
         XCTAssertFalse(ledger.errors.isEmpty)
 
         // close twice (+ normal open) is not ok
-        ledger = Parser.parse(string: "\(basicAccountOpeningString)\n\(basicAccountClosingString)\n\(basicAccountClosingString)")
+        parser = Parser(string: "\(basicAccountOpeningString)\n\(basicAccountClosingString)\n\(basicAccountClosingString)")
+        ledger = parser.parse()
         XCTAssertFalse(ledger.errors.isEmpty)
     }
 
     func testCommodity() {
-        var ledger = Parser.parse(string: "\(commodityString)")
+        var parser = Parser(string: "\(commodityString)")
+        var ledger = parser.parse()
         XCTAssertTrue(ledger.errors.isEmpty)
 
-        ledger = Parser.parse(string: "\(commodityString)\n\(commodityString)")
+        parser = Parser(string: "\(commodityString)\n\(commodityString)")
+        ledger = parser.parse()
         XCTAssertFalse(ledger.errors.isEmpty)
     }
 
     func testPrice() {
-        var ledger = Parser.parse(string: "\(priceString)")
+        var parser = Parser(string: "\(priceString)")
+        var ledger = parser.parse()
         XCTAssertTrue(ledger.errors.isEmpty)
 
-        ledger = Parser.parse(string: "\(priceString)\n\(priceString)")
+        parser = Parser(string: "\(priceString)\n\(priceString)")
+        ledger = parser.parse()
         XCTAssertFalse(ledger.errors.isEmpty)
     }
 
     func testBalance() {
-        var ledger = Parser.parse(string: "\(balanceString)")
+        var parser = Parser(string: "\(balanceString)")
+        var ledger = parser.parse()
         XCTAssertTrue(ledger.errors.isEmpty)
 
-        ledger = Parser.parse(string: "\(invalidBalanceString)")
+        parser = Parser(string: "\(invalidBalanceString)")
+        ledger = parser.parse()
         XCTAssertFalse(ledger.errors.isEmpty)
     }
 
     func testRoundTrip() {
         do {
             for testFile in TestFile.withoutError {
-                let ledger1 = try Parser.parse(contentOf: urlFor(testFile: testFile))
-                let ledger2 = Parser.parse(string: String(describing: ledger1))
+                let parser1 = try Parser(url: urlFor(testFile: testFile))
+                let ledger1 = parser1.parse()
+                let parser2 = Parser(string: String(describing: ledger1))
+                let ledger2 = parser2.parse()
                 let result = ledger1 == ledger2
                 XCTAssert(result)
             }
@@ -142,7 +158,8 @@ class ParserTests: XCTestCase {
     func testPerformance() {
         self.measure {
             do {
-                _ = try Parser.parse(contentOf: urlFor(testFile: .big))
+                let parser = try Parser(url: urlFor(testFile: .big))
+                _ = parser.parse()
             } catch {
                 XCTFail(String(describing: error))
             }
@@ -157,7 +174,8 @@ class ParserTests: XCTestCase {
 
     private func ensureEmpty(testFile: TestFile) -> Ledger {
         do {
-            let ledger = try Parser.parse(contentOf: urlFor(testFile: testFile))
+            let parser = try Parser(url: urlFor(testFile: testFile))
+            let ledger = parser.parse()
             XCTAssertEqual(ledger.transactions.count, 0)
             return ledger
         } catch {
@@ -168,7 +186,8 @@ class ParserTests: XCTestCase {
 
     private func ensureMinimal(testFile: TestFile) {
         do {
-            let ledger = try Parser.parse(contentOf: urlFor(testFile: testFile))
+            let parser = try Parser(url: urlFor(testFile: testFile))
+            let ledger = parser.parse()
             XCTAssertEqual(ledger.transactions.count, 1)
             XCTAssert(ledger.errors.isEmpty)
             XCTAssertEqual(ledger.commodities.count, 1)
@@ -179,12 +198,10 @@ class ParserTests: XCTestCase {
             XCTAssertEqual(transaction.metaData.narration, "Narration")
             XCTAssertEqual(transaction.metaData.date, TestUtils.date20170608)
             let posting1 = transaction.postings.first { $0.amount.number == Decimal(-1) }!
-            XCTAssertEqual(posting1.account.name, "Equity:OpeningBalance")
-            XCTAssertEqual(posting1.account.opening, TestUtils.date20170608)
+            XCTAssertEqual(posting1.accountName.fullName, "Equity:OpeningBalance")
             XCTAssertEqual(posting1.amount.commodity, Commodity(symbol: "EUR"))
             let posting2 = transaction.postings.first { $0.amount.number == Decimal(1) }!
-            XCTAssertEqual(posting2.account.name, "Assets:Checking")
-            XCTAssertEqual(posting2.account.opening, TestUtils.date20170608)
+            XCTAssertEqual(posting2.accountName.fullName, "Assets:Checking")
             XCTAssertEqual(posting2.amount.commodity, Commodity(symbol: "EUR"))
         } catch {
             XCTFail(String(describing: error))

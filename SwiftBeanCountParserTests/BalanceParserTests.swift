@@ -17,32 +17,33 @@ class BalanceParserTests: XCTestCase {
     let endOfLineCommentString = "2017-06-09 balance Assets:Cash 10.00 CAD ;gfsdt     "
     let specialCharacterString = "2017-06-09 balance Assets:💵 10.00 💵"
     let invalidDateString = "2017-02-30 balance Assets:Cash 10.00 CAD"
+    let accountName = try! AccountName("Assets:Cash")
 
     func testBasic() {
         let balance = BalanceParser.parseFrom(line: basicString)
         XCTAssertEqual(balance, Balance(date: TestUtils.date20170609,
-                                        account: try! Account(name: "Assets:Cash"),
+                                        account: Account(name: accountName),
                                         amount: Amount(number: 10, commodity: Commodity(symbol: "CAD"), decimalDigits: 2)))
     }
 
     func testWhitespace() {
         let balance = BalanceParser.parseFrom(line: whitespaceString)
         XCTAssertEqual(balance, Balance(date: TestUtils.date20170609,
-                                        account: try! Account(name: "Assets:Cash"),
+                                        account: Account(name: accountName),
                                         amount: Amount(number: 10, commodity: Commodity(symbol: "CAD"), decimalDigits: 2)))
     }
 
     func testEndOfLineComment() {
         let balance = BalanceParser.parseFrom(line: endOfLineCommentString)
         XCTAssertEqual(balance, Balance(date: TestUtils.date20170609,
-                                        account: try! Account(name: "Assets:Cash"),
+                                        account: Account(name: accountName),
                                         amount: Amount(number: 10, commodity: Commodity(symbol: "CAD"), decimalDigits: 2)))
     }
 
     func testSpecialCharacter() {
         let balance = BalanceParser.parseFrom(line: specialCharacterString)
         XCTAssertEqual(balance, Balance(date: TestUtils.date20170609,
-                                        account: try! Account(name: "Assets:💵"),
+                                        account: try! Account(name: AccountName("Assets:💵")),
                                         amount: Amount(number: 10, commodity: Commodity(symbol: "💵"), decimalDigits: 2)))
     }
 

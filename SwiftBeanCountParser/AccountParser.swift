@@ -46,19 +46,19 @@ enum AccountParser {
             }
         }
 
-        guard let account = bookingMethod != nil ? try? Account(name: match[3], bookingMethod: bookingMethod!) : try? Account(name: match[3]) else {
+        guard let accountName = try? AccountName(match[3]) else {
             return nil
         }
 
-        if match[2] == "open" && account.opening == nil {
+        if match[2] == "open" {
             let commodity = match[4] != "" ? Commodity(symbol: match[5]) : nil
-            account.opening = date
-            account.commodity = commodity
-            return account
-        } else if match[2] == "close" && match[5] == "" && account.closing == nil {
+            return bookingMethod != nil ? Account(name: accountName, bookingMethod: bookingMethod!, commodity: commodity, opening: date)
+                : Account(name: accountName, commodity: commodity, opening: date)
+        } else if match[2] == "close" && match[5] == "" {
             guard bookingMethod == nil else {
                 return nil
             }
+            let account = Account(name: accountName)
             account.closing = date
             return account
         }
