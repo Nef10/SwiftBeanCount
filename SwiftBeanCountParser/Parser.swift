@@ -177,45 +177,57 @@ public class Parser {
         }
 
         // Account
-        if parseAccount(from: line, lineNumber: lineNumber) {
+        if let account = AccountParser.parseFrom(line: line) {
+            accounts.append((lineNumber, line, account))
             return nil
         }
 
         // Price
-        if parsePrice(from: line, lineNumber: lineNumber) {
+        if let price = PriceParser.parseFrom(line: line) {
+            prices.append((lineNumber, price))
             return nil
         }
 
         // Commodity
-        if parseCommodity(from: line, lineNumber: lineNumber) {
+        if let commodity = CommodityParser.parseFrom(line: line) {
+            commodities.append((lineNumber, commodity))
             return nil
         }
 
         // Balance
-        if parseBalance(from: line, lineNumber: lineNumber) {
+        if let balance = BalanceParser.parseFrom(line: line) {
+            balances.append((lineNumber, balance))
             return nil
         }
 
         // Option
-        if parseOption(from: line) {
+        if let option = OptionParser.parseFrom(line: line) {
+            ledger.option.append(option)
             return nil
         }
 
         // Plugin
-        if parsePlugin(from: line) {
+        if let plugin = PluginParser.parseFrom(line: line) {
+            ledger.plugins.append(plugin)
             return nil
         }
 
         // Event
-        if parseEvent(from: line) {
+        if let event = EventParser.parseFrom(line: line) {
+            ledger.events.append(event)
             return nil
         }
 
         // Custom
-        if parseCustom(from: line) {
+        if let custom = CustomsParser.parseFrom(line: line) {
+            ledger.custom.append(custom)
             return nil
         }
 
+        return addParsingError(lineNumber: lineNumber, line: line)
+    }
+
+    private func addParsingError(lineNumber: Int, line: String) -> Transaction? {
         ledger.parsingErrors.append("Invalid format in line \(lineNumber + 1): \(line)")
         return nil
     }
@@ -261,122 +273,6 @@ public class Parser {
            }
         }
         return (false, nil)
-    }
-
-    /// Tries to parse an account from a line and add it to the ledger
-    ///
-    /// Adds an error to the ledger if the account cannot be added
-    ///
-    /// - Parameters:
-    ///   - line: line to parse from
-    ///   - lineNumber: line number which should be included in the error if the account cannot be added
-    /// - Returns: true if there was an account in the line (even if it could not be added to the ledger), false otherwise
-    private func parseAccount(from line: String, lineNumber: Int) -> Bool {
-        guard let account = AccountParser.parseFrom(line: line) else {
-            return false
-        }
-        accounts.append((lineNumber, line, account))
-        return true
-    }
-
-    /// Tries to parse a price from a line and add it to the ledger
-    ///
-    /// Adds an error to the ledger if the price cannot be added
-    ///
-    /// - Parameters:
-    ///   - line: line to parse from
-    ///   - lineNumber: line number which should be included in the error if the price cannot be added
-    /// - Returns: true if there was a price in the line (even if it could not be added to the ledger), false otherwise
-    private func parsePrice(from line: String, lineNumber: Int) -> Bool {
-        guard let price = PriceParser.parseFrom(line: line) else {
-            return false
-        }
-        prices.append((lineNumber, price))
-        return true
-    }
-
-    /// Tries to parse a commodity from a line and add it to the ledger
-    ///
-    /// Adds an error to the ledger if the commodity cannot be added
-    ///
-    /// - Parameters:
-    ///   - line: line to parse from
-    ///   - lineNumber: line number which should be included in the error if the commodity cannot be added
-    /// - Returns: true if there was a commodity in the line (even if it could not be added to the ledger), false otherwise
-    private func parseCommodity(from line: String, lineNumber: Int) -> Bool {
-        guard let commodity = CommodityParser.parseFrom(line: line) else {
-            return false
-        }
-        commodities.append((lineNumber, commodity))
-        return true
-    }
-
-    /// Tries to parse a balance from a line and add it to the ledger
-    ///
-    /// Adds an error to the ledger if the balance cannot be added
-    ///
-    /// - Parameters:
-    ///   - line: line to parse
-    ///   - lineNumber: line number which should be included in the error if the balance cannot be added
-    /// - Returns: true if there was a balance in the line (even if it could not be added to the ledger), false otherwise
-    private func parseBalance(from line: String, lineNumber: Int) -> Bool {
-        guard let balance = BalanceParser.parseFrom(line: line) else {
-            return false
-        }
-        balances.append((lineNumber, balance))
-        return true
-    }
-
-    /// Tries to parse an option from a line and add it to the ledger
-    ///
-    /// - Parameters:
-    ///   - line: line to parse
-    /// - Returns: true if there was a option in the line (even if it could not be added to the ledger), false otherwise
-    private func parseOption(from line: String) -> Bool {
-        guard let option = OptionParser.parseFrom(line: line) else {
-            return false
-        }
-        ledger.option.append(option)
-        return true
-    }
-
-    /// Tries to parse a plugin from a line and add it to the ledger
-    ///
-    /// - Parameters:
-    ///   - line: line to parse
-    /// - Returns: true if there was a plugin in the line (even if it could not be added to the ledger), false otherwise
-    private func parsePlugin(from line: String) -> Bool {
-        if let plugin = PluginParser.parseFrom(line: line) {
-            ledger.plugins.append(plugin)
-            return true
-        }
-        return false
-    }
-
-    /// Tries to parse an event from a line and add it to the ledger
-    ///
-    /// - Parameters:
-    ///   - line: line to parse
-    /// - Returns: true if there was a event in the line, false otherwise
-    private func parseEvent(from line: String) -> Bool {
-        if let event = EventParser.parseFrom(line: line) {
-            ledger.events.append(event)
-            return true
-        }
-        return false
-    }
-
-    /// Tries to parse a custom directive from a line and add it to the ledger
-    ///
-    /// - Parameters:
-    ///   - line: line to parse
-    /// - Returns: true if there was a custom directive in the line, false otherwise
-    private func parseCustom(from line: String) -> Bool {
-        if let event = CustomsParser.parseFrom(line: line) {
-            ledger.custom.append(event)
-            return true
-        }
-        return false
     }
 
 }
