@@ -47,13 +47,22 @@ public class Parser {
     public func parse() -> Ledger {
 
         let lines = string.components(separatedBy: .newlines)
+        var lineNumber = 0
 
-        for (lineNumber, line) in lines.enumerated() {
+        while lineNumber < lines.count {
+            let line = lines[lineNumber]
             if line.isEmpty || line[line.startIndex] == Parser.comment {
                 // Ignore empty lines and comments
+                lineNumber += 1
                 continue
             }
-            openTransaction = parse(line, number: lineNumber)
+            var metaData = [String: String]()
+            while lineNumber < lines.count - 1, let metaDataParsed = MetaDataParser.parseFrom(line: lines[lineNumber + 1]) {
+                metaData = metaData.merging(metaDataParsed) { _, new in new }
+                lineNumber += 1
+            }
+            openTransaction = parse(line, number: lineNumber, metaData: metaData)
+            lineNumber += 1
         }
 
         closeOpenTransaction(onLine: lines.count)
@@ -154,7 +163,7 @@ public class Parser {
     ///   - line: string of the line
     ///   - lineNumber: number of the line for error messages
     /// - Returns: new open transaction or nil if no transaction open
-    private func parse(_ line: String, number lineNumber: Int) -> Transaction? {
+    private func parse(_ line: String, number lineNumber: Int, metaData: [String: String]) -> Transaction? {
 
         // Posting
         let (shouldReturn, returnValue) = parsePosting(from: line, lineNumber: lineNumber, openTransaction: openTransaction)
