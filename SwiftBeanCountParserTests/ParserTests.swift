@@ -34,6 +34,9 @@ class ParserTests: XCTestCase {
     let balanceString = "2017-06-09 balance Assets:Cash 0.00 CAD"
     let invalidBalanceString = "2017-06-09 balance TEST:Cash 0.00 CAD"
 
+    let metaDataString = "  metaData: \"TestString\""
+    let metaData = ["metaData": "TestString"]
+
     func testMinimal() {
         ensureMinimal(testFile: .minimal)
     }
@@ -108,6 +111,16 @@ class ParserTests: XCTestCase {
         parser = Parser(string: "\(basicAccountOpeningString)\n\(basicAccountClosingString)\n\(basicAccountClosingString)")
         ledger = parser.parse()
         XCTAssertFalse(ledger.errors.isEmpty)
+
+        // meta data
+        parser = Parser(string: "\(basicAccountOpeningString)\n\(metaDataString)")
+        ledger = parser.parse()
+        XCTAssertEqual(ledger.accounts.first?.metaData, metaData)
+
+        // no meta data on closing
+        parser = Parser(string: "\(basicAccountOpeningString)\n\(basicAccountClosingString)\n\(metaDataString)")
+        ledger = parser.parse()
+        XCTAssertFalse(ledger.errors.isEmpty)
     }
 
     func testCommodity() {
@@ -118,6 +131,10 @@ class ParserTests: XCTestCase {
         parser = Parser(string: "\(commodityString)\n\(commodityString)")
         ledger = parser.parse()
         XCTAssertFalse(ledger.errors.isEmpty)
+
+        parser = Parser(string: "\(commodityString)\n\(metaDataString)")
+        ledger = parser.parse()
+        XCTAssertEqual(ledger.commodities.first?.metaData, metaData)
     }
 
     func testPrice() {
@@ -128,6 +145,10 @@ class ParserTests: XCTestCase {
         parser = Parser(string: "\(priceString)\n\(priceString)")
         ledger = parser.parse()
         XCTAssertFalse(ledger.errors.isEmpty)
+
+        parser = Parser(string: "\(priceString)\n\(metaDataString)")
+        ledger = parser.parse()
+        XCTAssertEqual(ledger.prices.first?.metaData, metaData)
     }
 
     func testBalance() {
@@ -138,6 +159,10 @@ class ParserTests: XCTestCase {
         parser = Parser(string: "\(invalidBalanceString)")
         ledger = parser.parse()
         XCTAssertFalse(ledger.errors.isEmpty)
+
+        parser = Parser(string: "\(balanceString)\n\(metaDataString)")
+        ledger = parser.parse()
+        XCTAssertEqual(ledger.accounts.first?.balances.first?.metaData, metaData)
     }
 
     func testRoundTrip() {

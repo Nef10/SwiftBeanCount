@@ -20,7 +20,7 @@ enum TransactionMetaDataParser {
     ///
     /// - Parameter line: String of one line
     /// - Returns: TransactionMetaData or nil if the line does not contain valid TransactionMetaData
-    static func parseFrom(line: String) -> TransactionMetaData? {
+    static func parseFrom(line: String, metaData: [String: String] = [:]) -> TransactionMetaData? {
         let transactionMatches = line.matchingStrings(regex: self.regex)
         if let match = transactionMatches[safe: 0] {
             let tagStrings = match[6].components(separatedBy: .whitespaces)
@@ -29,7 +29,7 @@ enum TransactionMetaDataParser {
                 return Tag(name: tagName)
             }
             if let date = DateParser.parseFrom(string: match[1]) {
-                return TransactionMetaData(date: date, payee: match[4], narration: match[5], flag: Flag(rawValue: match[2])!, tags: tags)
+                return TransactionMetaData(date: date, payee: match[4], narration: match[5], flag: Flag(rawValue: match[2])!, tags: tags, metaData: metaData)
             }
         }
         return nil

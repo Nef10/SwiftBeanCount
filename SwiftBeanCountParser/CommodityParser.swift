@@ -20,7 +20,7 @@ enum CommodityParser {
     ///
     /// - Parameter line: String of one line
     /// - Returns: commodity if the line could be parsed, otherwise nil
-    static func parseFrom(line: String) -> Commodity? {
+    static func parseFrom(line: String, metaData: [String: String] = [:]) -> Commodity? {
         let commodityMatches = line.matchingStrings(regex: self.regex)
         guard
             let match = commodityMatches[safe: 0],
@@ -28,7 +28,7 @@ enum CommodityParser {
         else {
             return nil
         }
-        return Commodity(symbol: match[2], opening: date)
+        return Commodity(symbol: match[2], opening: date, metaData: metaData)
     }
 
 }

@@ -20,7 +20,7 @@ enum BalanceParser {
     ///
     /// - Parameter line: String of one line
     /// - Returns: balance if the line could be parsed, otherwise nil
-    static func parseFrom(line: String) -> Balance? {
+    static func parseFrom(line: String, metaData: [String: String] = [:]) -> Balance? {
         let balanceMatches = line.matchingStrings(regex: self.regex)
         guard
             let match = balanceMatches[safe: 0],
@@ -32,7 +32,7 @@ enum BalanceParser {
         let commodity = Commodity(symbol: match[6])
         let (amountDecimal, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: match[3])
         let amount = Amount(number: amountDecimal, commodity: commodity, decimalDigits: decimalDigits)
-        return Balance(date: date, account: account, amount: amount)
+        return Balance(date: date, account: account, amount: amount, metaData: metaData)
     }
 
 }

@@ -23,7 +23,7 @@ enum AccountParser {
     ///
     /// - Parameter line: String of one line
     /// - Returns: Account if the line could be parsed, otherwise nil
-    static func parseFrom(line: String) -> Account? {
+    static func parseFrom(line: String, metaData: [String: String] = [:]) -> Account? {
         let accountMatches = line.matchingStrings(regex: self.regex)
         guard
             let match = accountMatches[safe: 0],
@@ -52,10 +52,10 @@ enum AccountParser {
 
         if match[2] == "open" {
             let commodity = match[4] != "" ? Commodity(symbol: match[5]) : nil
-            return bookingMethod != nil ? Account(name: accountName, bookingMethod: bookingMethod!, commodity: commodity, opening: date)
-                : Account(name: accountName, commodity: commodity, opening: date)
+            return bookingMethod != nil ? Account(name: accountName, bookingMethod: bookingMethod!, commodity: commodity, opening: date, metaData: metaData)
+                : Account(name: accountName, commodity: commodity, opening: date, metaData: metaData)
         } else if match[2] == "close" && match[5] == "" {
-            guard bookingMethod == nil else {
+            guard bookingMethod == nil && metaData.isEmpty else {
                 return nil
             }
             let account = Account(name: accountName)

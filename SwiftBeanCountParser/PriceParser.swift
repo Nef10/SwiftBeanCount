@@ -20,7 +20,7 @@ enum PriceParser {
     ///
     /// - Parameter line: String of one line
     /// - Returns: Price if the line could be parsed, otherwise nil
-    static func parseFrom(line: String) -> Price? {
+    static func parseFrom(line: String, metaData: [String: String] = [:]) -> Price? {
         let priceMatches = line.matchingStrings(regex: self.regex)
         guard
             let match = priceMatches[safe: 0],
@@ -34,7 +34,8 @@ enum PriceParser {
 
         return try? Price(date: date,
                           commodity: commodity,
-                          amount: Amount(number: amount, commodity: amountCommodity, decimalDigits: decimalDigits))
+                          amount: Amount(number: amount, commodity: amountCommodity, decimalDigits: decimalDigits),
+                          metaData: metaData)
 
     }
 

@@ -172,30 +172,30 @@ public class Parser {
         }
 
         // Transaction
-        if let transactionMetaData = TransactionMetaDataParser.parseFrom(line: line) {
+        if let transactionMetaData = TransactionMetaDataParser.parseFrom(line: line, metaData: metaData) {
             return Transaction(metaData: transactionMetaData)
         }
 
         // Account
-        if let account = AccountParser.parseFrom(line: line) {
+        if let account = AccountParser.parseFrom(line: line, metaData: metaData) {
             accounts.append((lineNumber, line, account))
             return nil
         }
 
         // Price
-        if let price = PriceParser.parseFrom(line: line) {
+        if let price = PriceParser.parseFrom(line: line, metaData: metaData) {
             prices.append((lineNumber, price))
             return nil
         }
 
         // Commodity
-        if let commodity = CommodityParser.parseFrom(line: line) {
+        if let commodity = CommodityParser.parseFrom(line: line, metaData: metaData) {
             commodities.append((lineNumber, commodity))
             return nil
         }
 
         // Balance
-        if let balance = BalanceParser.parseFrom(line: line) {
+        if let balance = BalanceParser.parseFrom(line: line, metaData: metaData) {
             balances.append((lineNumber, balance))
             return nil
         }
@@ -213,13 +213,13 @@ public class Parser {
         }
 
         // Event
-        if let event = EventParser.parseFrom(line: line) {
+        if let event = EventParser.parseFrom(line: line, metaData: metaData) {
             ledger.events.append(event)
             return nil
         }
 
         // Custom
-        if let custom = CustomsParser.parseFrom(line: line) {
+        if let custom = CustomsParser.parseFrom(line: line, metaData: metaData) {
             ledger.custom.append(custom)
             return nil
         }
