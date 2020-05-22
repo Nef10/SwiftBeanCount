@@ -33,6 +33,10 @@ class ParserTests: XCTestCase {
     let priceString = "2017-06-09 price EUR 1.50 CAD"
     let balanceString = "2017-06-09 balance Assets:Cash 0.00 CAD"
     let invalidBalanceString = "2017-06-09 balance TEST:Cash 0.00 CAD"
+    let optionString = "option \"ABC\" \"DEF\""
+    let pluginString = "plugin \"ABC\""
+    let eventString = "2017-06-09 event \"ABC\" \"DEF\""
+    let customString = "2017-06-09 custom \"ABC\" \"DEF\""
 
     let metaDataString = "  metaData: \"TestString\""
     let metaData = ["metaData": "TestString"]
@@ -163,6 +167,38 @@ class ParserTests: XCTestCase {
         parser = Parser(string: "\(balanceString)\n\(metaDataString)")
         ledger = parser.parse()
         XCTAssertEqual(ledger.accounts.first?.balances.first?.metaData, metaData)
+    }
+
+    func testOption() {
+        let parser = Parser(string: "\(optionString)")
+        let ledger = parser.parse()
+        XCTAssertEqual(ledger.option.first, Option(name: "ABC", value: "DEF"))
+    }
+
+    func testPlugin() {
+        let parser = Parser(string: "\(pluginString)")
+        let ledger = parser.parse()
+        XCTAssertEqual(ledger.plugins.first, "ABC")
+    }
+
+    func testEvent() {
+        var parser = Parser(string: "\(eventString)")
+        var ledger = parser.parse()
+        XCTAssertEqual(ledger.events.first, Event(date: TestUtils.date20170609, name: "ABC", value: "DEF"))
+
+        parser = Parser(string: "\(eventString)\n\(metaDataString)")
+        ledger = parser.parse()
+        XCTAssertEqual(ledger.events.first?.metaData, metaData)
+    }
+
+    func testCustom() {
+        var parser = Parser(string: "\(customString)")
+        var ledger = parser.parse()
+        XCTAssertEqual(ledger.custom.first, Custom(date: TestUtils.date20170609, name: "ABC", values: ["DEF"]))
+
+        parser = Parser(string: "\(customString)\n\(metaDataString)")
+        ledger = parser.parse()
+        XCTAssertEqual(ledger.custom.first?.metaData, metaData)
     }
 
     func testRoundTrip() {
