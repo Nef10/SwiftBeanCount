@@ -54,6 +54,7 @@
 		F9ED3BC422EAA89A005A6469 /* CommodityParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ED3BC322EAA89A005A6469 /* CommodityParserTests.swift */; };
 		F9ED3BC722EADC26005A6469 /* BalanceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ED3BC622EADC26005A6469 /* BalanceParser.swift */; };
 		F9ED3BC922EAE018005A6469 /* BalanceParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ED3BC822EAE018005A6469 /* BalanceParserTests.swift */; };
+		F9F3FBD72478A21B0026539E /* MetaData.beancount in Resources */ = {isa = PBXBuildFile; fileRef = F9F3FBD62478A21B0026539E /* MetaData.beancount */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +139,7 @@
 		F9ED3BC322EAA89A005A6469 /* CommodityParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommodityParserTests.swift; sourceTree = "<group>"; };
 		F9ED3BC622EADC26005A6469 /* BalanceParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceParser.swift; sourceTree = "<group>"; };
 		F9ED3BC822EAE018005A6469 /* BalanceParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceParserTests.swift; sourceTree = "<group>"; };
+		F9F3FBD62478A21B0026539E /* MetaData.beancount */ = {isa = PBXFileReference; lastKnownFileType = text; path = MetaData.beancount; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +269,7 @@
 				F9BDC3BE1FBAB13E00393578 /* TransactionWithoutPosting.beancount */,
 				F9BDC3B91FBAB13E00393578 /* Whitespace.beancount */,
 				F9B9E15D232FEB5600811B3F /* InvalidCost.beancount */,
+				F9F3FBD62478A21B0026539E /* MetaData.beancount */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 				F9BDC3C51FBAB13E00393578 /* PostingWithoutTransaction.beancount in Resources */,
 				F9BDC3C11FBAB13E00393578 /* Whitespace.beancount in Resources */,
 				F9BDC3C71FBAB13E00393578 /* Comments.beancount in Resources */,
+				F9F3FBD72478A21B0026539E /* MetaData.beancount in Resources */,
 				F9BDC3C41FBAB13E00393578 /* Big.beancount in Resources */,
 				F9BDC3C61FBAB13E00393578 /* TransactionWithoutPosting.beancount in Resources */,
 			);

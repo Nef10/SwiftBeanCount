@@ -21,8 +21,9 @@ class ParserTests: XCTestCase {
         case whitespace = "Whitespace"
         case big = "Big"
         case invalidCost = "InvalidCost"
+        case metaData = "MetaData"
 
-        static let withoutError = [minimal, comments, commentsEndOfLine, whitespace, big]
+        static let withoutError = [minimal, comments, commentsEndOfLine, whitespace, big, metaData]
     }
 
     let basicAccountOpeningString = "2017-06-09 open Assets:Cash"
@@ -79,8 +80,7 @@ class ParserTests: XCTestCase {
         } catch {
             errorMessage = error.localizedDescription
         }
-        let parser = try! Parser(url: urlFor(testFile: TestFile.invalidCost))
-        let ledger1 = parser.parse()
+        let ledger1 = ledgerFor(testFile: .invalidCost)
         XCTAssertEqual(ledger1.errors.count, 1)
         XCTAssertEqual(ledger1.errors[0], "\(errorMessage) (line 7)")
     }
@@ -222,72 +222,73 @@ class ParserTests: XCTestCase {
         XCTAssertEqual(ledger.events.first?.metaData, metaData2)
     }
 
+    func testMetaData() {
+        let ledger = ledgerFor(testFile: .metaData)
+        XCTAssertEqual(ledger.accounts[0].metaData, metaData2)
+        XCTAssertEqual(ledger.accounts[1].metaData, metaData2)
+        XCTAssertEqual(ledger.commodities.first?.metaData, metaData2)
+        XCTAssertEqual(ledger.transactions[0].metaData.metaData, metaData2)
+        XCTAssertEqual(ledger.transactions[0].postings[0].metaData, metaData2)
+        XCTAssertEqual(ledger.transactions[0].postings[1].metaData, metaData2)
+        XCTAssertEqual(ledger.transactions[1].metaData.metaData, metaData2)
+        XCTAssertEqual(ledger.transactions[1].postings[0].metaData, metaData2)
+        XCTAssertEqual(ledger.transactions[1].postings[1].metaData, metaData2)
+    }
+
     func testRoundTrip() {
-        do {
-            for testFile in TestFile.withoutError {
-                let parser1 = try Parser(url: urlFor(testFile: testFile))
-                let ledger1 = parser1.parse()
-                let parser2 = Parser(string: String(describing: ledger1))
-                let ledger2 = parser2.parse()
-                let result = ledger1 == ledger2
-                XCTAssert(result)
-            }
-        } catch {
-            XCTFail(String(describing: error))
+        for testFile in TestFile.withoutError {
+            let ledger1 = ledgerFor(testFile: testFile)
+            let parser2 = Parser(string: String(describing: ledger1))
+            let ledger2 = parser2.parse()
+            let result = ledger1 == ledger2
+            XCTAssert(result)
         }
     }
 
     func testPerformance() {
         self.measure {
-            do {
-                let parser = try Parser(url: urlFor(testFile: .big))
-                _ = parser.parse()
-            } catch {
-                XCTFail(String(describing: error))
-            }
+            _ = ledgerFor(testFile: .big)
         }
     }
 
     //  Helper
 
-    private func urlFor(testFile: TestFile) -> URL {
-        NSURL.fileURL(withPath: Bundle(for: type(of: self)).path(forResource: testFile.rawValue, ofType: "beancount")!)
+    private func ensureEmpty(testFile: TestFile) -> Ledger {
+        let ledger = ledgerFor(testFile: testFile)
+        XCTAssertEqual(ledger.transactions.count, 0)
+        return ledger
     }
 
-    private func ensureEmpty(testFile: TestFile) -> Ledger {
+    private func ensureMinimal(testFile: TestFile) {
+        let ledger = ledgerFor(testFile: testFile)
+        XCTAssertEqual(ledger.transactions.count, 1)
+        XCTAssert(ledger.errors.isEmpty)
+        XCTAssertEqual(ledger.commodities.count, 1)
+        XCTAssertEqual(ledger.accounts.count, 2)
+        let transaction = ledger.transactions[0]
+        XCTAssertEqual(transaction.postings.count, 2)
+        XCTAssertEqual(transaction.metaData.payee, "Payee")
+        XCTAssertEqual(transaction.metaData.narration, "Narration")
+        XCTAssertEqual(transaction.metaData.date, TestUtils.date20170608)
+        let posting1 = transaction.postings.first { $0.amount.number == Decimal(-1) }!
+        XCTAssertEqual(posting1.accountName.fullName, "Equity:OpeningBalance")
+        XCTAssertEqual(posting1.amount.commodity, Commodity(symbol: "EUR"))
+        let posting2 = transaction.postings.first { $0.amount.number == Decimal(1) }!
+        XCTAssertEqual(posting2.accountName.fullName, "Assets:Checking")
+        XCTAssertEqual(posting2.amount.commodity, Commodity(symbol: "EUR"))
+    }
+
+    private func ledgerFor(testFile: TestFile) -> Ledger {
         do {
-            let parser = try Parser(url: urlFor(testFile: testFile))
+            let url = NSURL.fileURL(withPath: Bundle(for: type(of: self)).path(forResource: testFile.rawValue, ofType: "beancount")!)
+            let parser = try Parser(url: url)
             let ledger = parser.parse()
-            XCTAssertEqual(ledger.transactions.count, 0)
             return ledger
         } catch {
             XCTFail(String(describing: error))
         }
         return Ledger()
-    }
 
-    private func ensureMinimal(testFile: TestFile) {
-        do {
-            let parser = try Parser(url: urlFor(testFile: testFile))
-            let ledger = parser.parse()
-            XCTAssertEqual(ledger.transactions.count, 1)
-            XCTAssert(ledger.errors.isEmpty)
-            XCTAssertEqual(ledger.commodities.count, 1)
-            XCTAssertEqual(ledger.accounts.count, 2)
-            let transaction = ledger.transactions[0]
-            XCTAssertEqual(transaction.postings.count, 2)
-            XCTAssertEqual(transaction.metaData.payee, "Payee")
-            XCTAssertEqual(transaction.metaData.narration, "Narration")
-            XCTAssertEqual(transaction.metaData.date, TestUtils.date20170608)
-            let posting1 = transaction.postings.first { $0.amount.number == Decimal(-1) }!
-            XCTAssertEqual(posting1.accountName.fullName, "Equity:OpeningBalance")
-            XCTAssertEqual(posting1.amount.commodity, Commodity(symbol: "EUR"))
-            let posting2 = transaction.postings.first { $0.amount.number == Decimal(1) }!
-            XCTAssertEqual(posting2.accountName.fullName, "Assets:Checking")
-            XCTAssertEqual(posting2.amount.commodity, Commodity(symbol: "EUR"))
-        } catch {
-            XCTFail(String(describing: error))
-        }
     }
 
 }

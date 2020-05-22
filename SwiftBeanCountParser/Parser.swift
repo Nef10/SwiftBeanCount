@@ -17,8 +17,6 @@ public class Parser {
     private let lines: [String]
     private let ledger = Ledger()
 
-    private var openTransaction: Transaction?
-
     private var accounts = [(Int, String, Account)]()
     private var transactions = [(Int, Transaction)]()
     private var balances = [(Int, Balance)]()
@@ -46,7 +44,6 @@ public class Parser {
     /// - Returns: Ledger with parsed content
     public func parse() -> Ledger {
         parseLines()
-        closeOpenTransaction(onLine: lines.count)
         sortParsedData()
         importParsedData()
         return ledger
@@ -62,9 +59,13 @@ public class Parser {
             if shouldSkipLine(line) {
                 continue
             }
-            let (metaData, offset) = getMetaDataForLine(number: lineNumber)
-            openTransaction = parse(line, number: lineNumber, metaData: metaData)
-            lineNumber += offset
+            let transactionOffset = getTransactionForLine(number: lineNumber)
+            if transactionOffset == 0 {
+                let (metaData, metaDataOffset) = getMetaDataForLine(number: lineNumber)
+                parse(line, number: lineNumber, metaData: metaData)
+                lineNumber += metaDataOffset
+            }
+            lineNumber += transactionOffset
         }
     }
 
@@ -76,6 +77,44 @@ public class Parser {
             return true
         }
         return false
+    }
+
+    /// Returns the transaction starting in a given line
+    ///
+    /// This is archived by first looking for the Transaction header (TransactionMetaData) and then for postings,
+    /// respecting meta data for both
+    ///
+    /// - Parameter lineNumber: line to check
+    /// - Returns: lines parsed
+    private func getTransactionForLine(number lineNumber: Int) -> Int {
+        let (transactionMetaDataMetaData, transactionMetaDataMetaDataOffset) = getMetaDataForLine(number: lineNumber)
+        guard let transactionMetaData = TransactionMetaDataParser.parseFrom(line: lines[lineNumber], metaData: transactionMetaDataMetaData) else {
+            return 0
+        }
+        let transaction = Transaction(metaData: transactionMetaData)
+
+        var offset = transactionMetaDataMetaDataOffset
+        while lineNumber + offset < lines.count - 1 {
+            offset += 1
+            if shouldSkipLine(lines[lineNumber + offset]) {
+                continue
+            }
+            let (metaData, metaDataOffset) = getMetaDataForLine(number: lineNumber + offset)
+            do {
+                if let posting = try PostingParser.parseFrom(line: lines[lineNumber + offset], metaData: metaData) {
+                    transaction.add(posting)
+                } else { // No posting, need to close previous transaction
+                    closeOpen(transaction: transaction, onLine: lineNumber + offset)
+                    return offset - 1
+                }
+            } catch {
+                ledger.parsingErrors.append("\(error.localizedDescription) (line \(lineNumber + offset + 1))")
+                return offset
+            }
+            offset += metaDataOffset
+        }
+        closeOpen(transaction: transaction, onLine: lineNumber + offset)
+        return offset
     }
 
     /// Returns the metaData for a directive in the given line
@@ -208,121 +247,72 @@ public class Parser {
     ///   - line: string of the line
     ///   - lineNumber: number of the line for error messages
     /// - Returns: new open transaction or nil if no transaction open
-    private func parse(_ line: String, number lineNumber: Int, metaData: [String: String]) -> Transaction? {
-
-        // Posting
-        let (shouldReturn, returnValue) = parsePosting(from: line, lineNumber: lineNumber, openTransaction: openTransaction)
-        if shouldReturn {
-            return returnValue
-        }
-
-        // Transaction
-        if let transactionMetaData = TransactionMetaDataParser.parseFrom(line: line, metaData: metaData) {
-            return Transaction(metaData: transactionMetaData)
-        }
+    private func parse(_ line: String, number lineNumber: Int, metaData: [String: String]) {
 
         // Account
         if let account = AccountParser.parseFrom(line: line, metaData: metaData) {
             accounts.append((lineNumber, line, account))
-            return nil
+            return
         }
 
         // Price
         if let price = PriceParser.parseFrom(line: line, metaData: metaData) {
             prices.append((lineNumber, price))
-            return nil
+            return
         }
 
         // Commodity
         if let commodity = CommodityParser.parseFrom(line: line, metaData: metaData) {
             commodities.append((lineNumber, commodity))
-            return nil
+            return
         }
 
         // Balance
         if let balance = BalanceParser.parseFrom(line: line, metaData: metaData) {
             balances.append((lineNumber, balance))
-            return nil
+            return
         }
 
         // Option
         if let option = OptionParser.parseFrom(line: line) {
             ledger.option.append(option)
-            return nil
+            return
         }
 
         // Plugin
         if let plugin = PluginParser.parseFrom(line: line) {
             ledger.plugins.append(plugin)
-            return nil
+            return
         }
 
         // Event
         if let event = EventParser.parseFrom(line: line, metaData: metaData) {
             ledger.events.append(event)
-            return nil
+            return
         }
 
         // Custom
         if let custom = CustomsParser.parseFrom(line: line, metaData: metaData) {
             ledger.custom.append(custom)
-            return nil
+            return
         }
 
-        return addParsingError(lineNumber: lineNumber, line: line)
-    }
-
-    /// Add a parsing error to the ledger
-    /// - Parameters:
-    ///   - lineNumber: line number
-    ///   - line: line which could not be parsed
-    /// - Returns: nil
-    private func addParsingError(lineNumber: Int, line: String) -> Transaction? {
         ledger.parsingErrors.append("Invalid format in line \(lineNumber + 1): \(line)")
-        return nil
     }
 
-    /// Tries to close an open transaction if any
+    /// Tries to close an open transaction
     ///
     /// Adds an error to the ledger if the transaction does not have any postings
     ///
     /// - Parameters:
+    ///   - transaction: transaction to close and add to the parsed transactions array
     ///   - line: line number which should be included in the error if the transaction cannot be closed
-    private func closeOpenTransaction(onLine line: Int) {
-        if let transaction = openTransaction {
-            if !transaction.postings.isEmpty {
-                transactions.append((line, transaction))
-            } else {
-                ledger.parsingErrors.append("Invalid format in line \(line): previous Transaction \(transaction) without postings")
-            }
+    private func closeOpen(transaction: Transaction, onLine line: Int) {
+        if !transaction.postings.isEmpty {
+            transactions.append((line, transaction))
+        } else {
+            ledger.parsingErrors.append("Invalid format in line \(line + 1): previous Transaction \(transaction) without postings")
         }
-    }
-
-    /// Tries to parse a posting from a line and add it to the open transaction
-    ///
-    /// Adds an error to the ledger if the posting cannot be added
-    /// If the is no posting in the line it closes the open transcation
-    ///
-    /// - Parameters:
-    ///   - line: line to parse from
-    ///   - lineNumber: line number which should be included in the error if the transaction cannot be added
-    ///   - openTransaction: transaction which is still open
-    /// - Returns: a tuple out of bool and an optional transaction. The boolean indicaties if the line was handled. The optional tansaction is the new open transaction.
-    private func parsePosting(from line: String, lineNumber: Int, openTransaction: Transaction?) -> (Bool, Transaction?) {
-        if let transaction = openTransaction {
-           do {
-               if let posting = try PostingParser.parseFrom(line: line) {
-                   transaction.add(posting)
-                   return (true, transaction)
-               } else { // No posting, need to close previous transaction
-                   closeOpenTransaction(onLine: lineNumber + 1)
-               }
-           } catch {
-               ledger.parsingErrors.append("\(error.localizedDescription) (line \(lineNumber + 1))")
-               return (true, nil)
-           }
-        }
-        return (false, nil)
     }
 
 }
