@@ -14,7 +14,7 @@ public class Parser {
 
     static let comment: Character = ";"
 
-    private let string: String
+    private let lines: [String]
     private let ledger = Ledger()
 
     private var openTransaction: Transaction?
@@ -38,39 +38,60 @@ public class Parser {
     ///
     /// - Parameter string: String to parse
     public init(string: String) {
-        self.string = string
+        lines = string.components(separatedBy: .newlines)
     }
 
     /// Parses the given content into a Ledger
     ///
     /// - Returns: Ledger with parsed content
     public func parse() -> Ledger {
-
-        let lines = string.components(separatedBy: .newlines)
-        var lineNumber = 0
-
-        while lineNumber < lines.count {
-            let line = lines[lineNumber]
-            if line.isEmpty || line[line.startIndex] == Parser.comment {
-                // Ignore empty lines and comments
-                lineNumber += 1
-                continue
-            }
-            var metaData = [String: String]()
-            while lineNumber < lines.count - 1, let metaDataParsed = MetaDataParser.parseFrom(line: lines[lineNumber + 1]) {
-                metaData = metaData.merging(metaDataParsed) { _, new in new }
-                lineNumber += 1
-            }
-            openTransaction = parse(line, number: lineNumber, metaData: metaData)
-            lineNumber += 1
-        }
-
+        parseLines()
         closeOpenTransaction(onLine: lines.count)
         sortParsedData()
         importParsedData()
-
         return ledger
+    }
 
+    /// Parses the lines into objects, not all yet added to the ledger
+    private func parseLines() {
+        var lineNumber = -1
+
+        while lineNumber < lines.count - 1 {
+            lineNumber += 1
+            let line = lines[lineNumber]
+            if shouldSkipLine(line) {
+                continue
+            }
+            let (metaData, offset) = getMetaDataForLine(number: lineNumber)
+            lineNumber += offset
+            openTransaction = parse(line, number: lineNumber, metaData: metaData)
+        }
+    }
+
+    /// Checks if the line can be skipped because it either is empty or only contains a comment
+    /// - Parameter line: string to check
+    /// - Returns: if the line should be skipped
+    private func shouldSkipLine(_ line: String) -> Bool {
+        if line.isEmpty || line[line.startIndex] == Parser.comment {
+            return true
+        }
+        return false
+    }
+
+    /// Returns the metaData for a directive in the given line
+    ///
+    /// This is archived by starting one line after the given and parse for metadata till no more is found
+    ///
+    /// - Parameter lineNumber: line with the directive
+    /// - Returns: metaData found and lines used
+    private func getMetaDataForLine(number lineNumber: Int) -> ([String: String], Int) {
+        var offset = 1
+        var metaData = [String: String]()
+        while lineNumber + offset < lines.count, let metaDataParsed = MetaDataParser.parseFrom(line: lines[lineNumber + offset]) {
+            metaData = metaData.merging(metaDataParsed) { _, new in new }
+            offset += 1
+        }
+        return (metaData, offset - 1)
     }
 
     /// Sorts all the parsed objects which have not yet added to the ledger by date, so they can be added in order later
