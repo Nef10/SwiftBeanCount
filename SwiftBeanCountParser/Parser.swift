@@ -73,6 +73,7 @@ public class Parser {
 
     }
 
+    /// Sorts all the parsed objects which have not yet added to the ledger by date, so they can be added in order later
     private func sortParsedData() {
         accounts.sort {
             let (_, _, account1) = $0
@@ -107,7 +108,10 @@ public class Parser {
         }
     }
 
+    /// Adds all the parsed objects objects which have not yet added to the ledger to it.
+    /// To avoid errors the objects must be sorted by date beforehand.
     private func importParsedData() {
+        // commodities do not have dependencies
         for (lineNumber, commodity) in commodities {
             do {
                 try ledger.add(commodity)
@@ -115,9 +119,13 @@ public class Parser {
                 ledger.parsingErrors.append("Error with commodity \(commodity): \(error.localizedDescription) in line \(lineNumber + 1)")
             }
         }
+
+        // accounts depend on commodities
         for (lineNumber, line, account) in accounts {
             addAccount(lineNumber: lineNumber, line: line, account: account)
         }
+
+        // prices depend on commodities
         for (lineNumber, price) in prices {
             do {
                 try ledger.add(price)
@@ -125,6 +133,8 @@ public class Parser {
                 ledger.parsingErrors.append("Error with price \(price): \(error.localizedDescription) in line \(lineNumber + 1)")
             }
         }
+
+        // balances depend on accounts and commodities
         for (lineNumber, balance) in balances {
             do {
                 try ledger.add(balance)
@@ -132,11 +142,18 @@ public class Parser {
                 ledger.parsingErrors.append("Error with balance \(balance): \(error.localizedDescription) in line \(lineNumber + 1)")
             }
         }
+
+        // transactions depend on accounts and commodities
         for (_, transaction) in transactions {
             _ = ledger.add(transaction)
         }
     }
 
+    /// Adds an account opening or closing to the ledger
+    /// - Parameters:
+    ///   - lineNumber: line number containing the data about the account - used to print out exact errors
+    ///   - line: line containing the data about the account - used to print out exact errors
+    ///   - account: the account to add
     private func addAccount(lineNumber: Int, line: String, account: Account) {
         if let ledgerAccount = ledger.accounts.first(where: { $0.name == account.name }) {
             if account.closing != nil {
@@ -227,6 +244,11 @@ public class Parser {
         return addParsingError(lineNumber: lineNumber, line: line)
     }
 
+    /// Add a parsing error to the ledger
+    /// - Parameters:
+    ///   - lineNumber: line number
+    ///   - line: line which could not be parsed
+    /// - Returns: nil
     private func addParsingError(lineNumber: Int, line: String) -> Transaction? {
         ledger.parsingErrors.append("Invalid format in line \(lineNumber + 1): \(line)")
         return nil
