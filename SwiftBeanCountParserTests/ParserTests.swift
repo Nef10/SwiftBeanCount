@@ -39,7 +39,10 @@ class ParserTests: XCTestCase {
     let customString = "2017-06-09 custom \"ABC\" \"DEF\""
 
     let metaDataString = "  metaData: \"TestString\""
+    let metaDataString2 = "  metaData2: \"TestString2\""
     let metaData = ["metaData": "TestString"]
+    let metaData2 = ["metaData": "TestString", "metaData2": "TestString2"]
+    let comment = "; TEST comment"
 
     func testMinimal() {
         ensureMinimal(testFile: .minimal)
@@ -199,6 +202,24 @@ class ParserTests: XCTestCase {
         parser = Parser(string: "\(customString)\n\(metaDataString)")
         ledger = parser.parse()
         XCTAssertEqual(ledger.custom.first?.metaData, metaData)
+    }
+
+    func testCommentsMetaData() {
+        var parser = Parser(string: "\(comment)")
+        var ledger = parser.parse()
+        XCTAssertTrue(ledger.errors.isEmpty)
+
+        parser = Parser(string: "\(comment)\n\(eventString)")
+        ledger = parser.parse()
+        XCTAssertEqual(ledger.events.first, Event(date: TestUtils.date20170609, name: "ABC", value: "DEF"))
+
+        parser = Parser(string: "\((comment))\n\(eventString)\n\(metaDataString)")
+        ledger = parser.parse()
+        XCTAssertEqual(ledger.events.first?.metaData, metaData)
+
+        parser = Parser(string: "\((comment))\n\(eventString)\n\(metaDataString)\n\(comment)\n\(metaDataString2)")
+        ledger = parser.parse()
+        XCTAssertEqual(ledger.events.first?.metaData, metaData2)
     }
 
     func testRoundTrip() {

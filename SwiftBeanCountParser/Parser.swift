@@ -63,8 +63,8 @@ public class Parser {
                 continue
             }
             let (metaData, offset) = getMetaDataForLine(number: lineNumber)
-            lineNumber += offset
             openTransaction = parse(line, number: lineNumber, metaData: metaData)
+            lineNumber += offset
         }
     }
 
@@ -85,13 +85,20 @@ public class Parser {
     /// - Parameter lineNumber: line with the directive
     /// - Returns: metaData found and lines used
     private func getMetaDataForLine(number lineNumber: Int) -> ([String: String], Int) {
-        var offset = 1
+        var offset = 0
         var metaData = [String: String]()
-        while lineNumber + offset < lines.count, let metaDataParsed = MetaDataParser.parseFrom(line: lines[lineNumber + offset]) {
-            metaData = metaData.merging(metaDataParsed) { _, new in new }
+        while lineNumber + offset < lines.count - 1 {
             offset += 1
+            let line = lines[lineNumber + offset]
+            if let metaDataParsed = MetaDataParser.parseFrom(line: line) {
+                metaData = metaData.merging(metaDataParsed) { _, new in new }
+            } else if shouldSkipLine(line) {
+                continue
+            } else {
+                return (metaData, offset - 1)
+            }
         }
-        return (metaData, offset - 1)
+        return (metaData, offset)
     }
 
     /// Sorts all the parsed objects which have not yet added to the ledger by date, so they can be added in order later
