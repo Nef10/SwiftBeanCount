@@ -10,7 +10,7 @@ import Foundation
 
 /// Errors Cost can throw
 public enum CostError: Error {
-    /// an invalid account name
+    /// a negative amount
     case negativeAmount(String)
 }
 

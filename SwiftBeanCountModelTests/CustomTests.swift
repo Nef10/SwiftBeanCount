@@ -11,8 +11,8 @@ import XCTest
 
 class CustomTests: XCTestCase {
 
-    let date1 = Date(timeIntervalSince1970: 1_496_905_200)
-    let date2 = Date(timeIntervalSince1970: 1_496_991_600)
+    let date1 = TestUtils.date20170608
+    let date2 = TestUtils.date20170609
 
     func testEqual() {
         var custom1 = Custom(date: date1, name: "A", values: ["B"])

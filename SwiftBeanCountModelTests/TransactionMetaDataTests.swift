@@ -14,7 +14,7 @@ class TransactionMetaDataTests: XCTestCase {
     let payee = "Payee"
     let narration = "Narration"
     let flag = Flag.complete
-    let date = Date(timeIntervalSince1970: 1_496_905_200)
+    let date = TestUtils.date20170608
     let dateString = "2017-06-08"
     var transactionMetaData: TransactionMetaData?
 

@@ -14,7 +14,7 @@ class InventoryTests: XCTestCase {
 
     let bookingMethods = [BookingMethod.strict, BookingMethod.lifo, BookingMethod.fifo]
 
-    let date = Date(timeIntervalSince1970: 1_496_905_200)
+    let date = TestUtils.date20170608
     let accountName = try! AccountName("Assets:Inventory")
     var account: Account!
     var transactionStore = [Transaction]() // required because the posting reference is unowned
@@ -905,7 +905,7 @@ extension InventoryTests { // Test Reduce
     }
 
     func transactionPosting(_ posting: Posting) -> TransactionPosting {
-        let transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_905_200),
+        let transaction = Transaction(metaData: TransactionMetaData(date: date,
                                                                     payee: "Payee",
                                                                     narration: "Narration",
                                                                     flag: Flag.complete,

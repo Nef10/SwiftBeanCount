@@ -11,8 +11,8 @@ import XCTest
 
 class EventTests: XCTestCase {
 
-    let date1 = Date(timeIntervalSince1970: 1_496_905_200)
-    let date2 = Date(timeIntervalSince1970: 1_496_991_600)
+    let date1 = TestUtils.date20170608
+    let date2 = TestUtils.date20170609
 
     func testEqual() {
         let event1 = Event(date: date1, name: "A", value: "B")

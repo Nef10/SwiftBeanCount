@@ -28,21 +28,19 @@ class CommodityTests: XCTestCase {
     func testDescriptionOpening() {
         let symbol = "CAD"
         let string = "2017-06-08 commodity \(symbol)"
-        let date = Date(timeIntervalSince1970: 1_496_905_200)
-        let commodity = Commodity(symbol: symbol, opening: date)
+        let commodity = Commodity(symbol: symbol, opening: TestUtils.date20170608)
         XCTAssertEqual(String(describing: commodity), string)
     }
 
     func testDescriptionMetaData() {
         let symbol = "CAD"
         let string = "2017-06-08 commodity \(symbol)\n  A: \"B\""
-        let date = Date(timeIntervalSince1970: 1_496_905_200)
-        let commodity = Commodity(symbol: symbol, opening: date, metaData: ["A": "B"])
+        let commodity = Commodity(symbol: symbol, opening: TestUtils.date20170608, metaData: ["A": "B"])
         XCTAssertEqual(String(describing: commodity), string)
     }
 
     func testValidate() {
-        let commodity = Commodity(symbol: "EUR", opening: Date(timeIntervalSince1970: 1_496_905_200))
+        let commodity = Commodity(symbol: "EUR", opening: TestUtils.date20170608)
         guard case .valid = commodity.validate() else {
             XCTFail("\(commodity) is not valid")
             return

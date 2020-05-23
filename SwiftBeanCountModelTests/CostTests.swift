@@ -14,8 +14,8 @@ class CostTests: XCTestCase {
     let amount1 = Amount(number: Decimal(1), commodity: Commodity(symbol: "CAD"))
     let amount2 = Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR"))
 
-    let date1 = Date(timeIntervalSince1970: 1_496_905_200)
-    let date2 = Date(timeIntervalSince1970: 1_496_991_600)
+    let date1 = TestUtils.date20170608
+    let date2 = TestUtils.date20170609
 
     let label1 = "1"
     let label2 = "2"

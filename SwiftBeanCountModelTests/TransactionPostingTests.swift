@@ -29,7 +29,7 @@ class TransactionPostingTests: XCTestCase {
     }
 
     func testInitTransactionPosting() {
-        let transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_991_600), payee: "", narration: "", flag: .complete, tags: []),
+        let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "", narration: "", flag: .complete, tags: []),
                                       postings: [])
         let posting = Posting(accountName: accountName1, amount: amount1!, metaData: ["A": "B"])
         let transactionPosting = TransactionPosting(posting: posting, transaction: transaction)
