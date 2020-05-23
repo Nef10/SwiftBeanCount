@@ -165,15 +165,16 @@ class LedgerTests: XCTestCase {
 
     func testBalances() {
         let ledger = Ledger()
-        let account = try! Account(name: AccountName("Assets:Test"))
+        let accountName = try! AccountName("Assets:Test")
+        let account = Account(name: accountName)
         let date = Date(timeIntervalSince1970: 1_496_905_200)
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "CAD"))
-        let balance = Balance(date: date, account: account, amount: amount, metaData: ["A": "B"])
+        let balance = Balance(date: date, accountName: accountName, amount: amount, metaData: ["A": "B"])
 
         try! ledger.add(account)
         XCTAssertTrue(ledger.accounts.first!.balances.isEmpty)
 
-        try! ledger.add(balance)
+        ledger.add(balance)
         XCTAssertTrue(ledger.accounts.first!.balances.first! == balance)
     }
 
@@ -256,14 +257,19 @@ class LedgerTests: XCTestCase {
     }
 
     func testValidateAccountBalance() {
-        let account = try! Account(name: AccountName("Assets:Test"))
+        let accountName = try! AccountName("Assets:Test")
+        let account = Account(name: accountName)
 
         let validLedger = Ledger()
         try! validLedger.add(account)
         XCTAssertTrue(validLedger.errors.isEmpty)
 
         let invalidLedger = Ledger()
-        account.balances = [Balance(date: Date(timeIntervalSince1970: 1_496_905_200), account: account, amount: Amount(number: 1, commodity: Commodity(symbol: "CAD")))]
+        account.balances = [
+            Balance(date: Date(timeIntervalSince1970: 1_496_905_200),
+                    accountName: accountName,
+                    amount: Amount(number: 1, commodity: Commodity(symbol: "CAD")))
+        ]
         try! invalidLedger.add(account)
         XCTAssertFalse(invalidLedger.errors.isEmpty)
     }

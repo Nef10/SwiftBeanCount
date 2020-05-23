@@ -14,8 +14,8 @@ public struct Balance {
     /// Date of the Balance
     public let date: Date
 
-    /// `Account` of the Balance
-    public let account: Account
+    /// `AccountName` of the Balance
+    public let accountName: AccountName
 
     /// `Amount` of the Balance
     public let amount: Amount
@@ -29,9 +29,9 @@ public struct Balance {
     ///   - date: date of the balance
     ///   - account: account
     ///   - amount: amount
-    public init(date: Date, account: Account, amount: Amount, metaData: [String: String] = [:]) {
+    public init(date: Date, accountName: AccountName, amount: Amount, metaData: [String: String] = [:]) {
         self.date = date
-        self.account = account
+        self.accountName = accountName
         self.amount = amount
         self.metaData = metaData
     }
@@ -48,7 +48,7 @@ extension Balance: CustomStringConvertible {
 
     /// Returns the price string for the ledger.
     public var description: String {
-        var result = "\(Self.dateFormatter.string(from: date)) balance \(account.name) \(amount)"
+        var result = "\(Self.dateFormatter.string(from: date)) balance \(accountName) \(amount)"
         if !metaData.isEmpty {
             result += "\n\(metaData.map { "  \($0): \"\($1)\"" }.joined(separator: "\n"))"
         }
@@ -66,7 +66,7 @@ extension Balance: Equatable {
     ///   - rhs: price 2
     /// - Returns: true if the prices are equal, false otherwise
     public static func == (lhs: Balance, rhs: Balance) -> Bool {
-        lhs.date == rhs.date && lhs.account == rhs.account && lhs.amount == rhs.amount && lhs.metaData == rhs.metaData
+        lhs.date == rhs.date && lhs.accountName == rhs.accountName && lhs.amount == rhs.amount && lhs.metaData == rhs.metaData
     }
 
 }

@@ -108,7 +108,12 @@ public class Ledger {
     /// - Parameter account: account to add
     /// - Throws: If the account already exists
     public func add(_ account: Account) throws {
-        self.account[account.name.fullName] = try getAccount(for: account, keepProperties: true)
+        let name = account.name.fullName
+        if self.account[name] == nil {
+            addAccountToStructure(account)
+        } else {
+            throw LedgerError.alreadyExists(String(describing: account))
+        }
     }
 
     /// Adds a `Commodity` to the ledger
@@ -139,9 +144,8 @@ public class Ledger {
     /// Adds a `Balance` to the ledger
     ///
     /// - Parameter balance: `Balance` to add
-    /// - Throws: If the account name is invalid
-    public func add(_ balance: Balance) throws {
-        try getAccount(for: balance.account).balances.append(balance)
+    public func add(_ balance: Balance) {
+        getAccount(by: balance.accountName).balances.append(balance)
     }
 
     /// Validates ledger and returns all validation errors
@@ -214,38 +218,39 @@ public class Ledger {
                decimalDigits: amount.decimalDigits)
     }
 
-    /// Converts `Account`s so that all accounts exists only once in a ledger
+    /// Adds an account the the account structure in the ledger
+    /// - Parameter account: account to add
+    private func addAccountToStructure(_ account: Account) {
+        let name = account.name.fullName
+        var group: AccountGroup!
+        let nameItems = name.split(separator: Account.nameSeperator).map { String($0) }
+        for (index, nameItem) in nameItems.enumerated() {
+            switch index {
+            case 0:
+                group = accountGroup[nameItem]
+            case nameItems.count - 1:
+                group.accounts[nameItem] = account
+            default:
+                if group.accountGroups[nameItem] == nil {
+                    group.accountGroups[nameItem] = AccountGroup(nameItem: nameItem, accountType: group.accountType)
+                }
+                group = group.accountGroups[nameItem]!
+            }
+        }
+        self.account[name] = account
+    }
+
+    // Gets an `Account` so that all accounts exists only once in a ledger, create a new one if it doesn't exist yet
     ///
     /// - Parameters:
-    ///   - account: account to convert
-    ///   - keepProperties: if true all properties of the accounts are added to the return object, otherwise only the name
-    ///                     Note: You cannot keep properties if an account with this name already exists in the ledger
-    /// - Returns: Account to add to the ledger
-    /// - Throws: If the account name is invalid or you try to keep properties of an account which already exists
-    private func getAccount(for account: Account, keepProperties: Bool = false) throws -> Account {
-        let name = account.name.fullName
-        if self.account[name] == nil {
-            let account = keepProperties ? account : try Account(name: AccountName(name))
-            var group: AccountGroup!
-            let nameItems = name.split(separator: Account.nameSeperator).map { String($0) }
-            for (index, nameItem) in nameItems.enumerated() {
-                switch index {
-                case 0:
-                    group = accountGroup[nameItem]
-                case nameItems.count - 1:
-                    group.accounts[nameItem] = account
-                default:
-                    if group.accountGroups[nameItem] == nil {
-                        group.accountGroups[nameItem] = AccountGroup(nameItem: nameItem, accountType: group.accountType)
-                    }
-                    group = group.accountGroups[nameItem]!
-                }
-            }
-            self.account[name] = account
-        } else if keepProperties {
-            throw LedgerError.alreadyExists(String(describing: account))
+    ///   - accountName: accountName to get
+    /// - Returns: Account from the ledger
+    private func getAccount(by name: AccountName) -> Account {
+        if self.account[name.fullName] == nil {
+            let account = Account(name: name)
+            addAccountToStructure(account)
         }
-        return self.account[name]!
+        return self.account[name.fullName]!
     }
 
     /// Converts `Tag`s so that all tags exists only once in a ledger. This function only keeps the name of the tag.

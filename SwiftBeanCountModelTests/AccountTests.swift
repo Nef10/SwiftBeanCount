@@ -265,13 +265,13 @@ class AccountTests: XCTestCase {
         let account = Account(name: accountName, commodity: commodity)
         try! ledger.add(account)
 
-        account.balances.append(Balance(date: date20170608, account: account, amount: Amount(number: 0, commodity: commodity)))
+        account.balances.append(Balance(date: date20170608, accountName: accountName, amount: Amount(number: 0, commodity: commodity)))
         guard case .valid = account.validateBalance(in: ledger) else {
             XCTFail("\(account) is not valid")
             return
         }
 
-        account.balances.append(Balance(date: date20170609, account: account, amount: Amount(number: 1, commodity: commodity)))
+        account.balances.append(Balance(date: date20170609, accountName: accountName, amount: Amount(number: 1, commodity: commodity)))
         if case .invalid(let error) = account.validateBalance(in: ledger) {
             XCTAssertEqual(error, "Balance failed for 2017-06-09 balance Assets:Cash 1 CAD - 1 CAD too much (0 tolerance)")
         } else {
@@ -290,7 +290,7 @@ class AccountTests: XCTestCase {
         posting = Posting(accountName: accountName, amount: Amount(number: 10, commodity: commodity))
         transaction = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         _ = ledger.add(transaction)
-        account.balances.append(Balance(date: date20170610, account: account, amount: Amount(number: 11, commodity: commodity)))
+        account.balances.append(Balance(date: date20170610, accountName: accountName, amount: Amount(number: 11, commodity: commodity)))
         guard case .valid = account.validateBalance(in: ledger) else {
             XCTFail("\(account) is not valid")
             return
@@ -325,9 +325,9 @@ class AccountTests: XCTestCase {
         let account = Account(name: accountName)
         try! ledger.add(account)
 
-        account.balances.append(Balance(date: date20170608, account: account, amount: Amount(number: 0, commodity: commodity2)))
+        account.balances.append(Balance(date: date20170608, accountName: accountName, amount: Amount(number: 0, commodity: commodity2)))
 
-        account.balances.append(Balance(date: date20170609, account: account, amount: Amount(number: 1, commodity: commodity1)))
+        account.balances.append(Balance(date: date20170609, accountName: accountName, amount: Amount(number: 1, commodity: commodity1)))
         if case .invalid(let error) = account.validateBalance(in: ledger) {
             XCTAssertEqual(error, "Balance failed for 2017-06-09 balance Assets:Cash 1 CAD - 1 CAD too much (0 tolerance)")
         } else {
@@ -352,7 +352,7 @@ class AccountTests: XCTestCase {
             return
         }
 
-        account.balances.append(Balance(date: date20170609, account: account, amount: Amount(number: 1, commodity: commodity2)))
+        account.balances.append(Balance(date: date20170609, accountName: accountName, amount: Amount(number: 1, commodity: commodity2)))
         posting = Posting(accountName: accountName, amount: Amount(number: 1, commodity: commodity2))
         transaction = Transaction(metaData: TransactionMetaData(date: date20170608, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         _ = ledger.add(transaction)
@@ -372,14 +372,14 @@ class AccountTests: XCTestCase {
         var transaction = Transaction(metaData: TransactionMetaData(date: date20170608, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         _ = ledger.add(transaction)
 
-        account.balances = [Balance(date: date20170609, account: account, amount: Amount(number: 1.15, commodity: commodity, decimalDigits: 2))]
+        account.balances = [Balance(date: date20170609, accountName: accountName, amount: Amount(number: 1.15, commodity: commodity, decimalDigits: 2))]
         if case .invalid(let error) = account.validateBalance(in: ledger) {
             XCTAssertEqual(error, "Balance failed for 2017-06-09 balance Assets:Cash 1.15 CAD - 0.05 CAD too much (0.005 tolerance)")
         } else {
             XCTFail("\(account) is valid")
         }
 
-        account.balances = [Balance(date: date20170609, account: account, amount: Amount(number: 1.15, commodity: commodity, decimalDigits: 1))]
+        account.balances = [Balance(date: date20170609, accountName: accountName, amount: Amount(number: 1.15, commodity: commodity, decimalDigits: 1))]
         guard case .valid = account.validateBalance(in: ledger) else {
             XCTFail("\(account) is not valid")
             return
@@ -389,14 +389,14 @@ class AccountTests: XCTestCase {
         transaction = Transaction(metaData: TransactionMetaData(date: date20170608, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         _ = ledger.add(transaction)
 
-        account.balances = [Balance(date: date20170609, account: account, amount: Amount(number: 1.16, commodity: commodity, decimalDigits: 2))]
+        account.balances = [Balance(date: date20170609, accountName: accountName, amount: Amount(number: 1.16, commodity: commodity, decimalDigits: 2))]
         if case .invalid(let error) = account.validateBalance(in: ledger) {
             XCTAssertEqual(error, "Balance failed for 2017-06-09 balance Assets:Cash 1.16 CAD - 0.005 CAD too much (0.0005 tolerance)")
         } else {
             XCTFail("\(account) is valid")
         }
 
-        account.balances = [Balance(date: date20170609, account: account, amount: Amount(number: 1.155_5, commodity: commodity, decimalDigits: 3))]
+        account.balances = [Balance(date: date20170609, accountName: accountName, amount: Amount(number: 1.155_5, commodity: commodity, decimalDigits: 3))]
         guard case .valid = account.validateBalance(in: ledger) else {
             XCTFail("\(account) is not valid")
             print(account.validateBalance(in: ledger))
