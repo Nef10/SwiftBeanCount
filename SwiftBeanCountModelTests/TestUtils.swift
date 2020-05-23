@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftBeanCountModel
 
 enum TestUtils {
 
@@ -20,6 +21,18 @@ enum TestUtils {
 
     static var date20170608: Date = {
         Date(timeIntervalSince1970: 1_496_905_200)
+    }()
+
+    static var cad: Commodity = {
+        Commodity(symbol: "CAD")
+    }()
+
+    static var eur: Commodity = {
+        Commodity(symbol: "EUR")
+    }()
+
+    static var usd: Commodity = {
+        Commodity(symbol: "USD")
     }()
 
 }

@@ -71,8 +71,8 @@ class CommodityTests: XCTestCase {
     }
 
     func testGreater() {
-        let eur = Commodity(symbol: "EUR")
-        let cad = Commodity(symbol: "CAD")
+        let eur = TestUtils.eur
+        let cad = TestUtils.cad
 
         XCTAssert(eur > cad)
         XCTAssertFalse(eur < cad)

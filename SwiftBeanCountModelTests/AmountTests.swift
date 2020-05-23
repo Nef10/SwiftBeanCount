@@ -11,25 +11,25 @@ import XCTest
 
 class AmountTests: XCTestCase {
 
-    let amount1 = Amount(number: Decimal(1), commodity: Commodity(symbol: "CAD"))
+    let amount1 = Amount(number: Decimal(1), commodity: TestUtils.cad)
 
     func testEqual() {
-        let amount2 = Amount(number: Decimal(1), commodity: Commodity(symbol: "CAD"))
+        let amount2 = Amount(number: Decimal(1), commodity: TestUtils.cad)
         XCTAssertEqual(amount1, amount2)
     }
 
     func testEqualRespectsAmount() {
-        let amount2 = Amount(number: Decimal(10), commodity: Commodity(symbol: "CAD"))
+        let amount2 = Amount(number: Decimal(10), commodity: TestUtils.cad)
         XCTAssertNotEqual(amount1, amount2)
     }
 
     func testEqualRespectsCommodity() {
-        let amount2 = Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR"))
+        let amount2 = Amount(number: Decimal(1), commodity: TestUtils.eur)
         XCTAssertNotEqual(amount1, amount2)
     }
 
     func testEqualRespectsDecimalDigits() {
-        let amount2 = Amount(number: Decimal(1.0), commodity: Commodity(symbol: "EUR"), decimalDigits: 1)
+        let amount2 = Amount(number: Decimal(1.0), commodity: TestUtils.eur, decimalDigits: 1)
         XCTAssertNotEqual(amount1, amount2)
     }
 
@@ -68,18 +68,16 @@ class AmountTests: XCTestCase {
 
     func testMultiCurrencyAmount() {
         let decimal = Decimal(10)
-        let commodity = Commodity(symbol: "EUR")
-        let amount = Amount(number: decimal, commodity: commodity)
-        XCTAssertEqual(amount.multiCurrencyAmount.amounts, [commodity: decimal])
-        XCTAssertEqual(amount.multiCurrencyAmount.decimalDigits, [commodity: 0])
+        let amount = Amount(number: decimal, commodity: TestUtils.eur)
+        XCTAssertEqual(amount.multiCurrencyAmount.amounts, [TestUtils.eur: decimal])
+        XCTAssertEqual(amount.multiCurrencyAmount.decimalDigits, [TestUtils.eur: 0])
     }
 
     func testMultiCurrencyAmountDecimalDigits() {
         let decimal = Decimal(10.25)
-        let commodity = Commodity(symbol: "EUR")
-        let amount = Amount(number: decimal, commodity: commodity, decimalDigits: 2)
-        XCTAssertEqual(amount.multiCurrencyAmount.amounts, [commodity: decimal])
-        XCTAssertEqual(amount.multiCurrencyAmount.decimalDigits, [commodity: 2])
+        let amount = Amount(number: decimal, commodity: TestUtils.eur, decimalDigits: 2)
+        XCTAssertEqual(amount.multiCurrencyAmount.amounts, [TestUtils.eur: decimal])
+        XCTAssertEqual(amount.multiCurrencyAmount.decimalDigits, [TestUtils.eur: 2])
     }
 
 }
