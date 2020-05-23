@@ -34,11 +34,9 @@ enum PostingParser {
         guard let accountName = try? AccountName(match[1]) else {
             return nil
         }
-        let commodity = Commodity(symbol: match[5])
         var price: Amount?
         let cost = try CostParser.parseFrom(match: match, startIndex: 6)
         if !match[24].isEmpty {  // price
-            let priceCommodity = Commodity(symbol: match[30])
             var priceAmount: Decimal
             var priceDecimalDigits: Int
             if match[25] == "@" {
@@ -47,10 +45,10 @@ enum PostingParser {
                 (priceAmount, priceDecimalDigits) = ParserUtils.parseAmountDecimalFrom(string: match[27])
                 priceAmount /= abs(amount)
             }
-            price = Amount(number: priceAmount, commodity: priceCommodity, decimalDigits: priceDecimalDigits)
+            price = Amount(number: priceAmount, commoditySymbol: match[30], decimalDigits: priceDecimalDigits)
         }
         return Posting(accountName: accountName,
-                       amount: Amount(number: amount, commodity: commodity, decimalDigits: decimalDigits),
+                       amount: Amount(number: amount, commoditySymbol: match[5], decimalDigits: decimalDigits),
                        price: price,
                        cost: cost,
                        metaData: metaData)

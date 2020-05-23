@@ -35,8 +35,7 @@ enum CostParser {
             }
             if !match[startIndex + 8].isEmpty {
                 let (costAmount, costDecimalDigits) = ParserUtils.parseAmountDecimalFrom(string: match[startIndex + 9])
-                let costCommodity = Commodity(symbol: match[startIndex + 12])
-                amount = Amount(number: costAmount, commodity: costCommodity, decimalDigits: costDecimalDigits)
+                amount = Amount(number: costAmount, commoditySymbol: match[startIndex + 12], decimalDigits: costDecimalDigits)
             }
             cost = try Cost(amount: amount, date: date, label: label)
         }

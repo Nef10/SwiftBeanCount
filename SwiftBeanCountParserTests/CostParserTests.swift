@@ -27,7 +27,7 @@ class CostParserTests: XCTestCase {
 
     func testCost() {
         XCTAssertEqual(try! Cost(amount: Amount(number: Decimal(1.003),
-                                                commodity: Commodity(symbol: "EUR"),
+                                                commoditySymbol: "EUR",
                                                 decimalDigits: 3),
                                  date: TestUtils.date20170609,
                                  label: "TEST"),
@@ -61,7 +61,7 @@ class CostParserTests: XCTestCase {
 
     func testWithoutDate() {
         XCTAssertEqual(try! Cost(amount: Amount(number: Decimal(1.003),
-                                                commodity: Commodity(symbol: "EUR"),
+                                                commoditySymbol: "EUR",
                                                 decimalDigits: 3),
                             date: nil,
                             label: "TEST"),
@@ -70,7 +70,7 @@ class CostParserTests: XCTestCase {
 
     func testWithoutLabel() {
         XCTAssertEqual(try! Cost(amount: Amount(number: Decimal(1.003),
-                                                commodity: Commodity(symbol: "EUR"),
+                                                commoditySymbol: "EUR",
                                                 decimalDigits: 3),
                                  date: TestUtils.date20170609,
                                  label: nil),
@@ -100,7 +100,7 @@ class CostParserTests: XCTestCase {
 
     func testOnlyAmount() {
         XCTAssertEqual(try! Cost(amount: Amount(number: Decimal(1.003),
-                                                commodity: Commodity(symbol: "EUR"),
+                                                commoditySymbol: "EUR",
                                                 decimalDigits: 3),
                             date: nil,
                             label: nil),
@@ -109,7 +109,7 @@ class CostParserTests: XCTestCase {
 
     func testOrder() {
         let result = try! Cost(amount: Amount(number: Decimal(1.003),
-                                              commodity: Commodity(symbol: "EUR"),
+                                              commoditySymbol: "EUR",
                                               decimalDigits: 3),
                                date: TestUtils.date20170609,
                                label: "TEST")
@@ -123,7 +123,7 @@ class CostParserTests: XCTestCase {
 
     func testWhitespace() {
         let result = try! Cost(amount: Amount(number: Decimal(1.003),
-                                              commodity: Commodity(symbol: "EUR"),
+                                              commoditySymbol: "EUR",
                                               decimalDigits: 3),
                                date: TestUtils.date20170609,
                                label: "TEST")
@@ -143,7 +143,7 @@ class CostParserTests: XCTestCase {
 
     func testCommaCommodity() {
         let result = try! Cost(amount: Amount(number: Decimal(1.003),
-                                              commodity: Commodity(symbol: "EUR,AB"),
+                                              commoditySymbol: "EUR,AB",
                                               decimalDigits: 3),
                                date: TestUtils.date20170609,
                                label: "TEST")
@@ -154,7 +154,7 @@ class CostParserTests: XCTestCase {
 
     func testSpecialCharacters() {
         XCTAssertEqual(try! Cost(amount: Amount(number: Decimal(1.003),
-                                                commodity: Commodity(symbol: "💰"),
+                                                commoditySymbol: "💰",
                                                 decimalDigits: 3),
                                  date: TestUtils.date20170609,
                                  label: "TES😀"),

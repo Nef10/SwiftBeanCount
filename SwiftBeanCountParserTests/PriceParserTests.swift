@@ -13,8 +13,8 @@ import XCTest
 class PriceParserTests: XCTestCase {
 
     let price = try! Price(date: TestUtils.date20170609,
-                           commodity: Commodity(symbol: "EUR"),
-                           amount: Amount(number: Decimal(211) / Decimal(100), commodity: Commodity(symbol: "CAD"), decimalDigits: 2))
+                           commoditySymbol: "EUR",
+                           amount: Amount(number: Decimal(211) / Decimal(100), commoditySymbol: "CAD", decimalDigits: 2))
 
     let basicPrice = "2017-06-09 price EUR 2.11 CAD"
     let priceComment = "2017-06-09 price EUR 2.11 CAD ;fsajfdsanfjsak"
@@ -49,8 +49,8 @@ class PriceParserTests: XCTestCase {
     func testSpecialCharacter() {
         let parsedPrice = PriceParser.parseFrom(line: priceSpecialCharacter)
         XCTAssertNotNil(parsedPrice)
-        XCTAssertEqual(parsedPrice!.commodity.symbol, "💵")
-        XCTAssertEqual(parsedPrice!.amount.commodity.symbol, "💸")
+        XCTAssertEqual(parsedPrice!.commoditySymbol, "💵")
+        XCTAssertEqual(parsedPrice!.amount.commoditySymbol, "💸")
     }
 
     func testWholeNumber() {

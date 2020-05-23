@@ -39,7 +39,7 @@ class AccountParserTests: XCTestCase {
     let bookingMethodInClosingString = "2017-06-09 close Assets:Cash \"FIFO\" ;gfsd"
 
     func testBasic() {
-        testWith(openingString: basicOpeningString, closingString: basicClosingString, commodity: nil)
+        testWith(openingString: basicOpeningString, closingString: basicClosingString, commoditySymbol: nil)
     }
 
     func testInvalidName() {
@@ -48,15 +48,15 @@ class AccountParserTests: XCTestCase {
     }
 
     func testWhitespace() {
-        testWith(openingString: whitespaceOpeningString, closingString: whitespaceClosingString, commodity: Commodity(symbol: "CAD"))
+        testWith(openingString: whitespaceOpeningString, closingString: whitespaceClosingString, commoditySymbol: "CAD")
     }
 
     func testEndOfLineComment() {
-        testWith(openingString: endOfLineCommentOpeningString, closingString: endOfLineCommentClosingString, commodity: Commodity(symbol: "EUR"))
+        testWith(openingString: endOfLineCommentOpeningString, closingString: endOfLineCommentClosingString, commoditySymbol: "EUR")
     }
 
     func testSpecialCharacter() {
-        testWith(openingString: specialCharacterOpeningString, closingString: specialCharacterClosingString, commodity: Commodity(symbol: "💵"))
+        testWith(openingString: specialCharacterOpeningString, closingString: specialCharacterClosingString, commoditySymbol: "💵")
     }
 
     func testInvalidCloseWithCommodity() {
@@ -68,19 +68,19 @@ class AccountParserTests: XCTestCase {
     }
 
     func testCommodityWithSemicolon() {
-        testWith(openingString: commodityWithSemicolonOpeningString, closingString: commodityWithSemicolonClosingString, commodity: Commodity(symbol: "EUR;test"))
+        testWith(openingString: commodityWithSemicolonOpeningString, closingString: commodityWithSemicolonClosingString, commoditySymbol: "EUR;test")
     }
 
     func testBookingMethodStrict() {
-        testWith(openingString: bookingMethodStrictOpeningString, closingString: bookingMethodClosingString, commodity: Commodity(symbol: "EUR;test"), bookingMethod: .strict)
+        testWith(openingString: bookingMethodStrictOpeningString, closingString: bookingMethodClosingString, commoditySymbol: "EUR;test", bookingMethod: .strict)
     }
 
     func testBookingMethodLifo() {
-        testWith(openingString: bookingMethodLifoOpeningString, closingString: bookingMethodClosingString, commodity: Commodity(symbol: "EUR"), bookingMethod: .lifo)
+        testWith(openingString: bookingMethodLifoOpeningString, closingString: bookingMethodClosingString, commoditySymbol: "EUR", bookingMethod: .lifo)
     }
 
     func testBookingMethodFifo() {
-        testWith(openingString: bookingMethodFifoOpeningString, closingString: bookingMethodClosingString, commodity: Commodity(symbol: "💵"), bookingMethod: .fifo)
+        testWith(openingString: bookingMethodFifoOpeningString, closingString: bookingMethodClosingString, commoditySymbol: "💵", bookingMethod: .fifo)
     }
 
     func testBookingMethodInClosingString() {
@@ -107,13 +107,13 @@ class AccountParserTests: XCTestCase {
     }
 
     // Helper
-    private func testWith(openingString: String, closingString: String, commodity: Commodity?, bookingMethod: BookingMethod? = nil) {
+    private func testWith(openingString: String, closingString: String, commoditySymbol: CommoditySymbol?, bookingMethod: BookingMethod? = nil) {
         let account1 = AccountParser.parseFrom(line: openingString)
 
         XCTAssertNotNil(account1)
         XCTAssertEqual(account1!.opening!, TestUtils.date20170609)
         XCTAssertNil(account1!.closing)
-        XCTAssertEqual(account1!.commodity, commodity)
+        XCTAssertEqual(account1!.commoditySymbol, commoditySymbol)
 
         if let bookingMethod = bookingMethod {
             XCTAssertEqual(account1!.bookingMethod, bookingMethod)

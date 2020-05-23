@@ -76,7 +76,7 @@ class ParserTests: XCTestCase {
     func testInvalidCost() {
         var errorMessage = "" // do not check for the exact error message from library, just check that the parser correctly copies it
         do {
-            _ = try Cost(amount: Amount(number: Decimal(-1), commodity: Commodity(symbol: "EUR"), decimalDigits: 2), date: nil, label: nil)
+            _ = try Cost(amount: Amount(number: Decimal(-1), commoditySymbol: "EUR", decimalDigits: 2), date: nil, label: nil)
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -134,10 +134,10 @@ class ParserTests: XCTestCase {
 
     func testPrice() {
         var ledger = Parser.parse(string: "\(priceString)")
-        XCTAssertTrue(ledger.errors.isEmpty)
+        XCTAssertTrue(ledger.parsingErrors.isEmpty)
 
         ledger = Parser.parse(string: "\(priceString)\n\(priceString)")
-        XCTAssertFalse(ledger.errors.isEmpty)
+        XCTAssertFalse(ledger.parsingErrors.isEmpty)
 
         ledger = Parser.parse(string: "\(priceString)\n\(metaDataString)")
         XCTAssertEqual(ledger.prices.first?.metaData, metaData)
@@ -145,10 +145,10 @@ class ParserTests: XCTestCase {
 
     func testBalance() {
         var ledger = Parser.parse(string: "\(balanceString)")
-        XCTAssertTrue(ledger.errors.isEmpty)
+        XCTAssertTrue(ledger.parsingErrors.isEmpty)
 
         ledger = Parser.parse(string: "\(invalidBalanceString)")
-        XCTAssertFalse(ledger.errors.isEmpty)
+        XCTAssertFalse(ledger.parsingErrors.isEmpty)
 
         ledger = Parser.parse(string: "\(balanceString)\n\(metaDataString)")
         XCTAssertEqual(ledger.accounts.first?.balances.first?.metaData, metaData)
@@ -243,10 +243,10 @@ class ParserTests: XCTestCase {
         XCTAssertEqual(transaction.metaData.date, TestUtils.date20170608)
         let posting1 = transaction.postings.first { $0.amount.number == Decimal(-1) }!
         XCTAssertEqual(posting1.accountName.fullName, "Equity:OpeningBalance")
-        XCTAssertEqual(posting1.amount.commodity, Commodity(symbol: "EUR"))
+        XCTAssertEqual(posting1.amount.commoditySymbol, "EUR")
         let posting2 = transaction.postings.first { $0.amount.number == Decimal(1) }!
         XCTAssertEqual(posting2.accountName.fullName, "Assets:Checking")
-        XCTAssertEqual(posting2.amount.commodity, Commodity(symbol: "EUR"))
+        XCTAssertEqual(posting2.amount.commoditySymbol, "EUR")
     }
 
     private func ledgerFor(testFile: TestFile) -> Ledger {

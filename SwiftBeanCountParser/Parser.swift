@@ -312,7 +312,7 @@ public enum Parser {
                     result.accounts.removeAll { _, _, account in account.name == parsedAccount.name }
                     let newAccount = Account(name: existingAccount.name,
                                              bookingMethod: existingAccount.bookingMethod,
-                                             commodity: existingAccount.commodity,
+                                             commoditySymbol: existingAccount.commoditySymbol,
                                              opening: existingAccount.opening,
                                              closing: parsedAccount.closing,
                                              metaData: existingAccount.metaData)
@@ -325,7 +325,7 @@ public enum Parser {
                     result.accounts.removeAll { _, _, account in account.name == parsedAccount.name }
                     let newAccount = Account(name: existingAccount.name,
                                              bookingMethod: existingAccount.bookingMethod,
-                                             commodity: existingAccount.commodity,
+                                             commoditySymbol: existingAccount.commoditySymbol,
                                              opening: parsedAccount.opening,
                                              closing: existingAccount.closing,
                                              metaData: existingAccount.metaData)

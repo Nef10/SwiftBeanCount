@@ -28,13 +28,11 @@ enum PriceParser {
             else {
                 return nil
         }
-        let commodity = Commodity(symbol: match[2])
         let (amount, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: match[3])
-        let amountCommodity = Commodity(symbol: match[6])
 
         return try? Price(date: date,
-                          commodity: commodity,
-                          amount: Amount(number: amount, commodity: amountCommodity, decimalDigits: decimalDigits),
+                          commoditySymbol: match[2],
+                          amount: Amount(number: amount, commoditySymbol: match[6], decimalDigits: decimalDigits),
                           metaData: metaData)
 
     }

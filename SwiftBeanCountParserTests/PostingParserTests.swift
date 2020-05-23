@@ -38,7 +38,7 @@ class PostingParserTests: XCTestCase {
         super.setUp()
         basicPosting = Posting(accountName: try! AccountName("Assets:Checking"),
                                amount: Amount(number: Decimal(1.23),
-                                              commodity: Commodity(symbol: "EUR"),
+                                              commoditySymbol: "EUR",
                                               decimalDigits: 2))
     }
 
@@ -49,22 +49,22 @@ class PostingParserTests: XCTestCase {
 
     func testInteger() {
         let posting = try! PostingParser.parseFrom(line: integerPostingString)!
-        XCTAssertEqual(posting.amount, Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR"), decimalDigits: 0))
+        XCTAssertEqual(posting.amount, Amount(number: Decimal(1), commoditySymbol: "EUR", decimalDigits: 0))
     }
 
     func testNoThousandsSeparator() {
         let posting = try! PostingParser.parseFrom(line: noThousandsSeparatorPostingString)!
-        XCTAssertEqual(posting.amount, Amount(number: Decimal(100_000), commodity: Commodity(symbol: "EUR"), decimalDigits: 0))
+        XCTAssertEqual(posting.amount, Amount(number: Decimal(100_000), commoditySymbol: "EUR", decimalDigits: 0))
     }
 
     func testThousandsSeparator() {
         let posting = try! PostingParser.parseFrom(line: thousandsSeparatorPostingString)!
-        XCTAssertEqual(posting.amount, Amount(number: Decimal(100_000), commodity: Commodity(symbol: "EUR"), decimalDigits: 0))
+        XCTAssertEqual(posting.amount, Amount(number: Decimal(100_000), commoditySymbol: "EUR", decimalDigits: 0))
     }
 
     func testNegative() {
         let posting = try! PostingParser.parseFrom(line: negativePostingString)!
-        XCTAssertEqual(posting.amount, Amount(number: Decimal(-1.2), commodity: Commodity(symbol: "EUR"), decimalDigits: 1))
+        XCTAssertEqual(posting.amount, Amount(number: Decimal(-1.2), commoditySymbol: "EUR", decimalDigits: 1))
     }
 
     func testPositive() {
@@ -74,7 +74,7 @@ class PostingParserTests: XCTestCase {
 
     func testSeparator() {
         let posting = try! PostingParser.parseFrom(line: separatorPostingString)!
-        XCTAssertEqual(posting.amount, Amount(number: Decimal(-1_000.23), commodity: Commodity(symbol: "EUR"), decimalDigits: 2))
+        XCTAssertEqual(posting.amount, Amount(number: Decimal(-1_000.23), commoditySymbol: "EUR", decimalDigits: 2))
     }
 
     func testWhitespace() {
@@ -85,7 +85,7 @@ class PostingParserTests: XCTestCase {
     func testSpecialCharacterPostingString() {
         let posting = try! PostingParser.parseFrom(line: specialCharacterPostingString)!
         XCTAssertEqual(posting.accountName, try! AccountName("Assets:💰"))
-        XCTAssertEqual(posting.amount, Amount(number: Decimal(1), commodity: Commodity(symbol: "💵"), decimalDigits: 2))
+        XCTAssertEqual(posting.amount, Amount(number: Decimal(1), commoditySymbol: "💵", decimalDigits: 2))
     }
 
     func testInvalidAccount() {
@@ -99,20 +99,20 @@ class PostingParserTests: XCTestCase {
 
     func testTotalPrice() {
         let posting = try! PostingParser.parseFrom(line: totalPricePostingString)!
-        XCTAssertEqual(posting.amount, Amount(number: Decimal(-2.00), commodity: Commodity(symbol: "💵"), decimalDigits: 2))
-        XCTAssertEqual(posting.price, Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR"), decimalDigits: 1))
+        XCTAssertEqual(posting.amount, Amount(number: Decimal(-2.00), commoditySymbol: "💵", decimalDigits: 2))
+        XCTAssertEqual(posting.price, Amount(number: Decimal(1), commoditySymbol: "EUR", decimalDigits: 1))
     }
 
     func testUnitPrice() {
         let posting = try! PostingParser.parseFrom(line: unitPricePostingString)!
-        XCTAssertEqual(posting.amount, Amount(number: Decimal(2), commodity: Commodity(symbol: "💵"), decimalDigits: 1))
-        XCTAssertEqual(posting.price, Amount(number: Decimal(1.003), commodity: Commodity(symbol: "EUR"), decimalDigits: 3))
+        XCTAssertEqual(posting.amount, Amount(number: Decimal(2), commoditySymbol: "💵", decimalDigits: 1))
+        XCTAssertEqual(posting.price, Amount(number: Decimal(1.003), commoditySymbol: "EUR", decimalDigits: 3))
     }
 
     func testCost() {
         let posting = try! PostingParser.parseFrom(line: costPostingString)!
         XCTAssertEqual(posting.cost!,
-                       try! Cost(amount: Amount(number: Decimal(1.003), commodity: Commodity(symbol: "EUR"), decimalDigits: 3), date: TestUtils.date20170609, label: "TEST"))
+                       try! Cost(amount: Amount(number: Decimal(1.003), commoditySymbol: "EUR", decimalDigits: 3), date: TestUtils.date20170609, label: "TEST"))
     }
 
     func testInvalidCost() {
@@ -122,14 +122,14 @@ class PostingParserTests: XCTestCase {
     func testCostAndUnitPrice() {
         let posting = try! PostingParser.parseFrom(line: costAndUnitPricePostingString)!
         XCTAssertEqual(posting.cost!,
-                       try! Cost(amount: Amount(number: Decimal(1.003), commodity: Commodity(symbol: "EUR"), decimalDigits: 3), date: TestUtils.date20170609, label: nil))
-        XCTAssertEqual(posting.price, Amount(number: Decimal(1.003), commodity: Commodity(symbol: "EUR"), decimalDigits: 3))
+                       try! Cost(amount: Amount(number: Decimal(1.003), commoditySymbol: "EUR", decimalDigits: 3), date: TestUtils.date20170609, label: nil))
+        XCTAssertEqual(posting.price, Amount(number: Decimal(1.003), commoditySymbol: "EUR", decimalDigits: 3))
     }
 
     func testCostAndTotalPrice() {
         let posting = try! PostingParser.parseFrom(line: costAndTotalPricePostingString)!
-        XCTAssertEqual(posting.cost!, try! Cost(amount: Amount(number: Decimal(1.003), commodity: Commodity(symbol: "EUR"), decimalDigits: 3), date: nil, label: "TEST"))
-        XCTAssertEqual(posting.price, Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR"), decimalDigits: 1))
+        XCTAssertEqual(posting.cost!, try! Cost(amount: Amount(number: Decimal(1.003), commoditySymbol: "EUR", decimalDigits: 3), date: nil, label: "TEST"))
+        XCTAssertEqual(posting.price, Amount(number: Decimal(1), commoditySymbol: "EUR", decimalDigits: 1))
     }
 
     func testPerformance() {
