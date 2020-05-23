@@ -117,7 +117,7 @@ public enum Parser {
             }
             offset += metaDataOffset
         }
-        result.transactions.append(( lineIndex + offset + 1, LedgerTransaction(metaData: transactionMetaData, postings: postings)))
+        result.transactions.append(( lineIndex + offset + 1, Transaction(metaData: transactionMetaData, postings: postings)))
         return offset
     }
 
@@ -223,12 +223,8 @@ public enum Parser {
         }
 
         // balances depend on accounts and commodities
-        for (lineIndex, balance) in result.balances {
-            do {
-                try ledger.add(balance)
-            } catch {
-                ledger.parsingErrors.append("Error with balance \(balance): \(error.localizedDescription) in line \(lineIndex + 1)")
-            }
+        for (_, balance) in result.balances {
+            ledger.add(balance)
         }
 
         // transactions depend on accounts and commodities
@@ -318,8 +314,8 @@ public enum Parser {
                                              bookingMethod: existingAccount.bookingMethod,
                                              commodity: existingAccount.commodity,
                                              opening: existingAccount.opening,
+                                             closing: parsedAccount.closing,
                                              metaData: existingAccount.metaData)
-                    newAccount.closing = parsedAccount.closing
                     result.accounts.append((lineIndex, line, newAccount))
                 } else {
                     result.parsingErrors.append("Second closing for account \(parsedAccount.name) in line \(lineIndex + 1): \(line)")
@@ -331,8 +327,8 @@ public enum Parser {
                                              bookingMethod: existingAccount.bookingMethod,
                                              commodity: existingAccount.commodity,
                                              opening: parsedAccount.opening,
+                                             closing: existingAccount.closing,
                                              metaData: existingAccount.metaData)
-                    newAccount.closing = existingAccount.closing
                     result.accounts.append((lineIndex, line, newAccount))
                 } else {
                     result.parsingErrors.append("Second open for account \(parsedAccount.name) in line \(lineIndex + 1): \(line)")

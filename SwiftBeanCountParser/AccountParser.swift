@@ -58,9 +58,7 @@ enum AccountParser {
             guard bookingMethod == nil && metaData.isEmpty else {
                 return nil
             }
-            let account = Account(name: accountName)
-            account.closing = date
-            return account
+            return Account(name: accountName, closing: date)
         }
         return nil
     }

@@ -25,14 +25,14 @@ enum BalanceParser {
         guard
             let match = balanceMatches[safe: 0],
             let date = DateParser.parseFrom(string: match[1]),
-            let account = try? Account(name: AccountName(match[2]))
+            let accountName = try? AccountName(match[2])
         else {
             return nil
         }
         let commodity = Commodity(symbol: match[6])
         let (amountDecimal, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: match[3])
         let amount = Amount(number: amountDecimal, commodity: commodity, decimalDigits: decimalDigits)
-        return Balance(date: date, account: account, amount: amount, metaData: metaData)
+        return Balance(date: date, accountName: accountName, amount: amount, metaData: metaData)
     }
 
 }

@@ -12,7 +12,7 @@ import XCTest
 
 class PostingParserTests: XCTestCase {
 
-    let transaction = Transaction(metaData: TransactionMetaData(date: Date(), payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
+    let transaction = Transaction(metaData: TransactionMetaData(date: Date(), payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []), postings: [])
 
     var basicPosting: Posting?
 

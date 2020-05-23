@@ -22,28 +22,28 @@ class BalanceParserTests: XCTestCase {
     func testBasic() {
         let balance = BalanceParser.parseFrom(line: basicString)
         XCTAssertEqual(balance, Balance(date: TestUtils.date20170609,
-                                        account: Account(name: accountName),
+                                        accountName: accountName,
                                         amount: Amount(number: 10, commodity: Commodity(symbol: "CAD"), decimalDigits: 2)))
     }
 
     func testWhitespace() {
         let balance = BalanceParser.parseFrom(line: whitespaceString)
         XCTAssertEqual(balance, Balance(date: TestUtils.date20170609,
-                                        account: Account(name: accountName),
+                                        accountName: accountName,
                                         amount: Amount(number: 10, commodity: Commodity(symbol: "CAD"), decimalDigits: 2)))
     }
 
     func testEndOfLineComment() {
         let balance = BalanceParser.parseFrom(line: endOfLineCommentString)
         XCTAssertEqual(balance, Balance(date: TestUtils.date20170609,
-                                        account: Account(name: accountName),
+                                        accountName: accountName,
                                         amount: Amount(number: 10, commodity: Commodity(symbol: "CAD"), decimalDigits: 2)))
     }
 
     func testSpecialCharacter() {
         let balance = BalanceParser.parseFrom(line: specialCharacterString)
         XCTAssertEqual(balance, Balance(date: TestUtils.date20170609,
-                                        account: try! Account(name: AccountName("Assets:💵")),
+                                        accountName: try! AccountName("Assets:💵"),
                                         amount: Amount(number: 10, commodity: Commodity(symbol: "💵"), decimalDigits: 2)))
     }
 
