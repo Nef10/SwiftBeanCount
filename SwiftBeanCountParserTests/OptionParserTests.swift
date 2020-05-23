@@ -13,7 +13,7 @@ import XCTest
 class OptionParserTests: XCTestCase {
 
     let basicString = "option \"ABC\" \"DEF\""
-    let whitespaceString = "option    \"ABC\"       \"DEF\"     "
+    let whitespaceString = "option    \"  A B C  \"       \"  D E F  \"     "
     let endOfLineCommentString = "option \"ABC\" \"DEF\";gfsdt     "
     let specialCharacterString = "option \"ABC💵\" \"DEF💵\""
 
@@ -25,8 +25,8 @@ class OptionParserTests: XCTestCase {
 
     func testWhitespace() {
         let option = OptionParser.parseFrom(line: whitespaceString)!
-        XCTAssertEqual(option.name, "ABC")
-        XCTAssertEqual(option.value, "DEF")
+        XCTAssertEqual(option.name, "  A B C  ")
+        XCTAssertEqual(option.value, "  D E F  ")
     }
 
     func testEndOfLineComment() {

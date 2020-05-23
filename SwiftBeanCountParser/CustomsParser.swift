@@ -23,7 +23,7 @@ enum CustomsParser {
         }
         let values: [String] = match[3].split(separator: "\"").compactMap {
             let trimmed = $0.trimmingCharacters(in: .whitespaces)
-            return trimmed.isEmpty ? nil : trimmed
+            return trimmed.isEmpty ? nil : String($0)
         }
         return Custom(date: date, name: match[2], values: values, metaData: metaData)
     }

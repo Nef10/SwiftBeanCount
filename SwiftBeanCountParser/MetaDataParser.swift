@@ -14,7 +14,7 @@ enum MetaDataParser {
 
     private static let regex: NSRegularExpression = {
         // swiftlint:disable:next force_try
-        try! NSRegularExpression(pattern: "^  (  )?([^\\s]+):\\s*\"([^\\s]+)\"\\s*(;.*)?$", options: [])
+        try! NSRegularExpression(pattern: "^  (  )?([^\\s]+):\\s*\"([^\"]+)\"\\s*(;.*)?$", options: [])
     }()
 
     /// Parse MetaData from a line String

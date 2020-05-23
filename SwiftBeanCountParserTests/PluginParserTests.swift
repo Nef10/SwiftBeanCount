@@ -13,7 +13,7 @@ import XCTest
 class PluginParserTests: XCTestCase {
 
     let basicString = "plugin \"ABC\""
-    let whitespaceString = "plugin    \"ABC\"        "
+    let whitespaceString = "plugin    \"  A B C  \"        "
     let endOfLineCommentString = "plugin \"ABC\";gfsdt     "
     let specialCharacterString = "plugin \"ABC💵\""
 
@@ -24,7 +24,7 @@ class PluginParserTests: XCTestCase {
 
     func testWhitespace() {
         let plugin = PluginParser.parseFrom(line: whitespaceString)
-        XCTAssertEqual(plugin, "ABC")
+        XCTAssertEqual(plugin, "  A B C  ")
     }
 
     func testEndOfLineComment() {

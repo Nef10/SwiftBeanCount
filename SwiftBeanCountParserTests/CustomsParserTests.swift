@@ -14,7 +14,7 @@ class CustomsParserTests: XCTestCase {
 
     let basicString = "2017-06-09 custom \"ABC\" \"DEF\""
     let multipleValuesString = "2017-06-09 custom \"ABC\" \"DEF\" \"GHI\" \"JKL\" \"MNO\""
-    let whitespaceString = "2017-06-09 custom    \"ABC\"       \"DEF\"      \"GHI\"       "
+    let whitespaceString = "2017-06-09 custom    \"  A B C  \"       \"  D E F  \"      \"G H I\"       "
     let endOfLineCommentString = "2017-06-09 custom \"ABC\" \"DEF\"  \"GHI\";gfsdt     "
     let specialCharacterString = "2017-06-09 custom \"ABC💵\" \"DEF💵\" \"GHI💵\""
     let invalidDateString = "2017-02-30 custom \"ABC\" \"DEF\""
@@ -36,8 +36,8 @@ class CustomsParserTests: XCTestCase {
     func testWhitespace() {
         let event = CustomsParser.parseFrom(line: whitespaceString)!
         XCTAssertEqual(event.date, TestUtils.date20170609)
-        XCTAssertEqual(event.name, "ABC")
-        XCTAssertEqual(event.values, ["DEF", "GHI"])
+        XCTAssertEqual(event.name, "  A B C  ")
+        XCTAssertEqual(event.values, ["  D E F  ", "G H I"])
     }
 
     func testEndOfLineComment() {

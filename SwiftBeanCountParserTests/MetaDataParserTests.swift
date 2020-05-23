@@ -12,8 +12,8 @@ import XCTest
 class MetaDataParserTests: XCTestCase {
 
     let basicString = "  test:\"ABC\""
-    let whitespaceString = "  test:    \"ABC\"        "
-    let whitespaceBeginningString = "    test:    \"ABC\"        "
+    let whitespaceString = "  test:    \"A B C\"        "
+    let whitespaceBeginningString = "    test:    \"  A B C  \"        "
     let whitespaceNonMatchingString = " test:\"ABC\""
     let endOfLineCommentString = "  test: \"ABC\";gfsdt     "
     let specialCharacterString = "  test💵: \"ABC💵\""
@@ -25,9 +25,9 @@ class MetaDataParserTests: XCTestCase {
 
     func testWhitespace() {
         let metaData1 = MetaDataParser.parseFrom(line: whitespaceString)
-        XCTAssertEqual(metaData1, ["test": "ABC"])
+        XCTAssertEqual(metaData1, ["test": "A B C"])
         let metaData2 = MetaDataParser.parseFrom(line: whitespaceBeginningString)
-        XCTAssertEqual(metaData2, ["test": "ABC"])
+        XCTAssertEqual(metaData2, ["test": "  A B C  "])
         let metaData3 = MetaDataParser.parseFrom(line: whitespaceNonMatchingString)
         XCTAssertNil(metaData3)
     }

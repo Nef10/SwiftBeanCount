@@ -13,7 +13,7 @@ import XCTest
 class EventParserTests: XCTestCase {
 
     let basicString = "2017-06-09 event \"ABC\" \"DEF\""
-    let whitespaceString = "2017-06-09 event    \"ABC\"       \"DEF\"     "
+    let whitespaceString = "2017-06-09 event    \"  A B C  \"       \"  D E F  \"     "
     let endOfLineCommentString = "2017-06-09 event \"ABC\" \"DEF\";gfsdt     "
     let specialCharacterString = "2017-06-09 event \"ABC💵\" \"DEF💵\""
     let invalidDateString = "2017-02-30 event \"ABC\" \"DEF\""
@@ -28,8 +28,8 @@ class EventParserTests: XCTestCase {
     func testWhitespace() {
         let event = EventParser.parseFrom(line: whitespaceString)!
         XCTAssertEqual(event.date, TestUtils.date20170609)
-        XCTAssertEqual(event.name, "ABC")
-        XCTAssertEqual(event.value, "DEF")
+        XCTAssertEqual(event.name, "  A B C  ")
+        XCTAssertEqual(event.value, "  D E F  ")
     }
 
     func testEndOfLineComment() {
