@@ -54,21 +54,21 @@ public class Parser {
 
     /// Parses the lines into objects, not all yet added to the ledger
     private func parseLines() {
-        var lineNumber = -1
+        var lineIndex = -1
 
-        while lineNumber < lines.count - 1 {
-            lineNumber += 1
-            let line = lines[lineNumber]
+        while lineIndex < lines.count - 1 {
+            lineIndex += 1
+            let line = lines[lineIndex]
             if shouldSkipLine(line) {
                 continue
             }
-            let transactionOffset = getTransactionForLine(number: lineNumber)
+            let transactionOffset = getTransactionForLine(index: lineIndex)
             if transactionOffset == 0 {
-                let (metaData, metaDataOffset) = getMetaDataForLine(number: lineNumber)
-                parse(line, number: lineNumber, metaData: metaData)
-                lineNumber += metaDataOffset
+                let (metaData, metaDataOffset) = getMetaDataForLine(index: lineIndex)
+                parse(line, index: lineIndex, metaData: metaData)
+                lineIndex += metaDataOffset
             }
-            lineNumber += transactionOffset
+            lineIndex += transactionOffset
         }
     }
 
@@ -87,35 +87,35 @@ public class Parser {
     /// This is archived by first looking for the Transaction header (TransactionMetaData) and then for postings,
     /// respecting meta data for both
     ///
-    /// - Parameter lineNumber: line to check
+    /// - Parameter lineIndex: line to check
     /// - Returns: lines parsed
-    private func getTransactionForLine(number lineNumber: Int) -> Int {
-        let (transactionMetaDataMetaData, transactionMetaDataMetaDataOffset) = getMetaDataForLine(number: lineNumber)
-        guard let transactionMetaData = TransactionMetaDataParser.parseFrom(line: lines[lineNumber], metaData: transactionMetaDataMetaData) else {
+    private func getTransactionForLine(index lineIndex: Int) -> Int {
+        let (transactionMetaDataMetaData, transactionMetaDataMetaDataOffset) = getMetaDataForLine(index: lineIndex)
+        guard let transactionMetaData = TransactionMetaDataParser.parseFrom(line: lines[lineIndex], metaData: transactionMetaDataMetaData) else {
             return 0
         }
         var postings = [Posting]()
         var offset = transactionMetaDataMetaDataOffset
-        while lineNumber + offset < lines.count - 1 {
+        while lineIndex + offset < lines.count - 1 {
             offset += 1
-            if shouldSkipLine(lines[lineNumber + offset]) {
+            if shouldSkipLine(lines[lineIndex + offset]) {
                 continue
             }
-            let (metaData, metaDataOffset) = getMetaDataForLine(number: lineNumber + offset)
+            let (metaData, metaDataOffset) = getMetaDataForLine(index: lineIndex + offset)
             do {
-                if let posting = try PostingParser.parseFrom(line: lines[lineNumber + offset], metaData: metaData) {
+                if let posting = try PostingParser.parseFrom(line: lines[lineIndex + offset], metaData: metaData) {
                     postings.append(posting)
                 } else {
                     offset -= 1
                     break
                 }
             } catch {
-                parsingErrors.append("\(error.localizedDescription) (line \(lineNumber + offset + 1))")
+                parsingErrors.append("\(error.localizedDescription) (line \(lineIndex + offset + 1))")
                 break
             }
             offset += metaDataOffset
         }
-        transactions.append(( lineNumber + offset + 1, LedgerTransaction(metaData: transactionMetaData, postings: postings)))
+        transactions.append(( lineIndex + offset + 1, LedgerTransaction(metaData: transactionMetaData, postings: postings)))
         return offset
     }
 
@@ -123,14 +123,14 @@ public class Parser {
     ///
     /// This is archived by starting one line after the given and parse for metadata till no more is found
     ///
-    /// - Parameter lineNumber: line with the directive
+    /// - Parameter lineIndex: line with the directive
     /// - Returns: metaData found and lines used
-    private func getMetaDataForLine(number lineNumber: Int) -> ([String: String], Int) {
+    private func getMetaDataForLine(index lineIndex: Int) -> ([String: String], Int) {
         var offset = 0
         var metaData = [String: String]()
-        while lineNumber + offset < lines.count - 1 {
+        while lineIndex + offset < lines.count - 1 {
             offset += 1
-            let line = lines[lineNumber + offset]
+            let line = lines[lineIndex + offset]
             if let metaDataParsed = MetaDataParser.parseFrom(line: line) {
                 metaData = metaData.merging(metaDataParsed) { _, new in new }
             } else if shouldSkipLine(line) {
@@ -190,34 +190,34 @@ public class Parser {
         ledger.events.append(contentsOf: events)
 
         // commodities do not have dependencies
-        for (lineNumber, commodity) in commodities {
+        for (lineIndex, commodity) in commodities {
             do {
                 try ledger.add(commodity)
             } catch {
-                ledger.parsingErrors.append("Error with commodity \(commodity): \(error.localizedDescription) in line \(lineNumber + 1)")
+                ledger.parsingErrors.append("Error with commodity \(commodity): \(error.localizedDescription) in line \(lineIndex + 1)")
             }
         }
 
         // accounts depend on commodities
-        for (lineNumber, line, account) in accounts {
-            addAccount(lineNumber: lineNumber, line: line, account: account, to: ledger)
+        for (lineIndex, line, account) in accounts {
+            addAccount(lineIndex: lineIndex, line: line, account: account, to: ledger)
         }
 
         // prices depend on commodities
-        for (lineNumber, price) in prices {
+        for (lineIndex, price) in prices {
             do {
                 try ledger.add(price)
             } catch {
-                ledger.parsingErrors.append("Error with price \(price): \(error.localizedDescription) in line \(lineNumber + 1)")
+                ledger.parsingErrors.append("Error with price \(price): \(error.localizedDescription) in line \(lineIndex + 1)")
             }
         }
 
         // balances depend on accounts and commodities
-        for (lineNumber, balance) in balances {
+        for (lineIndex, balance) in balances {
             do {
                 try ledger.add(balance)
             } catch {
-                ledger.parsingErrors.append("Error with balance \(balance): \(error.localizedDescription) in line \(lineNumber + 1)")
+                ledger.parsingErrors.append("Error with balance \(balance): \(error.localizedDescription) in line \(lineIndex + 1)")
             }
         }
 
@@ -231,25 +231,25 @@ public class Parser {
 
     /// Adds an account opening or closing to the ledger
     /// - Parameters:
-    ///   - lineNumber: line number containing the data about the account - used to print out exact errors
+    ///   - lineIndex: line index containing the data about the account - used to print out exact errors
     ///   - line: line containing the data about the account - used to print out exact errors
     ///   - account: the account to add
-    private func addAccount(lineNumber: Int, line: String, account: Account, to ledger: Ledger) {
+    private func addAccount(lineIndex: Int, line: String, account: Account, to ledger: Ledger) {
         if let ledgerAccount = ledger.accounts.first(where: { $0.name == account.name }) {
             if account.closing != nil {
                 if ledgerAccount.closing == nil {
                     ledgerAccount.closing = account.closing
                 } else {
-                    ledger.parsingErrors.append("Second closing for account \(account.name) in line \(lineNumber + 1): \(line)")
+                    ledger.parsingErrors.append("Second closing for account \(account.name) in line \(lineIndex + 1): \(line)")
                 }
             } else {
-                ledger.parsingErrors.append("Second open for account \(account.name) in line \(lineNumber + 1): \(line)")
+                ledger.parsingErrors.append("Second open for account \(account.name) in line \(lineIndex + 1): \(line)")
             }
         } else {
             do {
                 try ledger.add(account)
             } catch {
-                ledger.parsingErrors.append("Error with account \(account.name): \(error.localizedDescription) in line \(lineNumber + 1): \(line)")
+                ledger.parsingErrors.append("Error with account \(account.name): \(error.localizedDescription) in line \(lineIndex + 1): \(line)")
             }
         }
     }
@@ -258,31 +258,31 @@ public class Parser {
     ///
     /// - Parameters:
     ///   - line: string of the line
-    ///   - lineNumber: number of the line for error messages
+    ///   - lineIndex: index of the line for error messages
     /// - Returns: new open transaction or nil if no transaction open
-    private func parse(_ line: String, number lineNumber: Int, metaData: [String: String]) {
+    private func parse(_ line: String, index lineIndex: Int, metaData: [String: String]) {
 
         // Account
         if let account = AccountParser.parseFrom(line: line, metaData: metaData) {
-            accounts.append((lineNumber, line, account))
+            accounts.append((lineIndex, line, account))
             return
         }
 
         // Price
         if let price = PriceParser.parseFrom(line: line, metaData: metaData) {
-            prices.append((lineNumber, price))
+            prices.append((lineIndex, price))
             return
         }
 
         // Commodity
         if let commodity = CommodityParser.parseFrom(line: line, metaData: metaData) {
-            commodities.append((lineNumber, commodity))
+            commodities.append((lineIndex, commodity))
             return
         }
 
         // Balance
         if let balance = BalanceParser.parseFrom(line: line, metaData: metaData) {
-            balances.append((lineNumber, balance))
+            balances.append((lineIndex, balance))
             return
         }
 
@@ -310,7 +310,7 @@ public class Parser {
             return
         }
 
-        parsingErrors.append("Invalid format in line \(lineNumber + 1): \(line)")
+        parsingErrors.append("Invalid format in line \(lineIndex + 1): \(line)")
     }
 
 }
