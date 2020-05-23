@@ -14,8 +14,8 @@ public struct Amount {
     /// Mumeric value of the amount
     public let number: Decimal
 
-    /// Commodity the number is in
-    public let commodity: Commodity
+    /// CommoditySymbol the number is in
+    public let commoditySymbol: CommoditySymbol
 
     /// Number of decimal digits the number has
     ///
@@ -29,9 +29,9 @@ public struct Amount {
     ///   - number: numeric value
     ///   - commodity: `Commodity`
     ///   - decimalDigits: number of decimal digits the number has
-    public init(number: Decimal, commodity: Commodity, decimalDigits: Int = 0) {
+    public init(number: Decimal, commoditySymbol: CommoditySymbol, decimalDigits: Int = 0) {
         self.number = number
-        self.commodity = commodity
+        self.commoditySymbol = commoditySymbol
         self.decimalDigits = decimalDigits
     }
 }
@@ -47,7 +47,7 @@ extension Amount: CustomStringConvertible {
     }()
 
     /// Returns a `String` for the ledger which contains the number with the correct number of decimal digits as well as the `commodity`
-    public var description: String { "\(amountString) \(commodity.symbol)" }
+    public var description: String { "\(amountString) \(commoditySymbol)" }
 
     private var amountString: String { Self.numberFormatter(fractionDigits: decimalDigits).string(from: number as NSDecimalNumber)! }
 
@@ -64,7 +64,7 @@ extension Amount: MultiCurrencyAmountRepresentable {
 
     /// the ammount represented as `MultiCurrencyAmount`
     public var multiCurrencyAmount: MultiCurrencyAmount {
-        MultiCurrencyAmount(amounts: [commodity: number], decimalDigits: [commodity: decimalDigits])
+        MultiCurrencyAmount(amounts: [commoditySymbol: number], decimalDigits: [commoditySymbol: decimalDigits])
     }
 
 }
@@ -80,7 +80,7 @@ extension Amount: Equatable {
     ///   - rhs: second amount
     /// - Returns: True if the amounts are the same, false otherwise
     public static func == (lhs: Amount, rhs: Amount) -> Bool {
-        lhs.number == rhs.number && lhs.commodity == rhs.commodity && lhs.decimalDigits == rhs.decimalDigits
+        lhs.number == rhs.number && lhs.commoditySymbol == rhs.commoditySymbol && lhs.decimalDigits == rhs.decimalDigits
     }
 
 }

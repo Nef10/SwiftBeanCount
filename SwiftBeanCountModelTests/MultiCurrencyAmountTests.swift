@@ -175,42 +175,42 @@ class MultiCurrencyAmountTests: XCTestCase {
     }
 
     func testValidateOneAmountWithTolerance() {
-        let commodity = TestUtils.cad
+        let commoditySymbol = TestUtils.cad
         var multiCurrencyAmount = MultiCurrencyAmount(amounts: [:], decimalDigits: [:])
 
-        var amount = Amount(number: 0, commodity: commodity, decimalDigits: 0)
+        var amount = Amount(number: 0, commoditySymbol: commoditySymbol, decimalDigits: 0)
         guard case .valid = multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount) else {
             XCTFail("\(multiCurrencyAmount) is not valid")
             return
         }
 
-        multiCurrencyAmount = MultiCurrencyAmount(amounts: [commodity: 0], decimalDigits: [:])
+        multiCurrencyAmount = MultiCurrencyAmount(amounts: [commoditySymbol: 0], decimalDigits: [:])
         guard case .valid = multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount) else {
             XCTFail("\(multiCurrencyAmount) is not valid")
             return
         }
 
-        multiCurrencyAmount = MultiCurrencyAmount(amounts: [commodity: 0.000_05], decimalDigits: [commodity: 5])
+        multiCurrencyAmount = MultiCurrencyAmount(amounts: [commoditySymbol: 0.000_05], decimalDigits: [commoditySymbol: 5])
         if case .invalid(let error) = multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount) {
             XCTAssertEqual(error, "-0.00005 CAD too much (0 tolerance)")
         } else {
             XCTFail("\(multiCurrencyAmount) is valid")
         }
 
-        amount = Amount(number: 0, commodity: commodity, decimalDigits: 1)
+        amount = Amount(number: 0, commoditySymbol: commoditySymbol, decimalDigits: 1)
         if case .invalid(let error) = multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount) {
             XCTAssertEqual(error, "-0.00005 CAD too much (0.000005 tolerance)")
         } else {
             XCTFail("\(multiCurrencyAmount) is valid")
         }
 
-        amount = Amount(number: 0.000_05, commodity: commodity, decimalDigits: 5)
+        amount = Amount(number: 0.000_05, commoditySymbol: commoditySymbol, decimalDigits: 5)
         guard case .valid = multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount) else {
             XCTFail("\(multiCurrencyAmount) is not valid")
             return
         }
 
-        multiCurrencyAmount = MultiCurrencyAmount(amounts: [commodity: 0.000_055], decimalDigits: [commodity: 5])
+        multiCurrencyAmount = MultiCurrencyAmount(amounts: [commoditySymbol: 0.000_055], decimalDigits: [commoditySymbol: 5])
         guard case .valid = multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount) else {
             XCTFail("\(multiCurrencyAmount) is not valid")
             return

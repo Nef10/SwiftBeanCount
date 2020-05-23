@@ -23,16 +23,20 @@ enum TestUtils {
         Date(timeIntervalSince1970: 1_496_905_200)
     }()
 
-    static var cad: Commodity = {
-        Commodity(symbol: "CAD")
+    static let cad: CommoditySymbol = "CAD"
+    static let eur: CommoditySymbol = "EUR"
+    static let usd: CommoditySymbol = "USD"
+
+    static var cadCommodity: Commodity = {
+        Commodity(symbol: cad)
     }()
 
-    static var eur: Commodity = {
-        Commodity(symbol: "EUR")
+    static var eurCommodity: Commodity = {
+        Commodity(symbol: eur)
     }()
 
-    static var usd: Commodity = {
-        Commodity(symbol: "USD")
+    static var usdCommodity: Commodity = {
+        Commodity(symbol: usd)
     }()
 
     static var chequing: AccountName = {
@@ -44,11 +48,11 @@ enum TestUtils {
     }()
 
     static var amount: Amount = {
-        Amount(number: Decimal(1), commodity: TestUtils.cad)
+        Amount(number: Decimal(1), commoditySymbol: cad)
     }()
 
     static var amount2: Amount = {
-        Amount(number: Decimal(1), commodity: TestUtils.eur)
+        Amount(number: Decimal(1), commoditySymbol: eur)
     }()
 
 }

@@ -8,11 +8,14 @@
 
 import Foundation
 
+/// A CommoditySymbol is just a string
+public typealias CommoditySymbol = String
+
 /// A commodity just consists of a symbol
 public class Commodity {
 
     /// symbol of the commodity
-    public let symbol: String
+    public let symbol: CommoditySymbol
 
     /// opening of the commodity
     public let opening: Date?
@@ -25,7 +28,7 @@ public class Commodity {
     /// - Parameters:
     ///   - symbol: symbol of the commodity
     ///   - opening: date the commodity was opened
-    public init(symbol: String, opening: Date? = nil, metaData: [String: String] = [:]) {
+    public init(symbol: CommoditySymbol, opening: Date? = nil, metaData: [String: String] = [:]) {
         self.symbol = symbol
         self.opening = opening
         self.metaData = metaData
@@ -54,12 +57,13 @@ extension Commodity: CustomStringConvertible {
     }()
 
     /// String of the commodity definition
+    ///
+    /// If no opening is set it is an empty string
     public var description: String {
-        var result = ""
-        if let opening = opening {
-            result += "\(Self.dateFormatter.string(from: opening)) "
+        guard let opening = opening else {
+            return ""
         }
-        result += "commodity \(symbol)"
+        var result = "\(Self.dateFormatter.string(from: opening)) commodity \(symbol)"
         if !metaData.isEmpty {
             result += "\n\(metaData.map { "  \($0): \"\($1)\"" }.joined(separator: "\n"))"
         }

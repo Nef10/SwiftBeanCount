@@ -12,21 +12,12 @@ import XCTest
 class CommodityTests: XCTestCase {
 
     func testDescription() {
-        let symbol = "String"
-        let string = "commodity \(symbol)"
-        let commodity = Commodity(symbol: symbol)
-        XCTAssertEqual(String(describing: commodity), string)
+        let commodity = Commodity(symbol: TestUtils.cad)
+        XCTAssertEqual(String(describing: commodity), "")
     }
 
-    func testDescriptionSpecialCharacters() {
+    func testDescriptionSpecialCharactersOpening() {
         let symbol = "💵"
-        let string = "commodity \(symbol)"
-        let commodity = Commodity(symbol: symbol)
-        XCTAssertEqual(String(describing: commodity), string)
-    }
-
-    func testDescriptionOpening() {
-        let symbol = "CAD"
         let string = "2017-06-08 commodity \(symbol)"
         let commodity = Commodity(symbol: symbol, opening: TestUtils.date20170608)
         XCTAssertEqual(String(describing: commodity), string)

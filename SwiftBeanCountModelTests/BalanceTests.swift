@@ -13,7 +13,7 @@ class BalanceTests: XCTestCase {
 
     func testDescription() {
         let account = Account(name: TestUtils.cash)
-        let amount = Amount(number: Decimal(1), commodity: TestUtils.cad)
+        let amount = Amount(number: Decimal(1), commoditySymbol: TestUtils.cad)
 
         var balance = Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: amount)
         XCTAssertEqual(String(describing: balance), "2017-06-08 balance \(account.name) \(amount)")
@@ -23,7 +23,7 @@ class BalanceTests: XCTestCase {
     }
 
     func testEqual() {
-        let amount = Amount(number: Decimal(1), commodity: TestUtils.cad)
+        let amount = Amount(number: Decimal(1), commoditySymbol: TestUtils.cad)
         var balance = Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: amount)
         var balance2 = Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: amount)
         XCTAssertEqual(balance, balance2)
@@ -44,12 +44,12 @@ class BalanceTests: XCTestCase {
         XCTAssertNotEqual(balance, balance4)
 
         // Amount commodity different
-        let amount2 = Amount(number: Decimal(1), commodity: TestUtils.usd)
+        let amount2 = Amount(number: Decimal(1), commoditySymbol: TestUtils.usd)
         let balance5 = Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: amount2)
         XCTAssertNotEqual(balance, balance5)
 
         // Amount number different
-        let amount3 = Amount(number: Decimal(2), commodity: TestUtils.cad)
+        let amount3 = Amount(number: Decimal(2), commoditySymbol: TestUtils.cad)
         let balance6 = Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: amount3)
         XCTAssertNotEqual(balance, balance6)
     }

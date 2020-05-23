@@ -9,7 +9,7 @@
 import Foundation
 
 /// A Tag is just a `String` which can be attatched to a `Transaction`
-public class Tag {
+public struct Tag {
 
     /// the name of the tag without the leading **#**
     public let name: String

@@ -70,7 +70,7 @@ public class Ledger {
     private var commodity = [String: Commodity]()
     private var account = [String: Account]()
     private var tag = [String: Tag]()
-    private var price = [Commodity: [Commodity: [Date: Price]]]()
+    private var price = [CommoditySymbol: [CommoditySymbol: [Date: Price]]]()
     private let accountGroup: [String: AccountGroup]
 
     var postingPrices = [Transaction: [Posting: MultiCurrencyAmount]]()
@@ -86,21 +86,22 @@ public class Ledger {
 
     /// Adds a `Transcaction` to the ledger
     ///
-    /// This function does not preserve properties of the accounts,
-    /// tags or commodities added other than name/symbol.
-    ///
-    /// Please note that this function internally copies the object,
-    /// therefore you should not keep a copy. However the old object
-    /// is equal to the new one if the contained accouts are either coming from
-    /// the ledger or have all properties set correctly.
-    ///
     /// - Parameter transaction: transaction to add
-    /// - Returns: added transaction
-    public func add(_ transaction: Transaction) -> Transaction {
-        let newTransaction = Transaction(metaData: getTransactionMetaData(for: transaction.metaData),
-                                         postings: transaction.postings.map { try! getPosting(for: $0) }) // swiftlint:disable:this force_try
-        transactions.append(newTransaction)
-        return newTransaction
+    public func add(_ transaction: Transaction) {
+        transactions.append(transaction)
+        transaction.metaData.tags.forEach {
+            addTagIfNeccessary($0)
+        }
+        transaction.postings.forEach {
+            addAccountIfNeccessary(name: $0.accountName)
+            addCommodityIfNeccessary(symbol: $0.amount.commoditySymbol)
+            if let price = $0.price {
+                addCommodityIfNeccessary(symbol: price.commoditySymbol)
+            }
+            if let costAmount = $0.cost?.amount {
+                addCommodityIfNeccessary(symbol: costAmount.commoditySymbol)
+            }
+        }
     }
 
     /// Adds an `Account` to the ledger
@@ -108,11 +109,12 @@ public class Ledger {
     /// - Parameter account: account to add
     /// - Throws: If the account already exists
     public func add(_ account: Account) throws {
-        let name = account.name.fullName
-        if self.account[name] == nil {
-            addAccountToStructure(account)
-        } else {
+        guard self.account[account.name.fullName] == nil else {
             throw LedgerError.alreadyExists(String(describing: account))
+        }
+        addAccountToStructure(account)
+        if let commoditySymbol = account.commoditySymbol {
+            addCommodityIfNeccessary(symbol: commoditySymbol)
         }
     }
 
@@ -121,7 +123,10 @@ public class Ledger {
     /// - Parameter commodity: commodity to add
     /// - Throws: If the commodity already exists
     public func add(_ commodity: Commodity) throws {
-        self.commodity[commodity.symbol] = try getCommodityWithProperties(for: commodity)
+        guard self.commodity[commodity.symbol] == nil else {
+            throw LedgerError.alreadyExists(String(describing: commodity))
+        }
+        self.commodity[commodity.symbol] = commodity
     }
 
     /// Adds a `Price` to the ledger
@@ -129,16 +134,17 @@ public class Ledger {
     /// - Parameter price: `Price` to add
     /// - Throws: If the price already exists
     public func add(_ price: Price) throws {
-        guard self.price[price.commodity]?[price.amount.commodity]?[price.date] == nil else {
+        guard self.price[price.commoditySymbol]?[price.amount.commoditySymbol]?[price.date] == nil else {
             throw LedgerError.alreadyExists(String(describing: price))
         }
-        if self.price[price.commodity] == nil {
-            self.price[price.commodity] = [Commodity: [Date: Price]]()
+        if self.price[price.commoditySymbol] == nil {
+            self.price[price.commoditySymbol] = [CommoditySymbol: [Date: Price]]()
         }
-        if self.price[price.commodity]![price.amount.commodity] == nil {
-            self.price[price.commodity]![price.amount.commodity] = [Date: Price]()
+        if self.price[price.commoditySymbol]![price.amount.commoditySymbol] == nil {
+            self.price[price.commoditySymbol]![price.amount.commoditySymbol] = [Date: Price]()
         }
-        self.price[price.commodity]![price.amount.commodity]![price.date] = price
+        self.price[price.commoditySymbol]![price.amount.commoditySymbol]![price.date] = price
+        addCommodityIfNeccessary(symbol: price.commoditySymbol)
     }
 
     /// Adds a `Balance` to the ledger
@@ -146,6 +152,7 @@ public class Ledger {
     /// - Parameter balance: `Balance` to add
     public func add(_ balance: Balance) {
         getAccount(by: balance.accountName).balances.append(balance)
+        addCommodityIfNeccessary(symbol: balance.amount.commoditySymbol)
     }
 
     /// Validates ledger and returns all validation errors
@@ -175,49 +182,6 @@ public class Ledger {
         return result
     }
 
-    /// Converts `TransactionMetaData` so that the new one uses the correct `Tag` objects.
-    /// Properties of these objects are not maintained.
-    ///
-    /// - Parameter metaData: TransactionMetaData to convert
-    /// - Returns: TransactionMetaData which can be added to the ledger
-    private func getTransactionMetaData(for metaData: TransactionMetaData) -> TransactionMetaData {
-        let result = TransactionMetaData(date: metaData.date,
-                                         payee: metaData.payee,
-                                         narration: metaData.narration,
-                                         flag: metaData.flag,
-                                         tags: metaData.tags.map { getTag(for: $0) },
-                                         metaData: metaData.metaData)
-        return result
-    }
-
-    /// Converts `Posting`s so that the new one uses the correct `Account` and `Commodity` objects.
-    /// Properties of these objects are not maintained.
-    ///
-    /// - Parameter posting: Posting to convert
-    /// - Returns: Posting which can be added to the ledger
-    /// - Throws: If the account name is invalid
-    private func getPosting(for posting: Posting) throws -> Posting {
-        let result = Posting(accountName: posting.accountName,
-                             amount: getLedgerAmount(for: posting.amount),
-                             price: posting.price != nil ? getLedgerAmount(for: posting.price!) : nil,
-                             cost: posting.cost != nil ? try Cost(amount: posting.cost?.amount != nil ? getLedgerAmount(for: posting.cost!.amount!) : nil,
-                                                                  date: posting.cost?.date,
-                                                                  label: posting.cost?.label) : nil,
-                             metaData: posting.metaData)
-        return result
-    }
-
-    /// Converts `Amount`s so that the new one uses the correct `Commodity` objects.
-    /// Properties of these objects are not maintained.
-    ///
-    /// - Parameter metaData: amount to convert
-    /// - Returns: Amount which can be added to the ledger
-    private func getLedgerAmount(for amount: Amount) -> Amount {
-        Amount(number: amount.number,
-               commodity: getCommodity(for: amount.commodity),
-               decimalDigits: amount.decimalDigits)
-    }
-
     /// Adds an account the the account structure in the ledger
     /// - Parameter account: account to add
     private func addAccountToStructure(_ account: Account) {
@@ -240,56 +204,45 @@ public class Ledger {
         self.account[name] = account
     }
 
-    // Gets an `Account` so that all accounts exists only once in a ledger, create a new one if it doesn't exist yet
+    /// Gets an `Account` so that all accounts exists only once in a ledger, create a new one if it doesn't exist yet
     ///
     /// - Parameters:
     ///   - accountName: accountName to get
     /// - Returns: Account from the ledger
     private func getAccount(by name: AccountName) -> Account {
+        addAccountIfNeccessary(name: name)
+        return self.account[name.fullName]!
+    }
+
+    /// Adds an `Account` to the structure if it does not exist yet
+    ///
+    /// - Parameters:
+    ///   - name: accountName of the account to add
+    private func addAccountIfNeccessary(name: AccountName) {
         if self.account[name.fullName] == nil {
             let account = Account(name: name)
             addAccountToStructure(account)
         }
-        return self.account[name.fullName]!
     }
 
-    /// Converts `Tag`s so that all tags exists only once in a ledger. This function only keeps the name of the tag.
+    /// Adds a `Tag` if it does not exist yet
     ///
-    /// - Parameter tag: tag to convert
-    /// - Returns: Tag to add to the ledger
-    private func getTag(for tag: Tag) -> Tag {
-        let name = tag.name
-        if self.tag[name] == nil {
-            self.tag[name] = Tag(name: name)
+    /// - Parameters:
+    ///   - tag: Tag to add
+    private func addTagIfNeccessary(_ tag: Tag) {
+        if self.tag[tag.name] == nil {
+            self.tag[tag.name] = tag
         }
-        return self.tag[name]!
     }
 
-    /// Converts `Commodity`s so that all commodities exists only once in a ledger. This function only keeps the symbol
+    /// Adds a `Commodity` if it does not exist yet
     ///
-    /// - Parameter commodity: commodity to convert
-    /// - Returns: Commodity to add to the ledger
-    private func getCommodity(for commodity: Commodity) -> Commodity {
-        let symbol = commodity.symbol
+    /// - Parameters:
+    ///   - symbol: Symbol of Commodity to add
+    private func addCommodityIfNeccessary(symbol: CommoditySymbol) {
         if self.commodity[symbol] == nil {
             self.commodity[symbol] = Commodity(symbol: symbol)
         }
-        return self.commodity[symbol]!
-    }
-
-    /// Converts `Commodity`s so that all commodities exists only once in a ledger. This function keeps all properties
-    ///
-    /// Note: You can only do this if a commodity with the symbol does not yet exists in the ledger.
-    ///
-    /// - Parameter commodity: commodity to convert
-    /// - Returns: Commodity to add to the ledger
-    /// - Throws: If a commodity with the symbol does exists in the ledger
-    private func getCommodityWithProperties(for commodity: Commodity) throws -> Commodity {
-        guard self.commodity[commodity.symbol] == nil else {
-            throw LedgerError.alreadyExists(String(describing: commodity))
-        }
-        self.commodity[commodity.symbol] = commodity
-        return commodity
     }
 
 }

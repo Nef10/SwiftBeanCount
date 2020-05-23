@@ -21,8 +21,8 @@ public protocol MultiCurrencyAmountRepresentable {
 /// **Tolerance** for validation: Half of the last digit of precision provided separately for each currency
 ///
 public struct MultiCurrencyAmount {
-    let amounts: [Commodity: Decimal]
-    let decimalDigits: [Commodity: Int]
+    let amounts: [CommoditySymbol: Decimal]
+    let decimalDigits: [CommoditySymbol: Int]
 
     /// Checks if all amounts of the first one are equal to the one in the second
     ///
@@ -36,16 +36,16 @@ public struct MultiCurrencyAmount {
     ///   - amount2: second amount
     /// - Returns: `ValidationResult`
     private static func equalWithinTolerance(amount1: MultiCurrencyAmount, amount2: MultiCurrencyAmount) -> ValidationResult {
-        for (commodity, decimal1) in amount1.amounts {
-            let decimal2 = amount2.amounts[commodity] ?? 0
+        for (commoditySymbol, decimal1) in amount1.amounts {
+            let decimal2 = amount2.amounts[commoditySymbol] ?? 0
             let result = decimal1 - decimal2
-            let decimalDigits = amount1.decimalDigits[commodity] ?? 0
+            let decimalDigits = amount1.decimalDigits[commoditySymbol] ?? 0
             var tolerance = Decimal()
             if decimalDigits != 0 {
                 tolerance = Decimal(sign: FloatingPointSign.plus, exponent: -(decimalDigits + 1), significand: Decimal(5))
             }
             if result > tolerance || result < (tolerance == 0 ? tolerance : -tolerance) {
-                return .invalid("\(result) \(commodity.symbol) too much (\(tolerance) tolerance)")
+                return .invalid("\(result) \(commoditySymbol) too much (\(tolerance) tolerance)")
             }
         }
         return .valid
@@ -67,8 +67,10 @@ public struct MultiCurrencyAmount {
     /// - Returns: `ValidationResult`
     func validateOneAmountWithTolerance(amount: Amount) -> ValidationResult {
         var decimalDigits = amount.multiCurrencyAmount.decimalDigits
-        decimalDigits[amount.commodity] = decimalDigitToKeep(amount.multiCurrencyAmount.decimalDigits[amount.commodity]!, self.decimalDigits[amount.commodity])
-        return MultiCurrencyAmount.equalWithinTolerance(amount1: MultiCurrencyAmount(amounts: amount.multiCurrencyAmount.amounts, decimalDigits: decimalDigits), amount2: self)
+        decimalDigits[amount.commoditySymbol] = decimalDigitToKeep(amount.multiCurrencyAmount.decimalDigits[amount.commoditySymbol]!,
+                                                                   self.decimalDigits[amount.commoditySymbol])
+        return MultiCurrencyAmount.equalWithinTolerance(amount1: MultiCurrencyAmount(amounts: amount.multiCurrencyAmount.amounts,
+                                                                                     decimalDigits: decimalDigits), amount2: self)
     }
 
 }

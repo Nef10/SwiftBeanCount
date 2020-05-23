@@ -68,18 +68,18 @@ public class Transaction {
             if let cost = posting.cost {
                 if let postingAmount = ledger.postingPrices[self]?[posting] {
                     let postingAmount = MultiCurrencyAmount(amounts: postingAmount.amounts,
-                                                            decimalDigits: [posting.amount.commodity: posting.amount.decimalDigits])
+                                                            decimalDigits: [posting.amount.commoditySymbol: posting.amount.decimalDigits])
                     amount += postingAmount
                 } else if let costAmount = cost.amount, costAmount.number > 0 {
-                    let postingAmount = MultiCurrencyAmount(amounts: [costAmount.commodity: costAmount.number * posting.amount.number],
-                                                            decimalDigits: [posting.amount.commodity: posting.amount.decimalDigits])
+                    let postingAmount = MultiCurrencyAmount(amounts: [costAmount.commoditySymbol: costAmount.number * posting.amount.number],
+                                                            decimalDigits: [posting.amount.commoditySymbol: posting.amount.decimalDigits])
                     amount += postingAmount
                 } else {
                     return .invalid("Posting \(posting) of transaction \(self) does not have an amount in the cost and add to the inventory")
                 }
             } else if let price = posting.price {
-                let postingAmount = MultiCurrencyAmount(amounts: [price.commodity: price.number * posting.amount.number],
-                                                        decimalDigits: [posting.amount.commodity: posting.amount.decimalDigits])
+                let postingAmount = MultiCurrencyAmount(amounts: [price.commoditySymbol: price.number * posting.amount.number],
+                                                        decimalDigits: [posting.amount.commoditySymbol: posting.amount.decimalDigits])
                 amount += postingAmount
             } else {
                 amount += posting.amount

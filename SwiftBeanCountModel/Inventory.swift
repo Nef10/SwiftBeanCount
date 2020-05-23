@@ -57,7 +57,7 @@ class Inventory {
         /// - Parameter amount: amount to add
         mutating func adjustUnits(_ amount: Amount) {
             units = Amount(number: units.number + amount.number,
-                           commodity: units.commodity,
+                           commoditySymbol: units.commoditySymbol,
                            decimalDigits: max(units.decimalDigits, amount.decimalDigits))
         }
 
@@ -86,7 +86,7 @@ class Inventory {
             assertionFailure("Trying to book a posting without cost")
             return nil
         }
-        let existingLotForCommodity = inventory.first { $0.units.commodity == posting.amount.commodity }
+        let existingLotForCommodity = inventory.first { $0.units.commoditySymbol == posting.amount.commoditySymbol }
         // inventories can either have all positive or all negative lots
         if !(existingLotForCommodity != nil) || existingLotForCommodity?.units.number.sign == posting.amount.number.sign {
             // When we have a cost without date in the posting and we need to add it, use the date from the transaction
@@ -107,7 +107,7 @@ class Inventory {
     ///
     /// - Parameter lot: lot to add
     private func add(_ lot: Lot) {
-        if let matchingLotIndex = inventory.firstIndex(where: { $0.units.commodity == lot.units.commodity && $0.cost == lot.cost }) {
+        if let matchingLotIndex = inventory.firstIndex(where: { $0.units.commoditySymbol == lot.units.commoditySymbol && $0.cost == lot.cost }) {
             inventory[matchingLotIndex].adjustUnits(lot.units)
         } else {
             inventory.append(lot)
@@ -123,15 +123,15 @@ class Inventory {
     /// - Returns: The price which should be used for the posting of the lot (negative of the amount paid for the units)
     /// - Throws: InventoryError if the lot cannot be reduced (e.g. ambiguous lot match)
     private func reduce(_ lot: Lot) throws -> MultiCurrencyAmount {
-        let matches = inventory.indices.filter { inventory[$0].units.commodity == lot.units.commodity && lot.cost.matches(cost: inventory[$0].cost) }
+        let matches = inventory.indices.filter { inventory[$0].units.commoditySymbol == lot.units.commoditySymbol && lot.cost.matches(cost: inventory[$0].cost) }
         let isTotalReduction = matches.reduce(Decimal()) { $0 + inventory[$1].units.number } == -lot.units.number
         if isTotalReduction {
             let result = matches.reduce(MultiCurrencyAmount(amounts: [:], decimalDigits: [:])) {
                 $0 + Amount(number: inventory[$1].cost.amount!.number * -inventory[$1].units.number,
-                            commodity: inventory[$1].cost.amount!.commodity,
+                            commoditySymbol: inventory[$1].cost.amount!.commoditySymbol,
                             decimalDigits: inventory[$1].cost.amount!.decimalDigits).multiCurrencyAmount
             }
-            inventory.removeAll { $0.units.commodity == lot.units.commodity && lot.cost.matches(cost: $0.cost) }
+            inventory.removeAll { $0.units.commoditySymbol == lot.units.commoditySymbol && lot.cost.matches(cost: $0.cost) }
             return result
         }
         if matches.count == 1 {
@@ -141,7 +141,7 @@ class Inventory {
             }
             inventory[index].adjustUnits(lot.units)
             let amount = inventory[index].cost.amount!
-            return Amount(number: amount.number * lot.units.number, commodity: amount.commodity, decimalDigits: amount.decimalDigits).multiCurrencyAmount
+            return Amount(number: amount.number * lot.units.number, commoditySymbol: amount.commoditySymbol, decimalDigits: amount.decimalDigits).multiCurrencyAmount
         } else if matches.isEmpty {
             throw InventoryError.noLotFound("No Lot matching \(lot) found, inventory: \(self)")
         }
@@ -182,15 +182,15 @@ class Inventory {
         var cost = MultiCurrencyAmount(amounts: [:], decimalDigits: [:])
         while number != 0 && !matches.isEmpty {
             if abs(inventory[matches.first!].units.number) > abs(number) {
-                inventory[matches.first!].adjustUnits(Amount(number: number, commodity: lot.units.commodity, decimalDigits: lot.units.decimalDigits))
+                inventory[matches.first!].adjustUnits(Amount(number: number, commoditySymbol: lot.units.commoditySymbol, decimalDigits: lot.units.decimalDigits))
                 cost += Amount(number: inventory[matches.first!].cost.amount!.number * number,
-                               commodity: inventory[matches.first!].cost.amount!.commodity,
+                               commoditySymbol: inventory[matches.first!].cost.amount!.commoditySymbol,
                                decimalDigits: inventory[matches.first!].cost.amount!.decimalDigits)
                 number = 0
             } else {
                 number += inventory[matches.first!].units.number
                 cost += Amount(number: inventory[matches.first!].cost.amount!.number * inventory[matches.first!].units.number * -1,
-                               commodity: inventory[matches.first!].cost.amount!.commodity,
+                               commoditySymbol: inventory[matches.first!].cost.amount!.commoditySymbol,
                                decimalDigits: inventory[matches.first!].cost.amount!.decimalDigits)
                 toRemove.append(matches.first!)
                 matches.removeFirst()

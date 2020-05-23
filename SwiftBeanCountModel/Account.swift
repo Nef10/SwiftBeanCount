@@ -88,7 +88,7 @@ public class AccountGroup: AccountItem {
     }
 }
 
-/// Class with represents an Account with a name, commodity, opening and closing date, as well as a type.
+/// Class with represents an Account with a name, CommoditySymbol, opening and closing date
 ///
 /// It does hot hold any `Transaction`s
 public class Account: AccountItem {
@@ -102,7 +102,7 @@ public class Account: AccountItem {
     public let bookingMethod: BookingMethod
 
     /// `Commodity` of this account
-    public let commodity: Commodity?
+    public let commoditySymbol: CommoditySymbol?
 
     /// MetaData of the Account
     public let metaData: [String: String]
@@ -128,14 +128,14 @@ public class Account: AccountItem {
     public init(
         name: AccountName,
         bookingMethod: BookingMethod = .strict,
-        commodity: Commodity? = nil,
+        commoditySymbol: CommoditySymbol? = nil,
         opening: Date? = nil,
         closing: Date? = nil,
         metaData: [String: String] = [:]
     ) {
         self.name = name
         self.bookingMethod = bookingMethod
-        self.commodity = commodity
+        self.commoditySymbol = commoditySymbol
         self.opening = opening
         self.closing = closing
         self.metaData = metaData
@@ -148,8 +148,8 @@ public class Account: AccountItem {
     /// - Returns: `ValidationResult`
     func validate(_ posting: TransactionPosting) -> ValidationResult {
         assert(posting.accountName == self.name, "Checking Posting \(posting) on wrong Account \(self)")
-        guard self.allowsPosting(in: posting.amount.commodity) else {
-            return .invalid("\(posting.transaction) uses a wrong commodiy for account \(self.name) - Only \(self.commodity!.symbol) is allowed")
+        guard self.allowsPosting(in: posting.amount.commoditySymbol) else {
+            return .invalid("\(posting.transaction) uses a wrong commodiy for account \(self.name) - Only \(self.commoditySymbol!) is allowed")
         }
         guard self.wasOpen(at: posting.transaction.metaData.date) else {
             return .invalid("\(posting.transaction) was posted while the accout \(self.name) was closed")
@@ -246,9 +246,9 @@ public class Account: AccountItem {
         return false
     }
 
-    private func allowsPosting(in commodity: Commodity) -> Bool {
-        if let ownCommodity = self.commodity {
-            return ownCommodity == commodity
+    private func allowsPosting(in commodity: CommoditySymbol) -> Bool {
+        if let ownCommoditySymbol = self.commoditySymbol {
+            return ownCommoditySymbol == commodity
         }
         return true
     }
@@ -270,8 +270,8 @@ extension Account: CustomStringConvertible {
         var string = ""
         if let opening = self.opening {
             string += "\(Self.dateFormatter.string(from: opening)) open \(name)"
-            if let commodity = self.commodity {
-                string += " \(commodity.symbol)"
+            if let commoditySymbol = self.commoditySymbol {
+                string += " \(commoditySymbol)"
             }
             if bookingMethod != .strict {
                 string += " \"\(bookingMethod)\""
@@ -296,7 +296,7 @@ extension Account: Equatable {
     ///
     /// - Returns: if the accounts are equal
     public static func == (lhs: Account, rhs: Account) -> Bool {
-        rhs.name == lhs.name && rhs.commodity == lhs.commodity && rhs.opening == lhs.opening && rhs.closing == lhs.closing && lhs.metaData == rhs.metaData
+        rhs.name == lhs.name && rhs.commoditySymbol == lhs.commoditySymbol && rhs.opening == lhs.opening && rhs.closing == lhs.closing && lhs.metaData == rhs.metaData
     }
 
 }

@@ -96,15 +96,14 @@ class LedgerTests: XCTestCase {
         let accountName = TestUtils.cash
         try! ledger.add(Account(name: accountName, opening: TestUtils.date20170609))
         let posting = Posting(accountName: accountName,
-                              amount: Amount(number: Decimal(10), commodity: TestUtils.eur),
-                              price: Amount(number: Decimal(15), commodity: TestUtils.usd),
-                              cost: try! Cost(amount: Amount(number: Decimal(5), commodity: TestUtils.cad), date: TestUtils.date20170609, label: "TEST"),
+                              amount: Amount(number: Decimal(10), commoditySymbol: TestUtils.eur),
+                              price: Amount(number: Decimal(15), commoditySymbol: TestUtils.usd),
+                              cost: try! Cost(amount: Amount(number: Decimal(5), commoditySymbol: TestUtils.cad), date: TestUtils.date20170609, label: "TEST"),
                               metaData: ["A": "B"])
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting])
 
-        let addedTransaction = ledger.add(transaction)
-        XCTAssertEqual(addedTransaction, transaction)
-        XCTAssert(ledger.transactions.contains(addedTransaction))
+        ledger.add(transaction)
+        XCTAssert(ledger.transactions.contains(transaction))
         XCTAssertEqual(ledger.commodities.count, 3)
         XCTAssertEqual(ledger.accounts.count, 1)
         XCTAssertEqual(ledger.tags.count, 1)
@@ -120,31 +119,31 @@ class LedgerTests: XCTestCase {
     func testPrices() {
         let ledger = Ledger()
 
-        let amount = Amount(number: Decimal(1), commodity: TestUtils.cad)
-        let price = try! Price(date: TestUtils.date20170608, commodity: TestUtils.eur, amount: amount, metaData: ["A": "B"])
+        let amount = Amount(number: Decimal(1), commoditySymbol: TestUtils.cad)
+        let price = try! Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount, metaData: ["A": "B"])
 
         XCTAssertNoThrow(try ledger.add(price))
         XCTAssertThrowsError(try ledger.add(price))
 
         // Date different
-        let price2 = try! Price(date: TestUtils.date20170609, commodity: TestUtils.eur, amount: amount)
+        let price2 = try! Price(date: TestUtils.date20170609, commoditySymbol: TestUtils.eur, amount: amount)
         XCTAssertNoThrow(try ledger.add(price2))
         XCTAssertThrowsError(try ledger.add(price2))
 
         // Commodity different
-        let price3 = try! Price(date: TestUtils.date20170608, commodity: TestUtils.usd, amount: amount)
+        let price3 = try! Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.usd, amount: amount)
         XCTAssertNoThrow(try ledger.add(price3))
         XCTAssertThrowsError(try ledger.add(price3))
 
         // Amount commodity different
-        let amount2 = Amount(number: Decimal(1), commodity: TestUtils.usd)
-        let price4 = try! Price(date: TestUtils.date20170608, commodity: TestUtils.eur, amount: amount2)
+        let amount2 = Amount(number: Decimal(1), commoditySymbol: TestUtils.usd)
+        let price4 = try! Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount2)
         XCTAssertNoThrow(try ledger.add(price4))
         XCTAssertThrowsError(try ledger.add(price4))
 
         // Amount number different
-        let amount3 = Amount(number: Decimal(2), commodity: TestUtils.cad)
-        let price5 = try! Price(date: TestUtils.date20170608, commodity: TestUtils.eur, amount: amount3)
+        let amount3 = Amount(number: Decimal(2), commoditySymbol: TestUtils.cad)
+        let price5 = try! Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount3)
         XCTAssertThrowsError(try ledger.add(price5))
 
         XCTAssertEqual(ledger.prices.count, 4)
@@ -159,7 +158,7 @@ class LedgerTests: XCTestCase {
     func testBalances() {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash)
-        let amount = Amount(number: Decimal(1), commodity: TestUtils.cad)
+        let amount = Amount(number: Decimal(1), commoditySymbol: TestUtils.cad)
         let balance = Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: amount, metaData: ["A": "B"])
 
         try! ledger.add(account)
@@ -208,9 +207,9 @@ class LedgerTests: XCTestCase {
         try! ledger.add(account1)
         try! ledger.add(account2)
 
-        let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
-        let costAmount = Amount(number: 3.0, commodity: commodity2, decimalDigits: 1)
-        let amount2 = Amount(number: -6.0, commodity: commodity2, decimalDigits: 1)
+        let amount1 = Amount(number: 2.0, commoditySymbol: commodity1.symbol, decimalDigits: 1)
+        let costAmount = Amount(number: 3.0, commoditySymbol: commodity2.symbol, decimalDigits: 1)
+        let amount2 = Amount(number: -6.0, commoditySymbol: commodity2.symbol, decimalDigits: 1)
         let posting1 = Posting(accountName: TestUtils.chequing, amount: amount1, price: nil, cost: try! Cost(amount: costAmount, date: nil, label: nil))
         let posting2 = Posting(accountName: TestUtils.cash, amount: amount2)
         let transaction1 = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "1", narration: "2", flag: .complete, tags: []),
@@ -219,8 +218,8 @@ class LedgerTests: XCTestCase {
         _ = ledger.add(transaction1)
         XCTAssertTrue(ledger.errors.isEmpty)
 
-        let amount3 = Amount(number: -2.0, commodity: commodity1, decimalDigits: 1)
-        let amount4 = Amount(number: 6.0, commodity: commodity2, decimalDigits: 1)
+        let amount3 = Amount(number: -2.0, commoditySymbol: commodity1.symbol, decimalDigits: 1)
+        let amount4 = Amount(number: 6.0, commoditySymbol: commodity2.symbol, decimalDigits: 1)
         let posting3 = Posting(accountName: TestUtils.chequing, amount: amount3, price: nil, cost: try! Cost(amount: nil, date: nil, label: nil))
         let posting4 = Posting(accountName: TestUtils.cash, amount: amount4)
         let transaction2 = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170610, payee: "3", narration: "4", flag: .complete, tags: []),
@@ -256,7 +255,7 @@ class LedgerTests: XCTestCase {
         account.balances = [
             Balance(date: TestUtils.date20170608,
                     accountName: TestUtils.cash,
-                    amount: Amount(number: 1, commodity: TestUtils.cad))
+                    amount: Amount(number: 1, commoditySymbol: TestUtils.cad))
         ]
         try! invalidLedger.add(account)
         XCTAssertFalse(invalidLedger.errors.isEmpty)
@@ -264,10 +263,9 @@ class LedgerTests: XCTestCase {
 
     func testValidateAccountInventory() {
         let ledger = Ledger()
-        let commodity = TestUtils.cad
-        let account = Account(name: TestUtils.cash, commodity: commodity)
-        let amount = Amount(number: 1.1, commodity: commodity, decimalDigits: 1)
-        let cost = try! Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: "1")
+        let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
+        let amount = Amount(number: 1.1, commoditySymbol: TestUtils.cad, decimalDigits: 1)
+        let cost = try! Cost(amount: Amount(number: 5, commoditySymbol: TestUtils.cad), date: nil, label: "1")
         try! ledger.add(account)
 
         var posting = Posting(accountName: TestUtils.cash, amount: amount, price: nil, cost: cost)
@@ -281,9 +279,9 @@ class LedgerTests: XCTestCase {
         _ = ledger.add(transaction)
 
         posting = Posting(accountName: TestUtils.cash,
-                          amount: Amount(number: -1.0, commodity: commodity, decimalDigits: 0),
+                          amount: Amount(number: -1.0, commoditySymbol: TestUtils.cad, decimalDigits: 0),
                           price: nil,
-                          cost: try! Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: nil))
+                          cost: try! Cost(amount: Amount(number: 5, commoditySymbol: TestUtils.cad), date: nil, label: nil))
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170610, payee: "", narration: "", flag: .complete, tags: []),
                                   postings: [posting])
         _ = ledger.add(transaction)
@@ -296,7 +294,7 @@ class LedgerTests: XCTestCase {
         try! validLedger.add(validCommodity)
         XCTAssertTrue(validLedger.errors.isEmpty)
 
-        let invalidCommodity = TestUtils.eur
+        let invalidCommodity = TestUtils.eurCommodity
         let invalidLedger = Ledger()
         try! invalidLedger.add(invalidCommodity)
         XCTAssertFalse(invalidLedger.errors.isEmpty)
@@ -307,7 +305,7 @@ class LedgerTests: XCTestCase {
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let commodity = Commodity(symbol: "EUR", opening: TestUtils.date20170609)
         var account = Account(name: accountName, opening: TestUtils.date20170609)
-        let posting = Posting(accountName: accountName, amount: Amount(number: Decimal(10), commodity: commodity))
+        let posting = Posting(accountName: accountName, amount: Amount(number: Decimal(10), commoditySymbol: commodity.symbol))
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting])
         var ledger = Ledger()
 
@@ -345,10 +343,8 @@ class LedgerTests: XCTestCase {
 
     func testDescriptionPrice() {
         let ledger = Ledger()
-        let commodity1 = Commodity(symbol: "EUR", opening: TestUtils.date20170608)
-        let commodity2 = Commodity(symbol: "CAD", opening: TestUtils.date20170608)
-        let price1 = try! Price(date: TestUtils.date20170609, commodity: commodity1, amount: Amount(number: 10, commodity: commodity2, decimalDigits: 2))
-        let price2 = try! Price(date: TestUtils.date20170610, commodity: commodity1, amount: Amount(number: 10, commodity: commodity2, decimalDigits: 2))
+        let price1 = try! Price(date: TestUtils.date20170609, commoditySymbol: TestUtils.eur, amount: Amount(number: 10, commoditySymbol: TestUtils.cad, decimalDigits: 2))
+        let price2 = try! Price(date: TestUtils.date20170610, commoditySymbol: TestUtils.eur, amount: Amount(number: 10, commoditySymbol: TestUtils.cad, decimalDigits: 2))
         try! ledger.add(price1)
         XCTAssertEqual(String(describing: ledger), String(describing: price1))
         try! ledger.add(price2)
@@ -424,10 +420,9 @@ class LedgerTests: XCTestCase {
         let ledger1 = Ledger()
         let ledger2 = Ledger()
 
-        let commodity = Commodity(symbol: "Name1")
         let accountName = TestUtils.cash
-        let amount1 = Amount(number: 1, commodity: commodity, decimalDigits: 1)
-        let amount2 = Amount(number: 1, commodity: commodity, decimalDigits: 2)
+        let amount1 = Amount(number: 1, commoditySymbol: TestUtils.cad, decimalDigits: 1)
+        let amount2 = Amount(number: 1, commoditySymbol: TestUtils.cad, decimalDigits: 2)
 
         // same meta data but different posting
         let transactionMetaData = TransactionMetaData(date: Date(), payee: name, narration: name, flag: Flag.complete, tags: [])
@@ -450,13 +445,13 @@ class LedgerTests: XCTestCase {
         let ledger1 = Ledger()
         let ledger2 = Ledger()
 
-        try! ledger1.add(TestUtils.cad)
+        try! ledger1.add(TestUtils.cadCommodity)
         XCTAssertNotEqual(ledger1, ledger2)
-        try! ledger2.add(TestUtils.eur)
+        try! ledger2.add(TestUtils.eurCommodity)
         XCTAssertNotEqual(ledger1, ledger2)
-        try! ledger1.add(TestUtils.eur)
+        try! ledger1.add(TestUtils.eurCommodity)
         XCTAssertNotEqual(ledger1, ledger2)
-        try! ledger2.add(TestUtils.cad)
+        try! ledger2.add(TestUtils.cadCommodity)
         XCTAssertEqual(ledger1, ledger2)
     }
 
@@ -481,10 +476,10 @@ class LedgerTests: XCTestCase {
         let ledger1 = Ledger()
         let ledger2 = Ledger()
 
-        let amount1 = Amount(number: 1, commodity: TestUtils.cad, decimalDigits: 1)
-        let amount2 = Amount(number: 1, commodity: TestUtils.cad, decimalDigits: 2)
-        let price1 = try! Price(date: Date(), commodity: TestUtils.eur, amount: amount1)
-        let price2 = try! Price(date: Date(), commodity: TestUtils.eur, amount: amount2)
+        let amount1 = Amount(number: 1, commoditySymbol: TestUtils.cad, decimalDigits: 1)
+        let amount2 = Amount(number: 1, commoditySymbol: TestUtils.cad, decimalDigits: 2)
+        let price1 = try! Price(date: Date(), commoditySymbol: TestUtils.eur, amount: amount1)
+        let price2 = try! Price(date: Date(), commoditySymbol: TestUtils.eur, amount: amount2)
 
         try! ledger1.add(price1)
         XCTAssertNotEqual(ledger1, ledger2)
