@@ -15,13 +15,17 @@ public class Parser {
     static let comment: Character = ";"
 
     private let lines: [String]
-    private let ledger = Ledger()
 
     private var accounts = [(Int, String, Account)]()
     private var transactions = [(Int, Transaction)]()
     private var balances = [(Int, Balance)]()
     private var commodities = [(Int, Commodity)]()
     private var prices = [(Int, Price)]()
+    private var options = [Option]()
+    private var events = [Event]()
+    private var plugins = [String]()
+    private var customs = [Custom]()
+    private var parsingErrors = [String]()
 
     /// Creates a parser for a file
     ///
@@ -45,8 +49,7 @@ public class Parser {
     public func parse() -> Ledger {
         parseLines()
         sortParsedData()
-        importParsedData()
-        return ledger
+        return importParsedData()
     }
 
     /// Parses the lines into objects, not all yet added to the ledger
@@ -107,7 +110,7 @@ public class Parser {
                     break
                 }
             } catch {
-                ledger.parsingErrors.append("\(error.localizedDescription) (line \(lineNumber + offset + 1))")
+                parsingErrors.append("\(error.localizedDescription) (line \(lineNumber + offset + 1))")
                 break
             }
             offset += metaDataOffset
@@ -176,7 +179,16 @@ public class Parser {
 
     /// Adds all the parsed objects objects which have not yet added to the ledger to it.
     /// To avoid errors the objects must be sorted by date beforehand.
-    private func importParsedData() {
+    private func importParsedData() -> Ledger {
+        let ledger = Ledger()
+
+        // no dependencies
+        ledger.parsingErrors.append(contentsOf: parsingErrors)
+        ledger.option.append(contentsOf: options)
+        ledger.plugins.append(contentsOf: plugins)
+        ledger.custom.append(contentsOf: customs)
+        ledger.events.append(contentsOf: events)
+
         // commodities do not have dependencies
         for (lineNumber, commodity) in commodities {
             do {
@@ -188,7 +200,7 @@ public class Parser {
 
         // accounts depend on commodities
         for (lineNumber, line, account) in accounts {
-            addAccount(lineNumber: lineNumber, line: line, account: account)
+            addAccount(lineNumber: lineNumber, line: line, account: account, to: ledger)
         }
 
         // prices depend on commodities
@@ -213,6 +225,8 @@ public class Parser {
         for (_, transaction) in transactions {
             _ = ledger.add(transaction)
         }
+
+        return ledger
     }
 
     /// Adds an account opening or closing to the ledger
@@ -220,7 +234,7 @@ public class Parser {
     ///   - lineNumber: line number containing the data about the account - used to print out exact errors
     ///   - line: line containing the data about the account - used to print out exact errors
     ///   - account: the account to add
-    private func addAccount(lineNumber: Int, line: String, account: Account) {
+    private func addAccount(lineNumber: Int, line: String, account: Account, to ledger: Ledger) {
         if let ledgerAccount = ledger.accounts.first(where: { $0.name == account.name }) {
             if account.closing != nil {
                 if ledgerAccount.closing == nil {
@@ -274,29 +288,29 @@ public class Parser {
 
         // Option
         if let option = OptionParser.parseFrom(line: line) {
-            ledger.option.append(option)
+            options.append(option)
             return
         }
 
         // Plugin
         if let plugin = PluginParser.parseFrom(line: line) {
-            ledger.plugins.append(plugin)
+            plugins.append(plugin)
             return
         }
 
         // Event
         if let event = EventParser.parseFrom(line: line, metaData: metaData) {
-            ledger.events.append(event)
+            events.append(event)
             return
         }
 
         // Custom
         if let custom = CustomsParser.parseFrom(line: line, metaData: metaData) {
-            ledger.custom.append(custom)
+            customs.append(custom)
             return
         }
 
-        ledger.parsingErrors.append("Invalid format in line \(lineNumber + 1): \(line)")
+        parsingErrors.append("Invalid format in line \(lineNumber + 1): \(line)")
     }
 
 }
