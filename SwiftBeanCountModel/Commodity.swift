@@ -72,17 +72,7 @@ extension Commodity: CustomStringConvertible {
 
 }
 
-extension Commodity: Comparable {
-
-    /// **<** comparision of the `symbol`s
-    ///
-    /// - Parameters:
-    ///   - lhs: commodity 1
-    ///   - rhs: commodity 1
-    /// - Returns: lhs.symbol < rhs.symbol
-    public static func < (lhs: Commodity, rhs: Commodity) -> Bool {
-        lhs.symbol < rhs.symbol
-    }
+extension Commodity: Equatable {
 
     /// Retuns if the two commodities are equal, meaning their `symbol`s and meta data are equal
     ///
@@ -92,14 +82,6 @@ extension Commodity: Comparable {
     /// - Returns: true if the sybols and meta data are equal, false otherwise
     public static func == (lhs: Commodity, rhs: Commodity) -> Bool {
         lhs.symbol == rhs.symbol && lhs.metaData == rhs.metaData
-    }
-
-}
-
-extension Commodity: Hashable {
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(symbol)
     }
 
 }
