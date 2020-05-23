@@ -91,8 +91,7 @@ public class Parser {
         guard let transactionMetaData = TransactionMetaDataParser.parseFrom(line: lines[lineNumber], metaData: transactionMetaDataMetaData) else {
             return 0
         }
-        let transaction = Transaction(metaData: transactionMetaData)
-
+        var postings = [Posting]()
         var offset = transactionMetaDataMetaDataOffset
         while lineNumber + offset < lines.count - 1 {
             offset += 1
@@ -102,18 +101,18 @@ public class Parser {
             let (metaData, metaDataOffset) = getMetaDataForLine(number: lineNumber + offset)
             do {
                 if let posting = try PostingParser.parseFrom(line: lines[lineNumber + offset], metaData: metaData) {
-                    transaction.add(posting)
-                } else { // No posting, need to close previous transaction
-                    closeOpen(transaction: transaction, onLine: lineNumber + offset)
-                    return offset - 1
+                    postings.append(posting)
+                } else {
+                    offset -= 1
+                    break
                 }
             } catch {
                 ledger.parsingErrors.append("\(error.localizedDescription) (line \(lineNumber + offset + 1))")
-                return offset
+                break
             }
             offset += metaDataOffset
         }
-        closeOpen(transaction: transaction, onLine: lineNumber + offset)
+        transactions.append(( lineNumber + offset + 1, LedgerTransaction(metaData: transactionMetaData, postings: postings)))
         return offset
     }
 
@@ -298,21 +297,6 @@ public class Parser {
         }
 
         ledger.parsingErrors.append("Invalid format in line \(lineNumber + 1): \(line)")
-    }
-
-    /// Tries to close an open transaction
-    ///
-    /// Adds an error to the ledger if the transaction does not have any postings
-    ///
-    /// - Parameters:
-    ///   - transaction: transaction to close and add to the parsed transactions array
-    ///   - line: line number which should be included in the error if the transaction cannot be closed
-    private func closeOpen(transaction: Transaction, onLine line: Int) {
-        if !transaction.postings.isEmpty {
-            transactions.append((line, transaction))
-        } else {
-            ledger.parsingErrors.append("Invalid format in line \(line + 1): previous Transaction \(transaction) without postings")
-        }
     }
 
 }

@@ -59,9 +59,9 @@ class ParserTests: XCTestCase {
     }
 
     func testTransactionWithoutPosting() {
-        let ledger = ensureEmpty(testFile: .transactionWithoutPosting)
+        let ledger = ledgerFor(testFile: .transactionWithoutPosting)
         XCTAssertEqual(ledger.errors.count, 1)
-        XCTAssertEqual(ledger.errors[0], "Invalid format in line 2: previous Transaction 2017-06-08 * \"Payee\" \"Narration\" without postings")
+        XCTAssertEqual(ledger.parsingErrors.count, 0)
     }
 
     func testComments() {
@@ -81,7 +81,7 @@ class ParserTests: XCTestCase {
             errorMessage = error.localizedDescription
         }
         let ledger1 = ledgerFor(testFile: .invalidCost)
-        XCTAssertEqual(ledger1.errors.count, 1)
+        XCTAssertEqual(ledger1.errors.count, 2)
         XCTAssertEqual(ledger1.errors[0], "\(errorMessage) (line 7)")
     }
 
