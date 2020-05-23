@@ -11,7 +11,6 @@ import XCTest
 
 class TransactionPostingTests: XCTestCase {
 
-    let transaction = Transaction(metaData: TransactionMetaData(date: Date(), payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []))
     let commoditySymbol = "EUR"
     var accountName1: AccountName!
     var accountName2: AccountName!
@@ -30,7 +29,8 @@ class TransactionPostingTests: XCTestCase {
     }
 
     func testInitTransactionPosting() {
-        let transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_991_600), payee: "", narration: "", flag: .complete, tags: []))
+        let transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_991_600), payee: "", narration: "", flag: .complete, tags: []),
+                                      postings: [])
         let posting = Posting(accountName: accountName1, amount: amount1!, metaData: ["A": "B"])
         let transactionPosting = TransactionPosting(posting: posting, transaction: transaction)
         XCTAssertEqual(posting.accountName, transactionPosting.accountName)

@@ -94,7 +94,6 @@ class LedgerTests: XCTestCase {
                                                       flag: Flag.complete,
                                                       tags: [Tag(name: "test")],
                                                       metaData: ["A": "B"])
-        let transaction = Transaction(metaData: transactionMetaData)
         let accountName = try! AccountName("Assets:Cash")
         try! ledger.add(Account(name: accountName, opening: date))
         let posting = Posting(accountName: accountName,
@@ -102,7 +101,7 @@ class LedgerTests: XCTestCase {
                               price: Amount(number: Decimal(15), commodity: Commodity(symbol: "USD")),
                               cost: try! Cost(amount: Amount(number: Decimal(5), commodity: Commodity(symbol: "CAD")), date: date, label: "TEST"),
                               metaData: ["A": "B"])
-        transaction.add(posting)
+        let transaction = Transaction(metaData: transactionMetaData, postings: [posting])
 
         let addedTransaction = ledger.add(transaction)
         XCTAssertEqual(addedTransaction, transaction)
@@ -199,7 +198,7 @@ class LedgerTests: XCTestCase {
                                                       narration: "Narration",
                                                       flag: Flag.complete,
                                                       tags: [Tag(name: "test")])
-        let transaction = Transaction(metaData: transactionMetaData)
+        let transaction = Transaction(metaData: transactionMetaData, postings: [])
         _ = ledger.add(transaction)
         XCTAssertFalse(ledger.errors.isEmpty)
     }
@@ -219,25 +218,23 @@ class LedgerTests: XCTestCase {
         try! ledger.add(account1)
         try! ledger.add(account2)
 
-        let transaction1 = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_991_600), payee: "1", narration: "2", flag: .complete, tags: []))
         let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
         let costAmount = Amount(number: 3.0, commodity: commodity2, decimalDigits: 1)
         let amount2 = Amount(number: -6.0, commodity: commodity2, decimalDigits: 1)
         let posting1 = Posting(accountName: accountName2, amount: amount1, price: nil, cost: try! Cost(amount: costAmount, date: nil, label: nil))
         let posting2 = Posting(accountName: accountName1, amount: amount2)
-        transaction1.add(posting1)
-        transaction1.add(posting2)
+        let transaction1 = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_991_600), payee: "1", narration: "2", flag: .complete, tags: []),
+                                       postings: [posting1, posting2])
 
         _ = ledger.add(transaction1)
         XCTAssertTrue(ledger.errors.isEmpty)
 
-        let transaction2 = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_596_991_600), payee: "3", narration: "4", flag: .complete, tags: []))
         let amount3 = Amount(number: -2.0, commodity: commodity1, decimalDigits: 1)
         let amount4 = Amount(number: 6.0, commodity: commodity2, decimalDigits: 1)
         let posting3 = Posting(accountName: accountName2, amount: amount3, price: nil, cost: try! Cost(amount: nil, date: nil, label: nil))
         let posting4 = Posting(accountName: accountName1, amount: amount4)
-        transaction2.add(posting3)
-        transaction2.add(posting4)
+        let transaction2 = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_596_991_600), payee: "3", narration: "4", flag: .complete, tags: []),
+                                       postings: [posting3, posting4])
 
         _ = ledger.add(transaction2)
         XCTAssertTrue(ledger.errors.isEmpty)
@@ -280,19 +277,22 @@ class LedgerTests: XCTestCase {
         let cost = try! Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: "1")
         try! ledger.add(account)
 
-        var transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_905_200), payee: "", narration: "", flag: .complete, tags: []))
-        transaction.add(Posting(accountName: accountName, amount: amount, price: nil, cost: cost))
+        var posting = Posting(accountName: accountName, amount: amount, price: nil, cost: cost)
+        var transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_905_200), payee: "", narration: "", flag: .complete, tags: []),
+                                      postings: [posting])
         _ = ledger.add(transaction)
 
-        transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_991_600), payee: "", narration: "", flag: .complete, tags: []))
-        transaction.add(Posting(accountName: accountName, amount: amount, price: nil, cost: cost))
+        posting = Posting(accountName: accountName, amount: amount, price: nil, cost: cost)
+        transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_991_600), payee: "", narration: "", flag: .complete, tags: []),
+                                  postings: [posting])
         _ = ledger.add(transaction)
 
-        transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_497_078_000), payee: "", narration: "", flag: .complete, tags: []))
-        transaction.add(Posting(accountName: accountName,
-                                amount: Amount(number: -1.0, commodity: commodity, decimalDigits: 0),
-                                price: nil,
-                                cost: try! Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: nil)))
+        posting = Posting(accountName: accountName,
+                          amount: Amount(number: -1.0, commodity: commodity, decimalDigits: 0),
+                          price: nil,
+                          cost: try! Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: nil))
+        transaction = Transaction(metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_497_078_000), payee: "", narration: "", flag: .complete, tags: []),
+                                  postings: [posting])
         _ = ledger.add(transaction)
         XCTAssertFalse(ledger.errors.isEmpty)
     }
@@ -312,11 +312,10 @@ class LedgerTests: XCTestCase {
     func testDescriptionTransactionsAccountsCommodities() {
         let accountName = try! AccountName("Assets:Cash")
         let transactionMetaData = TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_991_600), payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
-        let transaction = Transaction(metaData: transactionMetaData)
         let commodity = Commodity(symbol: "EUR", opening: Date(timeIntervalSince1970: 1_496_991_600))
         let account = Account(name: accountName, opening: Date(timeIntervalSince1970: 1_496_991_600))
         let posting = Posting(accountName: accountName, amount: Amount(number: Decimal(10), commodity: commodity))
-        transaction.add(posting)
+        let transaction = Transaction(metaData: transactionMetaData, postings: [posting])
         let ledger = Ledger()
 
         // Empty ledger
@@ -435,12 +434,10 @@ class LedgerTests: XCTestCase {
 
         // same meta data but different posting
         let transactionMetaData = TransactionMetaData(date: Date(), payee: name, narration: name, flag: Flag.complete, tags: [])
-        let transaction1 = Transaction(metaData: transactionMetaData)
-        let transaction2 = Transaction(metaData: transactionMetaData)
         let posting1 = Posting(accountName: accountName, amount: amount1)
-        transaction1.add(posting1)
         let posting2 = Posting(accountName: accountName, amount: amount2)
-        transaction2.add(posting2)
+        let transaction1 = Transaction(metaData: transactionMetaData, postings: [posting1])
+        let transaction2 = Transaction(metaData: transactionMetaData, postings: [posting2])
 
         _ = ledger1.add(transaction1)
         XCTAssertNotEqual(ledger1, ledger2)

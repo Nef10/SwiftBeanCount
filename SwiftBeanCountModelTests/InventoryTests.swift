@@ -909,8 +909,8 @@ extension InventoryTests { // Test Reduce
                                                                     payee: "Payee",
                                                                     narration: "Narration",
                                                                     flag: Flag.complete,
-                                                                    tags: []))
-        transaction.add(posting)
+                                                                    tags: []),
+                                      postings: [posting])
         transactionStore.append(transaction)
         return transaction.postings[0]
 

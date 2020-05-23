@@ -1,5 +1,5 @@
 //
-//  LedgerTransactionTests.swift
+//  TransactionTests.swift
 //  SwiftBeanCountModelTests
 //
 //  Created by Steffen Kötte on 2017-06-18.
@@ -9,7 +9,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
-class LedgerTransactionTests: XCTestCase { // swiftlint:disable:this type_body_length
+class TransactionTests: XCTestCase {
 
     var transaction1WithoutPosting: Transaction!
     var transaction2WithoutPosting: Transaction!
@@ -24,7 +24,7 @@ class LedgerTransactionTests: XCTestCase { // swiftlint:disable:this type_body_l
     var date: Date?
     let ledger = Ledger()
 
-    override func setUp() { // swiftlint:disable:this function_body_length
+    override func setUp() {
         super.setUp()
         date = Date(timeIntervalSince1970: 1_496_905_200)
         account1 = Account(name: accountName1, opening: date)
@@ -38,29 +38,23 @@ class LedgerTransactionTests: XCTestCase { // swiftlint:disable:this type_body_l
         let amount1 = Amount(number: Decimal(10), commodity: Commodity(symbol: "EUR"))
         let amount2 = Amount(number: Decimal(-10), commodity: Commodity(symbol: "EUR"))
 
-        transaction1WithoutPosting = Transaction(metaData: transactionMetaData1)
+        transaction1WithoutPosting = Transaction(metaData: transactionMetaData1, postings: [])
 
-        transaction2WithoutPosting = Transaction(metaData: transactionMetaData2)
+        transaction2WithoutPosting = Transaction(metaData: transactionMetaData2, postings: [])
 
-        transaction1WithPosting1 = Transaction(metaData: transactionMetaData1)
         let transaction1Posting1 = Posting(accountName: accountName1, amount: amount1)
-        transaction1WithPosting1?.add(transaction1Posting1)
+        transaction1WithPosting1 = Transaction(metaData: transactionMetaData1, postings: [transaction1Posting1])
 
-        transaction3WithPosting1 = Transaction(metaData: transactionMetaData3)
         let transaction3Posting1 = Posting(accountName: accountName2, amount: amount1)
-        transaction3WithPosting1?.add(transaction3Posting1)
+        transaction3WithPosting1 = Transaction(metaData: transactionMetaData3, postings: [transaction3Posting1])
 
-        transaction1WithPosting1And2 = Transaction(metaData: transactionMetaData1)
         let transaction1WithPosting1And2Posting1 = Posting(accountName: accountName1, amount: amount1)
         let transaction1WithPosting1And2Posting2 = Posting(accountName: accountName2, amount: amount2)
-        transaction1WithPosting1And2?.add(transaction1WithPosting1And2Posting1)
-        transaction1WithPosting1And2?.add(transaction1WithPosting1And2Posting2)
+        transaction1WithPosting1And2 = Transaction(metaData: transactionMetaData1, postings: [transaction1WithPosting1And2Posting1, transaction1WithPosting1And2Posting2])
 
-        transaction2WithPosting1And2 = Transaction(metaData: transactionMetaData1)
         let transaction2WithPosting1And2Posting1 = Posting(accountName: accountName1, amount: amount1)
         let transaction2WithPosting1And2Posting2 = Posting(accountName: accountName2, amount: amount2)
-        transaction2WithPosting1And2?.add(transaction2WithPosting1And2Posting1)
-        transaction2WithPosting1And2?.add(transaction2WithPosting1And2Posting2)
+        transaction2WithPosting1And2 = Transaction(metaData: transactionMetaData1, postings: [transaction2WithPosting1And2Posting1, transaction2WithPosting1And2Posting2])
 
         transaction1WithoutPosting = ledger.add(transaction1WithoutPosting)
         transaction2WithoutPosting = ledger.add(transaction2WithoutPosting)
@@ -162,16 +156,13 @@ class LedgerTransactionTests: XCTestCase { // swiftlint:disable:this type_body_l
         //Assets:Checking 10.00000 CAD @ 0.101 EUR
 
         let transactionMetaData = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
-        let transaction = Transaction(metaData: transactionMetaData)
         let amount1 = Amount(number: Decimal(-1), commodity: Commodity(symbol: "EUR"), decimalDigits: 0)
         let amount2 = Amount(number: Decimal(10.000_00), commodity: Commodity(symbol: "CAD"), decimalDigits: 5)
         // 0.101
         let price = Amount(number: Decimal(sign: FloatingPointSign.plus, exponent: -3, significand: Decimal(101)), commodity: Commodity(symbol: "EUR"), decimalDigits: 3)
         let posting1 = Posting(accountName: accountName1, amount: amount1)
         let posting2 = Posting(accountName: accountName2, amount: amount2, price: price)
-        transaction.add(posting1)
-        transaction.add(posting2)
-
+        let transaction = Transaction(metaData: transactionMetaData, postings: [posting1, posting2])
         // 10 * 0.101  = 1.01
         // |1 - 1.01| = 0.01
         // -1 EUR has 0 decimal digits -> tolerance is 0 !
@@ -193,7 +184,6 @@ class LedgerTransactionTests: XCTestCase { // swiftlint:disable:this type_body_l
         //Assets:Checking 10.00000 CAD @ 0.85251 EUR
 
         let transactionMetaData = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
-        let transaction = Transaction(metaData: transactionMetaData)
         // -8.52
         let amount1 = Amount(number: Decimal(sign: FloatingPointSign.minus, exponent: -2, significand: Decimal(852)), commodity: Commodity(symbol: "EUR"), decimalDigits: 2)
         let amount2 = Amount(number: Decimal(10.000_00), commodity: Commodity(symbol: "CAD"), decimalDigits: 5)
@@ -201,8 +191,7 @@ class LedgerTransactionTests: XCTestCase { // swiftlint:disable:this type_body_l
         let price = Amount(number: Decimal(sign: FloatingPointSign.plus, exponent: -5, significand: Decimal(85_251)), commodity: Commodity(symbol: "EUR"), decimalDigits: 5)
         let posting1 = Posting(accountName: accountName1, amount: amount1)
         let posting2 = Posting(accountName: accountName2, amount: amount2, price: price)
-        transaction.add(posting1)
-        transaction.add(posting2)
+        let transaction = Transaction(metaData: transactionMetaData, postings: [posting1, posting2])
 
         // 10 * 0.85251  = 8.5251
         // |8.52 - 8.5251| = 0.0051
@@ -224,12 +213,11 @@ class LedgerTransactionTests: XCTestCase { // swiftlint:disable:this type_body_l
         //Assets:Checking 10.00000 CAD @ 0.85251 EUR
 
         let transactionMetaData = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
-        let transaction = Transaction(metaData: transactionMetaData)
         let amount1 = Amount(number: Decimal(10.000_00), commodity: Commodity(symbol: "CAD"), decimalDigits: 5)
         // 0.85251
         let price = Amount(number: Decimal(sign: FloatingPointSign.plus, exponent: -5, significand: Decimal(85_251)), commodity: Commodity(symbol: "EUR"), decimalDigits: 5)
         let posting1 = Posting(accountName: accountName1, amount: amount1, price: price)
-        transaction.add(posting1)
+        let transaction = Transaction(metaData: transactionMetaData, postings: [posting1])
 
         if case .invalid(let error) = transaction.validate(in: ledger) {
             XCTAssertEqual(error, """
@@ -246,14 +234,12 @@ class LedgerTransactionTests: XCTestCase { // swiftlint:disable:this type_body_l
         //Assets:Checking 10.00000 CAD @ 0.85250 EUR
 
         let transactionMetaData = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
-        var transaction = Transaction(metaData: transactionMetaData)
         let amount1 = Amount(number: Decimal(sign: FloatingPointSign.minus, exponent: -2, significand: Decimal(852)), commodity: Commodity(symbol: "EUR"), decimalDigits: 2)
         let amount2 = Amount(number: Decimal(10.000_00), commodity: Commodity(symbol: "CAD"), decimalDigits: 5)
         let price = Amount(number: Decimal(sign: FloatingPointSign.plus, exponent: -5, significand: Decimal(85_250)), commodity: Commodity(symbol: "EUR"), decimalDigits: 5)
         let posting1 = Posting(accountName: accountName1, amount: amount1)
         let posting2 = Posting(accountName: accountName2, amount: amount2, price: price)
-        transaction.add(posting1)
-        transaction.add(posting2)
+        var transaction = Transaction(metaData: transactionMetaData, postings: [posting1, posting2])
         transaction = ledger.add(transaction)
 
         // 10 * 0.8525  = 8.525
@@ -272,7 +258,6 @@ class LedgerTransactionTests: XCTestCase { // swiftlint:disable:this type_body_l
         //Assets:Checking 10.00000 CAD { 0.85250 EUR }
 
         let transactionMetaData = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
-        var transaction = Transaction(metaData: transactionMetaData)
         let amount1 = Amount(number: Decimal(sign: FloatingPointSign.minus, exponent: -2, significand: Decimal(852)), commodity: Commodity(symbol: "EUR"), decimalDigits: 2)
         let amount2 = Amount(number: Decimal(10.000_00), commodity: Commodity(symbol: "CAD"), decimalDigits: 5)
         let costAmount = Amount(number: Decimal(sign: FloatingPointSign.plus, exponent: -5, significand: Decimal(85_250)),
@@ -281,8 +266,7 @@ class LedgerTransactionTests: XCTestCase { // swiftlint:disable:this type_body_l
         let cost = try! Cost(amount: costAmount, date: date, label: nil)
         let posting1 = Posting(accountName: accountName1, amount: amount1)
         let posting2 = Posting(accountName: accountName2, amount: amount2, price: nil, cost: cost)
-        transaction.add(posting1)
-        transaction.add(posting2)
+        var transaction = Transaction(metaData: transactionMetaData, postings: [posting1, posting2])
         transaction = ledger.add(transaction)
 
         // 10 * 0.8525  = 8.525
@@ -301,7 +285,6 @@ class LedgerTransactionTests: XCTestCase { // swiftlint:disable:this type_body_l
         //Assets:Checking 10.00000 CAD { 0.85251 EUR }
 
         let transactionMetaData = TransactionMetaData(date: date!, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
-        let transaction = Transaction(metaData: transactionMetaData)
         // -8.52
         let amount1 = Amount(number: Decimal(sign: FloatingPointSign.minus, exponent: -2, significand: Decimal(852)), commodity: Commodity(symbol: "EUR"), decimalDigits: 2)
         let amount2 = Amount(number: Decimal(10.000_00), commodity: Commodity(symbol: "CAD"), decimalDigits: 5)
@@ -312,8 +295,7 @@ class LedgerTransactionTests: XCTestCase { // swiftlint:disable:this type_body_l
         let cost = try! Cost(amount: costAmount, date: nil, label: nil)
         let posting1 = Posting(accountName: accountName1, amount: amount1)
         let posting2 = Posting(accountName: accountName2, amount: amount2, price: nil, cost: cost)
-        transaction.add(posting1)
-        transaction.add(posting2)
+        let transaction = Transaction(metaData: transactionMetaData, postings: [posting1, posting2])
 
         // 10 * 0.85251  = 8.5251
         // |8.52 - 8.5251| = 0.0051

@@ -18,7 +18,7 @@ public enum LedgerError: Error {
 public class Ledger {
 
     /// Array of all `Transaction`s in this ledger
-    public private(set) var transactions = [LedgerTransaction]()
+    public private(set) var transactions = [Transaction]()
 
     /// Errors from the ledger and the parsing
     ///
@@ -96,9 +96,9 @@ public class Ledger {
     ///
     /// - Parameter transaction: transaction to add
     /// - Returns: added transaction
-    public func add(_ transaction: Transaction) -> LedgerTransaction {
-        let newTransaction = LedgerTransaction(metaData: getTransactionMetaData(for: transaction.metaData),
-                                               postings: transaction.postings.map { try! getPosting(for: $0) }) // swiftlint:disable:this force_try
+    public func add(_ transaction: Transaction) -> Transaction {
+        let newTransaction = Transaction(metaData: getTransactionMetaData(for: transaction.metaData),
+                                         postings: transaction.postings.map { try! getPosting(for: $0) }) // swiftlint:disable:this force_try
         transactions.append(newTransaction)
         return newTransaction
     }
