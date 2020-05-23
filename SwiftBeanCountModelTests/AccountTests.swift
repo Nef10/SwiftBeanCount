@@ -14,72 +14,67 @@ import XCTest
 class AccountTests: XCTestCase {
 
     let amount = Amount(number: Decimal(1), commodity: TestUtils.eur)
-    var accountName, accountNameSpecial: AccountName!
-
-    override func setUp() {
-        super.setUp()
-        accountName = try! AccountName("Assets:Cash")
-        accountNameSpecial = try! AccountName("Assets:💰")
-    }
 
     func testBookingMethod() {
-        let defaultAccount = Account(name: accountName)
+        let defaultAccount = Account(name: TestUtils.cash)
         XCTAssertEqual(defaultAccount.bookingMethod, .strict)
 
-        let fifoAccount = Account(name: accountName, bookingMethod: .fifo)
+        let fifoAccount = Account(name: TestUtils.cash, bookingMethod: .fifo)
         XCTAssertEqual(fifoAccount.bookingMethod, .fifo)
 
-        let lifoAccount = Account(name: accountName, bookingMethod: .lifo)
+        let lifoAccount = Account(name: TestUtils.cash, bookingMethod: .lifo)
         XCTAssertEqual(lifoAccount.bookingMethod, .lifo)
     }
 
     func testDescription() {
-        var accout = Account(name: accountName)
+        var accout = Account(name: TestUtils.cash)
         XCTAssertEqual(String(describing: accout), "")
-        accout = Account(name: accountName, opening: TestUtils.date20170608)
-        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountName!)")
+        accout = Account(name: TestUtils.cash, opening: TestUtils.date20170608)
+        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(TestUtils.cash)")
         let symbol = "EUR"
-        accout = Account(name: accountName, commodity: Commodity(symbol: symbol), opening: TestUtils.date20170608)
-        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountName!) \(symbol)")
-        accout = Account(name: accountName, commodity: Commodity(symbol: symbol), opening: TestUtils.date20170608, closing: TestUtils.date20170609)
-        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountName!) \(symbol)\n2017-06-09 close \(accountName!)")
-        accout = Account(name: accountName, commodity: Commodity(symbol: symbol), opening: TestUtils.date20170608, closing: TestUtils.date20170609, metaData: ["A": "B"])
-        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountName!) \(symbol)\n  A: \"B\"\n2017-06-09 close \(accountName!)")
+        accout = Account(name: TestUtils.cash, commodity: Commodity(symbol: symbol), opening: TestUtils.date20170608)
+        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(TestUtils.cash) \(symbol)")
+        accout = Account(name: TestUtils.cash, commodity: Commodity(symbol: symbol), opening: TestUtils.date20170608, closing: TestUtils.date20170609)
+        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(TestUtils.cash) \(symbol)\n2017-06-09 close \(TestUtils.cash)")
+        accout = Account(name: TestUtils.cash, commodity: Commodity(symbol: symbol), opening: TestUtils.date20170608, closing: TestUtils.date20170609, metaData: ["A": "B"])
+        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(TestUtils.cash) \(symbol)\n  A: \"B\"\n2017-06-09 close \(TestUtils.cash)")
     }
 
     func testDescriptionBookingMethod() {
         for bookingMethod in [BookingMethod.fifo, BookingMethod.lifo] {
-            var accout = Account(name: accountName, bookingMethod: bookingMethod)
+            var accout = Account(name: TestUtils.cash, bookingMethod: bookingMethod)
             XCTAssertEqual(String(describing: accout), "")
-            accout = Account(name: accountName, bookingMethod: bookingMethod, opening: TestUtils.date20170608)
-            XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountName!) \"\(bookingMethod)\"")
+            accout = Account(name: TestUtils.cash, bookingMethod: bookingMethod, opening: TestUtils.date20170608)
+            XCTAssertEqual(String(describing: accout), "2017-06-08 open \(TestUtils.cash) \"\(bookingMethod)\"")
             let symbol = "EUR"
-            accout = Account(name: accountName, bookingMethod: bookingMethod, commodity: Commodity(symbol: symbol), opening: TestUtils.date20170608)
-            XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountName!) \(symbol) \"\(bookingMethod)\"")
-            accout = Account(name: accountName,
+            accout = Account(name: TestUtils.cash, bookingMethod: bookingMethod, commodity: Commodity(symbol: symbol), opening: TestUtils.date20170608)
+            XCTAssertEqual(String(describing: accout), "2017-06-08 open \(TestUtils.cash) \(symbol) \"\(bookingMethod)\"")
+            accout = Account(name: TestUtils.cash,
                              bookingMethod: bookingMethod,
                              commodity: Commodity(symbol: symbol),
                              opening: TestUtils.date20170608,
                              closing: TestUtils.date20170609)
-            XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountName!) \(symbol) \"\(bookingMethod)\"\n2017-06-09 close \(accountName!)")
+            XCTAssertEqual(String(describing: accout), "2017-06-08 open \(TestUtils.cash) \(symbol) \"\(bookingMethod)\"\n2017-06-09 close \(TestUtils.cash)")
         }
     }
 
     func testDescriptionSpecialCharacters() {
+        let accountNameSpecial = try! AccountName("Assets:💰")
+
         var accout = Account(name: accountNameSpecial)
         XCTAssertEqual(String(describing: accout), "")
         accout = Account(name: accountNameSpecial, opening: TestUtils.date20170608)
-        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountNameSpecial!)")
+        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountNameSpecial)")
         let symbol = "💵"
         accout = Account(name: accountNameSpecial, commodity: Commodity(symbol: symbol), opening: TestUtils.date20170608)
-        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountNameSpecial!) \(symbol)")
+        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountNameSpecial) \(symbol)")
         accout = Account(name: accountNameSpecial, commodity: Commodity(symbol: symbol), opening: TestUtils.date20170608, closing: TestUtils.date20170609)
-        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountNameSpecial!) \(symbol)\n2017-06-09 close \(accountNameSpecial!)")
+        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountNameSpecial) \(symbol)\n2017-06-09 close \(accountNameSpecial)")
     }
 
     func testIsPostingValid_NotOpenPast() {
-        let account = Account(name: accountName)
-        let posting = Posting(accountName: accountName, amount: Amount(number: Decimal(1), commodity: TestUtils.eur))
+        let account = Account(name: TestUtils.cash)
+        let posting = Posting(accountName: TestUtils.cash, amount: Amount(number: Decimal(1), commodity: TestUtils.eur))
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                       postings: [posting])
         if case .invalid(let error) = account.validate(transaction.postings[0]) {
@@ -93,8 +88,8 @@ class AccountTests: XCTestCase {
     }
 
     func testIsPostingValid_NoOpenPresent() {
-        let account = Account(name: accountName)
-        let posting = Posting(accountName: accountName, amount: Amount(number: Decimal(1), commodity: TestUtils.eur))
+        let account = Account(name: TestUtils.cash)
+        let posting = Posting(accountName: TestUtils.cash, amount: Amount(number: Decimal(1), commodity: TestUtils.eur))
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                       postings: [posting])
         if case .invalid(let error) = account.validate(transaction.postings[0]) {
@@ -108,8 +103,8 @@ class AccountTests: XCTestCase {
     }
 
     func testIsPostingValid_BeforeOpening() {
-        let account = Account(name: accountName, opening: TestUtils.date20170609)
-        let posting = Posting(accountName: accountName, amount: Amount(number: Decimal(1), commodity: TestUtils.eur))
+        let account = Account(name: TestUtils.cash, opening: TestUtils.date20170609)
+        let posting = Posting(accountName: TestUtils.cash, amount: Amount(number: Decimal(1), commodity: TestUtils.eur))
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                       postings: [posting])
         if case .invalid(let error) = account.validate(transaction.postings[0]) {
@@ -123,8 +118,8 @@ class AccountTests: XCTestCase {
     }
 
     func testIsPostingValid_AfterOpening() {
-        let account = Account(name: accountName, opening: TestUtils.date20170609)
-        let posting1 = Posting(accountName: accountName, amount: amount)
+        let account = Account(name: TestUtils.cash, opening: TestUtils.date20170609)
+        let posting1 = Posting(accountName: TestUtils.cash, amount: amount)
         let transaction1 = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                        postings: [posting1])
         guard case .valid = account.validate(transaction1.postings[0]) else {
@@ -132,7 +127,7 @@ class AccountTests: XCTestCase {
             return
         }
 
-        let posting2 = Posting(accountName: accountName, amount: amount)
+        let posting2 = Posting(accountName: TestUtils.cash, amount: amount)
         let transaction2 = Transaction(metaData: TransactionMetaData(date: Date(), payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                        postings: [posting2])
         guard case .valid = account.validate(transaction2.postings[0]) else {
@@ -142,8 +137,8 @@ class AccountTests: XCTestCase {
     }
 
     func testIsPostingValid_BeforeClosing() {
-        let account = Account(name: accountName, opening: TestUtils.date20170609, closing: TestUtils.date20170609)
-        let posting = Posting(accountName: accountName, amount: amount)
+        let account = Account(name: TestUtils.cash, opening: TestUtils.date20170609, closing: TestUtils.date20170609)
+        let posting = Posting(accountName: TestUtils.cash, amount: amount)
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                       postings: [posting])
         guard case .valid = account.validate(transaction.postings[0]) else {
@@ -153,8 +148,8 @@ class AccountTests: XCTestCase {
     }
 
     func testIsPostingValid_AfterClosing() {
-        let account = Account(name: accountName, opening: TestUtils.date20170609, closing: TestUtils.date20170609)
-        let posting = Posting(accountName: accountName, amount: amount)
+        let account = Account(name: TestUtils.cash, opening: TestUtils.date20170609, closing: TestUtils.date20170609)
+        let posting = Posting(accountName: TestUtils.cash, amount: amount)
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170610, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                       postings: [posting])
         if case .invalid(let error) = account.validate(transaction.postings[0]) {
@@ -168,8 +163,8 @@ class AccountTests: XCTestCase {
     }
 
     func testIsPostingValid_WithoutCommodity() {
-        let account = Account(name: accountName, opening: TestUtils.date20170608)
-        let posting1 = Posting(accountName: accountName, amount: amount)
+        let account = Account(name: TestUtils.cash, opening: TestUtils.date20170608)
+        let posting1 = Posting(accountName: TestUtils.cash, amount: amount)
         let transaction1 = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                        postings: [posting1])
         guard case .valid = account.validate(transaction1.postings[0]) else {
@@ -177,7 +172,7 @@ class AccountTests: XCTestCase {
             return
         }
 
-        let posting2 = Posting(accountName: accountName, amount: amount)
+        let posting2 = Posting(accountName: TestUtils.cash, amount: amount)
         let transaction2 = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                        postings: [posting2])
         guard case .valid = account.validate(transaction2.postings[0]) else {
@@ -187,8 +182,8 @@ class AccountTests: XCTestCase {
     }
 
     func testIsPostingValid_CorrectCommodity() {
-        let account = Account(name: accountName, commodity: amount.commodity, opening: TestUtils.date20170608)
-        let posting = Posting(accountName: accountName, amount: amount)
+        let account = Account(name: TestUtils.cash, commodity: amount.commodity, opening: TestUtils.date20170608)
+        let posting = Posting(accountName: TestUtils.cash, amount: amount)
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                       postings: [posting])
         guard case .valid = account.validate(transaction.postings[0]) else {
@@ -198,8 +193,8 @@ class AccountTests: XCTestCase {
     }
 
     func testIsPostingValid_WrongCommodity() {
-        let account = Account(name: accountName, commodity: Commodity(symbol: "\(amount.commodity.symbol)1"), opening: TestUtils.date20170608)
-        let posting = Posting(accountName: accountName, amount: amount)
+        let account = Account(name: TestUtils.cash, commodity: Commodity(symbol: "\(amount.commodity.symbol)1"), opening: TestUtils.date20170608)
+        let posting = Posting(accountName: TestUtils.cash, amount: amount)
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                       postings: [posting])
         if case .invalid(let error) = account.validate(transaction.postings[0]) {
@@ -213,7 +208,7 @@ class AccountTests: XCTestCase {
     }
 
     func testIsValid() {
-        var account = Account(name: accountName)
+        var account = Account(name: TestUtils.cash)
 
         // neither closing nor opening
         guard case .valid = account.validate() else {
@@ -222,28 +217,28 @@ class AccountTests: XCTestCase {
         }
 
         // only opening
-        account = Account(name: accountName, opening: TestUtils.date20170608)
+        account = Account(name: TestUtils.cash, opening: TestUtils.date20170608)
         guard case .valid = account.validate() else {
             XCTFail("\(account) is not valid")
             return
         }
 
         // Closing == opening
-        account = Account(name: accountName, opening: TestUtils.date20170608, closing: TestUtils.date20170608)
+        account = Account(name: TestUtils.cash, opening: TestUtils.date20170608, closing: TestUtils.date20170608)
         guard case .valid = account.validate() else {
             XCTFail("\(account) is not valid")
             return
         }
 
         // Closing > opening
-        account = Account(name: accountName, opening: TestUtils.date20170608, closing: TestUtils.date20170609)
+        account = Account(name: TestUtils.cash, opening: TestUtils.date20170608, closing: TestUtils.date20170609)
         guard case .valid = account.validate() else {
             XCTFail("\(account) is not valid")
             return
         }
 
         // Closing < opening
-        account = Account(name: accountName, opening: TestUtils.date20170609, closing: TestUtils.date20170608)
+        account = Account(name: TestUtils.cash, opening: TestUtils.date20170609, closing: TestUtils.date20170608)
         if case .invalid(let error) = account.validate() {
             XCTAssertEqual(error, "Account Assets:Cash was closed on 2017-06-08 before it was opened on 2017-06-09")
         } else {
@@ -251,7 +246,7 @@ class AccountTests: XCTestCase {
         }
 
         // only closing
-        account = Account(name: accountName, closing: TestUtils.date20170608)
+        account = Account(name: TestUtils.cash, closing: TestUtils.date20170608)
         if case .invalid(let error) = account.validate() {
             XCTAssertEqual(error, "Account Assets:Cash has a closing date but no opening")
         } else {
@@ -261,23 +256,23 @@ class AccountTests: XCTestCase {
 
     func testValidateBalance() {
         let ledger = Ledger()
-        let account = Account(name: accountName, commodity: TestUtils.cad)
+        let account = Account(name: TestUtils.cash, commodity: TestUtils.cad)
         try! ledger.add(account)
 
-        account.balances.append(Balance(date: TestUtils.date20170608, accountName: accountName, amount: Amount(number: 0, commodity: TestUtils.cad)))
+        account.balances.append(Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: Amount(number: 0, commodity: TestUtils.cad)))
         guard case .valid = account.validateBalance(in: ledger) else {
             XCTFail("\(account) is not valid")
             return
         }
 
-        account.balances.append(Balance(date: TestUtils.date20170609, accountName: accountName, amount: Amount(number: 1, commodity: TestUtils.cad)))
+        account.balances.append(Balance(date: TestUtils.date20170609, accountName: TestUtils.cash, amount: Amount(number: 1, commodity: TestUtils.cad)))
         if case .invalid(let error) = account.validateBalance(in: ledger) {
             XCTAssertEqual(error, "Balance failed for 2017-06-09 balance Assets:Cash 1 CAD - 1 CAD too much (0 tolerance)")
         } else {
             XCTFail("\(account) is valid")
         }
 
-        var posting = Posting(accountName: accountName, amount: Amount(number: 1, commodity: TestUtils.cad))
+        var posting = Posting(accountName: TestUtils.cash, amount: Amount(number: 1, commodity: TestUtils.cad))
         var transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         _ = ledger.add(transaction)
 
@@ -286,10 +281,10 @@ class AccountTests: XCTestCase {
             return
         }
 
-        posting = Posting(accountName: accountName, amount: Amount(number: 10, commodity: TestUtils.cad))
+        posting = Posting(accountName: TestUtils.cash, amount: Amount(number: 10, commodity: TestUtils.cad))
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         _ = ledger.add(transaction)
-        account.balances.append(Balance(date: TestUtils.date20170610, accountName: accountName, amount: Amount(number: 11, commodity: TestUtils.cad)))
+        account.balances.append(Balance(date: TestUtils.date20170610, accountName: TestUtils.cash, amount: Amount(number: 11, commodity: TestUtils.cad)))
         guard case .valid = account.validateBalance(in: ledger) else {
             XCTFail("\(account) is not valid")
             return
@@ -298,7 +293,7 @@ class AccountTests: XCTestCase {
 
     func testValidateBalanceEmpty() {
         let ledger = Ledger()
-        let account = Account(name: accountName, commodity: TestUtils.cad)
+        let account = Account(name: TestUtils.cash, commodity: TestUtils.cad)
         try! ledger.add(account)
 
         guard case .valid = account.validateBalance(in: ledger) else {
@@ -306,7 +301,7 @@ class AccountTests: XCTestCase {
             return
         }
 
-        let posting = Posting(accountName: accountName, amount: Amount(number: 1, commodity: TestUtils.cad))
+        let posting = Posting(accountName: TestUtils.cash, amount: Amount(number: 1, commodity: TestUtils.cad))
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         _ = ledger.add(transaction)
 
@@ -318,19 +313,19 @@ class AccountTests: XCTestCase {
 
     func testValidateBalanceDifferentCommodity() {
         let ledger = Ledger()
-        let account = Account(name: accountName)
+        let account = Account(name: TestUtils.cash)
         try! ledger.add(account)
 
-        account.balances.append(Balance(date: TestUtils.date20170608, accountName: accountName, amount: Amount(number: 0, commodity: TestUtils.eur)))
+        account.balances.append(Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: Amount(number: 0, commodity: TestUtils.eur)))
 
-        account.balances.append(Balance(date: TestUtils.date20170609, accountName: accountName, amount: Amount(number: 1, commodity: TestUtils.cad)))
+        account.balances.append(Balance(date: TestUtils.date20170609, accountName: TestUtils.cash, amount: Amount(number: 1, commodity: TestUtils.cad)))
         if case .invalid(let error) = account.validateBalance(in: ledger) {
             XCTAssertEqual(error, "Balance failed for 2017-06-09 balance Assets:Cash 1 CAD - 1 CAD too much (0 tolerance)")
         } else {
             XCTFail("\(account) is valid")
         }
 
-        var posting = Posting(accountName: accountName, amount: Amount(number: 1, commodity: TestUtils.cad))
+        var posting = Posting(accountName: TestUtils.cash, amount: Amount(number: 1, commodity: TestUtils.cad))
         var transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         _ = ledger.add(transaction)
 
@@ -340,7 +335,7 @@ class AccountTests: XCTestCase {
         }
 
         // Ignores other commodity without currency
-        posting = Posting(accountName: accountName, amount: Amount(number: 1, commodity: TestUtils.usd))
+        posting = Posting(accountName: TestUtils.cash, amount: Amount(number: 1, commodity: TestUtils.usd))
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         _ = ledger.add(transaction)
         guard case .valid = account.validateBalance(in: ledger) else {
@@ -348,8 +343,8 @@ class AccountTests: XCTestCase {
             return
         }
 
-        account.balances.append(Balance(date: TestUtils.date20170609, accountName: accountName, amount: Amount(number: 1, commodity: TestUtils.eur)))
-        posting = Posting(accountName: accountName, amount: Amount(number: 1, commodity: TestUtils.eur))
+        account.balances.append(Balance(date: TestUtils.date20170609, accountName: TestUtils.cash, amount: Amount(number: 1, commodity: TestUtils.eur)))
+        posting = Posting(accountName: TestUtils.cash, amount: Amount(number: 1, commodity: TestUtils.eur))
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         _ = ledger.add(transaction)
         guard case .valid = account.validateBalance(in: ledger) else {
@@ -360,38 +355,38 @@ class AccountTests: XCTestCase {
 
     func testValidateBalanceTolerance() {
         let ledger = Ledger()
-        let account = Account(name: accountName, commodity: TestUtils.cad)
+        let account = Account(name: TestUtils.cash, commodity: TestUtils.cad)
         try! ledger.add(account)
 
-        var posting = Posting(accountName: accountName, amount: Amount(number: 1.1, commodity: TestUtils.cad, decimalDigits: 1))
+        var posting = Posting(accountName: TestUtils.cash, amount: Amount(number: 1.1, commodity: TestUtils.cad, decimalDigits: 1))
         var transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         _ = ledger.add(transaction)
 
-        account.balances = [Balance(date: TestUtils.date20170609, accountName: accountName, amount: Amount(number: 1.15, commodity: TestUtils.cad, decimalDigits: 2))]
+        account.balances = [Balance(date: TestUtils.date20170609, accountName: TestUtils.cash, amount: Amount(number: 1.15, commodity: TestUtils.cad, decimalDigits: 2))]
         if case .invalid(let error) = account.validateBalance(in: ledger) {
             XCTAssertEqual(error, "Balance failed for 2017-06-09 balance Assets:Cash 1.15 CAD - 0.05 CAD too much (0.005 tolerance)")
         } else {
             XCTFail("\(account) is valid")
         }
 
-        account.balances = [Balance(date: TestUtils.date20170609, accountName: accountName, amount: Amount(number: 1.15, commodity: TestUtils.cad, decimalDigits: 1))]
+        account.balances = [Balance(date: TestUtils.date20170609, accountName: TestUtils.cash, amount: Amount(number: 1.15, commodity: TestUtils.cad, decimalDigits: 1))]
         guard case .valid = account.validateBalance(in: ledger) else {
             XCTFail("\(account) is not valid")
             return
         }
 
-        posting = Posting(accountName: accountName, amount: Amount(number: 0.055, commodity: TestUtils.cad, decimalDigits: 3))
+        posting = Posting(accountName: TestUtils.cash, amount: Amount(number: 0.055, commodity: TestUtils.cad, decimalDigits: 3))
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         _ = ledger.add(transaction)
 
-        account.balances = [Balance(date: TestUtils.date20170609, accountName: accountName, amount: Amount(number: 1.16, commodity: TestUtils.cad, decimalDigits: 2))]
+        account.balances = [Balance(date: TestUtils.date20170609, accountName: TestUtils.cash, amount: Amount(number: 1.16, commodity: TestUtils.cad, decimalDigits: 2))]
         if case .invalid(let error) = account.validateBalance(in: ledger) {
             XCTAssertEqual(error, "Balance failed for 2017-06-09 balance Assets:Cash 1.16 CAD - 0.005 CAD too much (0.0005 tolerance)")
         } else {
             XCTFail("\(account) is valid")
         }
 
-        account.balances = [Balance(date: TestUtils.date20170609, accountName: accountName, amount: Amount(number: 1.155_5, commodity: TestUtils.cad, decimalDigits: 3))]
+        account.balances = [Balance(date: TestUtils.date20170609, accountName: TestUtils.cash, amount: Amount(number: 1.155_5, commodity: TestUtils.cad, decimalDigits: 3))]
         guard case .valid = account.validateBalance(in: ledger) else {
             XCTFail("\(account) is not valid")
             print(account.validateBalance(in: ledger))
@@ -401,7 +396,7 @@ class AccountTests: XCTestCase {
 
     func testValidateInventoryEmpty() {
         let ledger = Ledger()
-        let account = Account(name: accountName, commodity: TestUtils.cad)
+        let account = Account(name: TestUtils.cash, commodity: TestUtils.cad)
         try! ledger.add(account)
 
         guard case .valid = account.validateInventory(in: ledger) else {
@@ -412,24 +407,24 @@ class AccountTests: XCTestCase {
 
     func testValidateInventory() {
         let ledger = Ledger()
-        let account = Account(name: accountName, commodity: TestUtils.cad)
+        let account = Account(name: TestUtils.cash, commodity: TestUtils.cad)
         try! ledger.add(account)
 
-        var posting = Posting(accountName: accountName,
+        var posting = Posting(accountName: TestUtils.cash,
                               amount: Amount(number: 1.1, commodity: TestUtils.cad, decimalDigits: 1),
                               price: nil,
                               cost: try! Cost(amount: Amount(number: 5, commodity: TestUtils.cad), date: nil, label: "1"))
         var transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         _ = ledger.add(transaction)
 
-        posting = Posting(accountName: accountName,
+        posting = Posting(accountName: TestUtils.cash,
                           amount: Amount(number: 1.1, commodity: TestUtils.cad, decimalDigits: 1),
                           price: nil,
                           cost: try! Cost(amount: Amount(number: 5, commodity: TestUtils.cad), date: nil, label: nil))
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         _ = ledger.add(transaction)
 
-        posting = Posting(accountName: accountName,
+        posting = Posting(accountName: TestUtils.cash,
                           amount: Amount(number: -1, commodity: TestUtils.cad, decimalDigits: 0),
                           price: nil,
                           cost: try! Cost(amount: Amount(number: 5, commodity: TestUtils.cad), date: nil, label: "1"))
@@ -444,20 +439,20 @@ class AccountTests: XCTestCase {
 
     func testValidateInvalidInventory() {
         let ledger = Ledger()
-        let account = Account(name: accountName, commodity: TestUtils.cad)
+        let account = Account(name: TestUtils.cash, commodity: TestUtils.cad)
         let amount = Amount(number: 1.1, commodity: TestUtils.cad, decimalDigits: 1)
         let cost = try! Cost(amount: Amount(number: 5, commodity: TestUtils.cad), date: nil, label: "1")
         try! ledger.add(account)
 
-        var posting = Posting(accountName: accountName, amount: amount, price: nil, cost: cost)
+        var posting = Posting(accountName: TestUtils.cash, amount: amount, price: nil, cost: cost)
         var transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         _ = ledger.add(transaction)
 
-        posting = Posting(accountName: accountName, amount: amount, price: nil, cost: cost)
+        posting = Posting(accountName: TestUtils.cash, amount: amount, price: nil, cost: cost)
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         _ = ledger.add(transaction)
 
-        posting = Posting(accountName: accountName,
+        posting = Posting(accountName: TestUtils.cash,
                           amount: Amount(number: -1.0, commodity: TestUtils.cad, decimalDigits: 0),
                           price: nil,
                           cost: try! Cost(amount: Amount(number: 5, commodity: TestUtils.cad), date: nil, label: nil))
@@ -476,8 +471,8 @@ class AccountTests: XCTestCase {
     }
 
     func testEqualName() {
-        let account1 = Account(name: accountName)
-        let account2 = Account(name: accountNameSpecial)
+        let account1 = Account(name: TestUtils.cash)
+        let account2 = Account(name: TestUtils.chequing)
         XCTAssertNotEqual(account1, account2)
     }
 
@@ -485,36 +480,36 @@ class AccountTests: XCTestCase {
         let date1 = TestUtils.date20170608
         let date2 = TestUtils.date20170609
 
-        var account1 = Account(name: accountName)
-        var account2 = Account(name: accountName)
+        var account1 = Account(name: TestUtils.cash)
+        var account2 = Account(name: TestUtils.cash)
 
         // equal
         XCTAssertEqual(account1, account2)
 
-        account1 = Account(name: accountName, commodity: TestUtils.eur, opening: date1, closing: date1)
-        account2 = Account(name: accountName, commodity: TestUtils.eur, opening: date1, closing: date1)
+        account1 = Account(name: TestUtils.cash, commodity: TestUtils.eur, opening: date1, closing: date1)
+        account2 = Account(name: TestUtils.cash, commodity: TestUtils.eur, opening: date1, closing: date1)
 
         // equal
         XCTAssertEqual(account1, account2)
         // different meta data
-        account1 = Account(name: accountName, commodity: TestUtils.eur, opening: date1, metaData: ["A": "B"])
-        account2 = Account(name: accountName, commodity: TestUtils.eur, opening: date1, metaData: ["A": "C"])
+        account1 = Account(name: TestUtils.cash, commodity: TestUtils.eur, opening: date1, metaData: ["A": "B"])
+        account2 = Account(name: TestUtils.cash, commodity: TestUtils.eur, opening: date1, metaData: ["A": "C"])
         XCTAssertNotEqual(account1, account2)
         // same meta data
-        account2 = Account(name: accountName, commodity: TestUtils.eur, opening: date1, metaData: ["A": "B"])
+        account2 = Account(name: TestUtils.cash, commodity: TestUtils.eur, opening: date1, metaData: ["A": "B"])
         XCTAssertEqual(account1, account2)
         // different commodity
-        account1 = Account(name: accountName, commodity: TestUtils.eur)
-        account2 = Account(name: accountName, commodity: TestUtils.cad)
+        account1 = Account(name: TestUtils.cash, commodity: TestUtils.eur)
+        account2 = Account(name: TestUtils.cash, commodity: TestUtils.cad)
         XCTAssertNotEqual(account1, account2)
         // different opening
-        account1 = Account(name: accountName, commodity: TestUtils.eur, opening: date1)
-        account2 = Account(name: accountName, commodity: TestUtils.eur, opening: date2)
+        account1 = Account(name: TestUtils.cash, commodity: TestUtils.eur, opening: date1)
+        account2 = Account(name: TestUtils.cash, commodity: TestUtils.eur, opening: date2)
         XCTAssertNotEqual(account1, account2)
         // different closing
-        account2 = Account(name: accountName, commodity: TestUtils.eur, opening: date2, closing: date2)
+        account2 = Account(name: TestUtils.cash, commodity: TestUtils.eur, opening: date2, closing: date2)
         XCTAssertNotEqual(account1, account2)
-        account1 = Account(name: accountName, commodity: TestUtils.eur, opening: date1, closing: date1)
+        account1 = Account(name: TestUtils.cash, commodity: TestUtils.eur, opening: date1, closing: date1)
         XCTAssertNotEqual(account1, account2)
     }
 

@@ -38,14 +38,14 @@ class LedgerTests: XCTestCase {
         let ledger = Ledger()
         XCTAssertEqual(ledger.accounts.count, 0)
 
-        let account1 = try! Account(name: AccountName("Assets:Checking"), metaData: ["A": "B"])
+        let account1 = Account(name: TestUtils.chequing, metaData: ["A": "B"])
         try! ledger.add(account1)
         XCTAssertEqual(ledger.accounts.count, 1)
         XCTAssertThrowsError(try ledger.add(account1))
         XCTAssertEqual(ledger.accounts.count, 1)
         XCTAssertEqual(ledger.accounts.first, account1)
 
-        let account2 = try! Account(name: AccountName("Assets:💰"))
+        let account2 = Account(name: TestUtils.cash)
         try! ledger.add(account2)
         XCTAssertEqual(ledger.accounts.count, 2)
         XCTAssertThrowsError(try ledger.add(account2))
@@ -72,7 +72,7 @@ class LedgerTests: XCTestCase {
         let ledger = Ledger()
         let account1 = try! Account(name: AccountName("Assets:Checking:RBC"))
         try! ledger.add(account1)
-        let account2 = try! Account(name: AccountName("Assets:Cash"))
+        let account2 = Account(name: TestUtils.cash)
         try! ledger.add(account2)
         let accountGroup = ledger.accountGroups.first { $0.nameItem == "Assets" }!
         XCTAssertEqual(accountGroup.accountGroups.count, 1)
@@ -93,7 +93,7 @@ class LedgerTests: XCTestCase {
                                                       flag: Flag.complete,
                                                       tags: [Tag(name: "test")],
                                                       metaData: ["A": "B"])
-        let accountName = try! AccountName("Assets:Cash")
+        let accountName = TestUtils.cash
         try! ledger.add(Account(name: accountName, opening: TestUtils.date20170609))
         let posting = Posting(accountName: accountName,
                               amount: Amount(number: Decimal(10), commodity: TestUtils.eur),
@@ -111,7 +111,7 @@ class LedgerTests: XCTestCase {
 
         // Test that properties on accounts are not overridden
         let ledger2 = Ledger()
-        let account2 = try! Account(name: AccountName("Assets:Cash"), opening: TestUtils.date20170610)
+        let account2 = Account(name: TestUtils.cash, opening: TestUtils.date20170610)
         try! ledger2.add(account2)
         _ = ledger2.add(transaction)
         XCTAssertEqual(ledger2.accounts.first!.opening, TestUtils.date20170610)
@@ -158,10 +158,9 @@ class LedgerTests: XCTestCase {
 
     func testBalances() {
         let ledger = Ledger()
-        let accountName = try! AccountName("Assets:Test")
-        let account = Account(name: accountName)
+        let account = Account(name: TestUtils.cash)
         let amount = Amount(number: Decimal(1), commodity: TestUtils.cad)
-        let balance = Balance(date: TestUtils.date20170608, accountName: accountName, amount: amount, metaData: ["A": "B"])
+        let balance = Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: amount, metaData: ["A": "B"])
 
         try! ledger.add(account)
         XCTAssertTrue(ledger.accounts.first!.balances.isEmpty)
@@ -201,10 +200,8 @@ class LedgerTests: XCTestCase {
 
         let commodity1 = Commodity(symbol: "STOCK", opening: TestUtils.date20170608)
         let commodity2 = Commodity(symbol: "CAD", opening: TestUtils.date20170608)
-        let accountName1 = try! AccountName("Assets:Cash")
-        let accountName2 = try! AccountName("Assets:Holding")
-        let account1 = Account(name: accountName1, opening: TestUtils.date20170608)
-        let account2 = Account(name: accountName2, opening: TestUtils.date20170608)
+        let account1 = Account(name: TestUtils.cash, opening: TestUtils.date20170608)
+        let account2 = Account(name: TestUtils.chequing, opening: TestUtils.date20170608)
 
         try! ledger.add(commodity1)
         try! ledger.add(commodity2)
@@ -214,8 +211,8 @@ class LedgerTests: XCTestCase {
         let amount1 = Amount(number: 2.0, commodity: commodity1, decimalDigits: 1)
         let costAmount = Amount(number: 3.0, commodity: commodity2, decimalDigits: 1)
         let amount2 = Amount(number: -6.0, commodity: commodity2, decimalDigits: 1)
-        let posting1 = Posting(accountName: accountName2, amount: amount1, price: nil, cost: try! Cost(amount: costAmount, date: nil, label: nil))
-        let posting2 = Posting(accountName: accountName1, amount: amount2)
+        let posting1 = Posting(accountName: TestUtils.chequing, amount: amount1, price: nil, cost: try! Cost(amount: costAmount, date: nil, label: nil))
+        let posting2 = Posting(accountName: TestUtils.cash, amount: amount2)
         let transaction1 = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "1", narration: "2", flag: .complete, tags: []),
                                        postings: [posting1, posting2])
 
@@ -224,8 +221,8 @@ class LedgerTests: XCTestCase {
 
         let amount3 = Amount(number: -2.0, commodity: commodity1, decimalDigits: 1)
         let amount4 = Amount(number: 6.0, commodity: commodity2, decimalDigits: 1)
-        let posting3 = Posting(accountName: accountName2, amount: amount3, price: nil, cost: try! Cost(amount: nil, date: nil, label: nil))
-        let posting4 = Posting(accountName: accountName1, amount: amount4)
+        let posting3 = Posting(accountName: TestUtils.chequing, amount: amount3, price: nil, cost: try! Cost(amount: nil, date: nil, label: nil))
+        let posting4 = Posting(accountName: TestUtils.cash, amount: amount4)
         let transaction2 = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170610, payee: "3", narration: "4", flag: .complete, tags: []),
                                        postings: [posting3, posting4])
 
@@ -234,7 +231,7 @@ class LedgerTests: XCTestCase {
     }
 
     func testValidateAccounts() {
-        var account = try! Account(name: AccountName("Assets:Test"))
+        var account = Account(name: TestUtils.cash)
 
         // valid account
         let validLedger = Ledger()
@@ -243,14 +240,13 @@ class LedgerTests: XCTestCase {
 
         // invalid account with only a closing date
         let invalidLedger = Ledger()
-        account = try! Account(name: AccountName("Assets:Test"), closing: TestUtils.date20170609)
+        account = Account(name: TestUtils.cash, closing: TestUtils.date20170609)
         try! invalidLedger.add(account)
         XCTAssertFalse(invalidLedger.errors.isEmpty)
     }
 
     func testValidateAccountBalance() {
-        let accountName = try! AccountName("Assets:Test")
-        let account = Account(name: accountName)
+        let account = Account(name: TestUtils.cash)
 
         let validLedger = Ledger()
         try! validLedger.add(account)
@@ -259,7 +255,7 @@ class LedgerTests: XCTestCase {
         let invalidLedger = Ledger()
         account.balances = [
             Balance(date: TestUtils.date20170608,
-                    accountName: accountName,
+                    accountName: TestUtils.cash,
                     amount: Amount(number: 1, commodity: TestUtils.cad))
         ]
         try! invalidLedger.add(account)
@@ -269,23 +265,22 @@ class LedgerTests: XCTestCase {
     func testValidateAccountInventory() {
         let ledger = Ledger()
         let commodity = TestUtils.cad
-        let accountName = try! AccountName("Assets:Test")
-        let account = Account(name: accountName, commodity: commodity)
+        let account = Account(name: TestUtils.cash, commodity: commodity)
         let amount = Amount(number: 1.1, commodity: commodity, decimalDigits: 1)
         let cost = try! Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: "1")
         try! ledger.add(account)
 
-        var posting = Posting(accountName: accountName, amount: amount, price: nil, cost: cost)
+        var posting = Posting(accountName: TestUtils.cash, amount: amount, price: nil, cost: cost)
         var transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "", narration: "", flag: .complete, tags: []),
                                       postings: [posting])
         _ = ledger.add(transaction)
 
-        posting = Posting(accountName: accountName, amount: amount, price: nil, cost: cost)
+        posting = Posting(accountName: TestUtils.cash, amount: amount, price: nil, cost: cost)
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "", narration: "", flag: .complete, tags: []),
                                   postings: [posting])
         _ = ledger.add(transaction)
 
-        posting = Posting(accountName: accountName,
+        posting = Posting(accountName: TestUtils.cash,
                           amount: Amount(number: -1.0, commodity: commodity, decimalDigits: 0),
                           price: nil,
                           cost: try! Cost(amount: Amount(number: 5, commodity: commodity), date: nil, label: nil))
@@ -308,7 +303,7 @@ class LedgerTests: XCTestCase {
     }
 
     func testDescriptionTransactionsAccountsCommodities() {
-        let accountName = try! AccountName("Assets:Cash")
+        let accountName = TestUtils.cash
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let commodity = Commodity(symbol: "EUR", opening: TestUtils.date20170609)
         var account = Account(name: accountName, opening: TestUtils.date20170609)
@@ -430,7 +425,7 @@ class LedgerTests: XCTestCase {
         let ledger2 = Ledger()
 
         let commodity = Commodity(symbol: "Name1")
-        let accountName = try! AccountName("Assets:Cash")
+        let accountName = TestUtils.cash
         let amount1 = Amount(number: 1, commodity: commodity, decimalDigits: 1)
         let amount2 = Amount(number: 1, commodity: commodity, decimalDigits: 2)
 
@@ -469,8 +464,8 @@ class LedgerTests: XCTestCase {
         let ledger1 = Ledger()
         let ledger2 = Ledger()
 
-        let account1 = try! Account(name: AccountName("Assets:Cash"))
-        let account2 = try! Account(name: AccountName("Assets:Cash1"))
+        let account1 = Account(name: TestUtils.cash)
+        let account2 = Account(name: TestUtils.chequing)
 
         try! ledger1.add(account1)
         XCTAssertNotEqual(ledger1, ledger2)

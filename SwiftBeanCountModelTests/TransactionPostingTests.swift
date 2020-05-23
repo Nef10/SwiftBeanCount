@@ -12,8 +12,6 @@ import XCTest
 class TransactionPostingTests: XCTestCase {
 
     let commoditySymbol = "EUR"
-    var accountName1: AccountName!
-    var accountName2: AccountName!
     let amountInteger = 1
     var amount1: Amount?
     var account1: Account?
@@ -21,17 +19,15 @@ class TransactionPostingTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        accountName1 = try! AccountName("Assets:Cash")
-        accountName2 = try! AccountName("Assets:💰")
         amount1 = Amount(number: Decimal(amountInteger), commodity: Commodity(symbol: commoditySymbol))
-        account1 = Account(name: accountName1)
-        posting1 = Posting(accountName: accountName1, amount: amount1!)
+        account1 = Account(name: TestUtils.cash)
+        posting1 = Posting(accountName: TestUtils.cash, amount: amount1!)
     }
 
     func testInitTransactionPosting() {
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "", narration: "", flag: .complete, tags: []),
                                       postings: [])
-        let posting = Posting(accountName: accountName1, amount: amount1!, metaData: ["A": "B"])
+        let posting = Posting(accountName: TestUtils.cash, amount: amount1!, metaData: ["A": "B"])
         let transactionPosting = TransactionPosting(posting: posting, transaction: transaction)
         XCTAssertEqual(posting.accountName, transactionPosting.accountName)
         XCTAssertEqual(posting.amount, transactionPosting.amount)
@@ -41,60 +37,60 @@ class TransactionPostingTests: XCTestCase {
 
     func testDescription() {
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "💵"))
-        let posting = Posting(accountName: accountName2, amount: amount)
+        let posting = Posting(accountName: TestUtils.chequing, amount: amount)
 
-        XCTAssertEqual(String(describing: posting), "  \(String(describing: accountName2!)) \(String(describing: amount))")
+        XCTAssertEqual(String(describing: posting), "  \(String(describing: TestUtils.chequing)) \(String(describing: amount))")
     }
 
     func testDescriptionMetaData() {
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "💵"))
-        let posting = Posting(accountName: accountName2, amount: amount, metaData: ["A": "B"])
+        let posting = Posting(accountName: TestUtils.chequing, amount: amount, metaData: ["A": "B"])
 
-        XCTAssertEqual(String(describing: posting), "  \(String(describing: accountName2!)) \(String(describing: amount))\n    A: \"B\"")
+        XCTAssertEqual(String(describing: posting), "  \(String(describing: TestUtils.chequing)) \(String(describing: amount))\n    A: \"B\"")
     }
 
     func testDescriptionPrice() {
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "💵"))
         let price = Amount(number: Decimal(1.555), commodity: TestUtils.eur)
-        let posting = Posting(accountName: accountName2, amount: amount, price: price)
+        let posting = Posting(accountName: TestUtils.chequing, amount: amount, price: price)
 
-        XCTAssertEqual(String(describing: posting), "  \(String(describing: accountName2!)) \(String(describing: amount)) @ \(price)")
+        XCTAssertEqual(String(describing: posting), "  \(String(describing: TestUtils.chequing)) \(String(describing: amount)) @ \(price)")
     }
 
     func testDescriptionCost() {
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "💵"))
         let cost = try! Cost(amount: amount, date: nil, label: "label")
-        let posting = Posting(accountName: accountName2, amount: amount, price: nil, cost: cost)
+        let posting = Posting(accountName: TestUtils.chequing, amount: amount, price: nil, cost: cost)
 
-        XCTAssertEqual(String(describing: posting), "  \(String(describing: accountName2!)) \(String(describing: amount)) \(String(describing: cost))")
+        XCTAssertEqual(String(describing: posting), "  \(String(describing: TestUtils.chequing)) \(String(describing: amount)) \(String(describing: cost))")
     }
 
     func testDescriptionCostAndPrice() {
         let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "💵"))
         let price = Amount(number: Decimal(1.555), commodity: TestUtils.eur)
         let cost = try! Cost(amount: amount, date: nil, label: "label")
-        let posting = Posting(accountName: accountName2, amount: amount, price: price, cost: cost)
+        let posting = Posting(accountName: TestUtils.chequing, amount: amount, price: price, cost: cost)
 
-        XCTAssertEqual(String(describing: posting), "  \(String(describing: accountName2!)) \(String(describing: amount)) \(String(describing: cost)) @ \(price)")
+        XCTAssertEqual(String(describing: posting), "  \(String(describing: TestUtils.chequing)) \(String(describing: amount)) \(String(describing: cost)) @ \(price)")
     }
 
     func testEqual() {
-        let posting2 = Posting(accountName: accountName1, amount: amount1!)
+        let posting2 = Posting(accountName: TestUtils.cash, amount: amount1!)
         XCTAssertEqual(posting1, posting2)
     }
 
     func testEqualRespectsMetaData() {
-        let posting2 = Posting(accountName: accountName1, amount: amount1!, metaData: ["A": "B"])
+        let posting2 = Posting(accountName: TestUtils.cash, amount: amount1!, metaData: ["A": "B"])
         XCTAssertNotEqual(posting1, posting2)
    }
 
     func testEqualRespectsAccount() {
-        let posting2 = Posting(accountName: try! AccountName("\(String(describing: accountName1!)):💰"), amount: amount1!)
+        let posting2 = Posting(accountName: try! AccountName("\(String(describing: TestUtils.cash)):💰"), amount: amount1!)
         XCTAssertNotEqual(posting1, posting2)
     }
 
     func testEqualRespectsAmount() {
-        let posting2 = Posting(accountName: accountName1,
+        let posting2 = Posting(accountName: TestUtils.cash,
                                amount: Amount(number: Decimal(amountInteger),
                                               commodity: Commodity(symbol: "\(commoditySymbol)1")))
         XCTAssertNotEqual(posting1, posting2)
@@ -102,14 +98,14 @@ class TransactionPostingTests: XCTestCase {
 
     func testEqualRespectsPrice() {
         let price = Amount(number: Decimal(1.555), commodity: TestUtils.eur)
-        let posting2 = Posting(accountName: accountName1, amount: amount1!, price: price)
+        let posting2 = Posting(accountName: TestUtils.cash, amount: amount1!, price: price)
         XCTAssertNotEqual(posting1, posting2)
     }
 
     func testEqualRespectsCost() {
         let amount = Amount(number: Decimal(1.555), commodity: TestUtils.eur)
         let cost = try! Cost(amount: amount, date: nil, label: "label")
-        let posting2 = Posting(accountName: accountName1, amount: amount1!, price: nil, cost: cost)
+        let posting2 = Posting(accountName: TestUtils.cash, amount: amount1!, price: nil, cost: cost)
         XCTAssertNotEqual(posting1, posting2)
     }
 

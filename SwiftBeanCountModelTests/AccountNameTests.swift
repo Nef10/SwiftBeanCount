@@ -35,7 +35,7 @@ class AccountNameTests: XCTestCase {
     }
 
     func testNameItem() {
-        XCTAssertEqual(try! AccountName("Assets:Cash").nameItem, "Cash")
+        XCTAssertEqual(TestUtils.cash.nameItem, "Cash")
         XCTAssertEqual(try! AccountName("Assets:A:B:C:D:E:Cash").nameItem, "Cash")
         XCTAssertEqual(try! AccountName("Assets:💰").nameItem, "💰")
     }

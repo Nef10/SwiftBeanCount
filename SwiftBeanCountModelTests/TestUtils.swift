@@ -35,4 +35,12 @@ enum TestUtils {
         Commodity(symbol: "USD")
     }()
 
+    static var chequing: AccountName = {
+        try! AccountName("Assets:Chequing")
+    }()
+
+    static var cash: AccountName = {
+        try! AccountName("Assets:Cash")
+    }()
+
 }
