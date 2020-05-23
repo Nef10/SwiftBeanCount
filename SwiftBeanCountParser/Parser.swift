@@ -206,7 +206,11 @@ public enum Parser {
 
         // accounts depend on commodities
         for (lineIndex, line, account) in result.accounts {
-            addAccount(lineIndex: lineIndex, line: line, account: account, to: ledger)
+            do {
+                try ledger.add(account)
+            } catch {
+                ledger.parsingErrors.append("Error with account \(account.name): \(error.localizedDescription) in line \(lineIndex + 1): \(line)")
+            }
         }
 
         // prices depend on commodities
@@ -235,32 +239,6 @@ public enum Parser {
         return ledger
     }
 
-    /// Adds an account opening or closing to the ledger
-    /// - Parameters:
-    ///   - lineIndex: line index containing the data about the account - used to print out exact errors
-    ///   - line: line containing the data about the account - used to print out exact errors
-    ///   - account: the account to add
-    ///   - ledger: ledger to add the accounts to
-    private static func addAccount(lineIndex: Int, line: String, account: Account, to ledger: Ledger) {
-        if let ledgerAccount = ledger.accounts.first(where: { $0.name == account.name }) {
-            if account.closing != nil {
-                if ledgerAccount.closing == nil {
-                    ledgerAccount.closing = account.closing
-                } else {
-                    ledger.parsingErrors.append("Second closing for account \(account.name) in line \(lineIndex + 1): \(line)")
-                }
-            } else {
-                ledger.parsingErrors.append("Second open for account \(account.name) in line \(lineIndex + 1): \(line)")
-            }
-        } else {
-            do {
-                try ledger.add(account)
-            } catch {
-                ledger.parsingErrors.append("Error with account \(account.name): \(error.localizedDescription) in line \(lineIndex + 1): \(line)")
-            }
-        }
-    }
-
     /// Parses a single line
     ///
     /// - Parameters:
@@ -272,8 +250,7 @@ public enum Parser {
     private static func parse(_ line: String, index lineIndex: Int, metaData: [String: String], into result: ParsingResult) {
 
         // Account
-        if let account = AccountParser.parseFrom(line: line, metaData: metaData) {
-            result.accounts.append((lineIndex, line, account))
+        if parseAccount(line, index: lineIndex, metaData: metaData, into: result) {
             return
         }
 
@@ -320,6 +297,51 @@ public enum Parser {
         }
 
         result.parsingErrors.append("Invalid format in line \(lineIndex + 1): \(line)")
+    }
+
+    /// Parses an account from a line into a result
+    /// - Parameters:
+    ///   - line: line to parse
+    ///   - lineIndex: index of the line, used in error messages
+    ///   - metaData: metaData of the account
+    ///   - result: ParsingResult where the account or errors should be saved to
+    /// - Returns: if the line contained an account
+    private static func parseAccount(_ line: String, index lineIndex: Int, metaData: [String: String], into result: Parser.ParsingResult) -> Bool {
+        guard let parsedAccount = AccountParser.parseFrom(line: line, metaData: metaData) else {
+            return false
+        }
+        if let existingAccount = result.accounts.first(where: { _, _, account in account.name == parsedAccount.name }).map({ _, _, account in account }) {
+            if parsedAccount.closing != nil {
+                if existingAccount.closing == nil {
+                    result.accounts.removeAll { _, _, account in account.name == parsedAccount.name }
+                    let newAccount = Account(name: existingAccount.name,
+                                             bookingMethod: existingAccount.bookingMethod,
+                                             commodity: existingAccount.commodity,
+                                             opening: existingAccount.opening,
+                                             metaData: existingAccount.metaData)
+                    newAccount.closing = parsedAccount.closing
+                    result.accounts.append((lineIndex, line, newAccount))
+                } else {
+                    result.parsingErrors.append("Second closing for account \(parsedAccount.name) in line \(lineIndex + 1): \(line)")
+                }
+            } else if parsedAccount.opening != nil {
+                if existingAccount.opening == nil {
+                    result.accounts.removeAll { _, _, account in account.name == parsedAccount.name }
+                    let newAccount = Account(name: existingAccount.name,
+                                             bookingMethod: existingAccount.bookingMethod,
+                                             commodity: existingAccount.commodity,
+                                             opening: parsedAccount.opening,
+                                             metaData: existingAccount.metaData)
+                    newAccount.closing = existingAccount.closing
+                    result.accounts.append((lineIndex, line, newAccount))
+                } else {
+                    result.parsingErrors.append("Second open for account \(parsedAccount.name) in line \(lineIndex + 1): \(line)")
+                }
+            }
+        } else {
+            result.accounts.append((lineIndex, line, parsedAccount))
+        }
+        return true
     }
 
 }
