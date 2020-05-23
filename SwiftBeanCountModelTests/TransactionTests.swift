@@ -19,18 +19,17 @@ class TransactionTests: XCTestCase {
     var transaction2WithPosting1And2: Transaction!
     var account1: Account?
     var account2: Account?
-    var date = TestUtils.date20170608
     let ledger = Ledger()
 
     override func setUp() {
         super.setUp()
-        account1 = Account(name: TestUtils.cash, opening: date)
-        account2 = Account(name: TestUtils.chequing, opening: date)
+        account1 = Account(name: TestUtils.cash, opening: TestUtils.date20170608)
+        account2 = Account(name: TestUtils.chequing, opening: TestUtils.date20170608)
         try! ledger.add(account1!)
         try! ledger.add(account2!)
-        let transactionMetaData1 = TransactionMetaData(date: date, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
-        let transactionMetaData2 = TransactionMetaData(date: date, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
-        let transactionMetaData3 = TransactionMetaData(date: date, payee: "Payee", narration: "Narration", flag: Flag.incomplete, tags: [])
+        let transactionMetaData1 = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
+        let transactionMetaData2 = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
+        let transactionMetaData3 = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.incomplete, tags: [])
 
         let amount1 = Amount(number: Decimal(10), commodity: TestUtils.eur)
         let amount2 = Amount(number: Decimal(-10), commodity: TestUtils.eur)
@@ -124,7 +123,7 @@ class TransactionTests: XCTestCase {
         // Accounts are not opened
         let ledger = Ledger()
         try! ledger.add(Account(name: TestUtils.cash))
-        try! ledger.add(Account(name: TestUtils.chequing, opening: date))
+        try! ledger.add(Account(name: TestUtils.chequing, opening: TestUtils.date20170608))
         let transaction = ledger.add(transaction1WithPosting1And2)
         if case .invalid(let error) = transaction.validate(in: ledger) {
             XCTAssertEqual(error, """
@@ -152,7 +151,7 @@ class TransactionTests: XCTestCase {
         //Assets:Cash     -1  EUR
         //Assets:Checking 10.00000 CAD @ 0.101 EUR
 
-        let transactionMetaData = TransactionMetaData(date: date, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
+        let transactionMetaData = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let amount1 = Amount(number: Decimal(-1), commodity: TestUtils.eur, decimalDigits: 0)
         let amount2 = Amount(number: Decimal(10.000_00), commodity: TestUtils.cad, decimalDigits: 5)
         // 0.101
@@ -180,7 +179,7 @@ class TransactionTests: XCTestCase {
         //Assets:Cash     -8.52  EUR
         //Assets:Checking 10.00000 CAD @ 0.85251 EUR
 
-        let transactionMetaData = TransactionMetaData(date: date, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
+        let transactionMetaData = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         // -8.52
         let amount1 = Amount(number: Decimal(sign: FloatingPointSign.minus, exponent: -2, significand: Decimal(852)), commodity: TestUtils.eur, decimalDigits: 2)
         let amount2 = Amount(number: Decimal(10.000_00), commodity: TestUtils.cad, decimalDigits: 5)
@@ -209,7 +208,7 @@ class TransactionTests: XCTestCase {
     func testIsValidUnusedCommodity() {
         //Assets:Checking 10.00000 CAD @ 0.85251 EUR
 
-        let transactionMetaData = TransactionMetaData(date: date, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
+        let transactionMetaData = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let amount1 = Amount(number: Decimal(10.000_00), commodity: TestUtils.cad, decimalDigits: 5)
         // 0.85251
         let price = Amount(number: Decimal(sign: FloatingPointSign.plus, exponent: -5, significand: Decimal(85_251)), commodity: TestUtils.eur, decimalDigits: 5)
@@ -230,7 +229,7 @@ class TransactionTests: XCTestCase {
         //Assets:Cash     -8.52  EUR
         //Assets:Checking 10.00000 CAD @ 0.85250 EUR
 
-        let transactionMetaData = TransactionMetaData(date: date, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
+        let transactionMetaData = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let amount1 = Amount(number: Decimal(sign: FloatingPointSign.minus, exponent: -2, significand: Decimal(852)), commodity: TestUtils.eur, decimalDigits: 2)
         let amount2 = Amount(number: Decimal(10.000_00), commodity: TestUtils.cad, decimalDigits: 5)
         let price = Amount(number: Decimal(sign: FloatingPointSign.plus, exponent: -5, significand: Decimal(85_250)), commodity: TestUtils.eur, decimalDigits: 5)
@@ -254,13 +253,13 @@ class TransactionTests: XCTestCase {
         //Assets:Cash     -8.52  EUR
         //Assets:Checking 10.00000 CAD { 0.85250 EUR }
 
-        let transactionMetaData = TransactionMetaData(date: date, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
+        let transactionMetaData = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let amount1 = Amount(number: Decimal(sign: FloatingPointSign.minus, exponent: -2, significand: Decimal(852)), commodity: TestUtils.eur, decimalDigits: 2)
         let amount2 = Amount(number: Decimal(10.000_00), commodity: TestUtils.cad, decimalDigits: 5)
         let costAmount = Amount(number: Decimal(sign: FloatingPointSign.plus, exponent: -5, significand: Decimal(85_250)),
                                 commodity: TestUtils.eur,
                                 decimalDigits: 5)
-        let cost = try! Cost(amount: costAmount, date: date, label: nil)
+        let cost = try! Cost(amount: costAmount, date: TestUtils.date20170608, label: nil)
         let posting1 = Posting(accountName: TestUtils.cash, amount: amount1)
         let posting2 = Posting(accountName: TestUtils.chequing, amount: amount2, price: nil, cost: cost)
         var transaction = Transaction(metaData: transactionMetaData, postings: [posting1, posting2])
@@ -281,7 +280,7 @@ class TransactionTests: XCTestCase {
         //Assets:Cash     -8.52  EUR
         //Assets:Checking 10.00000 CAD { 0.85251 EUR }
 
-        let transactionMetaData = TransactionMetaData(date: date, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
+        let transactionMetaData = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         // -8.52
         let amount1 = Amount(number: Decimal(sign: FloatingPointSign.minus, exponent: -2, significand: Decimal(852)), commodity: TestUtils.eur, decimalDigits: 2)
         let amount2 = Amount(number: Decimal(10.000_00), commodity: TestUtils.cad, decimalDigits: 5)

@@ -11,59 +11,47 @@ import XCTest
 
 class AmountTests: XCTestCase {
 
-    let amount1 = Amount(number: Decimal(1), commodity: TestUtils.cad)
-
     func testEqual() {
-        let amount2 = Amount(number: Decimal(1), commodity: TestUtils.cad)
-        XCTAssertEqual(amount1, amount2)
+        XCTAssertEqual(TestUtils.amount, Amount(number: Decimal(1), commodity: TestUtils.cad))
     }
 
     func testEqualRespectsAmount() {
-        let amount2 = Amount(number: Decimal(10), commodity: TestUtils.cad)
-        XCTAssertNotEqual(amount1, amount2)
+        XCTAssertNotEqual(TestUtils.amount, Amount(number: Decimal(10), commodity: TestUtils.cad))
     }
 
     func testEqualRespectsCommodity() {
-        let amount2 = Amount(number: Decimal(1), commodity: TestUtils.eur)
-        XCTAssertNotEqual(amount1, amount2)
+        XCTAssertNotEqual(TestUtils.amount, TestUtils.amount2)
     }
 
     func testEqualRespectsDecimalDigits() {
-        let amount2 = Amount(number: Decimal(1.0), commodity: TestUtils.eur, decimalDigits: 1)
-        XCTAssertNotEqual(amount1, amount2)
+        XCTAssertNotEqual(TestUtils.amount, Amount(number: Decimal(1.0), commodity: TestUtils.eur, decimalDigits: 1))
     }
 
     func testDescriptionInteger() {
         let amountInteger = 123
-        let commodity = Commodity(symbol: "💵")
-        let amount = Amount(number: Decimal(amountInteger), commodity: commodity)
+        let amount = Amount(number: Decimal(amountInteger), commodity: TestUtils.cad)
 
-        XCTAssertEqual(String(describing: amount), "\(amountInteger) \(commodity.symbol)")
+        XCTAssertEqual(String(describing: amount), "\(amountInteger) \(TestUtils.cad.symbol)")
     }
 
     func testDescriptionThousandsSeperator() {
         let amountInteger = 1_234_567_890.00
-        let commodity = Commodity(symbol: "💵")
-        let amount = Amount(number: Decimal(amountInteger), commodity: commodity, decimalDigits: 2)
+        let amount = Amount(number: Decimal(amountInteger), commodity: TestUtils.cad, decimalDigits: 2)
 
-        XCTAssertEqual(String(describing: amount), "1,234,567,890.00 \(commodity.symbol)")
+        XCTAssertEqual(String(describing: amount), "1,234,567,890.00 \(TestUtils.cad.symbol)")
     }
 
     func testDescriptionFloat() {
-        let commodity = Commodity(symbol: "💵")
+        let amountOneDecimal = Amount(number: Decimal(125.5), commodity: TestUtils.cad, decimalDigits: 1)
+        XCTAssertEqual(String(describing: amountOneDecimal), "125.5 \(TestUtils.cad.symbol)")
 
-        let amountOneDecimal = Amount(number: Decimal(125.5), commodity: commodity, decimalDigits: 1)
-        XCTAssertEqual(String(describing: amountOneDecimal), "125.5 \(commodity.symbol)")
-
-        let amountTwoDecimals = Amount(number: Decimal(125.50), commodity: commodity, decimalDigits: 2)
-        XCTAssertEqual(String(describing: amountTwoDecimals), "125.50 \(commodity.symbol)")
+        let amountTwoDecimals = Amount(number: Decimal(125.50), commodity: TestUtils.cad, decimalDigits: 2)
+        XCTAssertEqual(String(describing: amountTwoDecimals), "125.50 \(TestUtils.cad.symbol)")
     }
 
     func testDescriptionLongFloat() {
-        let commodity = Commodity(symbol: "💵")
-        let amount = Amount(number: Decimal(0.000_976_562_5), commodity: commodity, decimalDigits: 10)
-
-        XCTAssertEqual(String(describing: amount), "0.0009765625 \(commodity.symbol)")
+        let amount = Amount(number: Decimal(0.000_976_562_5), commodity: TestUtils.cad, decimalDigits: 10)
+        XCTAssertEqual(String(describing: amount), "0.0009765625 \(TestUtils.cad.symbol)")
     }
 
     func testMultiCurrencyAmount() {

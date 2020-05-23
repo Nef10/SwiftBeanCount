@@ -43,4 +43,12 @@ enum TestUtils {
         try! AccountName("Assets:Cash")
     }()
 
+    static var amount: Amount = {
+        Amount(number: Decimal(1), commodity: TestUtils.cad)
+    }()
+
+    static var amount2: Amount = {
+        Amount(number: Decimal(1), commodity: TestUtils.eur)
+    }()
+
 }
