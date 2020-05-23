@@ -13,6 +13,8 @@
 		F9159477233CA18400ECFFA7 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9159476233CA18400ECFFA7 /* Event.swift */; };
 		F915947A233CA21F00ECFFA7 /* EventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9159479233CA21F00ECFFA7 /* EventTests.swift */; };
 		F940339920B251CC00DAC55F /* ValidationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F940339820B251CC00DAC55F /* ValidationResult.swift */; };
+		F958046D2478CC0F004AF159 /* AccountName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F958046C2478CC0F004AF159 /* AccountName.swift */; };
+		F958046F2478CC8B004AF159 /* AccountNameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F958046E2478CC8B004AF159 /* AccountNameTests.swift */; };
 		F991CD191F5534C000EE31E5 /* SwiftBeanCountModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F991CD0F1F5534C000EE31E5 /* SwiftBeanCountModel.framework */; };
 		F99E58A520A9089000A05AFE /* Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99E58A420A9089000A05AFE /* Price.swift */; };
 		F99E58A720A90F3100A05AFE /* PriceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99E58A620A90F3100A05AFE /* PriceTests.swift */; };
@@ -61,6 +63,8 @@
 		F9159476233CA18400ECFFA7 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		F9159479233CA21F00ECFFA7 /* EventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTests.swift; sourceTree = "<group>"; };
 		F940339820B251CC00DAC55F /* ValidationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationResult.swift; sourceTree = "<group>"; };
+		F958046C2478CC0F004AF159 /* AccountName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountName.swift; sourceTree = "<group>"; };
+		F958046E2478CC8B004AF159 /* AccountNameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountNameTests.swift; sourceTree = "<group>"; };
 		F991CD0F1F5534C000EE31E5 /* SwiftBeanCountModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftBeanCountModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F991CD131F5534C000EE31E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F991CD181F5534C000EE31E5 /* SwiftBeanCountModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftBeanCountModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				F991CD301F5534ED00EE31E5 /* Account.swift */,
+				F958046C2478CC0F004AF159 /* AccountName.swift */,
 				F991CD2A1F5534ED00EE31E5 /* Amount.swift */,
 				F991CD2F1F5534ED00EE31E5 /* Commodity.swift */,
 				F991CD321F5534ED00EE31E5 /* Flag.swift */,
@@ -164,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				F991CD371F5534FB00EE31E5 /* AccountTests.swift */,
+				F958046E2478CC8B004AF159 /* AccountNameTests.swift */,
 				F991CD361F5534FB00EE31E5 /* AmountTests.swift */,
 				F991CD3A1F5534FB00EE31E5 /* CommodityTests.swift */,
 				F991CD381F5534FB00EE31E5 /* FlagTests.swift */,
@@ -319,6 +325,7 @@
 				F9C1F372233C7E5400357FF0 /* Custom.swift in Sources */,
 				F9B7A88C1F553ABE0062B1CB /* MultiCurrencyAmount.swift in Sources */,
 				F9B7A8871F553ABE0062B1CB /* Account.swift in Sources */,
+				F958046D2478CC0F004AF159 /* AccountName.swift in Sources */,
 				F90E0C3E24737BCA00F4C3B6 /* Option.swift in Sources */,
 				F9B7A8881F553ABE0062B1CB /* Amount.swift in Sources */,
 				F9B9E1522326213B00811B3F /* Cost.swift in Sources */,
@@ -345,6 +352,7 @@
 				F9B7A8841F553AB90062B1CB /* TagTests.swift in Sources */,
 				F9B9E15C232DBCB000811B3F /* InventoryTests.swift in Sources */,
 				F99E58AE20A91BA500A05AFE /* BalanceTests.swift in Sources */,
+				F958046F2478CC8B004AF159 /* AccountNameTests.swift in Sources */,
 				F9B7A8831F553AB90062B1CB /* TransactionPostingTests.swift in Sources */,
 				F9B7A87D1F553AB90062B1CB /* AccountTests.swift in Sources */,
 				F9C1F374233C8C6D00357FF0 /* CustomTests.swift in Sources */,

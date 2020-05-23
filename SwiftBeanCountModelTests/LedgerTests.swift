@@ -241,7 +241,7 @@ class LedgerTests: XCTestCase {
     }
 
     func testValidateAccounts() {
-        let account = try! Account(name: AccountName("Assets:Test"))
+        var account = try! Account(name: AccountName("Assets:Test"))
 
         // valid account
         let validLedger = Ledger()
@@ -250,7 +250,7 @@ class LedgerTests: XCTestCase {
 
         // invalid account with only a closing date
         let invalidLedger = Ledger()
-        account.closing = Date(timeIntervalSince1970: 1_496_991_600)
+        account = try! Account(name: AccountName("Assets:Test"), closing: Date(timeIntervalSince1970: 1_496_991_600))
         try! invalidLedger.add(account)
         XCTAssertFalse(invalidLedger.errors.isEmpty)
     }
@@ -313,10 +313,10 @@ class LedgerTests: XCTestCase {
         let accountName = try! AccountName("Assets:Cash")
         let transactionMetaData = TransactionMetaData(date: Date(timeIntervalSince1970: 1_496_991_600), payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let commodity = Commodity(symbol: "EUR", opening: Date(timeIntervalSince1970: 1_496_991_600))
-        let account = Account(name: accountName, opening: Date(timeIntervalSince1970: 1_496_991_600))
+        var account = Account(name: accountName, opening: Date(timeIntervalSince1970: 1_496_991_600))
         let posting = Posting(accountName: accountName, amount: Amount(number: Decimal(10), commodity: commodity))
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting])
-        let ledger = Ledger()
+        var ledger = Ledger()
 
         // Empty ledger
         XCTAssertEqual(String(describing: ledger), "")
@@ -335,15 +335,19 @@ class LedgerTests: XCTestCase {
                        "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
 
         // Ledger with transaction, account opening as well as closing and commodity
-        ledger.accounts.first { $0.name == accountName }!.closing = Date(timeIntervalSince1970: 1_497_078_000)
+        ledger = Ledger()
+        try! ledger.add(commodity)
+        account = Account(name: accountName, opening: Date(timeIntervalSince1970: 1_496_991_600), closing: Date(timeIntervalSince1970: 1_497_078_000))
+        try! ledger.add(account)
+        _ = ledger.add(transaction)
         XCTAssertEqual(String(describing: ledger),
                        "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
 
         // ledger with only account opening
-        let ledger2 = Ledger()
+        ledger = Ledger()
         let account2 = Account(name: accountName, opening: Date(timeIntervalSince1970: 1_496_991_600))
-        try! ledger2.add(account2)
-        XCTAssertEqual(String(describing: ledger2), String(describing: ledger2.accounts.first!))
+        try! ledger.add(account2)
+        XCTAssertEqual(String(describing: ledger), String(describing: ledger.accounts.first!))
     }
 
     func testDescriptionPrice() {

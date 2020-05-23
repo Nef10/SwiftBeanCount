@@ -19,8 +19,6 @@ class AccountTests: XCTestCase {
 
     let amount = Amount(number: Decimal(1), commodity: Commodity(symbol: "EUR"))
     var accountName, accountNameSpecial: AccountName!
-    let invalidNames = ["Assets", "Liabilities", "Income", "Expenses", "Equity", "Assets:", "Assets:Test:", "Assets:Test:", "Assets:Test::Test", "💰", ""]
-    let validNames = ["Assets:Cash", "Assets:Cash:Test:Test:A", "Assets:Cash:💰", "Assets:Cash:Ca💰h:Test:💰", "Liabilities:Test", "Income:Test", "Expenses:Test", "Equity:Test"]
 
     override func setUp() {
         super.setUp()
@@ -47,10 +45,9 @@ class AccountTests: XCTestCase {
         let symbol = "EUR"
         accout = Account(name: accountName, commodity: Commodity(symbol: symbol), opening: date20170608)
         XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountName!) \(symbol)")
-        accout.closing = date20170609
+        accout = Account(name: accountName, commodity: Commodity(symbol: symbol), opening: date20170608, closing: date20170609)
         XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountName!) \(symbol)\n2017-06-09 close \(accountName!)")
-        accout = Account(name: accountName, commodity: Commodity(symbol: symbol), opening: date20170608, metaData: ["A": "B"])
-        accout.closing = date20170609
+        accout = Account(name: accountName, commodity: Commodity(symbol: symbol), opening: date20170608, closing: date20170609, metaData: ["A": "B"])
         XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountName!) \(symbol)\n  A: \"B\"\n2017-06-09 close \(accountName!)")
     }
 
@@ -63,7 +60,7 @@ class AccountTests: XCTestCase {
             let symbol = "EUR"
             accout = Account(name: accountName, bookingMethod: bookingMethod, commodity: Commodity(symbol: symbol), opening: date20170608)
             XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountName!) \(symbol) \"\(bookingMethod)\"")
-            accout.closing = date20170609
+            accout = Account(name: accountName, bookingMethod: bookingMethod, commodity: Commodity(symbol: symbol), opening: date20170608, closing: date20170609)
             XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountName!) \(symbol) \"\(bookingMethod)\"\n2017-06-09 close \(accountName!)")
         }
     }
@@ -76,7 +73,7 @@ class AccountTests: XCTestCase {
         let symbol = "💵"
         accout = Account(name: accountNameSpecial, commodity: Commodity(symbol: symbol), opening: date20170608)
         XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountNameSpecial!) \(symbol)")
-        accout.closing = date20170609
+        accout = Account(name: accountNameSpecial, commodity: Commodity(symbol: symbol), opening: date20170608, closing: date20170609)
         XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountNameSpecial!) \(symbol)\n2017-06-09 close \(accountNameSpecial!)")
     }
 
@@ -145,8 +142,7 @@ class AccountTests: XCTestCase {
     }
 
     func testIsPostingValid_BeforeClosing() {
-        let account = Account(name: accountName, opening: date20170609)
-        account.closing = date20170609
+        let account = Account(name: accountName, opening: date20170609, closing: date20170609)
         let posting = Posting(accountName: accountName, amount: amount)
         let transaction = Transaction(metaData: TransactionMetaData(date: date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                       postings: [posting])
@@ -157,8 +153,7 @@ class AccountTests: XCTestCase {
     }
 
     func testIsPostingValid_AfterClosing() {
-        let account = Account(name: accountName, opening: date20170609)
-        account.closing = date20170609
+        let account = Account(name: accountName, opening: date20170609, closing: date20170609)
         let posting = Posting(accountName: accountName, amount: amount)
         let transaction = Transaction(metaData: TransactionMetaData(date: date20170610, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                       postings: [posting])
@@ -227,29 +222,28 @@ class AccountTests: XCTestCase {
         }
 
         // only opening
-         account = Account(name: accountName, opening: date20170608)
+        account = Account(name: accountName, opening: date20170608)
         guard case .valid = account.validate() else {
             XCTFail("\(account) is not valid")
             return
         }
 
         // Closing == opening
-        account.closing = date20170608
+        account = Account(name: accountName, opening: date20170608, closing: date20170608)
         guard case .valid = account.validate() else {
             XCTFail("\(account) is not valid")
             return
         }
 
         // Closing > opening
-        account.closing = date20170609
+        account = Account(name: accountName, opening: date20170608, closing: date20170609)
         guard case .valid = account.validate() else {
             XCTFail("\(account) is not valid")
             return
         }
 
         // Closing < opening
-        account = Account(name: accountName, opening: date20170609)
-        account.closing = date20170608
+        account = Account(name: accountName, opening: date20170609, closing: date20170608)
         if case .invalid(let error) = account.validate() {
             XCTAssertEqual(error, "Account Assets:Cash was closed on 2017-06-08 before it was opened on 2017-06-09")
         } else {
@@ -257,8 +251,7 @@ class AccountTests: XCTestCase {
         }
 
         // only closing
-        account = Account(name: accountName)
-        account.closing = date20170608
+        account = Account(name: accountName, closing: date20170608)
         if case .invalid(let error) = account.validate() {
             XCTAssertEqual(error, "Account Assets:Cash has a closing date but no opening")
         } else {
@@ -508,10 +501,8 @@ class AccountTests: XCTestCase {
         // equal
         XCTAssertEqual(account1, account2)
 
-        account1 = Account(name: accountName, commodity: commodity1, opening: date1)
-        account2 = Account(name: accountName, commodity: commodity1, opening: date1)
-        account1.closing = date1
-        account2.closing = date1
+        account1 = Account(name: accountName, commodity: commodity1, opening: date1, closing: date1)
+        account2 = Account(name: accountName, commodity: commodity1, opening: date1, closing: date1)
 
         // equal
         XCTAssertEqual(account1, account2)
@@ -531,56 +522,10 @@ class AccountTests: XCTestCase {
         account2 = Account(name: accountName, commodity: commodity2, opening: date2)
         XCTAssertNotEqual(account1, account2)
         // different closing
-        account2.closing = date2
+        account2 = Account(name: accountName, commodity: commodity2, opening: date2, closing: date2)
         XCTAssertNotEqual(account1, account2)
-        account1.closing = date1
+        account1 = Account(name: accountName, commodity: commodity1, opening: date1, closing: date1)
         XCTAssertNotEqual(account1, account2)
-    }
-
-}
-
-extension AccountTests { // AccountName Tests
-
-    func testInitNames() {
-        for name in validNames {
-            XCTAssertNoThrow(try AccountName(name))
-        }
-        for name in invalidNames {
-            XCTAssertThrowsError(try AccountName(name)) {
-                XCTAssertEqual($0.localizedDescription, "Invalid Account name: \(name)")
-            }
-        }
-    }
-
-    func testIsAccountNameVaild() {
-        for name in validNames {
-            XCTAssert(AccountName.isNameValid(name))
-        }
-        for name in invalidNames {
-            XCTAssertFalse(AccountName.isNameValid(name))
-        }
-    }
-
-    func testNameItem() {
-        XCTAssertEqual(try! AccountName("Assets:Cash").nameItem, "Cash")
-        XCTAssertEqual(try! AccountName("Assets:A:B:C:D:E:Cash").nameItem, "Cash")
-        XCTAssertEqual(try! AccountName("Assets:💰").nameItem, "💰")
-    }
-
-    func testAccountType() {
-        XCTAssertEqual(try! AccountName("Assets:Test").accountType, AccountType.asset)
-        XCTAssertEqual(try! AccountName("Liabilities:Test").accountType, AccountType.liability)
-        XCTAssertEqual(try! AccountName("Income:Test").accountType, AccountType.income)
-        XCTAssertEqual(try! AccountName("Expenses:Test").accountType, AccountType.expense)
-        XCTAssertEqual(try! AccountName("Equity:Test").accountType, AccountType.equity)
-    }
-
-    func testAccountNameEqual() {
-        let name1 = try! AccountName("Assets:Test")
-        let name2 = try! AccountName("Assets:Test")
-        let name3 = try! AccountName("Assets:Test:Test")
-        XCTAssertEqual(name1, name2)
-        XCTAssertNotEqual(name1, name3)
     }
 
 }
