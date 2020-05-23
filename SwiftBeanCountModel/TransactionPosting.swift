@@ -58,7 +58,7 @@ public class TransactionPosting: Posting {
     ///   - transaction: the `Transaction` the posting is in - an *unowned* reference will be stored
     init(posting: Posting, transaction: Transaction) {
         self.transaction = transaction
-        super.init(accountName: posting.accountName, amount: posting.amount, price: posting.price, cost: posting.cost)
+        super.init(accountName: posting.accountName, amount: posting.amount, price: posting.price, cost: posting.cost, metaData: posting.metaData)
     }
 
 }
