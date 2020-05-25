@@ -1,9 +1,0 @@
-module: SwiftBeanCountModel
-readme: README.md
-clean: true
-disable_search: true
-author: Nef10
-author_url: https://github.com/Nef10
-root_url: https://github.com/Nef10/SwiftBeanCountModel/blob/master/docs
-github_url: https://github.com/Nef10/SwiftBeanCountModel
-github_file_prefix: https://github.com/Nef10/SwiftBeanCountModel/blob/master

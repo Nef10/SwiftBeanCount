@@ -1,8 +1,5 @@
 # Updated for 0.35.0
 
-excluded:
-  - Carthage
-
 opt_in_rules:
   - attributes
   - closure_end_indentation

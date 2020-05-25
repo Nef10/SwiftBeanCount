@@ -1,0 +1,57 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - '.github/workflows/ci.yml'
+      - '.swiftlint.yml'
+      - '**/*.swift'
+  push:
+    branches:
+    - master
+
+jobs:
+  test:
+    name: Tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macOS-latest, ubuntu-latest]
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@master
+    - name: Install Swift
+      uses: fwal/setup-swift@v1
+      with:
+        swift-version: "5.2.0"
+    - name: Run tests
+      run: swift test --enable-code-coverage --enable-test-discovery
+    - name: Generate test coverage report
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      uses: maxep/spm-lcov-action@0.3.0
+      with:
+        output-file: ./coverage/lcov.info
+    - name: Post test coverage report
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      uses: romeovs/lcov-reporter-action@v0.2.16
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        lcov-file: ./coverage/lcov.info
+    - name: Enforce test coverage threshhold
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      uses: Nef10/lcov-cop@v1.0.2
+      with:
+        path: ./coverage/lcov.info
+        min_coverage: 99
+  swiftlint:
+    name: SwiftLint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Run SwiftLint --strict
+        uses: norio-nomura/action-swiftlint@3.1.0
+        with:
+          args: --strict
