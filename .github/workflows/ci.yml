@@ -3,11 +3,7 @@ name: Continuous Integration
 on:
   pull_request:
     branches:
-      - master
-    paths:
-      - '.github/workflows/ci.yml'
-      - '.swiftlint.yml'
-      - '**/*.swift'
+    - master
   push:
     branches:
     - master
