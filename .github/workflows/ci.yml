@@ -30,7 +30,7 @@ jobs:
       with:
         output-file: ./coverage/lcov.info
     - name: Post test coverage report
-      if: ${{ matrix.os == 'ubuntu-latest' && github.event == 'pull_request' }}
+      if: ${{ matrix.os == 'ubuntu-latest' && github.event_name == 'pull_request' }}
       uses: romeovs/lcov-reporter-action@v0.2.16
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
