@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "SwiftBeanCountModel",
+        "repositoryURL": "https://github.com/Nef10/SwiftBeanCountModel.git",
+        "state": {
+          "branch": null,
+          "revision": "3290a6659b1d149dfc16ea018fe073c0d852aca6",
+          "version": "0.1.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

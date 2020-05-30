@@ -1,0 +1,12 @@
+extension Resources {
+
+  static var comments: String {
+      """
+;2017-06-08 * "Payee" "Narration"
+;  Equity:OpeningBalance  -1.00 EUR
+;  Assets:Checking         1.00 EUR
+"""
+
+  }
+
+}
