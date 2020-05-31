@@ -37,7 +37,7 @@ jobs:
         lcov-file: ./coverage/lcov.info
     - name: Enforce test coverage threshhold
       if: ${{ matrix.os == 'ubuntu-latest' }}
-      uses: Nef10/lcov-cop@v1.0.2
+      uses: ChicagoFlutter/lcov-cop@v1.0.2
       with:
         path: ./coverage/lcov.info
         min_coverage: 99
