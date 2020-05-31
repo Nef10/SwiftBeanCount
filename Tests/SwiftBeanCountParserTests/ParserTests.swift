@@ -270,9 +270,6 @@ class ParserTests: XCTestCase {
             string = Resources.invalidCost
         case .metaData:
             string = Resources.metaData
-        default:
-        string = ""
-            XCTFail("Invalid file")
         }
         let ledger = Parser.parse(string: string)
         return ledger
