@@ -98,7 +98,7 @@ public class Account: AccountItem {
     /// Name of the account
     public let name: AccountName
 
-    // `BookingMethod` of the account
+    /// `BookingMethod` of the account
     public let bookingMethod: BookingMethod
 
     /// `Commodity` of this account
