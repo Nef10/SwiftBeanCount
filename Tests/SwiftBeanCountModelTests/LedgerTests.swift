@@ -112,7 +112,7 @@ class LedgerTests: XCTestCase {
         let ledger2 = Ledger()
         let account2 = Account(name: TestUtils.cash, opening: TestUtils.date20170610)
         try! ledger2.add(account2)
-        _ = ledger2.add(transaction)
+        ledger2.add(transaction)
         XCTAssertEqual(ledger2.accounts.first!.opening, TestUtils.date20170610)
     }
 
@@ -190,7 +190,7 @@ class LedgerTests: XCTestCase {
                                                       flag: Flag.complete,
                                                       tags: [Tag(name: "test")])
         let transaction = Transaction(metaData: transactionMetaData, postings: [])
-        _ = ledger.add(transaction)
+        ledger.add(transaction)
         XCTAssertFalse(ledger.errors.isEmpty)
     }
 
@@ -215,7 +215,7 @@ class LedgerTests: XCTestCase {
         let transaction1 = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "1", narration: "2", flag: .complete, tags: []),
                                        postings: [posting1, posting2])
 
-        _ = ledger.add(transaction1)
+        ledger.add(transaction1)
         XCTAssertTrue(ledger.errors.isEmpty)
 
         let amount3 = Amount(number: -2.0, commoditySymbol: commodity1.symbol, decimalDigits: 1)
@@ -225,7 +225,7 @@ class LedgerTests: XCTestCase {
         let transaction2 = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170610, payee: "3", narration: "4", flag: .complete, tags: []),
                                        postings: [posting3, posting4])
 
-        _ = ledger.add(transaction2)
+        ledger.add(transaction2)
         XCTAssertTrue(ledger.errors.isEmpty)
     }
 
@@ -271,12 +271,12 @@ class LedgerTests: XCTestCase {
         var posting = Posting(accountName: TestUtils.cash, amount: amount, price: nil, cost: cost)
         var transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "", narration: "", flag: .complete, tags: []),
                                       postings: [posting])
-        _ = ledger.add(transaction)
+        ledger.add(transaction)
 
         posting = Posting(accountName: TestUtils.cash, amount: amount, price: nil, cost: cost)
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "", narration: "", flag: .complete, tags: []),
                                   postings: [posting])
-        _ = ledger.add(transaction)
+        ledger.add(transaction)
 
         posting = Posting(accountName: TestUtils.cash,
                           amount: Amount(number: -1.0, commoditySymbol: TestUtils.cad, decimalDigits: 0),
@@ -284,7 +284,7 @@ class LedgerTests: XCTestCase {
                           cost: try! Cost(amount: Amount(number: 5, commoditySymbol: TestUtils.cad), date: nil, label: nil))
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170610, payee: "", narration: "", flag: .complete, tags: []),
                                   postings: [posting])
-        _ = ledger.add(transaction)
+        ledger.add(transaction)
         XCTAssertFalse(ledger.errors.isEmpty)
     }
 
@@ -321,7 +321,7 @@ class LedgerTests: XCTestCase {
         XCTAssertEqual(String(describing: ledger), "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))")
 
         // Ledger with transactions, account opening and commodity
-        _ = ledger.add(transaction)
+        ledger.add(transaction)
         XCTAssertEqual(String(describing: ledger),
                        "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
 
@@ -330,7 +330,7 @@ class LedgerTests: XCTestCase {
         try! ledger.add(commodity)
         account = Account(name: accountName, opening: TestUtils.date20170609, closing: TestUtils.date20170610)
         try! ledger.add(account)
-        _ = ledger.add(transaction)
+        ledger.add(transaction)
         XCTAssertEqual(String(describing: ledger),
                        "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
 
@@ -436,13 +436,13 @@ class LedgerTests: XCTestCase {
         let transaction1 = Transaction(metaData: transactionMetaData, postings: [posting1])
         let transaction2 = Transaction(metaData: transactionMetaData, postings: [posting2])
 
-        _ = ledger1.add(transaction1)
+        ledger1.add(transaction1)
         XCTAssertNotEqual(ledger1, ledger2)
-        _ = ledger2.add(transaction2)
+        ledger2.add(transaction2)
         XCTAssertNotEqual(ledger1, ledger2)
-        _ = ledger1.add(transaction2)
+        ledger1.add(transaction2)
         XCTAssertNotEqual(ledger1, ledger2)
-        _ = ledger2.add(transaction1)
+        ledger2.add(transaction1)
         XCTAssertEqual(ledger1, ledger2)
     }
 
