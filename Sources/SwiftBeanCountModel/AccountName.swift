@@ -77,7 +77,7 @@ public struct AccountName: AccountItem {
         for type in AccountType.allValues() {
             if name.starts(with: type.rawValue + String(Account.nameSeperator)) // has to start with one base account followed by a seperator
                 && name.last != Account.nameSeperator //  is not allowed to end in a seperator
-                && name.range(of: "\(Account.nameSeperator)\(Account.nameSeperator)") == nil { // no account item is allowed to be empty
+                && !name.contains("\(Account.nameSeperator)\(Account.nameSeperator)") { // no account item is allowed to be empty
                 Cache.validNames.insert(name)
                 return true
             }

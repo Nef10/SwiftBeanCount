@@ -74,7 +74,7 @@ extension Custom: Equatable {
 extension Custom: Comparable {
 
     public static func < (lhs: Custom, rhs: Custom) -> Bool {
-       String(describing: lhs) < String(describing: rhs)
+        String(describing: lhs) < String(describing: rhs)
     }
 
 }

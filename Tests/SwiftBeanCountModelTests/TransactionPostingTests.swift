@@ -71,7 +71,7 @@ class TransactionPostingTests: XCTestCase {
     func testEqualRespectsMetaData() {
         let posting2 = Posting(accountName: TestUtils.cash, amount: TestUtils.amount, metaData: ["A": "B"])
         XCTAssertNotEqual(posting1, posting2)
-   }
+    }
 
     func testEqualRespectsAccount() {
         let posting2 = Posting(accountName: try! AccountName("\(String(describing: TestUtils.cash)):💰"), amount: TestUtils.amount)
