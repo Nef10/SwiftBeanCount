@@ -32,7 +32,7 @@ The project is split across several repositories, please consult their readmes t
 * [SwiftBeanCountParser](https://github.com/Nef10/SwiftBeanCountParser): Parser which reads the plain text and transforms it into an instance of the model
 * [SwiftBeanCountImporter](https://github.com/Nef10/SwiftBeanCountImporter): *not released yet* Importer to read CSV files and texts (e.g. from banks) and output transactions
 * [SwiftBeanCountSheetSync](https://github.com/Nef10/SwiftBeanCountSheetSync): *not released yet* Tool to sync transaction between a Google Sheet and a ledger
-* [SwiftBeanCountCLI](https://github.com/Nef10/SwiftBeanCountCLI): *not released yet* CLI tool for basic operations on the ledger
+* [SwiftBeanCountCLI](https://github.com/Nef10/SwiftBeanCountCLI): CLI tool for basic operations on the ledger
 * [SwiftBeanCountApp](https://github.com/Nef10/SwiftBeanCountApp): *not released yet* GUI tool for basic operations on the ledger
 
 ##  Status
