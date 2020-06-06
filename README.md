@@ -28,12 +28,22 @@ The goal is to supplement my usage of beancount and [fava](https://github.com/be
 
 The project is split across several repositories, please consult their readmes to get more instrutions:
 
-* [SwiftBeanCountModel](https://github.com/Nef10/SwiftBeanCountModel): Model which holds all data as well as the logic
-* [SwiftBeanCountParser](https://github.com/Nef10/SwiftBeanCountParser): Parser which reads the plain text and transforms it into an instance of the model
-* [SwiftBeanCountImporter](https://github.com/Nef10/SwiftBeanCountImporter): Importer to read CSV files and texts (e.g. from banks) and output transactions
+### Apps
+
+Apps with a user interface:
+
+* [SwiftBeanCountImporterApp](https://github.com/Nef10/SwiftBeanCountImporterApp): Importer to load CSV files and texts (e.g. from banks) and return the user transactions to add to their ledger
 * [SwiftBeanCountSheetSync](https://github.com/Nef10/SwiftBeanCountSheetSync): *not released yet* Tool to sync transaction between a Google Sheet and a ledger
 * [SwiftBeanCountCLI](https://github.com/Nef10/SwiftBeanCountCLI): CLI tool for basic operations on the ledger
 * [SwiftBeanCountApp](https://github.com/Nef10/SwiftBeanCountApp): GUI tool for basic operations on the ledger
+
+### Libraries
+
+Internal libraries which extract functionality to be re-used across different apps:
+
+* [SwiftBeanCountModel](https://github.com/Nef10/SwiftBeanCountModel): Model which holds all data as well as the logic
+* [SwiftBeanCountParser](https://github.com/Nef10/SwiftBeanCountParser): Parser which reads the plain text and transforms it into an instance of the model
+* [SwiftBeanCountImporter](https://github.com/Nef10/SwiftBeanCountImporter): Library to read CSV files and texts (e.g. from banks) and transform them into transactions
 
 ##  Status
 
