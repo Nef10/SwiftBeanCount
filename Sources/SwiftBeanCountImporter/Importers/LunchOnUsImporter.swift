@@ -6,7 +6,7 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
-import Cocoa
+import Foundation
 
 class LunchOnUsImporter: CSVBaseImporter, CSVImporter {
 
