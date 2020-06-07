@@ -33,6 +33,8 @@ class LunchOnUsImporter: CSVBaseImporter, CSVImporter {
             payee = "SAP Canada Inc."
             sign = "+"
             description = ""
+        } else if csvReader[Self.type]! == "Cash Out" {
+            description = "Cash Out"
         } else {
             description = csvReader[Self.description]!
         }

@@ -30,13 +30,12 @@ class N26Importer: CSVBaseImporter, CSVImporter {
 
     override func parseLine() -> CSVLine {
         let date = Self.dateFormatter.date(from: csvReader[Self.date]!)!
-        let recipient = csvReader[Self.recipient] ?? ""
-        let description = recipient + (csvReader[Self.description] != nil ? " " + csvReader[Self.description]! : "")
+        let description = "\(csvReader[Self.recipient]!) \(csvReader[Self.description]!)"
         let amount = Decimal(string: csvReader[Self.amount]!, locale: Locale(identifier: "en_CA"))!
-        let amountForeignCurrency = Decimal(string: csvReader[Self.amountForeignCurrency] ?? "", locale: Locale(identifier: "en_CA"))
+        let amountForeignCurrency = Decimal(string: csvReader[Self.amountForeignCurrency]!, locale: Locale(identifier: "en_CA"))
         var price: Amount?
-        if let amountForeignCurrency = amountForeignCurrency {
-            price = Amount(number: -amountForeignCurrency, commoditySymbol: csvReader[Self.foreignCurrency] ?? "", decimalDigits: 2)
+        if let amountForeignCurrency = amountForeignCurrency, csvReader[Self.foreignCurrency] != commoditySymbol {
+            price = Amount(number: -amountForeignCurrency, commoditySymbol: csvReader[Self.foreignCurrency]!, decimalDigits: 2)
         }
         return CSVLine(date: date, description: description, amount: amount, payee: "", price: price)
     }

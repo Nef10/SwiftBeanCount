@@ -19,6 +19,14 @@ enum TestUtils {
         Commodity(symbol: usd)
     }()
 
+    static var date20170610: Date = {
+        Date(timeIntervalSince1970: 1_497_078_000)
+    }()
+
+    static var date20200605: Date = {
+        Date(timeIntervalSince1970: 1_591_340_400)
+    }()
+
     static var ledger: Ledger = {
         let ledger = Ledger()
         let option = Option(name: "a", value: "b")
@@ -57,6 +65,12 @@ enum TestUtils {
 
     static func csvReader(description: String, payee: String) -> CSVReader {
         try! CSVReader(stream: InputStream(data: "Date, Description, Payee\n2020-01-01, \(description), \(payee)\n".data(using: .utf8)!),
+                       hasHeaderRow: true,
+                       trimFields: true)
+    }
+
+    static func csvReader(content: String) -> CSVReader {
+        try! CSVReader(stream: InputStream(data: content.data(using: .utf8)!),
                        hasHeaderRow: true,
                        trimFields: true)
     }
