@@ -16,13 +16,11 @@ class BaseImporter: Importer {
     class var settingsName: String { "" }
     class var settings: [ImporterSetting] { [accountsSetting] }
 
-    private let fallbackCommodity = "CAD"
-
     private(set) var accountName: AccountName?
     var ledger: Ledger?
 
     var commoditySymbol: String {
-        ledger?.accounts.first { $0.name == accountName }?.commoditySymbol ?? fallbackCommodity
+        ledger?.accounts.first { $0.name == accountName }?.commoditySymbol ?? Settings.fallbackCommodity
     }
 
     init(ledger: Ledger?) {

@@ -74,9 +74,9 @@ extension Importer {
         UserDefaults.standard.set(value, forKey: getUserDefaultsKey(for: setting))
     }
 
-    /// Get the key used in the `NSUserDefaults` to save a particular setting
+    /// Get the key used in the `UserDefaults` to save a particular setting
     /// - Parameter setting: Setting of which you want to have the key
-    /// - Returns: key used in the `NSUserDefaults`
+    /// - Returns: key used in the `UserDefaults`
     public static func getUserDefaultsKey(for setting: ImporterSetting) -> String {
         "\(String(describing: self)).\(setting.identifier)"
     }

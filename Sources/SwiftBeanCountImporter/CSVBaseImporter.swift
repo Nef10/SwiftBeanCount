@@ -21,7 +21,7 @@ class CSVBaseImporter: BaseImporter {
             try! NSRegularExpression(pattern: "[0-9]* ~ Internet Withdrawal", options: []),
             try! NSRegularExpression(pattern: "(-)? SAP(?! CANADA)", options: []),
             try! NSRegularExpression(pattern: "-( )?(MAY|JUNE)( )?201(4|6)", options: []),
-            try! NSRegularExpression(pattern: "[^ ]*  BC  CA", options: []),
+            try! NSRegularExpression(pattern: "  BC  CA", options: []),
             try! NSRegularExpression(pattern: "#( )?[0-9]{1,5}", options: []),
         ]
     }() // swiftlint:enable force_try
@@ -100,7 +100,7 @@ class CSVBaseImporter: BaseImporter {
                                                     range: NSRange(result.startIndex..., in: result),
                                                     withTemplate: "")
         }
-        return result
+        return result.trimmingCharacters(in: .whitespaces)
     }
 
 }
