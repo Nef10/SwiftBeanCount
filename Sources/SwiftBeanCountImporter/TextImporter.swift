@@ -13,7 +13,7 @@ import SwiftBeanCountModel
 /// It allow abstraction of the different importers by encapsulation to logic of which one to use.
 public enum TextImporterManager {
 
-    static var importers: [TextImporter.Type] {
+    static var importers: [TransactionBalanceTextImporter.Type] {
         [ManuLifeImporter.self]
     }
 
@@ -30,10 +30,14 @@ public enum TextImporterManager {
 
 }
 
+protocol TransactionBalanceTextImporter: TextImporter {
+    init(ledger: Ledger?, transaction: String, balance: String)
+}
+
+/// Protocol to represent an Importer which imports text
 public protocol TextImporter: Importer {
 
-    init(ledger: Ledger?, transaction: String, balance: String)
-
+    /// Parses the input Strings into a String which can be added to the ledger
     func parse() -> String
 
 }

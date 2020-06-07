@@ -9,7 +9,7 @@
 import Foundation
 import SwiftBeanCountModel
 
-class ManuLifeImporter: BaseImporter, TextImporter {
+class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
 
     private struct ManuLifeBalance {
         let commodity: String
