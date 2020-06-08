@@ -42,7 +42,7 @@ final class N26ImporterTests: XCTestCase {
 
         importer.csvReader.next()
         let line = importer.parseLine()
-        XCTAssertEqual(line.date, TestUtils.date20170610)
+        XCTAssert(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
         XCTAssertEqual(line.description, "Online Shop ")
         XCTAssertEqual(line.amount, Decimal(string: "-79.33", locale: Locale(identifier: "en_CA"))!)
         XCTAssertEqual(line.payee, "")
@@ -77,7 +77,7 @@ final class N26ImporterTests: XCTestCase {
 
         importer.csvReader.next()
         let line = importer.parseLine()
-        XCTAssertEqual(line.date, TestUtils.date20200605)
+        XCTAssert(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20200605))
         XCTAssertEqual(line.description, "Recipient Comment")
         XCTAssertEqual(line.amount, Decimal(string: "-32.20", locale: Locale(identifier: "en_CA"))!)
         XCTAssertEqual(line.payee, "")

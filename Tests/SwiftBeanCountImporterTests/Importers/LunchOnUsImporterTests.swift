@@ -24,14 +24,14 @@ final class LunchOnUsImporterTests: XCTestCase {
         let importer = LunchOnUsImporter(ledger: nil,
                                          csvReader: TestUtils.csvReader(content: """
 date,type,amount,invoice,remaining,location
-"June 10, 2017 | 00:00:00","Purchase","6.83","00012345IUYTrBTE","003737","Bubble Tea"\n
+"June 10, 2017 | 23:45:19","Purchase","6.83","00012345IUYTrBTE","003737","Bubble Tea"\n
 """
                                             ),
                                          fileName: "")
 
         importer.csvReader.next()
         let line = importer.parseLine()
-        XCTAssertEqual(line.date, TestUtils.date20170610)
+        XCTAssert(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
         XCTAssertEqual(line.description, "Bubble Tea")
         XCTAssertEqual(line.amount, Decimal(string: "-6.83", locale: Locale(identifier: "en_CA"))!)
         XCTAssertEqual(line.payee, "")
@@ -42,14 +42,14 @@ date,type,amount,invoice,remaining,location
         let importer = LunchOnUsImporter(ledger: nil,
                                          csvReader: TestUtils.csvReader(content: """
 date,type,amount,invoice,remaining,location
-"June 05, 2020 | 00:00:00","Redeem Unlock","75.00","00000478IUYTaBVR","499147","Test Restaurant"\n
+"June 05, 2020 | 01:02:59","Redeem Unlock","75.00","00000478IUYTaBVR","499147","Test Restaurant"\n
 """
                                             ),
                                          fileName: "")
 
         importer.csvReader.next()
         let line = importer.parseLine()
-        XCTAssertEqual(line.date, TestUtils.date20200605)
+        XCTAssert(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20200605))
         XCTAssertEqual(line.description, "Test Restaurant")
         XCTAssertEqual(line.amount, Decimal(string: "-75.00", locale: Locale(identifier: "en_CA"))!)
         XCTAssertEqual(line.payee, "")
