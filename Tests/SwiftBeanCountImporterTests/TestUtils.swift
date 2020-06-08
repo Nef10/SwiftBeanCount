@@ -14,6 +14,8 @@ import XCTest
 enum TestUtils {
 
     static let usd: CommoditySymbol = "USD"
+    static let accountNumberChequing = 123_456_789
+    static let accountNumberCash = 987_654_321
 
     static var usdCommodity: Commodity = {
         Commodity(symbol: usd)
@@ -41,6 +43,16 @@ enum TestUtils {
         try! ledger.add(account)
         return ledger
 
+    }()
+
+    static var lederAccountNumers: Ledger = {
+        let ledger = Ledger()
+        try! ledger.add(TestUtils.usdCommodity)
+        let account1 = Account(name: TestUtils.chequing, commoditySymbol: TestUtils.usd, metaData: ["number": "\(accountNumberChequing)"] )
+        let account2 = Account(name: TestUtils.cash, commoditySymbol: TestUtils.usd, metaData: ["number": "\(accountNumberCash)"] )
+        try! ledger.add(account1)
+        try! ledger.add(account2)
+        return ledger
     }()
 
     static var cash: AccountName = {

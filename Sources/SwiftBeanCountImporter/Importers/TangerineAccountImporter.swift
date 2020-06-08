@@ -48,11 +48,12 @@ class TangerineAccountImporter: CSVBaseImporter, CSVImporter {
         var payee = ""
         if csvReader[Self.name]! == Self.interest {
             payee = "Tangerine"
-        } else {
-            description = csvReader[Self.memo]!
-            if csvReader[Self.name]!.starts(with: Self.interac) {
-                description = "\(csvReader[Self.name]!.replacingOccurrences(of: Self.interac, with: "")) - \(description)"
-            }
+        }
+        description = csvReader[Self.memo]!
+        if csvReader[Self.name]!.starts(with: Self.interac) {
+            description = "\(csvReader[Self.name]!.replacingOccurrences(of: Self.interac, with: "")) - \(description)"
+        } else if description.isEmpty {
+            description = csvReader[Self.name]!
         }
         let amount = Decimal(string: csvReader[Self.amount]!, locale: Locale(identifier: "en_CA"))!
         return CSVLine(date: date, description: description, amount: amount, payee: payee, price: nil)
