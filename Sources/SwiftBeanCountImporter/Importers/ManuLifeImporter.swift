@@ -18,7 +18,6 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         let employeeVoluntary: String?
         let employerMatch: String?
         let employerBasic: String?
-        let memberVoluntary: String?
     }
 
     private struct ManuLifeBuy {
@@ -27,11 +26,11 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         let price: String
     }
 
-    private static let cashAccountSetting = ImporterSetting(identifier: "cashAccountName", name: "Cash Account Postfix")
-    private static let employeeBasicSetting = ImporterSetting(identifier: "employeeBasicFraction", name: "Employee Basic Percentage")
-    private static let employerBasicSetting = ImporterSetting(identifier: "employerBasicFraction", name: "Employer Basic Percentage")
-    private static let employerMatchSetting = ImporterSetting(identifier: "employerMatchFraction", name: "Employer Match Percentage")
-    private static let employeeVoluntarySetting = ImporterSetting(identifier: "employeeVoluntaryFraction", name: "Employee Voluntary Percentage")
+    static let cashAccountSetting = ImporterSetting(identifier: "cashAccountName", name: "Cash Account Postfix")
+    static let employeeBasicSetting = ImporterSetting(identifier: "employeeBasicFraction", name: "Employee Basic Percentage")
+    static let employerBasicSetting = ImporterSetting(identifier: "employerBasicFraction", name: "Employer Basic Percentage")
+    static let employerMatchSetting = ImporterSetting(identifier: "employerMatchFraction", name: "Employer Match Percentage")
+    static let employeeVoluntarySetting = ImporterSetting(identifier: "employeeVoluntaryFraction", name: "Employee Voluntary Percentage")
 
     override class var settingsName: String { "ManuLife" }
     override class var settings: [ImporterSetting] { super.settings +
@@ -115,7 +114,6 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         let employeeVoluntaryPattern = #"\s*?Employee voluntary\s*([0-9.]*)"#
         let employerBasicPattern = #"\s*?Employer Basic\s*([0-9.]*)"#
         let employerMatchPattern = #"\s*?Employer Match\s*([0-9.]*)"#
-        let memberVoluntaryPattern = #"\s*?Member Voluntary\s*([0-9.]*)"#
         let unitValuePattern = #"\s*?(?:Employer Basic|Member Voluntary|Employee voluntary)\s*[0-9.]*\s*([0-9.]*)\s*[0-9.]*"#
 
         //swiftlint:disable force_try
@@ -124,7 +122,6 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         let employeeVoluntaryRegex = try! NSRegularExpression(pattern: employeeVoluntaryPattern, options: [.anchorsMatchLines])
         let employerBasicRegex = try! NSRegularExpression(pattern: employerBasicPattern, options: [.anchorsMatchLines])
         let employerMatchRegex = try! NSRegularExpression(pattern: employerMatchPattern, options: [.anchorsMatchLines])
-        let memberVoluntaryRegex = try! NSRegularExpression(pattern: memberVoluntaryPattern, options: [.anchorsMatchLines])
         let unitValueRegex = try! NSRegularExpression(pattern: unitValuePattern, options: [.anchorsMatchLines])
         //swiftlint:enable force_try
 
@@ -144,8 +141,7 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
                                            employeeBasic: firstMatch(in: input, regex: employeeBasicRegex),
                                            employeeVoluntary: firstMatch(in: input, regex: employeeVoluntaryRegex),
                                            employerMatch: firstMatch(in: input, regex: employerMatchRegex),
-                                           employerBasic: firstMatch(in: input, regex: employerBasicRegex),
-                                           memberVoluntary: firstMatch(in: input, regex: memberVoluntaryRegex)))
+                                           employerBasic: firstMatch(in: input, regex: employerBasicRegex)))
         }
 
         return results
@@ -176,10 +172,6 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
             if let employeeVoluntary = $0.employeeVoluntary {
                 let accountName = "\(accountString):Employee:Voluntary:\($0.commodity)".padding(toLength: accountPaddingLength, withPad: " ", startingAt: 0)
                 result.append("\(dateString) balance \(accountName) \(leftPadding(toLength: amountPaddingLength, withPad: " ", string: employeeVoluntary)) \($0.commodity)")
-            }
-            if let memberVoluntary = $0.memberVoluntary {
-                let accountName = "\(accountString):\($0.commodity.components(separatedBy: "_")[0])".padding(toLength: accountPaddingLength, withPad: " ", startingAt: 0)
-                result.append("\(dateString) balance \(accountName) \(leftPadding(toLength: amountPaddingLength, withPad: " ", string: memberVoluntary)) \($0.commodity)")
             }
             return result.joined(separator: "\n")
         }
@@ -237,6 +229,9 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
     private func stringifyPurchase(_ purchase: ([ManuLifeBuy], Date?)) -> String {
         guard let accountString = accountName?.fullName else { fatalError("No account configured") }
         let (matches, date) = purchase
+        guard !matches.isEmpty else {
+            return ""
+        }
         let dateString = date != nil ? Self.printDateFormatter.string(from: date!) : ""
 
         var decimalPointPosition = 0
