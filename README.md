@@ -13,6 +13,8 @@ This is the command line tool of SwiftBeanCount.
 As this is currently an alpha version, it only supports this very limited list of functions:
 
 * `check` Parses your ledger and prints any errors it finds
+* `stats` Statistics of a ledger (e.g. # of transactions)
+* `accounts` Print all accounts
 
 ## Installation
 
