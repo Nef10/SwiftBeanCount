@@ -20,8 +20,12 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/apple/swift-argument-parser",
-            .upToNextMinor(from: "0.0.6")
+            .upToNextMinor(from: "0.1.0")
         ),
+        .package(
+            url: "https://github.com/scottrhoyt/SwiftyTextTable.git",
+            .upToNextMinor(from: "0.9.0")
+        )
     ],
     targets: [
         .target(
@@ -30,6 +34,7 @@ let package = Package(
                 "SwiftBeanCountModel",
                 "SwiftBeanCountParser",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                "SwiftyTextTable",
             ]),
     ]
 )
