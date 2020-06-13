@@ -8,7 +8,6 @@ struct Check: LedgerCommand {
     @OptionGroup() var options: LedgerOption
     @ArgumentParser.Flag(name: [.short, .long], help: "Don't print errors, only indicate via exit code.") var quiet: Bool
 
-
     func run() throws {
         let ledger = try parseLedger()
         let errors = ledger.errors
