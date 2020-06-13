@@ -15,6 +15,7 @@ struct Accounts: LedgerCommand {
     }()
 
     @OptionGroup() var options: LedgerOption
+    @Argument(default: "", help: "String to filter account names by.") var filter: String
     @ArgumentParser.Flag(help: "Hide the table outline.") var hideTable: Bool
     @ArgumentParser.Flag(help: "Hide the opening and closing date.") var hideDates: Bool
     @ArgumentParser.Flag(help: "Hide closed accounts.") var hideClosed: Bool
@@ -35,6 +36,9 @@ struct Accounts: LedgerCommand {
         var table = TextTable(columns: columns, header: "Accounts")
 
         var accounts = ledger.accounts.sorted { $0.name.fullName < $1.name.fullName }
+        if !filter.isEmpty {
+            accounts = accounts.filter { $0.name.fullName.contains(filter) }
+        }
         if hideClosed {
             accounts = accounts.filter { $0.closing == nil || $0.closing! > Date() }
         }
