@@ -13,9 +13,12 @@ struct Check: LedgerCommand {
         let errors = ledger.errors
         if !errors.isEmpty {
             if !quiet {
+                print("Found \(errors.count) errors:\n")
                 print(errors.joined(separator: "\n"))
             }
             throw ExitCode(65)
+        } else if !quiet {
+            print("No errors found.")
         }
     }
 
