@@ -5,6 +5,10 @@ import PackageDescription
 let package = Package(
     name: "SwiftBeanCountCLI",
     products: [
+        .library(
+            name: "SwiftBeanCountCLILibrary",
+            targets: ["SwiftBeanCountCLILibrary"]
+        ),
         .executable(
             name: "swiftbeancount",
             targets: ["SwiftBeanCountCLI"]
@@ -34,13 +38,26 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "SwiftBeanCountCLI",
+            name: "SwiftBeanCountCLILibrary",
             dependencies: [
                 "SwiftBeanCountModel",
                 "SwiftBeanCountParser",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 "SwiftyTextTable",
                 "Rainbow",
-            ]),
+            ]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountCLILibraryTests",
+            dependencies: [
+                "SwiftBeanCountCLILibrary"
+            ]
+        ),
+        .target(
+            name: "SwiftBeanCountCLI",
+            dependencies: [
+                "SwiftBeanCountCLILibrary"
+            ]
+        ),
     ]
 )
