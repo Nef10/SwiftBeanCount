@@ -1,19 +1,18 @@
 import ArgumentParser
-import SwiftBeanCountModel
+import Foundation
 import Rainbow
+import SwiftBeanCountModel
 
-struct Check: LedgerCommand {
+struct Check: LedgerCommand, ColorizedCommand {
 
     static var configuration = CommandConfiguration(abstract: "Parses a ledger and prints any errors it finds")
 
     @OptionGroup() var options: LedgerOption
     @ArgumentParser.Flag(name: [.short, .long], help: "Don't print errors, only indicate via exit code.") private var quiet: Bool
-    @ArgumentParser.Flag(help: "Disable colors in output.\nNote: When output is not connected to a terminal, colorization is disabled automatically.\nYou can also use the NO_COLOR environment variable.") private var noColor: Bool
+    @ArgumentParser.Flag(help: Self.noColorHelp()) var noColor: Bool
 
     func run() throws {
-        if noColor || ProcessInfo.processInfo.environment["NO_COLOR"] != nil {
-            Rainbow.enabled = false
-        }
+        adjustColorization()
         let ledger = try parseLedger()
         let errors = ledger.errors
         if !errors.isEmpty {

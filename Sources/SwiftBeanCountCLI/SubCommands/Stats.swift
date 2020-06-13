@@ -1,20 +1,18 @@
 import ArgumentParser
 import Foundation
-import SwiftBeanCountModel
 import Rainbow
+import SwiftBeanCountModel
 
-struct Stats: FormattableLedgerCommand {
+struct Stats: LedgerCommand, FormattableCommand, ColorizedCommand {
 
     static var configuration = CommandConfiguration(abstract: "Statistics of a ledger (e.g. # of transactions)")
 
     @OptionGroup() var options: LedgerOption
     @ArgumentParser.Option(name: [.short, .long], default: .table, help: "Output format. \(Self.supportedFormats())") var format: Format
-    @ArgumentParser.Flag(help: "Disable colors in output.\nNote: When output is not connected to a terminal, colorization is disabled automatically.\nYou can also use the NO_COLOR environment variable.") private var noColor: Bool
+    @ArgumentParser.Flag(help: Self.noColorHelp()) var noColor: Bool
 
     func run() throws {
-        if noColor || ProcessInfo.processInfo.environment["NO_COLOR"] != nil {
-            Rainbow.enabled = false
-        }
+        adjustColorization()
         let start = Date.timeIntervalSinceReferenceDate
         let ledger = try parseLedger()
         let end = Date.timeIntervalSinceReferenceDate

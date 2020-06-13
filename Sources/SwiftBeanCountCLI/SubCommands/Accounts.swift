@@ -2,7 +2,7 @@ import ArgumentParser
 import Foundation
 import SwiftBeanCountModel
 
-struct Accounts: FormattableLedgerCommand {
+struct Accounts: LedgerCommand, FormattableCommand {
 
     static var configuration = CommandConfiguration(abstract: "Print all accounts")
 
