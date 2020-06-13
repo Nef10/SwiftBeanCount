@@ -13,7 +13,14 @@ class CheckTests: XCTestCase {
 
     func testSuccessful() {
         let url = temporaryFileURL()
-        createFile(at: url, content: "2020-06-13 commodity CAD\n2020-06-13 open Assets:CAD\n2020-06-13 open Income:Job\n2020-06-13 * \"\" \"\"\n  Assets:CAD 10.00 CAD\n  Income:Job -10.00 CAD")
+        createFile(at: url, content: """
+                                     2020-06-13 commodity CAD
+                                     2020-06-13 open Assets:CAD
+                                     2020-06-13 open Income:Job
+                                     2020-06-13 * "" ""
+                                       Assets:CAD 10.00 CAD
+                                       Income:Job -10.00 CAD
+                                     """)
         let (exitCode, output) = outputFromExecutionWith(arguments: ["check", url.path])
         XCTAssertEqual(exitCode, 0)
         XCTAssertEqual(output, "No errors found.")
@@ -24,7 +31,14 @@ class CheckTests: XCTestCase {
         createFile(at: url, content: "2020-06-13 * \"\" \"\"\n  Assets:CAD 10.00 CAD\n  Income:Job -15.00 CAD")
         let (exitCode, output) = outputFromExecutionWith(arguments: ["check", url.path])
         XCTAssertEqual(exitCode, 65)
-        XCTAssertEqual(output, "Found 2 errors:\n\n2020-06-13 * \"\" \"\"\n  Assets:CAD 10.00 CAD\n  Income:Job -15.00 CAD is not balanced - -5 CAD too much (0.005 tolerance)\nCommodity CAD does not have an opening date")
+        XCTAssertEqual(output, """
+                               Found 2 errors:
+
+                               2020-06-13 * "" ""
+                                 Assets:CAD 10.00 CAD
+                                 Income:Job -15.00 CAD is not balanced - -5 CAD too much (0.005 tolerance)
+                               Commodity CAD does not have an opening date
+                               """)
     }
 
     func testQuietSuccessful() {
