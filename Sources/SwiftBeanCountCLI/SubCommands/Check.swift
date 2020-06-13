@@ -11,7 +11,7 @@ struct Check: LedgerCommand {
     @ArgumentParser.Flag(help: "Disable colors in output.\nNote: When output is not connected to a terminal, colorization is disabled automatically.\nYou can also use the NO_COLOR environment variable.") private var noColor: Bool
 
     func run() throws {
-        if noColor {
+        if noColor || ProcessInfo.processInfo.environment["NO_COLOR"] != nil {
             Rainbow.enabled = false
         }
         let ledger = try parseLedger()

@@ -1,6 +1,7 @@
 import ArgumentParser
 import Foundation
 import SwiftBeanCountModel
+import Rainbow
 
 struct Stats: FormattableLedgerCommand {
 
@@ -8,8 +9,12 @@ struct Stats: FormattableLedgerCommand {
 
     @OptionGroup() var options: LedgerOption
     @ArgumentParser.Option(name: [.short, .long], default: .table, help: "Output format. \(Self.supportedFormats())") var format: Format
+    @ArgumentParser.Flag(help: "Disable colors in output.\nNote: When output is not connected to a terminal, colorization is disabled automatically.\nYou can also use the NO_COLOR environment variable.") private var noColor: Bool
 
     func run() throws {
+        if noColor || ProcessInfo.processInfo.environment["NO_COLOR"] != nil {
+            Rainbow.enabled = false
+        }
         let start = Date.timeIntervalSinceReferenceDate
         let ledger = try parseLedger()
         let end = Date.timeIntervalSinceReferenceDate
@@ -32,7 +37,7 @@ struct Stats: FormattableLedgerCommand {
 
         printFormatted(title: "Statistics", columns: ["Type", "Number"], values: values)
         if format != .csv {
-            print(String(format: "\nParsing time: %.3f sec", time))
+            print(String(format: "\nParsing time: %.3f sec".lightBlack, time))
         }
     }
 
