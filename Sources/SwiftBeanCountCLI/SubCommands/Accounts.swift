@@ -1,9 +1,8 @@
 import ArgumentParser
 import Foundation
 import SwiftBeanCountModel
-import SwiftyTextTable
 
-struct Accounts: LedgerCommand {
+struct Accounts: FormattableLedgerCommand {
 
     static var configuration = CommandConfiguration(abstract: "Print all accounts")
 
@@ -15,26 +14,22 @@ struct Accounts: LedgerCommand {
     }()
 
     @OptionGroup() var options: LedgerOption
-    @Argument(default: "", help: "String to filter account names by.") var filter: String
-    @ArgumentParser.Flag(help: "Hide the table outline.") var hideTable: Bool
-    @ArgumentParser.Flag(help: "Hide the opening and closing date.") var hideDates: Bool
-    @ArgumentParser.Flag(help: "Hide closed accounts.") var hideClosed: Bool
-    @ArgumentParser.Flag(help: "Hide open accounts.") var hideOpen: Bool
-    @ArgumentParser.Flag(name: [.short, .long], help: "Display the number of accounts.") var count: Bool
+    @ArgumentParser.Option(default: .table, help: "Output format. Supported formats: \(Format.allCases.map { $0.rawValue }.joined(separator: ", "))") var format: Format
+    @Argument(default: "", help: "String to filter account names by.") private var filter: String
+    @ArgumentParser.Flag(help: "Hide the opening and closing date.") private var hideDates: Bool
+    @ArgumentParser.Flag(help: "Hide closed accounts.") private var hideClosed: Bool
+    @ArgumentParser.Flag(help: "Hide open accounts.") private var hideOpen: Bool
+    @ArgumentParser.Flag(name: [.short, .long], help: "Display the number of accounts.") private var count: Bool
 
     func run() throws {
         let ledger = try parseLedger()
 
-        let name = TextTableColumn(header: "Name")
-        let opening = TextTableColumn(header: "opening")
-        let closing = TextTableColumn(header: "closing")
-        var columns = [name, opening, closing]
+        var columns = ["Name", "Opening", "Closing"]
         if hideDates {
-            columns = [name]
+            columns = ["Name"]
         } else if hideClosed {
-            columns = [name, opening]
+            columns = ["Name", "Opening"]
         }
-        var table = TextTable(columns: columns, header: "Accounts")
 
         var accounts = ledger.accounts.sorted { $0.name.fullName < $1.name.fullName }
         if !filter.isEmpty {
@@ -47,22 +42,11 @@ struct Accounts: LedgerCommand {
             accounts = accounts.filter { $0.closing != nil && $0.closing! < Date() }
         }
 
-        table.addRows(values: accounts.map {
-            hideDates ? [$0.name] : [$0.name, dateString($0.opening), dateString($0.closing)]
-        })
-
-        var result: String
-
-        if hideTable {
-            table.columnFence = ""
-            table.rowFence = ""
-            table.cornerFence = ""
-            result = table.render().split(whereSeparator: \.isNewline).map { $0.trimmingCharacters(in: .whitespaces) }.joined(separator: "\n")
-        } else {
-            result = table.render()
+        let values = accounts.map {
+            hideDates ? [$0.name.fullName] : [$0.name.fullName, dateString($0.opening), dateString($0.closing)]
         }
 
-        print(result)
+        printFormatted(title: "Accounts", columns: columns, values: values)
         if count {
             print("\n \(accounts.count) Accounts")
         }
