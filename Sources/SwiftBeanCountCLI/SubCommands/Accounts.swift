@@ -21,6 +21,12 @@ struct Accounts: FormattableLedgerCommand {
     @ArgumentParser.Flag(default: true, inversion: .prefixedNo, help: "Show dates of account opening and closing.") private var dates: Bool
     @ArgumentParser.Flag(name: [.short, .long], help: "Display the number of accounts.") private var count: Bool
 
+    func validate() throws {
+        if format == .csv && count {
+            throw ValidationError("Cannot print count in csv format. Please remove count flag or specify another format.")
+        }
+    }
+
     func run() throws {
         let ledger = try parseLedger()
 
