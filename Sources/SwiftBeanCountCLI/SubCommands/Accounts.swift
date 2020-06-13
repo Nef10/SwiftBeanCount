@@ -16,18 +16,18 @@ struct Accounts: FormattableLedgerCommand {
     @OptionGroup() var options: LedgerOption
     @ArgumentParser.Option(name: [.short, .long], default: .table, help: "Output format. \(Self.supportedFormats())") var format: Format
     @Argument(default: "", help: "String to filter account names by.") private var filter: String
-    @ArgumentParser.Flag(help: "Hide the opening and closing date.") private var hideDates: Bool
-    @ArgumentParser.Flag(help: "Hide closed accounts.") private var hideClosed: Bool
-    @ArgumentParser.Flag(help: "Hide open accounts.") private var hideOpen: Bool
+    @ArgumentParser.Flag(default: true, inversion: .prefixedNo, help: "Show open accounts.") private var open: Bool
+    @ArgumentParser.Flag(default: true, inversion: .prefixedNo, help: "Show closed accounts.") private var closed: Bool
+    @ArgumentParser.Flag(default: true, inversion: .prefixedNo, help: "Show dates of account opening and closing.") private var dates: Bool
     @ArgumentParser.Flag(name: [.short, .long], help: "Display the number of accounts.") private var count: Bool
 
     func run() throws {
         let ledger = try parseLedger()
 
         var columns = ["Name", "Opening", "Closing"]
-        if hideDates {
+        if !dates {
             columns = ["Name"]
-        } else if hideClosed {
+        } else if !closed {
             columns = ["Name", "Opening"]
         }
 
@@ -35,15 +35,15 @@ struct Accounts: FormattableLedgerCommand {
         if !filter.isEmpty {
             accounts = accounts.filter { $0.name.fullName.contains(filter) }
         }
-        if hideClosed {
+        if !closed {
             accounts = accounts.filter { $0.closing == nil || $0.closing! > Date() }
         }
-        if hideOpen {
+        if !open {
             accounts = accounts.filter { $0.closing != nil && $0.closing! < Date() }
         }
 
         let values = accounts.map {
-            hideDates ? [$0.name.fullName] : [$0.name.fullName, dateString($0.opening), dateString($0.closing)]
+            dates ? [$0.name.fullName, dateString($0.opening), dateString($0.closing)] : [$0.name.fullName]
         }
 
         printFormatted(title: "Accounts", columns: columns, values: values)
