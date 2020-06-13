@@ -20,6 +20,7 @@ struct Accounts: LedgerCommand {
     @ArgumentParser.Flag(help: "Hide the opening and closing date.") var hideDates: Bool
     @ArgumentParser.Flag(help: "Hide closed accounts.") var hideClosed: Bool
     @ArgumentParser.Flag(help: "Hide open accounts.") var hideOpen: Bool
+    @ArgumentParser.Flag(name: [.short, .long], help: "Display the number of accounts.") var count: Bool
 
     func run() throws {
         let ledger = try parseLedger()
@@ -62,6 +63,9 @@ struct Accounts: LedgerCommand {
         }
 
         print(result)
+        if count {
+            print("\n \(accounts.count) Accounts")
+        }
     }
 
     private func dateString(_ date: Date?) -> String {
