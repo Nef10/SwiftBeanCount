@@ -19,6 +19,7 @@ struct Accounts: LedgerCommand, FormattableCommand {
     @ArgumentParser.Flag(default: true, inversion: .prefixedNo, help: "Show open accounts.") private var open: Bool
     @ArgumentParser.Flag(default: true, inversion: .prefixedNo, help: "Show closed accounts.") private var closed: Bool
     @ArgumentParser.Flag(default: true, inversion: .prefixedNo, help: "Show dates of account opening and closing.") private var dates: Bool
+    @ArgumentParser.Flag(default: false, inversion: .prefixedNo, help: "Show number of postings in each account.") private var postings: Bool
     @ArgumentParser.Flag(name: [.short, .long], help: "Display the number of accounts.") private var count: Bool
 
     func validate() throws {
@@ -30,11 +31,15 @@ struct Accounts: LedgerCommand, FormattableCommand {
     func run() throws {
         let ledger = try parseLedger()
 
-        var columns = ["Name", "Opening", "Closing"]
-        if !dates {
-            columns = ["Name"]
-        } else if !closed {
-            columns = ["Name", "Opening"]
+        var columns = ["Name"]
+        if postings {
+            columns.append("# Postings")
+        }
+        if dates {
+            columns.append("Opening")
+            if closed {
+                columns.append("Closing")
+            }
         }
 
         var accounts = ledger.accounts.sorted { $0.name.fullName < $1.name.fullName }
@@ -48,8 +53,18 @@ struct Accounts: LedgerCommand, FormattableCommand {
             accounts = accounts.filter { $0.closing != nil && $0.closing! < Date() }
         }
 
-        let values = accounts.map {
-            dates ? [$0.name.fullName, dateString($0.opening), dateString($0.closing)] : [$0.name.fullName]
+        let values: [[String]] = accounts.map { account in
+            var result = [account.name.fullName]
+            if postings {
+                result.append(String(ledger.transactions.map { $0.postings.filter { $0.accountName == account.name }.count }.reduce(0) { $0 + $1 }))
+            }
+            if dates {
+                result.append(dateString(account.opening))
+                if closed {
+                    result.append(dateString(account.closing))
+                }
+            }
+            return result
         }
 
         printFormatted(title: "Accounts", columns: columns, values: values)
