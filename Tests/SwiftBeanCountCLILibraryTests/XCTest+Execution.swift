@@ -11,7 +11,7 @@ extension XCTest {
         return url.appendingPathComponent("swiftbeancount")
     }
 
-    func outputFromExecutionWith(arguments: [String]) -> String {
+    func outputFromExecutionWith(arguments: [String]) -> (Int32, String) {
         let output = Pipe()
         let process = Process()
         if #available(macOS 10.13, *) {
@@ -36,7 +36,7 @@ extension XCTest {
         let data = output.fileHandleForReading.readDataToEndOfFile()
         let result = String(data: data, encoding: .utf8)!.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        return result
+        return (process.terminationStatus, result)
     }
 
 }
