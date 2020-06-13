@@ -22,8 +22,25 @@ jobs:
       uses: fwal/setup-swift@v1
       with:
         swift-version: "5.2.0"
-    - name: Build
-      run: swift build --enable-test-discovery -Xswiftc -warnings-as-errors
+    - name: Run tests
+      run: swift test --enable-code-coverage --enable-test-discovery -Xswiftc -warnings-as-errors
+    - name: Generate test coverage report
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      uses: maxep/spm-lcov-action@0.3.0
+      with:
+        output-file: ./coverage/lcov.info
+    - name: Post test coverage report
+      if: ${{ matrix.os == 'ubuntu-latest' && github.event_name == 'pull_request' }}
+      uses: romeovs/lcov-reporter-action@v0.2.16
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        lcov-file: ./coverage/lcov.info
+    - name: Enforce test coverage threshhold
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      uses: ChicagoFlutter/lcov-cop@v1.0.2
+      with:
+        path: ./coverage/lcov.info
+        min_coverage: 1
   swiftlint:
     name: SwiftLint
     runs-on: ubuntu-latest
