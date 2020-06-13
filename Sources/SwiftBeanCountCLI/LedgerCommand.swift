@@ -39,6 +39,10 @@ extension LedgerCommand {
 
 extension FormattableLedgerCommand {
 
+    static func supportedFormats() -> String {
+        "Supported formats: \(Format.allCases.map { $0.rawValue }.joined(separator: ", "))"
+    }
+
     func printFormatted(title: String, columns: [String], values: [[String]]) {
         var result: String
         switch format {
@@ -59,10 +63,6 @@ extension FormattableLedgerCommand {
             result += values.map { $0.map { "\"\($0)\"" }.joined(separator: ", ") }.joined(separator: "\n")
         }
         print(result)
-    }
-
-    static func supportedFormats() -> String {
-        "Supported formats: \(Format.allCases.map { $0.rawValue }.joined(separator: ", "))"
     }
 
 }
