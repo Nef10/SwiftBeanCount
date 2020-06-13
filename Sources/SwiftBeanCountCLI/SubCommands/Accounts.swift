@@ -14,7 +14,7 @@ struct Accounts: FormattableLedgerCommand {
     }()
 
     @OptionGroup() var options: LedgerOption
-    @ArgumentParser.Option(default: .table, help: "Output format. Supported formats: \(Format.allCases.map { $0.rawValue }.joined(separator: ", "))") var format: Format
+    @ArgumentParser.Option(name: [.short, .long], default: .table, help: "Output format. Supported formats: \(Format.allCases.map { $0.rawValue }.joined(separator: ", "))") var format: Format
     @Argument(default: "", help: "String to filter account names by.") private var filter: String
     @ArgumentParser.Flag(help: "Hide the opening and closing date.") private var hideDates: Bool
     @ArgumentParser.Flag(help: "Hide closed accounts.") private var hideClosed: Bool
