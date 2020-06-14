@@ -183,7 +183,7 @@ class AccountsTests: XCTestCase {
         let url = basicLedgerURL()
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--no-open", "--count"], output: table)
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "table", "--no-open", "--closed", "--dates", "--count"], output: table)
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "table", "--no-postings", "--count", "--no-open"], output: table)
+        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "table", "--no-postings", "-c", "--no-open"], output: table)
     }
 
     func testTextCount() {
@@ -201,7 +201,7 @@ class AccountsTests: XCTestCase {
             6 Accounts
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "text", "--open", "--closed", "--dates", "--count"], output: text)
+        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "text", "--open", "--closed", "--dates", "-c"], output: text)
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "text", "--no-postings", "--count"], output: text)
     }
 

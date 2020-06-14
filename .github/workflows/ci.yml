@@ -40,7 +40,7 @@ jobs:
       uses: ChicagoFlutter/lcov-cop@v1.0.2
       with:
         path: ./coverage/lcov.info
-        min_coverage: 1
+        min_coverage: 99
   swiftlint:
     name: SwiftLint
     runs-on: ubuntu-latest
