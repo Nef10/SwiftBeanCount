@@ -31,4 +31,10 @@ extension XCTestCase {
         }
     }
 
+    func emptyFileURL() -> URL {
+        let url = temporaryFileURL()
+        createFile(at: url, content: "\n")
+        return url
+    }
+
 }

@@ -3,9 +3,15 @@ import XCTest
 
 class CheckTests: XCTestCase {
 
-    func testEmptyFile() {
+    func testFileDoesNotExist() {
         let url = temporaryFileURL()
-        createFile(at: url, content: "\n")
+        let (exitCode, output) = outputFromExecutionWith(arguments: ["check", url.path])
+        XCTAssertEqual(exitCode, 1)
+        XCTAssertEqual(output, "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
+    }
+
+    func testEmptyFile() {
+        let url = emptyFileURL()
         let (exitCode, output) = outputFromExecutionWith(arguments: ["check", url.path])
         XCTAssertEqual(exitCode, 0)
         XCTAssertEqual(output, "No errors found.")
