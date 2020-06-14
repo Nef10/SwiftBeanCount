@@ -5,20 +5,19 @@ class CheckTests: XCTestCase {
 
     func testFileDoesNotExist() {
         let url = temporaryFileURL()
-        let (exitCode, output) = outputFromExecutionWith(arguments: ["check", url.path])
-        XCTAssertEqual(exitCode, 1)
+        let result = outputFromExecutionWith(arguments: ["check", url.path])
+        XCTAssertEqual(result.exitCode, 1)
+        XCTAssert(result.errorOutput.isEmpty)
         #if os(Linux)
-        XCTAssertEqual(output, "The operation could not be completed. No such file or directory")
+        XCTAssertEqual(result.output, "The operation could not be completed. No such file or directory")
         #else
-        XCTAssertEqual(output, "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
+        XCTAssertEqual(result.output, "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
         #endif
     }
 
     func testEmptyFile() {
         let url = emptyFileURL()
-        let (exitCode, output) = outputFromExecutionWith(arguments: ["check", url.path])
-        XCTAssertEqual(exitCode, 0)
-        XCTAssertEqual(output, "No errors found.")
+        assertSuccessfulExecutionResult(arguments: ["check", url.path], output: "No errors found.")
     }
 
     func testSuccessful() {
@@ -31,46 +30,43 @@ class CheckTests: XCTestCase {
                                        Assets:CAD 10.00 CAD
                                        Income:Job -10.00 CAD
                                      """)
-        let (exitCode, output) = outputFromExecutionWith(arguments: ["check", url.path])
-        XCTAssertEqual(exitCode, 0)
-        XCTAssertEqual(output, "No errors found.")
+        assertSuccessfulExecutionResult(arguments: ["check", url.path], output: "No errors found.")
     }
 
     func testError() {
         let url = temporaryFileURL()
         createFile(at: url, content: "2020-06-13 * \"\" \"\"\n  Assets:CAD 10.00 CAD\n  Income:Job -15.00 CAD")
-        let (exitCode, output) = outputFromExecutionWith(arguments: ["check", url.path])
-        XCTAssertEqual(exitCode, 65)
-        XCTAssertEqual(output, """
-                               Found 2 errors:
+        let result = outputFromExecutionWith(arguments: ["check", url.path])
+        XCTAssertEqual(result.exitCode, 65)
+        XCTAssert(result.errorOutput.isEmpty)
+        XCTAssertEqual(result.output, """
+                                        Found 2 errors:
 
-                               2020-06-13 * "" ""
-                                 Assets:CAD 10.00 CAD
-                                 Income:Job -15.00 CAD is not balanced - -5 CAD too much (0.005 tolerance)
-                               Commodity CAD does not have an opening date
-                               """)
+                                        2020-06-13 * "" ""
+                                          Assets:CAD 10.00 CAD
+                                          Income:Job -15.00 CAD is not balanced - -5 CAD too much (0.005 tolerance)
+                                        Commodity CAD does not have an opening date
+                                        """)
     }
 
     func testQuietSuccessful() {
         let url = temporaryFileURL()
         createFile(at: url, content: "\n")
-        var (exitCode, output) = outputFromExecutionWith(arguments: ["check", url.path, "-q"])
-        XCTAssertEqual(exitCode, 0)
-        XCTAssert(output.isEmpty)
-        (exitCode, output) = outputFromExecutionWith(arguments: ["check", url.path, "--quiet"])
-        XCTAssertEqual(exitCode, 0)
-        XCTAssert(output.isEmpty)
+        assertSuccessfulExecutionResult(arguments: ["check", url.path, "-q"], output: "")
+        assertSuccessfulExecutionResult(arguments: ["check", url.path, "--quiet"], output: "")
     }
 
     func testQuietError() {
         let url = temporaryFileURL()
         createFile(at: url, content: "2020-06-13 * \"\" \"\"\n  Assets:CAD 10.00 CAD\n  Income:Job -15.00 CAD")
-        var (exitCode, output) = outputFromExecutionWith(arguments: ["check", url.path, "-q"])
-        XCTAssertEqual(exitCode, 65)
-        XCTAssert(output.isEmpty)
-        (exitCode, output) = outputFromExecutionWith(arguments: ["check", url.path, "--quiet"])
-        XCTAssertEqual(exitCode, 65)
-        XCTAssert(output.isEmpty)
+        var result = outputFromExecutionWith(arguments: ["check", url.path, "-q"])
+        XCTAssertEqual(result.exitCode, 65)
+        XCTAssert(result.errorOutput.isEmpty)
+        XCTAssert(result.output.isEmpty)
+        result = outputFromExecutionWith(arguments: ["check", url.path, "--quiet"])
+        XCTAssertEqual(result.exitCode, 65)
+        XCTAssert(result.errorOutput.isEmpty)
+        XCTAssert(result.output.isEmpty)
     }
 
 }

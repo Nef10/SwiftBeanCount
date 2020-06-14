@@ -5,12 +5,13 @@ class StatsTests: XCTestCase {
 
     func testFileDoesNotExist() {
         let url = temporaryFileURL()
-        let (exitCode, output) = outputFromExecutionWith(arguments: ["stats", url.path])
-        XCTAssertEqual(exitCode, 1)
+        let result = outputFromExecutionWith(arguments: ["stats", url.path])
+        XCTAssertEqual(result.exitCode, 1)
+        XCTAssert(result.errorOutput.isEmpty)
         #if os(Linux)
-        XCTAssertEqual(output, "The operation could not be completed. No such file or directory")
+        XCTAssertEqual(result.output, "The operation could not be completed. No such file or directory")
         #else
-        XCTAssertEqual(output, "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
+        XCTAssertEqual(result.output, "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
         #endif
     }
 
@@ -36,15 +37,9 @@ class StatsTests: XCTestCase {
             +------------------+--------+
             """
         let url = emptyFileURL()
-        var (exitCode, output) = outputFromExecutionWith(arguments: ["stats", url.path])
-        XCTAssertEqual(exitCode, 0)
-        XCTAssert(output.hasPrefix(table))
-        (exitCode, output) = outputFromExecutionWith(arguments: ["stats", url.path, "-f", "table"])
-        XCTAssertEqual(exitCode, 0)
-        XCTAssert(output.hasPrefix(table))
-        (exitCode, output) = outputFromExecutionWith(arguments: ["stats", url.path, "--format", "table"])
-        XCTAssertEqual(exitCode, 0)
-        XCTAssert(output.hasPrefix(table))
+        assertSuccessfulExecutionResult(arguments: ["stats", url.path], outputPrefix: table)
+        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "table"], outputPrefix: table)
+        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "table"], outputPrefix: table)
     }
 
     func testEmptyFileCSV() {
@@ -64,12 +59,8 @@ class StatsTests: XCTestCase {
             "Plugins", "0"
             """
         let url = emptyFileURL()
-        var (exitCode, output) = outputFromExecutionWith(arguments: ["stats", url.path, "-f", "csv"])
-        XCTAssertEqual(exitCode, 0)
-        XCTAssertEqual(output, csv)
-        (exitCode, output) = outputFromExecutionWith(arguments: ["stats", url.path, "--format", "csv"])
-        XCTAssertEqual(exitCode, 0)
-        XCTAssertEqual(output, csv)
+        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "csv"], output: csv)
+        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "csv"], output: csv)
     }
 
     func testEmptyFileText() {
@@ -91,12 +82,8 @@ class StatsTests: XCTestCase {
             Plugins           0
             """
         let url = emptyFileURL()
-        var (exitCode, output) = outputFromExecutionWith(arguments: ["stats", url.path, "-f", "text"])
-        XCTAssertEqual(exitCode, 0)
-        XCTAssert(output.hasPrefix(text))
-        (exitCode, output) = outputFromExecutionWith(arguments: ["stats", url.path, "--format", "text"])
-        XCTAssertEqual(exitCode, 0)
-        XCTAssert(output.hasPrefix(text))
+        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "text"], outputPrefix: text)
+        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "text"], outputPrefix: text)
     }
 
     func testTestTable() {
@@ -121,15 +108,9 @@ class StatsTests: XCTestCase {
             +------------------+--------+
             """
         let url = basicLedgerURL()
-        var (exitCode, output) = outputFromExecutionWith(arguments: ["stats", url.path])
-        XCTAssertEqual(exitCode, 0)
-        XCTAssert(output.hasPrefix(table))
-        (exitCode, output) = outputFromExecutionWith(arguments: ["stats", url.path, "-f", "table"])
-        XCTAssertEqual(exitCode, 0)
-        XCTAssert(output.hasPrefix(table))
-        (exitCode, output) = outputFromExecutionWith(arguments: ["stats", url.path, "--format", "table"])
-        XCTAssertEqual(exitCode, 0)
-        XCTAssert(output.hasPrefix(table))
+        assertSuccessfulExecutionResult(arguments: ["stats", url.path], outputPrefix: table)
+        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "table"], outputPrefix: table)
+        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "table"], outputPrefix: table)
     }
 
     func testCSV() {
@@ -149,12 +130,8 @@ class StatsTests: XCTestCase {
             "Plugins", "5"
             """
         let url = basicLedgerURL()
-        var (exitCode, output) = outputFromExecutionWith(arguments: ["stats", url.path, "-f", "csv"])
-        XCTAssertEqual(exitCode, 0)
-        XCTAssertEqual(output, csv)
-        (exitCode, output) = outputFromExecutionWith(arguments: ["stats", url.path, "--format", "csv"])
-        XCTAssertEqual(exitCode, 0)
-        XCTAssertEqual(output, csv)
+        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "csv"], output: csv)
+        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "csv"], output: csv)
     }
 
     func testText() {
@@ -176,12 +153,8 @@ class StatsTests: XCTestCase {
             Plugins           5
             """
         let url = basicLedgerURL()
-        var (exitCode, output) = outputFromExecutionWith(arguments: ["stats", url.path, "-f", "text"])
-        XCTAssertEqual(exitCode, 0)
-        XCTAssert(output.hasPrefix(text))
-        (exitCode, output) = outputFromExecutionWith(arguments: ["stats", url.path, "--format", "text"])
-        XCTAssertEqual(exitCode, 0)
-        XCTAssert(output.hasPrefix(text))
+        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "text"], outputPrefix: text)
+        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "text"], outputPrefix: text)
     }
 
     private func basicLedgerURL() -> URL {
