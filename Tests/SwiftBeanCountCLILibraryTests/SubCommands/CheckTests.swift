@@ -7,7 +7,11 @@ class CheckTests: XCTestCase {
         let url = temporaryFileURL()
         let (exitCode, output) = outputFromExecutionWith(arguments: ["check", url.path])
         XCTAssertEqual(exitCode, 1)
+        #if os(Linux)
+        XCTAssertEqual(output, "The operation could not be completed. No such file or directory")
+        #else
         XCTAssertEqual(output, "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
+        #endif
     }
 
     func testEmptyFile() {
