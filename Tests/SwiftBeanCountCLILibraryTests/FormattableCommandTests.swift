@@ -5,6 +5,10 @@ import XCTest
 
 struct TestFormattableCommand: FormattableCommand {
         @ArgumentParser.Option() var format: Format
+
+        func getResult() throws -> FormattableResult {
+            return FormattableResult(title: "A", columns: ["B", "C"], values: [["D E", "F G"], ["H", "I"]], footer: "J")
+        }
 }
 
 class FormattableCommandTests: XCTestCase {
@@ -20,7 +24,7 @@ class FormattableCommandTests: XCTestCase {
         Rainbow.enabled = true
         var subject = TestFormattableCommand()
         subject.format = .csv
-        let result = subject.formatted(title: "Title is ignored", columns: ["Column A", "B", "C"], values: [["1", "Value 2", "Value3"], ["Row 2", "Value 2", ""]])
+        let result = subject.formatted(FormattableResult(title: "Title is ignored", columns: ["Column A", "B", "C"], values: [["1", "Value 2", "Value3"], ["Row 2", "Value 2", ""]], footer: nil))
         XCTAssertEqual(result, """
             "Column A", "B", "C"
             "1", "Value 2", "Value3"
@@ -34,7 +38,7 @@ class FormattableCommandTests: XCTestCase {
         Rainbow.enabled = false
         var subject = TestFormattableCommand()
         subject.format = .csv
-        let result = subject.formatted(title: "Title is ignored", columns: ["Column A", "B", "C"], values: [["1", "Value 2", "Value3"], ["Row 2", "Value 2", ""]])
+        let result = subject.formatted(FormattableResult(title: "Title is ignored", columns: ["Column A", "B", "C"], values: [["1", "Value 2", "Value3"], ["Row 2", "Value 2", ""]], footer: nil))
         XCTAssertEqual(result, """
             "Column A", "B", "C"
             "1", "Value 2", "Value3"
@@ -48,7 +52,7 @@ class FormattableCommandTests: XCTestCase {
         Rainbow.enabled = true
         var subject = TestFormattableCommand()
         subject.format = .table
-        let result = subject.formatted(title: "Title", columns: ["Column A", "B", "C"], values: [["1", "Value 2", "Value3"], ["Row 2", "Value 2", ""]])
+        let result = subject.formatted(FormattableResult(title: "Title", columns: ["Column A", "B", "C"], values: [["1", "Value 2", "Value3"], ["Row 2", "Value 2", ""]], footer: nil))
         XCTAssertEqual(result, """
             +-----------------------------+
             | \("Title".bold)                       |
@@ -67,7 +71,7 @@ class FormattableCommandTests: XCTestCase {
         Rainbow.enabled = false
         var subject = TestFormattableCommand()
         subject.format = .table
-        let result = subject.formatted(title: "Title", columns: ["Column A", "B", "C"], values: [["1", "Value 2", "Value3"], ["Row 2", "Value 2", ""]])
+        let result = subject.formatted(FormattableResult(title: "Title", columns: ["Column A", "B", "C"], values: [["1", "Value 2", "Value3"], ["Row 2", "Value 2", ""]], footer: nil))
         XCTAssertEqual(result, """
             +-----------------------------+
             | Title                       |
@@ -86,7 +90,7 @@ class FormattableCommandTests: XCTestCase {
         Rainbow.enabled = true
         var subject = TestFormattableCommand()
         subject.format = .text
-        let result = subject.formatted(title: "Title", columns: ["Column A", "B", "C"], values: [["1", "Value 2", "Value3"], ["Row 2", "Value 2", ""]])
+        let result = subject.formatted(FormattableResult(title: "Title", columns: ["Column A", "B", "C"], values: [["1", "Value 2", "Value3"], ["Row 2", "Value 2", ""]], footer: nil))
         XCTAssertEqual(result, """
             \("Title".bold.underline)
 
@@ -102,7 +106,7 @@ class FormattableCommandTests: XCTestCase {
         Rainbow.enabled = false
         var subject = TestFormattableCommand()
         subject.format = .text
-        let result = subject.formatted(title: "Title", columns: ["Column A", "B", "C"], values: [["1", "Value 2", "Value3"], ["Row 2", "Value 2", ""]])
+        let result = subject.formatted(FormattableResult(title: "Title", columns: ["Column A", "B", "C"], values: [["1", "Value 2", "Value3"], ["Row 2", "Value 2", ""]], footer: nil))
         XCTAssertEqual(result, """
             Title
 
@@ -118,7 +122,7 @@ class FormattableCommandTests: XCTestCase {
         Rainbow.enabled = false
         var subject = TestFormattableCommand()
         subject.format = .text
-        var result = subject.formatted(title: "Title", columns: ["Column A"], values: [["1"]])
+        var result = subject.formatted(FormattableResult(title: "Title", columns: ["Column A"], values: [["1"]], footer: nil))
         XCTAssertEqual(result, """
             Title
 
@@ -127,14 +131,14 @@ class FormattableCommandTests: XCTestCase {
             """)
 
         subject.format = .csv
-        result = subject.formatted(title: "Title", columns: ["Column A"], values: [["1"]])
+        result = subject.formatted(FormattableResult(title: "Title", columns: ["Column A"], values: [["1"]], footer: nil))
         XCTAssertEqual(result, """
             "Column A"
             "1"
             """)
 
         subject.format = .table
-        result = subject.formatted(title: "Title", columns: ["Column A"], values: [["1"]])
+        result = subject.formatted(FormattableResult(title: "Title", columns: ["Column A"], values: [["1"]], footer: nil))
         XCTAssertEqual(result, """
             +----------+
             | Title    |
@@ -153,7 +157,7 @@ class FormattableCommandTests: XCTestCase {
         Rainbow.enabled = false
         var subject = TestFormattableCommand()
         subject.format = .text
-        var result = subject.formatted(title: "Title", columns: ["Column A", "B"], values: [])
+        var result = subject.formatted(FormattableResult(title: "Title", columns: ["Column A", "B"], values: [], footer: nil))
         XCTAssertEqual(result, """
             Title
 
@@ -161,14 +165,14 @@ class FormattableCommandTests: XCTestCase {
             """)
 
         subject.format = .csv
-        result = subject.formatted(title: "Title", columns: ["Column A", "B"], values: [])
+        result = subject.formatted(FormattableResult(title: "Title", columns: ["Column A", "B"], values: [], footer: nil))
         XCTAssertEqual(result, """
             "Column A", "B"
 
             """)
 
         subject.format = .table
-        result = subject.formatted(title: "Title", columns: ["Column A", "B"], values: [])
+        result = subject.formatted(FormattableResult(title: "Title", columns: ["Column A", "B"], values: [], footer: nil))
         XCTAssertEqual(result, """
             +--------------+
             | Title        |

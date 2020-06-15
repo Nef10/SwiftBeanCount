@@ -11,7 +11,7 @@ struct Stats: LedgerCommand, FormattableCommand, ColorizedCommand {
     @ArgumentParser.Option(name: [.short, .long], default: .table, help: "Output format. \(Self.supportedFormats())") var format: Format
     @ArgumentParser.Flag(help: Self.noColorHelp()) var noColor: Bool
 
-    func run() throws {
+    func getResult() throws -> FormattableResult {
         adjustColorization()
         let start = Date.timeIntervalSinceReferenceDate
         let ledger = try parseLedger()
@@ -33,10 +33,12 @@ struct Stats: LedgerCommand, FormattableCommand, ColorizedCommand {
             ["Plugins", String(ledger.plugins.count)]
         ]
 
-        print(formatted(title: "Statistics", columns: ["Type", "Number"], values: values))
+        var footer: String?
         if format != .csv {
-            print(String(format: "\nParsing time: %.3f sec".lightBlack, time))
+            footer = String(format: "Parsing time: %.3f sec", time)
         }
+
+        return FormattableResult(title: "Statistics", columns: ["Type", "Number"], values: values, footer: footer)
     }
 
 }

@@ -29,24 +29,7 @@ struct Accounts: LedgerCommand, FormattableCommand {
         }
     }
 
-    private func columns() -> [String] {
-        var columns = ["Name"]
-        if postings {
-            columns.append("# Postings")
-        }
-        if activity {
-            columns.append("Last Activity")
-        }
-        if dates {
-            columns.append("Opening")
-            if closed {
-                columns.append("Closing")
-            }
-        }
-        return columns
-    }
-
-    func run() throws {
+    func getResult() throws -> FormattableResult {
         let ledger = try parseLedger()
 
         var accounts = ledger.accounts.sorted { $0.name.fullName < $1.name.fullName }
@@ -80,10 +63,29 @@ struct Accounts: LedgerCommand, FormattableCommand {
             return result
         }
 
-        print(formatted(title: "Accounts", columns: columns(), values: values))
+        var footer: String?
         if count {
-            print("\n\(accounts.count) Accounts")
+           footer = "\(accounts.count) Accounts"
         }
+
+        return FormattableResult(title: "Accounts", columns: columns(), values: values, footer: footer)
+    }
+
+     private func columns() -> [String] {
+        var columns = ["Name"]
+        if postings {
+            columns.append("# Postings")
+        }
+        if activity {
+            columns.append("Last Activity")
+        }
+        if dates {
+            columns.append("Opening")
+            if closed {
+                columns.append("Closing")
+            }
+        }
+        return columns
     }
 
     private func dateString(_ date: Date?) -> String {

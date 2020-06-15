@@ -8,8 +8,18 @@ enum Format: String, ExpressibleByArgument, CaseIterable {
     case csv
 }
 
+struct FormattableResult {
+    let title: String
+    let columns: [String]
+    let values: [[String]]
+    let footer: String?
+}
+
 protocol FormattableCommand: ParsableCommand {
     var format: Format { get }
+
+    func getResult() throws -> FormattableResult
+
 }
 
 extension FormattableCommand {
@@ -18,24 +28,31 @@ extension FormattableCommand {
         "Supported formats: \(Format.allCases.map { $0.rawValue }.joined(separator: ", "))"
     }
 
-    func formatted(title: String, columns: [String], values: [[String]]) -> String {
+    func run() throws {
+        print(formatted(try getResult()))
+    }
+
+    func formatted(_ value: FormattableResult) -> String {
         var result: String
         switch format {
         case .text:
-            var table = TextTable(columns: columns.map { TextTableColumn(header: $0.bold) })
-            table.addRows(values: values)
+            var table = TextTable(columns: value.columns.map { TextTableColumn(header: $0.bold) })
+            table.addRows(values: value.values)
             table.columnFence = ""
             table.rowFence = ""
             table.cornerFence = ""
-            result = title.bold.underline + "\n\n"
+            result = value.title.bold.underline + "\n\n"
             result += table.render().split(whereSeparator: \.isNewline).map { $0.trimmingCharacters(in: .whitespaces) }.joined(separator: "\n")
         case .table:
-            var table = TextTable(columns: columns.map { TextTableColumn(header: $0) }, header: title.bold)
-            table.addRows(values: values)
+            var table = TextTable(columns: value.columns.map { TextTableColumn(header: $0) }, header: value.title.bold)
+            table.addRows(values: value.values)
             result = table.render()
         case .csv:
-            result = columns.map { "\"\($0)\"" }.joined(separator: ", ") + "\n"
-            result += values.map { $0.map { "\"\($0)\"" }.joined(separator: ", ") }.joined(separator: "\n")
+            result = value.columns.map { "\"\($0)\"" }.joined(separator: ", ") + "\n"
+            result += value.values.map { $0.map { "\"\($0)\"" }.joined(separator: ", ") }.joined(separator: "\n")
+        }
+        if let footer = value.footer, !footer.isEmpty {
+            result += "\n\n\(footer.lightBlack)"
         }
         return result
     }
