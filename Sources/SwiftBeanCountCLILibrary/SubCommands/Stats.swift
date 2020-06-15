@@ -3,7 +3,7 @@ import Foundation
 import Rainbow
 import SwiftBeanCountModel
 
-struct Stats: LedgerCommand, FormattableCommand, ColorizedCommand {
+struct Stats: LedgerCommand, FormattableCommand {
 
     static var configuration = CommandConfiguration(abstract: "Statistics of a ledger (e.g. # of transactions)")
 
@@ -12,7 +12,6 @@ struct Stats: LedgerCommand, FormattableCommand, ColorizedCommand {
     @ArgumentParser.Flag(help: Self.noColorHelp()) var noColor: Bool
 
     func getResult() throws -> FormattableResult {
-        adjustColorization()
         let start = Date.timeIntervalSinceReferenceDate
         let ledger = try parseLedger()
         let end = Date.timeIntervalSinceReferenceDate

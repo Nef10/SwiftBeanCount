@@ -15,7 +15,7 @@ struct FormattableResult {
     let footer: String?
 }
 
-protocol FormattableCommand: ParsableCommand {
+protocol FormattableCommand: ColorizedCommand {
 
     var format: Format { get }
 
@@ -30,6 +30,7 @@ extension FormattableCommand {
     }
 
     func run() throws {
+        adjustColorization()
         print(formatted(try getResult()))
     }
 

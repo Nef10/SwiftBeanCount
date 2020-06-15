@@ -14,8 +14,9 @@ struct Accounts: LedgerCommand, FormattableCommand {
     }()
 
     @OptionGroup() var options: LedgerOption
-    @ArgumentParser.Option(name: [.short, .long], default: .table, help: "Output format. \(Self.supportedFormats())") var format: Format
     @Argument(default: "", help: "String to filter account names by.") private var filter: String
+    @ArgumentParser.Option(name: [.short, .long], default: .table, help: "Output format. \(Self.supportedFormats())") var format: Format
+    @ArgumentParser.Flag(help: Self.noColorHelp()) var noColor: Bool
     @ArgumentParser.Flag(default: true, inversion: .prefixedNo, help: "Show open accounts.") private var open: Bool
     @ArgumentParser.Flag(default: true, inversion: .prefixedNo, help: "Show closed accounts.") private var closed: Bool
     @ArgumentParser.Flag(default: true, inversion: .prefixedNo, help: "Show dates of account opening and closing.") private var dates: Bool
