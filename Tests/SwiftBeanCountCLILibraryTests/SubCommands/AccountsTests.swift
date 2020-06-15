@@ -178,7 +178,7 @@ class AccountsTests: XCTestCase {
             "Income:Test", "0", "2020-07-13", "2020-05-16", ""
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--dates", "--no-postings", "--activity"], output: csv)
+        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--dates", "--postings", "--activity"], output: csv)
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--postings", "--activity"], output: csv)
     }
 
