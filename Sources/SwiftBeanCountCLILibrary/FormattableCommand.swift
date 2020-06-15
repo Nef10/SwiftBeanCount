@@ -16,6 +16,7 @@ struct FormattableResult {
 }
 
 protocol FormattableCommand: ParsableCommand {
+
     var format: Format { get }
 
     func getResult() throws -> FormattableResult
@@ -51,7 +52,7 @@ extension FormattableCommand {
             result = value.columns.map { "\"\($0)\"" }.joined(separator: ", ") + "\n"
             result += value.values.map { $0.map { "\"\($0)\"" }.joined(separator: ", ") }.joined(separator: "\n")
         }
-        if let footer = value.footer, !footer.isEmpty {
+        if let footer = value.footer, !footer.isEmpty, format != .csv {
             result += "\n\n\(footer.lightBlack)"
         }
         return result
