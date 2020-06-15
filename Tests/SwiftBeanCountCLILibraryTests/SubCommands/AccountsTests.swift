@@ -40,7 +40,7 @@ class AccountsTests: XCTestCase {
             """
         let url = basicLedgerURL()
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path], output: table)
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "table", "--open", "--closed", "--dates"], output: table)
+        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "table", "--open", "--closed", "--dates", "--no-activity"], output: table)
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "table", "--no-postings"], output: table)
     }
 
@@ -72,7 +72,7 @@ class AccountsTests: XCTestCase {
             Income:Test  2020-05-16
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "text", "--open", "--closed", "--dates"], output: text)
+        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "text", "--open", "--closed", "--dates", "--no-activity"], output: text)
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "text", "--no-postings"], output: text)
     }
 
@@ -80,7 +80,7 @@ class AccountsTests: XCTestCase {
         let csv = #""Name", "Opening", "Closing""#
         let url = emptyFileURL()
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--dates"], output: csv)
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv"], output: csv)
+        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--no-activity"], output: csv)
     }
 
     func testNoDates() {
@@ -164,7 +164,22 @@ class AccountsTests: XCTestCase {
             """
         let url = basicLedgerURL()
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--dates", "--postings"], output: csv)
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--postings"], output: csv)
+        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--postings", "--no-activity"], output: csv)
+    }
+
+    func testActivity() {
+        let csv = """
+            "Name", "# Postings", "Last Activity", "Opening", "Closing"
+            "Assets:CAD", "2", "2020-06-13", "2020-06-11", "2020-06-13"
+            "Assets:USD", "0", "2020-05-13", "2020-05-11", "2020-05-13"
+            "Income:Job", "1", "2020-06-13", "2020-06-13", ""
+            "Income:Job2", "1", "2020-06-13", "2020-05-13", ""
+            "Income:Job3", "0", "2020-05-15", "2020-05-15", ""
+            "Income:Test", "0", "2020-07-13", "2020-05-16", ""
+            """
+        let url = basicLedgerURL()
+        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--dates", "--no-postings", "--activity"], output: csv)
+        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--postings", "--activity"], output: csv)
     }
 
     func testTestTableCount() {
@@ -221,6 +236,7 @@ class AccountsTests: XCTestCase {
             2020-06-13 * "" ""
               Assets:CAD 20.00 CAD
               Income:Job2 -20.00 CAD
+            2020-07-13 balance Income:Test 0.00 CAD
             """
         let url = temporaryFileURL()
         createFile(at: url, content: content)

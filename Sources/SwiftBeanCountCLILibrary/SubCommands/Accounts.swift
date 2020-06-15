@@ -20,6 +20,7 @@ struct Accounts: LedgerCommand, FormattableCommand {
     @ArgumentParser.Flag(default: true, inversion: .prefixedNo, help: "Show closed accounts.") private var closed: Bool
     @ArgumentParser.Flag(default: true, inversion: .prefixedNo, help: "Show dates of account opening and closing.") private var dates: Bool
     @ArgumentParser.Flag(default: false, inversion: .prefixedNo, help: "Show number of postings in each account.") private var postings: Bool
+    @ArgumentParser.Flag(default: false, inversion: .prefixedNo, help: "Show the date of the last activity in each account.") private var activity: Bool
     @ArgumentParser.Flag(name: [.short, .long], help: "Display the number of accounts.") private var count: Bool
 
     func validate() throws {
@@ -34,6 +35,9 @@ struct Accounts: LedgerCommand, FormattableCommand {
         var columns = ["Name"]
         if postings {
             columns.append("# Postings")
+        }
+        if activity {
+            columns.append("Last Activity")
         }
         if dates {
             columns.append("Opening")
@@ -57,6 +61,12 @@ struct Accounts: LedgerCommand, FormattableCommand {
             var result = [account.name.fullName]
             if postings {
                 result.append(String(ledger.transactions.map { $0.postings.filter { $0.accountName == account.name }.count }.reduce(0) { $0 + $1 }))
+            }
+            if activity {
+                let transactionDates = ledger.transactions.compactMap { $0.postings.contains { $0.accountName == account.name } ? $0.metaData.date : nil }
+                let balanceDates = account.balances.map { $0.date }
+                let dates = (transactionDates + balanceDates + [account.opening] + [account.closing]).compactMap { $0 }.sorted(by: >)
+                result.append(dateString(dates.first))
             }
             if dates {
                 result.append(dateString(account.opening))
