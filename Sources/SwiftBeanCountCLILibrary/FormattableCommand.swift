@@ -18,7 +18,7 @@ extension FormattableCommand {
         "Supported formats: \(Format.allCases.map { $0.rawValue }.joined(separator: ", "))"
     }
 
-    func printFormatted(title: String, columns: [String], values: [[String]]) {
+    func formatted(title: String, columns: [String], values: [[String]]) -> String {
         var result: String
         switch format {
         case .text:
@@ -37,7 +37,7 @@ extension FormattableCommand {
             result = columns.map { "\"\($0)\"" }.joined(separator: ", ") + "\n"
             result += values.map { $0.map { "\"\($0)\"" }.joined(separator: ", ") }.joined(separator: "\n")
         }
-        print(result)
+        return result
     }
 
 }

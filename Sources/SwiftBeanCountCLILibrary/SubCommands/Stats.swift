@@ -33,7 +33,7 @@ struct Stats: LedgerCommand, FormattableCommand, ColorizedCommand {
             ["Plugins", String(ledger.plugins.count)]
         ]
 
-        printFormatted(title: "Statistics", columns: ["Type", "Number"], values: values)
+        print(formatted(title: "Statistics", columns: ["Type", "Number"], values: values))
         if format != .csv {
             print(String(format: "\nParsing time: %.3f sec".lightBlack, time))
         }

@@ -80,7 +80,7 @@ struct Accounts: LedgerCommand, FormattableCommand {
             return result
         }
 
-        printFormatted(title: "Accounts", columns: columns(), values: values)
+        print(formatted(title: "Accounts", columns: columns(), values: values))
         if count {
             print("\n\(accounts.count) Accounts")
         }
