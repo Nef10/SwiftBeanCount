@@ -29,9 +29,7 @@ struct Accounts: LedgerCommand, FormattableCommand {
         }
     }
 
-    func run() throws {
-        let ledger = try parseLedger()
-
+    private func columns() -> [String] {
         var columns = ["Name"]
         if postings {
             columns.append("# Postings")
@@ -45,6 +43,11 @@ struct Accounts: LedgerCommand, FormattableCommand {
                 columns.append("Closing")
             }
         }
+        return columns
+    }
+
+    func run() throws {
+        let ledger = try parseLedger()
 
         var accounts = ledger.accounts.sorted { $0.name.fullName < $1.name.fullName }
         if !filter.isEmpty {
@@ -77,7 +80,7 @@ struct Accounts: LedgerCommand, FormattableCommand {
             return result
         }
 
-        printFormatted(title: "Accounts", columns: columns, values: values)
+        printFormatted(title: "Accounts", columns: columns(), values: values)
         if count {
             print("\n\(accounts.count) Accounts")
         }

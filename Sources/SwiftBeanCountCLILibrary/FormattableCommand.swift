@@ -1,6 +1,6 @@
 import ArgumentParser
-import SwiftyTextTable
 import Rainbow
+import SwiftyTextTable
 
 enum Format: String, ExpressibleByArgument, CaseIterable {
     case text
