@@ -1,5 +1,6 @@
 import ArgumentParser
 import SwiftyTextTable
+import Rainbow
 
 enum Format: String, ExpressibleByArgument, CaseIterable {
     case text
@@ -21,15 +22,15 @@ extension FormattableCommand {
         var result: String
         switch format {
         case .text:
-            var table = TextTable(columns: columns.map { TextTableColumn(header: $0) })
+            var table = TextTable(columns: columns.map { TextTableColumn(header: $0.bold) })
             table.addRows(values: values)
             table.columnFence = ""
             table.rowFence = ""
             table.cornerFence = ""
-            result = title + "\n\n"
+            result = title.bold.underline + "\n\n"
             result += table.render().split(whereSeparator: \.isNewline).map { $0.trimmingCharacters(in: .whitespaces) }.joined(separator: "\n")
         case .table:
-            var table = TextTable(columns: columns.map { TextTableColumn(header: $0) }, header: title)
+            var table = TextTable(columns: columns.map { TextTableColumn(header: $0) }, header: title.bold)
             table.addRows(values: values)
             result = table.render()
         case .csv:
