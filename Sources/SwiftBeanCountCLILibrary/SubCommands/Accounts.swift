@@ -2,7 +2,7 @@ import ArgumentParser
 import Foundation
 import SwiftBeanCountModel
 
-struct Accounts: LedgerCommand, FormattableCommand {
+struct Accounts: FormattableLedgerCommand {
 
     static var configuration = CommandConfiguration(abstract: "Print all accounts")
 
@@ -30,9 +30,7 @@ struct Accounts: LedgerCommand, FormattableCommand {
         }
     }
 
-    func getResult() throws -> FormattableResult {
-        let ledger = try parseLedger()
-
+    func getResult(from ledger: Ledger, parsingDuration _: Double) -> FormattableResult {
         var accounts = ledger.accounts.sorted { $0.name.fullName < $1.name.fullName }
         if !filter.isEmpty {
             accounts = accounts.filter { $0.name.fullName.contains(filter) }
