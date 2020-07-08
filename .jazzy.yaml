@@ -8,3 +8,4 @@ root_url: https://Nef10.github.io/SwiftBeanCountImporter/
 github_url: https://github.com/Nef10/SwiftBeanCountImporter
 github_file_prefix: https://github.com/Nef10/SwiftBeanCountImporter/blob/master
 output: ./docs
+theme: fullwidth
