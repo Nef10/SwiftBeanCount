@@ -9,6 +9,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
+//swiftlint:disable:next type_body_length
 class TransactionTests: XCTestCase {
 
     var transaction1WithoutPosting: Transaction!
@@ -346,7 +347,7 @@ class TransactionTests: XCTestCase {
 
         let effect = try! transaction.effect(in: ledger)
         XCTAssertEqual(effect.amounts.count, 1)
-        guard case .valid = try! effect.validateOneAmountWithTolerance(amount: amount1) else {
+        guard case .valid = effect.validateOneAmountWithTolerance(amount: amount1) else {
             XCTFail("\(transaction) effect is not the expected value")
             return
         }
