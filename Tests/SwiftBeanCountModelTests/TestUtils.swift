@@ -47,6 +47,10 @@ enum TestUtils {
         try! AccountName("Assets:Cash")
     }()
 
+    static var income: AccountName = {
+        try! AccountName("Income:Test")
+    }()
+
     static var amount: Amount = {
         Amount(number: Decimal(1), commoditySymbol: cad)
     }()

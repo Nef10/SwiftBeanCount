@@ -309,4 +309,47 @@ class TransactionTests: XCTestCase {
         }
     }
 
+    func testEffectZeroPrice() {
+        //Assets:Cash     -8.52  EUR
+        //Assets:Checking 10.00000 CAD @ 0.85250 EUR
+
+        let transactionMetaData = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
+        let amount1 = Amount(number: Decimal(sign: FloatingPointSign.minus, exponent: -2, significand: Decimal(852)), commoditySymbol: TestUtils.eur, decimalDigits: 2)
+        let amount2 = Amount(number: Decimal(10.000_00), commoditySymbol: TestUtils.cad, decimalDigits: 5)
+        let price = Amount(number: Decimal(sign: FloatingPointSign.plus, exponent: -5, significand: Decimal(85_250)), commoditySymbol: TestUtils.eur, decimalDigits: 5)
+        let posting1 = Posting(accountName: TestUtils.cash, amount: amount1)
+        let posting2 = Posting(accountName: TestUtils.chequing, amount: amount2, price: price)
+        let transaction = Transaction(metaData: transactionMetaData, postings: [posting1, posting2])
+        ledger.add(transaction)
+
+        guard case .valid = try! transaction.effect(in: ledger).validateZeroWithTolerance() else {
+            XCTFail("\(transaction) effect is not zero")
+            return
+        }
+    }
+
+    func testEffectCost() {
+        //Imcome:Test     -8.52  EUR
+        //Assets:Checking 10.00000 CAD { 0.85250 EUR }
+
+        let transactionMetaData = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
+        let amount1 = Amount(number: Decimal(sign: FloatingPointSign.minus, exponent: -2, significand: Decimal(852)), commoditySymbol: TestUtils.eur, decimalDigits: 2)
+        let amount2 = Amount(number: Decimal(10.000_00), commoditySymbol: TestUtils.cad, decimalDigits: 5)
+        let costAmount = Amount(number: Decimal(sign: FloatingPointSign.plus, exponent: -5, significand: Decimal(85_250)),
+                                commoditySymbol: TestUtils.eur,
+                                decimalDigits: 5)
+        let cost = try! Cost(amount: costAmount, date: TestUtils.date20170608, label: nil)
+        let posting1 = Posting(accountName: TestUtils.income, amount: amount1)
+        let posting2 = Posting(accountName: TestUtils.chequing, amount: amount2, price: nil, cost: cost)
+        let transaction = Transaction(metaData: transactionMetaData, postings: [posting1, posting2])
+        ledger.add(transaction)
+
+        let effect = try! transaction.effect(in: ledger)
+        XCTAssertEqual(effect.amounts.count, 1)
+        guard case .valid = try! effect.validateOneAmountWithTolerance(amount: amount1) else {
+            XCTFail("\(transaction) effect is not the expected value")
+            return
+        }
+    }
+
 }
