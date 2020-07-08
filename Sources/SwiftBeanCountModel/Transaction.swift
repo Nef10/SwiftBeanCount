@@ -74,7 +74,10 @@ public class Transaction {
     /// - Throws: if the effect cannot be calculated
     /// - Returns: MultiCurrencyAmount
     public func effect(in ledger: Ledger) throws -> MultiCurrencyAmount {
-        try postings.compactMap { ($0.accountName.accountType == .income || $0.accountName.accountType == .expense) ? try $0.balance(in: ledger) : nil }.reduce(MultiCurrencyAmount(), +)
+        try postings.compactMap {
+            ($0.accountName.accountType == .income || $0.accountName.accountType == .expense) ? try $0.balance(in: ledger) : nil
+        }
+        .reduce(MultiCurrencyAmount(), +)
     }
 
     /// Checks if a Transaction is balanced within the allowed Tolerance
