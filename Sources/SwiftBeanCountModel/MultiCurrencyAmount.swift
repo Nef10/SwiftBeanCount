@@ -22,6 +22,7 @@ public protocol MultiCurrencyAmountRepresentable {
 ///
 public struct MultiCurrencyAmount {
 
+    /// amounts per currency
     public let amounts: [CommoditySymbol: Decimal]
     let decimalDigits: [CommoditySymbol: Int]
 
