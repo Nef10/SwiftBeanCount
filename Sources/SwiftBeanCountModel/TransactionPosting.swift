@@ -8,6 +8,12 @@
 
 import Foundation
 
+/// Errors an Posting can throw
+public enum PostingError: Error {
+    /// if a posting adds to the an inventory without specifying an amount
+    case noCost(String)
+}
+
 /// A Posting contains an `AccountName` with the corresponding `Amount`,
 /// as well as the `price` and `cost` (if applicable).
 public class Posting {
@@ -51,7 +57,7 @@ public class TransactionPosting: Posting {
     /// *unowned* link back to the `Transaction`
     public unowned let transaction: Transaction
 
-    /// Creats an TransactionPosting based on an existing `Posting`
+    /// Creates an TransactionPosting based on an existing `Posting`
     ///
     /// - Parameters:
     ///   - posting: `Posting`, which values will be copied
@@ -59,6 +65,30 @@ public class TransactionPosting: Posting {
     init(posting: Posting, transaction: Transaction) {
         self.transaction = transaction
         super.init(accountName: posting.accountName, amount: posting.amount, price: posting.price, cost: posting.cost, metaData: posting.metaData)
+    }
+
+    /// Returns the balance of a posting, this is the impact it has when you respect the cost or price
+    ///
+    /// - Parameter ledger: ledger to calculate in
+    /// - Throws: PostingError if the balance could not be calculated
+    /// - Returns: MultiCurrencyAmount
+    func balance(in ledger: Ledger) throws -> MultiCurrencyAmount {
+        if let cost = cost {
+            if let postingAmount = ledger.postingPrices[transaction]?[self] {
+                return MultiCurrencyAmount(amounts: postingAmount.amounts,
+                                           decimalDigits: [amount.commoditySymbol: amount.decimalDigits])
+            } else if let costAmount = cost.amount, costAmount.number > 0 {
+                return MultiCurrencyAmount(amounts: [costAmount.commoditySymbol: costAmount.number * amount.number],
+                                           decimalDigits: [amount.commoditySymbol: amount.decimalDigits])
+            } else {
+                throw PostingError.noCost("Posting \(self) of transaction \(transaction) does not have an amount in the cost and adds to the inventory")
+            }
+        } else if let price = price {
+            return MultiCurrencyAmount(amounts: [price.commoditySymbol: price.number * amount.number],
+                                       decimalDigits: [amount.commoditySymbol: amount.decimalDigits])
+        } else {
+            return amount.multiCurrencyAmount
+        }
     }
 
 }

@@ -55,35 +55,42 @@ public class Transaction {
         return .valid
     }
 
+    /// Gets the balance of a transaction, should be zero (within tolerance)
+    ///
+    /// This method just adds up the balances of the individual postings
+    ///
+    /// - Parameter ledger: ledger to calculate in
+    /// - Throws: if the balances cannot be calculated
+    /// - Returns: MultiCurrencyAmount
+    func balance(in ledger: Ledger) throws -> MultiCurrencyAmount {
+        try postings.map { try $0.balance(in: ledger) }.reduce(MultiCurrencyAmount(), +)
+    }
+
+    /// Returns the effect (income + expenses) a transaction has
+    ///
+    /// This methods adds up the amount of all postings from income and expense accounts in the transaction
+    ///
+    /// - Parameter ledger: ledger to calculate in
+    /// - Throws: if the effect cannot be calculated
+    /// - Returns: MultiCurrencyAmount
+    public func effect(in ledger: Ledger) throws -> MultiCurrencyAmount {
+        try postings.compactMap { ($0.accountName.accountType == .income || $0.accountName.accountType == .expense) ? try $0.balance(in: ledger) : nil }.reduce(MultiCurrencyAmount(), +)
+    }
+
     /// Checks if a Transaction is balanced within the allowed Tolerance
     ///
     /// **Tolerance**: If multiple postings are in the same currency the percision of the number with the best precision is used
     ///  *Note*: Price and cost values are ignored
     ///  *Note*: Tolerance for interger amounts is zero
     ///
+    /// - Parameter ledger: ledger to calculate in
     /// - Returns: `ValidationResult`
     private func validateBalance(in ledger: Ledger) -> ValidationResult {
-        var amount = MultiCurrencyAmount()
-        for posting in postings {
-            if let cost = posting.cost {
-                if let postingAmount = ledger.postingPrices[self]?[posting] {
-                    let postingAmount = MultiCurrencyAmount(amounts: postingAmount.amounts,
-                                                            decimalDigits: [posting.amount.commoditySymbol: posting.amount.decimalDigits])
-                    amount += postingAmount
-                } else if let costAmount = cost.amount, costAmount.number > 0 {
-                    let postingAmount = MultiCurrencyAmount(amounts: [costAmount.commoditySymbol: costAmount.number * posting.amount.number],
-                                                            decimalDigits: [posting.amount.commoditySymbol: posting.amount.decimalDigits])
-                    amount += postingAmount
-                } else {
-                    return .invalid("Posting \(posting) of transaction \(self) does not have an amount in the cost and add to the inventory")
-                }
-            } else if let price = posting.price {
-                let postingAmount = MultiCurrencyAmount(amounts: [price.commoditySymbol: price.number * posting.amount.number],
-                                                        decimalDigits: [posting.amount.commoditySymbol: posting.amount.decimalDigits])
-                amount += postingAmount
-            } else {
-                amount += posting.amount
-            }
+        let amount: MultiCurrencyAmount
+        do {
+            amount = try balance(in: ledger)
+        } catch {
+            return .invalid(error.localizedDescription)
         }
         let validation = amount.validateZeroWithTolerance()
         if case .invalid(let error) = validation {
