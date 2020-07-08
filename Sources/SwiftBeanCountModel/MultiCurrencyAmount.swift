@@ -21,7 +21,8 @@ public protocol MultiCurrencyAmountRepresentable {
 /// **Tolerance** for validation: Half of the last digit of precision provided separately for each currency
 ///
 public struct MultiCurrencyAmount {
-    let amounts: [CommoditySymbol: Decimal]
+
+    public let amounts: [CommoditySymbol: Decimal]
     let decimalDigits: [CommoditySymbol: Int]
 
     /// Checks if all amounts of the first one are equal to the one in the second
@@ -76,10 +77,13 @@ public struct MultiCurrencyAmount {
 }
 
 extension MultiCurrencyAmount {
-    init() {
+
+    /// Creates an empty MultiCurrencyAmount
+    public init() {
         amounts = [:]
         decimalDigits = [:]
     }
+
 }
 
 extension MultiCurrencyAmount: MultiCurrencyAmountRepresentable {
@@ -107,7 +111,7 @@ extension MultiCurrencyAmount: Equatable {
 ///   - left: first MultiCurrencyAmountRepresentable, the multiAccountAmount will be added
 ///   - right: second MultiCurrencyAmountRepresentable, the multiAccountAmount will be added
 /// - Returns: MultiCurrencyAmount which includes both amounts
-func + (left: MultiCurrencyAmountRepresentable, right: MultiCurrencyAmountRepresentable) -> MultiCurrencyAmount {
+public func + (left: MultiCurrencyAmountRepresentable, right: MultiCurrencyAmountRepresentable) -> MultiCurrencyAmount {
     var result = left.multiCurrencyAmount.amounts
     var decimalDigits = left.multiCurrencyAmount.decimalDigits
     for (commodity, decimal) in right.multiCurrencyAmount.amounts {
@@ -124,7 +128,7 @@ func + (left: MultiCurrencyAmountRepresentable, right: MultiCurrencyAmountRepres
 /// - Parameters:
 ///   - left: first MultiCurrencyAmount which at the same time will store the result
 ///   - right: MultiCurrencyAmountRepresentable of which the multiAccountAmount will be added
-func += (left: inout MultiCurrencyAmount, right: MultiCurrencyAmountRepresentable) {
+public func += (left: inout MultiCurrencyAmount, right: MultiCurrencyAmountRepresentable) {
     // swiftlint:disable:next shorthand_operator
     left = left + right
 }
