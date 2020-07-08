@@ -53,3 +53,11 @@ extension Tag: Comparable {
     }
 
 }
+
+extension Tag: Hashable {
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+    }
+
+}

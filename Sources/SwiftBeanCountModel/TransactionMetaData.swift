@@ -86,3 +86,16 @@ extension TransactionMetaData: Equatable {
     }
 
 }
+
+extension TransactionMetaData: Hashable {
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(date)
+        hasher.combine(payee)
+        hasher.combine(narration)
+        hasher.combine(flag)
+        hasher.combine(tags)
+        hasher.combine(metaData)
+    }
+
+}

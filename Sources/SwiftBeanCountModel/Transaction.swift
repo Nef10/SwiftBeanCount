@@ -124,7 +124,8 @@ extension Transaction: Equatable {
 extension Transaction: Hashable {
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(description)
+        hasher.combine(metaData)
+        hasher.combine(postings)
     }
 
 }

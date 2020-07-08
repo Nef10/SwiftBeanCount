@@ -120,3 +120,13 @@ extension Cost: Equatable {
     }
 
 }
+
+extension Cost: Hashable {
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(amount)
+        hasher.combine(date)
+        hasher.combine(label)
+    }
+
+}

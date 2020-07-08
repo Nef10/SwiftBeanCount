@@ -111,3 +111,11 @@ extension AccountName: CustomStringConvertible {
 
     public var description: String { fullName }
 }
+
+extension AccountName: Hashable {
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(fullName)
+    }
+
+}

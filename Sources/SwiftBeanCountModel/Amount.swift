@@ -84,3 +84,13 @@ extension Amount: Equatable {
     }
 
 }
+
+extension Amount: Hashable {
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(number)
+        hasher.combine(commoditySymbol)
+        hasher.combine(decimalDigits)
+    }
+
+}

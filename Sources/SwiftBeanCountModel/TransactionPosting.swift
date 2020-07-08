@@ -101,7 +101,11 @@ extension Posting: Equatable {
 extension Posting: Hashable {
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(description)
+        hasher.combine(accountName)
+        hasher.combine(amount)
+        hasher.combine(price)
+        hasher.combine(cost)
+        hasher.combine(metaData)
     }
 
 }
