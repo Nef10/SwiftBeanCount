@@ -12,7 +12,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/Nef10/SwiftBeanCountModel.git",
-            .exact("0.1.1")
+            .exact("0.1.2")
         ),
     ],
     targets: [
