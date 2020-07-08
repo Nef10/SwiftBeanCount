@@ -26,7 +26,7 @@ jobs:
       run: swift test --enable-code-coverage --enable-test-discovery -Xswiftc -warnings-as-errors
     - name: Generate test coverage report
       if: ${{ matrix.os == 'ubuntu-latest' }}
-      uses: maxep/spm-lcov-action@0.3.0
+      uses: maxep/spm-lcov-action@0.3.1
       with:
         output-file: ./coverage/lcov.info
     - name: Post test coverage report
