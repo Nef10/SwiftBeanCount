@@ -53,6 +53,16 @@ public struct MultiCurrencyAmount {
         return .valid
     }
 
+    /// Checks is the amount is zero within the allowed tolerance
+    ///
+    /// - Returns: Bool
+    public func isZeroWithTolerance() -> Bool {
+        if case .valid = validateZeroWithTolerance() {
+            return true
+        }
+        return false
+    }
+
     /// Validates that the amount is zero within the allowed tolerance
     ///
     /// - Returns: `ValidationResult`

@@ -146,12 +146,14 @@ class MultiCurrencyAmountTests: XCTestCase {
             XCTFail("\(amount) is not valid")
             return
         }
+        XCTAssertTrue(amount.isZeroWithTolerance())
 
         amount = MultiCurrencyAmount(amounts: [commodity: 0], decimalDigits: [:])
         guard case .valid = amount.validateZeroWithTolerance() else {
             XCTFail("\(amount) is not valid")
             return
         }
+        XCTAssertTrue(amount.isZeroWithTolerance())
 
         amount = MultiCurrencyAmount(amounts: [commodity: 0.000_05], decimalDigits: [:])
         if case .invalid(let error) = amount.validateZeroWithTolerance() {
@@ -159,6 +161,7 @@ class MultiCurrencyAmountTests: XCTestCase {
         } else {
             XCTFail("\(amount) is valid")
         }
+        XCTAssertFalse(amount.isZeroWithTolerance())
 
         amount = MultiCurrencyAmount(amounts: [commodity: 0.000_05], decimalDigits: [commodity: 5])
         if case .invalid(let error) = amount.validateZeroWithTolerance() {
@@ -166,12 +169,14 @@ class MultiCurrencyAmountTests: XCTestCase {
         } else {
             XCTFail("\(amount) is valid")
         }
+        XCTAssertFalse(amount.isZeroWithTolerance())
 
         amount = MultiCurrencyAmount(amounts: [commodity: 0.000_05], decimalDigits: [commodity: 4])
         guard case .valid = amount.validateZeroWithTolerance() else {
             XCTFail("\(amount) is not valid")
             return
         }
+        XCTAssertTrue(amount.isZeroWithTolerance())
     }
 
     func testValidateOneAmountWithTolerance() {
