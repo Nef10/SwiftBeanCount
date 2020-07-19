@@ -8,14 +8,18 @@
 
 import Foundation
 
-enum ParserUtils {
+/// Helper methods for parsing a ledger file
+public enum ParserUtils {
 
     static let accountGroup = "([^\\s]+:[^\\s]+)"
     static let decimalGroup = "([-+]?[0-9]+(,[0-9]{3})*(.[0-9]+)?)"
     static let commodityGroup = "([^\\s]+)"
     static let amountGroup = "\(decimalGroup)\\s+\(commodityGroup)"
 
-    static func parseAmountDecimalFrom(string: String) -> (Decimal, Int) {
+    /// Parses an string into an Decimal
+    /// - Parameter string: string with the amount
+    /// - Returns: Tuple with the decimal ane the number of decimal palces the string contained
+    public static func parseAmountDecimalFrom(string: String) -> (Decimal, Int) {
         var amountString = string
         var sign = FloatingPointSign.plus
         while let index = amountString.firstIndex(of: ",") {
