@@ -19,7 +19,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@master
     - name: Install Swift
-      uses: fwal/setup-swift@v1
+      uses: fwal/setup-swift@v1.1.0
       with:
         swift-version: "5.2.0"
     - name: Run tests
