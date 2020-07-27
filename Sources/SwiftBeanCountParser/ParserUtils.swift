@@ -41,4 +41,14 @@ public enum ParserUtils {
         return (Decimal(sign: sign, exponent: -exponent, significand: Decimal(UInt64(amountString)!)), exponent)
     }
 
+    /// Returns the matches of a NSRegularExpression on a string
+    /// - Parameters:
+    ///   - regex: NSRegularExpression to match
+    ///   - string: String to match in
+    /// - Returns: [[String]], the outer array contains an entry for each match and the inner arrays contain an entry for each capturing group
+    public static func match(regex: NSRegularExpression, in string: String) -> [[String]] {
+        // This helper function is to expose the helpful string extension wouth polluting the string class
+        string.matchingStrings(regex: regex)
+    }
+
 }

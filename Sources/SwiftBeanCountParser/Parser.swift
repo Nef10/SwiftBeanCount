@@ -113,7 +113,6 @@ public enum Parser {
                 }
             } catch {
                 result.parsingErrors.append("\(error.localizedDescription) (line \(lineIndex + offset + 1))")
-                break
             }
             offset += metaDataOffset
         }
