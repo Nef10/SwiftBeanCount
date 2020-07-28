@@ -62,7 +62,7 @@ public class Transaction {
     /// - Parameter ledger: ledger to calculate in
     /// - Throws: if the balances cannot be calculated
     /// - Returns: MultiCurrencyAmount
-    func balance(in ledger: Ledger) throws -> MultiCurrencyAmount {
+    public func balance(in ledger: Ledger) throws -> MultiCurrencyAmount {
         try postings.map { try $0.balance(in: ledger) }.reduce(MultiCurrencyAmount(), +)
     }
 
