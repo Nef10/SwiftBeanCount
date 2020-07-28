@@ -53,6 +53,20 @@ public struct MultiCurrencyAmount {
         return .valid
     }
 
+    /// Returns the amount of one commodity
+    ///
+    /// If there is not amount for the given symbol in this MultiCurrencyAmount
+    /// it returns an amount with zero.
+    ///
+    /// - Parameter symbol: symbol of the commodity to get
+    /// - Returns: Amount
+    public func amountFor(symbol: CommoditySymbol) -> Amount {
+        guard let number = amounts[symbol], let digits = decimalDigits[symbol] else {
+            return Amount(number: 0, commoditySymbol: symbol)
+        }
+        return Amount(number: number, commoditySymbol: symbol, decimalDigits: digits)
+    }
+
     /// Checks is the amount is zero within the allowed tolerance
     ///
     /// - Returns: Bool

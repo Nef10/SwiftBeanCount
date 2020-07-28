@@ -21,6 +21,26 @@ class MultiCurrencyAmountTests: XCTestCase {
         XCTAssertEqual(multiCurrencyAmount.multiCurrencyAmount, multiCurrencyAmount)
     }
 
+    func testAmountFor() {
+        var multiCurrencyAmount = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(10)], decimalDigits: [TestUtils.eur: 3])
+        var result = multiCurrencyAmount.amountFor(symbol: TestUtils.eur)
+        XCTAssertEqual(result.commoditySymbol, TestUtils.eur)
+        XCTAssertEqual(result.number, Decimal(10))
+        XCTAssertEqual(result.decimalDigits, 3)
+
+        multiCurrencyAmount = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(10), TestUtils.usd: Decimal(4)], decimalDigits: [TestUtils.eur: 3, TestUtils.usd: 0])
+        result = multiCurrencyAmount.amountFor(symbol: TestUtils.eur)
+        XCTAssertEqual(result.commoditySymbol, TestUtils.eur)
+        XCTAssertEqual(result.number, Decimal(10))
+        XCTAssertEqual(result.decimalDigits, 3)
+
+        multiCurrencyAmount = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(10)], decimalDigits: [TestUtils.eur: 3])
+        result = multiCurrencyAmount.amountFor(symbol: TestUtils.usd)
+        XCTAssertEqual(result.commoditySymbol, TestUtils.usd)
+        XCTAssertEqual(result.number, Decimal(0))
+        XCTAssertEqual(result.decimalDigits, 0)
+    }
+
     func testPlusSameCurrency() {
         let fifteenEuro = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(15)], decimalDigits: [TestUtils.eur: 0])
         let tenEuro = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(10)], decimalDigits: [TestUtils.eur: 0])
