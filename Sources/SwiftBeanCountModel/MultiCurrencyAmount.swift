@@ -61,10 +61,10 @@ public struct MultiCurrencyAmount {
     /// - Parameter symbol: symbol of the commodity to get
     /// - Returns: Amount
     public func amountFor(symbol: CommoditySymbol) -> Amount {
-        guard let number = amounts[symbol], let digits = decimalDigits[symbol] else {
+        guard let number = amounts[symbol] else {
             return Amount(number: 0, commoditySymbol: symbol)
         }
-        return Amount(number: number, commoditySymbol: symbol, decimalDigits: digits)
+        return Amount(number: number, commoditySymbol: symbol, decimalDigits: decimalDigits[symbol] ?? 0)
     }
 
     /// Checks is the amount is zero within the allowed tolerance

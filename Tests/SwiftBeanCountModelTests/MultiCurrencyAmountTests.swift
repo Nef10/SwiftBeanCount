@@ -27,6 +27,10 @@ class MultiCurrencyAmountTests: XCTestCase {
         XCTAssertEqual(result.commoditySymbol, TestUtils.eur)
         XCTAssertEqual(result.number, Decimal(10))
         XCTAssertEqual(result.decimalDigits, 3)
+        result = multiCurrencyAmount.amountFor(symbol: TestUtils.usd)
+        XCTAssertEqual(result.commoditySymbol, TestUtils.usd)
+        XCTAssertEqual(result.number, Decimal(0))
+        XCTAssertEqual(result.decimalDigits, 0)
 
         multiCurrencyAmount = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(10), TestUtils.usd: Decimal(4)], decimalDigits: [TestUtils.eur: 3, TestUtils.usd: 0])
         result = multiCurrencyAmount.amountFor(symbol: TestUtils.eur)
@@ -34,10 +38,10 @@ class MultiCurrencyAmountTests: XCTestCase {
         XCTAssertEqual(result.number, Decimal(10))
         XCTAssertEqual(result.decimalDigits, 3)
 
-        multiCurrencyAmount = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(10)], decimalDigits: [TestUtils.eur: 3])
+        multiCurrencyAmount = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(10), TestUtils.usd: Decimal(4)], decimalDigits: [TestUtils.eur: 3])
         result = multiCurrencyAmount.amountFor(symbol: TestUtils.usd)
         XCTAssertEqual(result.commoditySymbol, TestUtils.usd)
-        XCTAssertEqual(result.number, Decimal(0))
+        XCTAssertEqual(result.number, Decimal(4))
         XCTAssertEqual(result.decimalDigits, 0)
     }
 
