@@ -39,7 +39,7 @@ public struct TransactionMetaData {
     ///   - narration: `String` with a comment for the `Transaction`
     ///   - flag: `Flag`
     ///   - tags: Array of `Tag`s, can be empty
-    public init(date: Date, payee: String, narration: String, flag: Flag, tags: [Tag], metaData: [String: String] = [:]) {
+    public init(date: Date, payee: String = "", narration: String = "", flag: Flag = .complete, tags: [Tag] = [], metaData: [String: String] = [:]) {
         self.date = date
         self.payee = payee
         self.narration = narration
