@@ -1,6 +1,6 @@
 @testable import Wealthsimple
 import XCTest
 
-final class SwiftBeanCountWealthsimpleMapper: XCTestCase {
+final class SwiftBeanCountWealthsimpleMapperTests: XCTestCase {
 
 }
