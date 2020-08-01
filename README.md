@@ -33,6 +33,7 @@ The project is split across several repositories, please consult their readmes t
 Apps with a user interface:
 
 * [SwiftBeanCountImporterApp](https://github.com/Nef10/SwiftBeanCountImporterApp): Importer to load CSV files and texts (e.g. from banks) and return the user transactions to add to their ledger
+* [SwiftBeanCountDownloaderApp](https://github.com/Nef10/SwiftBeanCountDownloaderApp): App to download data directly from financial institutions and convert to the Beancount syntax
 * [SwiftBeanCountSheetSync](https://github.com/Nef10/SwiftBeanCountSheetSync): *not released yet* Tool to sync transaction between a Google Sheet and a ledger
 * [SwiftBeanCountCLI](https://github.com/Nef10/SwiftBeanCountCLI): CLI tool for basic operations on the ledger
 * [SwiftBeanCountApp](https://github.com/Nef10/SwiftBeanCountApp): GUI tool for basic operations on the ledger
