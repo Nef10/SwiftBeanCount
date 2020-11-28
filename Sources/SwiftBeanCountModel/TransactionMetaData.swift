@@ -60,7 +60,7 @@ extension TransactionMetaData: CustomStringConvertible {
 
     /// `String` to represent the meta data of the `Transaction` in the ledger file (e.g. the first line above the `Posting`s
     public var description: String {
-        var tagString =  ""
+        var tagString = ""
         tags.forEach { tagString += " \(String(describing: $0))" }
         var result = "\(self.dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\"\(tagString)"
         if !metaData.isEmpty {

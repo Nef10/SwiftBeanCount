@@ -14,13 +14,13 @@ class TagTests: XCTestCase {
     func testDescription() {
         let string = "String"
         let tag = Tag(name: string)
-        XCTAssertEqual(String(describing: tag), "#"+string)
+        XCTAssertEqual(String(describing: tag), "#" + string)
     }
 
     func testDescriptionSpecialCharacters() {
         let string = "#️⃣"
         let tag = Tag(name: string)
-        XCTAssertEqual(String(describing: tag), "#"+string)
+        XCTAssertEqual(String(describing: tag), "#" + string)
     }
 
     func testEqual() {
