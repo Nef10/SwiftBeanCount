@@ -214,8 +214,8 @@ public struct WealthsimpleLedgerMapper {
             (price, result) = try mapSell(transaction: transaction, in: account, assetAccountName: assetAccountName)
         case .dividend:
             result = try mapDividend(transaction: transaction, in: account, assetAccountName: assetAccountName)
-        case .fee:
-            result = try mapFee(transaction: transaction, in: account, assetAccountName: assetAccountName)
+        case .fee, .reimbursement:
+            result = try mapFeeOrReimbursement(transaction: transaction, in: account, assetAccountName: assetAccountName)
         case .contribution:
             result = try mapContribution(transaction: transaction, in: account, assetAccountName: assetAccountName)
         case .deposit:
@@ -260,22 +260,20 @@ public struct WealthsimpleLedgerMapper {
         if let contributionAsset = try? lookup.ledgerAccountName(for: account, ofType: .asset, symbol: Self.contributionValue),
            let contributionExpense = try? lookup.ledgerAccountName(for: account, ofType: .expense, symbol: Self.contributionValue),
            let commoditySymbol = lookup.ledgerAccountCommoditySymbol(of: contributionAsset) {
-            postings.append(Posting(accountName: contributionAsset, amount: Amount(number: transaction.negatedNetCash.number,
-                                                                                   commoditySymbol: commoditySymbol,
-                                                                                   decimalDigits: transaction.negatedNetCash.decimalDigits)))
-            postings.append(Posting(accountName: contributionExpense, amount: Amount(number: transaction.netCash.number,
-                                                                                     commoditySymbol: commoditySymbol,
-                                                                                     decimalDigits: transaction.netCash.decimalDigits)))
+            let amount1 = Amount(number: transaction.negatedNetCash.number, commoditySymbol: commoditySymbol, decimalDigits: transaction.negatedNetCash.decimalDigits)
+            let amount2 = Amount(number: transaction.netCash.number, commoditySymbol: commoditySymbol, decimalDigits: transaction.netCash.decimalDigits)
+            postings.append(Posting(accountName: contributionAsset, amount: amount1))
+            postings.append(Posting(accountName: contributionExpense, amount: amount2))
         }
         return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: postings)
     }
 
-    private func mapFee(transaction: WTransaction, in account: WAccount, assetAccountName: AccountName) throws -> STransaction {
+    private func mapFeeOrReimbursement(transaction: WTransaction, in account: WAccount, assetAccountName: AccountName) throws -> STransaction {
         let meta = TransactionMetaData(date: transaction.processDate, payee: Self.payee, narration: transaction.description, metaData: [MetaDataKeys.id: transaction.id])
-        return SwiftBeanCountModel.Transaction(metaData: meta, postings: [
-           Posting(accountName: assetAccountName, amount: transaction.netCash),
-           Posting(accountName: try lookup.ledgerAccountName(for: account, ofType: .expense, symbol: transaction.transactionType.rawValue), amount: transaction.negatedNetCash)
-        ])
+        let posting1 = Posting(accountName: assetAccountName, amount: transaction.netCash)
+        let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: account, ofType: .expense, symbol: WTransaction.TransactionType.fee.rawValue),
+                               amount: transaction.negatedNetCash)
+        return SwiftBeanCountModel.Transaction(metaData: meta, postings: [posting1, posting2])
     }
 
     private func mapDividend(transaction: WTransaction, in account: WAccount, assetAccountName: AccountName) throws -> STransaction {
