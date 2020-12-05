@@ -14,7 +14,7 @@ final class RogersImporterTests: XCTestCase {
 
     func testHeader() {
         XCTAssertEqual(RogersImporter.header,
-                       ["Date", "Activity Type", "Merchant Name", "Merchant Category Description", "Amount", "Rewards"])
+                       ["Date", "Activity Type", "Merchant Name", "Merchant Category", "Amount", "Rewards"])
     }
 
     func testSettingsName() {
@@ -24,8 +24,8 @@ final class RogersImporterTests: XCTestCase {
     func testParseLine() {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: TestUtils.csvReader(content: """
-"Date","Activity Type","Merchant Name","Merchant Category Description","Amount","Rewards"
-"2017-06-10","TRANS","Merchant","Catalog Merchant","4.44",""\n
+"Date","Activity Type","Merchant Name","Merchant Category","Amount","Rewards"
+"2017-06-10","TRANS","Merchant","Catalog Merchant","$4,004.44",""\n
 """
                                             ),
                                       fileName: "")
@@ -34,7 +34,7 @@ final class RogersImporterTests: XCTestCase {
         let line = importer.parseLine()
         XCTAssert(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
         XCTAssertEqual(line.description.trimmingCharacters(in: .whitespaces), "Merchant")
-        XCTAssertEqual(line.amount, Decimal(string: "-4.44", locale: Locale(identifier: "en_CA"))!)
+        XCTAssertEqual(line.amount, Decimal(string: "-4004.44", locale: Locale(identifier: "en_CA"))!)
         XCTAssertEqual(line.payee, "")
         XCTAssertNil(line.price)
     }
@@ -42,7 +42,7 @@ final class RogersImporterTests: XCTestCase {
     func testParseLineCashBack() {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: TestUtils.csvReader(content: """
-"Date","Activity Type","Merchant Name","Merchant Category Description","Amount","Rewards"
+"Date","Activity Type","Merchant Name","Merchant Category","Amount","Rewards"
 "2020-06-05","TRANS","CashBack / Remises","","-43.00",""\n
 """
                                             ),
