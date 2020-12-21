@@ -11,8 +11,11 @@ import GoogleAuthentication
 import SwiftBeanCountModel
 import SwiftBeanCountParser
 
+/// Which way the sync is done
 public enum SyncMode {
+    /// Sync entries from the sheet into the ledger
     case download
+    /// Sync new entries from the ledger to the sheet
     case upload
 }
 
@@ -33,18 +36,30 @@ enum SyncError: LocalizedError {
     }
 }
 
+/// Result of the syncronization
 public struct SyncResult {
-    let mode: SyncMode
-    let transactions: [Transaction]
-    let parserErrors: [SheetParserError]
-    let ledgerSettings: LedgerSettings
+    /// Mode in which the syncronization was performed
+    public let mode: SyncMode
+    /// Transactions which need to be added
+    public let transactions: [Transaction]
+    /// Lines in the Sheet which could not be read
+    public let parserErrors: [SheetParserError]
+    /// Settings for the syncronization read from the ledger
+    public let ledgerSettings: LedgerSettings
 }
 
+/// Base class with helpers for specific syncers
+///
+/// Not for initialization, just as base class
 public class GenericSyncer {
 
     private let sheetURL: String
     private let ledgerURL: URL
 
+    /// Creates a new Syncer
+    /// - Parameters:
+    ///   - sheetURL: HTTP URL of the Google sheet
+    ///   - ledgerURL: File URL of the ledger file
     public required init(sheetURL: String, ledgerURL: URL) {
         self.sheetURL = sheetURL
         self.ledgerURL = ledgerURL
