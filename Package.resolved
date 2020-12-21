@@ -1,0 +1,97 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "BrightFutures",
+        "repositoryURL": "https://github.com/Thomvis/BrightFutures.git",
+        "state": {
+          "branch": null,
+          "revision": "9279defa6bdc21501ce740266e5a14d0119ddc63",
+          "version": "8.0.1"
+        }
+      },
+      {
+        "package": "Erik",
+        "repositoryURL": "https://github.com/phimage/Erik.git",
+        "state": {
+          "branch": null,
+          "revision": "109a130e9cdb00789a43a7a625293eeb12d22989",
+          "version": "5.1.0"
+        }
+      },
+      {
+        "package": "FileKit",
+        "repositoryURL": "https://github.com/nvzqz/FileKit.git",
+        "state": {
+          "branch": null,
+          "revision": "826d9161b184509f80d85c28cd612d630646de98",
+          "version": "6.0.0"
+        }
+      },
+      {
+        "package": "GoogleAuthentication",
+        "repositoryURL": "https://github.com/Nef10/GoogleAuthentication.git",
+        "state": {
+          "branch": null,
+          "revision": "7e4b18cf046cfa0e36f7dc73e08a6b07b33b0ab3",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "package": "Kanna",
+        "repositoryURL": "https://github.com/tid-kijyun/Kanna.git",
+        "state": {
+          "branch": null,
+          "revision": "c657fb9f5827ef138068215c76ad0bb62bbc92da",
+          "version": "5.2.4"
+        }
+      },
+      {
+        "package": "KeychainAccess",
+        "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess.git",
+        "state": {
+          "branch": null,
+          "revision": "654d52d30f3dd4592e944c3e0bccb53178c992f6",
+          "version": "4.2.1"
+        }
+      },
+      {
+        "package": "OAuthSwift",
+        "repositoryURL": "https://github.com/OAuthSwift/OAuthSwift.git",
+        "state": {
+          "branch": null,
+          "revision": "fde77955e6983fbfaabd491709d52b8a82fda4d0",
+          "version": "2.1.2"
+        }
+      },
+      {
+        "package": "SwiftBeanCountModel",
+        "repositoryURL": "https://github.com/Nef10/SwiftBeanCountModel.git",
+        "state": {
+          "branch": null,
+          "revision": "a72ca4e46e816638be644ddfbb3c3f9233a5c944",
+          "version": "0.1.6"
+        }
+      },
+      {
+        "package": "SwiftBeanCountParser",
+        "repositoryURL": "https://github.com/Nef10/SwiftBeanCountParser.git",
+        "state": {
+          "branch": null,
+          "revision": "4299b420e43abeb113a315467b1a70a5017ca758",
+          "version": "0.1.8"
+        }
+      },
+      {
+        "package": "Swifter",
+        "repositoryURL": "https://github.com/httpswift/swifter.git",
+        "state": {
+          "branch": null,
+          "revision": "9483a5d459b45c3ffd059f7b55f9638e268632fd",
+          "version": "1.5.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

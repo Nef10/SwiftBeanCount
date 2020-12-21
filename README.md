@@ -1,0 +1,4 @@
+# SwiftBeanCountSheetSync
+
+[![CI Status](https://github.com/Nef10/SwiftBeanCountSheetSync/workflows/CI/badge.svg?event=push)](https://github.com/Nef10/SwiftBeanCountSheetSync/actions?query=workflow%3A%22CI%22) [![Documentation percentage](https://nef10.github.io/SwiftBeanCountSheetSync/badge.svg)](https://nef10.github.io/SwiftBeanCountSheetSync/) [![License: MIT](https://img.shields.io/github/license/Nef10/SwiftBeanCountSheetSync)](https://github.com/Nef10/SwiftBeanCountSheetSync/blob/master/LICENSE) [![Latest version](https://img.shields.io/github/v/release/Nef10/SwiftBeanCountSheetSync?label=SemVer&sort=semver)](https://github.com/Nef10/SwiftBeanCountSheetSync/releases) ![platforms supported: macOS](https://img.shields.io/badge/platform-macOS-blue) ![SPM compatible](https://img.shields.io/badge/SPM-compatible-blue)
+

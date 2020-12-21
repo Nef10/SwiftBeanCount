@@ -1,0 +1,11 @@
+module: SwiftBeanCountSheetSync
+readme: README.md
+clean: true
+disable_search: true
+author: Nef10
+author_url: https://github.com/Nef10
+root_url: https://Nef10.github.io/SwiftBeanCountSheetSync/
+github_url: https://github.com/Nef10/SwiftBeanCountSheetSync
+github_file_prefix: https://github.com/Nef10/SwiftBeanCountSheetSync/blob/master
+output: ./docs
+theme: fullwidth
