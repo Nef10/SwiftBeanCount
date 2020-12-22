@@ -145,6 +145,12 @@ public class GenericSyncer {
 
 }
 
+/// Syncer which can sync transactions between the sheet and ledger
 public protocol Syncer: GenericSyncer {
+
+    /// Start the sync process
+    /// - Parameters:
+    ///   - authentication: valid authentication for the Google Sheet API
+    ///   - completion: result of the sync
     func start(authentication: Authentication, completion: @escaping (Result<SyncResult, Error>) -> Void)
 }

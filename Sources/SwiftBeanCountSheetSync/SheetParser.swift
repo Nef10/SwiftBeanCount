@@ -8,22 +8,26 @@
 
 import Foundation
 
+/// Errors while reading the sheet
 public enum SheetParserError: LocalizedError {
-        case missingHeader(String)
-        case invalidValue(String)
-        case missingValue(String)
+    /// The specified column is missing in the sheet
+    case missingHeader(String)
+    /// The provided value is invalid for this column
+    case invalidValue(String)
+    /// The value for the provided column is missing
+    case missingValue(String)
 
-        public var errorDescription: String? {
-            switch self {
-            case .missingHeader(message: let message):
-                return "\(message)"
-            case .invalidValue(message: let message):
-                return "\(message)"
-            case .missingValue(message: let message):
-                return "\(message)"
-            }
+    public var errorDescription: String? {
+        switch self {
+        case .missingHeader(message: let message):
+            return "\(message)"
+        case .invalidValue(message: let message):
+            return "\(message)"
+        case .missingValue(message: let message):
+            return "\(message)"
         }
     }
+}
 
 enum SheetParser {
 

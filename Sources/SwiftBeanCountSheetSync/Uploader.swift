@@ -10,6 +10,7 @@ import Foundation
 import GoogleAuthentication
 import SwiftBeanCountModel
 
+/// Uploads transactions from the ledger to the sheet
 public class Uploader: GenericSyncer, Syncer {
 
     public func start(authentication: Authentication, completion: @escaping (Result<SyncResult, Error>) -> Void) {

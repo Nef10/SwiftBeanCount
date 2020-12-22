@@ -10,6 +10,7 @@ import Foundation
 import GoogleAuthentication
 import SwiftBeanCountModel
 
+/// Downloads transactions from the Sheet and merges them into transactions in the ledgers
 public class Downloader: GenericSyncer, Syncer {
 
     public func start(authentication: Authentication, completion: @escaping (Result<SyncResult, Error>) -> Void) {
