@@ -38,14 +38,28 @@ enum SyncError: LocalizedError {
 
 /// Result of the syncronization
 public struct SyncResult {
+
     /// Mode in which the syncronization was performed
     public let mode: SyncMode
     /// Transactions which need to be added
     public let transactions: [Transaction]
-    /// Lines in the Sheet which could not be read
+    /// Errors of lines in the Sheet which could not be read
     public let parserErrors: [SheetParserError]
     /// Settings for the syncronization read from the ledger
     public let ledgerSettings: LedgerSettings
+
+    /// Creates the syncroization result
+    /// - Parameters:
+    ///   - mode: Mode in which the syncronization was performed
+    ///   - transactions: Transactions which need to be added
+    ///   - parserErrors: Errors of lines in the Sheet which could not be read
+    ///   - ledgerSettings: Settings for the syncronization read from the ledger
+    public init(mode: SyncMode, transactions: [Transaction], parserErrors: [SheetParserError], ledgerSettings: LedgerSettings) {
+        self.mode = mode
+        self.transactions = transactions
+        self.parserErrors = parserErrors
+        self.ledgerSettings = ledgerSettings
+    }
 }
 
 /// Base class with helpers for specific syncers

@@ -23,6 +23,7 @@ enum LedgerSettingsConstants {
 
 /// Settings for SwiftBeanCountSheetSync which were read from the ledger file
 public struct LedgerSettings {
+
     static let fallbackAccountName = try! AccountName("Expenses:TODO") // swiftlint:disable:this force_try
     static let ownAccountName = try! AccountName("Assets:TODO") // swiftlint:disable:this force_try
 
@@ -40,4 +41,31 @@ public struct LedgerSettings {
     public let categoryAccountNames: [String: AccountName]
     /// Mapping from account names in the ledger to the corresponding categories in the sheet
     public let accountNameCategories: [String: String]
+
+    /// Create the ledger settings from the data read from the ledger
+    /// - Parameters:
+    ///   - commoditySymbol: commodity symbol
+    ///   - tag: Tag which is appended to all transactions from the sheet
+    ///   - name: Name of the person of the ledger
+    ///   - accountName: Account which is used to keep track of the balance between the people
+    ///   - dateTolerance: tolerance used to detect already existing transactions
+    ///   - categoryAccountNames: Mapping from sheet categories to the corresponding account names in the ledger
+    ///   - accountNameCategories: Mapping from account names in the ledger to the corresponding categories in the sheet
+    public init(
+        commoditySymbol: String,
+        tag: Tag,
+        name: String,
+        accountName: AccountName,
+        dateTolerance: TimeInterval,
+        categoryAccountNames: [String: AccountName],
+        accountNameCategories: [String: String]
+    ) {
+        self.commoditySymbol = commoditySymbol
+        self.tag = tag
+        self.name = name
+        self.accountName = accountName
+        self.dateTolerance = dateTolerance
+        self.categoryAccountNames = categoryAccountNames
+        self.accountNameCategories = accountNameCategories
+    }
 }
