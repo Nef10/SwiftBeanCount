@@ -25,7 +25,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/apple/swift-argument-parser",
-            .upToNextMinor(from: "0.1.0")
+            .upToNextMinor(from: "0.3.1")
         ),
         .package(
             url: "https://github.com/scottrhoyt/SwiftyTextTable.git",

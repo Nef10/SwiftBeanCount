@@ -14,15 +14,15 @@ struct Accounts: FormattableLedgerCommand {
     }()
 
     @OptionGroup() var options: LedgerOption
-    @Argument(default: "", help: "String to filter account names by.") private var filter: String
-    @ArgumentParser.Option(name: [.short, .long], default: .table, help: "Output format. \(Self.supportedFormats())") var format: Format
-    @ArgumentParser.Flag(help: Self.noColorHelp()) var noColor: Bool
-    @ArgumentParser.Flag(default: true, inversion: .prefixedNo, help: "Show open accounts.") private var open: Bool
-    @ArgumentParser.Flag(default: true, inversion: .prefixedNo, help: "Show closed accounts.") private var closed: Bool
-    @ArgumentParser.Flag(default: true, inversion: .prefixedNo, help: "Show dates of account opening and closing.") private var dates: Bool
-    @ArgumentParser.Flag(default: false, inversion: .prefixedNo, help: "Show number of postings in each account.") private var postings: Bool
-    @ArgumentParser.Flag(default: false, inversion: .prefixedNo, help: "Show the date of the last activity in each account.") private var activity: Bool
-    @ArgumentParser.Flag(name: [.short, .long], help: "Display the number of accounts.") private var count: Bool
+    @Argument(help: "String to filter account names by.") private var filter: String = ""
+    @ArgumentParser.Option(name: [.short, .long], help: "Output format. \(Self.supportedFormats())") var format: Format = .table
+    @ArgumentParser.Flag(help: Self.noColorHelp()) var noColor: Bool = false
+    @ArgumentParser.Flag(inversion: .prefixedNo, help: "Show open accounts.") private var open: Bool = true
+    @ArgumentParser.Flag(inversion: .prefixedNo, help: "Show closed accounts.") private var closed: Bool = true
+    @ArgumentParser.Flag(inversion: .prefixedNo, help: "Show dates of account opening and closing.") private var dates: Bool = true
+    @ArgumentParser.Flag(inversion: .prefixedNo, help: "Show number of postings in each account.") private var postings: Bool = false
+    @ArgumentParser.Flag(inversion: .prefixedNo, help: "Show the date of the last activity in each account.") private var activity: Bool = false
+    @ArgumentParser.Flag(name: [.short, .long], help: "Display the number of accounts.") private var count: Bool = false
 
     func validate() throws {
         if format == .csv && count {

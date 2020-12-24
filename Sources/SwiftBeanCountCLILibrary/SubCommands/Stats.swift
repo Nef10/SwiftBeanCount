@@ -6,8 +6,8 @@ struct Stats: FormattableLedgerCommand {
     static var configuration = CommandConfiguration(abstract: "Statistics of a ledger (e.g. # of transactions)")
 
     @OptionGroup() var options: LedgerOption
-    @ArgumentParser.Option(name: [.short, .long], default: .table, help: "Output format. \(Self.supportedFormats())") var format: Format
-    @ArgumentParser.Flag(help: Self.noColorHelp()) var noColor: Bool
+    @ArgumentParser.Option(name: [.short, .long], help: "Output format. \(Self.supportedFormats())") var format: Format = .table
+    @ArgumentParser.Flag(help: Self.noColorHelp()) var noColor: Bool = false
 
     func getResult(from ledger: Ledger, parsingDuration: Double) -> FormattableResult {
         let values: [[String]] = [
