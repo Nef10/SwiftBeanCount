@@ -23,7 +23,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/Nef10/GoogleAuthentication.git",
-            .upToNextMajor(from: "1.0.0")
+            .upToNextMajor(from: "1.0.1")
         ),
     ],
     targets: [
