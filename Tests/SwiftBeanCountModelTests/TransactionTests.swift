@@ -12,15 +12,15 @@ import XCTest
 // swiftlint:disable:next type_body_length
 class TransactionTests: XCTestCase {
 
-    var transaction1WithoutPosting: Transaction!
-    var transaction2WithoutPosting: Transaction!
-    var transaction1WithPosting1: Transaction!
-    var transaction3WithPosting1: Transaction!
-    var transaction1WithPosting1And2: Transaction!
-    var transaction2WithPosting1And2: Transaction!
-    var account1: Account?
-    var account2: Account?
-    let ledger = Ledger()
+    private var transaction1WithoutPosting: Transaction!
+    private var transaction2WithoutPosting: Transaction!
+    private var transaction1WithPosting1: Transaction!
+    private var transaction3WithPosting1: Transaction!
+    private var transaction1WithPosting1And2: Transaction!
+    private var transaction2WithPosting1And2: Transaction!
+    private var account1: Account?
+    private var account2: Account?
+    private let ledger = Ledger()
 
     override func setUp() {
         super.setUp()

@@ -11,7 +11,7 @@ import XCTest
 
 class TransactionPostingTests: XCTestCase {
 
-    var posting1 = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
+    private var posting1 = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
 
     func testInitTransactionPosting() {
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "", narration: "", flag: .complete, tags: []),

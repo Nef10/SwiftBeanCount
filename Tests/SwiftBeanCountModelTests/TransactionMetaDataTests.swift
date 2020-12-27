@@ -11,12 +11,12 @@ import XCTest
 
 class TransactionMetaDataTests: XCTestCase {
 
-    let payee = "Payee"
-    let narration = "Narration"
-    let flag = Flag.complete
-    let date = TestUtils.date20170608
-    let dateString = "2017-06-08"
-    var transactionMetaData: TransactionMetaData?
+    private let payee = "Payee"
+    private let narration = "Narration"
+    private let flag = Flag.complete
+    private let date = TestUtils.date20170608
+    private let dateString = "2017-06-08"
+    private var transactionMetaData: TransactionMetaData?
 
     override func setUp() {
         super.setUp()

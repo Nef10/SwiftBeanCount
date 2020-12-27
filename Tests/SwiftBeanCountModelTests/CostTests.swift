@@ -11,8 +11,8 @@ import XCTest
 
 class CostTests: XCTestCase {
 
-    let label1 = "1"
-    let label2 = "2"
+    private let label1 = "1"
+    private let label2 = "2"
 
     func testNegativeAmount() {
         XCTAssertThrowsError(try Cost(amount: Amount(number: -1, commoditySymbol: TestUtils.eur), date: nil, label: nil)) {

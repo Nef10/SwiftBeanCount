@@ -12,10 +12,10 @@ import XCTest
 
 class InventoryTests: XCTestCase {
 
-    let bookingMethods = [BookingMethod.strict, BookingMethod.lifo, BookingMethod.fifo]
+    private let bookingMethods = [BookingMethod.strict, BookingMethod.lifo, BookingMethod.fifo]
 
-    let date = TestUtils.date20170608
-    var transactionStore = [Transaction]() // required because the posting reference is unowned
+    private let date = TestUtils.date20170608
+    private var transactionStore = [Transaction]() // required because the posting reference is unowned
 
     func testInit() {
         for bookingMethod in bookingMethods {
