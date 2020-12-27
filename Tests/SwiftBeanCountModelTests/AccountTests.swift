@@ -10,7 +10,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
-//swiftlint:disable:next type_body_length
+// swiftlint:disable:next type_body_length
 class AccountTests: XCTestCase {
 
     func testBookingMethod() {

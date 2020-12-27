@@ -9,7 +9,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
-//swiftlint:disable:next type_body_length
+// swiftlint:disable:next type_body_length
 class TransactionTests: XCTestCase {
 
     var transaction1WithoutPosting: Transaction!
@@ -149,8 +149,8 @@ class TransactionTests: XCTestCase {
     }
 
     func testIsValidUnbalancedIntegerTolerance() {
-        //Assets:Cash     -1  EUR
-        //Assets:Checking 10.00000 CAD @ 0.101 EUR
+        // Assets:Cash     -1  EUR
+        // Assets:Checking 10.00000 CAD @ 0.101 EUR
 
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let amount1 = Amount(number: Decimal(-1), commoditySymbol: TestUtils.eur, decimalDigits: 0)
@@ -177,8 +177,8 @@ class TransactionTests: XCTestCase {
     }
 
     func testIsValidUnbalancedTolerance() {
-        //Assets:Cash     -8.52  EUR
-        //Assets:Checking 10.00000 CAD @ 0.85251 EUR
+        // Assets:Cash     -8.52  EUR
+        // Assets:Checking 10.00000 CAD @ 0.85251 EUR
 
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         // -8.52
@@ -207,7 +207,7 @@ class TransactionTests: XCTestCase {
     }
 
     func testIsValidUnusedCommodity() {
-        //Assets:Checking 10.00000 CAD @ 0.85251 EUR
+        // Assets:Checking 10.00000 CAD @ 0.85251 EUR
 
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let amount1 = Amount(number: Decimal(10.000_00), commoditySymbol: TestUtils.cad, decimalDigits: 5)
@@ -227,8 +227,8 @@ class TransactionTests: XCTestCase {
     }
 
     func testIsValidBalancedTolerance() {
-        //Assets:Cash     -8.52  EUR
-        //Assets:Checking 10.00000 CAD @ 0.85250 EUR
+        // Assets:Cash     -8.52  EUR
+        // Assets:Checking 10.00000 CAD @ 0.85250 EUR
 
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let amount1 = Amount(number: Decimal(sign: FloatingPointSign.minus, exponent: -2, significand: Decimal(852)), commoditySymbol: TestUtils.eur, decimalDigits: 2)
@@ -251,8 +251,8 @@ class TransactionTests: XCTestCase {
     }
 
     func testIsValidBalancedToleranceCost() {
-        //Assets:Cash     -8.52  EUR
-        //Assets:Checking 10.00000 CAD { 0.85250 EUR }
+        // Assets:Cash     -8.52  EUR
+        // Assets:Checking 10.00000 CAD { 0.85250 EUR }
 
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let amount1 = Amount(number: Decimal(sign: FloatingPointSign.minus, exponent: -2, significand: Decimal(852)), commoditySymbol: TestUtils.eur, decimalDigits: 2)
@@ -278,8 +278,8 @@ class TransactionTests: XCTestCase {
     }
 
     func testIsValidUnbalancedToleranceCost() {
-        //Assets:Cash     -8.52  EUR
-        //Assets:Checking 10.00000 CAD { 0.85251 EUR }
+        // Assets:Cash     -8.52  EUR
+        // Assets:Checking 10.00000 CAD { 0.85251 EUR }
 
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         // -8.52
@@ -311,8 +311,8 @@ class TransactionTests: XCTestCase {
     }
 
     func testEffectZeroPrice() {
-        //Assets:Cash     -8.52  EUR
-        //Assets:Checking 10.00000 CAD @ 0.85250 EUR
+        // Assets:Cash     -8.52  EUR
+        // Assets:Checking 10.00000 CAD @ 0.85250 EUR
 
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let amount1 = Amount(number: Decimal(sign: FloatingPointSign.minus, exponent: -2, significand: Decimal(852)), commoditySymbol: TestUtils.eur, decimalDigits: 2)
@@ -330,8 +330,8 @@ class TransactionTests: XCTestCase {
     }
 
     func testEffectCost() {
-        //Imcome:Test     -8.52  EUR
-        //Assets:Checking 10.00000 CAD { 0.85250 EUR }
+        // Income:Test     -8.52  EUR
+        // Assets:Checking 10.00000 CAD { 0.85250 EUR }
 
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let amount1 = Amount(number: Decimal(sign: FloatingPointSign.minus, exponent: -2, significand: Decimal(852)), commoditySymbol: TestUtils.eur, decimalDigits: 2)

@@ -64,7 +64,6 @@ public struct AccountName: AccountItem {
     /// - Parameter name: String to check
     /// - Returns: if the name is valid
     public static func isNameValid(_ name: String) -> Bool {
-        // swiftlint:disable:next nesting
         struct Cache { // https://stackoverflow.com/a/25354915/3386893 // swiftlint:disable:this convenience_type
             static var validNames = Set<String>()
         }
