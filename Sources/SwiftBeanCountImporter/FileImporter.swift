@@ -17,7 +17,7 @@ public enum FileImporterManager {
         CSVImporterManager.importers
     }
 
-    /// Returns a the correct FileImporter, or nil if the file cannot be imported
+    /// Returns the correct FileImporter, or nil if the file cannot be imported
     /// - Parameters:
     ///   - ledger: existing ledger which is used to assist the import,
     ///             e.g. to read attributes of accounts
