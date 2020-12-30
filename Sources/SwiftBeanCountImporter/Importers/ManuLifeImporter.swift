@@ -116,14 +116,14 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         let employerMatchPattern = #"\s*?Employer Match\s*([0-9.]*)"#
         let unitValuePattern = #"\s*?(?:Employer Basic|Member Voluntary|Employee voluntary)\s*[0-9.]*\s*([0-9.]*)\s*[0-9.]*"#
 
-        //swiftlint:disable force_try
+        // swiftlint:disable force_try
         let commodityRegex = try! NSRegularExpression(pattern: commodityPattern, options: [.anchorsMatchLines])
         let employeeBasicRegex = try! NSRegularExpression(pattern: employeeBasicPattern, options: [.anchorsMatchLines])
         let employeeVoluntaryRegex = try! NSRegularExpression(pattern: employeeVoluntaryPattern, options: [.anchorsMatchLines])
         let employerBasicRegex = try! NSRegularExpression(pattern: employerBasicPattern, options: [.anchorsMatchLines])
         let employerMatchRegex = try! NSRegularExpression(pattern: employerMatchPattern, options: [.anchorsMatchLines])
         let unitValueRegex = try! NSRegularExpression(pattern: unitValuePattern, options: [.anchorsMatchLines])
-        //swiftlint:enable force_try
+        // swiftlint:enable force_try
 
         // Split by different Commodities
         let splittedInput = string.components(separatedBy: "TOTAL")
@@ -194,10 +194,10 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         let datePattern = #"^(.*) Contribution \(Ref."#
         let purchasePattern = #"\s*.*?\.gif\s*(\d{4}.*?[a-z]\d)\s*$\s*Contribution\s*([0-9.]*)\s*units\s*@\s*\$([0-9.]*)/unit\s*[0-9.]*\s*$"#
 
-        //swiftlint:disable force_try
+        // swiftlint:disable force_try
         let dateRegex = try! NSRegularExpression(pattern: datePattern, options: [.anchorsMatchLines])
         let regex = try! NSRegularExpression(pattern: purchasePattern, options: [.anchorsMatchLines])
-        //swiftlint:enable force_try
+        // swiftlint:enable force_try
 
         // Parse purchase date
         let parsedDate = firstMatch(in: input, regex: dateRegex) ?? ""
