@@ -155,11 +155,11 @@ final class CSVBaseImporterTests: XCTestCase {
         XCTAssertEqual(descriptionHelper(description: "Shop1 # 12"), "Shop1")
     }
 
-    func descriptionHelper(description: String) -> String {
+    private func descriptionHelper(description: String) -> String {
         transactionHelper(description: description).metaData.narration
     }
 
-    func transactionHelper(description: String, payee: String = "payee") -> Transaction {
+    private func transactionHelper(description: String, payee: String = "payee") -> Transaction {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.csvReader(description: description, payee: payee), fileName: "")
         importer.useAccount(name: TestUtils.cash)
         importer.loadFile()

@@ -195,7 +195,7 @@ final class ManuLifeImporterTests: XCTestCase {
         XCTAssertEqual(result, "\(transactionResult)\n\n\(balanceResult)") // Note: Cash amount missing (#3), End of long symbol in transaction cut off (#4)
     }
 
-    func clearSettings() {
+    private func clearSettings() {
         UserDefaults.standard.removeObject(forKey: ManuLifeImporter.getUserDefaultsKey(for: ManuLifeImporter.employeeBasicSetting))
         UserDefaults.standard.removeObject(forKey: ManuLifeImporter.getUserDefaultsKey(for: ManuLifeImporter.employerBasicSetting))
         UserDefaults.standard.removeObject(forKey: ManuLifeImporter.getUserDefaultsKey(for: ManuLifeImporter.employerMatchSetting))
