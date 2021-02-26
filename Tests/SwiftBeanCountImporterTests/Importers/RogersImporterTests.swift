@@ -14,7 +14,7 @@ final class RogersImporterTests: XCTestCase {
 
     func testHeader() {
         XCTAssertEqual(RogersImporter.header,
-                       ["Date", "Activity Type", "Merchant Name", "Merchant Category", "Amount", "Rewards"])
+                       ["Transaction Date", "Activity Type", "Merchant Name", "Merchant Category", "Amount"])
     }
 
     func testSettingsName() {
@@ -24,8 +24,8 @@ final class RogersImporterTests: XCTestCase {
     func testParseLine() {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: TestUtils.csvReader(content: """
-"Date","Activity Type","Merchant Name","Merchant Category","Amount","Rewards"
-"2017-06-10","TRANS","Merchant","Catalog Merchant","$4,004.44",""\n
+"Transaction Date","Activity Type","Merchant Name","Merchant Category","Amount"
+"2017-06-10","TRANS","Merchant","Catalog Merchant","$4,004.44"n
 """
                                             ),
                                       fileName: "")
@@ -42,7 +42,7 @@ final class RogersImporterTests: XCTestCase {
     func testParseLineCashBack() {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: TestUtils.csvReader(content: """
-"Date","Activity Type","Merchant Name","Merchant Category","Amount","Rewards"
+"Transaction Date","Activity Type","Merchant Name","Merchant Category","Amount"
 "2020-06-05","TRANS","CashBack / Remises","","-43.00",""\n
 """
                                             ),
