@@ -90,8 +90,8 @@ struct LedgerLookup {
         let accountType = account.accountType.rawValue
         let account = ledger.accounts.first {
             $0.name.accountType == type &&
-                $0.metaData[Self.keyMetaDataKey] == symbol &&
-                $0.metaData[Self.accountTypeMetaDataKey] == accountType
+                ($0.metaData[Self.keyMetaDataKey]?.contains(symbol) ?? false) &&
+                ($0.metaData[Self.accountTypeMetaDataKey]?.contains(accountType) ?? false)
         }
         guard let accountName = account?.name else {
             throw WealthsimpleConversionError.missingAccount(symbol, type.rawValue, accountType)

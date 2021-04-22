@@ -36,6 +36,8 @@ For account you need to add two meta data entries:
   * In case you get a refund, add `refund` to an income account
   * If you want to track contribution room, use `contribution-room` on an asset and expense account (optional)
 
+Both keys and types can be space separated in case you have multiple Wealthsimple accounts and for example want to combine the fees into one expense account, or you contribute from the same account.
+
 <details>
   <summary>Full Example</summary>
 
