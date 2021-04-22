@@ -32,7 +32,8 @@ struct LedgerLookup {
 
     func doesTransactionExistInLedger(_ transaction: SwiftBeanCountModel.Transaction) -> Bool {
         self.ledger.transactions.contains {
-            $0.metaData.metaData[MetaDataKeys.id] == transaction.metaData.metaData[MetaDataKeys.id]
+            $0.metaData.metaData[MetaDataKeys.id] == transaction.metaData.metaData[MetaDataKeys.id] ||
+            $0.metaData.metaData[MetaDataKeys.nrwtId] == transaction.metaData.metaData[MetaDataKeys.id]
         }
     }
 
