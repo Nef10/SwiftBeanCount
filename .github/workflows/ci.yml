@@ -27,18 +27,26 @@ jobs:
       uses: maxep/spm-lcov-action@0.3.1
       with:
         output-file: ./coverage/lcov.info
-    - name: Post test coverage report
-      if: ${{ matrix.os == 'ubuntu-latest' && github.event_name == 'pull_request' }}
-      uses: romeovs/lcov-reporter-action@v0.2.17
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        lcov-file: ./coverage/lcov.info
     - name: Enforce test coverage threshhold
       if: ${{ matrix.os == 'ubuntu-latest' }}
       uses: ChicagoFlutter/lcov-cop@v1.0.2
       with:
         path: ./coverage/lcov.info
         min_coverage: 0
+    - name: Save PR number
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      run: |
+        mkdir -p ./pr
+        echo ${{ github.event.number }} > ./pr/NR
+    - name: Move Coverage Report
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      run: mv ./coverage/lcov.info ./pr/lcov.info
+    - name: Upload Coverage Information for Comment
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: pr
+        path: pr/
   swiftlint:
     name: SwiftLint
     runs-on: ubuntu-latest
