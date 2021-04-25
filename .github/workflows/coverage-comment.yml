@@ -36,9 +36,8 @@ jobs:
             fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
       - run: unzip pr.zip
       - name: 'Get PR number'
-        with:
-          run: |
-            echo "pr_number=$(cat ./NR)" >> $GITHUB_ENV
+        run: |
+          echo "pr_number=$(cat ./NR)" >> $GITHUB_ENV
       - name: Post code coverage report
         uses: Nef10/lcov-reporter-action@v0.3.1
         with:
