@@ -36,10 +36,16 @@ jobs:
       - name: 'Get PR number'
         run: |
           echo "pr_number=$(cat ./NR)" >> $GITHUB_ENV
-      - name: Post code coverage report
+      - name: Generate code coverage report
         uses: Nef10/lcov-reporter-action@v0.3.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           lcov-file: lcov.info
           pr-number: ${{ env.pr_number }}
           hide-branch-coverage: true
+          output-file: comment.html
+      - name: Post code coverage report
+        uses: marocchino/sticky-pull-request-comment@v2.1.0
+        with:
+          path: comment.html
+          number: ${{ env.pr_number }}
