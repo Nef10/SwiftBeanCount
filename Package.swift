@@ -33,7 +33,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/onevcat/Rainbow",
-            .upToNextMajor(from: "3.0.0")
+            .upToNextMajor(from: "4.0.0")
         ),
     ],
     targets: [
