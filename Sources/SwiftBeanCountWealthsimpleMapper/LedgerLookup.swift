@@ -85,16 +85,16 @@ struct LedgerLookup {
         return symbol
     }
 
-    func ledgerAccountName(for account: Wealthsimple.Account, ofType type: SwiftBeanCountModel.AccountType, symbol assetSymbol: String? = nil) throws -> AccountName {
+    func ledgerAccountName(for account: Wealthsimple.Account, ofType type: [SwiftBeanCountModel.AccountType], symbol assetSymbol: String? = nil) throws -> AccountName {
         let symbol = assetSymbol ?? account.currency
         let accountType = account.accountType.rawValue
         let account = ledger.accounts.first {
-            $0.name.accountType == type &&
+            type.contains($0.name.accountType)  &&
                 ($0.metaData[Self.keyMetaDataKey]?.contains(symbol) ?? false) &&
                 ($0.metaData[Self.accountTypeMetaDataKey]?.contains(accountType) ?? false)
         }
         guard let accountName = account?.name else {
-            throw WealthsimpleConversionError.missingAccount(symbol, type.rawValue, accountType)
+            throw WealthsimpleConversionError.missingAccount(symbol, type.map { $0.rawValue }.joined(separator: ", or"), accountType)
         }
         return accountName
     }
