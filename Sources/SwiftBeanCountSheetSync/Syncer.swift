@@ -95,7 +95,7 @@ public class GenericSyncer {
     }
 
     func ledgerTransactionForCorrectMonth(ledgerTransactions: [Transaction], sheetTransactions: [Transaction]) -> [Transaction] {
-        let date = sheetTransactions.first?.metaData.date ?? Date()
+        let date = sheetTransactions.last?.metaData.date ?? Date()
         return ledgerTransactions.filter {
             Calendar.current.isDate(date, equalTo: $0.metaData.date, toGranularity: .month)
         }
