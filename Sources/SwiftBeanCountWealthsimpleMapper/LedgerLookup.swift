@@ -94,7 +94,7 @@ struct LedgerLookup {
                 ($0.metaData[Self.accountTypeMetaDataKey]?.contains(accountType) ?? false)
         }
         guard let accountName = account?.name else {
-            throw WealthsimpleConversionError.missingAccount(symbol, type.map { $0.rawValue }.joined(separator: ", or"), accountType)
+            throw WealthsimpleConversionError.missingAccount(symbol, type.map { $0.rawValue }.joined(separator: ", or "), accountType)
         }
         return accountName
     }
