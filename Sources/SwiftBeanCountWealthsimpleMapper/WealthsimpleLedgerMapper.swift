@@ -211,8 +211,8 @@ public struct WealthsimpleLedgerMapper {
             (price, result) = try mapSell(transaction: transaction, in: account, assetAccountName: assetAccountName)
         case .dividend:
             result = try mapDividend(transaction: transaction, in: account, assetAccountName: assetAccountName)
-        case .fee, .reimbursement:
-            result = try mapFeeOrReimbursement(transaction: transaction, in: account, assetAccountName: assetAccountName)
+        case .fee, .reimbursement, .interest:
+            result = try mapFeeOrReimbursementOrInterest(transaction: transaction, in: account, assetAccountName: assetAccountName)
         case .contribution:
             result = try mapContribution(transaction: transaction, in: account, assetAccountName: assetAccountName)
         case .deposit, .withdrawal, .paymentTransferOut:
@@ -268,10 +268,10 @@ public struct WealthsimpleLedgerMapper {
         return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: postings)
     }
 
-    private func mapFeeOrReimbursement(transaction: WTransaction, in account: WAccount, assetAccountName: AccountName) throws -> STransaction {
+    private func mapFeeOrReimbursementOrInterest(transaction: WTransaction, in account: WAccount, assetAccountName: AccountName) throws -> STransaction {
         let meta = TransactionMetaData(date: transaction.processDate, payee: Self.payee, narration: transaction.description, metaData: [MetaDataKeys.id: transaction.id])
         let posting1 = Posting(accountName: assetAccountName, amount: transaction.netCash)
-        let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: account, ofType: [.expense], symbol: WTransaction.TransactionType.fee.rawValue),
+        let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: account, ofType: [.expense, .income], symbol: transaction.transactionType.rawValue),
                                amount: transaction.negatedNetCash)
         return SwiftBeanCountModel.Transaction(metaData: meta, postings: [posting1, posting2])
     }
