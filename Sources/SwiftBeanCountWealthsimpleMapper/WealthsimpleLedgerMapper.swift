@@ -215,7 +215,7 @@ public struct WealthsimpleLedgerMapper {
             result = try mapFeeOrReimbursementOrInterest(transaction: transaction, in: account, assetAccountName: assetAccountName)
         case .contribution:
             result = try mapContribution(transaction: transaction, in: account, assetAccountName: assetAccountName)
-        case .deposit, .withdrawal, .paymentTransferOut:
+        case .deposit, .withdrawal, .paymentTransferOut, .transferIn, .transferOut:
             result = try mapDeposit(transaction: transaction, in: account, assetAccountName: assetAccountName)
         case .refund:
             result = try mapRefund(transaction: transaction, in: account, assetAccountName: assetAccountName)
