@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+    - main
+  push:
+    branches:
+    - main
+
+jobs:
+  test:
+    name: Tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macOS-latest, ubuntu-latest]
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Install Swift
+      uses: fwal/setup-swift@v1.7.0
+    - name: Run tests
+      run: swift test --enable-code-coverage -Xswiftc -warnings-as-errors
+    - name: Generate test coverage report
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      uses: maxep/spm-lcov-action@0.3.1
+      with:
+        output-file: ./coverage/lcov.info
+    - name: Enforce test coverage threshhold
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
+      with:
+        path: ./coverage/lcov.info
+        min_coverage: 0
+    - name: Save PR number
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      run: |
+        mkdir -p ./pr
+        echo ${{ github.event.number }} > ./pr/NR
+    - name: Move Coverage Report
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      run: mv ./coverage/lcov.info ./pr/lcov.info
+    - name: Upload Coverage Information for Comment
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: pr
+        path: pr/
+  swiftlint:
+    name: SwiftLint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run SwiftLint --strict
+        uses: norio-nomura/action-swiftlint@3.2.1
+        with:
+          args: --strict
