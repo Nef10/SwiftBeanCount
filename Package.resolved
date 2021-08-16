@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "RogersBankDownloader",
+        "repositoryURL": "https://github.com/Nef10/RogersBankDownloader.git",
+        "state": {
+          "branch": null,
+          "revision": "0b85972c305483d5ffcb58685b3ed9f5f42add40",
+          "version": "0.0.2"
+        }
+      },
+      {
         "package": "SwiftBeanCountModel",
         "repositoryURL": "https://github.com/Nef10/SwiftBeanCountModel.git",
         "state": {
