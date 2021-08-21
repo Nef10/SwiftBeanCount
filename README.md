@@ -54,5 +54,5 @@ Example:
 The library supports the Swift Package Manger, so simply add a dependency in your `Package.swift`:
 
 ```
-.package(url: "https://github.com/Nef10/SwiftBeanCountSheetSync.git", .upToNextMajor(from: "1.0.2")),
+.package(url: "https://github.com/Nef10/SwiftBeanCountSheetSync.git", .upToNextMajor(from: "X.Y.Z")),
 ```
