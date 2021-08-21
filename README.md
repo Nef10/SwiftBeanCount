@@ -26,7 +26,7 @@ Please also check out the complete documentation [here](https://nef10.github.io/
 The library supports the Swift Package Manger, so simply add a dependency in your `Package.swift`:
 
 ```
-.package(url: "https://github.com/Nef10/SwiftBeanCountRogersBankMapper.git", .exact(from: "0.0.2")),
+.package(url: "https://github.com/Nef10/SwiftBeanCountRogersBankMapper.git", .exact(from: "X.Y.Z")),
 ```
 
-Please note that following semantic versioning every release before version 1.0.0 might be breaking, so use `.exact` for now.
+*Note: as per semantic versioning all versions changes < 1.0.0 can be breaking, so please use `.exact` for now*
