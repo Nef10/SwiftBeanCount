@@ -243,26 +243,40 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
 
         var result = "\(dateString) * \"\" \"\"\n  \(cashAccount) \(amountString.padding(toLength: 10, withPad: " ", startingAt: 0)) \(commoditySymbol)\n"
         result += matches.map {
-            let employeeBasic = "\(accountString):Employee:Basic:\($0.commodity)".padding(toLength: accountPaddingLength, withPad: " ", startingAt: 0)
-            let employerBasic = "\(accountString):Employer:Basic:\($0.commodity)".padding(toLength: accountPaddingLength, withPad: " ", startingAt: 0)
-            let employerMatch = "\(accountString):Employer:Match:\($0.commodity)".padding(toLength: accountPaddingLength, withPad: " ", startingAt: 0)
-            let employeeVoluntary = "\(accountString):Employee:Voluntary:\($0.commodity)".padding(toLength: accountPaddingLength, withPad: " ", startingAt: 0)
             let unitFraction = Double($0.units)! / (employeeBasicFraction + employerBasicFraction + employerMatchFraction + employeeVoluntaryFraction)
             let commodity = $0.commodity.padding(toLength: commodityPaddingLength, withPad: " ", startingAt: 0)
-            var result = "  \(employeeBasic) \(String(format: unitFormat, unitFraction * employeeBasicFraction)) \(commodity) {\($0.price) \(commoditySymbol)}\n"
-            result += "  \(employerBasic) \(String(format: unitFormat, unitFraction * employerBasicFraction)) \(commodity) {\($0.price) \(commoditySymbol)}\n"
-            result += "  \(employerMatch) \(String(format: unitFormat, unitFraction * employerMatchFraction)) \(commodity) {\($0.price) \(commoditySymbol)}\n"
-            result += "  \(employeeVoluntary) \(String(format: unitFormat, unitFraction * employeeVoluntaryFraction)) \(commodity) {\($0.price) \(commoditySymbol)}"
+            var result = ""
+            if employeeBasicFraction != 0 {
+                let employeeBasic = "\(accountString):Employee:Basic:\($0.commodity)".padding(toLength: accountPaddingLength, withPad: " ", startingAt: 0)
+                result += "  \(employeeBasic) \(String(format: unitFormat, unitFraction * employeeBasicFraction)) \(commodity) {\($0.price) \(commoditySymbol)}\n"
+            }
+            if employerBasicFraction != 0 {
+                let employerBasic = "\(accountString):Employer:Basic:\($0.commodity)".padding(toLength: accountPaddingLength, withPad: " ", startingAt: 0)
+                result += "  \(employerBasic) \(String(format: unitFormat, unitFraction * employerBasicFraction)) \(commodity) {\($0.price) \(commoditySymbol)}\n"
+            }
+            if employerMatchFraction != 0 {
+                let employerMatch = "\(accountString):Employer:Match:\($0.commodity)".padding(toLength: accountPaddingLength, withPad: " ", startingAt: 0)
+                result += "  \(employerMatch) \(String(format: unitFormat, unitFraction * employerMatchFraction)) \(commodity) {\($0.price) \(commoditySymbol)}\n"
+            }
+            if employeeVoluntaryFraction != 0 {
+                let employeeVoluntary = "\(accountString):Employee:Voluntary:\($0.commodity)".padding(toLength: accountPaddingLength, withPad: " ", startingAt: 0)
+                result += "  \(employeeVoluntary) \(String(format: unitFormat, unitFraction * employeeVoluntaryFraction)) \(commodity) {\($0.price) \(commoditySymbol)}\n"
+            }
             return result
         }
-        .joined(separator: "\n")
-        result += "\n\n"
-        result += matches.map { buy -> String in
-            "\(dateString) price \(buy.commodity.padding(toLength: commodityPaddingLength, withPad: " ", startingAt: 0)) \(buy.price) \(commoditySymbol)"
-        }
-        .sorted()
-        .joined(separator: "\n")
+        .joined()
+        result += "\n" + matches.map { priceString(buy: $0, date: dateString) }.sorted().joined(separator: "\n")
         return result
+    }
+
+    /// Create the string for a price from a buy
+    ///
+    /// - Parameters:
+    ///   - buy: the purchase to take the price and commodity from
+    ///   - date: string which will be used as date
+    /// - Returns: string with padding of price entry
+    private func priceString(buy: ManuLifeBuy, date: String) -> String {
+        "\(date) price \(buy.commodity.padding(toLength: commodityPaddingLength, withPad: " ", startingAt: 0)) \(buy.price) \(commoditySymbol)"
     }
 
     /// Pads a string to a certain length with a given character

@@ -173,6 +173,56 @@ final class ManuLifeImporterTests: XCTestCase {
         clearSettings()
     }
 
+    func testTransactionSettingsZero1() {
+        ManuLifeImporter.set(setting: ManuLifeImporter.employeeBasicSetting, to: "2.5")
+        ManuLifeImporter.set(setting: ManuLifeImporter.employerBasicSetting, to: "5")
+        ManuLifeImporter.set(setting: ManuLifeImporter.employerMatchSetting, to: "2.5")
+        ManuLifeImporter.set(setting: ManuLifeImporter.employeeVoluntarySetting, to: "0")
+        ManuLifeImporter.set(setting: ManuLifeImporter.cashAccountSetting, to: "Setting")
+
+        let importer = ManuLifeImporter(ledger: TestUtils.lederFund, transaction: transaction, balance: "")
+        importer.useAccount(name: TestUtils.cash)
+        let result = importer.parse()
+        XCTAssertEqual(result, """
+            2020-05-29 * "" ""
+              Assets:Cash:Setting                                                   0.00       USD
+              Assets:Cash:Employee:Basic:1234 ML Category Fund 9876 y8              0.11028 1234 ML Category Fun {21.221 USD}
+              Assets:Cash:Employer:Basic:1234 ML Category Fund 9876 y8              0.22056 1234 ML Category Fun {21.221 USD}
+              Assets:Cash:Employer:Match:1234 ML Category Fund 9876 y8              0.11028 1234 ML Category Fun {21.221 USD}
+              Assets:Cash:Employee:Basic:\(TestUtils.fundSymbol)                                       3.82386 \(TestUtils.fundSymbol)                 {9.148 USD}
+              Assets:Cash:Employer:Basic:\(TestUtils.fundSymbol)                                       7.64772 \(TestUtils.fundSymbol)                 {9.148 USD}
+              Assets:Cash:Employer:Match:\(TestUtils.fundSymbol)                                       3.82386 \(TestUtils.fundSymbol)                 {9.148 USD}
+
+            2020-05-29 price 1234 ML Category Fun 21.221 USD
+            2020-05-29 price \(TestUtils.fundSymbol)                 9.148 USD
+            """) // Note: Cash amount missing (#3), End of long symbol in transaction cut off (#4)
+
+        clearSettings()
+    }
+
+    func testTransactionSettingsZero2() {
+        ManuLifeImporter.set(setting: ManuLifeImporter.employeeBasicSetting, to: "0")
+        ManuLifeImporter.set(setting: ManuLifeImporter.employerBasicSetting, to: "0")
+        ManuLifeImporter.set(setting: ManuLifeImporter.employerMatchSetting, to: "0")
+        ManuLifeImporter.set(setting: ManuLifeImporter.employeeVoluntarySetting, to: "1")
+        ManuLifeImporter.set(setting: ManuLifeImporter.cashAccountSetting, to: "Setting")
+
+        let importer = ManuLifeImporter(ledger: TestUtils.lederFund, transaction: transaction, balance: "")
+        importer.useAccount(name: TestUtils.cash)
+        let result = importer.parse()
+        XCTAssertEqual(result, """
+            2020-05-29 * "" ""
+              Assets:Cash:Setting                                                   0.00       USD
+              Assets:Cash:Employee:Voluntary:1234 ML Category Fund 9876 y8          0.44112 1234 ML Category Fun {21.221 USD}
+              Assets:Cash:Employee:Voluntary:\(TestUtils.fundSymbol)                                   15.29544 \(TestUtils.fundSymbol)                 {9.148 USD}
+
+            2020-05-29 price 1234 ML Category Fun 21.221 USD
+            2020-05-29 price \(TestUtils.fundSymbol)                 9.148 USD
+            """) // Note: Cash amount missing (#3), End of long symbol in transaction cut off (#4)
+
+        clearSettings()
+    }
+
     func testTransactionGarbage() {
         let importer = ManuLifeImporter(ledger: TestUtils.lederFund, transaction: "This is not a valid Transaction", balance: "")
         importer.useAccount(name: TestUtils.cash)
