@@ -31,6 +31,10 @@ class ParserUtilsTests: XCTestCase {
         (decimal, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: "1.25")
         XCTAssertEqual(decimal, Decimal(1.25))
         XCTAssertEqual(decimalDigits, 2)
+
+        (decimal, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: "1,001.25")
+        XCTAssertEqual(decimal, Decimal(1_001.25))
+        XCTAssertEqual(decimalDigits, 2)
     }
 
 }
