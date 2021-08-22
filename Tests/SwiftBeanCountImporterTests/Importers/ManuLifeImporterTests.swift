@@ -65,7 +65,7 @@ final class ManuLifeImporterTests: XCTestCase {
         To:			Amount($)
         ../Images/colour7.gif	 1234 ML Category Fund 9876 y8
         Contribution 0.44112 units @ $21.221/unit	9.36
-        Total		9.38
+        Total		9.36
         ../Images/colour10.gif	 \(TestUtils.fundName)
         Contribution 15.29544 units @ $9.148/unit	139.92
         Total		139.92
@@ -79,7 +79,7 @@ final class ManuLifeImporterTests: XCTestCase {
         To:			Amount($)
         ../Images/colour7.gif	 1234 ML Category Fund 9876 y8
         Contribution 0.44112 units @ $21.221/unit	9.36
-        Total		9.38
+        Total		9.36
         """
 
     private lazy var balanceResult: String = { """
@@ -99,7 +99,7 @@ final class ManuLifeImporterTests: XCTestCase {
 
     private let transactionResult = """
         2020-05-29 * "" ""
-          Assets:Cash:Parking                                                   0.00       USD
+          Assets:Cash:Parking                                                 149.28    USD
           Assets:Cash:Employee:Basic:1234 ML Category Fund 9876 y8              0.11028 1234 ML Category Fun {21.221 USD}
           Assets:Cash:Employer:Basic:1234 ML Category Fund 9876 y8              0.11028 1234 ML Category Fun {21.221 USD}
           Assets:Cash:Employer:Match:1234 ML Category Fund 9876 y8              0.11028 1234 ML Category Fun {21.221 USD}
@@ -141,7 +141,7 @@ final class ManuLifeImporterTests: XCTestCase {
         let importer = ManuLifeImporter(ledger: TestUtils.lederFund, transaction: transaction, balance: "")
         importer.useAccount(name: TestUtils.cash)
         let result = importer.parse()
-        XCTAssertEqual(result, transactionResult) // Note: Cash amount missing (#3), End of long symbol in transaction cut off (#4)
+        XCTAssertEqual(result, transactionResult) // Note: End of long symbol in transaction cut off (#4)
     }
 
     func testTransactionSettings() {
@@ -156,7 +156,7 @@ final class ManuLifeImporterTests: XCTestCase {
         let result = importer.parse()
         XCTAssertEqual(result, """
             2020-05-29 * "" ""
-              Assets:Cash:Setting                                                   0.00       USD
+              Assets:Cash:Setting                                                 149.28    USD
               Assets:Cash:Employee:Basic:1234 ML Category Fund 9876 y8              0.11028 1234 ML Category Fun {21.221 USD}
               Assets:Cash:Employer:Basic:1234 ML Category Fund 9876 y8              0.14336 1234 ML Category Fun {21.221 USD}
               Assets:Cash:Employer:Match:1234 ML Category Fund 9876 y8              0.11028 1234 ML Category Fun {21.221 USD}
@@ -168,7 +168,7 @@ final class ManuLifeImporterTests: XCTestCase {
 
             2020-05-29 price 1234 ML Category Fun 21.221 USD
             2020-05-29 price \(TestUtils.fundSymbol)                 9.148 USD
-            """) // Note: Cash amount missing (#3), End of long symbol in transaction cut off (#4)
+            """) // Note: End of long symbol in transaction cut off (#4)
 
         clearSettings()
     }
@@ -185,7 +185,7 @@ final class ManuLifeImporterTests: XCTestCase {
         let result = importer.parse()
         XCTAssertEqual(result, """
             2020-05-29 * "" ""
-              Assets:Cash:Setting                                                   0.00       USD
+              Assets:Cash:Setting                                                 149.28    USD
               Assets:Cash:Employee:Basic:1234 ML Category Fund 9876 y8              0.11028 1234 ML Category Fun {21.221 USD}
               Assets:Cash:Employer:Basic:1234 ML Category Fund 9876 y8              0.22056 1234 ML Category Fun {21.221 USD}
               Assets:Cash:Employer:Match:1234 ML Category Fund 9876 y8              0.11028 1234 ML Category Fun {21.221 USD}
@@ -195,7 +195,7 @@ final class ManuLifeImporterTests: XCTestCase {
 
             2020-05-29 price 1234 ML Category Fun 21.221 USD
             2020-05-29 price \(TestUtils.fundSymbol)                 9.148 USD
-            """) // Note: Cash amount missing (#3), End of long symbol in transaction cut off (#4)
+            """) // Note: End of long symbol in transaction cut off (#4)
 
         clearSettings()
     }
@@ -212,13 +212,13 @@ final class ManuLifeImporterTests: XCTestCase {
         let result = importer.parse()
         XCTAssertEqual(result, """
             2020-05-29 * "" ""
-              Assets:Cash:Setting                                                   0.00       USD
+              Assets:Cash:Setting                                                 149.28    USD
               Assets:Cash:Employee:Voluntary:1234 ML Category Fund 9876 y8          0.44112 1234 ML Category Fun {21.221 USD}
               Assets:Cash:Employee:Voluntary:\(TestUtils.fundSymbol)                                   15.29544 \(TestUtils.fundSymbol)                 {9.148 USD}
 
             2020-05-29 price 1234 ML Category Fun 21.221 USD
             2020-05-29 price \(TestUtils.fundSymbol)                 9.148 USD
-            """) // Note: Cash amount missing (#3), End of long symbol in transaction cut off (#4)
+            """) // Note: End of long symbol in transaction cut off (#4)
 
         clearSettings()
     }
@@ -242,7 +242,7 @@ final class ManuLifeImporterTests: XCTestCase {
         let importer = ManuLifeImporter(ledger: TestUtils.lederFund, transaction: transaction, balance: balance)
         importer.useAccount(name: TestUtils.cash)
         let result = importer.parse()
-        XCTAssertEqual(result, "\(transactionResult)\n\n\(balanceResult)") // Note: Cash amount missing (#3), End of long symbol in transaction cut off (#4)
+        XCTAssertEqual(result, "\(transactionResult)\n\n\(balanceResult)") // Note: End of long symbol in transaction cut off (#4)
     }
 
     private func clearSettings() {
