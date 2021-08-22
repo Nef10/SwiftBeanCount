@@ -12,9 +12,9 @@ import XCTest
 
 final class RBCImporterTests: XCTestCase {
 
-    func testHeader() {
-        XCTAssertEqual(RBCImporter.header,
-                       ["Account Type", "Account Number", "Transaction Date", "Cheque Number", "Description 1", "Description 2", "CAD$", "USD$"])
+    func testHeaders() {
+        XCTAssertEqual(RBCImporter.headers,
+                       [["Account Type", "Account Number", "Transaction Date", "Cheque Number", "Description 1", "Description 2", "CAD$", "USD$"]])
     }
 
     func testSettingsName() {

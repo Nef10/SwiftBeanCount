@@ -12,9 +12,9 @@ import XCTest
 
 final class TangerineAccountImporterTests: XCTestCase {
 
-    func testHeader() {
-        XCTAssertEqual(TangerineAccountImporter.header,
-                       ["Date", "Transaction", "Name", "Memo", "Amount"])
+    func testHeaders() {
+        XCTAssertEqual(TangerineAccountImporter.headers,
+                       [["Date", "Transaction", "Name", "Memo", "Amount"]])
     }
 
     func testSettingsName() {

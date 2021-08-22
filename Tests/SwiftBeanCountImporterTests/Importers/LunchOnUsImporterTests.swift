@@ -12,8 +12,8 @@ import XCTest
 
 final class LunchOnUsImporterTests: XCTestCase {
 
-    func testHeader() {
-        XCTAssertEqual(LunchOnUsImporter.header, ["date", "type", "amount", "invoice", "remaining", "location"])
+    func testHeaders() {
+        XCTAssertEqual(LunchOnUsImporter.headers, [["date", "type", "amount", "invoice", "remaining", "location"]])
     }
 
     func testSettingsName() {

@@ -12,9 +12,9 @@ import XCTest
 
 final class TangerineCardImporterTests: XCTestCase {
 
-    func testHeader() {
-        XCTAssertEqual(TangerineCardImporter.header,
-                       ["Transaction date", "Transaction", "Name", "Memo", "Amount"])
+    func testHeaders() {
+        XCTAssertEqual(TangerineCardImporter.headers,
+                       [["Transaction date", "Transaction", "Name", "Memo", "Amount"]])
     }
 
     func testSettingsName() {

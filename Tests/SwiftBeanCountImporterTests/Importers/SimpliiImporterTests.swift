@@ -12,8 +12,8 @@ import XCTest
 
 final class SimpliiImporterTests: XCTestCase {
 
-    func testHeader() {
-        XCTAssertEqual(SimpliiImporter.header, ["Date", "Transaction Details", "Funds Out", "Funds In"])
+    func testHeaders() {
+        XCTAssertEqual(SimpliiImporter.headers, [["Date", "Transaction Details", "Funds Out", "Funds In"]])
     }
 
     func testSettingsName() {

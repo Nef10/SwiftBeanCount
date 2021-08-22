@@ -15,7 +15,7 @@ class SimpliiImporter: CSVBaseImporter, CSVImporter {
     private static let amountIn = "Funds In"
     private static let amountOut = "Funds Out"
 
-    static let header = [date, description, amountOut, amountIn]
+    static let headers = [[date, description, amountOut, amountIn]]
     override class var settingsName: String { "Simplii Accounts" }
 
     private static var dateFormatter: DateFormatter = {

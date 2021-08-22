@@ -12,18 +12,20 @@ import XCTest
 
 final class N26ImporterTests: XCTestCase {
 
-    func testHeader() {
-        XCTAssertEqual(N26Importer.header, [
-            "Datum",
-            "Empfänger",
-            "Kontonummer",
-            "Transaktionstyp",
-            "Verwendungszweck",
-            "Kategorie",
-            "Betrag (EUR)",
-            "Betrag (Fremdwährung)",
-            "Fremdwährung",
-            "Wechselkurs"
+    func testHeaders() {
+        XCTAssertEqual(N26Importer.headers, [
+            [
+                "Datum",
+                "Empfänger",
+                "Kontonummer",
+                "Transaktionstyp",
+                "Verwendungszweck",
+                "Kategorie",
+                "Betrag (EUR)",
+                "Betrag (Fremdwährung)",
+                "Fremdwährung",
+                "Wechselkurs"
+            ]
         ])
     }
 

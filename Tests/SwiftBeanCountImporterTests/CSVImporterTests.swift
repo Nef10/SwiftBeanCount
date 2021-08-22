@@ -32,9 +32,25 @@ final class CSVImporterTests: XCTestCase {
         // matching header
         let importers = CSVImporterManager.importers
         for importer in importers {
-            let url = temporaryFileURL()
-            createFile(at: url, content: "\(importer.header.joined(separator: ", "))\n")
-            XCTAssertTrue(type(of: CSVImporterManager.new(ledger: nil, url: url)!) == importer)
+            for header in importer.headers {
+                let url = temporaryFileURL()
+                createFile(at: url, content: "\(header.joined(separator: ", "))\n")
+                XCTAssertTrue(type(of: CSVImporterManager.new(ledger: nil, url: url)!) == importer)
+            }
+        }
+    }
+
+    func testNoEqualHeaders() {
+        var headers = [[String]]()
+        let importers = CSVImporterManager.importers
+        for importer in importers {
+            for header in importer.headers {
+                guard !headers.contains(header) else {
+                    XCTFail("Importers cannot use the same headers")
+                    return
+                }
+                headers.append(header)
+            }
         }
     }
 

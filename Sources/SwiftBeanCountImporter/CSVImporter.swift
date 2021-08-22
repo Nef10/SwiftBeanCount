@@ -37,7 +37,7 @@ enum CSVImporterManager {
             return nil
         }
         let importer = Self.importers.first {
-            $0.header == headerRow
+            $0.headers.contains(headerRow)
         }
         guard let importerClass = importer else {
             return nil
@@ -61,7 +61,7 @@ enum CSVImporterManager {
 
 protocol CSVImporter: FileImporter {
 
-    static var header: [String] { get }
+    static var headers: [[String]] { get }
 
     init(ledger: Ledger?, csvReader: CSVReader, fileName: String)
 
