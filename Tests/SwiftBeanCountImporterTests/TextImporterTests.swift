@@ -12,8 +12,8 @@ import XCTest
 
 final class TextImporterTests: XCTestCase {
 
-    func testSettings() {
-        let result = TextImporterManager.new(ledger: nil, transaction: "", balance: "")
+    func testNew() {
+        let result = TextImporterFactory.new(ledger: nil, transaction: "", balance: "")
         XCTAssertNotNil(result)
         XCTAssertTrue(result is ManuLifeImporter)
     }

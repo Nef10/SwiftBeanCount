@@ -18,7 +18,7 @@ struct CSVLine {
     let price: Amount?
 }
 
-enum CSVImporterManager {
+enum CSVImporterFactory {
 
     static var importers: [CSVImporter.Type] {
         [

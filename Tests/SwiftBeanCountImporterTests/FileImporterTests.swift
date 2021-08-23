@@ -15,12 +15,30 @@ final class FileImporterTests: XCTestCase {
 
     func testImporters() {
         // currently only csv files are supported
-        XCTAssertEqual(FileImporterManager.importers.count, CSVImporterManager.importers.count)
+        XCTAssertEqual(FileImporterFactory.importers.count, CSVImporterFactory.importers.count)
     }
 
     func testNew() {
         // no url
-        XCTAssertNil(FileImporterManager.new(ledger: nil, url: nil))
+        XCTAssertNil(FileImporterFactory.new(ledger: nil, url: nil))
+
+        // invalid URL
+        XCTAssertNil(FileImporterFactory.new(ledger: nil, url: URL(fileURLWithPath: "DOES_NOT_EXIST")))
+
+        // valid URL without matching headers
+        let url = temporaryFileURL()
+        createFile(at: url, content: "Header, no, matching, anything\n")
+        XCTAssertNil(FileImporterFactory.new(ledger: nil, url: url))
+
+        // matching header
+        let importers = CSVImporterFactory.importers
+        for importer in importers {
+            for header in importer.headers {
+                let url = temporaryFileURL()
+                createFile(at: url, content: "\(header.joined(separator: ", "))\n")
+                XCTAssertTrue(type(of: FileImporterFactory.new(ledger: nil, url: url)!) == importer)
+            }
+        }
     }
 
 }

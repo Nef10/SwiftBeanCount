@@ -9,15 +9,38 @@
 import Foundation
 import SwiftBeanCountModel
 
-/// The ImporterManager is responsible for all different types of `Importer`s.
-public enum ImporterManager {
+/// The ImporterFactory is used to create the different importer types
+public enum ImporterFactory {
 
-    /// Return all existing importers
+    /// Return all existing importer types
     ///
     /// As the importers do not need to be called directly, this should only
     /// be used in the settings to allow displaying all settings of all importers
-    public static var importers: [Importer.Type] {
-        FileImporterManager.importers + TextImporterManager.importers
+    ///
+    /// - Returns: All existing importer types
+    public static var allImporters: [Importer.Type] {
+        FileImporterFactory.importers + TextImporterFactory.importers
+    }
+
+    // Returns a TextImporter, or nil if the text cannot be imported
+    /// - Parameters:
+    ///   - ledger: existing ledger which is used to assist the import,
+    ///             e.g. to read attributes of accounts
+    ///   - transaction: text of a transaction
+    ///   - balance: text of a balance
+    /// - Returns: TextImporter, or nil if the text cannot be imported
+    public static func new(ledger: Ledger?, transaction: String, balance: String) -> TextImporter? {
+        TextImporterFactory.new(ledger: ledger, transaction: transaction, balance: balance)
+    }
+
+    /// Returns a FileImporter, or nil if the file cannot be imported
+    /// - Parameters:
+    ///   - ledger: existing ledger which is used to assist the import,
+    ///             e.g. to read attributes of accounts
+    ///   - url: URL of the file to import
+    /// - Returns: FileImporter, or nil if the file cannot be imported
+    public static func new(ledger: Ledger?, url: URL?) -> FileImporter? {
+        FileImporterFactory.new(ledger: ledger, url: url)
     }
 
 }

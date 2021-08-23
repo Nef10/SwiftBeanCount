@@ -9,12 +9,12 @@
 import Foundation
 import SwiftBeanCountModel
 
-/// The FileImporterManager is responsible for the different types of `FileImporter`s.
+/// The FileImporterFactory is responsible for the different types of `FileImporter`s.
 /// It allow abstraction of the different importers by encapsulation to logic of which one to use.
-public enum FileImporterManager {
+enum FileImporterFactory {
 
     static var importers: [FileImporter.Type] {
-        CSVImporterManager.importers
+        CSVImporterFactory.importers
     }
 
     /// Returns the correct FileImporter, or nil if the file cannot be imported
@@ -23,8 +23,8 @@ public enum FileImporterManager {
     ///             e.g. to read attributes of accounts
     ///   - url: URL of the file to import
     /// - Returns: FileImporter, or nil if the file cannot be imported
-    public static func new(ledger: Ledger?, url: URL?) -> FileImporter? {
-        CSVImporterManager.new(ledger: ledger, url: url)
+    static func new(ledger: Ledger?, url: URL?) -> FileImporter? {
+        CSVImporterFactory.new(ledger: ledger, url: url)
     }
 
 }

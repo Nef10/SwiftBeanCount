@@ -14,35 +14,35 @@ import XCTest
 final class CSVImporterTests: XCTestCase {
 
     func testImporters() {
-        XCTAssertEqual(CSVImporterManager.importers.count, 7)
+        XCTAssertEqual(CSVImporterFactory.importers.count, 7)
     }
 
     func testNew() {
         // no url
-        XCTAssertNil(CSVImporterManager.new(ledger: nil, url: nil))
+        XCTAssertNil(CSVImporterFactory.new(ledger: nil, url: nil))
 
         // invalid URL
-        XCTAssertNil(CSVImporterManager.new(ledger: nil, url: URL(fileURLWithPath: "DOES_NOT_EXIST")))
+        XCTAssertNil(CSVImporterFactory.new(ledger: nil, url: URL(fileURLWithPath: "DOES_NOT_EXIST")))
 
         // valid URL without matching headers
         let url = temporaryFileURL()
         createFile(at: url, content: "Header, no, matching, anything\n")
-        XCTAssertNil(CSVImporterManager.new(ledger: nil, url: url))
+        XCTAssertNil(CSVImporterFactory.new(ledger: nil, url: url))
 
         // matching header
-        let importers = CSVImporterManager.importers
+        let importers = CSVImporterFactory.importers
         for importer in importers {
             for header in importer.headers {
                 let url = temporaryFileURL()
                 createFile(at: url, content: "\(header.joined(separator: ", "))\n")
-                XCTAssertTrue(type(of: CSVImporterManager.new(ledger: nil, url: url)!) == importer)
+                XCTAssertTrue(type(of: CSVImporterFactory.new(ledger: nil, url: url)!) == importer)
             }
         }
     }
 
     func testNoEqualHeaders() {
         var headers = [[String]]()
-        let importers = CSVImporterManager.importers
+        let importers = CSVImporterFactory.importers
         for importer in importers {
             for header in importer.headers {
                 guard !headers.contains(header) else {

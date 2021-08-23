@@ -28,8 +28,37 @@ private class TestImporter: Importer {
 
 final class ImporterTests: XCTestCase {
 
-    func testImporters() {
-        XCTAssertEqual(ImporterManager.importers.count, (FileImporterManager.importers + TextImporterManager.importers).count)
+    func testAllImporters() {
+        XCTAssertEqual(ImporterFactory.allImporters.count, (FileImporterFactory.importers + TextImporterFactory.importers).count)
+    }
+
+    func testFileImporter() {
+        // no url
+        XCTAssertNil(ImporterFactory.new(ledger: nil, url: nil))
+
+        // invalid URL
+        XCTAssertNil(ImporterFactory.new(ledger: nil, url: URL(fileURLWithPath: "DOES_NOT_EXIST")))
+
+        // valid URL without matching headers
+        let url = temporaryFileURL()
+        createFile(at: url, content: "Header, no, matching, anything\n")
+        XCTAssertNil(ImporterFactory.new(ledger: nil, url: url))
+
+        // matching header
+        let importers = CSVImporterFactory.importers
+        for importer in importers {
+            for header in importer.headers {
+                let url = temporaryFileURL()
+                createFile(at: url, content: "\(header.joined(separator: ", "))\n")
+                XCTAssertTrue(type(of: ImporterFactory.new(ledger: nil, url: url)!) == importer)
+            }
+        }
+    }
+
+     func testTextImporter() {
+        let result = ImporterFactory.new(ledger: nil, transaction: "", balance: "")
+        XCTAssertNotNil(result)
+        XCTAssertTrue(result is ManuLifeImporter)
     }
 
     func testSettings() {

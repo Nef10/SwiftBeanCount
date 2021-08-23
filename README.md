@@ -12,7 +12,7 @@ This is the importer of SwiftBeanCount. It reads files to create transactions. T
 
 ### Import Transactions
 
-1) Create a `FileImporter` via `FileImporterManager.new(ledger: Ledger?, url: URL?)` or a `TextImporter` via `TextImporterManager.new(ledger: Ledger?, transaction: String, balance: String)`, depending on what you want to import.
+1) Create a `FileImporter` via `ImporterFactory.new(ledger: Ledger?, url: URL?)` or a `Importer` via `ImporterFactory.new(ledger: Ledger?, transaction: String, balance: String)`, depending on what you want to import.
 2) Check `possibleAccounts()` on the importer. If there is more than one or none, promt to user to enter/select the account to use.
 3) Pass the result to the importer via `useAccount(name:)`.
 4) If using a FileImporter call `loadFile()`.
@@ -22,7 +22,7 @@ This is the importer of SwiftBeanCount. It reads files to create transactions. T
 
 The different importers which are included in this library can be configured:
 
-1) Call `ImporterManager.importers` to retreive all importers
+1) Call `ImporterFactory.allImporters` to retreive all importers
 2) Call `importer.settingsName` to get the user friendly name of the importer
 3) Call `importer.settings` to get the `ImporterSetting`s which an importer offers
 3) Use `importer.get(setting: ImporterSetting)` and `importer.set(setting: ImporterSetting, to value: String)` to modify these settings.
