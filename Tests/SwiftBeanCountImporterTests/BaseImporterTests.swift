@@ -99,4 +99,59 @@ final class BaseImporterTests: XCTestCase {
         UserDefaults.standard.removeObject(forKey: key)
     }
 
+    func testSavedPayee() {
+        let description = "abcd"
+        let payeeMapping = "efg"
+        UserDefaults.standard.removeObject(forKey: Settings.payeesUserDefaultKey)
+
+        UserDefaults.standard.set([description: payeeMapping], forKey: Settings.payeesUserDefaultKey)
+        let importer = BaseImporter(ledger: TestUtils.ledger)
+        let (_, savedPayee) = importer.savedDescriptionAndPayeeFor(description: description)
+        XCTAssertEqual(savedPayee, payeeMapping)
+
+        UserDefaults.standard.removeObject(forKey: Settings.payeesUserDefaultKey)
+    }
+
+    func testSavedDescription() {
+        let description = "abcd"
+        let descriptionMapping = "efg"
+        UserDefaults.standard.removeObject(forKey: Settings.descriptionUserDefaultsKey)
+
+        UserDefaults.standard.set([description: descriptionMapping], forKey: Settings.descriptionUserDefaultsKey)
+        let importer = BaseImporter(ledger: TestUtils.ledger)
+        let (savedDescription, _) = importer.savedDescriptionAndPayeeFor(description: description)
+        XCTAssertEqual(savedDescription, descriptionMapping)
+
+        UserDefaults.standard.removeObject(forKey: Settings.descriptionUserDefaultsKey)
+    }
+
+    func testSavedAccount() {
+        let payee = "abcd"
+        UserDefaults.standard.removeObject(forKey: Settings.accountsUserDefaultsKey)
+
+        UserDefaults.standard.set([payee: TestUtils.chequing.fullName], forKey: Settings.accountsUserDefaultsKey)
+        let importer = BaseImporter(ledger: TestUtils.ledger)
+        XCTAssertEqual(importer.savedAccountNameFor(payee: payee), TestUtils.chequing)
+
+        UserDefaults.standard.removeObject(forKey: Settings.accountsUserDefaultsKey)
+    }
+
+    func testSanitizeDescription() {
+        let importer = BaseImporter(ledger: TestUtils.ledger)
+        XCTAssertEqual(importer.sanitize(description: "Shop1 C-IDP PURCHASE - 1234  BC  CA"), "Shop1")
+        XCTAssertEqual(importer.sanitize(description: "Shop1 IDP PURCHASE-1234"), "Shop1")
+        XCTAssertEqual(importer.sanitize(description: "Shop1 VISA DEBIT REF-1234"), "Shop1")
+        XCTAssertEqual(importer.sanitize(description: "Shop1 VISA DEBIT PUR-1234"), "Shop1")
+        XCTAssertEqual(importer.sanitize(description: "Shop1 INTERAC E-TRF- 1234"), "Shop1")
+        XCTAssertEqual(importer.sanitize(description: "Shop1 WWWINTERAC PUR 1234"), "Shop1")
+        XCTAssertEqual(importer.sanitize(description: "Shop1 1234 ~ Internet Withdrawal"), "Shop1")
+        XCTAssertEqual(importer.sanitize(description: "Shop1 - SAP"), "Shop1")
+        XCTAssertEqual(importer.sanitize(description: "Shop1 SAP"), "Shop1")
+        XCTAssertEqual(importer.sanitize(description: " SAP CANADA"), "SAP CANADA")
+        XCTAssertEqual(importer.sanitize(description: "Shop1 -MAY 2014"), "Shop1")
+        XCTAssertEqual(importer.sanitize(description: "Shop1 - JUNE 2016"), "Shop1")
+        XCTAssertEqual(importer.sanitize(description: "Shop1  BC  CA"), "Shop1")
+        XCTAssertEqual(importer.sanitize(description: "Shop1 #12345"), "Shop1")
+        XCTAssertEqual(importer.sanitize(description: "Shop1 # 12"), "Shop1")
+    }
 }

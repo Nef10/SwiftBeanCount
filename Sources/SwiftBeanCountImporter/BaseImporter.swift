@@ -11,6 +11,20 @@ import SwiftBeanCountModel
 
 class BaseImporter: Importer {
 
+    private static let regexe: [NSRegularExpression] = {  // swiftlint:disable force_try
+        [
+            try! NSRegularExpression(pattern: "(C-)?IDP PURCHASE( )?-( )?[0-9]{4}", options: []),
+            try! NSRegularExpression(pattern: "VISA DEBIT (PUR|REF)-[0-9]{4}", options: []),
+            try! NSRegularExpression(pattern: "WWWINTERAC PUR [0-9]{4}", options: []),
+            try! NSRegularExpression(pattern: "INTERAC E-TRF- [0-9]{4}", options: []),
+            try! NSRegularExpression(pattern: "[0-9]* ~ Internet Withdrawal", options: []),
+            try! NSRegularExpression(pattern: "(-)? SAP(?! CANADA)", options: []),
+            try! NSRegularExpression(pattern: "-( )?(MAY|JUNE)( )?201(4|6)", options: []),
+            try! NSRegularExpression(pattern: "  BC  CA", options: []),
+            try! NSRegularExpression(pattern: "#( )?[0-9]{1,5}", options: []),
+        ]
+    }() // swiftlint:enable force_try
+
     static let accountsSetting = ImporterSetting(identifier: "accounts", name: "Account(s)")
 
     class var settingsName: String { "" }
@@ -62,4 +76,27 @@ class BaseImporter: Importer {
         [] // Override if neccessary
     }
 
+    func sanitize(description: String) -> String {
+        var result = description
+        for regex in Self.regexe {
+            result = regex.stringByReplacingMatches(in: result,
+                                                    options: .withoutAnchoringBounds,
+                                                    range: NSRange(result.startIndex..., in: result),
+                                                    withTemplate: "")
+        }
+        return result.trimmingCharacters(in: .whitespaces)
+    }
+
+    func savedDescriptionAndPayeeFor(description: String) -> (String?, String?) {
+        ((UserDefaults.standard.dictionary(forKey: Settings.descriptionUserDefaultsKey) as? [String: String])?[description],
+         (UserDefaults.standard.dictionary(forKey: Settings.payeesUserDefaultKey) as? [String: String])?[description])
+    }
+
+    func savedAccountNameFor(payee: String) -> AccountName? {
+        if let accountNameString = (UserDefaults.standard.dictionary(forKey: Settings.accountsUserDefaultsKey) as? [String: String])?[payee],
+            let accountName = try? AccountName(accountNameString) {
+            return accountName
+        }
+        return nil
+    }
 }
