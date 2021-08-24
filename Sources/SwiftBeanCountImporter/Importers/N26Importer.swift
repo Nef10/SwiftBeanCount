@@ -28,6 +28,10 @@ class N26Importer: CSVBaseImporter, CSVImporter {
         return dateFormatter
     }()
 
+    override var importName: String {
+        "N26 File \(fileName)"
+    }
+
     override func parseLine() -> CSVLine {
         let date = Self.dateFormatter.date(from: csvReader[Self.date]!)!
         let description = "\(csvReader[Self.recipient]!) \(csvReader[Self.description]!)"

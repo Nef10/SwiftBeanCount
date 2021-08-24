@@ -21,6 +21,13 @@ final class TangerineCardImporterTests: XCTestCase {
         XCTAssertEqual(TangerineCardImporter.settingsName, "Tangerine CC")
     }
 
+    func testImportName() {
+        XCTAssertEqual(
+            TangerineCardImporter(ledger: nil, csvReader: TestUtils.csvReader(content: "A"), fileName: "TestName").importName,
+            "Tangerine Credit Card File TestName"
+        )
+    }
+
     func testParseLine() {
         let importer = TangerineCardImporter(ledger: nil,
                                              csvReader: TestUtils.csvReader(content: """

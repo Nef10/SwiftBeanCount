@@ -29,6 +29,10 @@ class CSVBaseImporter: BaseImporter {
     let csvReader: CSVReader
     let fileName: String
 
+    override var importName: String {
+        fileName
+    }
+
     private var loaded = false
     private var lines = [CSVLine]()
 
@@ -38,7 +42,7 @@ class CSVBaseImporter: BaseImporter {
         super.init(ledger: ledger)
     }
 
-    func loadFile() {
+    override func load() {
         guard !loaded else {
             return
         }
@@ -49,7 +53,7 @@ class CSVBaseImporter: BaseImporter {
         loaded = true
     }
 
-    func parseLineIntoTransaction() -> ImportedTransaction? {
+    override func nextTransaction() -> ImportedTransaction? {
         guard let accountName = accountName else {
             fatalError("No account configured")
         }

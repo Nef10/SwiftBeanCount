@@ -20,6 +20,10 @@ final class SimpliiImporterTests: XCTestCase {
         XCTAssertEqual(SimpliiImporter.settingsName, "Simplii Accounts")
     }
 
+    func testImportName() {
+        XCTAssertEqual(SimpliiImporter(ledger: nil, csvReader: TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "Simplii File TestName")
+    }
+
     func testParseLine() {
         let importer = SimpliiImporter(ledger: nil,
                                        csvReader: TestUtils.csvReader(content: """

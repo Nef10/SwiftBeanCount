@@ -21,6 +21,10 @@ final class RBCImporterTests: XCTestCase {
         XCTAssertEqual(RBCImporter.settingsName, "RBC Accounts + CC")
     }
 
+    func testImportName() {
+        XCTAssertEqual(RBCImporter(ledger: nil, csvReader: TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "RBC File TestName")
+    }
+
     func testParseLineAccount() {
         let importer = RBCImporter(ledger: nil,
                                    csvReader: TestUtils.csvReader(content: """

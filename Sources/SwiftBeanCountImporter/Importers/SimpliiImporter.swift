@@ -24,6 +24,10 @@ class SimpliiImporter: CSVBaseImporter, CSVImporter {
         return dateFormatter
     }()
 
+    override var importName: String {
+        "Simplii File \(fileName)"
+    }
+
     override func parseLine() -> CSVLine {
         let date = Self.dateFormatter.date(from: csvReader[Self.date]!)!
         let description = csvReader[Self.description]!

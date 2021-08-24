@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftBeanCountModel
 
 enum ParserUtils {
 
@@ -33,6 +34,11 @@ enum ParserUtils {
             exponent = afterDot.count
         }
         return (Decimal(sign: sign, exponent: -exponent, significand: Decimal(UInt64(amountString)!)), exponent)
+    }
+
+    static func parseAmountFrom(string: String, commoditySymbol: String) -> Amount {
+        let (number, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: string)
+        return Amount(number: number, commoditySymbol: commoditySymbol, decimalDigits: decimalDigits)
     }
 
 }

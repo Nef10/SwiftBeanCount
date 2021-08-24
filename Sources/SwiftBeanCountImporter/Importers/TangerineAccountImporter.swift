@@ -28,6 +28,10 @@ class TangerineAccountImporter: CSVBaseImporter, CSVImporter {
         return dateFormatter
     }()
 
+    override var importName: String {
+        "Tangerine Account File \(fileName)"
+    }
+
     override func possibleAccountNames(for ledger: Ledger?) -> [AccountName] {
         if let accountName = accountName {
             return [accountName]

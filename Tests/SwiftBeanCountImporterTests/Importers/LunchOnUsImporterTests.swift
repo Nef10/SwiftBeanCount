@@ -20,6 +20,10 @@ final class LunchOnUsImporterTests: XCTestCase {
         XCTAssertEqual(LunchOnUsImporter.settingsName, "LunchOnUs Card")
     }
 
+    func testImportName() {
+        XCTAssertEqual(LunchOnUsImporter(ledger: nil, csvReader: TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "LunchOnUs File TestName")
+    }
+
     func testParseLineNormalPurchase() {
         let importer = LunchOnUsImporter(ledger: nil,
                                          csvReader: TestUtils.csvReader(content: """

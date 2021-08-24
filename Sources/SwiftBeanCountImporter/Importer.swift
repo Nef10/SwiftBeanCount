@@ -22,24 +22,24 @@ public enum ImporterFactory {
         FileImporterFactory.importers + TextImporterFactory.importers
     }
 
-    // Returns a TextImporter, or nil if the text cannot be imported
+    // Creates an Importer to import a transaction and balance String, or nil if the text cannot be imported
     /// - Parameters:
     ///   - ledger: existing ledger which is used to assist the import,
     ///             e.g. to read attributes of accounts
     ///   - transaction: text of a transaction
     ///   - balance: text of a balance
-    /// - Returns: TextImporter, or nil if the text cannot be imported
-    public static func new(ledger: Ledger?, transaction: String, balance: String) -> TextImporter? {
+    /// - Returns: Importer, or nil if the text cannot be imported
+    public static func new(ledger: Ledger?, transaction: String, balance: String) -> Importer? {
         TextImporterFactory.new(ledger: ledger, transaction: transaction, balance: balance)
     }
 
-    /// Returns a FileImporter, or nil if the file cannot be imported
+    /// Creates an Importer to import a file, or nil if the file cannot be imported
     /// - Parameters:
     ///   - ledger: existing ledger which is used to assist the import,
     ///             e.g. to read attributes of accounts
     ///   - url: URL of the file to import
-    /// - Returns: FileImporter, or nil if the file cannot be imported
-    public static func new(ledger: Ledger?, url: URL?) -> FileImporter? {
+    /// - Returns: Importer, or nil if the file cannot be imported
+    public static func new(ledger: Ledger?, url: URL?) -> Importer? {
         FileImporterFactory.new(ledger: ledger, url: url)
     }
 
@@ -66,6 +66,18 @@ public protocol Importer {
     /// Settings of this importer
     static var settings: [ImporterSetting] { get }
 
+    /// A description of the import, e.g. a file name together with the importer name
+    ///
+    /// Can be used in the UI when an importer requests more information, e.g.
+    /// account selection or credentials
+    var importName: String { get }
+
+    /// AccountName of the account the import is for
+    ///
+    /// You can use this to detect which posting the user should not edit
+    /// Note: Some importers work on child accounts of the given one
+    var accountName: AccountName? { get }
+
     /// Get possible account names for this importer
     /// - Parameter ledger: existing ledger to allow reading attributes of the accounts
     ///                     which can be used to determine to correct account
@@ -77,6 +89,30 @@ public protocol Importer {
     /// exactly one account
     /// - Parameter name: name for the accout to use
     func useAccount(name: AccountName)
+
+    /// Loads the data to import
+    ///
+    /// You must call this method before you call `nextTransaction()`.
+    /// You might want to show a loading indicator during the loading, as depending
+    /// on the importer this might take some time.
+    func load()
+
+    /// Returns the next `ImportedTransaction`
+    ///
+    /// Returns nil when there are no more lines left.
+    func nextTransaction() -> ImportedTransaction?
+
+    /// Returns balances to be imported
+    ///
+    /// Only some importer can import balances, so it might return an empty array
+    /// Only call this function after you received all transactions
+    func balancesToImport() -> [Balance]
+
+    /// Returns prices to be imported
+    ///
+    /// Only some importer can import prices, so it might return an empty array
+    /// Only call this function after you received all transactions
+    func pricesToImport() -> [Price]
 
 }
 

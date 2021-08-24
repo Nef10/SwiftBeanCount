@@ -37,4 +37,38 @@ class ParserUtilsTests: XCTestCase {
         XCTAssertEqual(decimalDigits, 2)
     }
 
+    func testParseAmountFrom() {
+        let commoditySymbol = "ABC"
+
+        var amount = ParserUtils.parseAmountFrom(string: "1", commoditySymbol: commoditySymbol)
+        XCTAssertEqual(amount.number, Decimal(1))
+        XCTAssertEqual(amount.decimalDigits, 0)
+        XCTAssertEqual(amount.commoditySymbol, commoditySymbol)
+
+        amount = ParserUtils.parseAmountFrom(string: "0.00", commoditySymbol: commoditySymbol)
+        XCTAssertEqual(amount.number, Decimal(0))
+        XCTAssertEqual(amount.decimalDigits, 2)
+        XCTAssertEqual(amount.commoditySymbol, commoditySymbol)
+
+        amount = ParserUtils.parseAmountFrom(string: "+3.0", commoditySymbol: commoditySymbol)
+        XCTAssertEqual(amount.number, Decimal(3))
+        XCTAssertEqual(amount.decimalDigits, 1)
+        XCTAssertEqual(amount.commoditySymbol, commoditySymbol)
+
+        amount = ParserUtils.parseAmountFrom(string: "-10.0000", commoditySymbol: commoditySymbol)
+        XCTAssertEqual(amount.number, Decimal(-10))
+        XCTAssertEqual(amount.decimalDigits, 4)
+        XCTAssertEqual(amount.commoditySymbol, commoditySymbol)
+
+        amount = ParserUtils.parseAmountFrom(string: "1.25", commoditySymbol: commoditySymbol)
+        XCTAssertEqual(amount.number, Decimal(1.25))
+        XCTAssertEqual(amount.decimalDigits, 2)
+        XCTAssertEqual(amount.commoditySymbol, commoditySymbol)
+
+        amount = ParserUtils.parseAmountFrom(string: "1,001.25", commoditySymbol: commoditySymbol)
+        XCTAssertEqual(amount.number, Decimal(1_001.25))
+        XCTAssertEqual(amount.decimalDigits, 2)
+        XCTAssertEqual(amount.commoditySymbol, commoditySymbol)
+    }
+
 }

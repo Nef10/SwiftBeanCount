@@ -24,6 +24,10 @@ class RBCImporter: CSVBaseImporter, CSVImporter {
         return dateFormatter
     }()
 
+    override var importName: String {
+        "RBC File \(fileName)"
+    }
+
     override func parseLine() -> CSVLine {
         let date = Self.dateFormatter.date(from: csvReader[Self.date]!)!
         let description = csvReader[Self.description1]! + " " + csvReader[Self.description2]!

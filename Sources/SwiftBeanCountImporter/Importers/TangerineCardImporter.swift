@@ -23,6 +23,10 @@ class TangerineCardImporter: CSVBaseImporter, CSVImporter {
         return dateFormatter
     }()
 
+    override var importName: String {
+        "Tangerine Credit Card File \(fileName)"
+    }
+
     override func parseLine() -> CSVLine {
         let date = Self.dateFormatter.date(from: csvReader[Self.date]!)!
         var description = ""

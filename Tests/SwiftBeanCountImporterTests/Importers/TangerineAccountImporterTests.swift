@@ -21,6 +21,10 @@ final class TangerineAccountImporterTests: XCTestCase {
         XCTAssertEqual(TangerineAccountImporter.settingsName, "Tangerine Accounts")
     }
 
+    func testImportName() {
+        XCTAssertEqual(TangerineAccountImporter(ledger: nil, csvReader: TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "Tangerine Account File TestName")
+    }
+
     func testPossibleAccountNames() {
         let key = TangerineAccountImporter.getUserDefaultsKey(for: TangerineAccountImporter.accountsSetting)
         UserDefaults.standard.set("\(TestUtils.cash.fullName), \(TestUtils.chequing.fullName)", forKey: key)

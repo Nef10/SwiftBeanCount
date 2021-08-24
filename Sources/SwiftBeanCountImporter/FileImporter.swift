@@ -42,25 +42,6 @@ public struct ImportedTransaction {
 }
 
 /// Protocol to represent an Importer which imports a file
-public protocol FileImporter: Importer {
-
-    /// AccountName of the account the file belongs to
-    ///
-    /// You can use this to detect which posting the user should not edit
-    var accountName: AccountName? { get }
-
-    /// FileName of the file beeing imported
-    var fileName: String { get }
-
-    /// Loads the file into the memory
-    ///
-    /// You must call this method before you call `parseLineIntoTransaction()`.
-    /// You might want to show a loading indicator during the loading of large files.
-    func loadFile()
-
-    /// Parses the next line into an `ImportedTransaction`.
-    ///
-    /// Returns nil when there are no more lines left.
-    func parseLineIntoTransaction() -> ImportedTransaction?
+protocol FileImporter: Importer {
 
 }

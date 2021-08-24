@@ -10,20 +10,9 @@ import Foundation
 import SwiftBeanCountModel
 import XCTest
 
-private class TestImporter: Importer {
-
+private class TestImporter: BaseImporter {
     static let setting = ImporterSetting(identifier: "accounts", name: "Account(s)")
-
-    class var settingsName: String { "" }
-    class var settings: [ImporterSetting] { [] }
-
-    func possibleAccountNames(for ledger: Ledger?) -> [AccountName] {
-        []
-    }
-
-    func useAccount(name: AccountName) {
-    }
-
+    override class var settings: [ImporterSetting] { [] }
 }
 
 final class ImporterTests: XCTestCase {

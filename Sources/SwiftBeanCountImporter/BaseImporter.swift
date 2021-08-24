@@ -23,6 +23,10 @@ class BaseImporter: Importer {
         ledger?.accounts.first { $0.name == accountName }?.commoditySymbol ?? Settings.fallbackCommodity
     }
 
+    var importName: String {
+        "" // Override
+    }
+
     init(ledger: Ledger?) {
         self.ledger = ledger
     }
@@ -40,6 +44,22 @@ class BaseImporter: Importer {
 
     func accountsFromSettings() -> [AccountName] {
         (Self.get(setting: Self.accountsSetting) ?? "").components(separatedBy: CharacterSet(charactersIn: " ,")).map { try? AccountName($0) }.compactMap { $0 }
+    }
+
+    func load() {
+        // Override if neccessary
+    }
+
+    func nextTransaction() -> ImportedTransaction? {
+        nil // Override
+    }
+
+    func balancesToImport() -> [Balance] {
+        [] // Override if neccessary
+    }
+
+    func pricesToImport() -> [Price] {
+        [] // Override if neccessary
     }
 
 }

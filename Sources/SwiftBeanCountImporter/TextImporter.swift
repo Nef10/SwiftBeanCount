@@ -35,9 +35,6 @@ protocol TransactionBalanceTextImporter: TextImporter {
 }
 
 /// Protocol to represent an Importer which imports text
-public protocol TextImporter: Importer {
-
-    /// Parses the input Strings into a String which can be added to the ledger
-    func parse() -> String
+protocol TextImporter: Importer {
 
 }

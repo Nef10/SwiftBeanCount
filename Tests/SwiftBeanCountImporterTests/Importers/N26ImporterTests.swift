@@ -33,6 +33,10 @@ final class N26ImporterTests: XCTestCase {
         XCTAssertEqual(N26Importer.settingsName, "N26")
     }
 
+    func testImportName() {
+        XCTAssertEqual(N26Importer(ledger: nil, csvReader: TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "N26 File TestName")
+    }
+
     func testParseLineNormalPurchase() {
         let importer = N26Importer(ledger: nil,
                                    csvReader: TestUtils.csvReader(content: """

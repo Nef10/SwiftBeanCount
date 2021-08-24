@@ -24,6 +24,10 @@ class LunchOnUsImporter: CSVBaseImporter, CSVImporter {
         return dateFormatter
     }()
 
+    override var importName: String {
+        "LunchOnUs File \(fileName)"
+    }
+
     override func parseLine() -> CSVLine {
         let date = Self.dateFormatter.date(from: csvReader[Self.date]!)!
         var description = ""

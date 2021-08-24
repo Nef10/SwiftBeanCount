@@ -12,11 +12,12 @@ This is the importer of SwiftBeanCount. It reads files to create transactions. T
 
 ### Import Transactions
 
-1) Create a `FileImporter` via `ImporterFactory.new(ledger: Ledger?, url: URL?)` or a `Importer` via `ImporterFactory.new(ledger: Ledger?, transaction: String, balance: String)`, depending on what you want to import.
-2) Check `possibleAccounts()` on the importer. If there is more than one or none, promt to user to enter/select the account to use.
-3) Pass the result to the importer via `useAccount(name:)`.
-4) If using a FileImporter call `loadFile()`.
-5) If using a TextImporter, call `parse()` to get a string of the parsed transactions. If using a FileImporter, call `parseLineIntoTransaction()` to retrive transaction after transactions till it returns `nil`. It is recommended to allow the user the edit the transactions while doing this. (See [#2](https://github.com/Nef10/SwiftBeanCountImporter/issues/2))
+1) Create an `Importer` via either `ImporterFactory.new(ledger: Ledger?, url: URL?)` or `ImporterFactory.new(ledger: Ledger?, transaction: String, balance: String)`, depending on what you want to import.
+2) Call `load()` on the importer.
+3) Check `possibleAccounts()` on the importer. If there is more than one or none, promt to user to enter/select the account to use. To show the user for which import they are entering information, you can display `importName`.
+4) Pass the result to the importer via `useAccount(name:)`.
+5) Call `nextTransaction()` to retrive transaction after transactions till it returns `nil`. It is recommended to allow the user the edit the transactions while doing this. (See [#12](https://github.com/Nef10/SwiftBeanCountImporter/issues/12))
+6) Get `balancesToImport()` and `pricesToImport()` from the importer.
 
 ### Settings
 

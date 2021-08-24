@@ -29,6 +29,10 @@ final class RogersImporterTests: XCTestCase {
         XCTAssertEqual(RogersImporter.settingsName, "Rogers CC")
     }
 
+    func testImportName() {
+        XCTAssertEqual(RogersImporter(ledger: nil, csvReader: TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "Rogers Bank File TestName")
+    }
+
     func testParseLine1() {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: TestUtils.csvReader(content: """

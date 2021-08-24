@@ -33,6 +33,10 @@ class RogersImporter: CSVBaseImporter, CSVImporter {
         return dateFormatter
     }()
 
+    override var importName: String {
+        "Rogers Bank File \(fileName)"
+    }
+
     override func parseLine() -> CSVLine {
         let dateString = csvReader[Self.date1] ?? csvReader[Self.date2]!
         let date = Self.dateFormatter.date(from: dateString)!

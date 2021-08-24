@@ -34,46 +34,49 @@ private class TestCSVBaseImporter: CSVBaseImporter {
 
 final class CSVBaseImporterTests: XCTestCase {
 
-    func testLoadFile() {
-        let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.basicCSVReader, fileName: "")
-        importer.useAccount(name: TestUtils.cash)
-        importer.loadFile()
+    func testImportName() {
+        let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.basicCSVReader, fileName: "ABCDTEST")
+        XCTAssertEqual(importer.importName, "ABCDTEST")
+    }
 
+    func testLoad() {
+        let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.basicCSVReader, fileName: "")
+        importer.load()
         // Can be called multiple times, still only returns each row once
-        importer.loadFile()
-        let line = importer.parseLineIntoTransaction()
-        XCTAssertNotNil(line)
+        importer.load()
+        importer.useAccount(name: TestUtils.cash)
 
-        let noLine = importer.parseLineIntoTransaction()
-        XCTAssertNil(noLine)
+        let importedTransaction = importer.nextTransaction()
+        XCTAssertNotNil(importedTransaction)
+
+        let noTransaction = importer.nextTransaction()
+        XCTAssertNil(noTransaction)
     }
 
-    func testLoadFileSortDate() {
+    func testLoadSortDate() {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.dateMixedCSVReader, fileName: "")
+        importer.load()
         importer.useAccount(name: TestUtils.cash)
-        importer.loadFile()
 
-        let line1 = importer.parseLineIntoTransaction()
-        XCTAssertNotNil(line1)
-        let line2 = importer.parseLineIntoTransaction()
-        XCTAssertNotNil(line2)
+        let importedTransaction1 = importer.nextTransaction()
+        XCTAssertNotNil(importedTransaction1)
+        let importedTransaction2 = importer.nextTransaction()
+        XCTAssertNotNil(importedTransaction2)
 
-        XCTAssertTrue(line1!.transaction.metaData.date < line2!.transaction.metaData.date)
+        XCTAssertTrue(importedTransaction1!.transaction.metaData.date < importedTransaction2!.transaction.metaData.date)
     }
 
-    func testParseLineIntoTransaction() {
+    func testNextTransaction() {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.basicCSVReader, fileName: "")
+
+        importer.load()
         importer.useAccount(name: TestUtils.cash)
 
-        // nil when loadFile is not called beforehand
-        XCTAssertNil(importer.parseLineIntoTransaction())
+        let importedTransaction = importer.nextTransaction()
+        XCTAssertNotNil(importedTransaction)
 
-        importer.loadFile()
-        let line = importer.parseLineIntoTransaction()
-        XCTAssertNotNil(line)
-
-        let noLine = importer.parseLineIntoTransaction()
-        XCTAssertNil(noLine)
+        let noTransaction = importer.nextTransaction()
+        XCTAssertNil(noTransaction)
     }
 
     func testPrice() {
@@ -161,11 +164,11 @@ final class CSVBaseImporterTests: XCTestCase {
 
     private func transactionHelper(description: String, payee: String = "payee") -> Transaction {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.csvReader(description: description, payee: payee), fileName: "")
+        importer.load()
         importer.useAccount(name: TestUtils.cash)
-        importer.loadFile()
-        let line = importer.parseLineIntoTransaction()
-        XCTAssertNotNil(line)
-        return line!.transaction
+        let importedTransaction = importer.nextTransaction()
+        XCTAssertNotNil(importedTransaction)
+        return importedTransaction!.transaction
     }
 
 }

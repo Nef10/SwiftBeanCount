@@ -37,14 +37,6 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
     override class var settings: [ImporterSetting] { super.settings +
         [cashAccountSetting, employeeBasicSetting, employerBasicSetting, employerMatchSetting, employeeVoluntarySetting] }
 
-    /// DateFormatter for printing a date in the result string
-    private static let printDateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter
-    }()
-
     /// DateFormatter to parse the date from the input
     private static let importDateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -55,12 +47,11 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
 
     private let defaultCashAccountName = "Parking"
     private let defaultContribution = 1.0
-    private let commodityPaddingLength = 20
-    private let accountPaddingLength = 69
-    private let amountPaddingLength = 9
     private let unitFormat = "%.5f"
-    private let transaction: String
-    private let balance: String
+
+    // Input
+    private let transactionInputString: String
+    private let balanceInputString: String
 
     private var cashAccountName: String { Self.get(setting: Self.cashAccountSetting) ?? defaultCashAccountName }
     private var employeeBasicFraction: Double { Double(Self.get(setting: Self.employeeBasicSetting) ?? "") ?? defaultContribution }
@@ -68,42 +59,63 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
     private var employerMatchFraction: Double { Double(Self.get(setting: Self.employerMatchSetting) ?? "") ?? defaultContribution }
     private var employeeVoluntaryFraction: Double { Double(Self.get(setting: Self.employeeVoluntarySetting) ?? "") ?? defaultContribution }
 
+    // Results from parsing
+    private var parsedManuLifeBalances = [ManuLifeBalance]()
+    private var parsedManuLifeBuys = [ManuLifeBuy]()
+    private var parsedTransactionDate: Date?
+
+    // Results to return
+    private var balances = [Balance]()
+    private var prices = [Price]()
+
+    private var didReturnTransaction = false
+
+    override var importName: String {
+        "ManuLife Text"
+    }
+
     required init(ledger: Ledger?, transaction: String, balance: String) {
-        self.transaction = transaction
-        self.balance = balance
+        transactionInputString = transaction
+        balanceInputString = balance
         super.init(ledger: ledger)
     }
 
-    private static func numberFormatter(fractionDigits: Int) -> NumberFormatter {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
-        numberFormatter.maximumFractionDigits = fractionDigits
-        numberFormatter.minimumFractionDigits = fractionDigits
-        return numberFormatter
-    }
-
-    func parse() -> String {
+    override func load() {
         let commodities = ledger?.commodities.reduce(into: [String: String]()) {
             if let name = $1.metaData["name"] {
                 $0[name] = $1.symbol
             }
         } ?? [:]
-        var result = ""
-        if !transaction.isEmpty {
-            result = parse(transaction: transaction, commodities: commodities)
+        if !transactionInputString.isEmpty {
+            let (buys, date) = parsePurchase(string: transactionInputString, commodities: commodities)
+            parsedManuLifeBuys = buys
+            parsedTransactionDate = date
         }
-        if !balance.isEmpty {
-            result += "\n\n\(parse(balance: balance, commodities: commodities))"
+        if !balanceInputString.isEmpty {
+            parsedManuLifeBalances = parseBalances(string: balanceInputString, commodities: commodities)
         }
-        return result.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
-    private func parse(balance: String, commodities: [String: String]) -> String {
-        stringifyBalances(parseBalances(balance, commodities))
+    override func nextTransaction() -> ImportedTransaction? {
+        guard !didReturnTransaction else {
+            return nil
+        }
+        let (transaction, purchasePrices) = convertPurchase(parsedManuLifeBuys, on: parsedTransactionDate)
+        self.prices.append(contentsOf: purchasePrices)
+
+        let (balances, balancePrices) = convertBalances(parsedManuLifeBalances)
+        self.balances.append(contentsOf: balances)
+        self.prices.append(contentsOf: balancePrices)
+
+        didReturnTransaction = true
+        return transaction
     }
 
-    private func parse(transaction: String, commodities: [String: String]) -> String {
-        stringifyPurchase(parsePurchase(transaction, commodities))
+    override func balancesToImport() -> [Balance] {
+        balances
+    }
+    override func pricesToImport() -> [Price] {
+        prices
     }
 
     /// Parses a string into ManuLifeBalances
@@ -112,22 +124,15 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
     ///   - string: input from website
     ///   - commodities: dictionary of name to account for commodities
     /// - Returns: ManuLifeBalances
-    private func parseBalances(_ string: String, _ commodities: [String: String]) -> [ManuLifeBalance] {
-
-        // RegEx
-        let commodityPattern = #"\s*?(\d{4}\s*?-\s*?.*?[a-z]\d)\s*?$"#
-        let employeeBasicPattern = #"\s*?Employee Basic\s*([0-9.]*)"#
-        let employeeVoluntaryPattern = #"\s*?Employee voluntary\s*([0-9.]*)"#
-        let employerBasicPattern = #"\s*?Employer Basic\s*([0-9.]*)"#
-        let employerMatchPattern = #"\s*?Employer Match\s*([0-9.]*)"#
+    private func parseBalances(string: String, commodities: [String: String]) -> [ManuLifeBalance] {
         let unitValuePattern = #"\s*?(?:Employer Basic|Member Voluntary|Employee voluntary)\s*[0-9.]*\s*([0-9.]*)\s*[0-9.]*"#
 
         // swiftlint:disable force_try
-        let commodityRegex = try! NSRegularExpression(pattern: commodityPattern, options: [.anchorsMatchLines])
-        let employeeBasicRegex = try! NSRegularExpression(pattern: employeeBasicPattern, options: [.anchorsMatchLines])
-        let employeeVoluntaryRegex = try! NSRegularExpression(pattern: employeeVoluntaryPattern, options: [.anchorsMatchLines])
-        let employerBasicRegex = try! NSRegularExpression(pattern: employerBasicPattern, options: [.anchorsMatchLines])
-        let employerMatchRegex = try! NSRegularExpression(pattern: employerMatchPattern, options: [.anchorsMatchLines])
+        let commodityRegex = try! NSRegularExpression(pattern: #"\s*?(\d{4}\s*?-\s*?.*?[a-z]\d)\s*?$"#, options: [.anchorsMatchLines])
+        let employeeBasicRegex = try! NSRegularExpression(pattern: #"\s*?Employee Basic\s*([0-9.]*)"#, options: [.anchorsMatchLines])
+        let employeeVoluntaryRegex = try! NSRegularExpression(pattern: #"\s*?Employee voluntary\s*([0-9.]*)"#, options: [.anchorsMatchLines])
+        let employerBasicRegex = try! NSRegularExpression(pattern: #"\s*?Employer Basic\s*([0-9.]*)"#, options: [.anchorsMatchLines])
+        let employerMatchRegex = try! NSRegularExpression(pattern: #"\s*?Employer Match\s*([0-9.]*)"#, options: [.anchorsMatchLines])
         let unitValueRegex = try! NSRegularExpression(pattern: unitValuePattern, options: [.anchorsMatchLines])
         // swiftlint:enable force_try
 
@@ -153,39 +158,44 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         return results
     }
 
-    /// Creates a string out of ManuLifeBalances
-    ///
-    /// - Parameter balances: Array of ManuLifeBalance
-    /// - Returns: string with the balances and prices of the units at the current date
-    private func stringifyBalances(_ balances: [ManuLifeBalance]) -> String {
-        guard let accountString = accountName?.fullName else { fatalError("No account configured") }
-        let dateString = Self.printDateFormatter.string(from: Date())
+    /// Converts ManuLifeBalance to SwiftBeanCountModel Balances and Prices
+    private func convertBalances(_ manuLifeBalances: [ManuLifeBalance]) -> ([Balance], [Price]) {
+        guard let accountString = accountName?.fullName else {
+            fatalError("No account configured")
+        }
 
-        return balances.map {
-            var result = [String]()
-            if let employeeBasic = $0.employeeBasic {
-                let accountName = "\(accountString):Employee:Basic:\($0.commodity)".padding(toLength: accountPaddingLength, withPad: " ", startingAt: 0)
-                result.append("\(dateString) balance \(accountName) \(leftPadding(toLength: amountPaddingLength, withPad: " ", string: employeeBasic)) \($0.commodity)")
+        let balances: [Balance] = manuLifeBalances.flatMap { manuLifeBalance -> [Balance] in
+            var tempBalances = [Balance]()
+            if let amountString = manuLifeBalance.employeeBasic, let accountName = try? AccountName("\(accountString):Employee:Basic:\(manuLifeBalance.commodity)") {
+                let (amountDecimal, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: amountString)
+                let amount = Amount(number: amountDecimal, commoditySymbol: manuLifeBalance.commodity, decimalDigits: decimalDigits)
+                tempBalances.append(Balance(date: Date(), accountName: accountName, amount: amount))
             }
-            if let employerBasic = $0.employerBasic {
-                let accountName = "\(accountString):Employer:Basic:\($0.commodity)".padding(toLength: accountPaddingLength, withPad: " ", startingAt: 0)
-                result.append("\(dateString) balance \(accountName) \(leftPadding(toLength: amountPaddingLength, withPad: " ", string: employerBasic)) \($0.commodity)")
+            if let amountString = manuLifeBalance.employerBasic, let accountName = try? AccountName("\(accountString):Employer:Basic:\(manuLifeBalance.commodity)") {
+                let (amountDecimal, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: amountString)
+                let amount = Amount(number: amountDecimal, commoditySymbol: manuLifeBalance.commodity, decimalDigits: decimalDigits)
+                tempBalances.append(Balance(date: Date(), accountName: accountName, amount: amount))
             }
-            if let employerMatch = $0.employerMatch {
-                let accountName = "\(accountString):Employer:Match:\($0.commodity)".padding(toLength: accountPaddingLength, withPad: " ", startingAt: 0)
-                result.append("\(dateString) balance \(accountName) \(leftPadding(toLength: amountPaddingLength, withPad: " ", string: employerMatch)) \($0.commodity)")
+            if let amountString = manuLifeBalance.employerMatch, let accountName = try? AccountName("\(accountString):Employer:Match:\(manuLifeBalance.commodity)") {
+                let (amountDecimal, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: amountString)
+                let amount = Amount(number: amountDecimal, commoditySymbol: manuLifeBalance.commodity, decimalDigits: decimalDigits)
+                tempBalances.append(Balance(date: Date(), accountName: accountName, amount: amount))
             }
-            if let employeeVoluntary = $0.employeeVoluntary {
-                let accountName = "\(accountString):Employee:Voluntary:\($0.commodity)".padding(toLength: accountPaddingLength, withPad: " ", startingAt: 0)
-                result.append("\(dateString) balance \(accountName) \(leftPadding(toLength: amountPaddingLength, withPad: " ", string: employeeVoluntary)) \($0.commodity)")
+            if let amountString = manuLifeBalance.employeeVoluntary, let accountName = try? AccountName("\(accountString):Employee:Voluntary:\(manuLifeBalance.commodity)") {
+                let (amountDecimal, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: amountString)
+                let amount = Amount(number: amountDecimal, commoditySymbol: manuLifeBalance.commodity, decimalDigits: decimalDigits)
+                tempBalances.append(Balance(date: Date(), accountName: accountName, amount: amount))
             }
-            return result.joined(separator: "\n")
+            return tempBalances
         }
-        .joined(separator: "\n") + "\n\n" + balances.map {
-            "\(dateString) price \($0.commodity.padding(toLength: commodityPaddingLength, withPad: " ", startingAt: 0)) \($0.unitValue) \(commoditySymbol)"
+
+        let prices: [Price] = manuLifeBalances.compactMap { manuLifeBalance -> Price? in
+            let (amountDecimal, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: manuLifeBalance.unitValue)
+            let amount = Amount(number: amountDecimal, commoditySymbol: commoditySymbol, decimalDigits: decimalDigits)
+            return try? Price(date: Date(), commoditySymbol: manuLifeBalance.commodity, amount: amount)
         }
-        .sorted()
-        .joined(separator: "\n")
+
+        return (balances, prices)
     }
 
     /// Parses a string into ManuLifeBuys
@@ -193,15 +203,12 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
     /// - Parameters:
     ///   - string: input from website
     ///   - commodities: dictionary of name to account for commodities
-    /// - Returns: Tupel with ManuLifeBuys and a date
-    private func parsePurchase(_ input: String, _ commodities: [String: String]) -> ([ManuLifeBuy], Date?) {
-
-        // RegEx
-        let datePattern = #"^(.*) Contribution \(Ref."#
+    /// - Returns: Tupel with ManuLifeBuys and the purchase date
+    private func parsePurchase(string input: String, commodities: [String: String]) -> ([ManuLifeBuy], Date?) {
         let purchasePattern = #"\s*.*?\.gif\s*(\d{4}.*?[a-z]\d)\s*$\s*Contribution\s*([0-9.]*)\s*units\s*@\s*\$([0-9.]*)/unit\s*([0-9.]*)\s*$"#
 
         // swiftlint:disable force_try
-        let dateRegex = try! NSRegularExpression(pattern: datePattern, options: [.anchorsMatchLines])
+        let dateRegex = try! NSRegularExpression(pattern: #"^(.*) Contribution \(Ref."#, options: [.anchorsMatchLines])
         let regex = try! NSRegularExpression(pattern: purchasePattern, options: [.anchorsMatchLines])
         // swiftlint:enable force_try
 
@@ -228,84 +235,53 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         }, date)
     }
 
-    /// Creates a string out of ManuLifeBuys and a date
-    ///
-    /// - Parameter purchase: tupel with array of ManuLifeBuy and a date
-    /// - Returns: string with the purchase and prices of the units at the purchase date
-    private func stringifyPurchase(_ purchase: ([ManuLifeBuy], Date?)) -> String {
+    /// Converts ManuLifeBuys to ImportedTransactions and SwiftBeanCountModel Prices
+    private func convertPurchase(_ buys: [ManuLifeBuy], on date: Date?) -> (ImportedTransaction?, [Price]) {
         guard let accountString = accountName?.fullName else { fatalError("No account configured") }
-        let (buys, date) = purchase
-        guard !buys.isEmpty else {
-            return ""
+        guard !buys.isEmpty, let date = date else {
+            return (nil, [])
         }
-        let dateString = date != nil ? Self.printDateFormatter.string(from: date!) : ""
-        var amount = Decimal()
 
-        var result = buys.map {
-            let (buyAmount, _) = ParserUtils.parseAmountDecimalFrom(string: $0.total)
-            amount += buyAmount
+        let transactionMetaData = TransactionMetaData(date: date, payee: "", narration: "", flag: .complete, tags: [])
+        var totalAmount = Decimal()
+        var postings = [Posting]()
+
+        buys.forEach {
             let unitFraction = Double($0.units)! / (employeeBasicFraction + employerBasicFraction + employerMatchFraction + employeeVoluntaryFraction)
-            let commodity = $0.commodity.padding(toLength: commodityPaddingLength, withPad: " ", startingAt: 0)
-            var result = ""
-            if employeeBasicFraction != 0 {
-                let employeeBasic = "\(accountString):Employee:Basic:\($0.commodity)".padding(toLength: accountPaddingLength, withPad: " ", startingAt: 0)
-                result += "  \(employeeBasic) \(String(format: unitFormat, unitFraction * employeeBasicFraction)) \(commodity) {\($0.price) \(commoditySymbol)}\n"
+            let (buyAmount, _) = ParserUtils.parseAmountDecimalFrom(string: $0.total)
+            totalAmount += buyAmount
+            guard let cost = try? Cost(amount: ParserUtils.parseAmountFrom(string: $0.price, commoditySymbol: commoditySymbol), date: nil, label: nil) else {
+                return
             }
-            if employerBasicFraction != 0 {
-                let employerBasic = "\(accountString):Employer:Basic:\($0.commodity)".padding(toLength: accountPaddingLength, withPad: " ", startingAt: 0)
-                result += "  \(employerBasic) \(String(format: unitFormat, unitFraction * employerBasicFraction)) \(commodity) {\($0.price) \(commoditySymbol)}\n"
+
+            if employeeBasicFraction != 0, let accountName = try? AccountName("\(accountString):Employee:Basic:\($0.commodity)") {
+                let amount = ParserUtils.parseAmountFrom(string: String(format: unitFormat, unitFraction * employeeBasicFraction), commoditySymbol: $0.commodity)
+                postings.append(Posting(accountName: accountName, amount: amount, cost: cost))
             }
-            if employerMatchFraction != 0 {
-                let employerMatch = "\(accountString):Employer:Match:\($0.commodity)".padding(toLength: accountPaddingLength, withPad: " ", startingAt: 0)
-                result += "  \(employerMatch) \(String(format: unitFormat, unitFraction * employerMatchFraction)) \(commodity) {\($0.price) \(commoditySymbol)}\n"
+            if employerBasicFraction != 0, let accountName = try? AccountName("\(accountString):Employer:Basic:\($0.commodity)") {
+                let amount = ParserUtils.parseAmountFrom(string: String(format: unitFormat, unitFraction * employerBasicFraction), commoditySymbol: $0.commodity)
+                postings.append(Posting(accountName: accountName, amount: amount, cost: cost))
             }
-            if employeeVoluntaryFraction != 0 {
-                let employeeVoluntary = "\(accountString):Employee:Voluntary:\($0.commodity)".padding(toLength: accountPaddingLength, withPad: " ", startingAt: 0)
-                result += "  \(employeeVoluntary) \(String(format: unitFormat, unitFraction * employeeVoluntaryFraction)) \(commodity) {\($0.price) \(commoditySymbol)}\n"
+            if employerMatchFraction != 0, let accountName = try? AccountName("\(accountString):Employer:Match:\($0.commodity)") {
+                let amount = ParserUtils.parseAmountFrom(string: String(format: unitFormat, unitFraction * employerMatchFraction), commoditySymbol: $0.commodity)
+                postings.append(Posting(accountName: accountName, amount: amount, cost: cost))
             }
-            return result
+            if employeeVoluntaryFraction != 0, let accountName = try? AccountName("\(accountString):Employee:Voluntary:\($0.commodity)") {
+                let amount = ParserUtils.parseAmountFrom(string: String(format: unitFormat, unitFraction * employeeVoluntaryFraction), commoditySymbol: $0.commodity)
+                postings.append(Posting(accountName: accountName, amount: amount, cost: cost))
+            }
         }
-        .joined()
-        result += "\n" + buys.map { priceString(buy: $0, date: dateString) }.sorted().joined(separator: "\n")
-        return "\(dateString) * \"\" \"\"\n\(cashAcountPostingString(amount: amount, account: accountString))" + result
-    }
 
-    private func cashAcountPostingString(amount: Decimal, account accountString: String) -> String {
-        let amountString = Self.numberFormatter(fractionDigits: 2).string(from: amount as NSDecimalNumber)!
-        var decimalPointPosition = 0
-        if let index = amountString.range(of: ".")?.lowerBound {
-            decimalPointPosition = amountString.distance(from: amountString.startIndex, to: index)
+        if let accountName = try? AccountName("\(accountString):\(cashAccountName)") {
+            postings.insert(Posting(accountName: accountName, amount: Amount(number: totalAmount, commoditySymbol: commoditySymbol, decimalDigits: 2)), at: 0)
         }
-        let cashAccount = "\(accountString):\(cashAccountName)".padding(toLength: accountPaddingLength - decimalPointPosition + 1, withPad: " ", startingAt: 0)
 
-        return "  \(cashAccount) \(amountString.padding(toLength: 6 + decimalPointPosition, withPad: " ", startingAt: 0)) \(commoditySymbol)\n"
-    }
-
-    /// Create the string for a price from a buy
-    ///
-    /// - Parameters:
-    ///   - buy: the purchase to take the price and commodity from
-    ///   - date: string which will be used as date
-    /// - Returns: string with padding of price entry
-    private func priceString(buy: ManuLifeBuy, date: String) -> String {
-        "\(date) price \(buy.commodity.padding(toLength: commodityPaddingLength, withPad: " ", startingAt: 0)) \(buy.price) \(commoditySymbol)"
-    }
-
-    /// Pads a string to a certain length with a given character
-    ///
-    /// Note: If the string is longer than the padding the original string is returned
-    ///
-    /// - Parameters:
-    ///   - toLength: length the string should be extended to
-    ///   - character: character used for filling
-    ///   - string: string to pad
-    /// - Returns: padded string if the string is shorter than the length, otherwise the original string
-    private func leftPadding(toLength: Int, withPad character: Character, string: String) -> String {
-        let length = string.count
-        if length < toLength {
-            return String(repeatElement(character, count: toLength - length)) + string
+        let prices: [Price] = buys.compactMap {  manuLifeBuy -> Price? in
+            let amount = ParserUtils.parseAmountFrom(string: manuLifeBuy.price, commoditySymbol: commoditySymbol)
+            return try? Price(date: date, commoditySymbol: manuLifeBuy.commodity, amount: amount)
         }
-        return string
+
+        return (ImportedTransaction(transaction: Transaction(metaData: transactionMetaData, postings: postings), originalDescription: ""), prices)
     }
 
     /// Returns the first match of the capture group regex in the input string

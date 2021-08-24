@@ -22,6 +22,31 @@ final class BaseImporterTests: XCTestCase {
         XCTAssertEqual(BaseImporter.settingsName, "")
     }
 
+    func testLoad() {
+        let importer = BaseImporter(ledger: TestUtils.ledger)
+        importer.load()
+    }
+
+    func testImportName() {
+        let importer = BaseImporter(ledger: TestUtils.ledger)
+        XCTAssertEqual(importer.importName, "")
+    }
+
+    func testNextTransaction() {
+        let importer = BaseImporter(ledger: TestUtils.ledger)
+        XCTAssertNil(importer.nextTransaction())
+    }
+
+    func testBalancesToImport() {
+        let importer = BaseImporter(ledger: TestUtils.ledger)
+        XCTAssertTrue(importer.balancesToImport().isEmpty)
+    }
+
+    func testPricesToImport() {
+        let importer = BaseImporter(ledger: TestUtils.ledger)
+        XCTAssertTrue(importer.pricesToImport().isEmpty)
+    }
+
     func testSettings() {
         let settings = BaseImporter.settings
         XCTAssertEqual(settings.count, 1)
