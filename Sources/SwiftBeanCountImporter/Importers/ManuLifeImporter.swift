@@ -273,7 +273,7 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         }
 
         if let accountName = try? AccountName("\(accountString):\(cashAccountName)") {
-            postings.insert(Posting(accountName: accountName, amount: Amount(number: totalAmount, commoditySymbol: commoditySymbol, decimalDigits: 2)), at: 0)
+            postings.insert(Posting(accountName: accountName, amount: Amount(number: -totalAmount, commoditySymbol: commoditySymbol, decimalDigits: 2)), at: 0)
         }
 
         let prices: [Price] = buys.compactMap {  manuLifeBuy -> Price? in

@@ -102,7 +102,7 @@ final class ManuLifeImporterTests: XCTestCase {
 
     private let transactionResult = """
         2020-05-29 * "" ""
-          Assets:Cash:Parking 149.28 USD
+          Assets:Cash:Parking -149.28 USD
           Assets:Cash:Employee:Basic:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
           Assets:Cash:Employer:Basic:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
           Assets:Cash:Employer:Match:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
@@ -212,7 +212,7 @@ final class ManuLifeImporterTests: XCTestCase {
         let prices = importer.pricesToImport()
         XCTAssertEqual("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))", """
             2020-05-29 * "" ""
-              Assets:Cash:Setting 149.28 USD
+              Assets:Cash:Setting -149.28 USD
               Assets:Cash:Employee:Basic:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
               Assets:Cash:Employer:Basic:1234 ML Category Fund 9876 y8 0.14336 1234 ML Category Fund 9876 y8 {21.221 USD}
               Assets:Cash:Employer:Match:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
@@ -248,7 +248,7 @@ final class ManuLifeImporterTests: XCTestCase {
         XCTAssertEqual(prices.count, 2)
         XCTAssertEqual("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))", """
             2020-05-29 * "" ""
-              Assets:Cash:Setting 149.28 USD
+              Assets:Cash:Setting -149.28 USD
               Assets:Cash:Employee:Basic:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
               Assets:Cash:Employer:Basic:1234 ML Category Fund 9876 y8 0.22056 1234 ML Category Fund 9876 y8 {21.221 USD}
               Assets:Cash:Employer:Match:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
@@ -281,7 +281,7 @@ final class ManuLifeImporterTests: XCTestCase {
         let prices = importer.pricesToImport()
         XCTAssertEqual("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))", """
             2020-05-29 * "" ""
-              Assets:Cash:Setting 149.28 USD
+              Assets:Cash:Setting -149.28 USD
               Assets:Cash:Employee:Voluntary:1234 ML Category Fund 9876 y8 0.44112 1234 ML Category Fund 9876 y8 {21.221 USD}
               Assets:Cash:Employee:Voluntary:\(TestUtils.fundSymbol) 15.29544 \(TestUtils.fundSymbol) {9.148 USD}
 
