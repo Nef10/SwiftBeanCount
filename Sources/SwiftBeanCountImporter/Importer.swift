@@ -45,6 +45,44 @@ public enum ImporterFactory {
 
 }
 
+/// Struct describing a transaction which has been imported
+public struct ImportedTransaction {
+
+    /// Transaction which has been imported
+    public let transaction: Transaction
+
+    /// The original description from the file. This is used to allow saving
+    /// of description and payee mapping.
+    let originalDescription: String
+
+    /// Saves a mapping of an imported transaction description to a different
+    /// description, payee as well as account name
+    ///
+    /// Note: You should ask to user if they want to save the mapping, ideally
+    /// separately for the account and description/payee
+    ///
+    /// - Parameters:
+    ///   - description: new description to use next time a transaction with the same origial description is imported
+    ///   - payee: new payee to use next time a transaction with the same origial description is imported
+    ///   - accountName: accountName to use next time a transaction with this payee is imported
+    public func saveMapped(description: String, payee: String, accountName: AccountName?) {
+        if !payee.isEmpty {
+            var defaultPayees = UserDefaults.standard.dictionary(forKey: Settings.payeesUserDefaultKey) ?? [:]
+            defaultPayees[originalDescription] = payee
+            UserDefaults.standard.set(defaultPayees, forKey: Settings.payeesUserDefaultKey)
+            if let accountName = accountName {
+                var defaultAccounts = UserDefaults.standard.dictionary(forKey: Settings.accountsUserDefaultsKey) ?? [:]
+                defaultAccounts[payee] = accountName.fullName
+                UserDefaults.standard.set(defaultAccounts, forKey: Settings.accountsUserDefaultsKey)
+            }
+        }
+        var defaultDescriptions = UserDefaults.standard.dictionary(forKey: Settings.descriptionUserDefaultsKey) ?? [:]
+        defaultDescriptions[originalDescription] = description
+        UserDefaults.standard.set(defaultDescriptions, forKey: Settings.descriptionUserDefaultsKey)
+    }
+
+}
+
 /// Represents a single setting of an importer
 public struct ImporterSetting {
 

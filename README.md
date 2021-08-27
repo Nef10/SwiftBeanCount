@@ -16,8 +16,9 @@ This is the importer of SwiftBeanCount. It reads files to create transactions. T
 2) Call `load()` on the importer.
 3) Check `possibleAccounts()` on the importer. If there is more than one or none, promt to user to enter/select the account to use. To show the user for which import they are entering information, you can display `importName`.
 4) Pass the result to the importer via `useAccount(name:)`.
-5) Call `nextTransaction()` to retrive transaction after transactions till it returns `nil`. It is recommended to allow the user the edit the transactions while doing this. (See [#12](https://github.com/Nef10/SwiftBeanCountImporter/issues/12))
-6) Get `balancesToImport()` and `pricesToImport()` from the importer.
+5) Call `nextTransaction()` to retrive transaction after transactions till it returns `nil`. It is recommended to allow the user the edit the transactions while doing this.
+6) If the user edits the transaction, and you offer and they accept to save the new mapping, call `saveMapped(description:payee:accountName:)`.
+7) Get `balancesToImport()` and `pricesToImport()` from the importer.
 
 ### Settings
 
@@ -27,6 +28,8 @@ The different importers which are included in this library can be configured:
 2) Call `importer.settingsName` to get the user friendly name of the importer
 3) Call `importer.settings` to get the `ImporterSetting`s which an importer offers
 3) Use `importer.get(setting: ImporterSetting)` and `importer.set(setting: ImporterSetting, to value: String)` to modify these settings.
+
+On top of this, there is a setting for the date tolerance when detecting duplicate transactions as well as the mapping the user saved in step 6) of importing transactions. Your app can allow the user to view and edit these via the `Settings` object.
 
 Please check out the complete documentation [here](https://nef10.github.io/SwiftBeanCountImporter/), or have a look at the [SwiftBeanCountImporterApp](https://github.com/Nef10/SwiftBeanCountImporterApp/) which uses this library.
 

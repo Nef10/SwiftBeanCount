@@ -29,18 +29,6 @@ enum FileImporterFactory {
 
 }
 
-/// Struct describing a transaction which has been imported
-public struct ImportedTransaction {
-
-    /// Transaction which has been imported
-    public let transaction: Transaction
-
-    /// The original description from the file. This is used to allow saving
-    /// of description and payee mapping.
-    public let originalDescription: String
-
-}
-
 /// Protocol to represent an Importer which imports a file
 protocol FileImporter: Importer {
 

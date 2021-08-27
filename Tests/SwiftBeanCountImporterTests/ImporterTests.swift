@@ -58,4 +58,34 @@ final class ImporterTests: XCTestCase {
         XCTAssertEqual(UserDefaults.standard.string(forKey: key), value)
     }
 
+    func testImportedTransactionSaveMapped() {
+        let originalDescription = "abcd"
+        let description = "ab"
+        let payee = "ef"
+        let accountName = TestUtils.cash
+        let metaData = TransactionMetaData(date: Date(),
+                                           payee: "",
+                                           narration: originalDescription,
+                                           flag: .incomplete,
+                                           tags: [])
+        let posting1 = Posting(accountName: TestUtils.chequing,
+                               amount: Amount(number: Decimal(10), commoditySymbol: TestUtils.usd, decimalDigits: 2),
+                               price: nil)
+        let posting2 = Posting(accountName: TestUtils.chequing,
+                               amount: Amount(number: Decimal(-10), commoditySymbol: TestUtils.usd, decimalDigits: 2),
+                               price: nil)
+        let transaction = Transaction(metaData: metaData, postings: [posting1, posting2])
+        let importedTransaction = ImportedTransaction(transaction: transaction, originalDescription: originalDescription)
+
+        UserDefaults.standard.removeObject(forKey: Settings.descriptionUserDefaultsKey)
+        UserDefaults.standard.removeObject(forKey: Settings.payeesUserDefaultKey)
+        UserDefaults.standard.removeObject(forKey: Settings.accountsUserDefaultsKey)
+
+        importedTransaction.saveMapped(description: description, payee: payee, accountName: accountName)
+
+        XCTAssertEqual(UserDefaults.standard.object(forKey: Settings.descriptionUserDefaultsKey) as? [String: String], [originalDescription: description])
+        XCTAssertEqual(UserDefaults.standard.object(forKey: Settings.payeesUserDefaultKey) as? [String: String], [originalDescription: payee])
+        XCTAssertEqual(UserDefaults.standard.object(forKey: Settings.accountsUserDefaultsKey) as? [String: String], [payee: accountName.fullName])
+    }
+
 }
