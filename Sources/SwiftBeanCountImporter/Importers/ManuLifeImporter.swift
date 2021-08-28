@@ -242,7 +242,6 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
             return (nil, [])
         }
 
-        let transactionMetaData = TransactionMetaData(date: date, payee: "", narration: "", flag: .complete, tags: [])
         var totalAmount = Decimal()
         var postings = [Posting]()
 
@@ -281,7 +280,8 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
             return try? Price(date: date, commoditySymbol: manuLifeBuy.commodity, amount: amount)
         }
 
-        return (ImportedTransaction(transaction: Transaction(metaData: transactionMetaData, postings: postings), originalDescription: ""), prices)
+        let transaction = Transaction(metaData: TransactionMetaData(date: date, payee: "", narration: "", flag: .complete, tags: []), postings: postings)
+        return (ImportedTransaction(transaction: transaction, originalDescription: "", possibleDuplicate: getPossibleDuplicateFor(transaction)), prices)
     }
 
     /// Returns the first match of the capture group regex in the input string

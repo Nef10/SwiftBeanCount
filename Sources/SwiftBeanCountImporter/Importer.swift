@@ -55,6 +55,10 @@ public struct ImportedTransaction {
     /// of description and payee mapping.
     let originalDescription: String
 
+    /// Transaction from the ledger of which the imported transaction
+    /// might be a duplicate
+    let possibleDuplicate: Transaction?
+
     /// Saves a mapping of an imported transaction description to a different
     /// description, payee as well as account name
     ///

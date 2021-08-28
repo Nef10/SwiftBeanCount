@@ -130,6 +130,36 @@ final class CSVBaseImporterTests: XCTestCase {
         XCTAssertEqual(transactionHelper(description: description).postings.first { $0.accountName != TestUtils.cash }?.accountName, TestUtils.chequing)
     }
 
+    func testGetPossibleDuplicateFor() {
+        Settings.storage = TestStorage()
+        Settings.dateToleranceInDays = 2
+        let ledger = TestUtils.lederFund
+        let transaction = TestUtils.transaction
+        ledger.add(transaction)
+
+        let importer = TestCSVBaseImporter(ledger: ledger, csvReader: TestUtils.csvReader(description: "a", payee: "b", date: transaction.metaData.date), fileName: "")
+        importer.load()
+        importer.useAccount(name: TestUtils.cash)
+        let importedTransaction = importer.nextTransaction()
+        XCTAssertNotNil(importedTransaction)
+        XCTAssertEqual(importedTransaction!.possibleDuplicate, transaction)
+    }
+
+    func testGetPossibleDuplicateForNone() {
+        Settings.storage = TestStorage()
+        Settings.dateToleranceInDays = 2
+        let ledger = TestUtils.lederFund
+        let transaction = TestUtils.transaction
+        ledger.add(transaction)
+
+        let importer = TestCSVBaseImporter(ledger: ledger, csvReader: TestUtils.csvReader(description: "a", payee: "b", date: transaction.metaData.date), fileName: "")
+        importer.load()
+        importer.useAccount(name: TestUtils.chequing)
+        let importedTransaction = importer.nextTransaction()
+        XCTAssertNotNil(importedTransaction)
+        XCTAssertNil(importedTransaction!.possibleDuplicate)
+    }
+
     func testSanitizeDescription() {
         XCTAssertEqual(descriptionHelper(description: "Shop1 C-IDP PURCHASE - 1234  BC  CA"), "Shop1")
         XCTAssertEqual(descriptionHelper(description: "Shop1 IDP PURCHASE-1234"), "Shop1")

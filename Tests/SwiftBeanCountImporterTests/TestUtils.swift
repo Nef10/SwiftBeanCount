@@ -37,6 +37,12 @@ enum TestUtils {
     static let accountNumberChequing = 123_456_789
     static let accountNumberCash = 987_654_321
 
+    private static var dateFormatter: DateFormatter = {
+        var dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter
+    }()
+
     static var usdCommodity: Commodity = {
         Commodity(symbol: usd)
     }()
@@ -85,6 +91,17 @@ enum TestUtils {
         return ledger
     }()
 
+    static var transaction: Transaction = {
+        let metaData = TransactionMetaData(date: Date(), payee: "a", narration: "b", flag: .incomplete, tags: [])
+        let posting1 = Posting(accountName: TestUtils.cash,
+                               amount: Amount(number: Decimal(10), commoditySymbol: TestUtils.usd, decimalDigits: 2),
+                               price: nil)
+        let posting2 = Posting(accountName: TestUtils.chequing,
+                               amount: Amount(number: Decimal(-10), commoditySymbol: TestUtils.usd, decimalDigits: 2),
+                               price: nil)
+        return Transaction(metaData: metaData, postings: [posting1, posting2])
+    }()
+
     static var cash: AccountName = {
         try! AccountName("Assets:Cash")
     }()
@@ -94,21 +111,21 @@ enum TestUtils {
     }()
 
     static var basicCSVReader: CSVReader {
-        try! CSVReader(stream: InputStream(data: "Date, Description, Payee\n2020-01-01, def, ghi\n".data(using: .utf8)!),
-                       hasHeaderRow: true,
-                       trimFields: true)
+        csvReader(content: "Date, Description, Payee\n2020-01-01, def, ghi\n")
     }
 
     static var dateMixedCSVReader: CSVReader {
-        try! CSVReader(stream: InputStream(data: "Date, Description, Payee\n2020-02-01, a, b\n2020-01-01, c, d\n".data(using: .utf8)!),
-                       hasHeaderRow: true,
-                       trimFields: true)
+        csvReader(content: "Date, Description, Payee\n2020-02-01, a, b\n2020-01-01, c, d\n")
     }
 
-    static func csvReader(description: String, payee: String) -> CSVReader {
-        try! CSVReader(stream: InputStream(data: "Date, Description, Payee\n2020-01-01, \(description), \(payee)\n".data(using: .utf8)!),
-                       hasHeaderRow: true,
-                       trimFields: true)
+    static func csvReader(description: String, payee: String, date: Date? = nil) -> CSVReader {
+        let dateString: String
+        if let date = date {
+            dateString = dateFormatter.string(from: date)
+        } else {
+            dateString = "2020-01-01"
+        }
+        return csvReader(content: "Date, Description, Payee\n\(dateString), \(description), \(payee)\n")
     }
 
     static func csvReader(content: String) -> CSVReader {

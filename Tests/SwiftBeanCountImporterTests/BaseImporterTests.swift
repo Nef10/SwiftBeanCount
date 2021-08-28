@@ -130,6 +130,73 @@ final class BaseImporterTests: XCTestCase {
         XCTAssertEqual(importer.savedAccountNameFor(payee: payee), TestUtils.chequing)
     }
 
+    func testGetPossibleDuplicateFor() {
+        Settings.storage = TestStorage()
+        Settings.dateToleranceInDays = 2
+        let ledger = TestUtils.lederFund
+        let transaction = TestUtils.transaction
+        ledger.add(transaction)
+
+        let importer = BaseImporter(ledger: ledger)
+        XCTAssertEqual(importer.getPossibleDuplicateFor(transaction), transaction)
+    }
+
+    func testGetPossibleDuplicateForDateToleranceInside() {
+        Settings.storage = TestStorage()
+        Settings.dateToleranceInDays = 2
+        let ledger = TestUtils.lederFund
+        let transaction = TestUtils.transaction
+        ledger.add(transaction)
+
+        let importer = BaseImporter(ledger: ledger)
+
+        var importedTransactionMetaData = TransactionMetaData(date: transaction.metaData.date - Settings.dateTolerance,
+                                                              payee: "",
+                                                              narration: "",
+                                                              flag: transaction.metaData.flag,
+                                                              tags: [])
+        var importedTransaction = Transaction(metaData: importedTransactionMetaData, postings: transaction.postings)
+
+        XCTAssertEqual(importer.getPossibleDuplicateFor(importedTransaction), transaction)
+
+        importedTransactionMetaData = TransactionMetaData(date: transaction.metaData.date + Settings.dateTolerance,
+                                                          payee: transaction.metaData.payee,
+                                                          narration: transaction.metaData.narration,
+                                                          flag: transaction.metaData.flag,
+                                                          tags: transaction.metaData.tags)
+        importedTransaction = Transaction(metaData: importedTransactionMetaData, postings: transaction.postings)
+
+        XCTAssertEqual(importer.getPossibleDuplicateFor(importedTransaction), transaction)
+    }
+
+    func testGetPossibleDuplicateForDateToleranceOutside() {
+        Settings.storage = TestStorage()
+        Settings.dateToleranceInDays = 2
+        let ledger = TestUtils.lederFund
+        let transaction = TestUtils.transaction
+        ledger.add(transaction)
+
+        let importer = BaseImporter(ledger: ledger)
+
+        var importedTransactionMetaData = TransactionMetaData(date: transaction.metaData.date - (Settings.dateTolerance + 1),
+                                                              payee: "",
+                                                              narration: "",
+                                                              flag: transaction.metaData.flag,
+                                                              tags: [])
+        var importedTransaction = Transaction(metaData: importedTransactionMetaData, postings: transaction.postings)
+
+        XCTAssertNil(importer.getPossibleDuplicateFor(importedTransaction))
+
+        importedTransactionMetaData = TransactionMetaData(date: transaction.metaData.date + (Settings.dateTolerance + 1),
+                                                          payee: transaction.metaData.payee,
+                                                          narration: transaction.metaData.narration,
+                                                          flag: transaction.metaData.flag,
+                                                          tags: transaction.metaData.tags)
+        importedTransaction = Transaction(metaData: importedTransactionMetaData, postings: transaction.postings)
+
+        XCTAssertNil(importer.getPossibleDuplicateFor(importedTransaction))
+    }
+
     func testSanitizeDescription() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
         XCTAssertEqual(importer.sanitize(description: "Shop1 C-IDP PURCHASE - 1234  BC  CA"), "Shop1")

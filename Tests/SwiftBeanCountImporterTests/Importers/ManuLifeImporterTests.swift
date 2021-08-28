@@ -8,6 +8,7 @@
 
 import Foundation
 @testable import SwiftBeanCountImporter
+import SwiftBeanCountModel
 import XCTest
 
 private let balance = """
@@ -47,7 +48,7 @@ private let balance = """
 private let transaction = """
 
     Transaction details
-    May 29, 2020 Contribution (Ref.# 12345678)
+    June 5, 2020 Contribution (Ref.# 12345678)
 
     To:			Amount($)
     ../Images/colour7.gif	 1234 ML Category Fund 9876 y8
@@ -69,54 +70,54 @@ private let transactionInvalidDate = """
     Total		9.36
     """
 
+private let transactionResult = """
+    2020-06-05 * "" ""
+      Assets:Cash:Parking -149.28 USD
+      Assets:Cash:Employee:Basic:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
+      Assets:Cash:Employer:Basic:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
+      Assets:Cash:Employer:Match:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
+      Assets:Cash:Employee:Voluntary:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
+      Assets:Cash:Employee:Basic:\(TestUtils.fundSymbol) 3.82386 \(TestUtils.fundSymbol) {9.148 USD}
+      Assets:Cash:Employer:Basic:\(TestUtils.fundSymbol) 3.82386 \(TestUtils.fundSymbol) {9.148 USD}
+      Assets:Cash:Employer:Match:\(TestUtils.fundSymbol) 3.82386 \(TestUtils.fundSymbol) {9.148 USD}
+      Assets:Cash:Employee:Voluntary:\(TestUtils.fundSymbol) 3.82386 \(TestUtils.fundSymbol) {9.148 USD}
+    """
+
+private let transactionPricesResult = """
+    2020-06-05 price 1234 ML Category Fund 9876 y8 21.221 USD
+    2020-06-05 price \(TestUtils.fundSymbol) 9.148 USD
+    """
+
+private let printDateFormatter: DateFormatter = {
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+    return dateFormatter
+}()
+
+private var dateString: String = {
+    printDateFormatter.string(from: Date())
+}()
+
+private var balanceResult: String = { """
+    \(dateString) balance Assets:Cash:Employee:Basic:1234 ML Category Fund 9876 y8 8.0000 1234 ML Category Fund 9876 y8
+    \(dateString) balance Assets:Cash:Employer:Basic:1234 ML Category Fund 9876 y8 10.4000 1234 ML Category Fund 9876 y8
+    \(dateString) balance Assets:Cash:Employer:Match:1234 ML Category Fund 9876 y8 8.0000 1234 ML Category Fund 9876 y8
+    \(dateString) balance Assets:Cash:Employee:Voluntary:1234 ML Category Fund 9876 y8 5.6000 1234 ML Category Fund 9876 y8
+    \(dateString) balance Assets:Cash:Employee:Basic:\(TestUtils.fundSymbol) 11.7280 \(TestUtils.fundSymbol)
+    \(dateString) balance Assets:Cash:Employer:Basic:\(TestUtils.fundSymbol) 15.24640 \(TestUtils.fundSymbol)
+    \(dateString) balance Assets:Cash:Employer:Match:\(TestUtils.fundSymbol) 11.72800 \(TestUtils.fundSymbol)
+    \(dateString) balance Assets:Cash:Employee:Voluntary:\(TestUtils.fundSymbol) 8.20960 \(TestUtils.fundSymbol)
+    """
+}()
+
+private var balancePricesResult: String = { """
+    \(dateString) price 1234 ML Category Fund 9876 y8 31.25 USD
+    \(dateString) price \(TestUtils.fundSymbol) 5.000 USD
+    """
+}()
+
 final class ManuLifeImporterTests: XCTestCase {
-
-    private static let printDateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter
-    }()
-
-    private lazy var dateString: String = {
-        Self.printDateFormatter.string(from: Date())
-    }()
-
-    private lazy var balanceResult: String = { """
-        \(dateString) balance Assets:Cash:Employee:Basic:1234 ML Category Fund 9876 y8 8.0000 1234 ML Category Fund 9876 y8
-        \(dateString) balance Assets:Cash:Employer:Basic:1234 ML Category Fund 9876 y8 10.4000 1234 ML Category Fund 9876 y8
-        \(dateString) balance Assets:Cash:Employer:Match:1234 ML Category Fund 9876 y8 8.0000 1234 ML Category Fund 9876 y8
-        \(dateString) balance Assets:Cash:Employee:Voluntary:1234 ML Category Fund 9876 y8 5.6000 1234 ML Category Fund 9876 y8
-        \(dateString) balance Assets:Cash:Employee:Basic:\(TestUtils.fundSymbol) 11.7280 \(TestUtils.fundSymbol)
-        \(dateString) balance Assets:Cash:Employer:Basic:\(TestUtils.fundSymbol) 15.24640 \(TestUtils.fundSymbol)
-        \(dateString) balance Assets:Cash:Employer:Match:\(TestUtils.fundSymbol) 11.72800 \(TestUtils.fundSymbol)
-        \(dateString) balance Assets:Cash:Employee:Voluntary:\(TestUtils.fundSymbol) 8.20960 \(TestUtils.fundSymbol)
-        """
-    }()
-
-    private lazy var balancePricesResult: String = { """
-        \(dateString) price 1234 ML Category Fund 9876 y8 31.25 USD
-        \(dateString) price \(TestUtils.fundSymbol) 5.000 USD
-        """
-    }()
-
-    private let transactionResult = """
-        2020-05-29 * "" ""
-          Assets:Cash:Parking -149.28 USD
-          Assets:Cash:Employee:Basic:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
-          Assets:Cash:Employer:Basic:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
-          Assets:Cash:Employer:Match:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
-          Assets:Cash:Employee:Voluntary:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
-          Assets:Cash:Employee:Basic:\(TestUtils.fundSymbol) 3.82386 \(TestUtils.fundSymbol) {9.148 USD}
-          Assets:Cash:Employer:Basic:\(TestUtils.fundSymbol) 3.82386 \(TestUtils.fundSymbol) {9.148 USD}
-          Assets:Cash:Employer:Match:\(TestUtils.fundSymbol) 3.82386 \(TestUtils.fundSymbol) {9.148 USD}
-          Assets:Cash:Employee:Voluntary:\(TestUtils.fundSymbol) 3.82386 \(TestUtils.fundSymbol) {9.148 USD}
-        """
-
-    private let transactionPricesResult = """
-        2020-05-29 price 1234 ML Category Fund 9876 y8 21.221 USD
-        2020-05-29 price \(TestUtils.fundSymbol) 9.148 USD
-        """
 
     func testSettingsName() {
         XCTAssertEqual(ManuLifeImporter.settingsName, "ManuLife")
@@ -211,7 +212,7 @@ final class ManuLifeImporterTests: XCTestCase {
         XCTAssertTrue(importer.balancesToImport().isEmpty)
         let prices = importer.pricesToImport()
         XCTAssertEqual("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))", """
-            2020-05-29 * "" ""
+            2020-06-05 * "" ""
               Assets:Cash:Setting -149.28 USD
               Assets:Cash:Employee:Basic:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
               Assets:Cash:Employer:Basic:1234 ML Category Fund 9876 y8 0.14336 1234 ML Category Fund 9876 y8 {21.221 USD}
@@ -222,8 +223,8 @@ final class ManuLifeImporterTests: XCTestCase {
               Assets:Cash:Employer:Match:\(TestUtils.fundSymbol) 3.82386 \(TestUtils.fundSymbol) {9.148 USD}
               Assets:Cash:Employee:Voluntary:\(TestUtils.fundSymbol) 2.67670 \(TestUtils.fundSymbol) {9.148 USD}
 
-            2020-05-29 price 1234 ML Category Fund 9876 y8 21.221 USD
-            2020-05-29 price \(TestUtils.fundSymbol) 9.148 USD
+            2020-06-05 price 1234 ML Category Fund 9876 y8 21.221 USD
+            2020-06-05 price \(TestUtils.fundSymbol) 9.148 USD
             """)
 
         clearSettings()
@@ -247,7 +248,7 @@ final class ManuLifeImporterTests: XCTestCase {
         let prices = importer.pricesToImport()
         XCTAssertEqual(prices.count, 2)
         XCTAssertEqual("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))", """
-            2020-05-29 * "" ""
+            2020-06-05 * "" ""
               Assets:Cash:Setting -149.28 USD
               Assets:Cash:Employee:Basic:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
               Assets:Cash:Employer:Basic:1234 ML Category Fund 9876 y8 0.22056 1234 ML Category Fund 9876 y8 {21.221 USD}
@@ -256,8 +257,8 @@ final class ManuLifeImporterTests: XCTestCase {
               Assets:Cash:Employer:Basic:\(TestUtils.fundSymbol) 7.64772 \(TestUtils.fundSymbol) {9.148 USD}
               Assets:Cash:Employer:Match:\(TestUtils.fundSymbol) 3.82386 \(TestUtils.fundSymbol) {9.148 USD}
 
-            2020-05-29 price 1234 ML Category Fund 9876 y8 21.221 USD
-            2020-05-29 price \(TestUtils.fundSymbol) 9.148 USD
+            2020-06-05 price 1234 ML Category Fund 9876 y8 21.221 USD
+            2020-06-05 price \(TestUtils.fundSymbol) 9.148 USD
             """)
 
         clearSettings()
@@ -280,13 +281,13 @@ final class ManuLifeImporterTests: XCTestCase {
         XCTAssertTrue(importer.balancesToImport().isEmpty)
         let prices = importer.pricesToImport()
         XCTAssertEqual("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))", """
-            2020-05-29 * "" ""
+            2020-06-05 * "" ""
               Assets:Cash:Setting -149.28 USD
               Assets:Cash:Employee:Voluntary:1234 ML Category Fund 9876 y8 0.44112 1234 ML Category Fund 9876 y8 {21.221 USD}
               Assets:Cash:Employee:Voluntary:\(TestUtils.fundSymbol) 15.29544 \(TestUtils.fundSymbol) {9.148 USD}
 
-            2020-05-29 price 1234 ML Category Fund 9876 y8 21.221 USD
-            2020-05-29 price \(TestUtils.fundSymbol) 9.148 USD
+            2020-06-05 price 1234 ML Category Fund 9876 y8 21.221 USD
+            2020-06-05 price \(TestUtils.fundSymbol) 9.148 USD
             """)
 
         clearSettings()
@@ -308,6 +309,43 @@ final class ManuLifeImporterTests: XCTestCase {
         XCTAssertNil(importer.nextTransaction())
         XCTAssertEqual(importer.balancesToImport(), [])
         XCTAssertEqual(importer.pricesToImport(), [])
+    }
+
+    func testGetPossibleDuplicateFor() {
+        Settings.storage = TestStorage()
+        Settings.dateToleranceInDays = 2
+        let ledger = TestUtils.lederFund
+        let metaData = TransactionMetaData(date: TestUtils.date20200605, payee: "a", narration: "b", flag: .incomplete, tags: [])
+        let posting1 = Posting(accountName: try! AccountName("Assets:Cash:Parking"),
+                               amount: Amount(number: Decimal(-149.28), commoditySymbol: TestUtils.usd, decimalDigits: 2),
+                               price: nil)
+        let posting2 = Posting(accountName: TestUtils.chequing,
+                               amount: Amount(number: Decimal(149.28), commoditySymbol: TestUtils.usd, decimalDigits: 2),
+                               price: nil)
+        let transaction1 = Transaction(metaData: metaData, postings: [posting1, posting2])
+        ledger.add(transaction1)
+
+        let importer = ManuLifeImporter(ledger: TestUtils.lederFund, transaction: transaction, balance: "")
+        importer.load()
+        importer.useAccount(name: TestUtils.cash)
+        let importedTransaction = importer.nextTransaction()
+        XCTAssertNotNil(importedTransaction)
+        XCTAssertEqual(importedTransaction!.possibleDuplicate, transaction1)
+    }
+
+    func testGetPossibleDuplicateForNone() {
+        Settings.storage = TestStorage()
+        Settings.dateToleranceInDays = 2
+        let ledger = TestUtils.lederFund
+        let transaction1 = TestUtils.transaction
+        ledger.add(transaction1)
+
+        let importer = ManuLifeImporter(ledger: TestUtils.lederFund, transaction: transaction, balance: "")
+        importer.load()
+        importer.useAccount(name: TestUtils.chequing)
+        let importedTransaction = importer.nextTransaction()
+        XCTAssertNotNil(importedTransaction)
+        XCTAssertNil(importedTransaction!.possibleDuplicate)
     }
 
     private func clearSettings() {

@@ -65,20 +65,7 @@ final class ImporterTests: XCTestCase {
         let accountName = TestUtils.cash
         Settings.storage = TestStorage()
 
-        let metaData = TransactionMetaData(date: Date(),
-                                           payee: "",
-                                           narration: originalDescription,
-                                           flag: .incomplete,
-                                           tags: [])
-        let posting1 = Posting(accountName: TestUtils.chequing,
-                               amount: Amount(number: Decimal(10), commoditySymbol: TestUtils.usd, decimalDigits: 2),
-                               price: nil)
-        let posting2 = Posting(accountName: TestUtils.chequing,
-                               amount: Amount(number: Decimal(-10), commoditySymbol: TestUtils.usd, decimalDigits: 2),
-                               price: nil)
-        let transaction = Transaction(metaData: metaData, postings: [posting1, posting2])
-        let importedTransaction = ImportedTransaction(transaction: transaction, originalDescription: originalDescription)
-
+        let importedTransaction = ImportedTransaction(transaction: TestUtils.transaction, originalDescription: originalDescription, possibleDuplicate: nil)
         importedTransaction.saveMapped(description: description, payee: payee, accountName: accountName)
 
         XCTAssertEqual(Settings.allDescriptionMappings, [originalDescription: description])

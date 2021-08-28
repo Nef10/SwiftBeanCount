@@ -97,4 +97,14 @@ class BaseImporter: Importer {
         }
         return nil
     }
+
+    func getPossibleDuplicateFor(_ transaction: Transaction) -> Transaction? {
+        guard let ledger = ledger else {
+            return nil
+        }
+        return ledger.transactions.first {
+            $0.postings.contains { $0.accountName == transaction.postings.first?.accountName && $0.amount == transaction.postings.first?.amount }
+                && $0.metaData.date + Settings.dateTolerance >= transaction.metaData.date && $0.metaData.date - Settings.dateTolerance <= transaction.metaData.date
+        }
+    }
 }
