@@ -67,18 +67,12 @@ public struct ImportedTransaction {
     ///   - accountName: accountName to use next time a transaction with this payee is imported
     public func saveMapped(description: String, payee: String, accountName: AccountName?) {
         if !payee.isEmpty {
-            var defaultPayees = UserDefaults.standard.dictionary(forKey: Settings.payeesUserDefaultKey) ?? [:]
-            defaultPayees[originalDescription] = payee
-            UserDefaults.standard.set(defaultPayees, forKey: Settings.payeesUserDefaultKey)
+            Settings.setPayeeMapping(key: originalDescription, payee: payee)
             if let accountName = accountName {
-                var defaultAccounts = UserDefaults.standard.dictionary(forKey: Settings.accountsUserDefaultsKey) ?? [:]
-                defaultAccounts[payee] = accountName.fullName
-                UserDefaults.standard.set(defaultAccounts, forKey: Settings.accountsUserDefaultsKey)
+                Settings.setAccountMapping(key: payee, account: accountName.fullName)
             }
         }
-        var defaultDescriptions = UserDefaults.standard.dictionary(forKey: Settings.descriptionUserDefaultsKey) ?? [:]
-        defaultDescriptions[originalDescription] = description
-        UserDefaults.standard.set(defaultDescriptions, forKey: Settings.descriptionUserDefaultsKey)
+        Settings.setDescriptionMapping(key: originalDescription, description: description)
     }
 
 }

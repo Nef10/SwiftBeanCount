@@ -88,13 +88,11 @@ class BaseImporter: Importer {
     }
 
     func savedDescriptionAndPayeeFor(description: String) -> (String?, String?) {
-        ((UserDefaults.standard.dictionary(forKey: Settings.descriptionUserDefaultsKey) as? [String: String])?[description],
-         (UserDefaults.standard.dictionary(forKey: Settings.payeesUserDefaultKey) as? [String: String])?[description])
+        (Settings.allDescriptionMappings[description], Settings.allPayeeMappings[description])
     }
 
     func savedAccountNameFor(payee: String) -> AccountName? {
-        if let accountNameString = (UserDefaults.standard.dictionary(forKey: Settings.accountsUserDefaultsKey) as? [String: String])?[payee],
-            let accountName = try? AccountName(accountNameString) {
+        if let accountNameString = Settings.allAccountMappings[payee], let accountName = try? AccountName(accountNameString) {
             return accountName
         }
         return nil
