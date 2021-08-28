@@ -275,13 +275,13 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
             postings.insert(Posting(accountName: accountName, amount: Amount(number: -totalAmount, commoditySymbol: commoditySymbol, decimalDigits: 2)), at: 0)
         }
 
-        let prices: [Price] = buys.compactMap {  manuLifeBuy -> Price? in
-            let amount = ParserUtils.parseAmountFrom(string: manuLifeBuy.price, commoditySymbol: commoditySymbol)
-            return try? Price(date: date, commoditySymbol: manuLifeBuy.commodity, amount: amount)
+        let prices: [Price] = buys.compactMap { manuLifeBuy -> Price? in
+            try? Price(date: date, commoditySymbol: manuLifeBuy.commodity, amount: ParserUtils.parseAmountFrom(string: manuLifeBuy.price, commoditySymbol: commoditySymbol))
         }
 
         let transaction = Transaction(metaData: TransactionMetaData(date: date, payee: "", narration: "", flag: .complete, tags: []), postings: postings)
-        return (ImportedTransaction(transaction: transaction, originalDescription: "", possibleDuplicate: getPossibleDuplicateFor(transaction)), prices)
+        return (ImportedTransaction(transaction: transaction, originalDescription: "", possibleDuplicate: getPossibleDuplicateFor(transaction), shouldAllowUserToEdit: false),
+                prices)
     }
 
     /// Returns the first match of the capture group regex in the input string

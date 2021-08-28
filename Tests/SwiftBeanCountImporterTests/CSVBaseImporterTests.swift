@@ -74,6 +74,7 @@ final class CSVBaseImporterTests: XCTestCase {
 
         let importedTransaction = importer.nextTransaction()
         XCTAssertNotNil(importedTransaction)
+        XCTAssertTrue(importedTransaction!.shouldAllowUserToEdit)
 
         let noTransaction = importer.nextTransaction()
         XCTAssertNil(noTransaction)

@@ -165,6 +165,7 @@ final class ManuLifeImporterTests: XCTestCase {
         let transaction = importer.nextTransaction()
         XCTAssertNotNil(transaction)
         XCTAssertEqual(transaction!.originalDescription, "")
+        XCTAssertFalse(transaction!.shouldAllowUserToEdit)
         XCTAssertNil(importer.nextTransaction())
         let prices = importer.pricesToImport()
         XCTAssertTrue(importer.balancesToImport().isEmpty)

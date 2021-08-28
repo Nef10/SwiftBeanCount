@@ -57,7 +57,13 @@ public struct ImportedTransaction {
 
     /// Transaction from the ledger of which the imported transaction
     /// might be a duplicate
-    let possibleDuplicate: Transaction?
+    public let possibleDuplicate: Transaction?
+
+    /// Indicates if the app should allow the user to edit the imported transaction.
+    ///
+    /// Some importer output transactions which normally do not require edits
+    /// e.g. from stock purchases. These indicate this by settings this value to true.
+    public let shouldAllowUserToEdit: Bool
 
     /// Saves a mapping of an imported transaction description to a different
     /// description, payee as well as account name

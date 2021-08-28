@@ -77,7 +77,8 @@ class CSVBaseImporter: BaseImporter {
             posting2 = Posting(accountName: categoryAccountName, amount: categoryAmount)
         }
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting, posting2])
-        return ImportedTransaction(transaction: transaction, originalDescription: originalDescription, possibleDuplicate: getPossibleDuplicateFor(transaction))
+        let possibleDuplicate = getPossibleDuplicateFor(transaction)
+        return ImportedTransaction(transaction: transaction, originalDescription: originalDescription, possibleDuplicate: possibleDuplicate, shouldAllowUserToEdit: true)
     }
 
     func parseLine() -> CSVLine { // swiftlint:disable:this unavailable_function

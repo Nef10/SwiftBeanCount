@@ -65,7 +65,10 @@ final class ImporterTests: XCTestCase {
         let accountName = TestUtils.cash
         Settings.storage = TestStorage()
 
-        let importedTransaction = ImportedTransaction(transaction: TestUtils.transaction, originalDescription: originalDescription, possibleDuplicate: nil)
+        let importedTransaction = ImportedTransaction(transaction: TestUtils.transaction,
+                                                      originalDescription: originalDescription,
+                                                      possibleDuplicate: nil,
+                                                      shouldAllowUserToEdit: true)
         importedTransaction.saveMapped(description: description, payee: payee, accountName: accountName)
 
         XCTAssertEqual(Settings.allDescriptionMappings, [originalDescription: description])
