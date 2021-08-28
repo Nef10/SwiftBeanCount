@@ -13,7 +13,7 @@ import XCTest
 final class SettingsTests: XCTestCase {
 
     func testDescriptionMappings() {
-        UserDefaults.standard.removeObject(forKey: Settings.descriptionUserDefaultsKey)
+        Settings.storage = TestStorage()
 
         XCTAssertEqual(Settings.allDescriptionMappings, [:])
 
@@ -32,12 +32,10 @@ final class SettingsTests: XCTestCase {
         // delete
         Settings.setDescriptionMapping(key: "originalDescription2", description: nil)
         XCTAssertEqual(Settings.allDescriptionMappings, ["originalDescription": "newer one"])
-
-        UserDefaults.standard.removeObject(forKey: Settings.descriptionUserDefaultsKey)
     }
 
     func testPayeeMappings() {
-        UserDefaults.standard.removeObject(forKey: Settings.payeesUserDefaultKey)
+        Settings.storage = TestStorage()
 
         XCTAssertEqual(Settings.allPayeeMappings, [:])
 
@@ -56,12 +54,10 @@ final class SettingsTests: XCTestCase {
         // delete
         Settings.setPayeeMapping(key: "originalDescription2", payee: nil)
         XCTAssertEqual(Settings.allPayeeMappings, ["originalDescription": "newer one"])
-
-        UserDefaults.standard.removeObject(forKey: Settings.payeesUserDefaultKey)
     }
 
     func testAccountMappings() {
-        UserDefaults.standard.removeObject(forKey: Settings.accountsUserDefaultsKey)
+        Settings.storage = TestStorage()
 
         XCTAssertEqual(Settings.allAccountMappings, [:])
 
@@ -80,12 +76,10 @@ final class SettingsTests: XCTestCase {
         // delete
         Settings.setAccountMapping(key: "originalDescription2", account: nil)
         XCTAssertEqual(Settings.allAccountMappings, ["originalDescription": "newer one"])
-
-        UserDefaults.standard.removeObject(forKey: Settings.accountsUserDefaultsKey)
     }
 
     func testDateTolerance() {
-        UserDefaults.standard.removeObject(forKey: Settings.dateToleranceUserDefaultsKey)
+        Settings.storage = TestStorage()
 
         XCTAssertEqual(Settings.dateToleranceInDays, Settings.defaultDateTolerance)
         XCTAssertEqual(Settings.dateTolerance, Double(Settings.defaultDateTolerance * 60 * 60 * 24))
@@ -93,8 +87,6 @@ final class SettingsTests: XCTestCase {
         Settings.dateToleranceInDays = 4
         XCTAssertEqual(Settings.dateToleranceInDays, 4)
         XCTAssertEqual(Settings.dateTolerance, Double(4 * 60 * 60 * 24))
-
-        UserDefaults.standard.removeObject(forKey: Settings.dateToleranceUserDefaultsKey)
     }
 
 }

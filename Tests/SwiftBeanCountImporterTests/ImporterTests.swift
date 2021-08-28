@@ -63,6 +63,8 @@ final class ImporterTests: XCTestCase {
         let description = "ab"
         let payee = "ef"
         let accountName = TestUtils.cash
+        Settings.storage = TestStorage()
+
         let metaData = TransactionMetaData(date: Date(),
                                            payee: "",
                                            narration: originalDescription,
@@ -77,15 +79,11 @@ final class ImporterTests: XCTestCase {
         let transaction = Transaction(metaData: metaData, postings: [posting1, posting2])
         let importedTransaction = ImportedTransaction(transaction: transaction, originalDescription: originalDescription)
 
-        UserDefaults.standard.removeObject(forKey: Settings.descriptionUserDefaultsKey)
-        UserDefaults.standard.removeObject(forKey: Settings.payeesUserDefaultKey)
-        UserDefaults.standard.removeObject(forKey: Settings.accountsUserDefaultsKey)
-
         importedTransaction.saveMapped(description: description, payee: payee, accountName: accountName)
 
-        XCTAssertEqual(UserDefaults.standard.object(forKey: Settings.descriptionUserDefaultsKey) as? [String: String], [originalDescription: description])
-        XCTAssertEqual(UserDefaults.standard.object(forKey: Settings.payeesUserDefaultKey) as? [String: String], [originalDescription: payee])
-        XCTAssertEqual(UserDefaults.standard.object(forKey: Settings.accountsUserDefaultsKey) as? [String: String], [payee: accountName.fullName])
+        XCTAssertEqual(Settings.allDescriptionMappings, [originalDescription: description])
+        XCTAssertEqual(Settings.allPayeeMappings, [originalDescription: payee])
+        XCTAssertEqual(Settings.allAccountMappings, [payee: accountName.fullName])
     }
 
 }

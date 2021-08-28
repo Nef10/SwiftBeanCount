@@ -8,8 +8,26 @@
 
 import CSV
 import Foundation
+@testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
 import XCTest
+
+class TestStorage: SettingsStorage {
+
+    var storage = [String: Any]()
+
+    func set(_ value: Any?, forKey defaultName: String) {
+        storage[defaultName] = value
+    }
+
+    func string(forKey defaultName: String) -> String? {
+        storage[defaultName] as? String
+    }
+
+    func dictionary(forKey defaultName: String) -> [String: Any]? {
+        storage[defaultName] as? [String: Any]
+    }
+}
 
 enum TestUtils {
 

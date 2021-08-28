@@ -102,38 +102,32 @@ final class BaseImporterTests: XCTestCase {
     func testSavedPayee() {
         let description = "abcd"
         let payeeMapping = "efg"
-        UserDefaults.standard.removeObject(forKey: Settings.payeesUserDefaultKey)
+        Settings.storage = TestStorage()
 
-        UserDefaults.standard.set([description: payeeMapping], forKey: Settings.payeesUserDefaultKey)
+        Settings.setPayeeMapping(key: description, payee: payeeMapping)
         let importer = BaseImporter(ledger: TestUtils.ledger)
         let (_, savedPayee) = importer.savedDescriptionAndPayeeFor(description: description)
         XCTAssertEqual(savedPayee, payeeMapping)
-
-        UserDefaults.standard.removeObject(forKey: Settings.payeesUserDefaultKey)
     }
 
     func testSavedDescription() {
         let description = "abcd"
         let descriptionMapping = "efg"
-        UserDefaults.standard.removeObject(forKey: Settings.descriptionUserDefaultsKey)
+        Settings.storage = TestStorage()
 
-        UserDefaults.standard.set([description: descriptionMapping], forKey: Settings.descriptionUserDefaultsKey)
+        Settings.setDescriptionMapping(key: description, description: descriptionMapping)
         let importer = BaseImporter(ledger: TestUtils.ledger)
         let (savedDescription, _) = importer.savedDescriptionAndPayeeFor(description: description)
         XCTAssertEqual(savedDescription, descriptionMapping)
-
-        UserDefaults.standard.removeObject(forKey: Settings.descriptionUserDefaultsKey)
     }
 
     func testSavedAccount() {
         let payee = "abcd"
-        UserDefaults.standard.removeObject(forKey: Settings.accountsUserDefaultsKey)
+        Settings.storage = TestStorage()
 
-        UserDefaults.standard.set([payee: TestUtils.chequing.fullName], forKey: Settings.accountsUserDefaultsKey)
+        Settings.setAccountMapping(key: payee, account: TestUtils.chequing.fullName)
         let importer = BaseImporter(ledger: TestUtils.ledger)
         XCTAssertEqual(importer.savedAccountNameFor(payee: payee), TestUtils.chequing)
-
-        UserDefaults.standard.removeObject(forKey: Settings.accountsUserDefaultsKey)
     }
 
     func testSanitizeDescription() {

@@ -97,47 +97,37 @@ final class CSVBaseImporterTests: XCTestCase {
     func testSavedPayee() {
         let description = "abcd"
         let payeeMapping = "efg"
-        UserDefaults.standard.removeObject(forKey: Settings.payeesUserDefaultKey)
+        Settings.storage = TestStorage()
 
-        UserDefaults.standard.set([description: payeeMapping], forKey: Settings.payeesUserDefaultKey)
+        Settings.setPayeeMapping(key: description, payee: payeeMapping)
         XCTAssertEqual(transactionHelper(description: description).metaData.payee, payeeMapping)
-
-        UserDefaults.standard.removeObject(forKey: Settings.payeesUserDefaultKey)
     }
 
     func testSavedDescription() {
         let description = "abcd"
         let descriptionMapping = "efg"
-        UserDefaults.standard.removeObject(forKey: Settings.descriptionUserDefaultsKey)
+        Settings.storage = TestStorage()
 
-        UserDefaults.standard.set([description: descriptionMapping], forKey: Settings.descriptionUserDefaultsKey)
+        Settings.setDescriptionMapping(key: description, description: descriptionMapping)
         XCTAssertEqual(descriptionHelper(description: description), descriptionMapping)
-
-        UserDefaults.standard.removeObject(forKey: Settings.descriptionUserDefaultsKey)
     }
 
     func testSavedAccount() {
         let payee = "abcd"
-        UserDefaults.standard.removeObject(forKey: Settings.accountsUserDefaultsKey)
+        Settings.storage = TestStorage()
 
-        UserDefaults.standard.set([payee: TestUtils.chequing.fullName], forKey: Settings.accountsUserDefaultsKey)
+        Settings.setAccountMapping(key: payee, account: TestUtils.chequing.fullName)
         XCTAssertEqual(transactionHelper(description: "", payee: payee).postings.first { $0.accountName != TestUtils.cash }?.accountName, TestUtils.chequing)
-
-        UserDefaults.standard.removeObject(forKey: Settings.accountsUserDefaultsKey)
     }
 
     func testSavedPayeeAccount() {
         let description = "abcd"
         let payee = "efg"
-        UserDefaults.standard.removeObject(forKey: Settings.payeesUserDefaultKey)
-        UserDefaults.standard.removeObject(forKey: Settings.accountsUserDefaultsKey)
+        Settings.storage = TestStorage()
 
-        UserDefaults.standard.set([payee: TestUtils.chequing.fullName], forKey: Settings.accountsUserDefaultsKey)
-        UserDefaults.standard.set([description: payee], forKey: Settings.payeesUserDefaultKey)
+        Settings.setAccountMapping(key: payee, account: TestUtils.chequing.fullName)
+        Settings.setPayeeMapping(key: description, payee: payee)
         XCTAssertEqual(transactionHelper(description: description).postings.first { $0.accountName != TestUtils.cash }?.accountName, TestUtils.chequing)
-
-        UserDefaults.standard.removeObject(forKey: Settings.accountsUserDefaultsKey)
-        UserDefaults.standard.removeObject(forKey: Settings.payeesUserDefaultKey)
     }
 
     func testSanitizeDescription() {
