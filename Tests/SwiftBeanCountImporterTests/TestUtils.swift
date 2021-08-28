@@ -74,16 +74,19 @@ enum TestUtils {
     static var lederAccountNumers: Ledger = {
         let ledger = Ledger()
         try! ledger.add(TestUtils.usdCommodity)
-        let account1 = Account(name: TestUtils.chequing, commoditySymbol: TestUtils.usd, metaData: ["number": "\(accountNumberChequing)"] )
-        let account2 = Account(name: TestUtils.cash, commoditySymbol: TestUtils.usd, metaData: ["number": "\(accountNumberCash)"] )
+        let account1 = Account(name: TestUtils.chequing,
+                               commoditySymbol: TestUtils.usd,
+                               metaData: ["number": "\(accountNumberChequing)", Settings.importerTypeKey: TangerineAccountImporter.importerType] )
+        let account2 = Account(name: TestUtils.cash,
+                               commoditySymbol: TestUtils.usd,
+                               metaData: ["number": "\(accountNumberCash)", Settings.importerTypeKey: TangerineAccountImporter.importerType] )
         try! ledger.add(account1)
         try! ledger.add(account2)
         return ledger
     }()
 
-    static var lederFund: Ledger = {
+    static var lederAccounts: Ledger = {
         let ledger = Ledger()
-        try! ledger.add(Commodity(symbol: fundSymbol, metaData: ["name": fundName]))
         let account1 = Account(name: TestUtils.chequing, commoditySymbol: TestUtils.usd)
         let account2 = Account(name: TestUtils.cash, commoditySymbol: TestUtils.usd)
         try! ledger.add(account1)
@@ -132,6 +135,36 @@ enum TestUtils {
         try! CSVReader(stream: InputStream(data: content.data(using: .utf8)!),
                        hasHeaderRow: true,
                        trimFields: true)
+    }
+
+    static func ledgerManuLife(
+        employeeBasic: String? = nil,
+        employerBasic: String? = nil,
+        employerMatch: String? = nil,
+        employeeVoluntary: String? = nil,
+        cashSuffix: String? = nil
+    ) -> Ledger {
+        let ledger = Ledger()
+        try! ledger.add(Commodity(symbol: fundSymbol, metaData: ["name": fundName]))
+        var metaData = [String: String]()
+        if let employeeBasic = employeeBasic {
+            metaData["employee-basic-fraction"] = employeeBasic
+        }
+        if let employerBasic = employerBasic {
+            metaData["employer-basic-fraction"] = employerBasic
+        }
+        if let employerMatch = employerMatch {
+            metaData["employer-match-fraction"] = employerMatch
+        }
+        if let employeeVoluntary = employeeVoluntary {
+            metaData["employee-voluntary-fraction"] = employeeVoluntary
+        }
+        if let cashSuffix = cashSuffix {
+            metaData["cash-account-suffix"] = cashSuffix
+        }
+        let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.usd, metaData: metaData)
+        try! ledger.add(account)
+        return ledger
     }
 
 }

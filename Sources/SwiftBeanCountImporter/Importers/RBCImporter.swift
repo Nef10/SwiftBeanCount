@@ -16,7 +16,8 @@ class RBCImporter: CSVBaseImporter, CSVImporter {
     private static let amount = "CAD$"
 
     static let headers = [["Account Type", "Account Number", date, "Cheque Number", description1, description2, amount, "USD$"]]
-    override static var settingsName: String { "RBC Accounts + CC" }
+
+    override class var importerType: String { "rbc" }
 
     private static var dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()

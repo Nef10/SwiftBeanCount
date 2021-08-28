@@ -17,8 +17,8 @@ final class TangerineCardImporterTests: XCTestCase {
                        [["Transaction date", "Transaction", "Name", "Memo", "Amount"]])
     }
 
-    func testSettingsName() {
-        XCTAssertEqual(TangerineCardImporter.settingsName, "Tangerine CC")
+    func testImporterType() {
+        XCTAssertEqual(TangerineCardImporter.importerType, "tangerine-card")
     }
 
     func testImportName() {

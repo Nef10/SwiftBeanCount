@@ -25,8 +25,8 @@ final class RogersImporterTests: XCTestCase {
         ])
     }
 
-    func testSettingsName() {
-        XCTAssertEqual(RogersImporter.settingsName, "Rogers CC")
+    func testImporterType() {
+        XCTAssertEqual(RogersImporter.importerType, "rogers")
     }
 
     func testImportName() {

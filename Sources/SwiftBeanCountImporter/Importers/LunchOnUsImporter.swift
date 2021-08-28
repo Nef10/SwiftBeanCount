@@ -16,7 +16,8 @@ class LunchOnUsImporter: CSVBaseImporter, CSVImporter {
     private static let description = "location"
 
     static let headers = [[date, type, amount, "invoice", "remaining", description]]
-    override class var settingsName: String { "LunchOnUs Card" }
+
+    override class var importerType: String { "lunch-on-us" }
 
     private static var dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()

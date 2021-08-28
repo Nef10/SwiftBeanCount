@@ -10,11 +10,6 @@ import Foundation
 import SwiftBeanCountModel
 import XCTest
 
-private class TestImporter: BaseImporter {
-    static let setting = ImporterSetting(identifier: "accounts", name: "Account(s)")
-    override class var settings: [ImporterSetting] { [] }
-}
-
 final class ImporterTests: XCTestCase {
 
     func testAllImporters() {
@@ -50,14 +45,6 @@ final class ImporterTests: XCTestCase {
         XCTAssertTrue(result is ManuLifeImporter)
     }
 
-    func testSettings() {
-        let value = "GFDSGFD"
-        TestImporter.set(setting: TestImporter.setting, to: value)
-        XCTAssertEqual(TestImporter.get(setting: TestImporter.setting), value)
-        let key = TestImporter.getUserDefaultsKey(for: TestImporter.setting)
-        XCTAssertEqual(UserDefaults.standard.string(forKey: key), value)
-    }
-
     func testImportedTransactionSaveMapped() {
         let originalDescription = "abcd"
         let description = "ab"
@@ -68,7 +55,8 @@ final class ImporterTests: XCTestCase {
         let importedTransaction = ImportedTransaction(transaction: TestUtils.transaction,
                                                       originalDescription: originalDescription,
                                                       possibleDuplicate: nil,
-                                                      shouldAllowUserToEdit: true)
+                                                      shouldAllowUserToEdit: true,
+                                                      accountName: nil)
         importedTransaction.saveMapped(description: description, payee: payee, accountName: accountName)
 
         XCTAssertEqual(Settings.allDescriptionMappings, [originalDescription: description])

@@ -25,7 +25,8 @@ class RogersImporter: CSVBaseImporter, CSVImporter {
         [date2, "Activity Type", description, "Merchant Category", amount, "Rewards"],
         [date2, "Activity Type", description, "Merchant Category Description", amount, "Rewards"],
     ]
-    override class var settingsName: String { "Rogers CC" }
+
+    override class var importerType: String { "rogers" }
 
     private static var dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()

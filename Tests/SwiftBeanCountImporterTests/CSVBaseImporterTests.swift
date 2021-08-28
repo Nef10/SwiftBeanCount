@@ -75,6 +75,7 @@ final class CSVBaseImporterTests: XCTestCase {
         let importedTransaction = importer.nextTransaction()
         XCTAssertNotNil(importedTransaction)
         XCTAssertTrue(importedTransaction!.shouldAllowUserToEdit)
+        XCTAssertEqual(importedTransaction!.accountName, TestUtils.cash)
 
         let noTransaction = importer.nextTransaction()
         XCTAssertNil(noTransaction)
@@ -134,7 +135,7 @@ final class CSVBaseImporterTests: XCTestCase {
     func testGetPossibleDuplicateFor() {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
-        let ledger = TestUtils.lederFund
+        let ledger = TestUtils.lederAccounts
         let transaction = TestUtils.transaction
         ledger.add(transaction)
 
@@ -149,7 +150,7 @@ final class CSVBaseImporterTests: XCTestCase {
     func testGetPossibleDuplicateForNone() {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
-        let ledger = TestUtils.lederFund
+        let ledger = TestUtils.lederAccounts
         let transaction = TestUtils.transaction
         ledger.add(transaction)
 

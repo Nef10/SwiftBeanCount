@@ -65,6 +65,12 @@ public struct ImportedTransaction {
     /// e.g. from stock purchases. These indicate this by settings this value to true.
     public let shouldAllowUserToEdit: Bool
 
+    /// AccountName of the account the import is for
+    ///
+    /// You can use this to detect which posting the user should not edit
+    /// Note: Not set on imported transactions which have shouldAllowUserToEdit set to false
+    public let accountName: AccountName?
+
     /// Saves a mapping of an imported transaction description to a different
     /// description, payee as well as account name
     ///
@@ -87,38 +93,14 @@ public struct ImportedTransaction {
 
 }
 
-/// Represents a single setting of an importer
-public struct ImporterSetting {
-
-    let identifier: String
-
-    /// User friendly name of the setting
-    public let name: String
-
-}
-
 /// Protocol to represent an Importer, regardless of type
 public protocol Importer {
-
-    /// User friendly name of the Importer
-    ///
-    /// Should be used in the settings to group the setting of this importer.
-    static var settingsName: String { get }
-
-    /// Settings of this importer
-    static var settings: [ImporterSetting] { get }
 
     /// A description of the import, e.g. a file name together with the importer name
     ///
     /// Can be used in the UI when an importer requests more information, e.g.
     /// account selection or credentials
     var importName: String { get }
-
-    /// AccountName of the account the import is for
-    ///
-    /// You can use this to detect which posting the user should not edit
-    /// Note: Some importers work on child accounts of the given one
-    var accountName: AccountName? { get }
 
     /// Get possible account names for this importer
     func possibleAccountNames() -> [AccountName]
@@ -139,6 +121,7 @@ public protocol Importer {
 
     /// Returns the next `ImportedTransaction`
     ///
+    /// You must call `load` before you call this function.
     /// Returns nil when there are no more lines left.
     func nextTransaction() -> ImportedTransaction?
 
@@ -153,31 +136,5 @@ public protocol Importer {
     /// Only some importer can import prices, so it might return an empty array
     /// Only call this function after you received all transactions
     func pricesToImport() -> [Price]
-
-}
-
-extension Importer {
-
-    /// Get the settings value of a specific setting
-    /// - Parameter setting: Setting to read
-    /// - Returns: value of the setting
-    public static func get(setting: ImporterSetting) -> String? {
-        UserDefaults.standard.string(forKey: getUserDefaultsKey(for: setting))
-    }
-
-    /// Set the value of a sepcific setting
-    /// - Parameters:
-    ///   - setting: Setting to write
-    ///   - value: value to set
-    public static func set(setting: ImporterSetting, to value: String) {
-        UserDefaults.standard.set(value, forKey: getUserDefaultsKey(for: setting))
-    }
-
-    /// Get the key used in the `UserDefaults` to save a particular setting
-    /// - Parameter setting: Setting of which you want to have the key
-    /// - Returns: key used in the `UserDefaults`
-    public static func getUserDefaultsKey(for setting: ImporterSetting) -> String {
-        "\(String(describing: self)).\(setting.identifier)"
-    }
 
 }

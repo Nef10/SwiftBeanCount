@@ -15,7 +15,8 @@ class TangerineCardImporter: CSVBaseImporter, CSVImporter {
     private static let amount = "Amount"
 
     static let headers = [[date, "Transaction", name, "Memo", amount]]
-    override class var settingsName: String { "Tangerine CC" }
+
+    override class var importerType: String { "tangerine-card" }
 
     private static var dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()

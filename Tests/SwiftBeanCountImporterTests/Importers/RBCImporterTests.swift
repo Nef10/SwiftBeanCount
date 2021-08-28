@@ -17,8 +17,8 @@ final class RBCImporterTests: XCTestCase {
                        [["Account Type", "Account Number", "Transaction Date", "Cheque Number", "Description 1", "Description 2", "CAD$", "USD$"]])
     }
 
-    func testSettingsName() {
-        XCTAssertEqual(RBCImporter.settingsName, "RBC Accounts + CC")
+    func testImporterType() {
+        XCTAssertEqual(RBCImporter.importerType, "rbc")
     }
 
     func testImportName() {

@@ -18,8 +18,8 @@ final class BaseImporterTests: XCTestCase {
         XCTAssertEqual(importer.ledger, TestUtils.ledger)
     }
 
-    func testSettingsName() {
-        XCTAssertEqual(BaseImporter.settingsName, "")
+    func testImporterType() {
+        XCTAssertEqual(BaseImporter.importerType, "")
     }
 
     func testLoad() {
@@ -47,13 +47,6 @@ final class BaseImporterTests: XCTestCase {
         XCTAssertTrue(importer.pricesToImport().isEmpty)
     }
 
-    func testSettings() {
-        let settings = BaseImporter.settings
-        XCTAssertEqual(settings.count, 1)
-        XCTAssertEqual(settings[0].identifier, BaseImporter.accountsSetting.identifier)
-        XCTAssertEqual(settings[0].name, BaseImporter.accountsSetting.name)
-    }
-
     func testCommoditySymbol() {
         var importer = BaseImporter(ledger: TestUtils.ledger)
         XCTAssertEqual(importer.commoditySymbol, Settings.fallbackCommodity)
@@ -72,19 +65,21 @@ final class BaseImporterTests: XCTestCase {
     }
 
     func testPossibleAccountNames() {
-        let importer = BaseImporter(ledger: TestUtils.ledger)
-        let key = BaseImporter.getUserDefaultsKey(for: BaseImporter.accountsSetting)
-
-        UserDefaults.standard.removeObject(forKey: key)
+        let ledger = TestUtils.ledger
+        var importer = BaseImporter(ledger: ledger)
         var possibleAccountNames = importer.possibleAccountNames()
         XCTAssertEqual(possibleAccountNames.count, 0)
 
-        UserDefaults.standard.set(TestUtils.cash.fullName, forKey: key)
+        var account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.usd, metaData: [Settings.importerTypeKey: ""])
+        try! ledger.add(account)
+        importer = BaseImporter(ledger: ledger)
         possibleAccountNames = importer.possibleAccountNames()
         XCTAssertEqual(possibleAccountNames.count, 1)
         XCTAssertEqual(possibleAccountNames[0], TestUtils.cash)
 
-        UserDefaults.standard.set("\(TestUtils.cash.fullName), \(TestUtils.chequing.fullName)", forKey: key)
+        account = Account(name: TestUtils.chequing, commoditySymbol: TestUtils.usd, metaData: [Settings.importerTypeKey: ""])
+        try! ledger.add(account)
+        importer = BaseImporter(ledger: ledger)
         possibleAccountNames = importer.possibleAccountNames()
         XCTAssertEqual(possibleAccountNames.count, 2)
         XCTAssertTrue(possibleAccountNames.contains(TestUtils.cash))
@@ -95,8 +90,6 @@ final class BaseImporterTests: XCTestCase {
         possibleAccountNames = importer.possibleAccountNames()
         XCTAssertEqual(possibleAccountNames.count, 1)
         XCTAssertEqual(possibleAccountNames[0], TestUtils.cash)
-
-        UserDefaults.standard.removeObject(forKey: key)
     }
 
     func testSavedPayee() {
@@ -133,7 +126,7 @@ final class BaseImporterTests: XCTestCase {
     func testGetPossibleDuplicateFor() {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
-        let ledger = TestUtils.lederFund
+        let ledger = TestUtils.lederAccounts
         let transaction = TestUtils.transaction
         ledger.add(transaction)
 
@@ -144,7 +137,7 @@ final class BaseImporterTests: XCTestCase {
     func testGetPossibleDuplicateForDateToleranceInside() {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
-        let ledger = TestUtils.lederFund
+        let ledger = TestUtils.lederAccounts
         let transaction = TestUtils.transaction
         ledger.add(transaction)
 
@@ -172,7 +165,7 @@ final class BaseImporterTests: XCTestCase {
     func testGetPossibleDuplicateForDateToleranceOutside() {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
-        let ledger = TestUtils.lederFund
+        let ledger = TestUtils.lederAccounts
         let transaction = TestUtils.transaction
         ledger.add(transaction)
 

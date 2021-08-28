@@ -16,8 +16,8 @@ final class SimpliiImporterTests: XCTestCase {
         XCTAssertEqual(SimpliiImporter.headers, [["Date", "Transaction Details", "Funds Out", "Funds In"]])
     }
 
-    func testSettingsName() {
-        XCTAssertEqual(SimpliiImporter.settingsName, "Simplii Accounts")
+    func testImporterType() {
+        XCTAssertEqual(SimpliiImporter.importerType, "simplii")
     }
 
     func testImportName() {

@@ -17,8 +17,8 @@ final class TangerineAccountImporterTests: XCTestCase {
                        [["Date", "Transaction", "Name", "Memo", "Amount"]])
     }
 
-    func testSettingsName() {
-        XCTAssertEqual(TangerineAccountImporter.settingsName, "Tangerine Accounts")
+    func testImporterType() {
+        XCTAssertEqual(TangerineAccountImporter.importerType, "tangerine-account")
     }
 
     func testImportName() {
@@ -26,9 +26,6 @@ final class TangerineAccountImporterTests: XCTestCase {
     }
 
     func testPossibleAccountNames() {
-        let key = TangerineAccountImporter.getUserDefaultsKey(for: TangerineAccountImporter.accountsSetting)
-        UserDefaults.standard.set("\(TestUtils.cash.fullName), \(TestUtils.chequing.fullName)", forKey: key)
-
         var importer = TangerineAccountImporter(ledger: TestUtils.lederAccountNumers,
                                                 csvReader: TestUtils.basicCSVReader,
                                                 fileName: "Export \(TestUtils.accountNumberChequing).csv")
@@ -51,8 +48,6 @@ final class TangerineAccountImporterTests: XCTestCase {
         possibleAccountNames = importer.possibleAccountNames()
         XCTAssertEqual(possibleAccountNames.count, 1)
         XCTAssertEqual(possibleAccountNames[0], TestUtils.cash)
-
-        UserDefaults.standard.removeObject(forKey: key)
     }
 
     func testParseLine() {

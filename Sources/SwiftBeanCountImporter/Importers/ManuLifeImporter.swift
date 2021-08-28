@@ -27,15 +27,7 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         let total: String
     }
 
-    static let cashAccountSetting = ImporterSetting(identifier: "cashAccountName", name: "Cash Account Postfix")
-    static let employeeBasicSetting = ImporterSetting(identifier: "employeeBasicFraction", name: "Employee Basic Percentage")
-    static let employerBasicSetting = ImporterSetting(identifier: "employerBasicFraction", name: "Employer Basic Percentage")
-    static let employerMatchSetting = ImporterSetting(identifier: "employerMatchFraction", name: "Employer Match Percentage")
-    static let employeeVoluntarySetting = ImporterSetting(identifier: "employeeVoluntaryFraction", name: "Employee Voluntary Percentage")
-
-    override class var settingsName: String { "ManuLife" }
-    override class var settings: [ImporterSetting] { super.settings +
-        [cashAccountSetting, employeeBasicSetting, employerBasicSetting, employerMatchSetting, employeeVoluntarySetting] }
+    override class var importerType: String { "manulife" }
 
     /// DateFormatter to parse the date from the input
     private static let importDateFormatter: DateFormatter = {
@@ -53,11 +45,13 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
     private let transactionInputString: String
     private let balanceInputString: String
 
-    private var cashAccountName: String { Self.get(setting: Self.cashAccountSetting) ?? defaultCashAccountName }
-    private var employeeBasicFraction: Double { Double(Self.get(setting: Self.employeeBasicSetting) ?? "") ?? defaultContribution }
-    private var employerBasicFraction: Double { Double(Self.get(setting: Self.employerBasicSetting) ?? "") ?? defaultContribution }
-    private var employerMatchFraction: Double { Double(Self.get(setting: Self.employerMatchSetting) ?? "") ?? defaultContribution }
-    private var employeeVoluntaryFraction: Double { Double(Self.get(setting: Self.employeeVoluntarySetting) ?? "") ?? defaultContribution }
+    private var cashAccountName: String { ledger?.accounts.first { $0.name == accountName }?.metaData["cash-account-suffix"] ?? defaultCashAccountName }
+    private var employeeBasicFraction: Double { Double(ledger?.accounts.first { $0.name == accountName }?.metaData["employee-basic-fraction"] ?? "") ?? defaultContribution }
+    private var employerBasicFraction: Double { Double(ledger?.accounts.first { $0.name == accountName }?.metaData["employer-basic-fraction"] ?? "") ?? defaultContribution }
+    private var employerMatchFraction: Double { Double(ledger?.accounts.first { $0.name == accountName }?.metaData["employer-match-fraction"] ?? "") ?? defaultContribution }
+    private var employeeVoluntaryFraction: Double {
+        Double(ledger?.accounts.first { $0.name == accountName }?.metaData["employee-voluntary-fraction"] ?? "") ?? defaultContribution
+    }
 
     // Results from parsing
     private var parsedManuLifeBalances = [ManuLifeBalance]()
@@ -280,8 +274,8 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         }
 
         let transaction = Transaction(metaData: TransactionMetaData(date: date, payee: "", narration: "", flag: .complete, tags: []), postings: postings)
-        return (ImportedTransaction(transaction: transaction, originalDescription: "", possibleDuplicate: getPossibleDuplicateFor(transaction), shouldAllowUserToEdit: false),
-                prices)
+        let duplicate = getPossibleDuplicateFor(transaction)
+        return (ImportedTransaction(transaction: transaction, originalDescription: "", possibleDuplicate: duplicate, shouldAllowUserToEdit: false, accountName: nil), prices)
     }
 
     /// Returns the first match of the capture group regex in the input string

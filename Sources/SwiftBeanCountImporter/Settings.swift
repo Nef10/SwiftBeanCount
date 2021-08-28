@@ -25,19 +25,22 @@ public protocol SettingsStorage {
 public enum Settings {
 
     /// Storage key for the payee mapping
-    static let payeesKey = "payees"
+    private static let payeesKey = "payees"
     /// Storage key for the account mapping
-    static let accountsKey = "accounts"
+    private static let accountsKey = "accounts"
     /// Storage key for the description mapping
-    static let descriptionKey = "description"
+    private static let descriptionKey = "description"
     /// Storage key for the date tolerance to detect duplicate transactions
-    static let dateToleranceKey = "date_tolerance"
+    private static let dateToleranceKey = "date_tolerance"
 
     /// Default date tolerance to detect duplicate transactions
     static let defaultDateTolerance = 2 // days
-
+    // Default account name to book the other posting of an imported transaction to
     static let defaultAccountName = "Expenses:TODO"
+    /// Currency to use if the account does not have a currency specified
     static let fallbackCommodity = "CAD"
+    /// Key used to save the importer type into the metaData of an account
+    static let importerTypeKey = "importer-type"
 
     /// A Storage which saves the settings
     ///

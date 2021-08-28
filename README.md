@@ -22,14 +22,9 @@ This is the importer of SwiftBeanCount. It reads files to create transactions. T
 
 ### Settings
 
-The different importers which are included in this library can be configured:
+There are settings for the date tolerance when detecting duplicate transactions, as well as for the mapping the user saved in step 6) of importing transactions. Your app can allow the user to view and edit these via the `Settings` object.
 
-1) Call `ImporterFactory.allImporters` to retreive all importers
-2) Call `importer.settingsName` to get the user friendly name of the importer
-3) Call `importer.settings` to get the `ImporterSetting`s which an importer offers
-3) Use `importer.get(setting: ImporterSetting)` and `importer.set(setting: ImporterSetting, to value: String)` to modify these settings.
-
-On top of this, there is a setting for the date tolerance when detecting duplicate transactions as well as the mapping the user saved in step 6) of importing transactions. Your app can allow the user to view and edit these via the `Settings` object.
+### More
 
 Please check out the complete documentation [here](https://nef10.github.io/SwiftBeanCountImporter/), or have a look at the [SwiftBeanCountImporterApp](https://github.com/Nef10/SwiftBeanCountImporterApp/) which uses this library.
 

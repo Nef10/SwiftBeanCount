@@ -29,8 +29,8 @@ final class N26ImporterTests: XCTestCase {
         ])
     }
 
-    func testSettingsName() {
-        XCTAssertEqual(N26Importer.settingsName, "N26")
+    func testImporterType() {
+        XCTAssertEqual(N26Importer.importerType, "n26")
     }
 
     func testImportName() {

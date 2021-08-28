@@ -17,10 +17,10 @@ class TangerineAccountImporter: CSVBaseImporter, CSVImporter {
     private static let amount = "Amount"
 
     static let headers = [[date, "Transaction", name, memo, amount]]
-    override class var settingsName: String { "Tangerine Accounts" }
-
     static let interac = "INTERAC e-Transfer From: "
     static let interest = "Interest Paid"
+
+    override class var importerType: String { "tangerine-account" }
 
     private static var dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()
@@ -32,11 +32,8 @@ class TangerineAccountImporter: CSVBaseImporter, CSVImporter {
         "Tangerine Account File \(fileName)"
     }
 
-    override func possibleAccountNames() -> [AccountName] {
-        if let accountName = accountName {
-            return [accountName]
-        }
-        let possibleAccountNames = accountsFromSettings()
+    override func accountsFromLedger() -> [AccountName] {
+        let possibleAccountNames = super.accountsFromLedger()
         let possibleAccounts = possibleAccountNames.compactMap { accountName in ledger?.accounts.first { $0.name == accountName } }
         for account in possibleAccounts {
             if let number = account.metaData["number"], fileName.contains(number) {

@@ -119,12 +119,8 @@ private var balancePricesResult: String = { """
 
 final class ManuLifeImporterTests: XCTestCase {
 
-    func testSettingsName() {
-        XCTAssertEqual(ManuLifeImporter.settingsName, "ManuLife")
-    }
-
-    func testSettings() {
-        XCTAssertEqual(ManuLifeImporter.settings.count, 6)
+    func testImporterType() {
+        XCTAssertEqual(ManuLifeImporter.importerType, "manulife")
     }
 
     func testImportName() {
@@ -141,7 +137,7 @@ final class ManuLifeImporterTests: XCTestCase {
     }
 
     func testParseBalance() {
-        let importer = ManuLifeImporter(ledger: TestUtils.lederFund, transaction: "", balance: balance)
+        let importer = ManuLifeImporter(ledger: TestUtils.ledgerManuLife(), transaction: "", balance: balance)
         importer.load()
         importer.useAccount(name: TestUtils.cash)
         XCTAssertNil(importer.nextTransaction())
@@ -157,15 +153,14 @@ final class ManuLifeImporterTests: XCTestCase {
     }
 
     func testTransaction() {
-        clearSettings()
-
-        let importer = ManuLifeImporter(ledger: TestUtils.lederFund, transaction: transaction, balance: "")
+        let importer = ManuLifeImporter(ledger: TestUtils.ledgerManuLife(), transaction: transaction, balance: "")
         importer.load()
         importer.useAccount(name: TestUtils.cash)
         let transaction = importer.nextTransaction()
         XCTAssertNotNil(transaction)
         XCTAssertEqual(transaction!.originalDescription, "")
         XCTAssertFalse(transaction!.shouldAllowUserToEdit)
+        XCTAssertNil(transaction!.accountName)
         XCTAssertNil(importer.nextTransaction())
         let prices = importer.pricesToImport()
         XCTAssertTrue(importer.balancesToImport().isEmpty)
@@ -178,8 +173,7 @@ final class ManuLifeImporterTests: XCTestCase {
     }
 
     func testBalanceAndTransaction() {
-        clearSettings()
-        let importer = ManuLifeImporter(ledger: TestUtils.lederFund, transaction: transaction, balance: balance)
+        let importer = ManuLifeImporter(ledger: TestUtils.ledgerManuLife(), transaction: transaction, balance: balance)
         importer.load()
         importer.useAccount(name: TestUtils.cash)
         let transaction = importer.nextTransaction()
@@ -197,13 +191,8 @@ final class ManuLifeImporterTests: XCTestCase {
     }
 
     func testTransactionSettings() {
-        ManuLifeImporter.set(setting: ManuLifeImporter.employeeBasicSetting, to: "2.5")
-        ManuLifeImporter.set(setting: ManuLifeImporter.employerBasicSetting, to: "3.25")
-        ManuLifeImporter.set(setting: ManuLifeImporter.employerMatchSetting, to: "2.5")
-        ManuLifeImporter.set(setting: ManuLifeImporter.employeeVoluntarySetting, to: "1.75")
-        ManuLifeImporter.set(setting: ManuLifeImporter.cashAccountSetting, to: "Setting")
-
-        let importer = ManuLifeImporter(ledger: TestUtils.lederFund, transaction: transaction, balance: "")
+        let ledger = TestUtils.ledgerManuLife(employeeBasic: "2.5", employerBasic: "3.25", employerMatch: "2.5", employeeVoluntary: "1.75", cashSuffix: "Setting")
+        let importer = ManuLifeImporter(ledger: ledger, transaction: transaction, balance: "")
         importer.load()
         importer.useAccount(name: TestUtils.cash)
         let transaction = importer.nextTransaction()
@@ -227,18 +216,11 @@ final class ManuLifeImporterTests: XCTestCase {
             2020-06-05 price 1234 ML Category Fund 9876 y8 21.221 USD
             2020-06-05 price \(TestUtils.fundSymbol) 9.148 USD
             """)
-
-        clearSettings()
     }
 
     func testTransactionSettingsZero1() {
-        ManuLifeImporter.set(setting: ManuLifeImporter.employeeBasicSetting, to: "2.5")
-        ManuLifeImporter.set(setting: ManuLifeImporter.employerBasicSetting, to: "5")
-        ManuLifeImporter.set(setting: ManuLifeImporter.employerMatchSetting, to: "2.5")
-        ManuLifeImporter.set(setting: ManuLifeImporter.employeeVoluntarySetting, to: "0")
-        ManuLifeImporter.set(setting: ManuLifeImporter.cashAccountSetting, to: "Setting")
-
-        let importer = ManuLifeImporter(ledger: TestUtils.lederFund, transaction: transaction, balance: "")
+        let ledger = TestUtils.ledgerManuLife(employeeBasic: "2.5", employerBasic: "5", employerMatch: "2.5", employeeVoluntary: "0", cashSuffix: "Setting")
+        let importer = ManuLifeImporter(ledger: ledger, transaction: transaction, balance: "")
         importer.load()
         importer.useAccount(name: TestUtils.cash)
         let transaction = importer.nextTransaction()
@@ -261,18 +243,11 @@ final class ManuLifeImporterTests: XCTestCase {
             2020-06-05 price 1234 ML Category Fund 9876 y8 21.221 USD
             2020-06-05 price \(TestUtils.fundSymbol) 9.148 USD
             """)
-
-        clearSettings()
     }
 
     func testTransactionSettingsZero2() {
-        ManuLifeImporter.set(setting: ManuLifeImporter.employeeBasicSetting, to: "0")
-        ManuLifeImporter.set(setting: ManuLifeImporter.employerBasicSetting, to: "0")
-        ManuLifeImporter.set(setting: ManuLifeImporter.employerMatchSetting, to: "0")
-        ManuLifeImporter.set(setting: ManuLifeImporter.employeeVoluntarySetting, to: "1")
-        ManuLifeImporter.set(setting: ManuLifeImporter.cashAccountSetting, to: "Setting")
-
-        let importer = ManuLifeImporter(ledger: TestUtils.lederFund, transaction: transaction, balance: "")
+        let ledger = TestUtils.ledgerManuLife(employeeBasic: "0", employerBasic: "0", employerMatch: "0", employeeVoluntary: "1", cashSuffix: "Setting")
+        let importer = ManuLifeImporter(ledger: ledger, transaction: transaction, balance: "")
         importer.load()
         importer.useAccount(name: TestUtils.cash)
         let transaction = importer.nextTransaction()
@@ -290,12 +265,10 @@ final class ManuLifeImporterTests: XCTestCase {
             2020-06-05 price 1234 ML Category Fund 9876 y8 21.221 USD
             2020-06-05 price \(TestUtils.fundSymbol) 9.148 USD
             """)
-
-        clearSettings()
     }
 
     func testTransactionGarbage() {
-        let importer = ManuLifeImporter(ledger: TestUtils.lederFund, transaction: "This is not a valid Transaction", balance: "")
+        let importer = ManuLifeImporter(ledger: TestUtils.ledgerManuLife(), transaction: "This is not a valid Transaction", balance: "")
         importer.load()
         importer.useAccount(name: TestUtils.cash)
         XCTAssertNil(importer.nextTransaction())
@@ -304,7 +277,7 @@ final class ManuLifeImporterTests: XCTestCase {
     }
 
     func testTransactionInvalidData() {
-        let importer = ManuLifeImporter(ledger: TestUtils.lederFund, transaction: transactionInvalidDate, balance: "")
+        let importer = ManuLifeImporter(ledger: TestUtils.ledgerManuLife(), transaction: transactionInvalidDate, balance: "")
         importer.load()
         importer.useAccount(name: TestUtils.cash)
         XCTAssertNil(importer.nextTransaction())
@@ -315,7 +288,7 @@ final class ManuLifeImporterTests: XCTestCase {
     func testGetPossibleDuplicateFor() {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
-        let ledger = TestUtils.lederFund
+        let ledger = TestUtils.ledgerManuLife()
         let metaData = TransactionMetaData(date: TestUtils.date20200605, payee: "a", narration: "b", flag: .incomplete, tags: [])
         let posting1 = Posting(accountName: try! AccountName("Assets:Cash:Parking"),
                                amount: Amount(number: Decimal(-149.28), commoditySymbol: TestUtils.usd, decimalDigits: 2),
@@ -326,7 +299,7 @@ final class ManuLifeImporterTests: XCTestCase {
         let transaction1 = Transaction(metaData: metaData, postings: [posting1, posting2])
         ledger.add(transaction1)
 
-        let importer = ManuLifeImporter(ledger: TestUtils.lederFund, transaction: transaction, balance: "")
+        let importer = ManuLifeImporter(ledger: ledger, transaction: transaction, balance: "")
         importer.load()
         importer.useAccount(name: TestUtils.cash)
         let importedTransaction = importer.nextTransaction()
@@ -337,24 +310,15 @@ final class ManuLifeImporterTests: XCTestCase {
     func testGetPossibleDuplicateForNone() {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
-        let ledger = TestUtils.lederFund
+        let ledger = TestUtils.ledgerManuLife()
         let transaction1 = TestUtils.transaction
         ledger.add(transaction1)
 
-        let importer = ManuLifeImporter(ledger: TestUtils.lederFund, transaction: transaction, balance: "")
+        let importer = ManuLifeImporter(ledger: ledger, transaction: transaction, balance: "")
         importer.load()
         importer.useAccount(name: TestUtils.chequing)
         let importedTransaction = importer.nextTransaction()
         XCTAssertNotNil(importedTransaction)
         XCTAssertNil(importedTransaction!.possibleDuplicate)
     }
-
-    private func clearSettings() {
-        UserDefaults.standard.removeObject(forKey: ManuLifeImporter.getUserDefaultsKey(for: ManuLifeImporter.employeeBasicSetting))
-        UserDefaults.standard.removeObject(forKey: ManuLifeImporter.getUserDefaultsKey(for: ManuLifeImporter.employerBasicSetting))
-        UserDefaults.standard.removeObject(forKey: ManuLifeImporter.getUserDefaultsKey(for: ManuLifeImporter.employerMatchSetting))
-        UserDefaults.standard.removeObject(forKey: ManuLifeImporter.getUserDefaultsKey(for: ManuLifeImporter.employeeVoluntarySetting))
-        UserDefaults.standard.removeObject(forKey: ManuLifeImporter.getUserDefaultsKey(for: ManuLifeImporter.cashAccountSetting))
-    }
-
 }

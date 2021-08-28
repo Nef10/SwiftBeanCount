@@ -25,20 +25,14 @@ class BaseImporter: Importer {
         ]
     }() // swiftlint:enable force_try
 
-    static let accountsSetting = ImporterSetting(identifier: "accounts", name: "Account(s)")
-
-    class var settingsName: String { "" }
-    class var settings: [ImporterSetting] { [accountsSetting] }
+    class var importerType: String { "" } // Override
 
     private(set) var accountName: AccountName?
     var ledger: Ledger?
+    var importName: String { "" } // Override
 
     var commoditySymbol: String {
         ledger?.accounts.first { $0.name == accountName }?.commoditySymbol ?? Settings.fallbackCommodity
-    }
-
-    var importName: String {
-        "" // Override
     }
 
     init(ledger: Ledger?) {
@@ -49,15 +43,16 @@ class BaseImporter: Importer {
         if let accountName = accountName {
             return [accountName]
         }
-        return accountsFromSettings()
+        return accountsFromLedger()
     }
 
     func useAccount(name: AccountName) {
         self.accountName = name
     }
 
-    func accountsFromSettings() -> [AccountName] {
-        (Self.get(setting: Self.accountsSetting) ?? "").components(separatedBy: CharacterSet(charactersIn: " ,")).map { try? AccountName($0) }.compactMap { $0 }
+    func accountsFromLedger() -> [AccountName] {
+        // Override if neccessary, e.g. to do more filtering based on more meta data, e.g. account numbers
+        ledger?.accounts.filter { $0.metaData[Settings.importerTypeKey] == Self.importerType }.map { $0.name } ?? []
     }
 
     func load() {
