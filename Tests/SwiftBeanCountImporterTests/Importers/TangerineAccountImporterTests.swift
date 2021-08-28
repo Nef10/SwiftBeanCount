@@ -32,23 +32,23 @@ final class TangerineAccountImporterTests: XCTestCase {
         var importer = TangerineAccountImporter(ledger: TestUtils.lederAccountNumers,
                                                 csvReader: TestUtils.basicCSVReader,
                                                 fileName: "Export \(TestUtils.accountNumberChequing).csv")
-        var possibleAccountNames = importer.possibleAccountNames(for: TestUtils.lederAccountNumers)
+        var possibleAccountNames = importer.possibleAccountNames()
         XCTAssertEqual(possibleAccountNames.count, 1)
         XCTAssertEqual(possibleAccountNames[0], TestUtils.chequing)
 
         importer = TangerineAccountImporter(ledger: TestUtils.lederAccountNumers, csvReader: TestUtils.basicCSVReader, fileName: "Export \(TestUtils.accountNumberCash).csv")
-        possibleAccountNames = importer.possibleAccountNames(for: TestUtils.lederAccountNumers)
+        possibleAccountNames = importer.possibleAccountNames()
         XCTAssertEqual(possibleAccountNames.count, 1)
         XCTAssertEqual(possibleAccountNames[0], TestUtils.cash)
 
         importer = TangerineAccountImporter(ledger: TestUtils.lederAccountNumers, csvReader: TestUtils.basicCSVReader, fileName: "Export 000000.csv")
-        possibleAccountNames = importer.possibleAccountNames(for: TestUtils.lederAccountNumers)
+        possibleAccountNames = importer.possibleAccountNames()
         XCTAssertEqual(possibleAccountNames.count, 2)
         XCTAssertTrue(possibleAccountNames.contains(TestUtils.cash))
         XCTAssertTrue(possibleAccountNames.contains(TestUtils.chequing))
 
         importer.useAccount(name: TestUtils.cash)
-        possibleAccountNames = importer.possibleAccountNames(for: TestUtils.lederAccountNumers)
+        possibleAccountNames = importer.possibleAccountNames()
         XCTAssertEqual(possibleAccountNames.count, 1)
         XCTAssertEqual(possibleAccountNames[0], TestUtils.cash)
 

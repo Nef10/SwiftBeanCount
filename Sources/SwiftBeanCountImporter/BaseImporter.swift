@@ -45,7 +45,7 @@ class BaseImporter: Importer {
         self.ledger = ledger
     }
 
-    func possibleAccountNames(for ledger: Ledger?) -> [AccountName] {
+    func possibleAccountNames() -> [AccountName] {
         if let accountName = accountName {
             return [accountName]
         }

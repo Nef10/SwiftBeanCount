@@ -121,9 +121,7 @@ public protocol Importer {
     var accountName: AccountName? { get }
 
     /// Get possible account names for this importer
-    /// - Parameter ledger: existing ledger to allow reading attributes of the accounts
-    ///                     which can be used to determine to correct account
-    func possibleAccountNames(for ledger: Ledger?) -> [AccountName]
+    func possibleAccountNames() -> [AccountName]
 
     /// Tells the importer to use the named account for the import.
     ///

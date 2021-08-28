@@ -32,7 +32,7 @@ class TangerineAccountImporter: CSVBaseImporter, CSVImporter {
         "Tangerine Account File \(fileName)"
     }
 
-    override func possibleAccountNames(for ledger: Ledger?) -> [AccountName] {
+    override func possibleAccountNames() -> [AccountName] {
         if let accountName = accountName {
             return [accountName]
         }
