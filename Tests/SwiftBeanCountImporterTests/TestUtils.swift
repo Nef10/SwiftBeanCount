@@ -109,6 +109,10 @@ enum TestUtils {
         try! AccountName("Assets:Cash")
     }()
 
+    static var parking: AccountName = {
+        try! AccountName("Assets:Cash:Parking")
+    }()
+
     static var chequing: AccountName = {
         try! AccountName("Assets:Chequing")
     }()
@@ -141,8 +145,7 @@ enum TestUtils {
         employeeBasic: String? = nil,
         employerBasic: String? = nil,
         employerMatch: String? = nil,
-        employeeVoluntary: String? = nil,
-        cashSuffix: String? = nil
+        employeeVoluntary: String? = nil
     ) -> Ledger {
         let ledger = Ledger()
         try! ledger.add(Commodity(symbol: fundSymbol, metaData: ["name": fundName]))
@@ -159,10 +162,7 @@ enum TestUtils {
         if let employeeVoluntary = employeeVoluntary {
             metaData["employee-voluntary-fraction"] = employeeVoluntary
         }
-        if let cashSuffix = cashSuffix {
-            metaData["cash-account-suffix"] = cashSuffix
-        }
-        let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.usd, metaData: metaData)
+        let account = Account(name: TestUtils.parking, commoditySymbol: TestUtils.usd, metaData: metaData)
         try! ledger.add(account)
         return ledger
     }

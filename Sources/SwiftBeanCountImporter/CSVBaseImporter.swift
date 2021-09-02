@@ -40,7 +40,6 @@ class CSVBaseImporter: BaseImporter {
     }
 
     override func nextTransaction() -> ImportedTransaction? {
-        guard let accountName = accountName else { fatalError("No account configured") }
         guard loaded, let data = lines.popLast() else {
             return nil
         }
@@ -64,7 +63,7 @@ class CSVBaseImporter: BaseImporter {
 
         let categoryAmount = Amount(number: -data.amount, commoditySymbol: commoditySymbol, decimalDigits: 2)
         let flag: Flag = description == originalDescription && payee == originalPayee ? .incomplete : .complete
-        let posting = Posting(accountName: accountName, amount: Amount(number: data.amount, commoditySymbol: commoditySymbol, decimalDigits: 2))
+        let posting = Posting(accountName: configuredAccountName, amount: Amount(number: data.amount, commoditySymbol: commoditySymbol, decimalDigits: 2))
         var posting2: Posting
         if let price = data.price {
             let pricePer = Amount(number: categoryAmount.number / price.number, commoditySymbol: commoditySymbol, decimalDigits: 7)
@@ -77,7 +76,7 @@ class CSVBaseImporter: BaseImporter {
                                    originalDescription: originalDescription,
                                    possibleDuplicate: getPossibleDuplicateFor(transaction),
                                    shouldAllowUserToEdit: true,
-                                   accountName: accountName)
+                                   accountName: configuredAccountName)
     }
 
     func parseLine() -> CSVLine { // swiftlint:disable:this unavailable_function

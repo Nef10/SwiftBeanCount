@@ -27,8 +27,14 @@ class BaseImporter: Importer {
 
     class var importerType: String { "" } // Override
 
-    private(set) var accountName: AccountName?
     var ledger: Ledger?
+    private(set) var accountName: AccountName?
+    var configuredAccountName: AccountName {
+        guard let accountName = accountName else {
+            fatalError("No account configured - You must call useAccount(name:) before attempting to import")
+        }
+        return accountName
+    }
     var importName: String { "" } // Override
 
     var commoditySymbol: String {
