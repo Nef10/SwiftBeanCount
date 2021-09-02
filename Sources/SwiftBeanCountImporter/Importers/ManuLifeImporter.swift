@@ -37,6 +37,14 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         return dateFormatter
     }()
 
+    private var date: Date {
+        var dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date())
+        dateComponents.hour = 0
+        dateComponents.minute = 0
+        dateComponents.second = 0
+        return Calendar.current.date(from: dateComponents)!
+    }
+
     private let defaultContribution = 1.0
     private let unitFormat = "%.5f"
 
@@ -92,12 +100,20 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         guard !didReturnTransaction else {
             return nil
         }
-        let (transaction, purchasePrices) = convertPurchase(parsedManuLifeBuys, on: parsedTransactionDate)
-        self.prices.append(contentsOf: purchasePrices)
-
+        var (transaction, prices) = convertPurchase(parsedManuLifeBuys, on: parsedTransactionDate)
         let (balances, balancePrices) = convertBalances(parsedManuLifeBalances)
-        self.balances.append(contentsOf: balances)
-        self.prices.append(contentsOf: balancePrices)
+        prices.append(contentsOf: balancePrices)
+
+        for balance in balances {
+            if !(ledger?.accounts.flatMap { $0.balances }.contains(balance) ?? false) {
+                self.balances.append(balance)
+            }
+        }
+        for price in prices {
+            if !(ledger?.prices.contains(price) ?? false) {
+                self.prices.append(price)
+            }
+        }
 
         didReturnTransaction = true
         return transaction
@@ -157,22 +173,22 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
             if let amountString = manuLifeBalance.employeeBasic, let accountName = try? AccountName("\(accountString):Employee:Basic:\(manuLifeBalance.commodity)") {
                 let (amountDecimal, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: amountString)
                 let amount = Amount(number: amountDecimal, commoditySymbol: manuLifeBalance.commodity, decimalDigits: decimalDigits)
-                tempBalances.append(Balance(date: Date(), accountName: accountName, amount: amount))
+                tempBalances.append(Balance(date: date, accountName: accountName, amount: amount))
             }
             if let amountString = manuLifeBalance.employerBasic, let accountName = try? AccountName("\(accountString):Employer:Basic:\(manuLifeBalance.commodity)") {
                 let (amountDecimal, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: amountString)
                 let amount = Amount(number: amountDecimal, commoditySymbol: manuLifeBalance.commodity, decimalDigits: decimalDigits)
-                tempBalances.append(Balance(date: Date(), accountName: accountName, amount: amount))
+                tempBalances.append(Balance(date: date, accountName: accountName, amount: amount))
             }
             if let amountString = manuLifeBalance.employerMatch, let accountName = try? AccountName("\(accountString):Employer:Match:\(manuLifeBalance.commodity)") {
                 let (amountDecimal, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: amountString)
                 let amount = Amount(number: amountDecimal, commoditySymbol: manuLifeBalance.commodity, decimalDigits: decimalDigits)
-                tempBalances.append(Balance(date: Date(), accountName: accountName, amount: amount))
+                tempBalances.append(Balance(date: date, accountName: accountName, amount: amount))
             }
             if let amountString = manuLifeBalance.employeeVoluntary, let accountName = try? AccountName("\(accountString):Employee:Voluntary:\(manuLifeBalance.commodity)") {
                 let (amountDecimal, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: amountString)
                 let amount = Amount(number: amountDecimal, commoditySymbol: manuLifeBalance.commodity, decimalDigits: decimalDigits)
-                tempBalances.append(Balance(date: Date(), accountName: accountName, amount: amount))
+                tempBalances.append(Balance(date: date, accountName: accountName, amount: amount))
             }
             return tempBalances
         }
@@ -180,7 +196,7 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         let prices: [Price] = manuLifeBalances.compactMap { manuLifeBalance -> Price? in
             let (amountDecimal, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: manuLifeBalance.unitValue)
             let amount = Amount(number: amountDecimal, commoditySymbol: commoditySymbol, decimalDigits: decimalDigits)
-            return try? Price(date: Date(), commoditySymbol: manuLifeBalance.commodity, amount: amount)
+            return try? Price(date: date, commoditySymbol: manuLifeBalance.commodity, amount: amount)
         }
 
         return (balances, prices)

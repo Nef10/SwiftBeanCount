@@ -48,11 +48,11 @@ enum TestUtils {
     }()
 
     static var date20170610: Date = {
-        Date(timeIntervalSince1970: 1_497_078_000)
+        Calendar.current.date(from: DateComponents(calendar: Calendar.current, timeZone: nil, era: nil, year: 2_017, month: 6, day: 10, hour: 0, minute: 0, second: 0))!
     }()
 
     static var date20200605: Date = {
-        Date(timeIntervalSince1970: 1_591_340_400)
+        Calendar.current.date(from: DateComponents(calendar: Calendar.current, timeZone: nil, era: nil, year: 2_020, month: 6, day: 5, hour: 0, minute: 0, second: 0))!
     }()
 
     static var ledger: Ledger = {
