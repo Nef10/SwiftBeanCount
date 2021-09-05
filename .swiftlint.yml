@@ -91,3 +91,11 @@ disabled_rules:
 
 line_length: 175
 function_body_length: 30
+identifier_name:
+  excluded:
+    - id
+  max_length:
+    warning: 45
+type_name:
+  max_length:
+    warning: 45
