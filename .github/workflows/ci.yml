@@ -27,12 +27,15 @@ jobs:
       uses: maxep/spm-lcov-action@0.3.1
       with:
         output-file: ./coverage/lcov.info
+    - name: 'Read minimum coverage'
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      run: echo "minimum_coverage=$(cat ./.github/minimum_coverage.txt)" >> $GITHUB_ENV
     - name: Enforce test coverage threshhold
       if: ${{ matrix.os == 'ubuntu-latest' }}
       uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
       with:
         path: ./coverage/lcov.info
-        min_coverage: 0
+        min_coverage: ${{ env.minimum_coverage }}
     - name: Save PR number
       if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
