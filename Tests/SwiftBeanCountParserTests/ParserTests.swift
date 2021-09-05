@@ -12,7 +12,7 @@ import XCTest
 
 class ParserTests: XCTestCase {
 
-    enum TestFile: String {
+    private enum TestFile: String {
         case minimal = "Minimal"
         case postingWithoutTransaction = "PostingWithoutTransaction"
         case transactionWithoutPosting = "TransactionWithoutPosting"
@@ -26,24 +26,24 @@ class ParserTests: XCTestCase {
         static let withoutError = [minimal, comments, commentsEndOfLine, whitespace, big, metaData]
     }
 
-    let basicAccountOpeningString = "2017-06-09 open Assets:Cash"
-    let accountOpeningStringCommodity = "2017-06-09 open Assets:Cash EUR"
-    let basicAccountClosingString = "2017-06-09 close Assets:Cash"
+    private let basicAccountOpeningString = "2017-06-09 open Assets:Cash"
+    private let accountOpeningStringCommodity = "2017-06-09 open Assets:Cash EUR"
+    private let basicAccountClosingString = "2017-06-09 close Assets:Cash"
 
-    let commodityString = "2017-06-09 commodity EUR"
-    let priceString = "2017-06-09 price EUR 1.50 CAD"
-    let balanceString = "2017-06-09 balance Assets:Cash 0.00 CAD"
-    let invalidBalanceString = "2017-06-09 balance TEST:Cash 0.00 CAD"
-    let optionString = "option \"ABC\" \"DEF\""
-    let pluginString = "plugin \"ABC\""
-    let eventString = "2017-06-09 event \"ABC\" \"DEF\""
-    let customString = "2017-06-09 custom \"ABC\" \"DEF\""
+    private let commodityString = "2017-06-09 commodity EUR"
+    private let priceString = "2017-06-09 price EUR 1.50 CAD"
+    private let balanceString = "2017-06-09 balance Assets:Cash 0.00 CAD"
+    private let invalidBalanceString = "2017-06-09 balance TEST:Cash 0.00 CAD"
+    private let optionString = "option \"ABC\" \"DEF\""
+    private let pluginString = "plugin \"ABC\""
+    private let eventString = "2017-06-09 event \"ABC\" \"DEF\""
+    private let customString = "2017-06-09 custom \"ABC\" \"DEF\""
 
-    let metaDataString = "  metaData: \"TestString\""
-    let metaDataString2 = "  metaData2: \"TestString2\""
-    let metaData = ["metaData": "TestString"]
-    let metaData2 = ["metaData": "TestString", "metaData2": "TestString2"]
-    let comment = "; TEST comment"
+    private let metaDataString = "  metaData: \"TestString\""
+    private let metaDataString2 = "  metaData2: \"TestString2\""
+    private let metaData = ["metaData": "TestString"]
+    private let metaData2 = ["metaData": "TestString", "metaData2": "TestString2"]
+    private let comment = "; TEST comment"
 
     func testMinimal() {
         ensureMinimal(testFile: .minimal)

@@ -12,12 +12,12 @@ import XCTest
 
 class CostParserTests: XCTestCase {
 
-    static let regex: NSRegularExpression = {
+    private static let regex: NSRegularExpression = {
         // swiftlint:disable:next force_try
         try! NSRegularExpression(pattern: "\(CostParser.costGroup)", options: [])
     }()
 
-    func cost(from line: String) -> Cost? {
+    private func cost(from line: String) -> Cost? {
         let postingMatches = line.matchingStrings(regex: Self.regex)
         guard let match = postingMatches[safe: 0] else {
             return nil

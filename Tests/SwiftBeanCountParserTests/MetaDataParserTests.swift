@@ -11,12 +11,12 @@ import XCTest
 
 class MetaDataParserTests: XCTestCase {
 
-    let basicString = "  test:\"ABC\""
-    let whitespaceString = "  test:    \"A B C\"        "
-    let whitespaceBeginningString = "    test:    \"  A B C  \"        "
-    let whitespaceNonMatchingString = " test:\"ABC\""
-    let endOfLineCommentString = "  test: \"ABC\";gfsdt     "
-    let specialCharacterString = "  test💵: \"ABC💵\""
+    private let basicString = "  test:\"ABC\""
+    private let whitespaceString = "  test:    \"A B C\"        "
+    private let whitespaceBeginningString = "    test:    \"  A B C  \"        "
+    private let whitespaceNonMatchingString = " test:\"ABC\""
+    private let endOfLineCommentString = "  test: \"ABC\";gfsdt     "
+    private let specialCharacterString = "  test💵: \"ABC💵\""
 
     func testBasic() {
         let metaData = MetaDataParser.parseFrom(line: basicString)

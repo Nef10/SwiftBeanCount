@@ -12,31 +12,31 @@ import XCTest
 
 class AccountParserTests: XCTestCase {
 
-    let basicOpeningString = "2017-06-09 open Assets:Cash"
-    let basicClosingString = "2017-06-09 close Assets:Cash"
+    private let basicOpeningString = "2017-06-09 open Assets:Cash"
+    private let basicClosingString = "2017-06-09 close Assets:Cash"
 
-    let whitespaceOpeningString = "2017-06-09    open    Assets:Cash      CAD"
-    let whitespaceClosingString = "2017-06-09   close      Assets:Cash"
+    private let whitespaceOpeningString = "2017-06-09    open    Assets:Cash      CAD"
+    private let whitespaceClosingString = "2017-06-09   close      Assets:Cash"
 
-    let endOfLineCommentOpeningString = "2017-06-09 open Assets:Cash EUR ;gfsdt     "
-    let endOfLineCommentClosingString = "2017-06-09 close Assets:Cash   ;gfd "
+    private let endOfLineCommentOpeningString = "2017-06-09 open Assets:Cash EUR ;gfsdt     "
+    private let endOfLineCommentClosingString = "2017-06-09 close Assets:Cash   ;gfd "
 
-    let specialCharacterOpeningString = "2017-06-09 open Assets:💵 💵"
-    let specialCharacterClosingString = "2017-06-09 close Assets:💵"
+    private let specialCharacterOpeningString = "2017-06-09 open Assets:💵 💵"
+    private let specialCharacterClosingString = "2017-06-09 close Assets:💵"
 
-    let invalidCloseWithCommodityString = "2017-06-09 close Assets:Cash CAD"
-    let invalidCloseDateString = "2017-02-30 close Assets:Cash CAD"
+    private let invalidCloseWithCommodityString = "2017-06-09 close Assets:Cash CAD"
+    private let invalidCloseDateString = "2017-02-30 close Assets:Cash CAD"
 
-    let commodityWithSemicolonOpeningString = "2017-06-09 open Assets:Cash EUR;test ;gfsd"
-    let commodityWithSemicolonClosingString = "2017-06-09 close Assets:Cash ;gfsd"
+    private let commodityWithSemicolonOpeningString = "2017-06-09 open Assets:Cash EUR;test ;gfsd"
+    private let commodityWithSemicolonClosingString = "2017-06-09 close Assets:Cash ;gfsd"
 
-    let invalidNameOpeningString = "2017-06-09 open Assets::Cash"
+    private let invalidNameOpeningString = "2017-06-09 open Assets::Cash"
 
-    let bookingMethodStrictOpeningString = "2017-06-09 open Assets:Cash EUR;test \"STRICT\" ;gfsd" // Commodity with Semicolon
-    let bookingMethodLifoOpeningString = "2017-06-09    open    Assets:Cash    EUR      \"LIFO\"     ;gfsd" // Whitespace
-    let bookingMethodFifoOpeningString = "2017-06-09 open Assets:Cash 💵 \"FIFO\" ;gfsd" // Special Character
-    let bookingMethodClosingString = "2017-06-09 close Assets:Cash ;gfsd"
-    let bookingMethodInClosingString = "2017-06-09 close Assets:Cash \"FIFO\" ;gfsd"
+    private let bookingMethodStrictOpeningString = "2017-06-09 open Assets:Cash EUR;test \"STRICT\" ;gfsd" // Commodity with Semicolon
+    private let bookingMethodLifoOpeningString = "2017-06-09    open    Assets:Cash    EUR      \"LIFO\"     ;gfsd" // Whitespace
+    private let bookingMethodFifoOpeningString = "2017-06-09 open Assets:Cash 💵 \"FIFO\" ;gfsd" // Special Character
+    private let bookingMethodClosingString = "2017-06-09 close Assets:Cash ;gfsd"
+    private let bookingMethodInClosingString = "2017-06-09 close Assets:Cash \"FIFO\" ;gfsd"
 
     func testBasic() {
         testWith(openingString: basicOpeningString, closingString: basicClosingString, commoditySymbol: nil)

@@ -12,13 +12,13 @@ import XCTest
 
 class TransactionMetaDataParserTests: XCTestCase {
 
-    let basicTransactionMetaDataString = "2017-06-09 * \"Payee\" \"Narration\""
-    let whitespaceTransactionMetaDataString = "2017-06-09   *    \"Payee\"   \"Narration\""
-    let endOfLineCommentTransactionMetaDataString = "2017-06-09 * \"Payee\" \"Narration\" ;TESTgfdsgds      "
-    let specialCharacterTransactionMetaDataString = "2017-06-09 * \"öøuß´@🇩🇪🇨🇦💵\" \"🎉😊💵Test⚅℃⁒♾\" #🇨🇦"
-    let incompleteTransactionMetaDataString = "2017-06-09 ! \"Payee\" \"Narration\""
-    let tagsTransactionMetaDataString = "2017-06-09 * \"Payee\" \"Narration\" #1 #two"
-    let invalidDateTransactionMetaDataString = "2017-02-30 * \"Payee\" \"Narration\""
+    private let basicTransactionMetaDataString = "2017-06-09 * \"Payee\" \"Narration\""
+    private let whitespaceTransactionMetaDataString = "2017-06-09   *    \"Payee\"   \"Narration\""
+    private let endOfLineCommentTransactionMetaDataString = "2017-06-09 * \"Payee\" \"Narration\" ;TESTgfdsgds      "
+    private let specialCharacterTransactionMetaDataString = "2017-06-09 * \"öøuß´@🇩🇪🇨🇦💵\" \"🎉😊💵Test⚅℃⁒♾\" #🇨🇦"
+    private let incompleteTransactionMetaDataString = "2017-06-09 ! \"Payee\" \"Narration\""
+    private let tagsTransactionMetaDataString = "2017-06-09 * \"Payee\" \"Narration\" #1 #two"
+    private let invalidDateTransactionMetaDataString = "2017-02-30 * \"Payee\" \"Narration\""
 
     func testBasic() {
         let transactionMetaData = TransactionMetaDataParser.parseFrom(line: basicTransactionMetaDataString)!

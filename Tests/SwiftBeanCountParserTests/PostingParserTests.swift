@@ -12,27 +12,27 @@ import XCTest
 
 class PostingParserTests: XCTestCase {
 
-    let transaction = Transaction(metaData: TransactionMetaData(date: Date(), payee: "Payee", narration: "Narration"), postings: [])
+    private let transaction = Transaction(metaData: TransactionMetaData(date: Date(), payee: "Payee", narration: "Narration"), postings: [])
 
-    var basicPosting: Posting?
+    private var basicPosting: Posting?
 
-    let basicPostingString = "  Assets:Checking 1.23 EUR"
-    let integerPostingString = "  Assets:Checking 1 EUR"
-    let noThousandsSeparatorPostingString = "  Assets:Checking 100000 EUR"
-    let thousandsSeparatorPostingString = "  Assets:Checking 100,000 EUR"
-    let negativePostingString = "  Assets:Checking -1.2 EUR"
-    let positivePostingString = "  Assets:Checking +1.23 EUR"
-    let separatorPostingString = "  Assets:Checking -1,000.23 EUR"
-    let whitespacePostingString = "         Assets:Checking        1.23    EUR     "
-    let invalidAccountPostingString = "  Invalid:Checking 1.23 EUR"
-    let endOfLineCommentPostingString = " Assets:Checking 1.23 EUR    ;gfdsg f gfds   "
-    let specialCharacterPostingString = "  Assets:💰 1.00 💵"
-    let totalPricePostingString = "  Assets:💰 -2.00 💵 @@ 2.0 EUR"
-    let unitPricePostingString = "  Assets:💰 2.0 💵 @ 1.003 EUR"
-    let costPostingString = "  Assets:💰 2.0 💵 {2017-06-09, 1.003 EUR, \"TEST\"}"
-    let invalidCostPostingString = "  Assets:💰 2.0 💵 {2017-06-09, -1.003 EUR, \"TEST\"}"
-    let costAndUnitPricePostingString = "  Assets:💰 2.0 💵 {2017-06-09, 1.003 EUR} @ 1.003 EUR"
-    let costAndTotalPricePostingString = "  Assets:💰 2.0 💵 {1.003 EUR, \"TEST\"} @@ 2.0 EUR"
+    private let basicPostingString = "  Assets:Checking 1.23 EUR"
+    private let integerPostingString = "  Assets:Checking 1 EUR"
+    private let noThousandsSeparatorPostingString = "  Assets:Checking 100000 EUR"
+    private let thousandsSeparatorPostingString = "  Assets:Checking 100,000 EUR"
+    private let negativePostingString = "  Assets:Checking -1.2 EUR"
+    private let positivePostingString = "  Assets:Checking +1.23 EUR"
+    private let separatorPostingString = "  Assets:Checking -1,000.23 EUR"
+    private let whitespacePostingString = "         Assets:Checking        1.23    EUR     "
+    private let invalidAccountPostingString = "  Invalid:Checking 1.23 EUR"
+    private let endOfLineCommentPostingString = " Assets:Checking 1.23 EUR    ;gfdsg f gfds   "
+    private let specialCharacterPostingString = "  Assets:💰 1.00 💵"
+    private let totalPricePostingString = "  Assets:💰 -2.00 💵 @@ 2.0 EUR"
+    private let unitPricePostingString = "  Assets:💰 2.0 💵 @ 1.003 EUR"
+    private let costPostingString = "  Assets:💰 2.0 💵 {2017-06-09, 1.003 EUR, \"TEST\"}"
+    private let invalidCostPostingString = "  Assets:💰 2.0 💵 {2017-06-09, -1.003 EUR, \"TEST\"}"
+    private let costAndUnitPricePostingString = "  Assets:💰 2.0 💵 {2017-06-09, 1.003 EUR} @ 1.003 EUR"
+    private let costAndTotalPricePostingString = "  Assets:💰 2.0 💵 {1.003 EUR, \"TEST\"} @@ 2.0 EUR"
 
     override func setUp() {
         super.setUp()

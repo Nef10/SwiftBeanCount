@@ -12,12 +12,12 @@ import XCTest
 
 class BalanceParserTests: XCTestCase {
 
-    let basicString = "2017-06-09 balance Assets:Cash 10.00 CAD"
-    let whitespaceString = "2017-06-09    balance    Assets:Cash     10.00      CAD"
-    let endOfLineCommentString = "2017-06-09 balance Assets:Cash 10.00 CAD ;gfsdt     "
-    let specialCharacterString = "2017-06-09 balance Assets:💵 10.00 💵"
-    let invalidDateString = "2017-02-30 balance Assets:Cash 10.00 CAD"
-    let accountName = try! AccountName("Assets:Cash")
+    private let basicString = "2017-06-09 balance Assets:Cash 10.00 CAD"
+    private let whitespaceString = "2017-06-09    balance    Assets:Cash     10.00      CAD"
+    private let endOfLineCommentString = "2017-06-09 balance Assets:Cash 10.00 CAD ;gfsdt     "
+    private let specialCharacterString = "2017-06-09 balance Assets:💵 10.00 💵"
+    private let invalidDateString = "2017-02-30 balance Assets:Cash 10.00 CAD"
+    private let accountName = try! AccountName("Assets:Cash")
 
     func testBasic() {
         let balance = BalanceParser.parseFrom(line: basicString)

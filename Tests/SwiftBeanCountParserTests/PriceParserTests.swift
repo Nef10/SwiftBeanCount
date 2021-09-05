@@ -12,21 +12,21 @@ import XCTest
 
 class PriceParserTests: XCTestCase {
 
-    let price = try! Price(date: TestUtils.date20170609,
-                           commoditySymbol: "EUR",
-                           amount: Amount(number: Decimal(211) / Decimal(100), commoditySymbol: "CAD", decimalDigits: 2))
+    private let price = try! Price(date: TestUtils.date20170609,
+                                   commoditySymbol: "EUR",
+                                   amount: Amount(number: Decimal(211) / Decimal(100), commoditySymbol: "CAD", decimalDigits: 2))
 
-    let basicPrice = "2017-06-09 price EUR 2.11 CAD"
-    let priceComment = "2017-06-09 price EUR 2.11 CAD ;fsajfdsanfjsak"
-    let priceWhitespace = "2017-06-09       price        EUR        2.11           CAD"
+    private let basicPrice = "2017-06-09 price EUR 2.11 CAD"
+    private let priceComment = "2017-06-09 price EUR 2.11 CAD ;fsajfdsanfjsak"
+    private let priceWhitespace = "2017-06-09       price        EUR        2.11           CAD"
 
-    let priceSpecialCharacter = "2017-06-09 price 💵 2.11 💸"
-    let priceWholeNumber = "2017-06-09 price EUR 2 CAD"
+    private let priceSpecialCharacter = "2017-06-09 price 💵 2.11 💸"
+    private let priceWholeNumber = "2017-06-09 price EUR 2 CAD"
 
-    let invalidPriceMissingNumber = "2017-06-09 price EUR  CAD"
-    let invalidPriceMissingFirstCurrency = "2017-06-09 price  2.11 CAD"
-    let invalidPriceMissingSecondCurrency = "2017-06-09 price EUR 2.11"
-    let invalidPriceMissingCurrencies = "2017-06-09 price 2.11"
+    private let invalidPriceMissingNumber = "2017-06-09 price EUR  CAD"
+    private let invalidPriceMissingFirstCurrency = "2017-06-09 price  2.11 CAD"
+    private let invalidPriceMissingSecondCurrency = "2017-06-09 price EUR 2.11"
+    private let invalidPriceMissingCurrencies = "2017-06-09 price 2.11"
 
     func testBasic() {
         let parsedPrice = PriceParser.parseFrom(line: basicPrice)

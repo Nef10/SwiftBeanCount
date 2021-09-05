@@ -12,11 +12,11 @@ import XCTest
 
 class EventParserTests: XCTestCase {
 
-    let basicString = "2017-06-09 event \"ABC\" \"DEF\""
-    let whitespaceString = "2017-06-09 event    \"  A B C  \"       \"  D E F  \"     "
-    let endOfLineCommentString = "2017-06-09 event \"ABC\" \"DEF\";gfsdt     "
-    let specialCharacterString = "2017-06-09 event \"ABC💵\" \"DEF💵\""
-    let invalidDateString = "2017-02-30 event \"ABC\" \"DEF\""
+    private let basicString = "2017-06-09 event \"ABC\" \"DEF\""
+    private let whitespaceString = "2017-06-09 event    \"  A B C  \"       \"  D E F  \"     "
+    private let endOfLineCommentString = "2017-06-09 event \"ABC\" \"DEF\";gfsdt     "
+    private let specialCharacterString = "2017-06-09 event \"ABC💵\" \"DEF💵\""
+    private let invalidDateString = "2017-02-30 event \"ABC\" \"DEF\""
 
     func testBasic() {
         let event = EventParser.parseFrom(line: basicString)!

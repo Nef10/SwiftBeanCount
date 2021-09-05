@@ -12,11 +12,11 @@ import XCTest
 
 class CommodityParserTests: XCTestCase {
 
-    let basicString = "2017-06-09 commodity CAD"
-    let whitespaceString = "2017-06-09    commodity        CAD"
-    let endOfLineCommentString = "2017-06-09 commodity CAD ;gfsdt     "
-    let specialCharacterString = "2017-06-09 commodity CAD💵"
-    let invalidDateString = "2017-02-30 commodity CAD"
+    private let basicString = "2017-06-09 commodity CAD"
+    private let whitespaceString = "2017-06-09    commodity        CAD"
+    private let endOfLineCommentString = "2017-06-09 commodity CAD ;gfsdt     "
+    private let specialCharacterString = "2017-06-09 commodity CAD💵"
+    private let invalidDateString = "2017-02-30 commodity CAD"
 
     func testBasic() {
         let commodity = CommodityParser.parseFrom(line: basicString)

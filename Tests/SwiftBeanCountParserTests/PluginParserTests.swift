@@ -12,10 +12,10 @@ import XCTest
 
 class PluginParserTests: XCTestCase {
 
-    let basicString = "plugin \"ABC\""
-    let whitespaceString = "plugin    \"  A B C  \"        "
-    let endOfLineCommentString = "plugin \"ABC\";gfsdt     "
-    let specialCharacterString = "plugin \"ABC💵\""
+    private let basicString = "plugin \"ABC\""
+    private let whitespaceString = "plugin    \"  A B C  \"        "
+    private let endOfLineCommentString = "plugin \"ABC\";gfsdt     "
+    private let specialCharacterString = "plugin \"ABC💵\""
 
     func testBasic() {
         let plugin = PluginParser.parseFrom(line: basicString)

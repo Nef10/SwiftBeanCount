@@ -12,10 +12,10 @@ import XCTest
 
 class OptionParserTests: XCTestCase {
 
-    let basicString = "option \"ABC\" \"DEF\""
-    let whitespaceString = "option    \"  A B C  \"       \"  D E F  \"     "
-    let endOfLineCommentString = "option \"ABC\" \"DEF\";gfsdt     "
-    let specialCharacterString = "option \"ABC💵\" \"DEF💵\""
+    private let basicString = "option \"ABC\" \"DEF\""
+    private let whitespaceString = "option    \"  A B C  \"       \"  D E F  \"     "
+    private let endOfLineCommentString = "option \"ABC\" \"DEF\";gfsdt     "
+    private let specialCharacterString = "option \"ABC💵\" \"DEF💵\""
 
     func testBasic() {
         let option = OptionParser.parseFrom(line: basicString)!
