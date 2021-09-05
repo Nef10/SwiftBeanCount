@@ -1,4 +1,4 @@
-# Updated for 0.39.2 (Fix 1)
+# Updated for 0.42.0
 
 excluded:
   - ".build"
@@ -83,10 +83,8 @@ opt_in_rules:
   - optional_enum_case_matching
   - prefer_self_type_over_type_of_self
   - orphaned_doc_comment
-  #- tuple_pattern
-  #- return_value_from_void_function
-  #- void_function_in_ternary
-  #- prohibited_nan_comparison
+  - prefer_zero_over_explicit_init
+  - test_case_accessibility
 
 disabled_rules:
   - trailing_comma
@@ -96,5 +94,8 @@ function_body_length: 30
 identifier_name:
   excluded:
     - id
+  max_length:
+    warning: 45
+type_name:
   max_length:
     warning: 45
