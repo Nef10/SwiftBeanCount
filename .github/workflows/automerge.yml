@@ -5,6 +5,7 @@ on:
 
 jobs:
   enable-auto-merge:
+    name: Enable Auto Merge
     runs-on: ubuntu-latest
     if: github.event.pull_request.user.login == 'file-sync-app[bot]' && contains(github.event.pull_request.labels.*.name, 'sync')
     steps:
