@@ -49,6 +49,7 @@ extension Amount: CustomStringConvertible {
     /// Returns a `String` for the ledger which contains the number with the correct number of decimal digits as well as the `commodity`
     public var description: String { "\(amountString) \(commoditySymbol)" }
 
+    // swiftlint:disable:next legacy_objc_type
     private var amountString: String { Self.numberFormatter(fractionDigits: decimalDigits).string(from: number as NSDecimalNumber)! }
 
     private static func numberFormatter(fractionDigits: Int) -> NumberFormatter {
