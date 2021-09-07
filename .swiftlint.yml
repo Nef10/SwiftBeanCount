@@ -1,4 +1,4 @@
-# Updated for 0.42.0
+# Updated for 0.43.1
 
 excluded:
   - ".build"
@@ -85,6 +85,10 @@ opt_in_rules:
   - orphaned_doc_comment
   - prefer_zero_over_explicit_init
   - test_case_accessibility
+  - discouraged_assert
+  - legacy_objc_type
+  - capture_variable
+  - private_subject
 
 disabled_rules:
   - trailing_comma
