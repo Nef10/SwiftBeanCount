@@ -11,6 +11,9 @@ import Foundation
 import SwiftBeanCountModel
 import XCTest
 
+class InvalidAccountNameProvider {
+}
+
 final class BaseImporterTests: XCTestCase {
 
     func testInit() {
@@ -52,44 +55,40 @@ final class BaseImporterTests: XCTestCase {
         XCTAssertEqual(importer.commoditySymbol, Settings.fallbackCommodity)
 
         importer = BaseImporter(ledger: TestUtils.ledgerCashUSD)
-        importer.useAccount(name: TestUtils.cash)
+        importer.delegate = TestUtils.cashAccountDelegate
         XCTAssertEqual(importer.commoditySymbol, TestUtils.usd)
     }
 
-    func testUseAccount() {
-        let importer = BaseImporter(ledger: TestUtils.ledger)
-        XCTAssertNil(importer.accountName)
-
-        importer.useAccount(name: TestUtils.cash)
-        XCTAssertEqual(importer.accountName, TestUtils.cash)
-    }
-
-    func testPossibleAccountNames() {
+    func testConfiguredAccountName() {
         let ledger = TestUtils.ledger
         var importer = BaseImporter(ledger: ledger)
-        var possibleAccountNames = importer.possibleAccountNames()
-        XCTAssertEqual(possibleAccountNames.count, 0)
+        var delegate = AccountNameSuggestionVerifier(expectedValues: [])
+        importer.delegate = delegate
+        _ = importer.configuredAccountName
+        XCTAssert(delegate.verified)
 
         var account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.usd, metaData: [Settings.importerTypeKey: ""])
         try! ledger.add(account)
         importer = BaseImporter(ledger: ledger)
-        possibleAccountNames = importer.possibleAccountNames()
-        XCTAssertEqual(possibleAccountNames.count, 1)
-        XCTAssertEqual(possibleAccountNames[0], TestUtils.cash)
+        importer.delegate = TestUtils.noInputDelegate
+        XCTAssertEqual(importer.configuredAccountName, TestUtils.cash)
 
         account = Account(name: TestUtils.chequing, commoditySymbol: TestUtils.usd, metaData: [Settings.importerTypeKey: ""])
         try! ledger.add(account)
         importer = BaseImporter(ledger: ledger)
-        possibleAccountNames = importer.possibleAccountNames()
-        XCTAssertEqual(possibleAccountNames.count, 2)
-        XCTAssertTrue(possibleAccountNames.contains(TestUtils.cash))
-        XCTAssertTrue(possibleAccountNames.contains(TestUtils.chequing))
+        delegate = AccountNameSuggestionVerifier(expectedValues: [TestUtils.cash, TestUtils.chequing])
+        importer.delegate = delegate
+        _ = importer.configuredAccountName
+        XCTAssert(delegate.verified)
 
-        // When account is set returns exactly this one
-        importer.useAccount(name: TestUtils.cash)
-        possibleAccountNames = importer.possibleAccountNames()
-        XCTAssertEqual(possibleAccountNames.count, 1)
-        XCTAssertEqual(possibleAccountNames[0], TestUtils.cash)
+        // When account is set it does not ask again
+        importer.delegate = TestUtils.noInputDelegate
+        _ = importer.configuredAccountName
+
+        importer = BaseImporter(ledger: ledger)
+        let delegate2 = InvalidAccountNameProvider()
+        importer.delegate = delegate2
+        _ = importer.configuredAccountName
     }
 
     func testSavedPayee() {
@@ -208,4 +207,19 @@ final class BaseImporterTests: XCTestCase {
         XCTAssertEqual(importer.sanitize(description: "Shop1 #12345"), "Shop1")
         XCTAssertEqual(importer.sanitize(description: "Shop1 # 12"), "Shop1")
     }
+}
+
+extension InvalidAccountNameProvider: ImporterDelegate {
+
+    func requestInput(name: String, suggestions: [String], allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
+        var result = completion("Not an valid account name")
+        XCTAssertFalse(result)
+        result = completion(TestUtils.cash.fullName)
+        XCTAssert(result)
+    }
+
+    func requestSecretInput(name: String, allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
+        XCTFail("requestSecretInput should not be called")
+    }
+
 }

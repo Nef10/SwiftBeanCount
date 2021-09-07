@@ -41,10 +41,11 @@ final class CSVBaseImporterTests: XCTestCase {
 
     func testLoad() {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.basicCSVReader, fileName: "")
+        importer.delegate = TestUtils.cashAccountDelegate
+
         importer.load()
         // Can be called multiple times, still only returns each row once
         importer.load()
-        importer.useAccount(name: TestUtils.cash)
 
         let importedTransaction = importer.nextTransaction()
         XCTAssertNotNil(importedTransaction)
@@ -55,8 +56,8 @@ final class CSVBaseImporterTests: XCTestCase {
 
     func testLoadSortDate() {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.dateMixedCSVReader, fileName: "")
+        importer.delegate = TestUtils.cashAccountDelegate
         importer.load()
-        importer.useAccount(name: TestUtils.cash)
 
         let importedTransaction1 = importer.nextTransaction()
         XCTAssertNotNil(importedTransaction1)
@@ -68,9 +69,8 @@ final class CSVBaseImporterTests: XCTestCase {
 
     func testNextTransaction() {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.basicCSVReader, fileName: "")
-
+        importer.delegate = TestUtils.cashAccountDelegate
         importer.load()
-        importer.useAccount(name: TestUtils.cash)
 
         let importedTransaction = importer.nextTransaction()
         XCTAssertNotNil(importedTransaction)
@@ -140,8 +140,8 @@ final class CSVBaseImporterTests: XCTestCase {
         ledger.add(transaction)
 
         let importer = TestCSVBaseImporter(ledger: ledger, csvReader: TestUtils.csvReader(description: "a", payee: "b", date: transaction.metaData.date), fileName: "")
+        importer.delegate = TestUtils.cashAccountDelegate
         importer.load()
-        importer.useAccount(name: TestUtils.cash)
         let importedTransaction = importer.nextTransaction()
         XCTAssertNotNil(importedTransaction)
         XCTAssertEqual(importedTransaction!.possibleDuplicate, transaction)
@@ -155,8 +155,10 @@ final class CSVBaseImporterTests: XCTestCase {
         ledger.add(transaction)
 
         let importer = TestCSVBaseImporter(ledger: ledger, csvReader: TestUtils.csvReader(description: "a", payee: "b", date: transaction.metaData.date), fileName: "")
+        let delegate = AccountNameProvider(account: TestUtils.chequing)
+        importer.delegate = TestUtils.cashAccountDelegate
+        importer.delegate = delegate
         importer.load()
-        importer.useAccount(name: TestUtils.chequing)
         let importedTransaction = importer.nextTransaction()
         XCTAssertNotNil(importedTransaction)
         XCTAssertNil(importedTransaction!.possibleDuplicate)
@@ -186,8 +188,8 @@ final class CSVBaseImporterTests: XCTestCase {
 
     private func transactionHelper(description: String, payee: String = "payee") -> Transaction {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.csvReader(description: description, payee: payee), fileName: "")
+        importer.delegate = TestUtils.cashAccountDelegate
         importer.load()
-        importer.useAccount(name: TestUtils.cash)
         let importedTransaction = importer.nextTransaction()
         XCTAssertNotNil(importedTransaction)
         return importedTransaction!.transaction

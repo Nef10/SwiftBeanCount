@@ -29,6 +29,26 @@ class TestStorage: SettingsStorage {
     }
 }
 
+class AccountNameProvider {
+    let account: AccountName
+
+    init(account: AccountName) {
+        self.account = account
+    }
+}
+
+class AccountNameSuggestionVerifier {
+    let expectedValues: [String]
+    var verified = false
+
+    init (expectedValues: [AccountName]) {
+        self.expectedValues = expectedValues.map { $0.fullName }
+    }
+}
+
+class NoInputCallVerifier {
+}
+
 enum TestUtils {
 
     static let usd: CommoditySymbol = "USD"
@@ -36,6 +56,9 @@ enum TestUtils {
     static let fundSymbol: String = "EASY"
     static let accountNumberChequing = 123_456_789
     static let accountNumberCash = 987_654_321
+    static let parkingAccountDelegate = AccountNameProvider(account: TestUtils.parking)
+    static let cashAccountDelegate = AccountNameProvider(account: TestUtils.cash)
+    static let noInputDelegate = NoInputCallVerifier()
 
     private static var dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()
@@ -169,6 +192,42 @@ enum TestUtils {
 
 }
 
+extension AccountNameProvider: ImporterDelegate {
+
+    func requestInput(name: String, suggestions: [String], allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
+        XCTAssertEqual(name, "Account")
+        XCTAssertFalse(allowSaving)
+        XCTAssertFalse(allowSaved)
+        let result = completion(account.fullName)
+        XCTAssert(result)
+    }
+
+    func requestSecretInput(name: String, allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
+        XCTFail("requestSecretInput should not be called for an account")
+    }
+
+}
+
+extension AccountNameSuggestionVerifier: ImporterDelegate {
+
+    func requestInput(name: String, suggestions: [String], allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
+        XCTAssertEqual(name, "Account")
+        XCTAssertEqual(suggestions.count, expectedValues.count)
+        for suggestion in suggestions {
+            XCTAssert(expectedValues.contains(suggestion))
+        }
+        XCTAssertFalse(allowSaving)
+        XCTAssertFalse(allowSaved)
+        verified = true
+        _ = completion(TestUtils.cash.fullName)
+    }
+
+    func requestSecretInput(name: String, allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
+        XCTFail("requestSecretInput should not be called for an account")
+    }
+
+}
+
 extension XCTestCase {
 
     func temporaryFileURL() -> URL {
@@ -197,6 +256,18 @@ extension XCTestCase {
         } catch {
             XCTFail("Error writing temporary file: \(error)")
         }
+    }
+
+}
+
+extension NoInputCallVerifier: ImporterDelegate {
+
+    func requestInput(name: String, suggestions: [String], allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
+        XCTFail("requestInput should not be called")
+    }
+
+    func requestSecretInput(name: String, allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
+        XCTFail("requestSecretInput should not be called")
     }
 
 }

@@ -25,29 +25,42 @@ final class TangerineAccountImporterTests: XCTestCase {
         XCTAssertEqual(TangerineAccountImporter(ledger: nil, csvReader: TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "Tangerine Account File TestName")
     }
 
-    func testPossibleAccountNames() {
+    func testAccountsFromLedger() {
         var importer = TangerineAccountImporter(ledger: TestUtils.lederAccountNumers,
                                                 csvReader: TestUtils.basicCSVReader,
                                                 fileName: "Export \(TestUtils.accountNumberChequing).csv")
-        var possibleAccountNames = importer.possibleAccountNames()
+        var possibleAccountNames = importer.accountsFromLedger()
         XCTAssertEqual(possibleAccountNames.count, 1)
         XCTAssertEqual(possibleAccountNames[0], TestUtils.chequing)
 
         importer = TangerineAccountImporter(ledger: TestUtils.lederAccountNumers, csvReader: TestUtils.basicCSVReader, fileName: "Export \(TestUtils.accountNumberCash).csv")
-        possibleAccountNames = importer.possibleAccountNames()
+        possibleAccountNames = importer.accountsFromLedger()
         XCTAssertEqual(possibleAccountNames.count, 1)
         XCTAssertEqual(possibleAccountNames[0], TestUtils.cash)
 
         importer = TangerineAccountImporter(ledger: TestUtils.lederAccountNumers, csvReader: TestUtils.basicCSVReader, fileName: "Export 000000.csv")
-        possibleAccountNames = importer.possibleAccountNames()
+        possibleAccountNames = importer.accountsFromLedger()
         XCTAssertEqual(possibleAccountNames.count, 2)
         XCTAssertTrue(possibleAccountNames.contains(TestUtils.cash))
         XCTAssertTrue(possibleAccountNames.contains(TestUtils.chequing))
+    }
 
-        importer.useAccount(name: TestUtils.cash)
-        possibleAccountNames = importer.possibleAccountNames()
-        XCTAssertEqual(possibleAccountNames.count, 1)
-        XCTAssertEqual(possibleAccountNames[0], TestUtils.cash)
+    func testAccountSuggestions() {
+        var importer = TangerineAccountImporter(ledger: TestUtils.lederAccountNumers,
+                                                csvReader: TestUtils.basicCSVReader,
+                                                fileName: "Export \(TestUtils.accountNumberChequing).csv")
+        importer.delegate = TestUtils.noInputDelegate
+        XCTAssertEqual(importer.configuredAccountName, TestUtils.chequing)
+
+        importer = TangerineAccountImporter(ledger: TestUtils.lederAccountNumers, csvReader: TestUtils.basicCSVReader, fileName: "Export \(TestUtils.accountNumberCash).csv")
+        importer.delegate = TestUtils.noInputDelegate
+        XCTAssertEqual(importer.configuredAccountName, TestUtils.cash)
+
+        importer = TangerineAccountImporter(ledger: TestUtils.lederAccountNumers, csvReader: TestUtils.basicCSVReader, fileName: "Export 000000.csv")
+        let delegate = AccountNameSuggestionVerifier(expectedValues: [TestUtils.cash, TestUtils.chequing])
+        importer.delegate = delegate
+        _ = importer.configuredAccountName
+        XCTAssert(delegate.verified)
     }
 
     func testParseLine() {

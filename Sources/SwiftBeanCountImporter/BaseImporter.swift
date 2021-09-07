@@ -27,33 +27,44 @@ class BaseImporter: Importer {
 
     class var importerType: String { "" } // Override
 
+    weak var delegate: ImporterDelegate?
     var ledger: Ledger?
-    private(set) var accountName: AccountName?
-    var configuredAccountName: AccountName {
-        guard let accountName = accountName else {
-            fatalError("No account configured - You must call useAccount(name:) before attempting to import")
-        }
-        return accountName
-    }
+    private var accountName: AccountName?
     var importName: String { "" } // Override
+    var configuredAccountName: AccountName {
+        if let existingAccountName = accountName {
+            return existingAccountName
+        }
+        let accountsFromLedger = accountsFromLedger()
+        if accountsFromLedger.count == 1 {
+            accountName = accountsFromLedger.first!
+            return accountName!
+        }
+        guard let delegate = delegate else {
+            fatalError("No delegate")
+        }
+        let group = DispatchGroup()
+        group.enter()
+
+        delegate.requestInput(name: "Account", suggestions: accountsFromLedger.map { $0.fullName }, allowSaving: false, allowSaved: false) {
+            guard let name = try? AccountName($0) else {
+                return false
+            }
+            accountName = name
+            group.leave()
+            return true
+        }
+
+        group.wait()
+        return accountName!
+    }
 
     var commoditySymbol: String {
-        ledger?.accounts.first { $0.name == accountName }?.commoditySymbol ?? Settings.fallbackCommodity
+        ledger?.accounts.first { $0.name == configuredAccountName }?.commoditySymbol ?? Settings.fallbackCommodity
     }
 
     init(ledger: Ledger?) {
         self.ledger = ledger
-    }
-
-    func possibleAccountNames() -> [AccountName] {
-        if let accountName = accountName {
-            return [accountName]
-        }
-        return accountsFromLedger()
-    }
-
-    func useAccount(name: AccountName) {
-        self.accountName = name
     }
 
     func accountsFromLedger() -> [AccountName] {

@@ -93,6 +93,44 @@ public struct ImportedTransaction {
 
 }
 
+/// Protocol of the delegate of an Importer
+public protocol ImporterDelegate: AnyObject {
+
+    /// Request for a user input, which is required for the importer to operate
+    ///
+    /// - Parameters:
+    ///   - name: name of the input required
+    ///   - suggestions: suggestions for the input - may be empty
+    ///   - allowSaving: if the app is allowed to offer the user to save this input
+    ///                  To save it use the importName together with the name as key.
+    ///   - allowSaved: if the app can just respond with a saved value.
+    ///                   E.g. if asked for a username, which has allowSaving on, the library
+    ///                   would first request the input with allowSaved set to true.
+    ///                   But if the username is incorrect it would request again
+    ///                   with allowSaved false, upon which the app should remove the saved value.
+    ///   - completion: function to pass input to. Returns if the input was accepted.
+    ///                 In case an input was not accepted, please call the function again.
+    func requestInput(name: String, suggestions: [String], allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool)
+
+    // Request for a secret user input, which is required for the importer to operate
+    ///
+    /// - Parameters:
+    ///   - name: name of the input required
+    ///   - isSecret: if the requested input is considered a secret, e.g. to show a password type input field
+    ///   - allowSaving: if the app is allowed to offer the user to save this input
+    ///                  E.g. this could be true for a password but false for an OTP.
+    ///                  To save it use the importName together with the name as key.
+    ///   - allowSaved: if the app can just respond with a saved value.
+    ///                   E.g. if asked for a password, which has allowSaving on, the library
+    ///                   would first request the input with allowSaved set to true.
+    ///                   But if the password is incorrect it would request again
+    ///                   with allowSaved false, upon which the app should remove the saved value.
+    ///   - completion: function to pass input to. Returns if the input was accepted.
+    ///                 In case an input was not accepted, please call the function again.
+    func requestSecretInput(name: String, allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool)
+
+}
+
 /// Protocol to represent an Importer, regardless of type
 public protocol Importer {
 
@@ -102,15 +140,8 @@ public protocol Importer {
     /// account selection or credentials
     var importName: String { get }
 
-    /// Get possible account names for this importer
-    func possibleAccountNames() -> [AccountName]
-
-    /// Tells the importer to use the named account for the import.
-    ///
-    /// Must be called before importing if `possibleAccountNames` does not return
-    /// exactly one account
-    /// - Parameter name: name for the accout to use
-    func useAccount(name: AccountName)
+    /// Delegate to request input
+    var delegate: ImporterDelegate? { get set }
 
     /// Loads the data to import
     ///

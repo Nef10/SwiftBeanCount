@@ -53,7 +53,7 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
     private let balanceInputString: String
 
     private var accountString: String { configuredAccountName.fullName.split(separator: ":").dropLast(1).joined(separator: ":") }
-    private var account: Account? { ledger?.accounts.first { $0.name == accountName } }
+    private var account: Account? { ledger?.accounts.first { $0.name == configuredAccountName } }
     private var employeeBasicFraction: Double { Double(account?.metaData["employee-basic-fraction"] ?? "") ?? defaultContribution }
     private var employerBasicFraction: Double { Double(account?.metaData["employer-basic-fraction"] ?? "") ?? defaultContribution }
     private var employerMatchFraction: Double { Double(account?.metaData["employer-match-fraction"] ?? "") ?? defaultContribution }

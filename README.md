@@ -13,12 +13,11 @@ This is the importer of SwiftBeanCount. It reads files to create transactions. T
 ### Import Transactions
 
 1) Create an `Importer` via either `ImporterFactory.new(ledger: Ledger?, url: URL?)` or `ImporterFactory.new(ledger: Ledger?, transaction: String, balance: String)`, depending on what you want to import.
-2) Call `load()` on the importer.
-3) Check `possibleAccountNames()` on the importer. If there is more than one or none, promt to user to enter/select the account to use. To show the user for which import they are entering information, you can display `importName`.
-4) Pass the result to the importer via `useAccount(name:)`.
-5) Call `nextTransaction()` to retrive transaction after transactions till it returns `nil`. It is recommended to allow the user the edit the transactions while doing this, as long as `shouldAllowUserToEdit` is true.
-6) If the user edits the transaction, and you offer and they accept to save the new mapping, call `saveMapped(description:payee:accountName:)`.
-7) Get `balancesToImport()` and `pricesToImport()` from the importer.
+2) Set your `delegate` on the importer.
+3) Call `load()` on the importer.
+4) Call `nextTransaction()` to retrive transaction after transactions till it returns `nil`. It is recommended to allow the user the edit the transactions while doing this, as long as `shouldAllowUserToEdit` is true.
+5) If the user edits the transaction, and you offer and they accept to save the new mapping, call `saveMapped(description:payee:accountName:)`.
+6) Get `balancesToImport()` and `pricesToImport()` from the importer.
 
 ### Settings
 
