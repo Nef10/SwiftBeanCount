@@ -12,7 +12,6 @@ import XCTest
 class StringTests: XCTestCase {
 
     func testMatchingStrings_multipleGroups() {
-        // swiftlint:disable:next force_try
         let regex = try! NSRegularExpression(pattern: "^\\s+([^\\s]+:[^\\s]+)\\s+(-?[0-9]+(.[0-9]+)?)\\s+([^\\s]+)\\s*(;.*)?$", options: [])
         let results = "  Assets:Checking 1.00 EUR".matchingStrings(regex: regex)
         XCTAssertEqual(results.count, 1)
@@ -20,7 +19,6 @@ class StringTests: XCTestCase {
     }
 
     func testMatchingStrings_multipleResults() {
-        // swiftlint:disable:next force_try
         let regex = try! NSRegularExpression(pattern: "\\d\\D\\d", options: [])
         let results = "0a01b1".matchingStrings(regex: regex)
         XCTAssertEqual(results.count, 2)
