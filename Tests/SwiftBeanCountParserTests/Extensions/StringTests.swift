@@ -28,4 +28,43 @@ class StringTests: XCTestCase {
         XCTAssertEqual(results[1], ["1b1"])
     }
 
+    func testMatchingStrings_ExtendedGraphemeClusters() {
+        var regex = try! NSRegularExpression(pattern: "[0-9]", options: [])
+        var results = "🇩🇪€4€9".matchingStrings(regex: regex)
+        XCTAssertEqual(results.count, 2)
+        XCTAssertEqual(results[0], ["4"])
+        XCTAssertEqual(results[1], ["9"])
+
+        regex = try! NSRegularExpression(pattern: "🇩🇪", options: [])
+        results = "🇩🇪€4€9".matchingStrings(regex: regex)
+        XCTAssertEqual(results.count, 1)
+        XCTAssertEqual(results[0], ["🇩🇪"])
+    }
+
+    func testAmountDecimal() {
+        var (decimal, decimalDigits) = "1".amountDecimal()
+        XCTAssertEqual(decimal, Decimal(1))
+        XCTAssertEqual(decimalDigits, 0)
+
+        (decimal, decimalDigits) = "0.00".amountDecimal()
+        XCTAssertEqual(decimal, Decimal(0))
+        XCTAssertEqual(decimalDigits, 2)
+
+        (decimal, decimalDigits) = "+3.0".amountDecimal()
+        XCTAssertEqual(decimal, Decimal(3))
+        XCTAssertEqual(decimalDigits, 1)
+
+        (decimal, decimalDigits) = "-10.0000".amountDecimal()
+        XCTAssertEqual(decimal, Decimal(-10))
+        XCTAssertEqual(decimalDigits, 4)
+
+        (decimal, decimalDigits) = "1.25".amountDecimal()
+        XCTAssertEqual(decimal, Decimal(1.25))
+        XCTAssertEqual(decimalDigits, 2)
+
+        (decimal, decimalDigits) = "1,001.25".amountDecimal()
+        XCTAssertEqual(decimal, Decimal(1_001.25))
+        XCTAssertEqual(decimalDigits, 2)
+    }
+
 }

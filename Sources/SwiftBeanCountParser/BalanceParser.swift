@@ -29,7 +29,7 @@ enum BalanceParser {
         else {
             return nil
         }
-        let (amountDecimal, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: match[3])
+        let (amountDecimal, decimalDigits) = match[3].amountDecimal()
         let amount = Amount(number: amountDecimal, commoditySymbol: match[6], decimalDigits: decimalDigits)
         return Balance(date: date, accountName: accountName, amount: amount, metaData: metaData)
     }
