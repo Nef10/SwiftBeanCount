@@ -37,3 +37,12 @@
 - name: wontfix
   description: This will not be worked on
   color: ffffff
+- name: major
+  description: This change should bump the major version of the next release
+  color: eeeeee
+- name: minor
+  description: This change should bump the minor version of the next release
+  color: eeeeee
+- name: skip-changelog
+  description: Hide this change in the change log
+  color: ffffff
