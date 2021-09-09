@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftBeanCountModel
-import SwiftBeanCountParser
+import SwiftBeanCountParserUtils
 import Wealthsimple
 
 /// Helper functions to transform downloaded wealthsimple data into SwiftBeanCountModel types
@@ -69,7 +69,7 @@ public struct WealthsimpleLedgerMapper {
     }
 
     static func amount(for string: String, in commoditySymbol: String, negate: Bool = false, inverse: Bool = false) -> Amount {
-        var (number, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: string)
+        var (number, decimalDigits) = string.amountDecimal()
         if decimalDigits < 2 {
             decimalDigits = 2 // Wealthsimple cuts of an ending 0 in the second digit. However, all amounts we deal with have at least 2 digits
         }
@@ -316,7 +316,7 @@ public struct WealthsimpleLedgerMapper {
 
     // swiftlint:disable:next large_tuple
     private func parseDividendDescription(_ string: String) throws -> (String, String, Amount?) {
-        let matches = ParserUtils.match(regex: Self.dividendRegEx, in: string)
+        let matches = string.matchingStrings(regex: Self.dividendRegEx)
         guard matches.count == 1, let date = Self.dividendDescriptionDateFormatter.date(from: matches[0][1]) else {
             throw WealthsimpleConversionError.unexpectedDescription(string)
         }
@@ -326,7 +326,7 @@ public struct WealthsimpleLedgerMapper {
     }
 
     private func parseNRWTDescription(_ string: String) throws -> Amount {
-        let matches = ParserUtils.match(regex: Self.nrwtRegEx, in: string)
+        let matches = string.matchingStrings(regex: Self.nrwtRegEx)
         guard matches.count == 1 else {
             throw WealthsimpleConversionError.unexpectedDescription(string)
         }
