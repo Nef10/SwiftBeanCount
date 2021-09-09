@@ -14,11 +14,15 @@ let package = Package(
             url: "https://github.com/Nef10/SwiftBeanCountModel.git",
             .exact("0.1.6")
         ),
+        .package(
+            url: "https://github.com/Nef10/SwiftBeanCountParserUtils.git",
+            .exact("0.0.1")
+        ),
     ],
     targets: [
         .target(
             name: "SwiftBeanCountParser",
-            dependencies: ["SwiftBeanCountModel"]),
+            dependencies: ["SwiftBeanCountModel", "SwiftBeanCountParserUtils"]),
         .testTarget(
             name: "SwiftBeanCountParserTests",
             dependencies: ["SwiftBeanCountParser"]),

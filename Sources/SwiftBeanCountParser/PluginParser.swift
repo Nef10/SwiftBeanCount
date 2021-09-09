@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import SwiftBeanCountModel
+import SwiftBeanCountParserUtils
 
 enum PluginParser {
 
