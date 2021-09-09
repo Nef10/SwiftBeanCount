@@ -18,11 +18,15 @@ let package = Package(
             url: "https://github.com/yaslab/CSV.swift.git",
             .upToNextMinor(from: "2.4.3")
         ),
+        .package(
+            url: "https://github.com/Nef10/SwiftBeanCountParserUtils.git",
+            .exact("0.0.1")
+        ),
     ],
     targets: [
         .target(
             name: "SwiftBeanCountImporter",
-            dependencies: ["SwiftBeanCountModel", .product(name: "CSV", package: "CSV.swift")]),
+            dependencies: ["SwiftBeanCountModel", "SwiftBeanCountParserUtils", .product(name: "CSV", package: "CSV.swift")]),
         .testTarget(
             name: "SwiftBeanCountImporterTests",
             dependencies: ["SwiftBeanCountImporter"]),

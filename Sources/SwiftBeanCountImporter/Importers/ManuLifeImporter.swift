@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftBeanCountModel
+import SwiftBeanCountParserUtils
 
 class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
 
@@ -171,22 +172,22 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         let balances: [Balance] = manuLifeBalances.flatMap { manuLifeBalance -> [Balance] in
             var tempBalances = [Balance]()
             if let amountString = manuLifeBalance.employeeBasic, let accountName = try? AccountName("\(accountString):Employee:Basic:\(manuLifeBalance.commodity)") {
-                let (amountDecimal, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: amountString)
+                let (amountDecimal, decimalDigits) = amountString.amountDecimal()
                 let amount = Amount(number: amountDecimal, commoditySymbol: manuLifeBalance.commodity, decimalDigits: decimalDigits)
                 tempBalances.append(Balance(date: date, accountName: accountName, amount: amount))
             }
             if let amountString = manuLifeBalance.employerBasic, let accountName = try? AccountName("\(accountString):Employer:Basic:\(manuLifeBalance.commodity)") {
-                let (amountDecimal, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: amountString)
+                let (amountDecimal, decimalDigits) = amountString.amountDecimal()
                 let amount = Amount(number: amountDecimal, commoditySymbol: manuLifeBalance.commodity, decimalDigits: decimalDigits)
                 tempBalances.append(Balance(date: date, accountName: accountName, amount: amount))
             }
             if let amountString = manuLifeBalance.employerMatch, let accountName = try? AccountName("\(accountString):Employer:Match:\(manuLifeBalance.commodity)") {
-                let (amountDecimal, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: amountString)
+                let (amountDecimal, decimalDigits) = amountString.amountDecimal()
                 let amount = Amount(number: amountDecimal, commoditySymbol: manuLifeBalance.commodity, decimalDigits: decimalDigits)
                 tempBalances.append(Balance(date: date, accountName: accountName, amount: amount))
             }
             if let amountString = manuLifeBalance.employeeVoluntary, let accountName = try? AccountName("\(accountString):Employee:Voluntary:\(manuLifeBalance.commodity)") {
-                let (amountDecimal, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: amountString)
+                let (amountDecimal, decimalDigits) = amountString.amountDecimal()
                 let amount = Amount(number: amountDecimal, commoditySymbol: manuLifeBalance.commodity, decimalDigits: decimalDigits)
                 tempBalances.append(Balance(date: date, accountName: accountName, amount: amount))
             }
@@ -194,7 +195,7 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         }
 
         let prices: [Price] = manuLifeBalances.compactMap { manuLifeBalance -> Price? in
-            let (amountDecimal, decimalDigits) = ParserUtils.parseAmountDecimalFrom(string: manuLifeBalance.unitValue)
+            let (amountDecimal, decimalDigits) = manuLifeBalance.unitValue.amountDecimal()
             let amount = Amount(number: amountDecimal, commoditySymbol: commoditySymbol, decimalDigits: decimalDigits)
             return try? Price(date: date, commoditySymbol: manuLifeBalance.commodity, amount: amount)
         }
@@ -250,26 +251,26 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
 
         buys.forEach {
             let unitFraction = Double($0.units)! / (employeeBasicFraction + employerBasicFraction + employerMatchFraction + employeeVoluntaryFraction)
-            let (buyAmount, _) = ParserUtils.parseAmountDecimalFrom(string: $0.total)
+            let (buyAmount, _) = $0.total.amountDecimal()
             totalAmount += buyAmount
-            guard let cost = try? Cost(amount: ParserUtils.parseAmountFrom(string: $0.price, commoditySymbol: commoditySymbol), date: nil, label: nil) else {
+            guard let cost = try? Cost(amount: parseAmountFrom(string: $0.price, commoditySymbol: commoditySymbol), date: nil, label: nil) else {
                 return
             }
 
             if employeeBasicFraction != 0, let accountName = try? AccountName("\(accountString):Employee:Basic:\($0.commodity)") {
-                let amount = ParserUtils.parseAmountFrom(string: String(format: unitFormat, unitFraction * employeeBasicFraction), commoditySymbol: $0.commodity)
+                let amount = parseAmountFrom(string: String(format: unitFormat, unitFraction * employeeBasicFraction), commoditySymbol: $0.commodity)
                 postings.append(Posting(accountName: accountName, amount: amount, cost: cost))
             }
             if employerBasicFraction != 0, let accountName = try? AccountName("\(accountString):Employer:Basic:\($0.commodity)") {
-                let amount = ParserUtils.parseAmountFrom(string: String(format: unitFormat, unitFraction * employerBasicFraction), commoditySymbol: $0.commodity)
+                let amount = parseAmountFrom(string: String(format: unitFormat, unitFraction * employerBasicFraction), commoditySymbol: $0.commodity)
                 postings.append(Posting(accountName: accountName, amount: amount, cost: cost))
             }
             if employerMatchFraction != 0, let accountName = try? AccountName("\(accountString):Employer:Match:\($0.commodity)") {
-                let amount = ParserUtils.parseAmountFrom(string: String(format: unitFormat, unitFraction * employerMatchFraction), commoditySymbol: $0.commodity)
+                let amount = parseAmountFrom(string: String(format: unitFormat, unitFraction * employerMatchFraction), commoditySymbol: $0.commodity)
                 postings.append(Posting(accountName: accountName, amount: amount, cost: cost))
             }
             if employeeVoluntaryFraction != 0, let accountName = try? AccountName("\(accountString):Employee:Voluntary:\($0.commodity)") {
-                let amount = ParserUtils.parseAmountFrom(string: String(format: unitFormat, unitFraction * employeeVoluntaryFraction), commoditySymbol: $0.commodity)
+                let amount = parseAmountFrom(string: String(format: unitFormat, unitFraction * employeeVoluntaryFraction), commoditySymbol: $0.commodity)
                 postings.append(Posting(accountName: accountName, amount: amount, cost: cost))
             }
         }
@@ -277,7 +278,7 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         postings.insert(Posting(accountName: configuredAccountName, amount: Amount(number: -totalAmount, commoditySymbol: commoditySymbol, decimalDigits: 2)), at: 0)
 
         let prices: [Price] = buys.compactMap { manuLifeBuy -> Price? in
-            try? Price(date: date, commoditySymbol: manuLifeBuy.commodity, amount: ParserUtils.parseAmountFrom(string: manuLifeBuy.price, commoditySymbol: commoditySymbol))
+            try? Price(date: date, commoditySymbol: manuLifeBuy.commodity, amount: parseAmountFrom(string: manuLifeBuy.price, commoditySymbol: commoditySymbol))
         }
 
         let transaction = Transaction(metaData: TransactionMetaData(date: date, payee: "", narration: "", flag: .complete, tags: []), postings: postings)
@@ -304,6 +305,11 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
             return nil
         }
         return "\(input[range])"
+    }
+
+    private func parseAmountFrom(string: String, commoditySymbol: String) -> Amount {
+        let (number, decimalDigits) = string.amountDecimal()
+        return Amount(number: number, commoditySymbol: commoditySymbol, decimalDigits: decimalDigits)
     }
 
 }

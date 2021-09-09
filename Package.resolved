@@ -18,6 +18,15 @@
           "revision": "a72ca4e46e816638be644ddfbb3c3f9233a5c944",
           "version": "0.1.6"
         }
+      },
+      {
+        "package": "SwiftBeanCountParserUtils",
+        "repositoryURL": "https://github.com/Nef10/SwiftBeanCountParserUtils.git",
+        "state": {
+          "branch": null,
+          "revision": "c0978850756dd137f929cd9d523d443772881b3e",
+          "version": "0.0.1"
+        }
       }
     ]
   },
