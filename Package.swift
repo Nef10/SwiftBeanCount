@@ -15,8 +15,8 @@ let package = Package(
             .exact("0.1.6")
         ),
         .package(
-            url: "https://github.com/Nef10/SwiftBeanCountParser.git",
-            .exact("0.1.8")
+            url: "https://github.com/Nef10/SwiftBeanCountParserUtils.git",
+            .exact("0.0.1")
         ),
         .package(
             url: "https://github.com/Nef10/RogersBankDownloader.git",
@@ -28,7 +28,7 @@ let package = Package(
             name: "SwiftBeanCountRogersBankMapper",
             dependencies: [
                 "SwiftBeanCountModel",
-                "SwiftBeanCountParser",
+                "SwiftBeanCountParserUtils",
                 "RogersBankDownloader",
             ]),
         .testTarget(

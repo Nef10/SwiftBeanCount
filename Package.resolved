@@ -20,12 +20,12 @@
         }
       },
       {
-        "package": "SwiftBeanCountParser",
-        "repositoryURL": "https://github.com/Nef10/SwiftBeanCountParser.git",
+        "package": "SwiftBeanCountParserUtils",
+        "repositoryURL": "https://github.com/Nef10/SwiftBeanCountParserUtils.git",
         "state": {
           "branch": null,
-          "revision": "4299b420e43abeb113a315467b1a70a5017ca758",
-          "version": "0.1.8"
+          "revision": "c0978850756dd137f929cd9d523d443772881b3e",
+          "version": "0.0.1"
         }
       }
     ]
