@@ -22,11 +22,15 @@ final class BaseImporterTests: XCTestCase {
     }
 
     func testImporterName() {
-        XCTAssertEqual(BaseImporter.importerType, "")
+        XCTAssertEqual(BaseImporter.importerName, "")
     }
 
     func testImporterType() {
         XCTAssertEqual(BaseImporter.importerType, "")
+    }
+
+    func testHelpText() {
+        XCTAssertEqual(BaseImporter.helpText, "")
     }
 
     func testLoad() {
