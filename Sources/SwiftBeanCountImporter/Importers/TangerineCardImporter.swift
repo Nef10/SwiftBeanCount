@@ -16,7 +16,15 @@ class TangerineCardImporter: CSVBaseImporter, CSVImporter {
 
     static let headers = [[date, "Transaction", name, "Memo", amount]]
 
+    override class var importerName: String { "Tangerine Credit Card" }
     override class var importerType: String { "tangerine-card" }
+    override class var helpText: String {
+        """
+        Enables importing of downloaded CSV files from Tangerine Credit Cards.
+
+        To use add \(Settings.importerTypeKey): "\(importerType)" to your account.
+        """
+    }
 
     private static var dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()

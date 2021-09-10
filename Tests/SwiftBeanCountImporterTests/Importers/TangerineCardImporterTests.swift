@@ -17,8 +17,17 @@ final class TangerineCardImporterTests: XCTestCase {
                        [["Transaction date", "Transaction", "Name", "Memo", "Amount"]])
     }
 
+    func testImporterName() {
+        XCTAssertEqual(TangerineCardImporter.importerName, "Tangerine Credit Card")
+    }
+
     func testImporterType() {
         XCTAssertEqual(TangerineCardImporter.importerType, "tangerine-card")
+    }
+
+    func testHelpText() {
+        XCTAssertEqual(TangerineCardImporter.helpText,
+                       "Enables importing of downloaded CSV files from Tangerine Credit Cards.\n\nTo use add importer-type: \"tangerine-card\" to your account.")
     }
 
     func testImportName() {

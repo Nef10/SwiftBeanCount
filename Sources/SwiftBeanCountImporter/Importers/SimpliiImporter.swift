@@ -17,7 +17,15 @@ class SimpliiImporter: CSVBaseImporter, CSVImporter {
 
     static let headers = [[date, description, amountOut, amountIn]]
 
+    override class var importerName: String { "Simplii" }
     override class var importerType: String { "simplii" }
+    override class var helpText: String {
+        """
+        Enables importing of downloaded CSV files from Simplii Accounts.
+
+        To use add \(Settings.importerTypeKey): "\(importerType)" to your account.
+        """
+    }
 
     private static var dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()

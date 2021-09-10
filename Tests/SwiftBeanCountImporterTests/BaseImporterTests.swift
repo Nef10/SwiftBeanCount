@@ -21,6 +21,10 @@ final class BaseImporterTests: XCTestCase {
         XCTAssertEqual(importer.ledger, TestUtils.ledger)
     }
 
+    func testImporterName() {
+        XCTAssertEqual(BaseImporter.importerType, "")
+    }
+
     func testImporterType() {
         XCTAssertEqual(BaseImporter.importerType, "")
     }

@@ -21,7 +21,15 @@ class N26Importer: CSVBaseImporter, CSVImporter {
 
     static let headers = [[date, recipient, "Kontonummer", "Transaktionstyp", description, "Kategorie", amount, amountForeignCurrency, foreignCurrency, exchangeRate]]
 
+    override class var importerName: String { "N26" }
     override class var importerType: String { "n26" }
+    override class var helpText: String {
+        """
+        Enables importing of downloaded CSV files from N26 Accounts.
+
+        To use add \(Settings.importerTypeKey): "\(importerType)" to your account.
+        """
+    }
 
     private static var dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()

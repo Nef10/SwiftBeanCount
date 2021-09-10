@@ -133,8 +133,16 @@ private func balancePricesResult(fundSymbol: String = TestUtils.fundSymbol, curr
 
 final class ManuLifeImporterTests: XCTestCase {
 
+    func testImporterName() {
+        XCTAssertEqual(ManuLifeImporter.importerName, "ManuLife")
+    }
+
     func testImporterType() {
         XCTAssertEqual(ManuLifeImporter.importerType, "manulife")
+    }
+
+    func testHelpText() {
+        XCTAssert(ManuLifeImporter.helpText.contains("importer-type: \"manulife\""))
     }
 
     func testImportName() {

@@ -16,8 +16,16 @@ final class LunchOnUsImporterTests: XCTestCase {
         XCTAssertEqual(LunchOnUsImporter.headers, [["date", "type", "amount", "invoice", "remaining", "location"]])
     }
 
+    func testImporterName() {
+        XCTAssertEqual(LunchOnUsImporter.importerName, "Lunch On Us")
+    }
+
     func testImporterType() {
         XCTAssertEqual(LunchOnUsImporter.importerType, "lunch-on-us")
+    }
+
+    func testHelpText() { // swiftlint:disable:next line_length
+        XCTAssertEqual(LunchOnUsImporter.helpText, "Enables importing of CSV files downloaded from https://lunchmapper.appspot.com/csv. Does not support importing balances.\n\nTo use add importer-type: \"lunch-on-us\" to your account.")
     }
 
     func testImportName() {

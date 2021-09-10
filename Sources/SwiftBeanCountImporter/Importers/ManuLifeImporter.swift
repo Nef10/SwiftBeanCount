@@ -28,7 +28,35 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         let total: String
     }
 
+    override class var importerName: String { "ManuLife" }
     override class var importerType: String { "manulife" }
+    override class var helpText: String {
+        """
+        Enables importing of transactions and balances from ManuLife Group Retirement Accounts.
+
+        This text-based imported requires you to copy two texts from the website. After logging in:
+        - For the transaction text, go to My Account -> Transaction Summary and select the correct Contribution from the table. In the popup select all text.
+        - For the balance text, go to My Account -> View My Account Balance and select Investment details at the bottom. Select all text starting from Investment details.
+
+        Each group account must have seperate sub-accounts for each contribution category plus cash. Within each category it must have sub-accounts for each fund:
+        E.g. Assets:ManuLife:RRSP:Cash, Assets:ManuLife:RRSP:Employer:Match:MLLPR2060, Assets:ManuLife:RRSP:Employee:Basic:MLLPR2060, Assets:ManuLife:Employer:Match:Fund2, ...
+        The different categories are Employee:Basic, Employee:Voluntary, Employer:Basic and Employer:Match.
+
+        You also must create a commodity entry for every fund like this:
+        YYYY-MM-DD commodity MLLPR2060
+            name: "2690 MLI MFS LifePlan Ret 2060 q4"
+        The symbol (MLLPR2060) of your commodity will be used as the sub-account name (see above), and the name must match the one on the ManuLife website.
+
+        To use this importer, add the following meta data to your cash account, providing the percentages you and your employer contribute to the different categories:
+        \(Settings.importerTypeKey): "\(importerType)"
+        employee-basic-fraction: "2.5"
+        employer-basic-fraction: "2.5"
+        employer-match-fraction: "2.5"
+        employee-voluntary-fraction: "0"
+
+        Note: Due to rounding and the split in the different categories some balance errors can occur. In this case please adjust the transaction to match the balance.
+        """
+    }
 
     /// DateFormatter to parse the date from the input
     private static let importDateFormatter: DateFormatter = {
@@ -38,13 +66,9 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         return dateFormatter
     }()
 
-    private var date: Date {
-        var dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date())
-        dateComponents.hour = 0
-        dateComponents.minute = 0
-        dateComponents.second = 0
-        return Calendar.current.date(from: dateComponents)!
-    }
+    override var importName: String { "ManuLife Text" }
+
+    private var date: Date { Calendar.current.date(from: Calendar.current.dateComponents([.year, .month, .day], from: Date()))! }
 
     private let defaultContribution = 1.0
     private let unitFormat = "%.5f"
@@ -70,10 +94,6 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
     private var prices = [Price]()
 
     private var didReturnTransaction = false
-
-    override var importName: String {
-        "ManuLife Text"
-    }
 
     required init(ledger: Ledger?, transaction: String, balance: String) {
         transactionInputString = transaction
@@ -155,8 +175,7 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
                 continue
             }
             commodity = commodity.replacingOccurrences(of: " -", with: "")
-            commodity = commodities[commodity] ?? commodity
-            results.append(ManuLifeBalance(commodity: commodity,
+            results.append(ManuLifeBalance(commodity: commodities[commodity] ?? commodity,
                                            unitValue: unitValue,
                                            employeeBasic: firstMatch(in: input, regex: employeeBasicRegex),
                                            employeeVoluntary: firstMatch(in: input, regex: employeeVoluntaryRegex),
@@ -295,16 +314,11 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
     ///   - regex: regex
     /// - Returns: result of the capture group if found, nil otherwise
     private func firstMatch(in input: String, regex: NSRegularExpression) -> String? {
-        let captureGroups = 1
-        let fullRange = NSRange(input.startIndex..<input.endIndex, in: input)
-        guard let result = regex.firstMatch(in: input, options: [], range: fullRange), result.numberOfRanges == 1 + captureGroups else {
+        let result = input.matchingStrings(regex: regex)
+        guard !result.isEmpty && result[0].count == 2 else {
             return nil
         }
-        let captureGroupRange = result.range(at: captureGroups)
-        guard captureGroupRange.location != NSNotFound, let range = Range(captureGroupRange, in: input) else {
-            return nil
-        }
-        return "\(input[range])"
+        return result[0][1]
     }
 
     private func parseAmountFrom(string: String, commoditySymbol: String) -> Amount {

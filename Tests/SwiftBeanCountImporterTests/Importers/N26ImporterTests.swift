@@ -29,8 +29,16 @@ final class N26ImporterTests: XCTestCase {
         ])
     }
 
+    func testImporterName() {
+        XCTAssertEqual(N26Importer.importerName, "N26")
+    }
+
     func testImporterType() {
         XCTAssertEqual(N26Importer.importerType, "n26")
+    }
+
+    func testHelpText() {
+        XCTAssertEqual(N26Importer.helpText, "Enables importing of downloaded CSV files from N26 Accounts.\n\nTo use add importer-type: \"n26\" to your account.")
     }
 
     func testImportName() {

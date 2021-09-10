@@ -17,7 +17,15 @@ class LunchOnUsImporter: CSVBaseImporter, CSVImporter {
 
     static let headers = [[date, type, amount, "invoice", "remaining", description]]
 
+    override class var importerName: String { "Lunch On Us" }
     override class var importerType: String { "lunch-on-us" }
+    override class var helpText: String {
+        """
+        Enables importing of CSV files downloaded from https://lunchmapper.appspot.com/csv. Does not support importing balances.
+
+        To use add \(Settings.importerTypeKey): "\(importerType)" to your account.
+        """
+    }
 
     private static var dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()

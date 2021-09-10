@@ -17,7 +17,15 @@ class RBCImporter: CSVBaseImporter, CSVImporter {
 
     static let headers = [["Account Type", "Account Number", date, "Cheque Number", description1, description2, amount, "USD$"]]
 
+    override class var importerName: String { "RBC" }
     override class var importerType: String { "rbc" }
+    override class var helpText: String {
+        """
+        Enables importing of downloaded CSV files from RBC Accounts and Credit Cards.
+
+        To use add \(Settings.importerTypeKey): "\(importerType)" to your accounts.
+        """
+    }
 
     private static var dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()

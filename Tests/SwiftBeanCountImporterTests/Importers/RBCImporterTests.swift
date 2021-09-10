@@ -17,8 +17,17 @@ final class RBCImporterTests: XCTestCase {
                        [["Account Type", "Account Number", "Transaction Date", "Cheque Number", "Description 1", "Description 2", "CAD$", "USD$"]])
     }
 
+    func testImporterName() {
+        XCTAssertEqual(RBCImporter.importerName, "RBC")
+    }
+
     func testImporterType() {
         XCTAssertEqual(RBCImporter.importerType, "rbc")
+    }
+
+    func testHelpText() {
+        XCTAssertEqual(RBCImporter.helpText,
+                       "Enables importing of downloaded CSV files from RBC Accounts and Credit Cards.\n\nTo use add importer-type: \"rbc\" to your accounts.")
     }
 
     func testImportName() {

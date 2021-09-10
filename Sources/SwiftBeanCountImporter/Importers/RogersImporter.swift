@@ -26,7 +26,15 @@ class RogersImporter: CSVBaseImporter, CSVImporter {
         [date2, "Activity Type", description, "Merchant Category Description", amount, "Rewards"],
     ]
 
+    override class var importerName: String { "Rogers Bank" }
     override class var importerType: String { "rogers" }
+    override class var helpText: String {
+        """
+        Enables importing of downloaded CSV files from Rogers Bank Credit Cards.
+
+        To use add \(Settings.importerTypeKey): "\(importerType)" to your account.
+        """
+    }
 
     private static var dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()

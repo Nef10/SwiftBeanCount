@@ -20,7 +20,15 @@ class TangerineAccountImporter: CSVBaseImporter, CSVImporter {
     static let interac = "INTERAC e-Transfer From: "
     static let interest = "Interest Paid"
 
+    override class var importerName: String { "Tangerine Accounts" }
     override class var importerType: String { "tangerine-account" }
+    override class var helpText: String {
+        """
+        Enables importing of downloaded CSV files from Tangerine Accounts.
+
+        To use add \(Settings.importerTypeKey): "\(importerType)" to your account.
+        """
+    }
 
     private static var dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()

@@ -25,7 +25,9 @@ class BaseImporter: Importer {
         ]
     }() // swiftlint:enable force_try
 
+    class var importerName: String { "" } // Override
     class var importerType: String { "" } // Override
+    class var helpText: String { "" } // Override
 
     weak var delegate: ImporterDelegate?
     var ledger: Ledger?

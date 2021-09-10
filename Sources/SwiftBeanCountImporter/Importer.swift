@@ -15,7 +15,7 @@ public enum ImporterFactory {
     /// Return all existing importer types
     ///
     /// As the importers do not need to be called directly, this should only
-    /// be used in the settings to allow displaying all settings of all importers
+    /// be used in the help to allow displaying the help texts of all importers.
     ///
     /// - Returns: All existing importer types
     public static var allImporters: [Importer.Type] {
@@ -133,6 +133,14 @@ public protocol ImporterDelegate: AnyObject {
 
 /// Protocol to represent an Importer, regardless of type
 public protocol Importer {
+
+    /// User friendly name of the importer
+    ///
+    /// Can be used in the help
+    static var importerName: String { get }
+
+    /// Help text for the importer
+    static var helpText: String { get }
 
     /// A description of the import, e.g. a file name together with the importer name
     ///

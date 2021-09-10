@@ -25,8 +25,17 @@ final class RogersImporterTests: XCTestCase {
         ])
     }
 
+    func testImporterName() {
+        XCTAssertEqual(RogersImporter.importerName, "Rogers Bank")
+    }
+
     func testImporterType() {
         XCTAssertEqual(RogersImporter.importerType, "rogers")
+    }
+
+    func testHelpText() {
+        XCTAssertEqual(RogersImporter.helpText,
+                       "Enables importing of downloaded CSV files from Rogers Bank Credit Cards.\n\nTo use add importer-type: \"rogers\" to your account.")
     }
 
     func testImportName() {

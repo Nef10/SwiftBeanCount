@@ -16,8 +16,17 @@ final class SimpliiImporterTests: XCTestCase {
         XCTAssertEqual(SimpliiImporter.headers, [["Date", "Transaction Details", "Funds Out", "Funds In"]])
     }
 
+    func testImporterName() {
+        XCTAssertEqual(SimpliiImporter.importerName, "Simplii")
+    }
+
     func testImporterType() {
         XCTAssertEqual(SimpliiImporter.importerType, "simplii")
+    }
+
+    func testHelpText() {
+        XCTAssertEqual(SimpliiImporter.helpText,
+                       "Enables importing of downloaded CSV files from Simplii Accounts.\n\nTo use add importer-type: \"simplii\" to your account.")
     }
 
     func testImportName() {
