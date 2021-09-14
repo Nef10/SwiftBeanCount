@@ -110,7 +110,7 @@ public protocol ImporterDelegate: AnyObject {
     ///                   with allowSaved false, upon which the app should remove the saved value.
     ///   - completion: function to pass input to. Returns if the input was accepted.
     ///                 In case an input was not accepted, please call the function again.
-    func requestInput(name: String, suggestions: [String], allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool)
+    func requestInput(name: String, suggestions: [String], allowSaving: Bool, allowSaved: Bool, completion: @escaping (String) -> Bool)
 
     // Request for a secret user input, which is required for the importer to operate
     ///
@@ -127,7 +127,7 @@ public protocol ImporterDelegate: AnyObject {
     ///                   with allowSaved false, upon which the app should remove the saved value.
     ///   - completion: function to pass input to. Returns if the input was accepted.
     ///                 In case an input was not accepted, please call the function again.
-    func requestSecretInput(name: String, allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool)
+    func requestSecretInput(name: String, allowSaving: Bool, allowSaved: Bool, completion: @escaping (String) -> Bool)
 
 }
 

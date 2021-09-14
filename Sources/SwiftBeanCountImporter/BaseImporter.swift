@@ -52,7 +52,7 @@ class BaseImporter: Importer {
             guard let name = try? AccountName($0) else {
                 return false
             }
-            accountName = name
+            self.accountName = name
             group.leave()
             return true
         }
