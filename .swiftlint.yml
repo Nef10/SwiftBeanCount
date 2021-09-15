@@ -1,4 +1,4 @@
-# Updated for 0.43.1
+# Updated for 0.44.0
 
 excluded:
   - ".build"
@@ -89,6 +89,8 @@ opt_in_rules:
   - legacy_objc_type
   - capture_variable
   - private_subject
+  - discouraged_none_name
+  - redundant_type_annotation
 
 disabled_rules:
   - trailing_comma
