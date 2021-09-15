@@ -3,7 +3,7 @@ import Rainbow
 import XCTest
 
 struct TestColorizedCommand: ColorizedCommand {
-    var noColor: Bool = false
+    var noColor = false
 }
 
 class ColorizedCommandTests: XCTestCase {
