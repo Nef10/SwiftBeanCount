@@ -70,16 +70,14 @@ public struct WealthsimpleLedgerMapper {
 
     static func amount(for string: String, in commoditySymbol: String, negate: Bool = false, inverse: Bool = false) -> Amount {
         var (number, decimalDigits) = string.amountDecimal()
-        if decimalDigits < 2 {
-            decimalDigits = 2 // Wealthsimple cuts of an ending 0 in the second digit. However, all amounts we deal with have at least 2 digits
-        }
         if negate {
             number = -number
         }
         if inverse {
             number = 1 / number
         }
-        return Amount(number: number, commoditySymbol: commoditySymbol, decimalDigits: decimalDigits)
+        // Wealthsimple cuts of an ending 0 in the second digit. However, all amounts we deal with have at least 2 digits
+        return Amount(number: number, commoditySymbol: commoditySymbol, decimalDigits: max(2, decimalDigits))
     }
 
     /// Maps downloaded wealthsimple positions from one account to SwiftBeanCountModel prices and balances
@@ -221,16 +219,17 @@ public struct WealthsimpleLedgerMapper {
             result = try mapRefund(transaction: transaction, in: account, assetAccountName: assetAccountName)
         case .nonResidentWithholdingTax:
             result = try mapNonResidentWithholdingTax(transaction: transaction, in: account, assetAccountName: assetAccountName)
-        case .paymentTransferIn, .referralBonus:
-            result = try mapDeposit(transaction: transaction, in: account, assetAccountName: assetAccountName, allowIncomeAccount: true)
+        case .paymentTransferIn, .referralBonus, .giveawayBonus:
+            result = try mapDeposit(transaction: transaction, in: account, assetAccountName: assetAccountName, accountTypes: [.asset, .income])
+        case .paymentSpend:
+            result = try mapDeposit(transaction: transaction, in: account, assetAccountName: assetAccountName, accountTypes: [.expense])
         default:
             throw WealthsimpleConversionError.unsupportedTransactionType(transaction.transactionType.rawValue)
         }
         if !lookup.isTransactionValid(result) {
-            var postings: [Posting] = result.postings
-            postings.append(Posting(accountName: try lookup.ledgerAccountName(for: account, ofType: [.expense], symbol: Self.roundingValue),
-                                    amount: lookup.roundingBalance(result)))
-            result = SwiftBeanCountModel.Transaction(metaData: result.metaData, postings: postings)
+            let posting = Posting(accountName: try lookup.ledgerAccountName(for: account, ofType: [.expense], symbol: Self.roundingValue),
+                                  amount: lookup.roundingBalance(result))
+            result = SwiftBeanCountModel.Transaction(metaData: result.metaData, postings: result.postings + [posting])
         }
         return (price, result)
     }
@@ -244,8 +243,8 @@ public struct WealthsimpleLedgerMapper {
         return (try Price(date: transaction.processDate, commoditySymbol: transaction.symbol, amount: transaction.marketPrice), result)
     }
 
-    private func mapDeposit(transaction: WTransaction, in account: WAccount, assetAccountName: AccountName, allowIncomeAccount: Bool = false) throws -> STransaction {
-        let accountName = try lookup.ledgerAccountName(for: account, ofType: (allowIncomeAccount ? [.asset, .income] : [.asset]), symbol: transaction.transactionType.rawValue)
+    private func mapDeposit(transaction: WTransaction, in account: WAccount, assetAccountName: AccountName, accountTypes: [AccountType] = [.asset]) throws -> STransaction {
+        let accountName = try lookup.ledgerAccountName(for: account, ofType: accountTypes, symbol: transaction.transactionType.rawValue)
         let posting1 = Posting(accountName: assetAccountName, amount: transaction.netCash)
         let posting2 = Posting(accountName: accountName, amount: transaction.negatedNetCash)
         return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [posting1, posting2])
