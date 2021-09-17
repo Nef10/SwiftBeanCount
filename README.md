@@ -14,10 +14,10 @@ The library relies heavily on meta data in your Beancount file to find accounts 
 
 ### Commodities
 
-Simply add the symbol used on Wealthsimple:
+If the commodity in your ledger differs from the symbol used by Wealthsimple, simply add `wealthsimple-symbol` as meta data:
 
 ```
-2011-10-18 commodity ACWV
+2011-10-18 commodity ACWVETF
   wealthsimple-symbol: "ACWV"
 ```
 

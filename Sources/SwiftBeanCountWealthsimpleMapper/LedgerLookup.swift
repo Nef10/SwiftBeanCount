@@ -76,8 +76,9 @@ struct LedgerLookup {
     }
 
     func ledgerSymbol(for assetSymbol: String) throws -> String {
-        let commodity = ledger.commodities.first {
-            $0.metaData[Self.symbolMetaDataKey] == assetSymbol
+        var commodity = ledger.commodities.first { $0.metaData[Self.symbolMetaDataKey] == assetSymbol }
+        if commodity == nil {
+            commodity = ledger.commodities.first { $0.symbol == assetSymbol }
         }
         guard let symbol = commodity?.symbol else {
             throw WealthsimpleConversionError.missingCommodity(assetSymbol)
