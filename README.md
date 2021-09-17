@@ -23,15 +23,16 @@ If the commodity in your ledger differs from the symbol used by Wealthsimple, si
 
 ### Accounts
 
-For account you need to add two meta data entries:
+For Wealthsimple accounts themselves, you need to add this metadata: `importer-type: "wealthsimple"` and `number: "XXX"`. If the account can hold more than one commodity (all accounts except chequing and saving), it needs to follow this structure: `Assets:X:Y:Z:CashAccountName`, `Assets:X:Y:Z:CommodityName`, `Assets:X:Y:Z:OtherCommodityName`. The name of the cash account does not matter, but all other account must end with the commodity symbol (see above). Only add the `importer-type` and `number` to the cash account.
+
+For account used for transaction to and from your Wealthsimple accounts you need to add two meta data entries:
 * First is the account type (`wealthsimple-account-type`), you can look up the possible values [here](https://github.com/Nef10/WealthsimpleDownloader/blob/main/Sources/Wealthsimple/Account.swift#L37)
-* Second is a key (`wealthsimple-key`):
-  * For holdings and cash assset accounts this is the symbol of the stock, ETF or currency
-  * For dividend income accounts this is the symbol as well
+* Second is a key (`wealthsimple-key`), for example:
+  * For dividend income accounts this is the symbol as of the stock or ETF
   * For the assset account you are going to contribute from, use `contribution`
   * For the assset account you are going to deposit from, use `deposit`
   * Use `fee` on an expense account to track the wealthsimple fees
-  * Use `non resident withholding tax` on an expense account for the tax
+  * Use `nonResidentWithholdingTax` on an expense account for the tax
   * In case some transaction does not balance, we will look for an expense account with `rounding`
   * In case you get a refund, add `refund` to an income account
   * If you want to track contribution room, use `contribution-room` on an asset and expense account (optional)
@@ -43,16 +44,14 @@ Both keys and types can be space separated in case you have multiple Wealthsimpl
 
 ```
 2020-07-31 open Assets:Checking:Wealthsimple CAD
-  wealthsimple-account-type: "ca_cash"
-  wealthsimple-key: "CAD"
+  importer-type: "wealthsimple"
+  number: "A001"
 
 2020-07-31 open Assets:Investment:Wealthsimple:TFSA:Parking CAD
-  wealthsimple-account-type: "ca_tfsa"
-  wealthsimple-key: "CAD"
-
+  importer-type: "wealthsimple"
+  number: "B002"
 2020-07-31 open Assets:Investment:Wealthsimple:TFSA:ACWV ACWV
-  wealthsimple-account-type: "ca_tfsa"
-  wealthsimple-key: "ACWV"
+2020-07-31 open Assets:Investment:Wealthsimple:TFSA:XGRO XGRO
 
 2020-07-31 open Income:Capital:Dividend:ACWV USD
   wealthsimple-account-type: "ca_tfsa"
@@ -62,7 +61,7 @@ Both keys and types can be space separated in case you have multiple Wealthsimpl
   wealthsimple-account-type: "ca_tfsa"
   wealthsimple-key: "contribution"
 
-2020-07-31 open Assets:Investment:OtherComany:TFSA
+2020-07-31 open Assets:Investment:OtherCompany:TFSA
   wealthsimple-account-type: "ca_tfsa"
   wealthsimple-key: "deposit"
 

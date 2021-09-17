@@ -13,6 +13,8 @@ public enum WealthsimpleConversionError: Error {
     case missingCommodity(String)
     /// an account was not found in the ledger
     case missingAccount(String, String, String)
+    /// a wealthsimple account was not found in the ledger
+    case missingWealthsimpleAccount(String)
     /// mapping of this transaction type has not been implemented yet
     case unsupportedTransactionType(String)
     /// the descriptions of the wealthsimple transactions is not the correct format
@@ -31,6 +33,11 @@ extension WealthsimpleConversionError: LocalizedError {
             return """
                 The \(category) account for account type \(accountType) and key \(key) was not found in your ledger. \
                 Please make sure you add the metadata \"\(LedgerLookup.keyMetaDataKey): \"\(key)\" \(LedgerLookup.accountTypeMetaDataKey): \"\(accountType)\"\" to it.
+                """
+        case let .missingWealthsimpleAccount(number):
+            return """
+                The account for the wealthsimple account with the number \(number) was not found in your ledger. \
+                Please make sure you add the metadata \"\(MetaDataKeys.importerType): \"\(MetaData.importerType)\" \(MetaDataKeys.number): \"\(number)\"\" to it.
                 """
         case let .unsupportedTransactionType(type):
             return "Transactions of Type \(type) are currently not yet supported"

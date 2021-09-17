@@ -86,6 +86,7 @@ struct LedgerLookup {
         return symbol
     }
 
+    /// Returns account name to use for a certain type of posting - not including the Wealthsimple accounts themselves
     func ledgerAccountName(for account: Wealthsimple.Account, ofType type: [SwiftBeanCountModel.AccountType], symbol assetSymbol: String? = nil) throws -> AccountName {
         let symbol = assetSymbol ?? account.currency
         let accountType = account.accountType.rawValue
@@ -98,6 +99,26 @@ struct LedgerLookup {
             throw WealthsimpleConversionError.missingAccount(symbol, type.map { $0.rawValue }.joined(separator: ", or "), accountType)
         }
         return accountName
+    }
+
+    /// Returns account name of matching the Wealthsimple account in the ledger
+    func ledgerAccountName(of account: Wealthsimple.Account, symbol assetSymbol: String? = nil) throws -> AccountName {
+        let baseAccount = ledger.accounts.first {
+            $0.metaData[MetaDataKeys.importerType] == MetaData.importerType &&
+            $0.metaData[MetaDataKeys.number] == account.number
+        }
+        guard let accountName = baseAccount?.name else {
+            throw WealthsimpleConversionError.missingWealthsimpleAccount(account.number)
+        }
+        if let symbol = assetSymbol {
+            let name = "\(accountName.fullName.split(separator: ":").dropLast(1).joined(separator: ":")):\(try ledgerSymbol(for: symbol))"
+            guard let result = try? AccountName(name) else {
+                throw WealthsimpleConversionError.missingWealthsimpleAccount(account.number)
+            }
+            return result
+        } else {
+            return accountName
+        }
     }
 
     func ledgerAccountCommoditySymbol(of account: AccountName) -> String? {

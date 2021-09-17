@@ -5,7 +5,15 @@
 //  Created by Steffen Kötte on 2020-07-31.
 //
 
+/// Data in meta data used in the ledger
+enum MetaData {
+    ///
+    static let importerType = "wealthsimple"
+}
+
+/// Keys for meta data used in the ledger
 enum MetaDataKeys {
+
     /// Key used to save and lookup the wealthsimple transaction id of transactions in the meta data
     static let id = "wealthsimple-id"
 
@@ -20,4 +28,11 @@ enum MetaDataKeys {
 
     /// Key used to save the symbol of shares for which non resident witholding tax was paid
     static let symbol = "symbol"
+
+    /// Key used to identify wealthsimple accounts in the ledger
+    static let importerType = "importer-type"
+
+    /// Key used for wealthsimple account numbers in the ledger
+    static let number = "number"
+
 }
