@@ -26,7 +26,7 @@ mint install Nef10/SwiftBeanCountCLI
 
 ### Completion
 
-Thanks to the [swift-argument-parser](https://github.com/apple/swift-argument-parser) you can generate [autocompletion scripts](https://github.com/apple/swift-argument-parser/blob/main/Documentation/07%20Completion%20Scripts.md) via `swiftbeancount --generate-completion-script {zsh|bash|fish}`. The exact command for your shell may vary, but for example for zsh with ~/.zfunctions in your fpath you can use:
+Thanks to the [swift-argument-parser](https://github.com/apple/swift-argument-parser) you can generate autocompletion scripts via `swiftbeancount --generate-completion-script {zsh|bash|fish}`. The exact command for your shell may vary, but for example for zsh with ~/.zfunctions in your fpath you can use:
 
 ```
 swiftbeancount --generate-completion-script zsh > ~/.zfunctions/_swiftbeancount
