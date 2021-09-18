@@ -30,7 +30,7 @@ extension Wealthsimple.Transaction {
     }
 
     func quantitySymbol(lookup: LedgerLookup) throws -> String {
-        cashTypes.contains(transactionType) ? symbol : try lookup.ledgerSymbol(for: symbol)
+        cashTypes.contains(transactionType) ? symbol : try lookup.commoditySymbol(for: symbol)
     }
 
     func quantityAmount(lookup: LedgerLookup) throws -> Amount {

@@ -9,11 +9,14 @@ import Foundation
 import SwiftBeanCountModel
 import Wealthsimple
 
+protocol WealthsimpleAccountRepresentable {
+    var number: String { get }
+    var accountType: Wealthsimple.Account.AccountType { get }
+    var currency: String { get }
+}
+
 /// To lookup things in the ledger
 struct LedgerLookup {
-
-    /// Key used to look up assets for wealthsimple symbols in the ledger
-    static let symbolMetaDataKey = "wealthsimple-symbol"
 
     /// Key used to look up accounts by keys (e.g. symbols or transactions types) in the ledger
     static let keyMetaDataKey = "wealthsimple-key"
@@ -30,17 +33,30 @@ struct LedgerLookup {
         self.ledger = ledger
     }
 
+    /// Checks if a transaction with a certain wealthsimple id as meta data already exists in the ledger
+    /// The check only checks based on the wealthsimple id - not any date, amount or other property
+    /// - Parameter transaction: transaction to check - should have MetaDataKeys.id set as meta data
+    /// - Returns: if a transaction with this id is already in the ledger
     func doesTransactionExistInLedger(_ transaction: SwiftBeanCountModel.Transaction) -> Bool {
-        self.ledger.transactions.contains {
-            $0.metaData.metaData[MetaDataKeys.id] == transaction.metaData.metaData[MetaDataKeys.id] ||
-            $0.metaData.metaData[MetaDataKeys.nrwtId] == transaction.metaData.metaData[MetaDataKeys.id]
+        guard let id = transaction.metaData.metaData[MetaDataKeys.id] else {
+            return false
+        }
+        return self.ledger.transactions.contains {
+            $0.metaData.metaData[MetaDataKeys.id] == id ||
+            $0.metaData.metaData[MetaDataKeys.nrwtId] == id
         }
     }
 
+    /// Checks if a specific price is already in the ledger
+    /// - Parameter price: price to check
+    /// - Returns: if the price exists
     func doesPriceExistInLedger(_ price: SwiftBeanCountModel.Price) -> Bool {
         ledger.prices.contains(price)
     }
 
+    /// Checks if a specific balance exists in the ledger
+    /// - Parameter balance: balance to check
+    /// - Returns: if the balance already exists
     func doesBalanceExistInLedger(_ balance: Balance) -> Bool {
         guard let account = ledger.accounts.first(where: { $0.name == balance.accountName }) else {
             return false
@@ -67,16 +83,21 @@ struct LedgerLookup {
         }
     }
 
-    func ledgerSymbol(for asset: Asset) throws -> String {
+    func commoditySymbol(for asset: Asset) throws -> CommoditySymbol {
         if asset.type == .currency {
             return asset.symbol
         } else {
-            return try ledgerSymbol(for: asset.symbol)
+            return try commoditySymbol(for: asset.symbol)
         }
     }
 
-    func ledgerSymbol(for assetSymbol: String) throws -> String {
-        var commodity = ledger.commodities.first { $0.metaData[Self.symbolMetaDataKey] == assetSymbol }
+    /// Finds the right CommoditySymbol from the ledger to use for a given asset symbol
+    /// The user can specify this via Self.symbolMetaDataKey, otherwise it try to use the commodity with the same symbol
+    /// - Parameter assetSymbol: asset symbol to find the commodity for
+    /// - Throws: WealthsimpleConversionError if the commodity cannot be found in the ledger
+    /// - Returns: CommoditySymbol
+    func commoditySymbol(for assetSymbol: String) throws -> CommoditySymbol {
+        var commodity = ledger.commodities.first { $0.metaData[MetaDataKeys.commoditySymbol] == assetSymbol }
         if commodity == nil {
             commodity = ledger.commodities.first { $0.symbol == assetSymbol }
         }
@@ -87,7 +108,11 @@ struct LedgerLookup {
     }
 
     /// Returns account name to use for a certain type of posting - not including the Wealthsimple accounts themselves
-    func ledgerAccountName(for account: Wealthsimple.Account, ofType type: [SwiftBeanCountModel.AccountType], symbol assetSymbol: String? = nil) throws -> AccountName {
+    func ledgerAccountName(
+        for account: WealthsimpleAccountRepresentable,
+        ofType type: [SwiftBeanCountModel.AccountType],
+        symbol assetSymbol: String? = nil
+    ) throws -> AccountName {
         let symbol = assetSymbol ?? account.currency
         let accountType = account.accountType.rawValue
         let account = ledger.accounts.first {
@@ -102,7 +127,12 @@ struct LedgerLookup {
     }
 
     /// Returns account name of matching the Wealthsimple account in the ledger
-    func ledgerAccountName(of account: Wealthsimple.Account, symbol assetSymbol: String? = nil) throws -> AccountName {
+    /// - Parameters:
+    ///   - account: Account to get the name for
+    ///   - assetSymbol: Assets symbol in the account. If not specified cash account will be returned
+    /// - Throws: WealthsimpleConversionError if the account cannot be found
+    /// - Returns: Name of the matching account
+    func ledgerAccountName(of account: WealthsimpleAccountRepresentable, symbol assetSymbol: String? = nil) throws -> AccountName {
         let baseAccount = ledger.accounts.first {
             $0.metaData[MetaDataKeys.importerType] == MetaData.importerType &&
             $0.metaData[MetaDataKeys.number] == account.number
@@ -111,9 +141,9 @@ struct LedgerLookup {
             throw WealthsimpleConversionError.missingWealthsimpleAccount(account.number)
         }
         if let symbol = assetSymbol {
-            let name = "\(accountName.fullName.split(separator: ":").dropLast(1).joined(separator: ":")):\(try ledgerSymbol(for: symbol))"
+            let name = "\(accountName.fullName.split(separator: ":").dropLast(1).joined(separator: ":")):\(try commoditySymbol(for: symbol))"
             guard let result = try? AccountName(name) else {
-                throw WealthsimpleConversionError.missingWealthsimpleAccount(account.number)
+                throw WealthsimpleConversionError.invalidCommoditySymbol(symbol)
             }
             return result
         } else {
@@ -121,10 +151,13 @@ struct LedgerLookup {
         }
     }
 
-    func ledgerAccountCommoditySymbol(of account: AccountName) -> String? {
-        let account = ledger.accounts.first {
-            $0.name == account
-        }
-        return account?.commoditySymbol
+    /// Get the CommoditySymbol of a specified account in the ledger
+    /// - Parameter account: name of the account to check
+    /// - Returns:CommoditySymbol or nil if either the account could not be found or did not have a commodity assigned
+    func ledgerAccountCommoditySymbol(of account: AccountName) -> CommoditySymbol? {
+        ledger.accounts.first { $0.name == account }?.commoditySymbol
     }
+}
+
+extension Wealthsimple.Account: WealthsimpleAccountRepresentable {
 }

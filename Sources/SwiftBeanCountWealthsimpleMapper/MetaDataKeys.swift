@@ -7,7 +7,7 @@
 
 /// Data in meta data used in the ledger
 enum MetaData {
-    ///
+    /// name of the importer
     static let importerType = "wealthsimple"
 }
 
@@ -34,5 +34,8 @@ enum MetaDataKeys {
 
     /// Key used for wealthsimple account numbers in the ledger
     static let number = "number"
+
+    /// Key used to look up commodities for wealthsimple symbols in the ledger
+    static let commoditySymbol = "wealthsimple-symbol"
 
 }

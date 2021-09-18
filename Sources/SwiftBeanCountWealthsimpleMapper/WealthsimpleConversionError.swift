@@ -8,7 +8,7 @@
 import Foundation
 
 /// Errors which can happen when transforming downloaded wealthsimple data into SwiftBeanCountModel types
-public enum WealthsimpleConversionError: Error {
+public enum WealthsimpleConversionError: Error, Equatable {
     /// a commodity was not found in the ledger
     case missingCommodity(String)
     /// an account was not found in the ledger
@@ -22,13 +22,15 @@ public enum WealthsimpleConversionError: Error {
     /// the account of the postion or transaction is not contained in the account property
     /// Did you forget to set it to the downloaded accounts before attempting mapping?
     case accountNotFound(String)
+    /// A commodity symbol was used which cannot be used as account name string
+    case invalidCommoditySymbol(String)
 }
 
 extension WealthsimpleConversionError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case let .missingCommodity(symbol):
-            return "The Commodity \(symbol) was not found in your ledger. Please make sure you add the metadata \"\(LedgerLookup.symbolMetaDataKey): \"\(symbol)\"\" to it."
+            return "The Commodity \(symbol) was not found in your ledger. Please make sure you add the metadata \"\(MetaDataKeys.commoditySymbol): \"\(symbol)\"\" to it."
         case let .missingAccount(key, category, accountType):
             return """
                 The \(category) account for account type \(accountType) and key \(key) was not found in your ledger. \
@@ -45,6 +47,8 @@ extension WealthsimpleConversionError: LocalizedError {
             return "Wealthsimple returned an unexpected description for a transaction: \(string)"
         case let .accountNotFound(accountId):
             return "Wealthsimple returned an element from an account with id \(accountId) which was not found."
+        case let .invalidCommoditySymbol(symbol):
+            return "Could not generate account for commodity \(symbol). For the mapping to work commodity symbols must only contain charaters allowed in account names."
         }
     }
 }

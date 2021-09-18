@@ -103,9 +103,9 @@ public struct WealthsimpleLedgerMapper {
         var balances = [Balance]()
         try positions.forEach {
             let price = Self.amount(for: $0.priceAmount, in: $0.priceCurrency)
-            let balanceAmount = Self.amount(for: $0.quantity, in: try lookup.ledgerSymbol(for: $0.asset))
+            let balanceAmount = Self.amount(for: $0.quantity, in: try lookup.commoditySymbol(for: $0.asset))
             if $0.asset.type != .currency {
-                let price = try Price(date: $0.positionDate, commoditySymbol: try lookup.ledgerSymbol(for: $0.asset), amount: price)
+                let price = try Price(date: $0.positionDate, commoditySymbol: try lookup.commoditySymbol(for: $0.asset), amount: price)
                 if !lookup.doesPriceExistInLedger(price) {
                     prices.append(price)
                 }
