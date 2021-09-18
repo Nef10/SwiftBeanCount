@@ -15,6 +15,13 @@ protocol WealthsimpleAccountRepresentable {
     var currency: String { get }
 }
 
+enum AccoutLookupType {
+    case transactionType(Wealthsimple.Transaction.TransactionType)
+    case dividend(String)
+    case contributionRoom
+    case rounding
+}
+
 /// To lookup things in the ledger
 struct LedgerLookup {
 
@@ -109,19 +116,28 @@ struct LedgerLookup {
 
     /// Returns account name to use for a certain type of posting - not including the Wealthsimple accounts themselves
     func ledgerAccountName(
-        for account: WealthsimpleAccountRepresentable,
-        ofType type: [SwiftBeanCountModel.AccountType],
-        symbol assetSymbol: String? = nil
+        for type: AccoutLookupType,
+        in account: WealthsimpleAccountRepresentable,
+        ofType accountType: [SwiftBeanCountModel.AccountType]
     ) throws -> AccountName {
-        let symbol = assetSymbol ?? account.currency
-        let accountType = account.accountType.rawValue
-        let account = ledger.accounts.first {
-            type.contains($0.name.accountType)  &&
-                ($0.metaData[Self.keyMetaDataKey]?.contains(symbol) ?? false) &&
-                ($0.metaData[Self.accountTypeMetaDataKey]?.contains(accountType) ?? false)
+        let symbol: String
+        switch type {
+        case let .transactionType(transactionType):
+            symbol = transactionType.rawValue
+        case let .dividend(dividendSymbol):
+            symbol = dividendSymbol
+        case .contributionRoom:
+            symbol = "contribution-room"
+        case .rounding:
+            symbol = "rounding"
         }
-        guard let accountName = account?.name else {
-            throw WealthsimpleConversionError.missingAccount(symbol, type.map { $0.rawValue }.joined(separator: ", or "), accountType)
+        let resultAccount = ledger.accounts.first {
+            accountType.contains($0.name.accountType)  &&
+                ($0.metaData[Self.keyMetaDataKey]?.contains(symbol) ?? false) &&
+                ($0.metaData[Self.accountTypeMetaDataKey]?.contains(account.accountType.rawValue) ?? false)
+        }
+        guard let accountName = resultAccount?.name else {
+            throw WealthsimpleConversionError.missingAccount(symbol, accountType.map { $0.rawValue }.joined(separator: ", or "), account.accountType.rawValue)
         }
         return accountName
     }

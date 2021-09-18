@@ -21,12 +21,6 @@ public struct WealthsimpleLedgerMapper {
     /// Payee used for fee transactions
     private static let payee = "Wealthsimple"
 
-    /// Value used for the key of the rounding account
-    private static let roundingValue = "rounding"
-
-    /// Value used for the key of the contribution accounts
-    private static let contributionValue = "contribution-room"
-
     /// Regex to parse the amount in foreign currency and the record date on dividend transactions from the description
     private static let dividendRegEx: NSRegularExpression = {
         // swiftlint:disable:next force_try
@@ -190,7 +184,7 @@ public struct WealthsimpleLedgerMapper {
         let assetAmount = (oldAsset.amount + transaction.netCash).amountFor(symbol: transaction.netCashCurrency)
         let postings = [
             dividend.postings.first { $0.accountName.accountType == .income }!, // income stays the same
-            Posting(accountName: try lookup.ledgerAccountName(for: account, ofType: [.expense], symbol: transaction.transactionType.rawValue), amount: expenseAmount),
+            Posting(accountName: try lookup.ledgerAccountName(for: .transactionType(transaction.transactionType), in: account, ofType: [.expense]), amount: expenseAmount),
             Posting(accountName: oldAsset.accountName, amount: assetAmount, price: oldAsset.price, cost: oldAsset.cost, metaData: oldAsset.metaData)
         ]
         var metaData = dividend.metaData.metaData
@@ -227,7 +221,7 @@ public struct WealthsimpleLedgerMapper {
             throw WealthsimpleConversionError.unsupportedTransactionType(transaction.transactionType.rawValue)
         }
         if !lookup.isTransactionValid(result) {
-            let posting = Posting(accountName: try lookup.ledgerAccountName(for: account, ofType: [.expense], symbol: Self.roundingValue),
+            let posting = Posting(accountName: try lookup.ledgerAccountName(for: .rounding, in: account, ofType: [.expense]),
                                   amount: lookup.roundingBalance(result))
             result = SwiftBeanCountModel.Transaction(metaData: result.metaData, postings: result.postings + [posting])
         }
@@ -244,20 +238,20 @@ public struct WealthsimpleLedgerMapper {
     }
 
     private func mapDeposit(transaction: WTransaction, in account: WAccount, assetAccountName: AccountName, accountTypes: [AccountType] = [.asset]) throws -> STransaction {
-        let accountName = try lookup.ledgerAccountName(for: account, ofType: accountTypes, symbol: transaction.transactionType.rawValue)
+        let accountName = try lookup.ledgerAccountName(for: .transactionType(transaction.transactionType), in: account, ofType: accountTypes)
         let posting1 = Posting(accountName: assetAccountName, amount: transaction.netCash)
         let posting2 = Posting(accountName: accountName, amount: transaction.negatedNetCash)
         return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [posting1, posting2])
     }
 
     private func mapContribution(transaction: WTransaction, in account: WAccount, assetAccountName: AccountName) throws -> STransaction {
-        let accountName = try lookup.ledgerAccountName(for: account, ofType: [.asset], symbol: transaction.transactionType.rawValue)
+        let accountName = try lookup.ledgerAccountName(for: .transactionType(transaction.transactionType), in: account, ofType: [.asset])
         var postings = [
             Posting(accountName: assetAccountName, amount: transaction.netCash),
             Posting(accountName: accountName, amount: transaction.negatedNetCash)
         ]
-        if let contributionAsset = try? lookup.ledgerAccountName(for: account, ofType: [.asset], symbol: Self.contributionValue),
-           let contributionExpense = try? lookup.ledgerAccountName(for: account, ofType: [.expense], symbol: Self.contributionValue),
+        if let contributionAsset = try? lookup.ledgerAccountName(for: .contributionRoom, in: account, ofType: [.asset]),
+           let contributionExpense = try? lookup.ledgerAccountName(for: .contributionRoom, in: account, ofType: [.expense]),
            let commoditySymbol = lookup.ledgerAccountCommoditySymbol(of: contributionAsset) {
             let amount1 = Amount(number: transaction.negatedNetCash.number, commoditySymbol: commoditySymbol, decimalDigits: transaction.negatedNetCash.decimalDigits)
             let amount2 = Amount(number: transaction.netCash.number, commoditySymbol: commoditySymbol, decimalDigits: transaction.netCash.decimalDigits)
@@ -270,7 +264,7 @@ public struct WealthsimpleLedgerMapper {
     private func mapFeeOrReimbursementOrInterest(transaction: WTransaction, in account: WAccount, assetAccountName: AccountName) throws -> STransaction {
         let meta = TransactionMetaData(date: transaction.processDate, payee: Self.payee, narration: transaction.description, metaData: [MetaDataKeys.id: transaction.id])
         let posting1 = Posting(accountName: assetAccountName, amount: transaction.netCash)
-        let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: account, ofType: [.expense, .income], symbol: transaction.transactionType.rawValue),
+        let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: .transactionType(transaction.transactionType), in: account, ofType: [.expense, .income]),
                                amount: transaction.negatedNetCash)
         return SwiftBeanCountModel.Transaction(metaData: meta, postings: [posting1, posting2])
     }
@@ -284,7 +278,7 @@ public struct WealthsimpleLedgerMapper {
             price = Amount(number: transaction.fxAmount.number, commoditySymbol: amount.commoditySymbol, decimalDigits: transaction.fxAmount.decimalDigits)
         }
         let posting1 = Posting(accountName: assetAccountName, amount: transaction.netCash, price: price)
-        let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: account, ofType: [.income], symbol: transaction.symbol), amount: income)
+        let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: .dividend(transaction.symbol), in: account, ofType: [.income]), amount: income)
         let metaDataDict = [MetaDataKeys.id: transaction.id, MetaDataKeys.dividendRecordDate: date, MetaDataKeys.dividendShares: shares]
         return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: metaDataDict), postings: [posting1, posting2])
     }
@@ -293,13 +287,13 @@ public struct WealthsimpleLedgerMapper {
         let amount = try parseNRWTDescription(transaction.description)
         let price = Amount(number: transaction.fxAmount.number, commoditySymbol: amount.commoditySymbol, decimalDigits: transaction.fxAmount.decimalDigits)
         let posting1 = Posting(accountName: assetAccountName, amount: transaction.netCash, price: price)
-        let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: account, ofType: [.expense], symbol: transaction.transactionType.rawValue), amount: amount)
+        let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: .transactionType(transaction.transactionType), in: account, ofType: [.expense]), amount: amount)
         return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [posting1, posting2])
     }
 
     private func mapRefund(transaction: WTransaction, in account: WAccount, assetAccountName: AccountName) throws -> STransaction {
         let posting1 = Posting(accountName: assetAccountName, amount: transaction.netCash)
-        let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: account, ofType: [.income], symbol: transaction.transactionType.rawValue),
+        let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: .transactionType(transaction.transactionType), in: account, ofType: [.income]),
                                amount: transaction.negatedNetCash)
         return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [posting1, posting2])
     }
