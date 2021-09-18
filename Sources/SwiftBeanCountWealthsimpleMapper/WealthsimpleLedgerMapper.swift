@@ -94,7 +94,7 @@ public struct WealthsimpleLedgerMapper {
                 }
             }
             let balance = Balance(date: $0.positionDate,
-                                  accountName: try lookup.ledgerAccountName(of: account, symbol: $0.asset.symbol),
+                                  accountName: try lookup.ledgerAccountName(of: account, symbol: account.currency != $0.asset.symbol ? $0.asset.symbol : nil),
                                   amount: balanceAmount)
             if !lookup.doesBalanceExistInLedger(balance) {
                 balances.append(balance)
