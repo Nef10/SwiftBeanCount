@@ -43,35 +43,24 @@ public struct WealthsimpleLedgerMapper {
         return dateFormatter
     }()
 
+    /// Date formatter used to save the dividend record date into transaction meta data
     private static let dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter
     }()
 
+    private let lookup: LedgerLookup
+
     /// Downloaded Wealthsimple accounts
     ///
     /// Need to be set before attempting to map positions or transactions
     public var accounts = [Wealthsimple.Account]()
 
-    private let lookup: LedgerLookup
-
     /// Create a WealthsimpleLedgerMapper
     /// - Parameter ledger: Ledger to look up accounts, commodities or duplicate entries in
     public init(ledger: Ledger) {
         self.lookup = LedgerLookup(ledger)
-    }
-
-    static func amount(for string: String, in commoditySymbol: String, negate: Bool = false, inverse: Bool = false) -> Amount {
-        var (number, decimalDigits) = string.amountDecimal()
-        if negate {
-            number = -number
-        }
-        if inverse {
-            number = 1 / number
-        }
-        // Wealthsimple cuts of an ending 0 in the second digit. However, all amounts we deal with have at least 2 digits
-        return Amount(number: number, commoditySymbol: commoditySymbol, decimalDigits: max(2, decimalDigits))
     }
 
     /// Maps downloaded wealthsimple positions from one account to SwiftBeanCountModel prices and balances
@@ -96,8 +85,8 @@ public struct WealthsimpleLedgerMapper {
         var prices = [Price]()
         var balances = [Balance]()
         try positions.forEach {
-            let price = Self.amount(for: $0.priceAmount, in: $0.priceCurrency)
-            let balanceAmount = Self.amount(for: $0.quantity, in: try lookup.commoditySymbol(for: $0.asset))
+            let price = Amount(for: $0.priceAmount, in: $0.priceCurrency)
+            let balanceAmount = Amount(for: $0.quantity, in: try lookup.commoditySymbol(for: $0.asset))
             if $0.asset.type != .currency {
                 let price = try Price(date: $0.positionDate, commoditySymbol: try lookup.commoditySymbol(for: $0.asset), amount: price)
                 if !lookup.doesPriceExistInLedger(price) {
@@ -144,7 +133,7 @@ public struct WealthsimpleLedgerMapper {
         var nrwtTransactions = wealthsimpleTransactions.filter { $0.transactionType == .nonResidentWithholdingTax }
         let transactionsToMap = wealthsimpleTransactions.filter { $0.transactionType != .nonResidentWithholdingTax }
         var prices = [Price]()
-        var transactions = [SwiftBeanCountModel.Transaction]()
+        var transactions = [STransaction]()
         for wealthsimpleTransaction in transactionsToMap {
             var (price, transaction) = try mapTransaction(wealthsimpleTransaction, in: account)
             if !lookup.doesTransactionExistInLedger(transaction) {
@@ -171,7 +160,7 @@ public struct WealthsimpleLedgerMapper {
         return (prices, transactions)
     }
 
-    /// Merges a non resident witholding tax transaction with the corresponding dividend transactin
+    /// Merges a non resident witholding tax transaction with the corresponding dividend transaction
     /// - Parameters:
     ///   - transaction: the non resident witholding tax transaction
     ///   - dividend: the dividend transaction
@@ -189,11 +178,11 @@ public struct WealthsimpleLedgerMapper {
         ]
         var metaData = dividend.metaData.metaData
         metaData[MetaDataKeys.nrwtId] = transaction.id
-        return SwiftBeanCountModel.Transaction(metaData: TransactionMetaData(date: dividend.metaData.date, metaData: metaData), postings: postings)
+        return STransaction(metaData: TransactionMetaData(date: dividend.metaData.date, metaData: metaData), postings: postings)
     }
 
     // swiftlint:disable:next cyclomatic_complexity
-    private func mapTransaction(_ transaction: Wealthsimple.Transaction, in account: Wealthsimple.Account) throws -> (Price?, SwiftBeanCountModel.Transaction) {
+    private func mapTransaction(_ transaction: WTransaction, in account: WAccount) throws -> (Price?, STransaction) {
         let assetAccountName = try lookup.ledgerAccountName(of: account)
         var price: Price?, result: STransaction
         switch transaction.transactionType {
@@ -208,22 +197,20 @@ public struct WealthsimpleLedgerMapper {
         case .contribution:
             result = try mapContribution(transaction: transaction, in: account, assetAccountName: assetAccountName)
         case .deposit, .withdrawal, .paymentTransferOut, .transferIn, .transferOut:
-            result = try mapDeposit(transaction: transaction, in: account, assetAccountName: assetAccountName)
-        case .refund:
-            result = try mapRefund(transaction: transaction, in: account, assetAccountName: assetAccountName)
+            result = try mapDepositOrWithdrawal(transaction: transaction, in: account, assetAccountName: assetAccountName, accountTypes: [.asset])
+        case .paymentTransferIn, .referralBonus, .giveawayBonus, .refund:
+            result = try mapDepositOrWithdrawal(transaction: transaction, in: account, assetAccountName: assetAccountName, accountTypes: [.asset, .income])
+        case .paymentSpend:
+            result = try mapDepositOrWithdrawal(transaction: transaction, in: account, assetAccountName: assetAccountName, accountTypes: [.expense])
         case .nonResidentWithholdingTax:
             result = try mapNonResidentWithholdingTax(transaction: transaction, in: account, assetAccountName: assetAccountName)
-        case .paymentTransferIn, .referralBonus, .giveawayBonus:
-            result = try mapDeposit(transaction: transaction, in: account, assetAccountName: assetAccountName, accountTypes: [.asset, .income])
-        case .paymentSpend:
-            result = try mapDeposit(transaction: transaction, in: account, assetAccountName: assetAccountName, accountTypes: [.expense])
         default:
             throw WealthsimpleConversionError.unsupportedTransactionType(transaction.transactionType.rawValue)
         }
         if !lookup.isTransactionValid(result) {
             let posting = Posting(accountName: try lookup.ledgerAccountName(for: .rounding, in: account, ofType: [.expense]),
                                   amount: lookup.roundingBalance(result))
-            result = SwiftBeanCountModel.Transaction(metaData: result.metaData, postings: result.postings + [posting])
+            result = STransaction(metaData: result.metaData, postings: result.postings + [posting])
         }
         return (price, result)
     }
@@ -231,13 +218,13 @@ public struct WealthsimpleLedgerMapper {
     private func mapBuy(transaction: WTransaction, in account: WAccount, assetAccountName: AccountName) throws -> (Price, STransaction) {
         let posting1 = Posting(accountName: assetAccountName, amount: transaction.netCash, price: transaction.useFx ? transaction.fxAmount : nil)
         let posting2 = Posting(accountName: try lookup.ledgerAccountName(of: account, symbol: transaction.symbol),
-                               amount: try transaction.quantityAmount(lookup: lookup),
+                               amount: try quantityAmount(for: transaction),
                                cost: try Cost(amount: transaction.marketPrice, date: nil, label: nil))
         let result = STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [posting1, posting2])
         return (try Price(date: transaction.processDate, commoditySymbol: transaction.symbol, amount: transaction.marketPrice), result)
     }
 
-    private func mapDeposit(transaction: WTransaction, in account: WAccount, assetAccountName: AccountName, accountTypes: [AccountType] = [.asset]) throws -> STransaction {
+    private func mapDepositOrWithdrawal(transaction: WTransaction, in account: WAccount, assetAccountName: AccountName, accountTypes: [AccountType]) throws -> STransaction {
         let accountName = try lookup.ledgerAccountName(for: .transactionType(transaction.transactionType), in: account, ofType: accountTypes)
         let posting1 = Posting(accountName: assetAccountName, amount: transaction.netCash)
         let posting2 = Posting(accountName: accountName, amount: transaction.negatedNetCash)
@@ -266,7 +253,7 @@ public struct WealthsimpleLedgerMapper {
         let posting1 = Posting(accountName: assetAccountName, amount: transaction.netCash)
         let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: .transactionType(transaction.transactionType), in: account, ofType: [.expense, .income]),
                                amount: transaction.negatedNetCash)
-        return SwiftBeanCountModel.Transaction(metaData: meta, postings: [posting1, posting2])
+        return STransaction(metaData: meta, postings: [posting1, posting2])
     }
 
     private func mapDividend(transaction: WTransaction, in account: WAccount, assetAccountName: AccountName) throws -> STransaction {
@@ -291,18 +278,11 @@ public struct WealthsimpleLedgerMapper {
         return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [posting1, posting2])
     }
 
-    private func mapRefund(transaction: WTransaction, in account: WAccount, assetAccountName: AccountName) throws -> STransaction {
-        let posting1 = Posting(accountName: assetAccountName, amount: transaction.netCash)
-        let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: .transactionType(transaction.transactionType), in: account, ofType: [.income]),
-                               amount: transaction.negatedNetCash)
-        return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [posting1, posting2])
-    }
-
     private func mapSell(transaction: WTransaction, in account: WAccount, assetAccountName: AccountName) throws -> (Price, STransaction) {
         let cost = try Cost(amount: nil, date: nil, label: nil)
         let posting1 = Posting(accountName: assetAccountName, amount: transaction.netCash, price: transaction.useFx ? transaction.fxAmount : nil)
         let accountName2 = try lookup.ledgerAccountName(of: account, symbol: transaction.symbol)
-        let posting2 = Posting(accountName: accountName2, amount: try transaction.quantityAmount(lookup: lookup), price: transaction.marketPrice, cost: cost)
+        let posting2 = Posting(accountName: accountName2, amount: try quantityAmount(for: transaction), price: transaction.marketPrice, cost: cost)
         let result = STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [posting1, posting2])
         return (try Price(date: transaction.processDate, commoditySymbol: transaction.symbol, amount: transaction.marketPrice), result)
     }
@@ -314,7 +294,7 @@ public struct WealthsimpleLedgerMapper {
             throw WealthsimpleConversionError.unexpectedDescription(string)
         }
         let match = matches[0]
-        let resultAmount = !match[4].isEmpty ? Self.amount(for: match[4], in: match[7], negate: true) : nil
+        let resultAmount = !match[4].isEmpty ? Amount(for: match[4], in: match[7], negate: true) : nil
         return (Self.dateFormatter.string(from: date), match[2], resultAmount)
     }
 
@@ -323,7 +303,13 @@ public struct WealthsimpleLedgerMapper {
         guard matches.count == 1 else {
             throw WealthsimpleConversionError.unexpectedDescription(string)
         }
-        return Self.amount(for: matches[0][1], in: matches[0][4])
+        return Amount(for: matches[0][1], in: matches[0][4])
+    }
+
+    private func quantityAmount(for transaction: WTransaction) throws -> Amount {
+        let cashTypes: [WTransaction.TransactionType] = [.fee, .contribution, .deposit, .refund]
+        let quantitySymbol = cashTypes.contains(transaction.transactionType) ? transaction.symbol : try lookup.commoditySymbol(for: transaction.symbol)
+        return Amount(for: transaction.quantity, in: quantitySymbol)
     }
 
 }
