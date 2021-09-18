@@ -146,9 +146,8 @@ struct LedgerLookup {
                 throw WealthsimpleConversionError.invalidCommoditySymbol(symbol)
             }
             return result
-        } else {
-            return accountName
         }
+        return accountName
     }
 
     /// Get the CommoditySymbol of a specified account in the ledger
