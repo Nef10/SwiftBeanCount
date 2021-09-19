@@ -3,7 +3,7 @@ import SwiftBeanCountModel
 import Wealthsimple
 import XCTest
 
-struct TestWealthsimpleTransactionRepresentable: WealthsimpleTransactionRepresentable {
+struct TestTransactionProvider: TransactionProvider {
     let id = ""
     let accountId = ""
     let transactionType: Wealthsimple.Transaction.TransactionType = .buy
@@ -22,10 +22,10 @@ struct TestWealthsimpleTransactionRepresentable: WealthsimpleTransactionRepresen
     var marketValueCurrency = ""
 }
 
-final class WealthsimpleTransactionRepresentableTests: XCTestCase {
+final class TransactionProviderTests: XCTestCase {
 
     func testExtension() {
-        var transaction = TestWealthsimpleTransactionRepresentable()
+        var transaction = TestTransactionProvider()
 
         transaction.marketPriceAmount = "10.0110"
         transaction.marketPriceCurrency = "EUR"

@@ -9,10 +9,6 @@ import Foundation
 import SwiftBeanCountModel
 import Wealthsimple
 
-protocol AccountNumberProvider {
-    var number: String { get }
-}
-
 enum AccoutLookupType {
     case transactionType(Wealthsimple.Transaction.TransactionType)
     case dividend(String)
@@ -88,7 +84,7 @@ struct LedgerLookup {
     /// - Returns: AccountName to use
     func ledgerAccountName(
         for type: AccoutLookupType,
-        in account: AccountNumberProvider,
+        in account: AccountProvider,
         ofType accountTypes: [SwiftBeanCountModel.AccountType]
     ) throws -> AccountName {
         let key: String
@@ -114,7 +110,7 @@ struct LedgerLookup {
     ///   - assetSymbol: Assets symbol in the account. If not specified cash account will be returned
     /// - Throws: WealthsimpleConversionError if the account cannot be found
     /// - Returns: Name of the matching account
-    func ledgerAccountName(of account: AccountNumberProvider, symbol assetSymbol: String? = nil) throws -> AccountName {
+    func ledgerAccountName(of account: AccountProvider, symbol assetSymbol: String? = nil) throws -> AccountName {
         let baseAccount = ledger.accounts.first {
             $0.metaData[MetaDataKeys.importerType] == MetaData.importerType &&
             $0.metaData[MetaDataKeys.number] == account.number
@@ -138,7 +134,4 @@ struct LedgerLookup {
     func ledgerAccountCommoditySymbol(of account: AccountName) -> CommoditySymbol? {
         ledger.accounts.first { $0.name == account }?.commoditySymbol
     }
-}
-
-extension Wealthsimple.Account: AccountNumberProvider {
 }

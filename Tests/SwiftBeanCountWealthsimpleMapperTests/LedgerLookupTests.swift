@@ -3,8 +3,10 @@ import SwiftBeanCountModel
 import Wealthsimple
 import XCTest
 
-struct TestAccount: AccountNumberProvider {
-    let number: String
+struct TestAccount: AccountProvider {
+    var number = ""
+    var id = ""
+    var currency = ""
 }
 
 final class LedgerLookupTests: XCTestCase {

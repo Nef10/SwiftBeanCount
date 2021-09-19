@@ -9,8 +9,42 @@ import Foundation
 import SwiftBeanCountModel
 import Wealthsimple
 
+/// Protocol to abstract a Wealthsimple Account
+public protocol AccountProvider {
+   /// Wealthsimple id for the account
+    var id: String { get }
+    /// number of the account
+    var number: String { get }
+    /// Operating currency of the account
+    var currency: String { get }
+}
+
+/// Protocol to abstract a Wealthsimple Asset
+public protocol AssetProvider {
+    /// Symbol of the asset, e.g. currency or ticker symbol
+    var symbol: String { get }
+    /// Type of the asset, e.g. currency or ETF
+    var type: Wealthsimple.Asset.AssetType { get }
+}
+
+/// Protocol to abstract a Wealthsimple Position
+public protocol PositionProvider {
+    /// Wealthsimple identifier of the account in which this position is held
+    var accountId: String { get }
+    /// Asset which is held
+    var assetObject: AssetProvider { get }
+    /// Price per pice of the asset on `priceDate`
+    var priceAmount: String { get }
+    /// Date of the positon
+    var positionDate: Date { get }
+    /// Currency of the price
+    var priceCurrency: String { get }
+    /// Number of units of the asset held
+    var quantity: String { get }
+}
+
 /// Protocol to define which properties are required for Wealthsimple Transactions
-protocol WealthsimpleTransactionRepresentable {
+public protocol TransactionProvider {
     /// Wealthsimples identifier of this transaction
     var id: String { get }
     /// Wealthsimple identifier of the account in which this transaction happend
@@ -43,7 +77,7 @@ protocol WealthsimpleTransactionRepresentable {
     var processDate: Date { get }
 }
 
-extension WealthsimpleTransactionRepresentable {
+extension TransactionProvider {
 
     var marketPrice: Amount {
         Amount(for: marketPriceAmount, in: marketPriceCurrency)
@@ -63,5 +97,17 @@ extension WealthsimpleTransactionRepresentable {
 
 }
 
-extension Wealthsimple.Transaction: WealthsimpleTransactionRepresentable {
+extension Wealthsimple.Account: AccountProvider {
+}
+
+extension Wealthsimple.Asset: AssetProvider {
+}
+
+extension Wealthsimple.Position: PositionProvider {
+    public var assetObject: AssetProvider {
+        asset
+    }
+}
+
+extension Wealthsimple.Transaction: TransactionProvider {
 }
