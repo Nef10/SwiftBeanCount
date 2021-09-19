@@ -63,20 +63,22 @@ struct LedgerLookup {
         return account.balances.contains(balance)
     }
 
-    func isTransactionValid(_ transaction: SwiftBeanCountModel.Transaction) -> Bool {
-        do {
-            return try transaction.balance(in: ledger).isZeroWithTolerance()
-        } catch {
-            return true
-        }
+    /// Checks if transaction is balanced in the ledger
+    /// - Parameter transaction: transaction to check
+    /// - Returns: true if balanced, otherwise false
+    func doesTransactionBalance(_ transaction: SwiftBeanCountModel.Transaction) -> Bool {
+        (try? transaction.balance(in: ledger).isZeroWithTolerance()) ?? true
     }
 
+    /// Calculates the amount required to balance a transaction
+    /// - Parameter transaction: transaction to balance
+    /// - Returns: Amount required to balance it
     func roundingBalance(_ transaction: SwiftBeanCountModel.Transaction) -> Amount {
         do {
             let balance = try transaction.balance(in: ledger)
             let (symbol, _) = balance.amounts.first!
             let amount = balance.amountFor(symbol: symbol)
-            return Amount(number: amount.number, commoditySymbol: amount.commoditySymbol, decimalDigits: amount.decimalDigits + 1)
+            return Amount(number: -amount.number, commoditySymbol: amount.commoditySymbol, decimalDigits: max(0, -(-amount.number).exponent))
         } catch {
             return Amount(number: 0, commoditySymbol: "")
         }

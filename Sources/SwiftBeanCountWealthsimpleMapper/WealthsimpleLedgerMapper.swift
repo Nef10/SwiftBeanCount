@@ -207,7 +207,7 @@ public struct WealthsimpleLedgerMapper {
         default:
             throw WealthsimpleConversionError.unsupportedTransactionType(transaction.transactionType.rawValue)
         }
-        if !lookup.isTransactionValid(result) {
+        if !lookup.doesTransactionBalance(result) {
             let posting = Posting(accountName: try lookup.ledgerAccountName(for: .rounding, in: account, ofType: [.expense]),
                                   amount: lookup.roundingBalance(result))
             result = STransaction(metaData: result.metaData, postings: result.postings + [posting])
