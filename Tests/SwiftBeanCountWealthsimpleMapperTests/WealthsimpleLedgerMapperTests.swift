@@ -38,9 +38,52 @@ struct TestTransaction: TransactionProvider {
 
 final class WealthsimpleLedgerMapperTests: XCTestCase {
 
+    private typealias SAccount = SwiftBeanCountModel.Account
+
+    private let transactionId = "id23"
+    private let accountId = "abc123"
+    private let accountNumber = "A1B2C3"
+    private let fxRate = "2"
+
+    private var testAccounts = [TestAccount]()
+    private var ledger = Ledger()
+
+    private var mapper: WealthsimpleLedgerMapper {
+        var wealthsimpleLedgerMapper = WealthsimpleLedgerMapper(ledger: ledger)
+        wealthsimpleLedgerMapper.accounts = testAccounts
+        return wealthsimpleLedgerMapper
+    }
+
+    private var testTransactionPrice: Price {
+        try! Price(date: testTransaction.processDate, commoditySymbol: "ETF", amount: Amount(number: Decimal(string: "2.24")!, commoditySymbol: "CAD", decimalDigits: 2))
+    }
+
+    private var testTransaction: TestTransaction {
+        TestTransaction(id: transactionId,
+                        accountId: accountId,
+                        symbol: "ETF",
+                        quantity: "5.25",
+                        marketPriceAmount: "2.24",
+                        marketPriceCurrency: "CAD",
+                        marketValueCurrency: "CAD",
+                        netCashAmount: "-11.76",
+                        netCashCurrency: "CAD",
+                        processDate: Date(timeIntervalSinceReferenceDate: 5_645_145_697))
+    }
+
+    override func setUpWithError() throws {
+        ledger = Ledger()
+        try? ledger.add(SAccount(name: try! AccountName("Assets:W:Cash"), metaData: [MetaDataKeys.importerType: MetaData.importerType, MetaDataKeys.number: accountNumber]))
+        try? ledger.add(Commodity(symbol: "ETF"))
+        try? ledger.add(Commodity(symbol: "CAD"))
+        testAccounts = [TestAccount(number: accountNumber, id: accountId, currency: "CAD")]
+        try super.setUpWithError()
+    }
+
     func testMapPositionsErrors() {
-        let ledger = Ledger()
-        var mapper = WealthsimpleLedgerMapper(ledger: ledger)
+        // empty the data setup by default
+        ledger = Ledger()
+        testAccounts = []
 
         // empty
         let (prices, balances) = try! mapper.mapPositionsToPriceAndBalance([])
@@ -48,37 +91,24 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         XCTAssert(balances.isEmpty)
 
         // no account set on mapper
-        var position = TestPositon(accountId: "abc123")
-        assert(
-            try mapper.mapPositionsToPriceAndBalance([position]),
-            throws: WealthsimpleConversionError.accountNotFound("abc123")
-        )
+        var position = TestPositon(accountId: accountId)
+        assert(try mapper.mapPositionsToPriceAndBalance([position]), throws: WealthsimpleConversionError.accountNotFound(accountId))
 
         // missing commodity
-        let account = TestAccount(number: "A1B2C3", id: "abc123")
-        mapper.accounts = [account]
+        testAccounts = [TestAccount(number: accountNumber, id: accountId)]
         position.priceAmount = "1234"
         position.priceCurrency = "EUR"
         position.asset.symbol = "CAD"
-        assert(
-            try mapper.mapPositionsToPriceAndBalance([position]),
-            throws: WealthsimpleConversionError.missingCommodity("CAD")
-        )
+        assert(try mapper.mapPositionsToPriceAndBalance([position]), throws: WealthsimpleConversionError.missingCommodity("CAD"))
 
         // missing account in ledger
         try! ledger.add(Commodity(symbol: "CAD"))
-        mapper = WealthsimpleLedgerMapper(ledger: ledger)
-        mapper.accounts = [account]
         position.quantity = "9.871"
-        assert(
-            try mapper.mapPositionsToPriceAndBalance([position]),
-            throws: WealthsimpleConversionError.missingWealthsimpleAccount("A1B2C3")
-        )
+        assert(try mapper.mapPositionsToPriceAndBalance([position]), throws: WealthsimpleConversionError.missingWealthsimpleAccount(accountNumber))
     }
 
     func testMapPositions() {
-        var mapper = setupMapper()
-        var position = TestPositon(accountId: "abc123", priceAmount: "1234", priceCurrency: "EUR", quantity: "9.871")
+        var position = TestPositon(accountId: accountId, priceAmount: "1234", priceCurrency: "EUR", quantity: "9.871")
         position.asset.symbol = "CAD"
 
         // currency
@@ -101,18 +131,17 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         XCTAssertEqual(balances, [balance])
 
         // already exists
-        let ledger = Ledger()
         try! ledger.add(price)
         ledger.add(balance)
-        mapper = setupMapper(ledger: ledger)
         (prices, balances) = try! mapper.mapPositionsToPriceAndBalance([position])
         XCTAssert(prices.isEmpty)
         XCTAssert(balances.isEmpty)
     }
 
     func testMapTransactionsErrors() {
-        let ledger = Ledger()
-        var mapper = WealthsimpleLedgerMapper(ledger: ledger)
+        // empty the data setup by default
+        ledger = Ledger()
+        testAccounts = []
 
         // empty
         let (prices, transactions) = try! mapper.mapTransactionsToPriceAndTransactions([])
@@ -120,78 +149,134 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         XCTAssert(transactions.isEmpty)
 
         // no account set on mapper
-        var transaction = TestTransaction(accountId: "abc123")
-        assert(
-            try mapper.mapTransactionsToPriceAndTransactions([transaction]),
-            throws: WealthsimpleConversionError.accountNotFound("abc123")
-        )
+        var transaction = TestTransaction(accountId: accountId)
+        assert(try mapper.mapTransactionsToPriceAndTransactions([transaction]), throws: WealthsimpleConversionError.accountNotFound(accountId))
 
         // missing account in ledger
-        let account = TestAccount(number: "A1B2C3", id: "abc123")
-        mapper.accounts = [account]
+        testAccounts = [TestAccount(number: accountNumber, id: accountId)]
         transaction.symbol = "CAD"
         transaction.netCashAmount = "7.53"
-        assert(
-            try mapper.mapTransactionsToPriceAndTransactions([transaction]),
-            throws: WealthsimpleConversionError.missingWealthsimpleAccount("A1B2C3")
-        )
+        assert(try mapper.mapTransactionsToPriceAndTransactions([transaction]), throws: WealthsimpleConversionError.missingWealthsimpleAccount(accountNumber) )
 
         // missing commodity
-        try! ledger.add(SwiftBeanCountModel.Account(name: try! AccountName("Assets:W:Cash"), metaData: ["importer-type": "wealthsimple", "number": "A1B2C3"]))
-        mapper = WealthsimpleLedgerMapper(ledger: ledger)
-        mapper.accounts = [account]
-        assert(
-            try mapper.mapTransactionsToPriceAndTransactions([transaction]),
-            throws: WealthsimpleConversionError.missingCommodity("CAD")
-        )
+        try! ledger.add(SAccount(name: try! AccountName("Assets:W:Cash"), metaData: [MetaDataKeys.importerType: MetaData.importerType, MetaDataKeys.number: accountNumber]))
+        assert(try mapper.mapTransactionsToPriceAndTransactions([transaction]), throws: WealthsimpleConversionError.missingCommodity("CAD"))
+
+        // nrwt invalid description
+        try? ledger.add(Commodity(symbol: "CAD"))
+        var nrwt = testTransaction
+        nrwt.transactionType = .nonResidentWithholdingTax
+        nrwt.fxRate = "1.2343"
+        nrwt.description = "Garbage"
+        assert(try mapper.mapTransactionsToPriceAndTransactions([nrwt]), throws: WealthsimpleConversionError.unexpectedDescription(nrwt.description))
+
+        // dividend invalid description
+        var dividend = testTransaction
+        dividend.transactionType = .dividend
+        dividend.fxRate = "1.2343"
+        dividend.description = "Garbage2"
+        assert(try mapper.mapTransactionsToPriceAndTransactions([dividend]), throws: WealthsimpleConversionError.unexpectedDescription(dividend.description))
     }
 
     func testMapTransactionsBuy() {
-        let mapper = setupMapper()
-        var transaction = TestTransaction(id: "id23",
-                                          accountId: "abc123",
-                                          symbol: "ETF",
-                                          quantity: "5.314",
-                                          marketPriceAmount: "2.234",
-                                          marketPriceCurrency: "CAD",
-                                          marketValueCurrency: "CAD",
-                                          netCashAmount: "7.53",
-                                          netCashCurrency: "CAD")
-
+        var transaction = testTransaction
         var (prices, transactions) = try! mapper.mapTransactionsToPriceAndTransactions([transaction])
-        let amount = Amount(number: Decimal(2.234), commoditySymbol: "CAD", decimalDigits: 3)
         var postings = [
-            Posting(accountName: try! AccountName("Assets:W:Cash"), amount: Amount(number: Decimal(7.53), commoditySymbol: "CAD", decimalDigits: 2)),
+            posting(),
             Posting(accountName: try! AccountName("Assets:W:ETF"),
-                    amount: Amount(number: Decimal(5.314), commoditySymbol: "ETF", decimalDigits: 3),
-                    cost: try! Cost(amount: amount, date: nil, label: nil))
+                    amount: Amount(number: Decimal(string: transaction.quantity)!, commoditySymbol: "ETF", decimalDigits: 2),
+                    cost: try! Cost(amount: testTransactionPrice.amount, date: nil, label: nil))
         ]
-        var resultTransaction = Transaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: "id23"]), postings: postings)
-        XCTAssertEqual(prices, [try! Price(date: transaction.processDate, commoditySymbol: "ETF", amount: amount)])
+        var resultTransaction = Transaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transactionId]), postings: postings)
+        XCTAssertEqual(prices, [testTransactionPrice])
         XCTAssertEqual(transactions, [resultTransaction])
 
         // fx
         transaction.netCashCurrency = "EUR"
-        transaction.fxRate = "0.16"
+        transaction.netCashAmount = "-23.51"
+        transaction.fxRate = fxRate
         (prices, transactions) = try! mapper.mapTransactionsToPriceAndTransactions([transaction])
-        let priceAmount = Amount(number: Decimal(string: "6.25")!, commoditySymbol: "CAD", decimalDigits: 2)
-        postings = [
-            Posting(accountName: postings[0].accountName, amount: Amount(number: Decimal(7.53), commoditySymbol: "EUR", decimalDigits: 2), price: priceAmount),
-            postings[1]
-        ]
-        resultTransaction = Transaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: "id23"]), postings: postings)
-        XCTAssertEqual(prices, [try! Price(date: transaction.processDate, commoditySymbol: "ETF", amount: amount)])
+        postings = [posting(number: transaction.netCashAmount, commodity: "EUR", price: priceAmount()), postings[1]]
+        resultTransaction = Transaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transactionId]), postings: postings)
+        XCTAssertEqual(prices, [testTransactionPrice])
         XCTAssertEqual(transactions, [resultTransaction])
     }
 
-    private func setupMapper(ledger: Ledger = Ledger()) -> WealthsimpleLedgerMapper {
-        try? ledger.add(SwiftBeanCountModel.Account(name: try! AccountName("Assets:W:Cash"), metaData: ["importer-type": "wealthsimple", "number": "A1B2C3"]))
-        try? ledger.add(Commodity(symbol: "ETF"))
-        try? ledger.add(Commodity(symbol: "CAD"))
-        var mapper = WealthsimpleLedgerMapper(ledger: ledger)
-        let account = TestAccount(number: "A1B2C3", id: "abc123", currency: "CAD")
-        mapper.accounts = [account]
-        return mapper
+    func testMapTransactionsAlreadyExisting() {
+        ledger.add(Transaction(metaData: TransactionMetaData(date: Date(), metaData: [MetaDataKeys.id: transactionId]), postings: []))
+
+        // transaction exists
+        var (prices, transactions) = try! mapper.mapTransactionsToPriceAndTransactions([testTransaction])
+        XCTAssertEqual(prices, [testTransactionPrice])
+        XCTAssert(transactions.isEmpty)
+
+        // price exists as well
+        try! ledger.add(testTransactionPrice)
+        (prices, transactions) = try! mapper.mapTransactionsToPriceAndTransactions([testTransaction])
+        XCTAssert(prices.isEmpty)
+        XCTAssert(transactions.isEmpty)
+
+        // non merged nrwt transaction already exists
+        var nrwt = testTransaction
+        nrwt.transactionType = .nonResidentWithholdingTax
+        nrwt.id = "tid2"
+        nrwt.fxRate = fxRate
+        nrwt.description = "VTI - Vanguard Index STK MKT ETF: Non-resident tax withheld at source (2.43 USD, convert to CAD @ 1.2343)"
+        ledger.add(Transaction(metaData: TransactionMetaData(date: Date(), metaData: [MetaDataKeys.nrwtId: "tid2"]), postings: []))
+        try? ledger.add(SAccount(name: try! AccountName("Expenses:t"), metaData: ["\(MetaDataKeys.prefix)\("\(nrwt.transactionType)".camelCaseToKebabCase())": accountNumber]))
+        (prices, transactions) = try! mapper.mapTransactionsToPriceAndTransactions([nrwt])
+        XCTAssert(prices.isEmpty)
+        XCTAssert(transactions.isEmpty)
+    }
+
+    func testMapTransactionsDividendAndNRWT() {
+        var nrwt = testTransaction
+        nrwt.transactionType = .nonResidentWithholdingTax
+        nrwt.fxRate = fxRate
+        nrwt.netCashAmount = "-4.86"
+        nrwt.description = "VTI - Vanguard Index STK MKT ETF: Non-resident tax withheld at source (2.43 USD, convert to CAD @ 2.00)"
+        try? ledger.add(SAccount(name: try! AccountName("Expenses:t"), metaData: ["\(MetaDataKeys.prefix)\("\(nrwt.transactionType)".camelCaseToKebabCase())": accountNumber]))
+
+        // nrwt not merged
+        var (prices, transactions) = try! mapper.mapTransactionsToPriceAndTransactions([nrwt])
+        var transaction = Transaction(metaData: TransactionMetaData(date: nrwt.processDate, metaData: [MetaDataKeys.id: transactionId]), postings: [
+            posting(number: nrwt.netCashAmount, price: priceAmount(commodity: "USD")), posting(account: "Expenses:t", number: "2.43", commodity: "USD")
+        ])
+        XCTAssert(prices.isEmpty)
+        XCTAssertEqual(transactions, [transaction])
+
+        // nrwt merged
+        try? ledger.add(SAccount(name: try! AccountName("Income:t"), metaData: ["\(MetaDataKeys.dividendPrefix)ETF": accountNumber]))
+        var dividend = nrwt
+        dividend.transactionType = .dividend
+        dividend.netCashAmount = "32.42"
+        dividend.id = "NewID1"
+        dividend.description = "VTI - Vanguard Index STK MKT ETF: 25-JUN-21 (record date) 24.0020 shares, gross 16.21 USD, convert to CAD @ – – 2.00"
+        (prices, transactions) = try! mapper.mapTransactionsToPriceAndTransactions([nrwt, dividend])
+        var meta = [MetaDataKeys.dividendShares: "24.0020", MetaDataKeys.dividendRecordDate: "2021-06-25", MetaDataKeys.id: dividend.id, MetaDataKeys.nrwtId: transactionId]
+        transaction = Transaction(metaData: TransactionMetaData(date: nrwt.processDate, metaData: meta), postings: [
+            Posting(accountName: try! AccountName("Income:t"), amount: Amount(number: Decimal(string: "-16.21")!, commoditySymbol: "USD", decimalDigits: 2)),
+            transaction.postings[1], posting(number: "27.56", price: priceAmount(commodity: "USD"))
+        ])
+        XCTAssert(prices.isEmpty)
+        XCTAssertEqual(transactions, [transaction])
+
+        // dividend
+        (prices, transactions) = try! mapper.mapTransactionsToPriceAndTransactions([dividend])
+        meta[MetaDataKeys.nrwtId] = nil
+        transaction = Transaction(metaData: TransactionMetaData(date: nrwt.processDate, metaData: meta), postings: [
+            posting(number: dividend.netCashAmount, price: priceAmount(commodity: "USD")), transaction.postings[0]
+        ])
+        XCTAssertEqual(transactions, [transaction])
+        XCTAssert(prices.isEmpty)
+    }
+
+    private func posting(account: String = "Assets:W:Cash", number: String = "-11.76", commodity: String = "CAD", decimals: Int = 2, price: Amount? = nil) -> Posting {
+        Posting(accountName: try! AccountName(account), amount: Amount(number: Decimal(string: number)!, commoditySymbol: commodity, decimalDigits: decimals), price: price)
+    }
+
+    private func priceAmount(number: String = "0.50", commodity: CommoditySymbol = "CAD", decimals: Int = 2) -> Amount {
+        Amount(number: Decimal(string: number)!, commoditySymbol: commodity, decimalDigits: decimals)
     }
 
 }

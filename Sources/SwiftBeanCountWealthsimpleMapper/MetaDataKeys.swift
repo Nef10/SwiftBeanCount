@@ -18,7 +18,7 @@ enum MetaDataKeys {
     static let prefix = "wealthsimple-"
 
     /// Key prefix used to look up dividend accounts
-    static let dividendPrefix = "wealthsimple-dividend-"
+    static let dividendPrefix = "\(prefix)dividend-"
 
     /// Key used to save and lookup the wealthsimple transaction id of transactions in the meta data
     static let id = "\(prefix)id"

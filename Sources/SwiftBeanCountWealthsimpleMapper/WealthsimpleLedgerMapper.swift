@@ -15,8 +15,6 @@ public struct WealthsimpleLedgerMapper {
 
     private typealias WTransaction = Wealthsimple.Transaction
     private typealias STransaction = SwiftBeanCountModel.Transaction
-    private typealias WAccount = Wealthsimple.Account
-    private typealias SAccount = SwiftBeanCountModel.Account
 
     /// Payee used for fee transactions
     private static let payee = "Wealthsimple"
@@ -131,7 +129,7 @@ public struct WealthsimpleLedgerMapper {
             if !lookup.doesTransactionExistInLedger(transaction) {
                 if wealthsimpleTransaction.transactionType == .dividend,
                    let index = nrwtTransactions.firstIndex(where: { $0.symbol == wealthsimpleTransaction.symbol && $0.processDate == wealthsimpleTransaction.processDate }) {
-                    transaction = try mergeNRWT(transaction: nrwtTransactions[index], withDividendTransaction: transaction, in: account)
+                    transaction = try mergeNRWT(nrwtTransactions[index], withDividendTransaction: transaction, in: account)
                     nrwtTransactions.remove(at: index)
                 }
                 transactions.append(transaction)
@@ -141,12 +139,9 @@ public struct WealthsimpleLedgerMapper {
             }
         }
         for wealthsimpleTransaction in nrwtTransactions { // add nrwt transactions which could not be merged
-            let (price, transaction) = try mapTransaction(wealthsimpleTransaction, in: account)
+            let transaction = try mapNonResidentWithholdingTax(wealthsimpleTransaction, in: account)
             if !lookup.doesTransactionExistInLedger(transaction) {
                 transactions.append(transaction)
-            }
-            if let price = price, !lookup.doesPriceExistInLedger(price) {
-                prices.append(price)
             }
         }
         return (prices, transactions)
@@ -159,7 +154,7 @@ public struct WealthsimpleLedgerMapper {
     ///   - account: account of the transactions
     /// - Throws: WealthsimpleConversionError
     /// - Returns: Merged transaction
-    private func mergeNRWT(transaction: TransactionProvider, withDividendTransaction dividend: STransaction, in account: AccountProvider) throws -> STransaction {
+    private func mergeNRWT(_ transaction: TransactionProvider, withDividendTransaction dividend: STransaction, in account: AccountProvider) throws -> STransaction {
         let expenseAmount = try parseNRWTDescription(transaction.description)
         let oldAsset = dividend.postings.first { $0.accountName.accountType == .asset }!
         let assetAmount = (oldAsset.amount + transaction.netCash).amountFor(symbol: transaction.netCashCurrency)
@@ -174,35 +169,34 @@ public struct WealthsimpleLedgerMapper {
     }
 
     private func mapTransaction(_ transaction: TransactionProvider, in account: AccountProvider) throws -> (Price?, STransaction) {
-        let assetAccountName = try lookup.ledgerAccountName(of: account)
         var price: Price?, result: STransaction
         switch transaction.transactionType {
         case .buy:
-            (price, result) = try mapBuy(transaction: transaction, in: account, assetAccountName: assetAccountName)
+            (price, result) = try mapBuy(transaction, in: account)
         case .sell:
-            (price, result) = try mapSell(transaction: transaction, in: account, assetAccountName: assetAccountName)
+            (price, result) = try mapSell(transaction, in: account)
         case .dividend:
-            result = try mapDividend(transaction: transaction, in: account, assetAccountName: assetAccountName)
+            result = try mapDividend(transaction, in: account)
         case .fee, .reimbursement, .interest:
-            result = try mapFeeOrReimbursementOrInterest(transaction: transaction, in: account, assetAccountName: assetAccountName)
+            result = try mapFeeOrReimbursementOrInterest(transaction, in: account)
         case .contribution:
-            result = try mapContribution(transaction: transaction, in: account, assetAccountName: assetAccountName)
+            result = try mapContribution(transaction, in: account)
         case .deposit, .withdrawal, .paymentTransferOut, .transferIn, .transferOut:
-            result = try mapDepositOrWithdrawal(transaction: transaction, in: account, assetAccountName: assetAccountName, accountTypes: [.asset])
+            result = try mapTransfer(transaction, in: account, accountTypes: [.asset])
         case .paymentTransferIn, .referralBonus, .giveawayBonus, .refund:
-            result = try mapDepositOrWithdrawal(transaction: transaction, in: account, assetAccountName: assetAccountName, accountTypes: [.asset, .income])
+            result = try mapTransfer(transaction, in: account, accountTypes: [.asset, .income])
         case .paymentSpend:
-            result = try mapDepositOrWithdrawal(transaction: transaction, in: account, assetAccountName: assetAccountName, accountTypes: [.expense])
+            result = try mapTransfer(transaction, in: account, accountTypes: [.expense])
         case .nonResidentWithholdingTax:
-            result = try mapNonResidentWithholdingTax(transaction: transaction, in: account, assetAccountName: assetAccountName)
+            result = try mapNonResidentWithholdingTax(transaction, in: account)
         default:
             throw WealthsimpleConversionError.unsupportedTransactionType(transaction.transactionType.rawValue)
         }
         return (price, result)
     }
 
-    private func mapBuy(transaction: TransactionProvider, in account: AccountProvider, assetAccountName: AccountName) throws -> (Price, STransaction) {
-        let posting1 = Posting(accountName: assetAccountName, amount: transaction.netCash, price: transaction.useFx ? transaction.fxAmount : nil)
+    private func mapBuy(_ transaction: TransactionProvider, in account: AccountProvider) throws -> (Price, STransaction) {
+        let posting1 = Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash, price: transaction.useFx ? transaction.fxAmount : nil)
         let posting2 = Posting(accountName: try lookup.ledgerAccountName(of: account, symbol: transaction.symbol),
                                amount: try quantityAmount(for: transaction),
                                cost: try Cost(amount: transaction.marketPrice, date: nil, label: nil))
@@ -210,22 +204,17 @@ public struct WealthsimpleLedgerMapper {
         return (try Price(date: transaction.processDate, commoditySymbol: transaction.symbol, amount: transaction.marketPrice), result)
     }
 
-    private func mapDepositOrWithdrawal(
-        transaction: TransactionProvider,
-        in account: AccountProvider,
-        assetAccountName: AccountName,
-        accountTypes: [AccountType]
-    ) throws -> STransaction {
+    private func mapTransfer(_ transaction: TransactionProvider, in account: AccountProvider, accountTypes: [AccountType]) throws -> STransaction {
         let accountName = try lookup.ledgerAccountName(for: .transactionType(transaction.transactionType), in: account, ofType: accountTypes)
-        let posting1 = Posting(accountName: assetAccountName, amount: transaction.netCash)
+        let posting1 = Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash)
         let posting2 = Posting(accountName: accountName, amount: transaction.negatedNetCash)
         return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [posting1, posting2])
     }
 
-    private func mapContribution(transaction: TransactionProvider, in account: AccountProvider, assetAccountName: AccountName) throws -> STransaction {
+    private func mapContribution(_ transaction: TransactionProvider, in account: AccountProvider) throws -> STransaction {
         let accountName = try lookup.ledgerAccountName(for: .transactionType(transaction.transactionType), in: account, ofType: [.asset])
         var postings = [
-            Posting(accountName: assetAccountName, amount: transaction.netCash),
+            Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash),
             Posting(accountName: accountName, amount: transaction.negatedNetCash)
         ]
         if let contributionAsset = try? lookup.ledgerAccountName(for: .contributionRoom, in: account, ofType: [.asset]),
@@ -239,15 +228,15 @@ public struct WealthsimpleLedgerMapper {
         return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: postings)
     }
 
-    private func mapFeeOrReimbursementOrInterest(transaction: TransactionProvider, in account: AccountProvider, assetAccountName: AccountName) throws -> STransaction {
+    private func mapFeeOrReimbursementOrInterest(_ transaction: TransactionProvider, in account: AccountProvider) throws -> STransaction {
         let meta = TransactionMetaData(date: transaction.processDate, payee: Self.payee, narration: transaction.description, metaData: [MetaDataKeys.id: transaction.id])
-        let posting1 = Posting(accountName: assetAccountName, amount: transaction.netCash)
+        let posting1 = Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash)
         let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: .transactionType(transaction.transactionType), in: account, ofType: [.expense, .income]),
                                amount: transaction.negatedNetCash)
         return STransaction(metaData: meta, postings: [posting1, posting2])
     }
 
-    private func mapDividend(transaction: TransactionProvider, in account: AccountProvider, assetAccountName: AccountName) throws -> STransaction {
+    private func mapDividend(_ transaction: TransactionProvider, in account: AccountProvider) throws -> STransaction {
         let (date, shares, foreignAmount) = try parseDividendDescription(transaction.description)
         var income = transaction.negatedNetCash
         var price: Amount?
@@ -255,23 +244,23 @@ public struct WealthsimpleLedgerMapper {
             income = amount
             price = Amount(number: transaction.fxAmount.number, commoditySymbol: amount.commoditySymbol, decimalDigits: transaction.fxAmount.decimalDigits)
         }
-        let posting1 = Posting(accountName: assetAccountName, amount: transaction.netCash, price: price)
+        let posting1 = Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash, price: price)
         let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: .dividend(transaction.symbol), in: account, ofType: [.income]), amount: income)
         let metaDataDict = [MetaDataKeys.id: transaction.id, MetaDataKeys.dividendRecordDate: date, MetaDataKeys.dividendShares: shares]
         return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: metaDataDict), postings: [posting1, posting2])
     }
 
-    private func mapNonResidentWithholdingTax(transaction: TransactionProvider, in account: AccountProvider, assetAccountName: AccountName) throws -> STransaction {
+    private func mapNonResidentWithholdingTax(_ transaction: TransactionProvider, in account: AccountProvider) throws -> STransaction {
         let amount = try parseNRWTDescription(transaction.description)
         let price = Amount(number: transaction.fxAmount.number, commoditySymbol: amount.commoditySymbol, decimalDigits: transaction.fxAmount.decimalDigits)
-        let posting1 = Posting(accountName: assetAccountName, amount: transaction.netCash, price: price)
+        let posting1 = Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash, price: price)
         let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: .transactionType(transaction.transactionType), in: account, ofType: [.expense]), amount: amount)
         return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [posting1, posting2])
     }
 
-    private func mapSell(transaction: TransactionProvider, in account: AccountProvider, assetAccountName: AccountName) throws -> (Price, STransaction) {
+    private func mapSell(_ transaction: TransactionProvider, in account: AccountProvider) throws -> (Price, STransaction) {
         let cost = try Cost(amount: nil, date: nil, label: nil)
-        let posting1 = Posting(accountName: assetAccountName, amount: transaction.netCash, price: transaction.useFx ? transaction.fxAmount : nil)
+        let posting1 = Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash, price: transaction.useFx ? transaction.fxAmount : nil)
         let accountName2 = try lookup.ledgerAccountName(of: account, symbol: transaction.symbol)
         let posting2 = Posting(accountName: accountName2, amount: try quantityAmount(for: transaction), price: transaction.marketPrice, cost: cost)
         let result = STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [posting1, posting2])
