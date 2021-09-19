@@ -181,7 +181,6 @@ public struct WealthsimpleLedgerMapper {
         return STransaction(metaData: TransactionMetaData(date: dividend.metaData.date, metaData: metaData), postings: postings)
     }
 
-    // swiftlint:disable:next cyclomatic_complexity
     private func mapTransaction(_ transaction: WTransaction, in account: WAccount) throws -> (Price?, STransaction) {
         let assetAccountName = try lookup.ledgerAccountName(of: account)
         var price: Price?, result: STransaction
@@ -206,11 +205,6 @@ public struct WealthsimpleLedgerMapper {
             result = try mapNonResidentWithholdingTax(transaction: transaction, in: account, assetAccountName: assetAccountName)
         default:
             throw WealthsimpleConversionError.unsupportedTransactionType(transaction.transactionType.rawValue)
-        }
-        if !lookup.doesTransactionBalance(result) {
-            let posting = Posting(accountName: try lookup.ledgerAccountName(for: .rounding, in: account, ofType: [.expense]),
-                                  amount: lookup.roundingBalance(result))
-            result = STransaction(metaData: result.metaData, postings: result.postings + [posting])
         }
         return (price, result)
     }

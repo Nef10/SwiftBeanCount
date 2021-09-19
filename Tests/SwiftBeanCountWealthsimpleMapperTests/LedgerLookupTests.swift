@@ -222,44 +222,4 @@ final class LedgerLookupTests: XCTestCase {
         XCTAssertEqual(try! ledgerLookup.commoditySymbol(for: "USD"), "USDABC")
     }
 
-    func testDoesTransactionBalance() {
-        let ledger = Ledger()
-        let ledgerLookup = LedgerLookup(ledger)
-        let posting1 = Posting(accountName: try! AccountName("Assets:TEST"), amount: Amount(number: Decimal(1), commoditySymbol: "CAD"))
-        var transaction = Transaction(metaData: TransactionMetaData(date: Date()), postings: [posting1])
-
-        XCTAssertFalse(ledgerLookup.doesTransactionBalance(transaction))
-
-        let posting2 = Posting(accountName: try! AccountName("Assets:TESTTWO"), amount: Amount(number: Decimal(-1), commoditySymbol: "CAD"))
-        transaction = Transaction(metaData: TransactionMetaData(date: Date()), postings: [posting1, posting2])
-        XCTAssert(ledgerLookup.doesTransactionBalance(transaction))
-
-        // error case, it will be assumed as balanced
-        let posting3 = Posting(accountName: try! AccountName("Assets:TESTTHREE"),
-                               amount: Amount(number: Decimal(-1), commoditySymbol: "STOCK"),
-                               cost: try! Cost(amount: nil, date: nil, label: "test"))
-        transaction = Transaction(metaData: TransactionMetaData(date: Date()), postings: [posting1, posting2, posting3])
-        XCTAssert(ledgerLookup.doesTransactionBalance(transaction))
-    }
-
-    func testRoundingBalance() {
-        let ledger = Ledger()
-        let ledgerLookup = LedgerLookup(ledger)
-        let posting1 = Posting(accountName: try! AccountName("Assets:TEST"), amount: Amount(number: Decimal(1), commoditySymbol: "CAD", decimalDigits: 0))
-        var transaction = Transaction(metaData: TransactionMetaData(date: Date()), postings: [posting1])
-
-        XCTAssertEqual(ledgerLookup.roundingBalance(transaction), Amount(number: Decimal(-1), commoditySymbol: "CAD", decimalDigits: 0))
-
-        let posting2 = Posting(accountName: try! AccountName("Assets:TESTTWO"), amount: Amount(number: Decimal(-1.01), commoditySymbol: "CAD", decimalDigits: 2))
-        transaction = Transaction(metaData: TransactionMetaData(date: Date()), postings: [posting1, posting2])
-        XCTAssertEqual(ledgerLookup.roundingBalance(transaction), Amount(number: Decimal(0.01), commoditySymbol: "CAD", decimalDigits: 2))
-
-        // Error case
-        let posting3 = Posting(accountName: try! AccountName("Assets:TESTTHREE"),
-                               amount: Amount(number: Decimal(-1), commoditySymbol: "STOCK"),
-                               cost: try! Cost(amount: nil, date: nil, label: "test"))
-        transaction = Transaction(metaData: TransactionMetaData(date: Date()), postings: [posting1, posting2, posting3])
-        XCTAssertEqual(ledgerLookup.roundingBalance(transaction), Amount(number: Decimal(0), commoditySymbol: ""))
-    }
-
 }

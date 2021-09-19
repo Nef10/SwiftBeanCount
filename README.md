@@ -101,6 +101,6 @@ The library supports the Swift Package Manger, so simply add a dependency in you
 Please note that I developed this library for my own needs and there may be bugs. It currently has some limitations:
 
 * Sell Gains are not calculated
-* If transactions do not balance, it will add a rounding posting. However, due to SwiftBeanCountModel not yet fully supporting Beancount rounding, the amount of this posting will likely be 0 and need to be adjusted manually.
+* In case a transactions does not balance it will not add a rounding posting because SwiftBeanCountModel does not yet fully supporting Beancount rounding
 
 Pull requests to extend the scope or remove limitations are very welcome.

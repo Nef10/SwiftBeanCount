@@ -63,27 +63,6 @@ struct LedgerLookup {
         return account.balances.contains(balance)
     }
 
-    /// Checks if transaction is balanced in the ledger
-    /// - Parameter transaction: transaction to check
-    /// - Returns: true if balanced, otherwise false
-    func doesTransactionBalance(_ transaction: SwiftBeanCountModel.Transaction) -> Bool {
-        (try? transaction.balance(in: ledger).isZeroWithTolerance()) ?? true
-    }
-
-    /// Calculates the amount required to balance a transaction
-    /// - Parameter transaction: transaction to balance
-    /// - Returns: Amount required to balance it
-    func roundingBalance(_ transaction: SwiftBeanCountModel.Transaction) -> Amount {
-        do {
-            let balance = try transaction.balance(in: ledger)
-            let (symbol, _) = balance.amounts.first!
-            let amount = balance.amountFor(symbol: symbol)
-            return Amount(number: -amount.number, commoditySymbol: amount.commoditySymbol, decimalDigits: max(0, -(-amount.number).exponent))
-        } catch {
-            return Amount(number: 0, commoditySymbol: "")
-        }
-    }
-
     /// Finds the right CommoditySymbol from the ledger to use for a given asset symbol
     /// The user can specify this via Self.symbolMetaDataKey, otherwise it try to use the commodity with the same symbol
     /// - Parameter assetSymbol: asset symbol to find the commodity for
