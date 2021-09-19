@@ -9,10 +9,10 @@ final class WealthsimpleConversionErrorTests: XCTestCase {
             "The Commodity CAD was not found in your ledger. Please make sure you add the metadata \"wealthsimple-symbol: \"CAD\"\" to it."
         )
         XCTAssertEqual(
-            "\(WealthsimpleConversionError.missingAccount("keyName", "categoryName", "typeName").localizedDescription)",
+            "\(WealthsimpleConversionError.missingAccount("key-name", "number123", "categoryName").localizedDescription)",
             """
-            The categoryName account for account type typeName and key keyName was not found in your ledger. \
-            Please make sure you add the metadata \"wealthsimple-key: \"keyName" wealthsimple-account-type: \"typeName\"\" to it.
+            The categoryName account for account number number123 and key key-name was not found in your ledger. \
+            Please make sure you add the metadata \"key-name: \"number123\"\" to it.
             """
         )
         XCTAssertEqual(

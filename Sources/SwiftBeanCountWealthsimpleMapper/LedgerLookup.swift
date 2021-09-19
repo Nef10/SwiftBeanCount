@@ -9,10 +9,8 @@ import Foundation
 import SwiftBeanCountModel
 import Wealthsimple
 
-protocol WealthsimpleAccountRepresentable {
+protocol AccountNumberProvider {
     var number: String { get }
-    var accountType: Wealthsimple.Account.AccountType { get }
-    var currency: String { get }
 }
 
 enum AccoutLookupType {
@@ -24,12 +22,6 @@ enum AccoutLookupType {
 
 /// To lookup things in the ledger
 struct LedgerLookup {
-
-    /// Key used to look up accounts by keys (e.g. symbols or transactions types) in the ledger
-    static let keyMetaDataKey = "wealthsimple-key"
-
-    /// Key used to look up accounts by type in the ledger
-    static let accountTypeMetaDataKey = "wealthsimple-account-type"
 
     /// Ledger to look up accounts, commodities or duplicate entries in
     private let ledger: Ledger
@@ -90,14 +82,6 @@ struct LedgerLookup {
         }
     }
 
-    func commoditySymbol(for asset: Asset) throws -> CommoditySymbol {
-        if asset.type == .currency {
-            return asset.symbol
-        } else {
-            return try commoditySymbol(for: asset.symbol)
-        }
-    }
-
     /// Finds the right CommoditySymbol from the ledger to use for a given asset symbol
     /// The user can specify this via Self.symbolMetaDataKey, otherwise it try to use the commodity with the same symbol
     /// - Parameter assetSymbol: asset symbol to find the commodity for
@@ -115,31 +99,32 @@ struct LedgerLookup {
     }
 
     /// Returns account name to use for a certain type of posting - not including the Wealthsimple accounts themselves
+    /// - Parameters:
+    ///   - type: AccoutLookupType to specify for which transaction type
+    ///   - account: WealthsimpleAccount to find the specific account for
+    ///   - accountType: Ehich account type is required, e.g. asset, expenses, income, ...
+    /// - Throws: WealthsimpleConversionError if the account could not be found
+    /// - Returns: AccountName to use
     func ledgerAccountName(
         for type: AccoutLookupType,
-        in account: WealthsimpleAccountRepresentable,
-        ofType accountType: [SwiftBeanCountModel.AccountType]
+        in account: AccountNumberProvider,
+        ofType accountTypes: [SwiftBeanCountModel.AccountType]
     ) throws -> AccountName {
-        let symbol: String
+        let key: String
         switch type {
         case let .transactionType(transactionType):
-            symbol = transactionType.rawValue
+            key = "\(MetaDataKeys.prefix)\("\(transactionType)".camelCaseToKebabCase())"
         case let .dividend(dividendSymbol):
-            symbol = dividendSymbol
+            key = "\(MetaDataKeys.dividendPrefix)\(dividendSymbol)"
         case .contributionRoom:
-            symbol = "contribution-room"
+            key = MetaDataKeys.contributionRoom
         case .rounding:
-            symbol = "rounding"
+            key = MetaDataKeys.rounding
         }
-        let resultAccount = ledger.accounts.first {
-            accountType.contains($0.name.accountType)  &&
-                ($0.metaData[Self.keyMetaDataKey]?.contains(symbol) ?? false) &&
-                ($0.metaData[Self.accountTypeMetaDataKey]?.contains(account.accountType.rawValue) ?? false)
+        guard let name = ledger.accounts.first(where: { accountTypes.contains($0.name.accountType) && $0.metaData[key]?.contains(account.number) ?? false })?.name else {
+            throw WealthsimpleConversionError.missingAccount(key, account.number, accountTypes.map { $0.rawValue }.joined(separator: ", or "))
         }
-        guard let accountName = resultAccount?.name else {
-            throw WealthsimpleConversionError.missingAccount(symbol, accountType.map { $0.rawValue }.joined(separator: ", or "), account.accountType.rawValue)
-        }
-        return accountName
+        return name
     }
 
     /// Returns account name of matching the Wealthsimple account in the ledger
@@ -148,7 +133,7 @@ struct LedgerLookup {
     ///   - assetSymbol: Assets symbol in the account. If not specified cash account will be returned
     /// - Throws: WealthsimpleConversionError if the account cannot be found
     /// - Returns: Name of the matching account
-    func ledgerAccountName(of account: WealthsimpleAccountRepresentable, symbol assetSymbol: String? = nil) throws -> AccountName {
+    func ledgerAccountName(of account: AccountNumberProvider, symbol assetSymbol: String? = nil) throws -> AccountName {
         let baseAccount = ledger.accounts.first {
             $0.metaData[MetaDataKeys.importerType] == MetaData.importerType &&
             $0.metaData[MetaDataKeys.number] == account.number
@@ -174,5 +159,5 @@ struct LedgerLookup {
     }
 }
 
-extension Wealthsimple.Account: WealthsimpleAccountRepresentable {
+extension Wealthsimple.Account: AccountNumberProvider {
 }

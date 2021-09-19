@@ -31,10 +31,10 @@ extension WealthsimpleConversionError: LocalizedError {
         switch self {
         case let .missingCommodity(symbol):
             return "The Commodity \(symbol) was not found in your ledger. Please make sure you add the metadata \"\(MetaDataKeys.commoditySymbol): \"\(symbol)\"\" to it."
-        case let .missingAccount(key, category, accountType):
+        case let .missingAccount(key, number, category):
             return """
-                The \(category) account for account type \(accountType) and key \(key) was not found in your ledger. \
-                Please make sure you add the metadata \"\(LedgerLookup.keyMetaDataKey): \"\(key)\" \(LedgerLookup.accountTypeMetaDataKey): \"\(accountType)\"\" to it.
+                The \(category) account for account number \(number) and key \(key) was not found in your ledger. \
+                Please make sure you add the metadata \"\(key): \"\(number)\"" to it.
                 """
         case let .missingWealthsimpleAccount(number):
             return """

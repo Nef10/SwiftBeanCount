@@ -23,21 +23,29 @@ If the commodity in your ledger differs from the symbol used by Wealthsimple, si
 
 ### Accounts
 
-For Wealthsimple accounts themselves, you need to add this metadata: `importer-type: "wealthsimple"` and `number: "XXX"`. If the account can hold more than one commodity (all accounts except chequing and saving), it needs to follow this structure: `Assets:X:Y:Z:CashAccountName`, `Assets:X:Y:Z:CommodityName`, `Assets:X:Y:Z:OtherCommodityName`. The name of the cash account does not matter, but all other account must end with the commodity symbol (see above). Only add the `importer-type` and `number` to the cash account.
+For Wealthsimple accounts themselves, you need to add this metadata: `importer-type: "wealthsimple"` and `number: "XXX"`. If the account can hold more than one commodity (all accounts except chequing and saving), it needs to follow this structure: `Assets:X:Y:Z:CashAccountName`, `Assets:X:Y:Z:CommodityName`, `Assets:X:Y:Z:OtherCommodityName`. The name of the cash account does not matter, but all other account must end with the commodity symbol (see above). Add the `importer-type` and `number` only to the cash account.
 
-For account used for transaction to and from your Wealthsimple accounts you need to add two meta data entries:
-* First is the account type (`wealthsimple-account-type`), you can look up the possible values [here](https://github.com/Nef10/WealthsimpleDownloader/blob/main/Sources/Wealthsimple/Account.swift#L37)
-* Second is a key (`wealthsimple-key`), for example:
-  * For dividend income accounts this is the symbol as of the stock or ETF
-  * For the assset account you are going to contribute from, use `contribution`
-  * For the assset account you are going to deposit from, use `deposit`
-  * Use `fee` on an expense account to track the wealthsimple fees
-  * Use `nonResidentWithholdingTax` on an expense account for the tax
-  * In case some transaction does not balance, we will look for an expense account with `rounding`
-  * In case you get a refund, add `refund` to an income account
-  * If you want to track contribution room, use `contribution-room` on an asset and expense account (optional)
+For accounts used in transactions to and from your Wealthsimple accounts you need to provide meta data as well. These is in the form of `wealthsimple-key: "accountNumber1 accountNumber2"`. The account number is the same as above, and you can specify one or multiple per key. As keys use these values:
 
-Both keys and types can be space separated in case you have multiple Wealthsimple accounts and for example want to combine the fees into one expense account, or you contribute from the same account.
+* For dividend income accounts `wealthsimple-dividend-COMMODITYSYMBOL`, e.g. `wealthsimple-dividend-XGRO`
+* For the assset account you are using to contribute to registered accounts from, use `wealthsimple-contribution`
+* For the assset account you are using to deposit to non-registered accounts from, use `wealthsimple-deposit`
+* Use `wealthsimple-fee` on an expense account to track the wealthsimple fees
+* Use `wealthsimple-non-resident-withholding-tax` on an expense account for non resident withholding tax
+* In case some transaction does not balance within your ledger, an expense account with `wealthsimple-rounding` will get the difference
+* If you want to track contribution room, use `wealthsimple-contribution-room` on an asset and expense account (optional)
+* Other values for transaction types you might incur are:
+  * `wealthsimple-reimbursement`
+  * `wealthsimple-interest`
+  * `wealthsimple-withdrawal`
+  * `wealthsimple-payment-transfer-in`
+  * `wealthsimple-payment-transfer-out`
+  * `wealthsimple-transfer-in`
+  * `wealthsimple-transfer-out`
+  * `wealthsimple-referral-bonus`
+  * `wealthsimple-giveaway-bonus`
+  * `wealthsimple-refund`
+  * `wealthsimple-payment-spend`
 
 <details>
   <summary>Full Example</summary>
@@ -54,40 +62,25 @@ Both keys and types can be space separated in case you have multiple Wealthsimpl
 2020-07-31 open Assets:Investment:Wealthsimple:TFSA:XGRO XGRO
 
 2020-07-31 open Income:Capital:Dividend:ACWV USD
-  wealthsimple-account-type: "ca_tfsa"
-  wealthsimple-key: "ACWV"
+  wealthsimple-dividend-ACWV: "A001 B002"
 
 2020-07-31 open Assets:Checking:Bank CAD
-  wealthsimple-account-type: "ca_tfsa"
-  wealthsimple-key: "contribution"
+  wealthsimple-contribution: "A001 B002"
 
-2020-07-31 open Assets:Investment:OtherCompany:TFSA
-  wealthsimple-account-type: "ca_tfsa"
-  wealthsimple-key: "deposit"
+2020-07-31 open Expenses:FinancialInstitutions:Investment:NonRegistered:Fees
+  wealthsimple-fee: "A001"
 
-2020-07-31 open Expenses:FinancialInstitutions:Investment:Fees
-  wealthsimple-account-type: "ca_tfsa"
-  wealthsimple-key: "fee"
+2020-07-31 open Expenses:FinancialInstitutions:Investment:Registered:Fees
+  wealthsimple-fee: "B002"
 
 2020-07-31 open Expenses:Tax:NRWT
-  wealthsimple-account-type: "ca_tfsa"
-  wealthsimple-key: "non resident withholding tax"
-
-2020-07-31 open Expenses:Rounding
-  wealthsimple-account-type: "ca_tfsa"
-  wealthsimple-key: "rounding"
-
-2020-07-31 open Income:FinancialInstitutions
-  wealthsimple-account-type: "ca_tfsa"
-  wealthsimple-key: "refund"
+  wealthsimple-non-resident-withholding-tax: "A001 B002"
 
 2020-07-31 open Assets:TFSAContributionRoom TFSA.ROOM
-  wealthsimple-account-type: "ca_tfsa"
-  wealthsimple-key: "contribution-room"
+  wealthsimple-contribution-room: "B002"
 
 2020-07-31 open Expenses:TFSAContributionRoom TFSA.ROOM
-  wealthsimple-account-type: "ca_tfsa"
-  wealthsimple-key: "contribution-room"
+  wealthsimple-contribution-room: "B002"
 ````
 </details>
 
