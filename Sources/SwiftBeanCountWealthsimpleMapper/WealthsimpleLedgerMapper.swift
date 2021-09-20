@@ -16,6 +16,11 @@ public struct WealthsimpleLedgerMapper {
     private typealias WTransaction = Wealthsimple.Transaction
     private typealias STransaction = SwiftBeanCountModel.Transaction
 
+    /// Fallback account for payments if not account with the correct meta data could be found
+    ///
+    /// Only used for transaction type payment spend
+    public static let fallbackExpenseAccountName = try! AccountName("Expenses:TODO") // swiftlint:disable:this force_try
+
     /// Payee used for fee transactions
     private static let payee = "Wealthsimple"
 

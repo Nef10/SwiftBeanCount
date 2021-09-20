@@ -99,6 +99,9 @@ struct LedgerLookup {
             key = MetaDataKeys.rounding
         }
         guard let name = ledger.accounts.first(where: { accountTypes.contains($0.name.accountType) && $0.metaData[key]?.contains(account.number) ?? false })?.name else {
+            if case .transactionType(.paymentSpend) = type {
+                return WealthsimpleLedgerMapper.fallbackExpenseAccountName
+            }
             throw WealthsimpleConversionError.missingAccount(key, account.number, accountTypes.map { $0.rawValue }.joined(separator: ", or "))
         }
         return name

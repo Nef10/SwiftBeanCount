@@ -33,7 +33,7 @@ For accounts used in transactions to and from your Wealthsimple accounts you nee
 * Use `wealthsimple-fee` on an expense account to track the wealthsimple fees
 * Use `wealthsimple-non-resident-withholding-tax` on an expense account for non resident withholding tax
 * In case some transaction does not balance within your ledger, an expense account with `wealthsimple-rounding` will get the difference
-* If you want to track contribution room, use `wealthsimple-contribution-room` on an asset and expense account (optional)
+* If you want to track contribution room, use `wealthsimple-contribution-room` on an asset and expense account (optional, if not set it will not create postings for the contribution room)
 * Other values for transaction types you might incur are:
   * `wealthsimple-reimbursement`
   * `wealthsimple-interest`
@@ -45,7 +45,7 @@ For accounts used in transactions to and from your Wealthsimple accounts you nee
   * `wealthsimple-referral-bonus`
   * `wealthsimple-giveaway-bonus`
   * `wealthsimple-refund`
-  * `wealthsimple-payment-spend`
+  * `wealthsimple-payment-spend` (optional, will use fallback account if not provided)
 
 <details>
   <summary>Full Example</summary>
@@ -86,7 +86,11 @@ For accounts used in transactions to and from your Wealthsimple accounts you nee
 
 ## How
 
-Please check out the complete documentation [here](https://nef10.github.io/SwiftBeanCountWealthsimpleMapper/). You can also have a look at the [SwiftBeanCountDownloaderApp](https://github.com/Nef10/SwiftBeanCountDownloaderApp) which uses this library.
+1) First create an instance of the mapper via `WealthsimpleLedgerMapper(ledger:)`, passing the ledger which contains the meta data discussed above.
+2) Assign the downloaded wealthsimple accounts to the `accounts` property on the mapper.
+3) Call `mapPositionsToPriceAndBalance` or `mapTransactionsToPriceAndTransactions` to map your downloaded positions / transactions to SwiftBeanCountModel Prices and Balances / Prices and Transactions.
+
+Please also check out the complete documentation [here](https://nef10.github.io/SwiftBeanCountWealthsimpleMapper/). Additionally, you can have a look at the [SwiftBeanCountDownloaderApp](https://github.com/Nef10/SwiftBeanCountDownloaderApp) which uses this library.
 
 ## Usage
 
