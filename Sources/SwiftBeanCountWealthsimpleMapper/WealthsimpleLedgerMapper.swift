@@ -194,11 +194,23 @@ public struct WealthsimpleLedgerMapper {
     }
 
     private func mapBuy(_ transaction: TransactionProvider, in account: AccountProvider) throws -> (Price, STransaction) {
-        let posting1 = Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash, price: transaction.useFx ? transaction.fxAmount : nil)
-        let posting2 = Posting(accountName: try lookup.ledgerAccountName(of: account, symbol: transaction.symbol),
-                               amount: try quantityAmount(for: transaction),
-                               cost: try Cost(amount: transaction.marketPrice, date: nil, label: nil))
-        let result = STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [posting1, posting2])
+        let result = STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [
+            Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash, price: transaction.useFx ? transaction.fxAmount : nil),
+            Posting(accountName: try lookup.ledgerAccountName(of: account, symbol: transaction.symbol),
+                    amount: Amount(for: transaction.quantity, in: try lookup.commoditySymbol(for: transaction.symbol)),
+                    cost: try Cost(amount: transaction.marketPrice, date: nil, label: nil))
+        ])
+        return (try Price(date: transaction.processDate, commoditySymbol: transaction.symbol, amount: transaction.marketPrice), result)
+    }
+
+    private func mapSell(_ transaction: TransactionProvider, in account: AccountProvider) throws -> (Price, STransaction) {
+        let result = STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [
+            Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash, price: transaction.useFx ? transaction.fxAmount : nil),
+            Posting(accountName: try lookup.ledgerAccountName(of: account, symbol: transaction.symbol),
+                    amount: Amount(for: transaction.quantity, in: try lookup.commoditySymbol(for: transaction.symbol)),
+                    price: transaction.marketPrice,
+                    cost: try Cost(amount: nil, date: nil, label: nil))
+        ])
         return (try Price(date: transaction.processDate, commoditySymbol: transaction.symbol, amount: transaction.marketPrice), result)
     }
 
@@ -249,15 +261,6 @@ public struct WealthsimpleLedgerMapper {
         return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [posting1, posting2])
     }
 
-    private func mapSell(_ transaction: TransactionProvider, in account: AccountProvider) throws -> (Price, STransaction) {
-        let cost = try Cost(amount: nil, date: nil, label: nil)
-        let posting1 = Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash, price: transaction.useFx ? transaction.fxAmount : nil)
-        let accountName2 = try lookup.ledgerAccountName(of: account, symbol: transaction.symbol)
-        let posting2 = Posting(accountName: accountName2, amount: try quantityAmount(for: transaction), price: transaction.marketPrice, cost: cost)
-        let result = STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [posting1, posting2])
-        return (try Price(date: transaction.processDate, commoditySymbol: transaction.symbol, amount: transaction.marketPrice), result)
-    }
-
     // swiftlint:disable:next large_tuple
     private func parseDividendDescription(_ string: String) throws -> (String, String, Amount?) {
         let matches = string.matchingStrings(regex: Self.dividendRegEx)
@@ -275,12 +278,6 @@ public struct WealthsimpleLedgerMapper {
             throw WealthsimpleConversionError.unexpectedDescription(string)
         }
         return Amount(for: matches[0][1], in: matches[0][4])
-    }
-
-    private func quantityAmount(for transaction: TransactionProvider) throws -> Amount {
-        let cashTypes: [WTransaction.TransactionType] = [.fee, .contribution, .deposit, .refund]
-        let quantitySymbol = cashTypes.contains(transaction.transactionType) ? transaction.symbol : try lookup.commoditySymbol(for: transaction.symbol)
-        return Amount(for: transaction.quantity, in: quantitySymbol)
     }
 
 }
