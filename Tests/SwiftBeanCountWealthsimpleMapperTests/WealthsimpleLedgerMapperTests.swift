@@ -3,25 +3,54 @@ import SwiftBeanCountModel
 import Wealthsimple
 import XCTest
 
-struct TestAsset: AssetProvider {
+struct TestAsset: Asset {
+    var name: String = ""
+    var currency: String = ""
     var symbol = ""
-    var type: Asset.AssetType = .currency
+    var type: AssetType = .currency
 }
 
-struct TestPositon: PositionProvider {
+struct TestPositon: Position {
     var accountId = ""
-    var asset = TestAsset()
-    var assetObject: AssetProvider { asset }
+    var asset: Asset = TestAsset()
     var priceAmount = ""
     var positionDate = Date()
     var priceCurrency = ""
     var quantity = ""
+
+    var assetSymbol: String {
+        get {
+            asset.symbol
+        }
+        set {
+            var newAsset = TestAsset()
+            newAsset.name = asset.name
+            newAsset.currency = asset.currency
+            newAsset.type = asset.type
+            newAsset.symbol = newValue
+            asset = newAsset
+        }
+    }
+
+    var assetType: AssetType {
+        get {
+            asset.type
+        }
+        set {
+            var newAsset = TestAsset()
+            newAsset.name = asset.name
+            newAsset.currency = asset.currency
+            newAsset.symbol = asset.symbol
+            newAsset.type = newValue
+            asset = newAsset
+        }
+    }
 }
 
-struct TestTransaction: TransactionProvider {
+struct TestTransaction: Wealthsimple.Transaction {
     var id = ""
     var accountId = ""
-    var transactionType: Wealthsimple.Transaction.TransactionType = .buy
+    var transactionType: TransactionType = .buy
     var description = ""
     var symbol = ""
     var quantity = ""
@@ -47,7 +76,7 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
     private let fxRate = "2"
     private let cashAccountName = try! AccountName("Assets:W:Cash")
 
-    private var testAccounts = [TestAccount]()
+    private var testAccounts = [Wealthsimple.Account]()
     private var ledger = Ledger()
 
     private var mapper: WealthsimpleLedgerMapper {
@@ -100,7 +129,7 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         testAccounts = [TestAccount(number: accountNumber, id: accountId)]
         position.priceAmount = "1234"
         position.priceCurrency = "EUR"
-        position.asset.symbol = "CAD"
+        position.assetSymbol = "CAD"
         assert(try mapper.mapPositionsToPriceAndBalance([position]), throws: WealthsimpleConversionError.missingCommodity("CAD"))
 
         // missing account in ledger
@@ -111,7 +140,7 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
 
     func testMapPositions() {
         var position = TestPositon(accountId: accountId, priceAmount: "1234", priceCurrency: "EUR", quantity: "9.871")
-        position.asset.symbol = "CAD"
+        position.assetSymbol = "CAD"
 
         // currency
         var (prices, balances) = try! mapper.mapPositionsToPriceAndBalance([position])
@@ -119,8 +148,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         XCTAssertEqual(balances, [Balance(date: position.positionDate, accountName: cashAccountName, amount: priceAmount(number: "9.871", decimals: 3))])
 
         // non currency
-        position.asset.type = .exchangeTradedFund
-        position.asset.symbol = "ETF"
+        position.assetType = .exchangeTradedFund
+        position.assetSymbol = "ETF"
         let price = try! Price(date: position.positionDate, commoditySymbol: "ETF", amount: Amount(number: Decimal(1_234), commoditySymbol: "EUR", decimalDigits: 2))
         let balance = Balance(date: position.positionDate, accountName: try! AccountName("Assets:W:ETF"), amount: priceAmount(number: "9.871", commodity: "ETF", decimals: 3))
         (prices, balances) = try! mapper.mapPositionsToPriceAndBalance([position])
@@ -324,7 +353,7 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
 
     func testMapTransactionsTransfers() {
         var count = 1
-        let types: [SwiftBeanCountModel.AccountType: [Wealthsimple.Transaction.TransactionType]] = [
+        let types: [SwiftBeanCountModel.AccountType: [Wealthsimple.TransactionType]] = [
             .asset: [.deposit, .withdrawal, .paymentTransferOut, .transferIn, .transferOut, .paymentTransferIn, .referralBonus, .giveawayBonus, .refund, .contribution],
             .income: [.paymentTransferIn, .referralBonus, .giveawayBonus, .refund, .fee, .reimbursement, .interest],
             .expense: [.paymentSpend, .fee, .reimbursement, .interest]

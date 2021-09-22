@@ -3,29 +3,10 @@ import SwiftBeanCountModel
 import Wealthsimple
 import XCTest
 
-struct TestTransactionProvider: TransactionProvider {
-    let id = ""
-    let accountId = ""
-    let transactionType: Wealthsimple.Transaction.TransactionType = .buy
-    let description = ""
-    let symbol = ""
-    let marketValueAmount = ""
-    let effectiveDate = Date()
-    let processDate = Date()
-    let quantity = ""
-
-    var fxRate = ""
-    var netCashAmount = ""
-    var netCashCurrency = ""
-    var marketPriceAmount = ""
-    var marketPriceCurrency = ""
-    var marketValueCurrency = ""
-}
-
-final class TransactionProviderTests: XCTestCase {
+final class TransactionHelperTests: XCTestCase {
 
     func testExtension() {
-        var transaction = TestTransactionProvider()
+        var transaction = TestTransaction()
 
         transaction.marketPriceAmount = "10.0110"
         transaction.marketPriceCurrency = "EUR"

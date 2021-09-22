@@ -3,7 +3,8 @@ import SwiftBeanCountModel
 import Wealthsimple
 import XCTest
 
-struct TestAccount: AccountProvider {
+struct TestAccount: Wealthsimple.Account {
+    var accountType = Wealthsimple.AccountType.nonRegistered
     var number = ""
     var id = ""
     var currency = ""
