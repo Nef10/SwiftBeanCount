@@ -37,9 +37,9 @@ class BaseImporter: Importer {
         if let existingAccountName = accountName {
             return existingAccountName
         }
-        let accountsFromLedger = accountsFromLedger()
-        if accountsFromLedger.count == 1 {
-            accountName = accountsFromLedger.first!
+        let ledgerAccounts = accountsFromLedger()
+        if ledgerAccounts.count == 1 {
+            accountName = ledgerAccounts.first!
             return accountName!
         }
         guard let delegate = delegate else {
@@ -48,7 +48,7 @@ class BaseImporter: Importer {
         let group = DispatchGroup()
         group.enter()
 
-        delegate.requestInput(name: "Account", suggestions: accountsFromLedger.map { $0.fullName }, isSecret: false) {
+        delegate.requestInput(name: "Account", suggestions: ledgerAccounts.map { $0.fullName }, isSecret: false) {
             guard let name = try? AccountName($0) else {
                 return false
             }
