@@ -19,7 +19,16 @@ public enum ImporterFactory {
     ///
     /// - Returns: All existing importer types
     public static var allImporters: [Importer.Type] {
-        FileImporterFactory.importers + TextImporterFactory.importers
+        FileImporterFactory.importers + TextImporterFactory.importers + DownloadImporterFactory.importers
+    }
+
+    /// Returns the names of the download importers
+    ///
+    /// These names can be used to create an importer via the `new(ledger:name:)` function
+    ///
+    /// - Returns: The names of all existing download importer types
+    public static var downloadImporterNames: [String] {
+        DownloadImporterFactory.importers.map { $0.importerName }
     }
 
     // Creates an Importer to import a transaction and balance String, or nil if the text cannot be imported
@@ -43,10 +52,20 @@ public enum ImporterFactory {
         FileImporterFactory.new(ledger: ledger, url: url)
     }
 
+    /// Creates an Inporter which downloads data from the internet
+    /// - Parameters:
+    ///   - ledger: existing ledger which is used to assist the import,
+    ///             e.g. to read attributes of accounts
+    ///   - name: Name of the importer to initialize
+    /// - Returns: Importer, or nil if an importer with this name cannot be found
+    public static func new(ledger: Ledger?, name: String) -> Importer? {
+        DownloadImporterFactory.new(ledger: ledger, name: name)
+    }
+
 }
 
 /// Struct describing a transaction which has been imported
-public struct ImportedTransaction {
+public struct ImportedTransaction: Equatable {
 
     /// Transaction which has been imported
     public let transaction: Transaction
@@ -62,7 +81,7 @@ public struct ImportedTransaction {
     /// Indicates if the app should allow the user to edit the imported transaction.
     ///
     /// Some importer output transactions which normally do not require edits
-    /// e.g. from stock purchases. These indicate this by settings this value to true.
+    /// e.g. from stock purchases. These indicate this by settings this value to false.
     public let shouldAllowUserToEdit: Bool
 
     /// AccountName of the account the import is for
@@ -70,6 +89,20 @@ public struct ImportedTransaction {
     /// You can use this to detect which posting the user should not edit
     /// Note: Not set on imported transactions which have shouldAllowUserToEdit set to false
     public let accountName: AccountName?
+
+    init(
+        _ transaction: Transaction,
+        originalDescription: String = "",
+        possibleDuplicate: Transaction? = nil,
+        shouldAllowUserToEdit: Bool = false,
+        accountName: AccountName? = nil
+    ) {
+        self.transaction = transaction
+        self.originalDescription = originalDescription
+        self.possibleDuplicate = possibleDuplicate
+        self.shouldAllowUserToEdit = shouldAllowUserToEdit
+        self.accountName = accountName
+    }
 
     /// Saves a mapping of an imported transaction description to a different
     /// description, payee as well as account name
@@ -82,6 +115,9 @@ public struct ImportedTransaction {
     ///   - payee: new payee to use next time a transaction with the same origial description is imported
     ///   - accountName: accountName to use next time a transaction with this payee is imported
     public func saveMapped(description: String, payee: String, accountName: AccountName?) {
+        guard !originalDescription.isEmpty else {
+            return
+        }
         if !payee.isEmpty {
             Settings.setPayeeMapping(key: originalDescription, payee: payee)
             if let accountName = accountName {
@@ -96,38 +132,40 @@ public struct ImportedTransaction {
 /// Protocol of the delegate of an Importer
 public protocol ImporterDelegate: AnyObject {
 
-    /// Request for a user input, which is required for the importer to operate
+    /// Request for a user input in form of a text, which is required for the importer to operate
     ///
     /// - Parameters:
     ///   - name: name of the input required
     ///   - suggestions: suggestions for the input - may be empty
-    ///   - allowSaving: if the app is allowed to offer the user to save this input
-    ///                  To save it use the importName together with the name as key.
-    ///   - allowSaved: if the app can just respond with a saved value.
-    ///                   E.g. if asked for a username, which has allowSaving on, the library
-    ///                   would first request the input with allowSaved set to true.
-    ///                   But if the username is incorrect it would request again
-    ///                   with allowSaved false, upon which the app should remove the saved value.
+    ///   - isSecret: if the requested input is considered a secret, e.g. to show a password type input field
     ///   - completion: function to pass input to. Returns if the input was accepted.
     ///                 In case an input was not accepted, please call the function again.
-    func requestInput(name: String, suggestions: [String], allowSaving: Bool, allowSaved: Bool, completion: @escaping (String) -> Bool)
+    func requestInput(name: String, suggestions: [String], isSecret: Bool, completion: @escaping (String) -> Bool)
 
-    // Request for a secret user input, which is required for the importer to operate
+    /// Request to save a credential
+    ///
+    /// Importers which require authenticate can for example save tokens this way.
+    /// Make sure to properly encrypt the storage.
+    ///
+    /// It is not strictly required, you can just do nothing in this method.
     ///
     /// - Parameters:
-    ///   - name: name of the input required
-    ///   - isSecret: if the requested input is considered a secret, e.g. to show a password type input field
-    ///   - allowSaving: if the app is allowed to offer the user to save this input
-    ///                  E.g. this could be true for a password but false for an OTP.
-    ///                  To save it use the importName together with the name as key.
-    ///   - allowSaved: if the app can just respond with a saved value.
-    ///                   E.g. if asked for a password, which has allowSaving on, the library
-    ///                   would first request the input with allowSaved set to true.
-    ///                   But if the password is incorrect it would request again
-    ///                   with allowSaved false, upon which the app should remove the saved value.
-    ///   - completion: function to pass input to. Returns if the input was accepted.
-    ///                 In case an input was not accepted, please call the function again.
-    func requestSecretInput(name: String, allowSaving: Bool, allowSaved: Bool, completion: @escaping (String) -> Bool)
+    ///   - value: value to save
+    ///   - key: key to retreive the value. Importers are required to ensure the uniqueness.
+    func saveCredential(_ value: String, for key: String)
+
+    /// Request for a saved credential
+    ///
+    /// It is not strictly required, you can just always return nil.
+    ///
+    /// Parameter: key: key used to save the value
+    /// Returns: String with the value or nil if no value can be found
+    func readCredential(_ key: String) -> String?
+
+    /// Indicates an error occured
+    ///
+    /// Parameter: error: The error which occured. Display the localized description to the user
+    func error(_: Error)
 
 }
 

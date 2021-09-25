@@ -12,7 +12,7 @@ This is the importer of SwiftBeanCount. It reads files to create transactions. T
 
 ### Import Transactions
 
-1) Create an `Importer` via either `ImporterFactory.new(ledger: Ledger?, url: URL?)` or `ImporterFactory.new(ledger: Ledger?, transaction: String, balance: String)`, depending on what you want to import.
+1) Create an `Importer` via one of the `new` functions on the `ImporterFactory`, depending on what you want to import.
 2) Set your `delegate` on the importer.
 3) Call `load()` on the importer.
 4) Call `nextTransaction()` to retrive transaction after transactions till it returns `nil`. It is recommended to allow the user the edit the transactions while doing this, as long as `shouldAllowUserToEdit` is true.
@@ -21,7 +21,7 @@ This is the importer of SwiftBeanCount. It reads files to create transactions. T
 
 ### Settings
 
-There are settings for the date tolerance when detecting duplicate transactions, as well as for the mapping the user saved in step 6) of importing transactions. Your app can allow the user to view and edit these via the `Settings` object.
+There are settings for the date tolerance when detecting duplicate transactions, as well as for the mapping the user saved in step 5) of importing transactions. Your app can allow the user to view and edit these via the `Settings` object. Settings are by default stored in `UserDefaults` but you can bring your own `SettingsStorage` by setting `Settings.storage`.
 
 ### Help
 

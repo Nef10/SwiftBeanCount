@@ -22,13 +22,29 @@ let package = Package(
             url: "https://github.com/Nef10/SwiftBeanCountParserUtils.git",
             .exact("0.0.1")
         ),
+        .package(
+            url: "https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper.git",
+            .upToNextMajor(from: "1.4.1")
+        ),
+        .package(
+            url: "https://github.com/Nef10/WealthsimpleDownloader.git",
+            .upToNextMajor(from: "2.0.0")
+        ),
     ],
     targets: [
         .target(
             name: "SwiftBeanCountImporter",
-            dependencies: ["SwiftBeanCountModel", "SwiftBeanCountParserUtils", .product(name: "CSV", package: "CSV.swift")]),
+            dependencies: [
+                "SwiftBeanCountModel",
+                .product(name: "CSV", package: "CSV.swift"),
+                "SwiftBeanCountParserUtils",
+                "SwiftBeanCountWealthsimpleMapper",
+                .product(name: "Wealthsimple", package: "WealthsimpleDownloader"),
+            ]
+        ),
         .testTarget(
             name: "SwiftBeanCountImporterTests",
-            dependencies: ["SwiftBeanCountImporter"]),
+            dependencies: ["SwiftBeanCountImporter"]
+        ),
     ]
 )

@@ -131,7 +131,7 @@ public enum Settings {
     public static func setPayeeMapping(key: String, payee: String?) {
         var payees = storage.dictionary(forKey: payeesKey) as? [String: String] ?? [:]
         payees[key] = payee
-       storage.set(payees, forKey: payeesKey)
+        storage.set(payees, forKey: payeesKey)
     }
 
     /// Save a new mapping of an account the user wants to automatically apply to

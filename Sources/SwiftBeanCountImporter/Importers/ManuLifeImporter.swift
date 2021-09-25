@@ -302,7 +302,7 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
 
         let transaction = Transaction(metaData: TransactionMetaData(date: date, payee: "", narration: "", flag: .complete, tags: []), postings: postings)
         let duplicate = getPossibleDuplicateFor(transaction)
-        return (ImportedTransaction(transaction: transaction, originalDescription: "", possibleDuplicate: duplicate, shouldAllowUserToEdit: false, accountName: nil), prices)
+        return (ImportedTransaction(transaction, possibleDuplicate: duplicate), prices)
     }
 
     /// Returns the first match of the capture group regex in the input string

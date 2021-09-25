@@ -219,15 +219,24 @@ final class BaseImporterTests: XCTestCase {
 
 extension InvalidAccountNameProvider: ImporterDelegate {
 
-    func requestInput(name: String, suggestions: [String], allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
+    func requestInput(name: String, suggestions: [String], isSecret: Bool, completion: (String) -> Bool) {
         var result = completion("Not an valid account name")
         XCTAssertFalse(result)
         result = completion(TestUtils.cash.fullName)
         XCTAssert(result)
     }
 
-    func requestSecretInput(name: String, allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
-        XCTFail("requestSecretInput should not be called")
+    func saveCredential(_ value: String, for key: String) {
+        XCTFail("saveCredential should not be called")
+    }
+
+    func readCredential(_ key: String) -> String? {
+        XCTFail("readCredential should not be called")
+        return nil
+    }
+
+    func error(_ error: Error) {
+        XCTFail("error should not be called")
     }
 
 }

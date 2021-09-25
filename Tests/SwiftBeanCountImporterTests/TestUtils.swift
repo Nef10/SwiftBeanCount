@@ -29,24 +29,124 @@ class TestStorage: SettingsStorage {
     }
 }
 
-class AccountNameProvider {
+class BaseTestImporterDelegate: ImporterDelegate {
+
+    func requestInput(name: String, suggestions: [String], isSecret: Bool, completion: (String) -> Bool) {
+        XCTFail("requestInput should not be called")
+    }
+
+    func saveCredential(_ value: String, for key: String) {
+        XCTFail("saveCredential should not be called")
+    }
+
+    func readCredential(_ key: String) -> String? {
+        XCTFail("readCredential should not be called")
+        return nil
+    }
+
+    func error(_ error: Error) {
+        XCTFail("error should not be called, received \(error)")
+    }
+
+}
+
+class AccountNameProvider: BaseTestImporterDelegate {
     let account: AccountName
 
     init(account: AccountName) {
         self.account = account
     }
+
+    override func requestInput(name: String, suggestions: [String], isSecret: Bool, completion: (String) -> Bool) {
+        XCTAssertEqual(name, "Account")
+        XCTAssertFalse(isSecret)
+        let result = completion(account.fullName)
+        XCTAssert(result)
+    }
 }
 
-class AccountNameSuggestionVerifier {
+class AccountNameSuggestionVerifier: BaseTestImporterDelegate {
     let expectedValues: [String]
     var verified = false
 
     init (expectedValues: [AccountName]) {
         self.expectedValues = expectedValues.map { $0.fullName }
     }
+
+    override func requestInput(name: String, suggestions: [String], isSecret: Bool, completion: (String) -> Bool) {
+        XCTAssertEqual(name, "Account")
+        XCTAssertEqual(suggestions.count, expectedValues.count)
+        for suggestion in suggestions {
+            XCTAssert(expectedValues.contains(suggestion))
+        }
+        XCTAssertFalse(isSecret)
+        verified = true
+        _ = completion(TestUtils.cash.fullName)
+    }
 }
 
-class NoInputCallVerifier {
+class CredentialDelegate: BaseTestImporterDelegate {
+    var verifiedSave = false
+    var verifiedRead = false
+
+    override func saveCredential(_ value: String, for key: String) {
+        XCTAssertEqual(key, "wealthsimple-testKey2")
+        XCTAssertEqual(value, "testValue")
+        verifiedSave = true
+    }
+
+    override func readCredential(_ key: String) -> String? {
+        XCTAssertEqual(key, "wealthsimple-testKey")
+        verifiedRead = true
+        return nil
+    }
+}
+
+class AuthenticationDelegate: BaseTestImporterDelegate {
+    let names = ["Username", "Password", "OTP"]
+    let secrets = [false, true, false]
+
+    var verified = false
+    var index = 0
+
+    override func requestInput(name: String, suggestions: [String], isSecret: Bool, completion: (String) -> Bool) {
+        XCTAssertEqual(name, names[index])
+        XCTAssert(suggestions.isEmpty)
+        XCTAssertEqual(isSecret, secrets[index])
+        switch index {
+        case 0:
+            XCTAssert(completion("testUserName"))
+        case 1:
+            XCTAssert(completion("testPassword"))
+        case 2:
+            XCTAssert(completion("testOTP"))
+            verified = true
+        default:
+            XCTFail("Caled requestInput too often")
+        }
+        index += 1
+    }
+}
+
+protocol EquatableError: Error, Equatable {
+}
+
+struct TestError: EquatableError {
+    let id = UUID()
+}
+
+class ErrorDelegate<T: EquatableError>: BaseTestImporterDelegate {
+    let error: T
+    var verified = false
+
+    init(error: T) {
+        self.error = error
+    }
+
+    override func error(_ error: Error) {
+        XCTAssertEqual(error as? T, self.error)
+        verified = true
+    }
 }
 
 enum TestUtils {
@@ -58,7 +158,7 @@ enum TestUtils {
     static let accountNumberCash = 987_654_321
     static let parkingAccountDelegate = AccountNameProvider(account: TestUtils.parking)
     static let cashAccountDelegate = AccountNameProvider(account: TestUtils.cash)
-    static let noInputDelegate = NoInputCallVerifier()
+    static let noInputDelegate = BaseTestImporterDelegate()
 
     private static var dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()
@@ -192,42 +292,6 @@ enum TestUtils {
 
 }
 
-extension AccountNameProvider: ImporterDelegate {
-
-    func requestInput(name: String, suggestions: [String], allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
-        XCTAssertEqual(name, "Account")
-        XCTAssertFalse(allowSaving)
-        XCTAssertFalse(allowSaved)
-        let result = completion(account.fullName)
-        XCTAssert(result)
-    }
-
-    func requestSecretInput(name: String, allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
-        XCTFail("requestSecretInput should not be called for an account")
-    }
-
-}
-
-extension AccountNameSuggestionVerifier: ImporterDelegate {
-
-    func requestInput(name: String, suggestions: [String], allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
-        XCTAssertEqual(name, "Account")
-        XCTAssertEqual(suggestions.count, expectedValues.count)
-        for suggestion in suggestions {
-            XCTAssert(expectedValues.contains(suggestion))
-        }
-        XCTAssertFalse(allowSaving)
-        XCTAssertFalse(allowSaved)
-        verified = true
-        _ = completion(TestUtils.cash.fullName)
-    }
-
-    func requestSecretInput(name: String, allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
-        XCTFail("requestSecretInput should not be called for an account")
-    }
-
-}
-
 extension XCTestCase {
 
     func temporaryFileURL() -> URL {
@@ -256,18 +320,6 @@ extension XCTestCase {
         } catch {
             XCTFail("Error writing temporary file: \(error)")
         }
-    }
-
-}
-
-extension NoInputCallVerifier: ImporterDelegate {
-
-    func requestInput(name: String, suggestions: [String], allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
-        XCTFail("requestInput should not be called")
-    }
-
-    func requestSecretInput(name: String, allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
-        XCTFail("requestSecretInput should not be called")
     }
 
 }

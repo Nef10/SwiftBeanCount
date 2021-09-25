@@ -48,7 +48,7 @@ class BaseImporter: Importer {
         let group = DispatchGroup()
         group.enter()
 
-        delegate.requestInput(name: "Account", suggestions: accountsFromLedger.map { $0.fullName }, allowSaving: false, allowSaved: false) {
+        delegate.requestInput(name: "Account", suggestions: accountsFromLedger.map { $0.fullName }, isSecret: false) {
             guard let name = try? AccountName($0) else {
                 return false
             }

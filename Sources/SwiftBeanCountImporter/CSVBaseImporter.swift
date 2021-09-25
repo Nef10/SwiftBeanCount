@@ -72,7 +72,7 @@ class CSVBaseImporter: BaseImporter {
             posting2 = Posting(accountName: categoryAccountName, amount: categoryAmount)
         }
         let transaction = Transaction(metaData: TransactionMetaData(date: data.date, payee: payee, narration: description, flag: flag), postings: [posting, posting2])
-        return ImportedTransaction(transaction: transaction,
+        return ImportedTransaction(transaction,
                                    originalDescription: originalDescription,
                                    possibleDuplicate: getPossibleDuplicateFor(transaction),
                                    shouldAllowUserToEdit: true,

@@ -13,7 +13,31 @@ import XCTest
 final class ImporterTests: XCTestCase {
 
     func testAllImporters() {
-        XCTAssertEqual(ImporterFactory.allImporters.count, (FileImporterFactory.importers + TextImporterFactory.importers).count)
+        XCTAssertEqual(ImporterFactory.allImporters.count, (FileImporterFactory.importers + TextImporterFactory.importers + DownloadImporterFactory.importers).count)
+    }
+
+    func testNoEqualImporterNames() {
+        var names = [String]()
+        let importers = ImporterFactory.allImporters
+        for importer in importers {
+            guard !names.contains(importer.importerName) else {
+                XCTFail("Importers cannot use the same name")
+                return
+            }
+            names.append(importer.importerName)
+        }
+    }
+
+    func testNoEqualImporterTypes() {
+        var types = [String]()
+        let importers = ImporterFactory.allImporters as! [BaseImporter.Type] // swiftlint:disable:this force_cast
+        for importer in importers {
+            guard !types.contains(importer.importerType) else {
+                XCTFail("Importers cannot use the same type")
+                return
+            }
+            types.append(importer.importerType)
+        }
     }
 
     func testFileImporter() {
@@ -39,10 +63,21 @@ final class ImporterTests: XCTestCase {
         }
     }
 
-     func testTextImporter() {
+    func testTextImporter() {
         let result = ImporterFactory.new(ledger: nil, transaction: "", balance: "")
         XCTAssertNotNil(result)
         XCTAssertTrue(result is ManuLifeImporter)
+    }
+
+    func testDownloadImporter() {
+        let importers = DownloadImporterFactory.importers
+        for importer in importers {
+            XCTAssertTrue(type(of: ImporterFactory.new(ledger: nil, name: importer.importerName)!) == importer)
+        }
+    }
+
+    func testDownloadImporterNames() {
+        XCTAssertEqual(ImporterFactory.downloadImporterNames, DownloadImporterFactory.importers.map { $0.importerName })
     }
 
     func testImportedTransactionSaveMapped() {
@@ -52,16 +87,22 @@ final class ImporterTests: XCTestCase {
         let accountName = TestUtils.cash
         Settings.storage = TestStorage()
 
-        let importedTransaction = ImportedTransaction(transaction: TestUtils.transaction,
-                                                      originalDescription: originalDescription,
-                                                      possibleDuplicate: nil,
-                                                      shouldAllowUserToEdit: true,
-                                                      accountName: nil)
+        // Does not save if originalDescription is an empty string
+        var importedTransaction = ImportedTransaction(TestUtils.transaction, originalDescription: "", shouldAllowUserToEdit: true)
+        importedTransaction.saveMapped(description: description, payee: payee, accountName: accountName)
+
+        XCTAssert(Settings.allDescriptionMappings.isEmpty)
+        XCTAssert(Settings.allPayeeMappings.isEmpty)
+        XCTAssert(Settings.allAccountMappings.isEmpty)
+
+        // Saves otherwise
+        importedTransaction = ImportedTransaction(TestUtils.transaction, originalDescription: originalDescription, shouldAllowUserToEdit: true)
         importedTransaction.saveMapped(description: description, payee: payee, accountName: accountName)
 
         XCTAssertEqual(Settings.allDescriptionMappings, [originalDescription: description])
         XCTAssertEqual(Settings.allPayeeMappings, [originalDescription: payee])
         XCTAssertEqual(Settings.allAccountMappings, [payee: accountName.fullName])
+
     }
 
 }
