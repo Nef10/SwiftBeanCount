@@ -44,11 +44,22 @@ jobs:
       uses: fwal/setup-swift@v1.8.0
     - name: Run tests
       run: swift test --enable-code-coverage -Xswiftc -warnings-as-errors
+    - name: Save PR number
+      if: ${{ matrix.os == needs.get_os.outputs.coverage_os }}
+      run: |
+        mkdir -p ./pr
+        echo ${{ github.event.number }} > ./pr/NR
     - name: Generate test coverage report
       if: ${{ matrix.os == needs.get_os.outputs.coverage_os }}
       uses: maxep/spm-lcov-action@0.3.1
       with:
-        output-file: ./coverage/lcov.info
+        output-file: ./pr/lcov.info
+    - name: Upload Coverage Information for Comment
+      if: ${{ matrix.os == needs.get_os.outputs.coverage_os }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: pr
+        path: pr/
     - name: 'Read minimum coverage'
       if: ${{ matrix.os == needs.get_os.outputs.coverage_os }}
       run: echo "minimum_coverage=$(cat ./.github/minimum_coverage.txt)" >> $GITHUB_ENV
@@ -56,22 +67,8 @@ jobs:
       if: ${{ matrix.os == needs.get_os.outputs.coverage_os }}
       uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
       with:
-        path: ./coverage/lcov.info
+        path: ./pr/lcov.info
         min_coverage: ${{ env.minimum_coverage }}
-    - name: Save PR number
-      if: ${{ matrix.os == needs.get_os.outputs.coverage_os }}
-      run: |
-        mkdir -p ./pr
-        echo ${{ github.event.number }} > ./pr/NR
-    - name: Move Coverage Report
-      if: ${{ matrix.os == needs.get_os.outputs.coverage_os }}
-      run: mv ./coverage/lcov.info ./pr/lcov.info
-    - name: Upload Coverage Information for Comment
-      if: ${{ matrix.os == needs.get_os.outputs.coverage_os }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: pr
-        path: pr/
 
   swiftlint:
     name: SwiftLint
