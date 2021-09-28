@@ -1,6 +1,119 @@
+import RogersBankDownloader
+import SwiftBeanCountModel
 @testable import SwiftBeanCountRogersBankMapper
 import XCTest
 
 final class SwiftBeanCountRogersBankMapperTests: XCTestCase {
 
+    private static let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter
+    }()
+
+    func testMapAccount() throws {
+        let accountName = try AccountName("Liabilities:CC:Rogers")
+        let ledger = Ledger()
+        try ledger.add(Account(name: accountName, metaData: ["last-four": "4862"]))
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        var account = TestAccount()
+        var balance = TestAmount()
+        balance.value = "205.25"
+        balance.currency = "USD"
+        account.currentBalance = balance
+        let result = try mapper.mapAccountToBalance(account: account)
+        XCTAssertEqual(Calendar.current.compare(result.date, to: Date(), toGranularity: .minute), .orderedSame)
+        XCTAssertEqual(result.accountName, accountName)
+        XCTAssertEqual(result.amount.number, Decimal(string: "-\(balance.value)")!)
+        XCTAssertEqual(result.amount.commoditySymbol, balance.currency)
+        XCTAssertEqual(result.amount.decimalDigits, 2)
+    }
+
+    func testMapAccountMissingAccount() throws {
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: Ledger())
+        assert(try mapper.mapAccountToBalance(account: TestAccount()), throws: RogersBankMappingError.missingAccount(lastFour: "4862"))
+    }
+
+    func testMapActivitiesEmpty() throws {
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: Ledger())
+        XCTAssert(try mapper.mapActivitiesToTransactions(activities: []).isEmpty)
+    }
+
+    func testMapActivitiesNotPosted() throws {
+        var activity = TestActivity()
+        activity.activityStatus = .approved
+        activity.activityType = .authorization
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: Ledger())
+        XCTAssert(try mapper.mapActivitiesToTransactions(activities: [TestActivity(), activity]).isEmpty)
+    }
+
+    func testMapActivitiesMissingPostingDate() throws {
+        var activity = TestActivity()
+        activity.activityStatus = .approved
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: Ledger())
+        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingActivityData(activity: activity, key: "postedDate"))
+    }
+
+    func testMapActivitiesMissingReferenceNumber() throws {
+        var activity = TestActivity()
+        activity.activityStatus = .approved
+        activity.postedDate = Date()
+        activity.activityCategory = .purchase
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: Ledger())
+        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingActivityData(activity: activity, key: "referenceNumber"))
+    }
+
+    func testMapActivitiesMissingAccount() throws {
+        var activity = TestActivity()
+        activity.activityStatus = .approved
+        activity.postedDate = Date()
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: Ledger())
+        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingAccount(lastFour: "1234"))
+    }
+
+    func testMapActivities() throws {
+        let accountName = try AccountName("Liabilities:CC:Rogers")
+        let ledger = Ledger()
+        try ledger.add(Account(name: accountName, metaData: ["last-four": "1234"]))
+        var activity1 = TestActivity()
+        activity1.activityStatus = .approved
+        activity1.postedDate = Date()
+        var activity2 = TestActivity()
+        activity2.activityStatus = .approved
+        activity2.activityCategory = .purchase
+        activity2.postedDate = Date()
+        activity2.referenceNumber = "852741963"
+        var amount = TestAmount()
+        amount.value = "2.79"
+        amount.currency = "USD"
+        var foreign = TestForeignCurrency()
+        foreign.originalAmount = amount
+        activity2.foreign = foreign
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        let result = try mapper.mapActivitiesToTransactions(activities: [activity1, activity2])
+        XCTAssertEqual(result.count, 2)
+        var postings = [
+            Posting(accountName: accountName, amount: SwiftBeanCountModel.Amount(number: Decimal(string: "-1.13")!, commoditySymbol: "CAD", decimalDigits: 2)),
+            Posting(accountName: mapper.expenseAccountName, amount: SwiftBeanCountModel.Amount(number: Decimal(string: "1.13")!, commoditySymbol: "CAD", decimalDigits: 2))
+        ]
+        let metaData = [MetaDataKeys.activityId: "payment-\(Self.dateFormatter.string(from: activity1.postedDate!))"]
+        XCTAssertEqual(result[0], Transaction(metaData: TransactionMetaData(date: activity1.postedDate!, payee: "Test Merchant Name", metaData: metaData), postings: postings))
+        postings[1] = Posting(accountName: mapper.expenseAccountName,
+                              amount: SwiftBeanCountModel.Amount(number: Decimal(string: "2.79")!, commoditySymbol: "USD", decimalDigits: 2),
+                              price: SwiftBeanCountModel.Amount(number: Decimal(string: "1.13")!, commoditySymbol: "CAD", decimalDigits: 2))
+        let transactionMetaData = TransactionMetaData(date: activity2.postedDate!, payee: "Test Merchant Name", metaData: [MetaDataKeys.activityId: "852741963"])
+        XCTAssertEqual(result[1], Transaction(metaData: transactionMetaData, postings: postings))
+    }
+
+}
+
+extension RogersBankMappingError: Equatable {
+    public static func == (lhs: RogersBankMappingError, rhs: RogersBankMappingError) -> Bool {
+        if case let .missingAccount(lhsString) = lhs, case let .missingAccount(rhsString) = rhs {
+            return lhsString == rhsString
+        } else if case let .missingActivityData(lhsActivity, lhsString) = lhs, case let .missingActivityData(rhsActivity, rhsString) = rhs {
+            return (lhsActivity as! TestActivity).id == (rhsActivity as! TestActivity).id && lhsString == rhsString // swiftlint:disable:this force_cast
+        }
+        return false
+    }
 }

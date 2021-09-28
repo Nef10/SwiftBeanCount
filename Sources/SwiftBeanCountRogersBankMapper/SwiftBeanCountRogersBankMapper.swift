@@ -12,7 +12,10 @@ public struct SwiftBeanCountRogersBankMapper {
         return dateFormatter
     }()
 
-    let ledger: Ledger
+    /// Account name to which the expenses are posted
+    public let expenseAccountName = try! AccountName("Expenses:TODO") // swiftlint:disable:this force_try
+
+    private let ledger: Ledger
 
     /// Creates a mapper
     /// - Parameter ledger: Ledger which will be used to look up account names
@@ -48,14 +51,13 @@ public struct SwiftBeanCountRogersBankMapper {
             if activity.activityCategory == .payment {
                 referenceNumber = "payment-\(Self.dateFormatter.string(from: postedDate))"
             } else {
-                if let number = activity.referenceNumber {
-                    referenceNumber = number
-                } else {
+                guard let number = activity.referenceNumber else {
                     throw RogersBankMappingError.missingActivityData(activity: activity, key: "referenceNumber")
                 }
+                referenceNumber = number
             }
             let accountName = try ledgerAccountName(lastFour: String(activity.cardNumber.suffix(4)))
-            let expenseAccountName = try! AccountName("Expenses:TODO") // swiftlint:disable:this force_try
+
             let metaData = TransactionMetaData(date: postedDate, payee: activity.merchant.name, metaData: [MetaDataKeys.activityId: referenceNumber])
             let (number, decimalDigits) = activity.amount.value.amountDecimal()
             let amount = Amount(number: number, commoditySymbol: activity.amount.currency, decimalDigits: decimalDigits)
@@ -73,12 +75,8 @@ public struct SwiftBeanCountRogersBankMapper {
         return transactions
     }
 
-    func ledgerAccountName(lastFour: String) throws -> AccountName {
-        let account = ledger.accounts.first {
-            $0.name.accountType == .liability &&
-                ($0.metaData[MetaDataKeys.account] == lastFour)
-        }
-        guard let accountName = account?.name else {
+    private func ledgerAccountName(lastFour: String) throws -> AccountName {
+        guard let accountName = ledger.accounts.first(where: { $0.name.accountType == .liability && $0.metaData[MetaDataKeys.account] == lastFour })?.name else {
             throw RogersBankMappingError.missingAccount(lastFour: lastFour)
         }
         return accountName
