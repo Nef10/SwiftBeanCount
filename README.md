@@ -10,7 +10,7 @@ This is a small library to convert downloaded data from Wealthsimple (via [Roger
 
 ## Beancount meta data
 
-The library relies on meta data in your Beancount file to find your accounts. Please add `rogers-bank-last-four: "XXXX"` with the last four digits of your number to your Credit Card Liability account.
+The library relies on meta data in your Beancount file to find your accounts. Please add `importer-type: "rogers"` and `last-four: "XXXX"` with the last four digits of your number to your Credit Card Liability account.
 
 ## How
 

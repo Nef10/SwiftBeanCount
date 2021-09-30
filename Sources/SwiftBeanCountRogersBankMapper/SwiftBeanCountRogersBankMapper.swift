@@ -76,7 +76,9 @@ public struct SwiftBeanCountRogersBankMapper {
     }
 
     private func ledgerAccountName(lastFour: String) throws -> AccountName {
-        guard let accountName = ledger.accounts.first(where: { $0.name.accountType == .liability && $0.metaData[MetaDataKeys.account] == lastFour })?.name else {
+        guard let accountName = ledger.accounts.first(where: {
+            $0.name.accountType == .liability && $0.metaData[MetaDataKeys.lastFour] == lastFour && $0.metaData[MetaDataKeys.importerType] == MetaDataKeys.importerTypeValue
+        })?.name else {
             throw RogersBankMappingError.missingAccount(lastFour: lastFour)
         }
         return accountName

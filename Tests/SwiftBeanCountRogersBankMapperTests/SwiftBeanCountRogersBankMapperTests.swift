@@ -14,7 +14,7 @@ final class SwiftBeanCountRogersBankMapperTests: XCTestCase {
     func testMapAccount() throws {
         let accountName = try AccountName("Liabilities:CC:Rogers")
         let ledger = Ledger()
-        try ledger.add(Account(name: accountName, metaData: ["last-four": "4862"]))
+        try ledger.add(Account(name: accountName, metaData: ["last-four": "4862", "importer-type": "rogers"]))
         let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
         var account = TestAccount()
         var balance = TestAmount()
@@ -64,17 +64,30 @@ final class SwiftBeanCountRogersBankMapperTests: XCTestCase {
     }
 
     func testMapActivitiesMissingAccount() throws {
+        let ledger = Ledger()
         var activity = TestActivity()
         activity.activityStatus = .approved
         activity.postedDate = Date()
-        let mapper = SwiftBeanCountRogersBankMapper(ledger: Ledger())
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingAccount(lastFour: "1234"))
+        // different number
+        try ledger.add(Account(name: try AccountName("Liabilities:CC:Rogers"), metaData: ["last-four": "4862", "importer-type": "rogers"]))
+        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingAccount(lastFour: "1234"))
+        // wrong type
+        try ledger.add(Account(name: try AccountName("Liabilities:CC:Rogers1"), metaData: ["last-four": "1234", "importer-type": "rogers1"]))
+        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingAccount(lastFour: "1234"))
+        // no type
+        try ledger.add(Account(name: try AccountName("Liabilities:CC:Rogers2"), metaData: ["last-four": "1234"]))
+        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingAccount(lastFour: "1234"))
+        // no number
+        try ledger.add(Account(name: try AccountName("Liabilities:CC:Rogers3"), metaData: ["importer-type": "rogers1"]))
         assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingAccount(lastFour: "1234"))
     }
 
     func testMapActivities() throws {
         let accountName = try AccountName("Liabilities:CC:Rogers")
         let ledger = Ledger()
-        try ledger.add(Account(name: accountName, metaData: ["last-four": "1234"]))
+        try ledger.add(Account(name: accountName, metaData: ["last-four": "1234", "importer-type": "rogers"]))
         var activity1 = TestActivity()
         activity1.activityStatus = .approved
         activity1.postedDate = Date()
