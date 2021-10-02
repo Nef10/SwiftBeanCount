@@ -56,8 +56,12 @@ public struct SwiftBeanCountRogersBankMapper {
                 }
                 referenceNumber = number
             }
-            let accountName = try ledgerAccountName(lastFour: String(activity.cardNumber.suffix(4)))
 
+            guard !ledger.transactions.contains(where: { $0.metaData.metaData[MetaDataKeys.activityId] == referenceNumber }) else {
+                continue
+            }
+
+            let accountName = try ledgerAccountName(lastFour: String(activity.cardNumber.suffix(4)))
             let metaData = TransactionMetaData(date: postedDate, narration: activity.merchant.name, metaData: [MetaDataKeys.activityId: referenceNumber])
             let (number, decimalDigits) = activity.amount.value.amountDecimal()
             let amount = Amount(number: number, commoditySymbol: activity.amount.currency, decimalDigits: decimalDigits)

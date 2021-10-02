@@ -121,6 +121,25 @@ final class SwiftBeanCountRogersBankMapperTests: XCTestCase {
         XCTAssertEqual(result[1], Transaction(metaData: transactionMetaData, postings: postings))
     }
 
+    func testMapActivityDuplicate() throws {
+        let accountName = try AccountName("Liabilities:CC:Rogers")
+        try ledger.add(Account(name: accountName, metaData: ["last-four": "1234", "importer-type": "rogers"]))
+        var activity = TestActivity()
+        activity.activityStatus = .approved
+        activity.activityCategory = .purchase
+        activity.postedDate = Date()
+        activity.referenceNumber = "852741963"
+        mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        var result = try mapper.mapActivitiesToTransactions(activities: [activity])
+        XCTAssertEqual(result.count, 1)
+
+        ledger.add(Transaction(metaData: TransactionMetaData(date: activity.postedDate!, narration: "Test Merchant Name", metaData: [MetaDataKeys.activityId: "852741963"]),
+                               postings: []))
+        mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        result = try mapper.mapActivitiesToTransactions(activities: [activity])
+        XCTAssertEqual(result.count, 0)
+    }
+
 }
 
 extension RogersBankMappingError: Equatable {
