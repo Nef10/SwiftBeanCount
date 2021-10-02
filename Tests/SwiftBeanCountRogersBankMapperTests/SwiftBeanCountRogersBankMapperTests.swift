@@ -11,9 +11,17 @@ final class SwiftBeanCountRogersBankMapperTests: XCTestCase {
         return dateFormatter
     }()
 
+    private var ledger = Ledger()
+    private var mapper: SwiftBeanCountRogersBankMapper!
+
+    override func setUpWithError() throws {
+        ledger = Ledger()
+        mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        try super.setUpWithError()
+    }
+
     func testMapAccount() throws {
         let accountName = try AccountName("Liabilities:CC:Rogers")
-        let ledger = Ledger()
         try ledger.add(Account(name: accountName, metaData: ["last-four": "4862", "importer-type": "rogers"]))
         let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
         var account = TestAccount()
@@ -30,12 +38,10 @@ final class SwiftBeanCountRogersBankMapperTests: XCTestCase {
     }
 
     func testMapAccountMissingAccount() throws {
-        let mapper = SwiftBeanCountRogersBankMapper(ledger: Ledger())
         assert(try mapper.mapAccountToBalance(account: TestAccount()), throws: RogersBankMappingError.missingAccount(lastFour: "4862"))
     }
 
     func testMapActivitiesEmpty() throws {
-        let mapper = SwiftBeanCountRogersBankMapper(ledger: Ledger())
         XCTAssert(try mapper.mapActivitiesToTransactions(activities: []).isEmpty)
     }
 
@@ -43,14 +49,12 @@ final class SwiftBeanCountRogersBankMapperTests: XCTestCase {
         var activity = TestActivity()
         activity.activityStatus = .approved
         activity.activityType = .authorization
-        let mapper = SwiftBeanCountRogersBankMapper(ledger: Ledger())
         XCTAssert(try mapper.mapActivitiesToTransactions(activities: [TestActivity(), activity]).isEmpty)
     }
 
     func testMapActivitiesMissingPostingDate() throws {
         var activity = TestActivity()
         activity.activityStatus = .approved
-        let mapper = SwiftBeanCountRogersBankMapper(ledger: Ledger())
         assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingActivityData(activity: activity, key: "postedDate"))
     }
 
@@ -64,7 +68,6 @@ final class SwiftBeanCountRogersBankMapperTests: XCTestCase {
     }
 
     func testMapActivitiesMissingAccount() throws {
-        let ledger = Ledger()
         var activity = TestActivity()
         activity.activityStatus = .approved
         activity.postedDate = Date()
@@ -86,7 +89,6 @@ final class SwiftBeanCountRogersBankMapperTests: XCTestCase {
 
     func testMapActivities() throws {
         let accountName = try AccountName("Liabilities:CC:Rogers")
-        let ledger = Ledger()
         try ledger.add(Account(name: accountName, metaData: ["last-four": "1234", "importer-type": "rogers"]))
         var activity1 = TestActivity()
         activity1.activityStatus = .approved
@@ -110,11 +112,12 @@ final class SwiftBeanCountRogersBankMapperTests: XCTestCase {
             Posting(accountName: mapper.expenseAccountName, amount: SwiftBeanCountModel.Amount(number: Decimal(string: "1.13")!, commoditySymbol: "CAD", decimalDigits: 2))
         ]
         let metaData = [MetaDataKeys.activityId: "payment-\(Self.dateFormatter.string(from: activity1.postedDate!))"]
-        XCTAssertEqual(result[0], Transaction(metaData: TransactionMetaData(date: activity1.postedDate!, payee: "Test Merchant Name", metaData: metaData), postings: postings))
+        XCTAssertEqual(result[0],
+                       Transaction(metaData: TransactionMetaData(date: activity1.postedDate!, narration: "Test Merchant Name", metaData: metaData), postings: postings))
         postings[1] = Posting(accountName: mapper.expenseAccountName,
                               amount: SwiftBeanCountModel.Amount(number: Decimal(string: "2.79")!, commoditySymbol: "USD", decimalDigits: 2),
                               price: SwiftBeanCountModel.Amount(number: Decimal(string: "1.13")!, commoditySymbol: "CAD", decimalDigits: 2))
-        let transactionMetaData = TransactionMetaData(date: activity2.postedDate!, payee: "Test Merchant Name", metaData: [MetaDataKeys.activityId: "852741963"])
+        let transactionMetaData = TransactionMetaData(date: activity2.postedDate!, narration: "Test Merchant Name", metaData: [MetaDataKeys.activityId: "852741963"])
         XCTAssertEqual(result[1], Transaction(metaData: transactionMetaData, postings: postings))
     }
 

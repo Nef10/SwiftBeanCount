@@ -58,7 +58,7 @@ public struct SwiftBeanCountRogersBankMapper {
             }
             let accountName = try ledgerAccountName(lastFour: String(activity.cardNumber.suffix(4)))
 
-            let metaData = TransactionMetaData(date: postedDate, payee: activity.merchant.name, metaData: [MetaDataKeys.activityId: referenceNumber])
+            let metaData = TransactionMetaData(date: postedDate, narration: activity.merchant.name, metaData: [MetaDataKeys.activityId: referenceNumber])
             let (number, decimalDigits) = activity.amount.value.amountDecimal()
             let amount = Amount(number: number, commoditySymbol: activity.amount.currency, decimalDigits: decimalDigits)
             let negatedAmount = Amount(number: -number, commoditySymbol: activity.amount.currency, decimalDigits: decimalDigits)
