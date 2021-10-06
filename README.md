@@ -26,29 +26,31 @@ The goal is to supplement my usage of beancount and [fava](https://github.com/be
 
 ## How
 
-The project is split across several repositories, please consult their readmes to get more instrutions:
+The project is split across several repositories, please consult their readmes to get more instructions:
 
 ### Apps
 
 Apps with a user interface:
 
-* [SwiftBeanCountImporterApp](https://github.com/Nef10/SwiftBeanCountImporterApp): Importer to load CSV files and texts (e.g. from banks) and return the user transactions to add to their ledger
-* [SwiftBeanCountDownloaderApp](https://github.com/Nef10/SwiftBeanCountDownloaderApp): App to download data directly from financial institutions and convert to the Beancount syntax
+* [SwiftBeanCountImporterApp](https://github.com/Nef10/SwiftBeanCountImporterApp): App to import CSV files and texts from banks websites, as well as download data directly from there, and return the user transactions to add to their ledger
 * [SwiftBeanCountSheetSyncApp](https://github.com/Nef10/SwiftBeanCountSheetSyncApp): *not released yet* Tool to sync transaction between a Google Sheet and a ledger
 * [SwiftBeanCountCLI](https://github.com/Nef10/SwiftBeanCountCLI): CLI tool for basic operations on the ledger
 * [SwiftBeanCountApp](https://github.com/Nef10/SwiftBeanCountApp): GUI tool for basic operations on the ledger
 
 ### Libraries
 
-Internal libraries which extract functionality to be re-used across different apps:
+The code is split up in several internal libraries, which allows functionality to be re-used across different apps:
 
 * [SwiftBeanCountModel](https://github.com/Nef10/SwiftBeanCountModel): Model which holds all data as well as the logic
 * [SwiftBeanCountParser](https://github.com/Nef10/SwiftBeanCountParser): Parser which reads the plain text and transforms it into an instance of the model
+* [SwiftBeanCountParserUtils](https://github.com/Nef10/SwiftBeanCountParserUtils): Utility functions for parsing, which are shared by the parser and some importers / mappers
 * [SwiftBeanCountImporter](https://github.com/Nef10/SwiftBeanCountImporter): Library to read CSV files and texts (e.g. from banks) and transform them into transactions
 * [SwiftBeanCountSheetSync](https://github.com/Nef10/SwiftBeanCountSheetSync): Library to sync transaction between a Google Sheet and a ledger
 * [GoogleAuthentication](https://github.com/Nef10/GoogleAuthentication): Library to help authenticate to Google APIs
 * [WealthsimpleDownloader](https://github.com/Nef10/WealthsimpleDownloader): Library to download data from Wealthsimple
 * [SwiftBeanCountWealthsimpleMapper](https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper): Library to convert downloaded data from Wealthsimple
+* [RogersBankDownloader](https://github.com/Nef10/RogersBankDownloader): Library to download data from Rogers Bank
+* [SwiftBeanCountRogersBankMapper](https://github.com/Nef10/SwiftBeanCountRogersBankMapper): Library to convert downloaded data from Rogers Bank
 
 ##  Status
 
