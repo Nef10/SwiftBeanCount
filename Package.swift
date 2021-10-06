@@ -30,14 +30,24 @@ let package = Package(
             url: "https://github.com/Nef10/WealthsimpleDownloader.git",
             .upToNextMajor(from: "2.0.0")
         ),
+        .package(
+            url: "https://github.com/Nef10/SwiftBeanCountRogersBankMapper.git",
+            .exact("0.0.5")
+        ),
+        .package(
+            url: "https://github.com/Nef10/RogersBankDownloader.git",
+            .exact("0.0.5")
+        ),
     ],
     targets: [
         .target(
             name: "SwiftBeanCountImporter",
             dependencies: [
-                "SwiftBeanCountModel",
                 .product(name: "CSV", package: "CSV.swift"),
+                "RogersBankDownloader",
+                "SwiftBeanCountModel",
                 "SwiftBeanCountParserUtils",
+                "SwiftBeanCountRogersBankMapper",
                 "SwiftBeanCountWealthsimpleMapper",
                 .product(name: "Wealthsimple", package: "WealthsimpleDownloader"),
             ]

@@ -28,18 +28,6 @@ final class ImporterTests: XCTestCase {
         }
     }
 
-    func testNoEqualImporterTypes() {
-        var types = [String]()
-        let importers = ImporterFactory.allImporters as! [BaseImporter.Type] // swiftlint:disable:this force_cast
-        for importer in importers {
-            guard !types.contains(importer.importerType) else {
-                XCTFail("Importers cannot use the same type")
-                return
-            }
-            types.append(importer.importerType)
-        }
-    }
-
     func testFileImporter() {
         // no url
         XCTAssertNil(ImporterFactory.new(ledger: nil, url: nil))

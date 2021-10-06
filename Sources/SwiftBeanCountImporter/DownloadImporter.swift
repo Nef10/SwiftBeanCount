@@ -13,7 +13,7 @@ import SwiftBeanCountModel
 enum DownloadImporterFactory {
 
     static var importers: [DownloadImporter.Type] {
-        [WealthsimpleImporter.self]
+        [WealthsimpleDownloadImporter.self, RogersDownloadImporter.self]
     }
 
     /// Returns the correct DownloadImporter

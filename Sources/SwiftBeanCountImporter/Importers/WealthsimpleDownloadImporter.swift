@@ -1,5 +1,5 @@
 //
-//  WealthsimpleImporter.swift
+//  WealthsimpleDownloadImporter.swift
 //  SwiftBeanCountImporter
 //
 //  Created by Steffen Kötte on 2021-09-10.
@@ -24,11 +24,11 @@ protocol WealthsimpleDownloaderProvider {
 }
 
 // swiftlint:disable:next type_body_length
-class WealthsimpleImporter: BaseImporter, DownloadImporter { //  swiftlint:disable line_length
+class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
 
-    override class var importerName: String { "Wealthsimple" }
+    override class var importerName: String { "Wealthsimple Download" }
     override class var importerType: String { "wealthsimple" }
-    override class var helpText: String {
+    override class var helpText: String { //  swiftlint:disable line_length
         """
         Downloads transactions, prices and balances from Wealthsimple.
 
@@ -304,7 +304,7 @@ class WealthsimpleImporter: BaseImporter, DownloadImporter { //  swiftlint:disab
 
 }
 
-extension WealthsimpleImporter: CredentialStorage {
+extension WealthsimpleDownloadImporter: CredentialStorage {
 
     func save(_ value: String, for key: String) {
         self.delegate?.saveCredential(value, for: "\(Self.importerType)-\(key)")

@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "RogersBankDownloader",
+        "repositoryURL": "https://github.com/Nef10/RogersBankDownloader.git",
+        "state": {
+          "branch": null,
+          "revision": "4b29e04a04c04d7386b85247ffafe71d61e3346f",
+          "version": "0.0.5"
+        }
+      },
+      {
         "package": "SwiftBeanCountModel",
         "repositoryURL": "https://github.com/Nef10/SwiftBeanCountModel.git",
         "state": {
@@ -26,6 +35,15 @@
           "branch": null,
           "revision": "c0978850756dd137f929cd9d523d443772881b3e",
           "version": "0.0.1"
+        }
+      },
+      {
+        "package": "SwiftBeanCountRogersBankMapper",
+        "repositoryURL": "https://github.com/Nef10/SwiftBeanCountRogersBankMapper.git",
+        "state": {
+          "branch": null,
+          "revision": "a070a755044661a188d34e810fa1a661bc781c5c",
+          "version": "0.0.5"
         }
       },
       {

@@ -14,7 +14,7 @@ import XCTest
 final class DownloadImporterTests: XCTestCase {
 
     func testImporters() {
-        XCTAssertEqual(DownloadImporterFactory.importers.count, 1)
+        XCTAssertEqual(DownloadImporterFactory.importers.count, 2)
     }
 
     func testNew() {
@@ -23,6 +23,18 @@ final class DownloadImporterTests: XCTestCase {
         let importers = DownloadImporterFactory.importers
         for importer in importers {
             XCTAssertTrue(type(of: DownloadImporterFactory.new(ledger: nil, name: importer.importerName)!) == importer)
+        }
+    }
+
+    func testNoEqualImporterTypes() {
+        var types = [String]()
+        let importers = DownloadImporterFactory.importers as! [BaseImporter.Type] // swiftlint:disable:this force_cast
+        for importer in importers {
+            guard !types.contains(importer.importerType) else {
+                XCTFail("Importers cannot use the same type")
+                return
+            }
+            types.append(importer.importerType)
         }
     }
 

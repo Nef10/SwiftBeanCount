@@ -1,5 +1,5 @@
 //
-//  WealthsimpleImporterTests.swift
+//  WealthsimpleDownloadImporterTests.swift
 //  SwiftBeanCountImporterTests
 //
 //  Created by Steffen Kötte on 2021-09-20.
@@ -12,14 +12,14 @@ import SwiftBeanCountWealthsimpleMapper
 import Wealthsimple
 import XCTest
 
-struct TestAccount: Wealthsimple.Account {
+private struct TestAccount: Wealthsimple.Account {
     var accountType = Wealthsimple.AccountType.nonRegistered
     var currency = "CAD"
     var id = "id123"
     var number = "A1B2"
 }
 
-struct TestTransaction: Wealthsimple.Transaction {
+private struct TestTransaction: Wealthsimple.Transaction {
     var id = "transID"
     var accountId = "id123"
     var transactionType = Wealthsimple.TransactionType.buy
@@ -37,14 +37,14 @@ struct TestTransaction: Wealthsimple.Transaction {
     var processDate = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
 }
 
-struct TestAsset: Wealthsimple.Asset {
+private struct TestAsset: Wealthsimple.Asset {
     var symbol = "XGRO"
     var name = "Grow ETF"
     var currency = "CAD"
     var type = AssetType.exchangeTradedFund
 }
 
-struct TestPosition: Wealthsimple.Position {
+private struct TestPosition: Wealthsimple.Position {
     var accountId = "AccountIDPosition"
     var asset: Wealthsimple.Asset = TestAsset()
     var quantity = "2"
@@ -53,28 +53,28 @@ struct TestPosition: Wealthsimple.Position {
     var positionDate = Date()
 }
 
-final class WealthsimpleImporterTests: XCTestCase { // swiftlint:disable:this type_body_length
+final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable:this type_body_length
 
     private typealias STransaction = SwiftBeanCountModel.Transaction
 
     private struct TestDownloader: WealthsimpleDownloaderProvider {
 
         init(authenticationCallback: @escaping WealthsimpleDownloader.AuthenticationCallback, credentialStorage: CredentialStorage) {
-            WealthsimpleImporterTests.authenticationCallback = authenticationCallback
-            WealthsimpleImporterTests.credentialStorage = credentialStorage
+            WealthsimpleDownloadImporterTests.authenticationCallback = authenticationCallback
+            WealthsimpleDownloadImporterTests.credentialStorage = credentialStorage
             downloader = self
         }
 
         func authenticate(completion: @escaping (Error?) -> Void) {
-            completion(WealthsimpleImporterTests.authenticate?())
+            completion(WealthsimpleDownloadImporterTests.authenticate?())
         }
 
         func getAccounts(completion: @escaping (Result<[Wealthsimple.Account], Wealthsimple.AccountError>) -> Void) {
-            completion(WealthsimpleImporterTests.getAccounts?() ?? .success([]))
+            completion(WealthsimpleDownloadImporterTests.getAccounts?() ?? .success([]))
         }
 
         func getPositions(in account: Wealthsimple.Account, date: Date?, completion: @escaping (Result<[Position], PositionError>) -> Void) {
-            completion(WealthsimpleImporterTests.getPositions?(account, date) ?? .success([]))
+            completion(WealthsimpleDownloadImporterTests.getPositions?(account, date) ?? .success([]))
         }
 
         func getTransactions(
@@ -82,7 +82,7 @@ final class WealthsimpleImporterTests: XCTestCase { // swiftlint:disable:this ty
             startDate: Date?,
             completion: @escaping (Result<[Wealthsimple.Transaction], Wealthsimple.TransactionError>) -> Void
         ) {
-            completion(WealthsimpleImporterTests.getTransactions?(account, startDate) ?? .success([]))
+            completion(WealthsimpleDownloadImporterTests.getTransactions?(account, startDate) ?? .success([]))
         }
     }
 
@@ -110,23 +110,23 @@ final class WealthsimpleImporterTests: XCTestCase { // swiftlint:disable:this ty
     }
 
     func testImporterName() {
-        XCTAssertEqual(WealthsimpleImporter.importerName, "Wealthsimple")
+        XCTAssertEqual(WealthsimpleDownloadImporter.importerName, "Wealthsimple Download")
     }
 
     func testImporterType() {
-        XCTAssertEqual(WealthsimpleImporter.importerType, "wealthsimple")
+        XCTAssertEqual(WealthsimpleDownloadImporter.importerType, "wealthsimple")
     }
 
     func testHelpText() {
-        XCTAssert(WealthsimpleImporter.helpText.hasPrefix("Downloads transactions, prices and balances from Wealthsimple."))
+        XCTAssert(WealthsimpleDownloadImporter.helpText.hasPrefix("Downloads transactions, prices and balances from Wealthsimple."))
     }
 
     func testImportName() {
-        XCTAssertEqual(WealthsimpleImporter(ledger: nil).importName, "Wealthsimple Download")
+        XCTAssertEqual(WealthsimpleDownloadImporter(ledger: nil).importName, "Wealthsimple Download")
     }
 
     func testNoData() {
-        let importer = WealthsimpleImporter(ledger: nil)
+        let importer = WealthsimpleDownloadImporter(ledger: nil)
         importer.downloaderClass = TestDownloader.self
         importer.load()
         XCTAssertNil(importer.nextTransaction())
@@ -135,7 +135,7 @@ final class WealthsimpleImporterTests: XCTestCase { // swiftlint:disable:this ty
     }
 
     func testLoadAuthenticationError() {
-        let importer = WealthsimpleImporter(ledger: nil)
+        let importer = WealthsimpleDownloadImporter(ledger: nil)
         let error = TestError()
         let delegate = ErrorDelegate(error: error)
         Self.authenticate = { error }
@@ -158,7 +158,7 @@ final class WealthsimpleImporterTests: XCTestCase { // swiftlint:disable:this ty
     }
 
     func testLoadAccountError() {
-        let importer = WealthsimpleImporter(ledger: nil)
+        let importer = WealthsimpleDownloadImporter(ledger: nil)
         let error = AccountError.httpError(error: "TESTErrorString")
         let delegate = ErrorDelegate(error: error)
         Self.getAccounts = { .failure(error) }
@@ -177,7 +177,7 @@ final class WealthsimpleImporterTests: XCTestCase { // swiftlint:disable:this ty
     }
 
     func testLoad() {
-        let importer = WealthsimpleImporter(ledger: nil)
+        let importer = WealthsimpleDownloadImporter(ledger: nil)
         var verifiedPositions = false
         var verifiedTransactions = false
         let account = TestAccount()
@@ -211,7 +211,7 @@ final class WealthsimpleImporterTests: XCTestCase { // swiftlint:disable:this ty
         let ledger = Ledger()
         ledger.custom.append(Custom(date: Date(), name: "wealthsimple-importer", values: ["pastDaysToLoad", "3"]))
         ledger.custom.append(Custom(date: Date(timeIntervalSinceNow: sixtyTwoDays), name: "wealthsimple-importer", values: ["pastDaysToLoad", "200"]))
-        let importer = WealthsimpleImporter(ledger: ledger)
+        let importer = WealthsimpleDownloadImporter(ledger: ledger)
         var verifiedTransactions = false
         let account = TestAccount()
         Self.getAccounts = { .success([account]) }
@@ -231,7 +231,7 @@ final class WealthsimpleImporterTests: XCTestCase { // swiftlint:disable:this ty
         try! ledger.add(SwiftBeanCountModel.Account(name: try! AccountName("Assets:W:Cash"), metaData: ["importer-type": "wealthsimple", "number": "A1B2"]))
         try! ledger.add(Commodity(symbol: "ETF"))
         try! ledger.add(Commodity(symbol: "CAD"))
-        let importer = WealthsimpleImporter(ledger: ledger)
+        let importer = WealthsimpleDownloadImporter(ledger: ledger)
         let account = TestAccount()
         let transaction1 = TestTransaction()
         var transaction2 = TestTransaction()
@@ -267,7 +267,7 @@ final class WealthsimpleImporterTests: XCTestCase { // swiftlint:disable:this ty
         try! ledger.add(Commodity(symbol: "XGRO"))
         try! ledger.add(Commodity(symbol: "CAD"))
         let delegate = BaseTestImporterDelegate()
-        let importer = WealthsimpleImporter(ledger: ledger)
+        let importer = WealthsimpleDownloadImporter(ledger: ledger)
         importer.delegate = delegate
         var account = TestAccount()
         let position = TestPosition()
@@ -287,7 +287,7 @@ final class WealthsimpleImporterTests: XCTestCase { // swiftlint:disable:this ty
     }
 
     func testLoadTransactionMappingError() {
-        let importer = WealthsimpleImporter(ledger: nil)
+        let importer = WealthsimpleDownloadImporter(ledger: nil)
         let account = TestAccount()
         let transaction = TestTransaction()
         let error = WealthsimpleConversionError.missingWealthsimpleAccount("A1B2")
@@ -305,7 +305,7 @@ final class WealthsimpleImporterTests: XCTestCase { // swiftlint:disable:this ty
     }
 
     func testLoadPositionMappingError() {
-        let importer = WealthsimpleImporter(ledger: nil)
+        let importer = WealthsimpleDownloadImporter(ledger: nil)
         let account = TestAccount()
         let position = TestPosition()
         let error = WealthsimpleConversionError.accountNotFound("AccountIDPosition")
@@ -326,7 +326,7 @@ final class WealthsimpleImporterTests: XCTestCase { // swiftlint:disable:this ty
     }
 
     func testLoadAccounts() {
-        let importer = WealthsimpleImporter(ledger: nil)
+        let importer = WealthsimpleDownloadImporter(ledger: nil)
         var verifiedPositionsOne = false, verifiedPositionsTwo = false, verifiedTransactionsOne = false, verifiedTransactionsTwo = false
         let account1 = TestAccount(), account2 = TestAccount(id: "id222", number: "C2c2")
         Self.getAccounts = { .success([account1, account2]) }
@@ -363,7 +363,7 @@ final class WealthsimpleImporterTests: XCTestCase { // swiftlint:disable:this ty
     }
 
     func testPositionError() {
-        let importer = WealthsimpleImporter(ledger: nil)
+        let importer = WealthsimpleDownloadImporter(ledger: nil)
         let account = TestAccount()
         let error = PositionError.httpError(error: "TESTErrorString")
         let delegate = ErrorDelegate(error: error)
@@ -380,7 +380,7 @@ final class WealthsimpleImporterTests: XCTestCase { // swiftlint:disable:this ty
     }
 
     func testTransactionError() {
-        let importer = WealthsimpleImporter(ledger: nil)
+        let importer = WealthsimpleDownloadImporter(ledger: nil)
         let account = TestAccount()
         let error = TransactionError.httpError(error: "TESTErrorString")
         let delegate = ErrorDelegate(error: error)
@@ -394,22 +394,20 @@ final class WealthsimpleImporterTests: XCTestCase { // swiftlint:disable:this ty
     }
 
     func testCredentialStorage() {
-        let importer = WealthsimpleImporter(ledger: nil)
-        let delegate = CredentialDelegate()
+        let importer = WealthsimpleDownloadImporter(ledger: nil)
+        let delegate = CredentialInputDelegate(saveKeys: ["wealthsimple-testKey2"], saveValues: ["testValue"], readKeys: ["wealthsimple-testKey"], readReturnValues: [nil])
         importer.delegate = delegate
         importer.downloaderClass = TestDownloader.self
         importer.load()
-        _ = Self.credentialStorage.read("testKey")
-        XCTAssert(delegate.verifiedRead)
-        XCTAssertFalse(delegate.verifiedSave)
+        XCTAssertNil(Self.credentialStorage.read("testKey"))
         Self.credentialStorage.save("testValue", for: "testKey2")
-        XCTAssert(delegate.verifiedSave)
+        XCTAssert(delegate.verified)
     }
 
     func testAuthenticationCallback() {
         let expectation = XCTestExpectation(description: "authenticationCallback called")
-        let importer = WealthsimpleImporter(ledger: nil)
-        let delegate = AuthenticationDelegate()
+        let importer = WealthsimpleDownloadImporter(ledger: nil)
+        let delegate = InputProviderDelegate()
         importer.delegate = delegate
         importer.downloaderClass = TestDownloader.self
         importer.load()

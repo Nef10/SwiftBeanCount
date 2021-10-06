@@ -62,9 +62,11 @@ final class BaseImporterTests: XCTestCase {
         var importer = BaseImporter(ledger: TestUtils.ledger)
         XCTAssertEqual(importer.commoditySymbol, Settings.fallbackCommodity)
 
+        let cashAccountDelegate = InputProviderDelegate(names: ["Account"], secrets: [false], returnValues: [TestUtils.cash.fullName])
         importer = BaseImporter(ledger: TestUtils.ledgerCashUSD)
-        importer.delegate = TestUtils.cashAccountDelegate
+        importer.delegate = cashAccountDelegate
         XCTAssertEqual(importer.commoditySymbol, TestUtils.usd)
+        XCTAssert(cashAccountDelegate.verified)
     }
 
     func testConfiguredAccountName() {

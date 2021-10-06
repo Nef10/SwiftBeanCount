@@ -50,21 +50,6 @@ class BaseTestImporterDelegate: ImporterDelegate {
 
 }
 
-class AccountNameProvider: BaseTestImporterDelegate {
-    let account: AccountName
-
-    init(account: AccountName) {
-        self.account = account
-    }
-
-    override func requestInput(name: String, suggestions: [String], isSecret: Bool, completion: (String) -> Bool) {
-        XCTAssertEqual(name, "Account")
-        XCTAssertFalse(isSecret)
-        let result = completion(account.fullName)
-        XCTAssert(result)
-    }
-}
-
 class AccountNameSuggestionVerifier: BaseTestImporterDelegate {
     let expectedValues: [String]
     var verified = false
@@ -85,46 +70,109 @@ class AccountNameSuggestionVerifier: BaseTestImporterDelegate {
     }
 }
 
-class CredentialDelegate: BaseTestImporterDelegate {
-    var verifiedSave = false
-    var verifiedRead = false
+class InputProviderDelegate: BaseTestImporterDelegate {
+    private let names: [String]
+    private let secrets: [Bool]
+    private let returnValues: [String]
 
-    override func saveCredential(_ value: String, for key: String) {
-        XCTAssertEqual(key, "wealthsimple-testKey2")
-        XCTAssertEqual(value, "testValue")
-        verifiedSave = true
+    private var verifiedInput = false
+    private var index = 0
+
+    var verified: Bool {
+        verifiedInput
     }
 
-    override func readCredential(_ key: String) -> String? {
-        XCTAssertEqual(key, "wealthsimple-testKey")
-        verifiedRead = true
-        return nil
+    init(names: [String] = ["Username", "Password", "OTP"], secrets: [Bool] = [false, true, false], returnValues: [String] = ["testUserName", "testPassword", "testOTP"]) {
+        self.names = names
+        self.secrets = secrets
+        self.returnValues = returnValues
+        if names.count != secrets.count || names.count != returnValues.count {
+            XCTFail("Invalid parameters")
+        }
+        if names.isEmpty {
+            verifiedInput = true
+        }
     }
-}
-
-class AuthenticationDelegate: BaseTestImporterDelegate {
-    let names = ["Username", "Password", "OTP"]
-    let secrets = [false, true, false]
-
-    var verified = false
-    var index = 0
 
     override func requestInput(name: String, suggestions: [String], isSecret: Bool, completion: (String) -> Bool) {
+        guard index < names.count else {
+            XCTFail("Called requestInput too often")
+            return
+        }
         XCTAssertEqual(name, names[index])
         XCTAssert(suggestions.isEmpty)
         XCTAssertEqual(isSecret, secrets[index])
-        switch index {
-        case 0:
-            XCTAssert(completion("testUserName"))
-        case 1:
-            XCTAssert(completion("testPassword"))
-        case 2:
-            XCTAssert(completion("testOTP"))
-            verified = true
-        default:
-            XCTFail("Caled requestInput too often")
-        }
+        XCTAssert(completion(returnValues[index]))
         index += 1
+        if index == names.count {
+            verifiedInput = true
+        }
+    }
+}
+
+class CredentialInputDelegate: InputProviderDelegate {
+    private let saveKeys: [String]
+    private let saveValues: [String]
+    private let readKeys: [String]
+    private let readReturnValues: [String?]
+
+    private var verifiedSave = false
+    private var verifiedRead = false
+    private var saveIndex = 0
+    private var readIndex = 0
+    override var verified: Bool {
+        super.verified && verifiedSave && verifiedRead
+    }
+
+    convenience init() {
+        self.init(inputNames: [], inputSecrets: [], inputReturnValues: [], saveKeys: [], saveValues: [], readKeys: [], readReturnValues: [])
+    }
+
+    convenience init(saveKeys: [String], saveValues: [String], readKeys: [String], readReturnValues: [String?]) {
+        self.init(inputNames: [], inputSecrets: [], inputReturnValues: [], saveKeys: saveKeys, saveValues: saveValues, readKeys: readKeys, readReturnValues: readReturnValues)
+    }
+
+    init(inputNames: [String], inputSecrets: [Bool], inputReturnValues: [String], saveKeys: [String], saveValues: [String], readKeys: [String], readReturnValues: [String?]) {
+        self.saveKeys = saveKeys
+        self.saveValues = saveValues
+        self.readKeys = readKeys
+        self.readReturnValues = readReturnValues
+        if saveKeys.count != saveValues.count || readKeys.count != readReturnValues.count {
+            XCTFail("Invalid parameters")
+        }
+        if saveKeys.isEmpty {
+            verifiedSave = true
+        }
+        if readKeys.isEmpty {
+            verifiedRead = true
+        }
+        super.init(names: inputNames, secrets: inputSecrets, returnValues: inputReturnValues)
+    }
+
+    override func saveCredential(_ value: String, for key: String) {
+        guard saveIndex < saveKeys.count else {
+            XCTFail("Called saveCredential too often")
+            return
+        }
+        XCTAssertEqual(value, saveValues[saveIndex])
+        XCTAssertEqual(key, saveKeys[saveIndex])
+        saveIndex += 1
+        if saveIndex == saveKeys.count {
+            verifiedSave = true
+        }
+    }
+
+    override func readCredential(_ key: String) -> String? {
+        guard readIndex < readKeys.count else {
+            XCTFail("Called readCredential too often")
+            return nil
+        }
+        XCTAssertEqual(key, readKeys[readIndex])
+        readIndex += 1
+        if readIndex == readKeys.count {
+            verifiedRead = true
+        }
+        return readReturnValues[readIndex - 1]
     }
 }
 
@@ -135,17 +183,40 @@ struct TestError: EquatableError {
     let id = UUID()
 }
 
-class ErrorDelegate<T: EquatableError>: BaseTestImporterDelegate {
-    let error: T
-    var verified = false
+class ErrorDelegate<T: EquatableError>: CredentialInputDelegate {
+    private let error: T
+    private var errorVerified = false
+    override var verified: Bool {
+        super.verified && errorVerified
+    }
 
-    init(error: T) {
+    convenience init(error: T) {
+        self.init(error: error, inputNames: [], inputSecrets: [], inputReturnValues: [], saveKeys: [], saveValues: [], readKeys: [], readReturnValues: [])
+    }
+
+    init(
+        error: T,
+        inputNames: [String],
+        inputSecrets: [Bool],
+        inputReturnValues: [String],
+        saveKeys: [String],
+        saveValues: [String],
+        readKeys: [String],
+        readReturnValues: [String?]
+    ) {
         self.error = error
+        super.init(inputNames: inputNames,
+                   inputSecrets: inputSecrets,
+                   inputReturnValues: inputReturnValues,
+                   saveKeys: saveKeys,
+                   saveValues: saveValues,
+                   readKeys: readKeys,
+                   readReturnValues: readReturnValues)
     }
 
     override func error(_ error: Error) {
         XCTAssertEqual(error as? T, self.error)
-        verified = true
+        errorVerified = true
     }
 }
 
@@ -156,8 +227,6 @@ enum TestUtils {
     static let fundSymbol: String = "EASY"
     static let accountNumberChequing = 123_456_789
     static let accountNumberCash = 987_654_321
-    static let parkingAccountDelegate = AccountNameProvider(account: TestUtils.parking)
-    static let cashAccountDelegate = AccountNameProvider(account: TestUtils.cash)
     static let noInputDelegate = BaseTestImporterDelegate()
 
     private static var dateFormatter: DateFormatter = {

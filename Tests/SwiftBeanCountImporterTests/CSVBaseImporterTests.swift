@@ -34,6 +34,13 @@ private class TestCSVBaseImporter: CSVBaseImporter {
 
 final class CSVBaseImporterTests: XCTestCase {
 
+    private var cashAccountDelegate: InputProviderDelegate! // swiftlint:disable:this weak_delegate
+
+    override func setUpWithError() throws {
+        cashAccountDelegate = InputProviderDelegate(names: ["Account"], secrets: [false], returnValues: [TestUtils.cash.fullName])
+        try super.setUpWithError()
+    }
+
     func testImportName() {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.basicCSVReader, fileName: "ABCDTEST")
         XCTAssertEqual(importer.importName, "ABCDTEST")
@@ -41,7 +48,7 @@ final class CSVBaseImporterTests: XCTestCase {
 
     func testLoad() {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.basicCSVReader, fileName: "")
-        importer.delegate = TestUtils.cashAccountDelegate
+        importer.delegate = cashAccountDelegate
 
         importer.load()
         // Can be called multiple times, still only returns each row once
@@ -56,7 +63,7 @@ final class CSVBaseImporterTests: XCTestCase {
 
     func testLoadSortDate() {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.dateMixedCSVReader, fileName: "")
-        importer.delegate = TestUtils.cashAccountDelegate
+        importer.delegate = cashAccountDelegate
         importer.load()
 
         let importedTransaction1 = importer.nextTransaction()
@@ -69,7 +76,7 @@ final class CSVBaseImporterTests: XCTestCase {
 
     func testNextTransaction() {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.basicCSVReader, fileName: "")
-        importer.delegate = TestUtils.cashAccountDelegate
+        importer.delegate = cashAccountDelegate
         importer.load()
 
         let importedTransaction = importer.nextTransaction()
@@ -79,6 +86,7 @@ final class CSVBaseImporterTests: XCTestCase {
 
         let noTransaction = importer.nextTransaction()
         XCTAssertNil(noTransaction)
+        XCTAssert(cashAccountDelegate.verified)
     }
 
     func testPrice() {
@@ -140,7 +148,7 @@ final class CSVBaseImporterTests: XCTestCase {
         ledger.add(transaction)
 
         let importer = TestCSVBaseImporter(ledger: ledger, csvReader: TestUtils.csvReader(description: "a", payee: "b", date: transaction.metaData.date), fileName: "")
-        importer.delegate = TestUtils.cashAccountDelegate
+        importer.delegate = cashAccountDelegate
         importer.load()
         let importedTransaction = importer.nextTransaction()
         XCTAssertNotNil(importedTransaction)
@@ -155,13 +163,13 @@ final class CSVBaseImporterTests: XCTestCase {
         ledger.add(transaction)
 
         let importer = TestCSVBaseImporter(ledger: ledger, csvReader: TestUtils.csvReader(description: "a", payee: "b", date: transaction.metaData.date), fileName: "")
-        let delegate = AccountNameProvider(account: TestUtils.chequing)
-        importer.delegate = TestUtils.cashAccountDelegate
+        let delegate = InputProviderDelegate(names: ["Account"], secrets: [false], returnValues: [TestUtils.chequing.fullName])
         importer.delegate = delegate
         importer.load()
         let importedTransaction = importer.nextTransaction()
         XCTAssertNotNil(importedTransaction)
         XCTAssertNil(importedTransaction!.possibleDuplicate)
+        XCTAssert(delegate.verified)
     }
 
     func testSanitizeDescription() {
@@ -188,10 +196,12 @@ final class CSVBaseImporterTests: XCTestCase {
 
     private func transactionHelper(description: String, payee: String = "payee") -> Transaction {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.csvReader(description: description, payee: payee), fileName: "")
-        importer.delegate = TestUtils.cashAccountDelegate
+        cashAccountDelegate = InputProviderDelegate(names: ["Account"], secrets: [false], returnValues: [TestUtils.cash.fullName])
+        importer.delegate = cashAccountDelegate
         importer.load()
         let importedTransaction = importer.nextTransaction()
         XCTAssertNotNil(importedTransaction)
+        XCTAssert(cashAccountDelegate.verified)
         return importedTransaction!.transaction
     }
 
