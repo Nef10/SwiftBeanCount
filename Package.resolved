@@ -65,15 +65,6 @@
         }
       },
       {
-        "package": "swift-crypto",
-        "repositoryURL": "https://github.com/apple/swift-crypto.git",
-        "state": {
-          "branch": null,
-          "revision": "3bea268b223651c4ab7b7b9ad62ef9b2d4143eb6",
-          "version": "1.1.6"
-        }
-      },
-      {
         "package": "SwiftBeanCountModel",
         "repositoryURL": "https://github.com/Nef10/SwiftBeanCountModel.git",
         "state": {
