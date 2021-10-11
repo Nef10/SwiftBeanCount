@@ -11,29 +11,29 @@ import XCTest
 
 class StringTests: XCTestCase {
 
-    func testMatchingStrings_multipleGroups() {
-        let regex = try! NSRegularExpression(pattern: "^\\s+([^\\s]+:[^\\s]+)\\s+(-?[0-9]+(.[0-9]+)?)\\s+([^\\s]+)\\s*(;.*)?$", options: [])
+    func testMatchingStrings_multipleGroups() throws {
+        let regex = try NSRegularExpression(pattern: "^\\s+([^\\s]+:[^\\s]+)\\s+(-?[0-9]+(.[0-9]+)?)\\s+([^\\s]+)\\s*(;.*)?$", options: [])
         let results = "  Assets:Checking 1.00 EUR".matchingStrings(regex: regex)
         XCTAssertEqual(results.count, 1)
         XCTAssertEqual(results[0], ["  Assets:Checking 1.00 EUR", "Assets:Checking", "1.00", ".00", "EUR", ""])
     }
 
-    func testMatchingStrings_multipleResults() {
-        let regex = try! NSRegularExpression(pattern: "\\d\\D\\d", options: [])
+    func testMatchingStrings_multipleResults() throws {
+        let regex = try NSRegularExpression(pattern: "\\d\\D\\d", options: [])
         let results = "0a01b1".matchingStrings(regex: regex)
         XCTAssertEqual(results.count, 2)
         XCTAssertEqual(results[0], ["0a0"])
         XCTAssertEqual(results[1], ["1b1"])
     }
 
-    func testMatchingStrings_ExtendedGraphemeClusters() {
-        var regex = try! NSRegularExpression(pattern: "[0-9]", options: [])
+    func testMatchingStrings_ExtendedGraphemeClusters() throws {
+        var regex = try NSRegularExpression(pattern: "[0-9]", options: [])
         var results = "🇩🇪€4€9".matchingStrings(regex: regex)
         XCTAssertEqual(results.count, 2)
         XCTAssertEqual(results[0], ["4"])
         XCTAssertEqual(results[1], ["9"])
 
-        regex = try! NSRegularExpression(pattern: "🇩🇪", options: [])
+        regex = try NSRegularExpression(pattern: "🇩🇪", options: [])
         results = "🇩🇪€4€9".matchingStrings(regex: regex)
         XCTAssertEqual(results.count, 1)
         XCTAssertEqual(results[0], ["🇩🇪"])
