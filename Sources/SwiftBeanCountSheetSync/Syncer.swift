@@ -129,7 +129,7 @@ public class GenericSyncer {
     }
 
     func moneySpend(_ transaction: SwiftBeanCountModel.Transaction, ledgerSettings: LedgerSettings) -> Amount? {
-        let multiCurrencyAmount = transaction.postings.compactMap {
+        let multiCurrencyAmount: MultiCurrencyAmount = transaction.postings.compactMap {
             ($0.accountName.accountType == .asset || $0.accountName.accountType == .liability) ? $0.amount.multiCurrencyAmount : nil
         }
         .reduce(MultiCurrencyAmount(), +)
