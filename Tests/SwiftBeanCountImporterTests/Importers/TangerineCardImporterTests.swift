@@ -30,16 +30,16 @@ final class TangerineCardImporterTests: XCTestCase {
                        "Enables importing of downloaded CSV files from Tangerine Credit Cards.\n\nTo use add importer-type: \"tangerine-card\" to your account.")
     }
 
-    func testImportName() {
+    func testImportName() throws {
         XCTAssertEqual(
-            TangerineCardImporter(ledger: nil, csvReader: TestUtils.csvReader(content: "A"), fileName: "TestName").importName,
+            TangerineCardImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName,
             "Tangerine Credit Card File TestName"
         )
     }
 
-    func testParseLine() {
+    func testParseLine() throws {
         let importer = TangerineCardImporter(ledger: nil,
-                                             csvReader: TestUtils.csvReader(content: """
+                                             csvReader: try TestUtils.csvReader(content: """
 Transaction date,Transaction,Name,Memo,Amount
 6/10/2017,DEBIT,Merchant VANCOUVER BC,Rewards earned: 0.78 ~ Category: Bill Payment,-39.2\n
 """

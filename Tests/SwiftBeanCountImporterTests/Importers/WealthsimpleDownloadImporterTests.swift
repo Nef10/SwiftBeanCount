@@ -96,7 +96,7 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
 
     private let sixtyTwoDays = -60 * 60 * 24 * 62.0
     private let threeDays = -60 * 60 * 24 * 3.0
-    private let xgroAccount = try! AccountName("Assets:W:XGRO")
+    private let xgroAccount = try! AccountName("Assets:W:XGRO") // swiftlint:disable:this force_try
 
     override func setUpWithError() throws {
         Self.downloader = nil
@@ -226,11 +226,11 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
         XCTAssert(verifiedTransactions)
     }
 
-    func testLoadTransactions() {
+    func testLoadTransactions() throws {
         let ledger = Ledger()
-        try! ledger.add(SwiftBeanCountModel.Account(name: try! AccountName("Assets:W:Cash"), metaData: ["importer-type": "wealthsimple", "number": "A1B2"]))
-        try! ledger.add(Commodity(symbol: "ETF"))
-        try! ledger.add(Commodity(symbol: "CAD"))
+        try ledger.add(SwiftBeanCountModel.Account(name: try AccountName("Assets:W:Cash"), metaData: ["importer-type": "wealthsimple", "number": "A1B2"]))
+        try ledger.add(Commodity(symbol: "ETF"))
+        try ledger.add(Commodity(symbol: "CAD"))
         let importer = WealthsimpleDownloadImporter(ledger: ledger)
         let account = TestAccount()
         let transaction1 = TestTransaction()
@@ -242,30 +242,30 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
         importer.downloaderClass = TestDownloader.self
         importer.load()
         var postings = [
-            Posting(accountName: try! AccountName("Assets:W:Cash"), amount: Amount(number: Decimal(string: "-11.76")!, commoditySymbol: "CAD", decimalDigits: 2)),
-            Posting(accountName: try! AccountName("Assets:W:ETF"),
+            Posting(accountName: try AccountName("Assets:W:Cash"), amount: Amount(number: Decimal(string: "-11.76")!, commoditySymbol: "CAD", decimalDigits: 2)),
+            Posting(accountName: try AccountName("Assets:W:ETF"),
                     amount: Amount(number: Decimal(string: transaction1.quantity)!, commoditySymbol: "ETF", decimalDigits: 2),
-                    cost: try! Cost(amount: Amount(number: Decimal(string: "2.24")!, commoditySymbol: "CAD", decimalDigits: 2), date: nil, label: nil))
+                    cost: try Cost(amount: Amount(number: Decimal(string: "2.24")!, commoditySymbol: "CAD", decimalDigits: 2), date: nil, label: nil))
         ]
         var transaction = STransaction(metaData: TransactionMetaData(date: transaction1.processDate, metaData: ["wealthsimple-id": "transID"]), postings: postings)
         XCTAssertEqual(importer.nextTransaction(), ImportedTransaction(transaction))
-        postings[1] = Posting(accountName: try! AccountName("Expenses:TODO"), amount: Amount(number: Decimal(string: "11.76")!, commoditySymbol: "CAD", decimalDigits: 2))
+        postings[1] = Posting(accountName: try AccountName("Expenses:TODO"), amount: Amount(number: Decimal(string: "11.76")!, commoditySymbol: "CAD", decimalDigits: 2))
         transaction = STransaction(metaData: TransactionMetaData(date: transaction1.processDate, metaData: ["wealthsimple-id": "transID"]), postings: postings)
         XCTAssertEqual(importer.nextTransaction(),
-                       ImportedTransaction(transaction, shouldAllowUserToEdit: true, accountName: try! AccountName("Assets:W:Cash")))
+                       ImportedTransaction(transaction, shouldAllowUserToEdit: true, accountName: try AccountName("Assets:W:Cash")))
         XCTAssertNil(importer.nextTransaction())
         XCTAssertEqual(
             importer.pricesToImport(),
-            [try! Price(date: transaction1.processDate, commoditySymbol: "ETF", amount: Amount(number: Decimal(string: "2.24")!, commoditySymbol: "CAD", decimalDigits: 2))]
+            [try Price(date: transaction1.processDate, commoditySymbol: "ETF", amount: Amount(number: Decimal(string: "2.24")!, commoditySymbol: "CAD", decimalDigits: 2))]
         )
         XCTAssert(importer.balancesToImport().isEmpty)
     }
 
-    func testLoadPositions() {
+    func testLoadPositions() throws {
         let ledger = Ledger()
-        try! ledger.add(SwiftBeanCountModel.Account(name: try! AccountName("Assets:W:Cash"), metaData: ["importer-type": "wealthsimple", "number": "A1B2"]))
-        try! ledger.add(Commodity(symbol: "XGRO"))
-        try! ledger.add(Commodity(symbol: "CAD"))
+        try ledger.add(SwiftBeanCountModel.Account(name: try AccountName("Assets:W:Cash"), metaData: ["importer-type": "wealthsimple", "number": "A1B2"]))
+        try ledger.add(Commodity(symbol: "XGRO"))
+        try ledger.add(Commodity(symbol: "CAD"))
         let delegate = BaseTestImporterDelegate()
         let importer = WealthsimpleDownloadImporter(ledger: ledger)
         importer.delegate = delegate
@@ -280,7 +280,7 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
         XCTAssertNil(importer.nextTransaction())
         XCTAssertEqual(
             importer.pricesToImport(),
-            [try! Price(date: position.positionDate, commoditySymbol: "XGRO", amount: Amount(number: Decimal(string: "1.11")!, commoditySymbol: "CAD", decimalDigits: 2))]
+            [try Price(date: position.positionDate, commoditySymbol: "XGRO", amount: Amount(number: Decimal(string: "1.11")!, commoditySymbol: "CAD", decimalDigits: 2))]
         )
         XCTAssertEqual(importer.balancesToImport(),
                        [Balance(date: position.positionDate, accountName: xgroAccount, amount: Amount(number: Decimal(2), commoditySymbol: "XGRO", decimalDigits: 2))])

@@ -69,7 +69,7 @@ final class BaseImporterTests: XCTestCase {
         XCTAssert(cashAccountDelegate.verified)
     }
 
-    func testConfiguredAccountName() {
+    func testConfiguredAccountName() throws {
         let ledger = TestUtils.ledger
         var importer = BaseImporter(ledger: ledger)
         var delegate = AccountNameSuggestionVerifier(expectedValues: [])
@@ -78,13 +78,13 @@ final class BaseImporterTests: XCTestCase {
         XCTAssert(delegate.verified)
 
         var account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.usd, metaData: [Settings.importerTypeKey: ""])
-        try! ledger.add(account)
+        try ledger.add(account)
         importer = BaseImporter(ledger: ledger)
         importer.delegate = TestUtils.noInputDelegate
         XCTAssertEqual(importer.configuredAccountName, TestUtils.cash)
 
         account = Account(name: TestUtils.chequing, commoditySymbol: TestUtils.usd, metaData: [Settings.importerTypeKey: ""])
-        try! ledger.add(account)
+        try ledger.add(account)
         importer = BaseImporter(ledger: ledger)
         delegate = AccountNameSuggestionVerifier(expectedValues: [TestUtils.cash, TestUtils.chequing])
         importer.delegate = delegate

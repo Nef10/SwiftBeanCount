@@ -29,13 +29,13 @@ final class SimpliiImporterTests: XCTestCase {
                        "Enables importing of downloaded CSV files from Simplii Accounts.\n\nTo use add importer-type: \"simplii\" to your account.")
     }
 
-    func testImportName() {
-        XCTAssertEqual(SimpliiImporter(ledger: nil, csvReader: TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "Simplii File TestName")
+    func testImportName() throws {
+        XCTAssertEqual(SimpliiImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "Simplii File TestName")
     }
 
-    func testParseLine() {
+    func testParseLine() throws {
         let importer = SimpliiImporter(ledger: nil,
-                                       csvReader: TestUtils.csvReader(content: """
+                                       csvReader: try TestUtils.csvReader(content: """
 Date, Transaction Details, Funds Out, Funds In
 06/10/2017,PAYROLL DEPOSIT COMPANY INC.,,123.45\n
 """
@@ -51,9 +51,9 @@ Date, Transaction Details, Funds Out, Funds In
         XCTAssertNil(line.price)
     }
 
-    func testParseLineAmountOut() {
+    func testParseLineAmountOut() throws {
         let importer = SimpliiImporter(ledger: nil,
-                                       csvReader: TestUtils.csvReader(content: """
+                                       csvReader: try TestUtils.csvReader(content: """
 Date, Transaction Details, Funds Out, Funds In
 05/06/2020,BANK TO BANK TSF EXT TSF,1234.56,\n
 """
@@ -68,9 +68,9 @@ Date, Transaction Details, Funds Out, Funds In
         XCTAssertNil(line.price)
     }
 
-    func testParseLineInterest() {
+    func testParseLineInterest() throws {
         let importer = SimpliiImporter(ledger: nil,
-                                       csvReader: TestUtils.csvReader(content: """
+                                       csvReader: try TestUtils.csvReader(content: """
 Date, Transaction Details, Funds Out, Funds In
 06/05/2020, INTEREST,,0.69\n
 """

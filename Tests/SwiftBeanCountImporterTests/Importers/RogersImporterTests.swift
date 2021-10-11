@@ -38,13 +38,13 @@ final class RogersImporterTests: XCTestCase {
                        "Enables importing of downloaded CSV files from Rogers Bank Credit Cards.\n\nTo use add importer-type: \"rogers\" to your account.")
     }
 
-    func testImportName() {
-        XCTAssertEqual(RogersImporter(ledger: nil, csvReader: TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "Rogers Bank File TestName")
+    func testImportName() throws {
+        XCTAssertEqual(RogersImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "Rogers Bank File TestName")
     }
 
-    func testParseLine1() {
+    func testParseLine1() throws {
         let importer = RogersImporter(ledger: nil,
-                                      csvReader: TestUtils.csvReader(content: """
+                                      csvReader: try TestUtils.csvReader(content: """
 "Transaction Date","Activity Type","Merchant Name","Merchant Category","Amount"
 "2017-06-10","TRANS","Merchant","Catalog Merchant","$4,004.44"n
 """
@@ -60,9 +60,9 @@ final class RogersImporterTests: XCTestCase {
         XCTAssertNil(line.price)
     }
 
-    func testParseLine2() {
+    func testParseLine2() throws {
         let importer = RogersImporter(ledger: nil,
-                                      csvReader: TestUtils.csvReader(content: """
+                                      csvReader: try TestUtils.csvReader(content: """
 "Transaction Date","Activity Type","Merchant Name","Merchant Category Description","Amount"
 "2017-06-10","TRANS","Merchant","Catalog Merchant","$4,004.44"n
 """
@@ -78,9 +78,9 @@ final class RogersImporterTests: XCTestCase {
         XCTAssertNil(line.price)
     }
 
-    func testParseLine3() {
+    func testParseLine3() throws {
         let importer = RogersImporter(ledger: nil,
-                                      csvReader: TestUtils.csvReader(content: """
+                                      csvReader: try TestUtils.csvReader(content: """
 "Date","Activity Type","Merchant Name","Merchant Category","Amount"
 "2017-06-10","TRANS","Merchant","Catalog Merchant","$4,004.44"n
 """
@@ -96,9 +96,9 @@ final class RogersImporterTests: XCTestCase {
         XCTAssertNil(line.price)
     }
 
-    func testParseLine4() {
+    func testParseLine4() throws {
         let importer = RogersImporter(ledger: nil,
-                                      csvReader: TestUtils.csvReader(content: """
+                                      csvReader: try TestUtils.csvReader(content: """
 "Date","Activity Type","Merchant Name","Merchant Category Description","Amount"
 "2017-06-10","TRANS","Merchant","Catalog Merchant","$4,004.44"n
 """
@@ -114,9 +114,9 @@ final class RogersImporterTests: XCTestCase {
         XCTAssertNil(line.price)
     }
 
-func testParseLine5() {
+    func testParseLine5() throws {
         let importer = RogersImporter(ledger: nil,
-                                      csvReader: TestUtils.csvReader(content: """
+                                      csvReader: try TestUtils.csvReader(content: """
 "Transaction Date","Activity Type","Merchant Name","Merchant Category","Amount","Rewards"
 "2017-06-10","TRANS","Merchant","Catalog Merchant","$4,004.44"n
 """
@@ -132,9 +132,9 @@ func testParseLine5() {
         XCTAssertNil(line.price)
     }
 
-    func testParseLine6() {
+    func testParseLine6() throws {
         let importer = RogersImporter(ledger: nil,
-                                      csvReader: TestUtils.csvReader(content: """
+                                      csvReader: try TestUtils.csvReader(content: """
 "Transaction Date","Activity Type","Merchant Name","Merchant Category Description","Amount","Rewards"
 "2017-06-10","TRANS","Merchant","Catalog Merchant","$4,004.44"n
 """
@@ -150,9 +150,9 @@ func testParseLine5() {
         XCTAssertNil(line.price)
     }
 
-    func testParseLine7() {
+    func testParseLine7() throws {
         let importer = RogersImporter(ledger: nil,
-                                      csvReader: TestUtils.csvReader(content: """
+                                      csvReader: try TestUtils.csvReader(content: """
 "Date","Activity Type","Merchant Name","Merchant Category","Amount","Rewards"
 "2017-06-10","TRANS","Merchant","Catalog Merchant","$4,004.44"n
 """
@@ -168,9 +168,9 @@ func testParseLine5() {
         XCTAssertNil(line.price)
     }
 
-    func testParseLine8() {
+    func testParseLine8() throws {
         let importer = RogersImporter(ledger: nil,
-                                      csvReader: TestUtils.csvReader(content: """
+                                      csvReader: try TestUtils.csvReader(content: """
 "Date","Activity Type","Merchant Name","Merchant Category Description","Amount","Rewards"
 "2017-06-10","TRANS","Merchant","Catalog Merchant","$4,004.44"n
 """
@@ -186,9 +186,9 @@ func testParseLine5() {
         XCTAssertNil(line.price)
     }
 
-    func testParseLineCashBack() {
+    func testParseLineCashBack() throws {
         let importer = RogersImporter(ledger: nil,
-                                      csvReader: TestUtils.csvReader(content: """
+                                      csvReader: try TestUtils.csvReader(content: """
 "Transaction Date","Activity Type","Merchant Name","Merchant Category","Amount"
 "2020-06-05","TRANS","CashBack / Remises","","-43.00",""\n
 """

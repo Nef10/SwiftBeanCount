@@ -28,13 +28,13 @@ final class LunchOnUsImporterTests: XCTestCase {
         XCTAssertEqual(LunchOnUsImporter.helpText, "Enables importing of CSV files downloaded from https://lunchmapper.appspot.com/csv. Does not support importing balances.\n\nTo use add importer-type: \"lunch-on-us\" to your account.")
     }
 
-    func testImportName() {
-        XCTAssertEqual(LunchOnUsImporter(ledger: nil, csvReader: TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "LunchOnUs File TestName")
+    func testImportName() throws {
+        XCTAssertEqual(LunchOnUsImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "LunchOnUs File TestName")
     }
 
-    func testParseLineNormalPurchase() {
+    func testParseLineNormalPurchase() throws {
         let importer = LunchOnUsImporter(ledger: nil,
-                                         csvReader: TestUtils.csvReader(content: """
+                                         csvReader: try TestUtils.csvReader(content: """
 date,type,amount,invoice,remaining,location
 "June 10, 2017 | 23:45:19","Purchase","6.83","00012345IUYTrBTE","003737","Bubble Tea"\n
 """
@@ -50,9 +50,9 @@ date,type,amount,invoice,remaining,location
         XCTAssertNil(line.price)
     }
 
-    func testParseLineRedeemUnlock() {
+    func testParseLineRedeemUnlock() throws {
         let importer = LunchOnUsImporter(ledger: nil,
-                                         csvReader: TestUtils.csvReader(content: """
+                                         csvReader: try TestUtils.csvReader(content: """
 date,type,amount,invoice,remaining,location
 "June 05, 2020 | 01:02:59","Redeem Unlock","75.00","00000478IUYTaBVR","499147","Test Restaurant"\n
 """
@@ -68,9 +68,9 @@ date,type,amount,invoice,remaining,location
         XCTAssertNil(line.price)
     }
 
-    func testParseLineBalanceInquiryWithPartLock() { // #7
+    func testParseLineBalanceInquiryWithPartLock() throws { // #7
         let importer = LunchOnUsImporter(ledger: nil,
-                                         csvReader: TestUtils.csvReader(content: """
+                                         csvReader: try TestUtils.csvReader(content: """
 date,type,amount,invoice,remaining,location
 "Feb 21, 2020 | 20:25:43","Balance Inquiry with part lock","65.21","00000750LJHGwHTE","923212","Shop SAP"\n
 """
@@ -85,9 +85,9 @@ date,type,amount,invoice,remaining,location
         XCTAssertNil(line.price)
     }
 
-    func testParseLineActivateCard() {
+    func testParseLineActivateCard() throws {
         let importer = LunchOnUsImporter(ledger: nil,
-                                         csvReader: TestUtils.csvReader(content: """
+                                         csvReader: try TestUtils.csvReader(content: """
 date,type,amount,invoice,remaining,location
 "Jan 01, 2020 | 04:07:12","Activate Card","528.00","UNKNOWN","123456","SAP CANADA INC. - HEAD OFFICE"\n
 """
@@ -102,9 +102,9 @@ date,type,amount,invoice,remaining,location
         XCTAssertNil(line.price)
     }
 
-    func testParseLineCashOut() {
+    func testParseLineCashOut() throws {
         let importer = LunchOnUsImporter(ledger: nil,
-                                         csvReader: TestUtils.csvReader(content: """
+                                         csvReader: try TestUtils.csvReader(content: """
 date,type,amount,invoice,remaining,location
 "Jan 01, 2020 | 03:07:19","Cash Out","0.60","UNKNOWN","654321","SAP CANADA INC. - HEAD OFFICE"\n
 """

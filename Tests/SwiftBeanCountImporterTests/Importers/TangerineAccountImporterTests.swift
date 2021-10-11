@@ -30,8 +30,9 @@ final class TangerineAccountImporterTests: XCTestCase {
                        "Enables importing of downloaded CSV files from Tangerine Accounts.\n\nTo use add importer-type: \"tangerine-account\" to your account.")
     }
 
-    func testImportName() {
-        XCTAssertEqual(TangerineAccountImporter(ledger: nil, csvReader: TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "Tangerine Account File TestName")
+    func testImportName() throws {
+        XCTAssertEqual(TangerineAccountImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName,
+                       "Tangerine Account File TestName")
     }
 
     func testAccountsFromLedger() {
@@ -72,9 +73,9 @@ final class TangerineAccountImporterTests: XCTestCase {
         XCTAssert(delegate.verified)
     }
 
-    func testParseLine() {
+    func testParseLine() throws {
         let importer = TangerineAccountImporter(ledger: nil,
-                                                csvReader: TestUtils.csvReader(content: """
+                                                csvReader: try TestUtils.csvReader(content: """
 Date,Transaction,Name,Memo,Amount
 6/5/2020,OTHER,EFT Withdrawal to BANK,To BANK,-765.43\n
 """
@@ -90,9 +91,9 @@ Date,Transaction,Name,Memo,Amount
         XCTAssertNil(line.price)
     }
 
-    func testParseLineEmptyMemo() {
+    func testParseLineEmptyMemo() throws {
         let importer = TangerineAccountImporter(ledger: nil,
-                                                csvReader: TestUtils.csvReader(content: """
+                                                csvReader: try TestUtils.csvReader(content: """
 Date,Transaction,Name,Memo,Amount
 6/10/2017,DEBIT,Cheque Withdrawal - 002,,-95\n
 """
@@ -108,9 +109,9 @@ Date,Transaction,Name,Memo,Amount
         XCTAssertNil(line.price)
     }
 
-    func testParseLineInterest() {
+    func testParseLineInterest() throws {
         let importer = TangerineAccountImporter(ledger: nil,
-                                                csvReader: TestUtils.csvReader(content: """
+                                                csvReader: try TestUtils.csvReader(content: """
 Date,Transaction,Name,Memo,Amount
 5/31/2020,OTHER,Interest Paid,,0.5\n
 """
@@ -125,9 +126,9 @@ Date,Transaction,Name,Memo,Amount
         XCTAssertNil(line.price)
     }
 
-    func testParseLineInterac() {
+    func testParseLineInterac() throws {
         let importer = TangerineAccountImporter(ledger: nil,
-                                                csvReader: TestUtils.csvReader(content: """
+                                                csvReader: try TestUtils.csvReader(content: """
 Date,Transaction,Name,Memo,Amount
 5/23/2020,OTHER,INTERAC e-Transfer From: NAME,Transferred,40.25\n
 """

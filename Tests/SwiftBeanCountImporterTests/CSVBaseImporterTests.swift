@@ -89,65 +89,65 @@ final class CSVBaseImporterTests: XCTestCase {
         XCTAssert(cashAccountDelegate.verified)
     }
 
-    func testPrice() {
-        let transaction = transactionHelper(description: "price")
+    func testPrice() throws {
+        let transaction = try transactionHelper(description: "price")
         let posting = transaction.postings.first { $0.accountName != TestUtils.cash }!
         XCTAssertEqual(posting.price!.number, -1)
         XCTAssertEqual(posting.amount.number, 10)
         XCTAssertEqual(posting.amount.commoditySymbol, TestUtils.usd)
     }
 
-    func testAccountName() {
-        let transaction = transactionHelper(description: "")
+    func testAccountName() throws {
+        let transaction = try transactionHelper(description: "")
         XCTAssertEqual(transaction.postings.count, 2)
         XCTAssertEqual(transaction.postings.filter { $0.accountName.fullName == Settings.defaultAccountName }.count, 1)
         XCTAssertEqual(transaction.postings.filter { $0.accountName == TestUtils.cash }.count, 1)
     }
 
-    func testSavedPayee() {
+    func testSavedPayee() throws {
         let description = "abcd"
         let payeeMapping = "efg"
         Settings.storage = TestStorage()
 
         Settings.setPayeeMapping(key: description, payee: payeeMapping)
-        XCTAssertEqual(transactionHelper(description: description).metaData.payee, payeeMapping)
+        XCTAssertEqual(try transactionHelper(description: description).metaData.payee, payeeMapping)
     }
 
-    func testSavedDescription() {
+    func testSavedDescription() throws {
         let description = "abcd"
         let descriptionMapping = "efg"
         Settings.storage = TestStorage()
 
         Settings.setDescriptionMapping(key: description, description: descriptionMapping)
-        XCTAssertEqual(descriptionHelper(description: description), descriptionMapping)
+        XCTAssertEqual(try descriptionHelper(description: description), descriptionMapping)
     }
 
-    func testSavedAccount() {
+    func testSavedAccount() throws {
         let payee = "abcd"
         Settings.storage = TestStorage()
 
         Settings.setAccountMapping(key: payee, account: TestUtils.chequing.fullName)
-        XCTAssertEqual(transactionHelper(description: "", payee: payee).postings.first { $0.accountName != TestUtils.cash }?.accountName, TestUtils.chequing)
+        XCTAssertEqual(try transactionHelper(description: "", payee: payee).postings.first { $0.accountName != TestUtils.cash }?.accountName, TestUtils.chequing)
     }
 
-    func testSavedPayeeAccount() {
+    func testSavedPayeeAccount() throws {
         let description = "abcd"
         let payee = "efg"
         Settings.storage = TestStorage()
 
         Settings.setAccountMapping(key: payee, account: TestUtils.chequing.fullName)
         Settings.setPayeeMapping(key: description, payee: payee)
-        XCTAssertEqual(transactionHelper(description: description).postings.first { $0.accountName != TestUtils.cash }?.accountName, TestUtils.chequing)
+        XCTAssertEqual(try transactionHelper(description: description).postings.first { $0.accountName != TestUtils.cash }?.accountName, TestUtils.chequing)
     }
 
-    func testGetPossibleDuplicateFor() {
+    func testGetPossibleDuplicateFor() throws {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
         let ledger = TestUtils.lederAccounts
         let transaction = TestUtils.transaction
         ledger.add(transaction)
 
-        let importer = TestCSVBaseImporter(ledger: ledger, csvReader: TestUtils.csvReader(description: "a", payee: "b", date: transaction.metaData.date), fileName: "")
+        let importer = TestCSVBaseImporter(ledger: ledger, csvReader: try TestUtils.csvReader(description: "a", payee: "b", date: transaction.metaData.date), fileName: "")
         importer.delegate = cashAccountDelegate
         importer.load()
         let importedTransaction = importer.nextTransaction()
@@ -155,14 +155,14 @@ final class CSVBaseImporterTests: XCTestCase {
         XCTAssertEqual(importedTransaction!.possibleDuplicate, transaction)
     }
 
-    func testGetPossibleDuplicateForNone() {
+    func testGetPossibleDuplicateForNone() throws {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
         let ledger = TestUtils.lederAccounts
         let transaction = TestUtils.transaction
         ledger.add(transaction)
 
-        let importer = TestCSVBaseImporter(ledger: ledger, csvReader: TestUtils.csvReader(description: "a", payee: "b", date: transaction.metaData.date), fileName: "")
+        let importer = TestCSVBaseImporter(ledger: ledger, csvReader: try TestUtils.csvReader(description: "a", payee: "b", date: transaction.metaData.date), fileName: "")
         let delegate = InputProviderDelegate(names: ["Account"], secrets: [false], returnValues: [TestUtils.chequing.fullName])
         importer.delegate = delegate
         importer.load()
@@ -172,30 +172,30 @@ final class CSVBaseImporterTests: XCTestCase {
         XCTAssert(delegate.verified)
     }
 
-    func testSanitizeDescription() {
-        XCTAssertEqual(descriptionHelper(description: "Shop1 C-IDP PURCHASE - 1234  BC  CA"), "Shop1")
-        XCTAssertEqual(descriptionHelper(description: "Shop1 IDP PURCHASE-1234"), "Shop1")
-        XCTAssertEqual(descriptionHelper(description: "Shop1 VISA DEBIT PUR-1234"), "Shop1")
-        XCTAssertEqual(descriptionHelper(description: "Shop1 VISA DEBIT REF-1234"), "Shop1")
-        XCTAssertEqual(descriptionHelper(description: "Shop1 WWWINTERAC PUR 1234"), "Shop1")
-        XCTAssertEqual(descriptionHelper(description: "Shop1 INTERAC E-TRF- 1234"), "Shop1")
-        XCTAssertEqual(descriptionHelper(description: "Shop1 1234 ~ Internet Withdrawal"), "Shop1")
-        XCTAssertEqual(descriptionHelper(description: "Shop1 - SAP"), "Shop1")
-        XCTAssertEqual(descriptionHelper(description: "Shop1 SAP"), "Shop1")
-        XCTAssertEqual(descriptionHelper(description: " SAP CANADA"), "SAP CANADA")
-        XCTAssertEqual(descriptionHelper(description: "Shop1 -MAY 2014"), "Shop1")
-        XCTAssertEqual(descriptionHelper(description: "Shop1 - JUNE 2016"), "Shop1")
-        XCTAssertEqual(descriptionHelper(description: "Shop1  BC  CA"), "Shop1")
-        XCTAssertEqual(descriptionHelper(description: "Shop1 #12345"), "Shop1")
-        XCTAssertEqual(descriptionHelper(description: "Shop1 # 12"), "Shop1")
+    func testSanitizeDescription() throws {
+        XCTAssertEqual(try descriptionHelper(description: "Shop1 C-IDP PURCHASE - 1234  BC  CA"), "Shop1")
+        XCTAssertEqual(try descriptionHelper(description: "Shop1 IDP PURCHASE-1234"), "Shop1")
+        XCTAssertEqual(try descriptionHelper(description: "Shop1 VISA DEBIT PUR-1234"), "Shop1")
+        XCTAssertEqual(try descriptionHelper(description: "Shop1 VISA DEBIT REF-1234"), "Shop1")
+        XCTAssertEqual(try descriptionHelper(description: "Shop1 WWWINTERAC PUR 1234"), "Shop1")
+        XCTAssertEqual(try descriptionHelper(description: "Shop1 INTERAC E-TRF- 1234"), "Shop1")
+        XCTAssertEqual(try descriptionHelper(description: "Shop1 1234 ~ Internet Withdrawal"), "Shop1")
+        XCTAssertEqual(try descriptionHelper(description: "Shop1 - SAP"), "Shop1")
+        XCTAssertEqual(try descriptionHelper(description: "Shop1 SAP"), "Shop1")
+        XCTAssertEqual(try descriptionHelper(description: " SAP CANADA"), "SAP CANADA")
+        XCTAssertEqual(try descriptionHelper(description: "Shop1 -MAY 2014"), "Shop1")
+        XCTAssertEqual(try descriptionHelper(description: "Shop1 - JUNE 2016"), "Shop1")
+        XCTAssertEqual(try descriptionHelper(description: "Shop1  BC  CA"), "Shop1")
+        XCTAssertEqual(try descriptionHelper(description: "Shop1 #12345"), "Shop1")
+        XCTAssertEqual(try descriptionHelper(description: "Shop1 # 12"), "Shop1")
     }
 
-    private func descriptionHelper(description: String) -> String {
-        transactionHelper(description: description).metaData.narration
+    private func descriptionHelper(description: String) throws -> String {
+        try transactionHelper(description: description).metaData.narration
     }
 
-    private func transactionHelper(description: String, payee: String = "payee") -> Transaction {
-        let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.csvReader(description: description, payee: payee), fileName: "")
+    private func transactionHelper(description: String, payee: String = "payee") throws -> Transaction {
+        let importer = TestCSVBaseImporter(ledger: nil, csvReader: try TestUtils.csvReader(description: description, payee: payee), fileName: "")
         cashAccountDelegate = InputProviderDelegate(names: ["Account"], secrets: [false], returnValues: [TestUtils.cash.fullName])
         importer.delegate = cashAccountDelegate
         importer.load()

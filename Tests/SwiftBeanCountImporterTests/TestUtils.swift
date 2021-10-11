@@ -254,6 +254,7 @@ enum TestUtils {
         return ledger
     }()
 
+    // swiftlint:disable force_try
     static var ledgerCashUSD: Ledger = {
         let ledger = Ledger()
         try! ledger.add(TestUtils.usdCommodity)
@@ -310,27 +311,28 @@ enum TestUtils {
     }()
 
     static var basicCSVReader: CSVReader {
-        csvReader(content: "Date, Description, Payee\n2020-01-01, def, ghi\n")
+        try! csvReader(content: "Date, Description, Payee\n2020-01-01, def, ghi\n")
     }
 
     static var dateMixedCSVReader: CSVReader {
-        csvReader(content: "Date, Description, Payee\n2020-02-01, a, b\n2020-01-01, c, d\n")
+        try! csvReader(content: "Date, Description, Payee\n2020-02-01, a, b\n2020-01-01, c, d\n")
     }
+    // swiftlint:enable force_try
 
-    static func csvReader(description: String, payee: String, date: Date? = nil) -> CSVReader {
+    static func csvReader(description: String, payee: String, date: Date? = nil) throws -> CSVReader {
         let dateString: String
         if let date = date {
             dateString = dateFormatter.string(from: date)
         } else {
             dateString = "2020-01-01"
         }
-        return csvReader(content: "Date, Description, Payee\n\(dateString), \(description), \(payee)\n")
+        return try csvReader(content: "Date, Description, Payee\n\(dateString), \(description), \(payee)\n")
     }
 
-    static func csvReader(content: String) -> CSVReader {
-        try! CSVReader(stream: InputStream(data: content.data(using: .utf8)!),
-                       hasHeaderRow: true,
-                       trimFields: true)
+    static func csvReader(content: String) throws -> CSVReader {
+        try CSVReader(stream: InputStream(data: content.data(using: .utf8)!),
+                      hasHeaderRow: true,
+                      trimFields: true)
     }
 
     static func ledgerManuLife(
@@ -338,9 +340,9 @@ enum TestUtils {
         employerBasic: String? = nil,
         employerMatch: String? = nil,
         employeeVoluntary: String? = nil
-    ) -> Ledger {
+    ) throws -> Ledger {
         let ledger = Ledger()
-        try! ledger.add(Commodity(symbol: fundSymbol, metaData: ["name": fundName]))
+        try ledger.add(Commodity(symbol: fundSymbol, metaData: ["name": fundName]))
         var metaData = [String: String]()
         if let employeeBasic = employeeBasic {
             metaData["employee-basic-fraction"] = employeeBasic
@@ -355,7 +357,7 @@ enum TestUtils {
             metaData["employee-voluntary-fraction"] = employeeVoluntary
         }
         let account = Account(name: TestUtils.parking, commoditySymbol: TestUtils.usd, metaData: metaData)
-        try! ledger.add(account)
+        try ledger.add(account)
         return ledger
     }
 
