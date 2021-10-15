@@ -12,6 +12,7 @@ import XCTest
 
 class PriceParserTests: XCTestCase {
 
+    // swiftlint:disable:next force_try
     private let price = try! Price(date: TestUtils.date20170609,
                                    commoditySymbol: "EUR",
                                    amount: Amount(number: Decimal(211) / Decimal(100), commoditySymbol: "CAD", decimalDigits: 2))

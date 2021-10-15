@@ -17,7 +17,7 @@ class BalanceParserTests: XCTestCase {
     private let endOfLineCommentString = "2017-06-09 balance Assets:Cash 10.00 CAD ;gfsdt     "
     private let specialCharacterString = "2017-06-09 balance Assets:💵 10.00 💵"
     private let invalidDateString = "2017-02-30 balance Assets:Cash 10.00 CAD"
-    private let accountName = try! AccountName("Assets:Cash")
+    private let accountName = try! AccountName("Assets:Cash") // swiftlint:disable:this force_try
 
     func testBasic() {
         let balance = BalanceParser.parseFrom(line: basicString)
@@ -40,10 +40,10 @@ class BalanceParserTests: XCTestCase {
                                         amount: Amount(number: 10, commoditySymbol: "CAD", decimalDigits: 2)))
     }
 
-    func testSpecialCharacter() {
+    func testSpecialCharacter() throws {
         let balance = BalanceParser.parseFrom(line: specialCharacterString)
         XCTAssertEqual(balance, Balance(date: TestUtils.date20170609,
-                                        accountName: try! AccountName("Assets:💵"),
+                                        accountName: try AccountName("Assets:💵"),
                                         amount: Amount(number: 10, commoditySymbol: "💵", decimalDigits: 2)))
     }
 

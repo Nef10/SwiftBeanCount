@@ -34,111 +34,113 @@ class PostingParserTests: XCTestCase {
     private let costAndUnitPricePostingString = "  Assets:💰 2.0 💵 {2017-06-09, 1.003 EUR} @ 1.003 EUR"
     private let costAndTotalPricePostingString = "  Assets:💰 2.0 💵 {1.003 EUR, \"TEST\"} @@ 2.0 EUR"
 
-    override func setUp() {
-        super.setUp()
-        basicPosting = Posting(accountName: try! AccountName("Assets:Checking"),
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+        basicPosting = Posting(accountName: try AccountName("Assets:Checking"),
                                amount: Amount(number: Decimal(1.23),
                                               commoditySymbol: "EUR",
                                               decimalDigits: 2))
     }
 
-    func testBasic() {
-        let posting = try! PostingParser.parseFrom(line: basicPostingString)!
+    func testBasic() throws {
+        let posting = try PostingParser.parseFrom(line: basicPostingString)!
         XCTAssertEqual(posting, basicPosting!)
     }
 
-    func testInteger() {
-        let posting = try! PostingParser.parseFrom(line: integerPostingString)!
+    func testInteger() throws {
+        let posting = try PostingParser.parseFrom(line: integerPostingString)!
         XCTAssertEqual(posting.amount, Amount(number: Decimal(1), commoditySymbol: "EUR", decimalDigits: 0))
     }
 
-    func testNoThousandsSeparator() {
-        let posting = try! PostingParser.parseFrom(line: noThousandsSeparatorPostingString)!
+    func testNoThousandsSeparator() throws {
+        let posting = try PostingParser.parseFrom(line: noThousandsSeparatorPostingString)!
         XCTAssertEqual(posting.amount, Amount(number: Decimal(100_000), commoditySymbol: "EUR", decimalDigits: 0))
     }
 
-    func testThousandsSeparator() {
-        let posting = try! PostingParser.parseFrom(line: thousandsSeparatorPostingString)!
+    func testThousandsSeparator() throws {
+        let posting = try PostingParser.parseFrom(line: thousandsSeparatorPostingString)!
         XCTAssertEqual(posting.amount, Amount(number: Decimal(100_000), commoditySymbol: "EUR", decimalDigits: 0))
     }
 
-    func testNegative() {
-        let posting = try! PostingParser.parseFrom(line: negativePostingString)!
+    func testNegative() throws {
+        let posting = try PostingParser.parseFrom(line: negativePostingString)!
         XCTAssertEqual(posting.amount, Amount(number: Decimal(-1.2), commoditySymbol: "EUR", decimalDigits: 1))
     }
 
-    func testPositive() {
-        let posting = try! PostingParser.parseFrom(line: positivePostingString)!
+    func testPositive() throws {
+        let posting = try PostingParser.parseFrom(line: positivePostingString)!
         XCTAssertEqual(posting, basicPosting!)
     }
 
-    func testSeparator() {
-        let posting = try! PostingParser.parseFrom(line: separatorPostingString)!
+    func testSeparator() throws {
+        let posting = try PostingParser.parseFrom(line: separatorPostingString)!
         XCTAssertEqual(posting.amount, Amount(number: Decimal(-1_000.23), commoditySymbol: "EUR", decimalDigits: 2))
     }
 
-    func testWhitespace() {
-        let posting = try! PostingParser.parseFrom(line: whitespacePostingString)!
+    func testWhitespace() throws {
+        let posting = try PostingParser.parseFrom(line: whitespacePostingString)!
         XCTAssertEqual(posting, basicPosting!)
     }
 
-    func testSpecialCharacterPostingString() {
-        let posting = try! PostingParser.parseFrom(line: specialCharacterPostingString)!
-        XCTAssertEqual(posting.accountName, try! AccountName("Assets:💰"))
+    func testSpecialCharacterPostingString() throws {
+        let posting = try PostingParser.parseFrom(line: specialCharacterPostingString)!
+        XCTAssertEqual(posting.accountName, try AccountName("Assets:💰"))
         XCTAssertEqual(posting.amount, Amount(number: Decimal(1), commoditySymbol: "💵", decimalDigits: 2))
     }
 
-    func testInvalidAccount() {
-        XCTAssertNil(try! PostingParser.parseFrom(line: invalidAccountPostingString))
+    func testInvalidAccount() throws {
+        XCTAssertNil(try PostingParser.parseFrom(line: invalidAccountPostingString))
     }
 
-    func testEndOfLineCommentPostingString() {
-        let posting = try! PostingParser.parseFrom(line: endOfLineCommentPostingString)!
+    func testEndOfLineCommentPostingString() throws {
+        let posting = try PostingParser.parseFrom(line: endOfLineCommentPostingString)!
         XCTAssertEqual(posting, basicPosting!)
     }
 
-    func testTotalPrice() {
-        let posting = try! PostingParser.parseFrom(line: totalPricePostingString)!
+    func testTotalPrice() throws {
+        let posting = try PostingParser.parseFrom(line: totalPricePostingString)!
         XCTAssertEqual(posting.amount, Amount(number: Decimal(-2.00), commoditySymbol: "💵", decimalDigits: 2))
         XCTAssertEqual(posting.price, Amount(number: Decimal(1), commoditySymbol: "EUR", decimalDigits: 1))
     }
 
-    func testUnitPrice() {
-        let posting = try! PostingParser.parseFrom(line: unitPricePostingString)!
+    func testUnitPrice() throws {
+        let posting = try PostingParser.parseFrom(line: unitPricePostingString)!
         XCTAssertEqual(posting.amount, Amount(number: Decimal(2), commoditySymbol: "💵", decimalDigits: 1))
         XCTAssertEqual(posting.price, Amount(number: Decimal(1.003), commoditySymbol: "EUR", decimalDigits: 3))
     }
 
-    func testCost() {
-        let posting = try! PostingParser.parseFrom(line: costPostingString)!
+    func testCost() throws {
+        let posting = try PostingParser.parseFrom(line: costPostingString)!
         XCTAssertEqual(posting.cost!,
-                       try! Cost(amount: Amount(number: Decimal(1.003), commoditySymbol: "EUR", decimalDigits: 3), date: TestUtils.date20170609, label: "TEST"))
+                       try Cost(amount: Amount(number: Decimal(1.003), commoditySymbol: "EUR", decimalDigits: 3), date: TestUtils.date20170609, label: "TEST"))
     }
 
-    func testInvalidCost() {
+    func testInvalidCost() throws {
         XCTAssertThrowsError(try PostingParser.parseFrom(line: invalidCostPostingString))
     }
 
-    func testCostAndUnitPrice() {
-        let posting = try! PostingParser.parseFrom(line: costAndUnitPricePostingString)!
+    func testCostAndUnitPrice() throws {
+        let posting = try PostingParser.parseFrom(line: costAndUnitPricePostingString)!
         XCTAssertEqual(posting.cost!,
-                       try! Cost(amount: Amount(number: Decimal(1.003), commoditySymbol: "EUR", decimalDigits: 3), date: TestUtils.date20170609, label: nil))
+                       try Cost(amount: Amount(number: Decimal(1.003), commoditySymbol: "EUR", decimalDigits: 3), date: TestUtils.date20170609, label: nil))
         XCTAssertEqual(posting.price, Amount(number: Decimal(1.003), commoditySymbol: "EUR", decimalDigits: 3))
     }
 
-    func testCostAndTotalPrice() {
-        let posting = try! PostingParser.parseFrom(line: costAndTotalPricePostingString)!
-        XCTAssertEqual(posting.cost!, try! Cost(amount: Amount(number: Decimal(1.003), commoditySymbol: "EUR", decimalDigits: 3), date: nil, label: "TEST"))
+    func testCostAndTotalPrice() throws {
+        let posting = try PostingParser.parseFrom(line: costAndTotalPricePostingString)!
+        XCTAssertEqual(posting.cost!, try Cost(amount: Amount(number: Decimal(1.003), commoditySymbol: "EUR", decimalDigits: 3), date: nil, label: "TEST"))
         XCTAssertEqual(posting.price, Amount(number: Decimal(1), commoditySymbol: "EUR", decimalDigits: 1))
     }
 
     func testPerformance() {
         self.measure {
             for _ in 0...1_000 {
+                // swiftlint:disable force_try
                 _ = try! PostingParser.parseFrom(line: basicPostingString)!
                 _ = try! PostingParser.parseFrom(line: whitespacePostingString)!
                 _ = try! PostingParser.parseFrom(line: endOfLineCommentPostingString)!
                 _ = try! PostingParser.parseFrom(line: specialCharacterPostingString)!
+                // swiftlint:enable force_try
             }
         }
     }
