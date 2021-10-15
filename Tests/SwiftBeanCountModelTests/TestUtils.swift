@@ -40,15 +40,15 @@ enum TestUtils {
     }()
 
     static var chequing: AccountName = {
-        try! AccountName("Assets:Chequing")
+        try! AccountName("Assets:Chequing") // swiftlint:disable:this force_try
     }()
 
     static var cash: AccountName = {
-        try! AccountName("Assets:Cash")
+        try! AccountName("Assets:Cash") // swiftlint:disable:this force_try
     }()
 
     static var income: AccountName = {
-        try! AccountName("Income:Test")
+        try! AccountName("Income:Test") // swiftlint:disable:this force_try
     }()
 
     static var amount: Amount = {

@@ -54,8 +54,8 @@ class AccountTests: XCTestCase {
         }
     }
 
-    func testDescriptionSpecialCharacters() {
-        let accountNameSpecial = try! AccountName("Assets:💰")
+    func testDescriptionSpecialCharacters() throws {
+        let accountNameSpecial = try AccountName("Assets:💰")
 
         var accout = Account(name: accountNameSpecial)
         XCTAssertEqual(String(describing: accout), "")
@@ -250,10 +250,10 @@ class AccountTests: XCTestCase {
         }
     }
 
-    func testValidateBalance() {
+    func testValidateBalance() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
-        try! ledger.add(account)
+        try ledger.add(account)
 
         account.balances.append(Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: Amount(number: 0, commoditySymbol: TestUtils.cad)))
         guard case .valid = account.validateBalance(in: ledger) else {
@@ -287,10 +287,10 @@ class AccountTests: XCTestCase {
         }
     }
 
-    func testValidateBalanceEmpty() {
+    func testValidateBalanceEmpty() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
-        try! ledger.add(account)
+        try ledger.add(account)
 
         guard case .valid = account.validateBalance(in: ledger) else {
             XCTFail("\(account) is not valid")
@@ -307,10 +307,10 @@ class AccountTests: XCTestCase {
         }
     }
 
-    func testValidateBalanceDifferentCommodity() {
+    func testValidateBalanceDifferentCommodity() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash)
-        try! ledger.add(account)
+        try ledger.add(account)
 
         account.balances.append(Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: Amount(number: 0, commoditySymbol: TestUtils.eur)))
 
@@ -349,10 +349,10 @@ class AccountTests: XCTestCase {
         }
     }
 
-    func testValidateBalanceTolerance() {
+    func testValidateBalanceTolerance() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
-        try! ledger.add(account)
+        try ledger.add(account)
 
         var posting = Posting(accountName: TestUtils.cash, amount: Amount(number: 1.1, commoditySymbol: TestUtils.cad, decimalDigits: 1))
         var transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
@@ -392,10 +392,10 @@ class AccountTests: XCTestCase {
         }
     }
 
-    func testValidateInventoryEmpty() {
+    func testValidateInventoryEmpty() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
-        try! ledger.add(account)
+        try ledger.add(account)
 
         guard case .valid = account.validateInventory(in: ledger) else {
             XCTFail("\(account) is not valid")
@@ -403,29 +403,29 @@ class AccountTests: XCTestCase {
         }
     }
 
-    func testValidateInventory() {
+    func testValidateInventory() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
-        try! ledger.add(account)
+        try ledger.add(account)
 
         var posting = Posting(accountName: TestUtils.cash,
                               amount: Amount(number: 1.1, commoditySymbol: TestUtils.cad, decimalDigits: 1),
                               price: nil,
-                              cost: try! Cost(amount: Amount(number: 5, commoditySymbol: TestUtils.cad), date: nil, label: "1"))
+                              cost: try Cost(amount: Amount(number: 5, commoditySymbol: TestUtils.cad), date: nil, label: "1"))
         var transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         ledger.add(transaction)
 
         posting = Posting(accountName: TestUtils.cash,
                           amount: Amount(number: 1.1, commoditySymbol: TestUtils.cad, decimalDigits: 1),
                           price: nil,
-                          cost: try! Cost(amount: Amount(number: 5, commoditySymbol: TestUtils.cad), date: nil, label: nil))
+                          cost: try Cost(amount: Amount(number: 5, commoditySymbol: TestUtils.cad), date: nil, label: nil))
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         ledger.add(transaction)
 
         posting = Posting(accountName: TestUtils.cash,
                           amount: Amount(number: -1, commoditySymbol: TestUtils.cad, decimalDigits: 0),
                           price: nil,
-                          cost: try! Cost(amount: Amount(number: 5, commoditySymbol: TestUtils.cad), date: nil, label: "1"))
+                          cost: try Cost(amount: Amount(number: 5, commoditySymbol: TestUtils.cad), date: nil, label: "1"))
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         ledger.add(transaction)
 
@@ -435,12 +435,12 @@ class AccountTests: XCTestCase {
         }
     }
 
-    func testValidateInvalidInventory() {
+    func testValidateInvalidInventory() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
         let amount = Amount(number: 1.1, commoditySymbol: TestUtils.cad, decimalDigits: 1)
-        let cost = try! Cost(amount: Amount(number: 5, commoditySymbol: TestUtils.cad), date: nil, label: "1")
-        try! ledger.add(account)
+        let cost = try Cost(amount: Amount(number: 5, commoditySymbol: TestUtils.cad), date: nil, label: "1")
+        try ledger.add(account)
 
         var posting = Posting(accountName: TestUtils.cash, amount: amount, price: nil, cost: cost)
         var transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
@@ -453,7 +453,7 @@ class AccountTests: XCTestCase {
         posting = Posting(accountName: TestUtils.cash,
                           amount: Amount(number: -1.0, commoditySymbol: TestUtils.cad, decimalDigits: 0),
                           price: nil,
-                          cost: try! Cost(amount: Amount(number: 5, commoditySymbol: TestUtils.cad), date: nil, label: nil))
+                          cost: try Cost(amount: Amount(number: 5, commoditySymbol: TestUtils.cad), date: nil, label: nil))
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170610, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         ledger.add(transaction)
 

@@ -23,16 +23,16 @@ class InventoryTests: XCTestCase {
         }
     }
 
-    func testDescription() {
+    func testDescription() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
             let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost1 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+            let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
             let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
             let amount2 = Amount(number: 3.0, commoditySymbol: TestUtils.eur, decimalDigits: 2)
-            let cost2 = try! Cost(amount: Amount(number: 5.0, commoditySymbol: TestUtils.cad, decimalDigits: 2), date: date, label: nil)
+            let cost2 = try Cost(amount: Amount(number: 5.0, commoditySymbol: TestUtils.cad, decimalDigits: 2), date: date, label: nil)
             let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
             do {
@@ -55,11 +55,11 @@ class InventoryTests: XCTestCase {
 
 extension InventoryTests { // Test Adding
 
-    func testAdding() {
+    func testAdding() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
             let amount = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+            let cost = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
             let posting = Posting(accountName: TestUtils.cash, amount: amount, price: nil, cost: cost)
 
             do {
@@ -75,11 +75,11 @@ extension InventoryTests { // Test Adding
         }
     }
 
-    func testAddingTransactionDateUsed() {
+    func testAddingTransactionDateUsed() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
             let amount = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
+            let cost = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
             let posting = Posting(accountName: TestUtils.cash, amount: amount, price: nil, cost: cost)
 
             do {
@@ -93,16 +93,16 @@ extension InventoryTests { // Test Adding
         }
     }
 
-    func testAddingMultiple() {
+    func testAddingMultiple() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
             let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost1 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+            let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
             let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
             let amount2 = Amount(number: 3.0, commoditySymbol: TestUtils.eur, decimalDigits: 2)
-            let cost2 = try! Cost(amount: Amount(number: 5.0, commoditySymbol: TestUtils.cad, decimalDigits: 2), date: date, label: nil)
+            let cost2 = try Cost(amount: Amount(number: 5.0, commoditySymbol: TestUtils.cad, decimalDigits: 2), date: date, label: nil)
             let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
             do {
@@ -122,12 +122,12 @@ extension InventoryTests { // Test Adding
         }
     }
 
-    func testAddingSameCost() {
+    func testAddingSameCost() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
             let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+            let cost = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
             let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost)
 
             let amount2 = Amount(number: 3.0, commoditySymbol: TestUtils.eur, decimalDigits: 2)
@@ -150,12 +150,12 @@ extension InventoryTests { // Test Adding
         }
     }
 
-    func testAddingSameCostDifferentCommodity() {
+    func testAddingSameCostDifferentCommodity() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
             let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+            let cost = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
             let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost)
 
             let amount2 = Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 2)
@@ -178,11 +178,11 @@ extension InventoryTests { // Test Adding
         }
     }
 
-    func testAddingNegative() {
+    func testAddingNegative() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
             let amount = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+            let cost = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
             let posting = Posting(accountName: TestUtils.cash, amount: amount, price: nil, cost: cost)
 
             do {
@@ -198,16 +198,16 @@ extension InventoryTests { // Test Adding
         }
     }
 
-    func testAddingMultipleNegative() {
+    func testAddingMultipleNegative() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
             let amount1 = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost1 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+            let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
             let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
             let amount2 = Amount(number: -3.0, commoditySymbol: TestUtils.eur, decimalDigits: 2)
-            let cost2 = try! Cost(amount: Amount(number: 5.0, commoditySymbol: TestUtils.cad, decimalDigits: 2), date: date, label: nil)
+            let cost2 = try Cost(amount: Amount(number: 5.0, commoditySymbol: TestUtils.cad, decimalDigits: 2), date: date, label: nil)
             let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
             do {
@@ -227,12 +227,12 @@ extension InventoryTests { // Test Adding
         }
     }
 
-    func testAddingSameCostNegative() {
+    func testAddingSameCostNegative() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
             let amount1 = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+            let cost = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
             let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost)
 
             let amount2 = Amount(number: -3.0, commoditySymbol: TestUtils.eur, decimalDigits: 2)
@@ -259,16 +259,16 @@ extension InventoryTests { // Test Adding
 
 extension InventoryTests { // Test Reduce
 
-    func testReduce() {
+    func testReduce() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
             let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost1 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+            let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
             let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
             let amount2 = Amount(number: -1.0, commoditySymbol: TestUtils.eur, decimalDigits: 2)
-            let cost2 = try! Cost(amount: nil, date: nil, label: nil)
+            let cost2 = try Cost(amount: nil, date: nil, label: nil)
             let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
             do {
@@ -289,16 +289,16 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testReduceMoreThanExist() {
+    func testReduceMoreThanExist() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
             let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost1 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+            let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
             let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
             let amount2 = Amount(number: -3.0, commoditySymbol: TestUtils.eur, decimalDigits: 2)
-            let cost2 = try! Cost(amount: nil, date: nil, label: nil)
+            let cost2 = try Cost(amount: nil, date: nil, label: nil)
             let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
             var errorMessage = ""
@@ -314,16 +314,16 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testReduceNoLot() {
+    func testReduceNoLot() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
             let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost1 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+            let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
             let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
             let amount2 = Amount(number: -1.0, commoditySymbol: TestUtils.eur, decimalDigits: 2)
-            let cost2 = try! Cost(amount: Amount(number: 4.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
+            let cost2 = try Cost(amount: Amount(number: 4.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
             let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
             var errorMessage = ""
@@ -339,16 +339,16 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testReducePositive() {
+    func testReducePositive() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
             let amount1 = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost1 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+            let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
             let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
             let amount2 = Amount(number: 1.0, commoditySymbol: TestUtils.eur, decimalDigits: 2)
-            let cost2 = try! Cost(amount: nil, date: nil, label: nil)
+            let cost2 = try Cost(amount: nil, date: nil, label: nil)
             let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
             do {
@@ -367,20 +367,20 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testReduceDifferentCurrencyPresent() {
+    func testReduceDifferentCurrencyPresent() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
             let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost1 = try! Cost(amount: Amount(number: 3.567, commoditySymbol: TestUtils.cad, decimalDigits: 3), date: date, label: nil)
+            let cost1 = try Cost(amount: Amount(number: 3.567, commoditySymbol: TestUtils.cad, decimalDigits: 3), date: date, label: nil)
             let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
             let amount2 = Amount(number: 1.0, commoditySymbol: TestUtils.cad, decimalDigits: 2)
-            let cost2 = try! Cost(amount: nil, date: date, label: nil)
+            let cost2 = try Cost(amount: nil, date: date, label: nil)
             let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
             let amount3 = Amount(number: -1.0, commoditySymbol: TestUtils.eur, decimalDigits: 2)
-            let cost3 = try! Cost(amount: nil, date: nil, label: nil)
+            let cost3 = try Cost(amount: nil, date: nil, label: nil)
             let posting3 = Posting(accountName: TestUtils.cash, amount: amount3, price: nil, cost: cost3)
 
             do {
@@ -405,16 +405,16 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testReduceDifferentLotPresent() {
+    func testReduceDifferentLotPresent() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
             let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost1 = try! Cost(amount: Amount(number: 5.5, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+            let cost1 = try Cost(amount: Amount(number: 5.5, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
             let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
             let amount2 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost2 = try! Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+            let cost2 = try Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
             let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
             let amount3 = Amount(number: -1.0, commoditySymbol: TestUtils.eur, decimalDigits: 2)
@@ -442,19 +442,19 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testReduceAmbigiousStrict() {
+    func testReduceAmbigiousStrict() throws {
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let cost1 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+        let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
         let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
         let amount2 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let cost2 = try! Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+        let cost2 = try Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
         let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
         let amount3 = Amount(number: -1.0, commoditySymbol: TestUtils.eur, decimalDigits: 2)
-        let posting3 = Posting(accountName: TestUtils.cash, amount: amount3, price: nil, cost: try! Cost(amount: nil, date: nil, label: nil))
+        let posting3 = Posting(accountName: TestUtils.cash, amount: amount3, price: nil, cost: try Cost(amount: nil, date: nil, label: nil))
 
         do {
             let result1 = try inventory.book(posting: transactionPosting(posting1))
@@ -480,20 +480,20 @@ extension InventoryTests { // Test Reduce
         XCTAssertEqual(inventory.inventory.last?.cost, cost2)
     }
 
-    func testReduceAmbigiousNotEnoughUnits() {
+    func testReduceAmbigiousNotEnoughUnits() throws {
         for bookingMethod in [BookingMethod.lifo, BookingMethod.fifo] {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
             let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost1 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+            let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
             let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
             let amount2 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost2 = try! Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+            let cost2 = try Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
             let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
             let amount3 = Amount(number: -5.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost3 = try! Cost(amount: nil, date: nil, label: nil)
+            let cost3 = try Cost(amount: nil, date: nil, label: nil)
             let posting3 = Posting(accountName: TestUtils.cash, amount: amount3, price: nil, cost: cost3)
 
             do {
@@ -511,19 +511,19 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testReduceAmbigiousLIFO() {
+    func testReduceAmbigiousLIFO() throws {
         let inventory = Inventory(bookingMethod: .lifo)
 
         let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let cost1 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+        let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
         let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
         let amount2 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let cost2 = try! Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+        let cost2 = try Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
         let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
         let amount3 = Amount(number: -1.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let posting3 = Posting(accountName: TestUtils.cash, amount: amount3, price: nil, cost: try! Cost(amount: nil, date: nil, label: nil))
+        let posting3 = Posting(accountName: TestUtils.cash, amount: amount3, price: nil, cost: try Cost(amount: nil, date: nil, label: nil))
 
         do {
             let result1 = try inventory.book(posting: transactionPosting(posting1))
@@ -548,19 +548,19 @@ extension InventoryTests { // Test Reduce
         XCTAssertEqual(inventory.inventory.last?.cost, cost2)
     }
 
-    func testReduceAmbigiousLIFOExactLot() {
+    func testReduceAmbigiousLIFOExactLot() throws {
         let inventory = Inventory(bookingMethod: .lifo)
 
         let amount1 = Amount(number: 3.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let cost1 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+        let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
         let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
         let amount2 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let cost2 = try! Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+        let cost2 = try Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
         let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
         let amount3 = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let posting3 = Posting(accountName: TestUtils.cash, amount: amount3, price: nil, cost: try! Cost(amount: nil, date: nil, label: nil))
+        let posting3 = Posting(accountName: TestUtils.cash, amount: amount3, price: nil, cost: try Cost(amount: nil, date: nil, label: nil))
 
         do {
             let result1 = try inventory.book(posting: transactionPosting(posting1))
@@ -583,23 +583,23 @@ extension InventoryTests { // Test Reduce
         XCTAssertEqual(inventory.inventory.last?.cost, cost1)
     }
 
-    func testReduceAmbigiousLIFOMultipleLots() {
+    func testReduceAmbigiousLIFOMultipleLots() throws {
         let inventory = Inventory(bookingMethod: .lifo)
 
         let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let cost1 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+        let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
         let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
         let amount2 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let cost2 = try! Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+        let cost2 = try Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
         let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
         let amount3 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let cost3 = try! Cost(amount: Amount(number: 4.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+        let cost3 = try Cost(amount: Amount(number: 4.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
         let posting3 = Posting(accountName: TestUtils.cash, amount: amount3, price: nil, cost: cost3)
 
         let amount4 = Amount(number: -5.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let posting4 = Posting(accountName: TestUtils.cash, amount: amount4, price: nil, cost: try! Cost(amount: nil, date: nil, label: nil))
+        let posting4 = Posting(accountName: TestUtils.cash, amount: amount4, price: nil, cost: try Cost(amount: nil, date: nil, label: nil))
 
         do {
             let result1 = try inventory.book(posting: transactionPosting(posting1))
@@ -624,19 +624,19 @@ extension InventoryTests { // Test Reduce
         XCTAssertEqual(inventory.inventory.last?.cost, cost1)
     }
 
-    func testReduceAmbigiousFIFO() {
+    func testReduceAmbigiousFIFO() throws {
         let inventory = Inventory(bookingMethod: .fifo)
 
         let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let cost1 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+        let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
         let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
         let amount2 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let cost2 = try! Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+        let cost2 = try Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
         let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
         let amount3 = Amount(number: -1.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let posting3 = Posting(accountName: TestUtils.cash, amount: amount3, price: nil, cost: try! Cost(amount: nil, date: nil, label: nil))
+        let posting3 = Posting(accountName: TestUtils.cash, amount: amount3, price: nil, cost: try Cost(amount: nil, date: nil, label: nil))
 
         do {
             let result1 = try inventory.book(posting: transactionPosting(posting1))
@@ -661,19 +661,19 @@ extension InventoryTests { // Test Reduce
         XCTAssertEqual(inventory.inventory.last?.cost, cost2)
     }
 
-    func testReduceAmbigiousFIFOExactLot() {
+    func testReduceAmbigiousFIFOExactLot() throws {
         let inventory = Inventory(bookingMethod: .fifo)
 
         let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let cost1 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+        let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
         let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
         let amount2 = Amount(number: 3.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let cost2 = try! Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+        let cost2 = try Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
         let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
         let amount3 = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let posting3 = Posting(accountName: TestUtils.cash, amount: amount3, price: nil, cost: try! Cost(amount: nil, date: nil, label: nil))
+        let posting3 = Posting(accountName: TestUtils.cash, amount: amount3, price: nil, cost: try Cost(amount: nil, date: nil, label: nil))
 
         do {
             let result1 = try inventory.book(posting: transactionPosting(posting1))
@@ -696,23 +696,23 @@ extension InventoryTests { // Test Reduce
         XCTAssertEqual(inventory.inventory.last?.cost, cost2)
     }
 
-    func testReduceAmbigiousFIFOMultipleLots() {
+    func testReduceAmbigiousFIFOMultipleLots() throws {
         let inventory = Inventory(bookingMethod: .fifo)
 
         let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let cost1 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+        let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
         let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
         let amount2 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let cost2 = try! Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+        let cost2 = try Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
         let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
         let amount3 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let cost3 = try! Cost(amount: Amount(number: 4.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+        let cost3 = try Cost(amount: Amount(number: 4.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
         let posting3 = Posting(accountName: TestUtils.cash, amount: amount3, price: nil, cost: cost3)
 
         let amount4 = Amount(number: -5.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let posting4 = Posting(accountName: TestUtils.cash, amount: amount4, price: nil, cost: try! Cost(amount: nil, date: nil, label: nil))
+        let posting4 = Posting(accountName: TestUtils.cash, amount: amount4, price: nil, cost: try Cost(amount: nil, date: nil, label: nil))
 
         do {
             let result1 = try inventory.book(posting: transactionPosting(posting1))
@@ -737,16 +737,16 @@ extension InventoryTests { // Test Reduce
         XCTAssertEqual(inventory.inventory.last?.cost, cost3)
     }
 
-    func testTotalReduce() {
+    func testTotalReduce() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
             let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost1 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
+            let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
             let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
             let amount2 = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 2)
-            let cost2 = try! Cost(amount: nil, date: nil, label: nil)
+            let cost2 = try Cost(amount: nil, date: nil, label: nil)
             let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
             do {
@@ -764,20 +764,20 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testTotalReduceMultipleLots() {
+    func testTotalReduceMultipleLots() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
             let amount1 = Amount(number: 2.5, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost1 = try! Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
+            let cost1 = try Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
             let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
             let amount2 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost2 = try! Cost(amount: Amount(number: 3.05, commoditySymbol: TestUtils.cad, decimalDigits: 2), date: date, label: nil)
+            let cost2 = try Cost(amount: Amount(number: 3.05, commoditySymbol: TestUtils.cad, decimalDigits: 2), date: date, label: nil)
             let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
             let amount3 = Amount(number: -4.5, commoditySymbol: TestUtils.eur, decimalDigits: 2)
-            let cost3 = try! Cost(amount: nil, date: nil, label: nil)
+            let cost3 = try Cost(amount: nil, date: nil, label: nil)
             let posting3 = Posting(accountName: TestUtils.cash, amount: amount3, price: nil, cost: cost3)
 
             do {
@@ -795,20 +795,20 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testTotalReduceDifferentCurrencyPresent() {
+    func testTotalReduceDifferentCurrencyPresent() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
             let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost1 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
+            let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
             let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
             let amount2 = Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1)
-            let cost2 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+            let cost2 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
             let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
             let amount3 = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 2)
-            let cost3 = try! Cost(amount: nil, date: nil, label: nil)
+            let cost3 = try Cost(amount: nil, date: nil, label: nil)
             let posting3 = Posting(accountName: TestUtils.cash, amount: amount3, price: nil, cost: cost3)
 
             do {
@@ -830,16 +830,16 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testTotalReduceDifferentLotPresent() {
+    func testTotalReduceDifferentLotPresent() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
             let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost1 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
+            let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
             let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
             let amount2 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost2 = try! Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
+            let cost2 = try Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: date, label: nil)
             let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
             let amount3 = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 2)
@@ -864,20 +864,20 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testAmountDifferentCurrency() {
+    func testAmountDifferentCurrency() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
             let amount1 = Amount(number: 2.5, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost1 = try! Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
+            let cost1 = try Cost(amount: Amount(number: 2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
             let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: nil, cost: cost1)
 
             let amount2 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-            let cost2 = try! Cost(amount: Amount(number: 3.05, commoditySymbol: TestUtils.eur, decimalDigits: 2), date: date, label: nil)
+            let cost2 = try Cost(amount: Amount(number: 3.05, commoditySymbol: TestUtils.eur, decimalDigits: 2), date: date, label: nil)
             let posting2 = Posting(accountName: TestUtils.cash, amount: amount2, price: nil, cost: cost2)
 
             let amount3 = Amount(number: -4.5, commoditySymbol: TestUtils.eur, decimalDigits: 2)
-            let cost3 = try! Cost(amount: nil, date: nil, label: nil)
+            let cost3 = try Cost(amount: nil, date: nil, label: nil)
             let posting3 = Posting(accountName: TestUtils.cash, amount: amount3, price: nil, cost: cost3)
 
             do {
@@ -911,34 +911,34 @@ extension InventoryTests { // Test Reduce
 
 extension InventoryTests { // Inventory.Lot Tests
 
-    func testLotDescription() {
+    func testLotDescription() throws {
         let amount = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let cost = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
+        let cost = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
         let lot = Inventory.Lot(units: amount, cost: cost)
         XCTAssertEqual(String(describing: lot), "\(amount) \(cost)")
     }
 
-    func testLotEqual() {
+    func testLotEqual() throws {
         let amount = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let cost = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
+        let cost = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
         let lot1 = Inventory.Lot(units: amount, cost: cost)
         let lot2 = Inventory.Lot(units: amount, cost: cost)
         XCTAssertTrue(lot1 == lot2)
     }
 
-    func testLotEqualRespectsAmount() {
+    func testLotEqualRespectsAmount() throws {
         let amount1 = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
         let amount2 = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 2)
-        let cost = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
+        let cost = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
         let lot1 = Inventory.Lot(units: amount1, cost: cost)
         let lot2 = Inventory.Lot(units: amount2, cost: cost)
         XCTAssertFalse(lot1 == lot2)
     }
 
-    func testLotEqualRespectsCost() {
+    func testLotEqualRespectsCost() throws {
         let amount = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
-        let cost1 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 2), date: nil, label: nil)
-        let cost2 = try! Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
+        let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 2), date: nil, label: nil)
+        let cost2 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
         let lot1 = Inventory.Lot(units: amount, cost: cost1)
         let lot2 = Inventory.Lot(units: amount, cost: cost2)
         XCTAssertFalse(lot1 == lot2)

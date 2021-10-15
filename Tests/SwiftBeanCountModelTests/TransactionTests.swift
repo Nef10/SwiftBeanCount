@@ -22,12 +22,11 @@ class TransactionTests: XCTestCase {
     private var account2: Account?
     private let ledger = Ledger()
 
-    override func setUp() {
-        super.setUp()
+    override func setUpWithError() throws {
         account1 = Account(name: TestUtils.cash, opening: TestUtils.date20170608)
         account2 = Account(name: TestUtils.chequing, opening: TestUtils.date20170608)
-        try! ledger.add(account1!)
-        try! ledger.add(account2!)
+        try ledger.add(account1!)
+        try ledger.add(account2!)
         let transactionMetaData1 = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let transactionMetaData2 = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let transactionMetaData3 = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.incomplete, tags: [])
@@ -59,7 +58,7 @@ class TransactionTests: XCTestCase {
         ledger.add(transaction3WithPosting1)
         ledger.add(transaction1WithPosting1And2)
         ledger.add(transaction2WithPosting1And2)
-
+        try super.setUpWithError()
     }
 
     func testDescriptionWithoutPosting() {
@@ -120,11 +119,11 @@ class TransactionTests: XCTestCase {
         }
     }
 
-    func testIsValidInvalidPosting() {
+    func testIsValidInvalidPosting() throws {
         // Accounts are not opened
         let ledger = Ledger()
-        try! ledger.add(Account(name: TestUtils.cash))
-        try! ledger.add(Account(name: TestUtils.chequing, opening: TestUtils.date20170608))
+        try ledger.add(Account(name: TestUtils.cash))
+        try ledger.add(Account(name: TestUtils.chequing, opening: TestUtils.date20170608))
         ledger.add(transaction1WithPosting1And2)
         if case .invalid(let error) = transaction1WithPosting1And2.validate(in: ledger) {
             XCTAssertEqual(error, """
@@ -250,7 +249,7 @@ class TransactionTests: XCTestCase {
         }
     }
 
-    func testIsValidBalancedToleranceCost() {
+    func testIsValidBalancedToleranceCost() throws {
         // Assets:Cash     -8.52  EUR
         // Assets:Checking 10.00000 CAD { 0.85250 EUR }
 
@@ -260,7 +259,7 @@ class TransactionTests: XCTestCase {
         let costAmount = Amount(number: Decimal(sign: FloatingPointSign.plus, exponent: -5, significand: Decimal(85_250)),
                                 commoditySymbol: TestUtils.eur,
                                 decimalDigits: 5)
-        let cost = try! Cost(amount: costAmount, date: TestUtils.date20170608, label: nil)
+        let cost = try Cost(amount: costAmount, date: TestUtils.date20170608, label: nil)
         let posting1 = Posting(accountName: TestUtils.cash, amount: amount1)
         let posting2 = Posting(accountName: TestUtils.chequing, amount: amount2, price: nil, cost: cost)
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting1, posting2])
@@ -277,7 +276,7 @@ class TransactionTests: XCTestCase {
         }
     }
 
-    func testIsValidUnbalancedToleranceCost() {
+    func testIsValidUnbalancedToleranceCost() throws {
         // Assets:Cash     -8.52  EUR
         // Assets:Checking 10.00000 CAD { 0.85251 EUR }
 
@@ -289,7 +288,7 @@ class TransactionTests: XCTestCase {
         let costAmount = Amount(number: Decimal(sign: FloatingPointSign.plus, exponent: -5, significand: Decimal(85_251)),
                                 commoditySymbol: TestUtils.eur,
                                 decimalDigits: 5)
-        let cost = try! Cost(amount: costAmount, date: nil, label: nil)
+        let cost = try Cost(amount: costAmount, date: nil, label: nil)
         let posting1 = Posting(accountName: TestUtils.cash, amount: amount1)
         let posting2 = Posting(accountName: TestUtils.chequing, amount: amount2, price: nil, cost: cost)
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting1, posting2])
@@ -310,7 +309,7 @@ class TransactionTests: XCTestCase {
         }
     }
 
-    func testEffectZeroPrice() {
+    func testEffectZeroPrice() throws {
         // Assets:Cash     -8.52  EUR
         // Assets:Checking 10.00000 CAD @ 0.85250 EUR
 
@@ -323,13 +322,13 @@ class TransactionTests: XCTestCase {
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting1, posting2])
         ledger.add(transaction)
 
-        guard case .valid = try! transaction.effect(in: ledger).validateZeroWithTolerance() else {
+        guard case .valid = try transaction.effect(in: ledger).validateZeroWithTolerance() else {
             XCTFail("\(transaction) effect is not zero")
             return
         }
     }
 
-    func testEffectCost() {
+    func testEffectCost() throws {
         // Income:Test     -8.52  EUR
         // Assets:Checking 10.00000 CAD { 0.85250 EUR }
 
@@ -339,13 +338,13 @@ class TransactionTests: XCTestCase {
         let costAmount = Amount(number: Decimal(sign: FloatingPointSign.plus, exponent: -5, significand: Decimal(85_250)),
                                 commoditySymbol: TestUtils.eur,
                                 decimalDigits: 5)
-        let cost = try! Cost(amount: costAmount, date: TestUtils.date20170608, label: nil)
+        let cost = try Cost(amount: costAmount, date: TestUtils.date20170608, label: nil)
         let posting1 = Posting(accountName: TestUtils.income, amount: amount1)
         let posting2 = Posting(accountName: TestUtils.chequing, amount: amount2, price: nil, cost: cost)
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting1, posting2])
         ledger.add(transaction)
 
-        let effect = try! transaction.effect(in: ledger)
+        let effect = try transaction.effect(in: ledger)
         XCTAssertEqual(effect.amounts.count, 1)
         guard case .valid = effect.validateOneAmountWithTolerance(amount: amount1) else {
             XCTFail("\(transaction) effect is not the expected value")
