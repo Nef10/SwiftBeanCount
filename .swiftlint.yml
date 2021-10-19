@@ -1,4 +1,4 @@
-# Updated for 0.44.0
+# Updated for 0.45.0
 
 excluded:
   - ".build"
@@ -98,8 +98,6 @@ disabled_rules:
 line_length: 175
 function_body_length: 30
 identifier_name:
-  excluded:
-    - id
   max_length:
     warning: 45
 type_name:
