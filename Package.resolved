@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/Nef10/RogersBankDownloader.git",
         "state": {
           "branch": null,
-          "revision": "4b29e04a04c04d7386b85247ffafe71d61e3346f",
-          "version": "0.0.5"
+          "revision": "7021815ed20c6e6356e4efb947e61ed46f044b57",
+          "version": "0.0.6"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/Nef10/SwiftBeanCountRogersBankMapper.git",
         "state": {
           "branch": null,
-          "revision": "a070a755044661a188d34e810fa1a661bc781c5c",
-          "version": "0.0.5"
+          "revision": "033621ba92566555002692f2bb5322785b03bb07",
+          "version": "0.0.6"
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper.git",
         "state": {
           "branch": null,
-          "revision": "d9d06b9fcc339e5381fef45370de667651117763",
-          "version": "1.4.1"
+          "revision": "829cad66717fa310c71a832987046d8d928e9610",
+          "version": "1.4.2"
         }
       },
       {
@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/Nef10/WealthsimpleDownloader.git",
         "state": {
           "branch": null,
-          "revision": "5502b33f55805536cb4fe7434121333b92ac79c7",
-          "version": "2.0.0"
+          "revision": "ea3c4e8f98eb3d496232f20f1d72e35d47cb7d04",
+          "version": "2.0.1"
         }
       }
     ]
