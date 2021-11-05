@@ -20,7 +20,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/Nef10/RogersBankDownloader.git",
-            .exact("0.0.5")
+            .exact("0.0.6")
         ),
     ],
     targets: [
