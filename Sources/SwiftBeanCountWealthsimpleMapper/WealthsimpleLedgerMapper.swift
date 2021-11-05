@@ -187,7 +187,7 @@ public struct WealthsimpleLedgerMapper {
             result = try mapContribution(transaction, in: account)
         case .deposit, .withdrawal, .paymentTransferOut, .transferIn, .transferOut:
             result = try mapTransfer(transaction, in: account, accountTypes: [.asset])
-        case .paymentTransferIn, .referralBonus, .giveawayBonus, .refund:
+        case .paymentTransferIn, .referralBonus, .giveawayBonus, .refund, .cashbackBonus:
             result = try mapTransfer(transaction, in: account, accountTypes: [.asset, .income])
         case .paymentSpend:
             result = try mapTransfer(transaction, in: account, accountTypes: [.expense])

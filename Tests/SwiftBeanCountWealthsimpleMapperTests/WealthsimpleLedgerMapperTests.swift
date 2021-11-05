@@ -293,7 +293,7 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         var count = 1
         let types: [SwiftBeanCountModel.AccountType: [Wealthsimple.TransactionType]] = [
             .asset: [.deposit, .withdrawal, .paymentTransferOut, .transferIn, .transferOut, .paymentTransferIn, .referralBonus, .giveawayBonus, .refund, .contribution],
-            .income: [.paymentTransferIn, .referralBonus, .giveawayBonus, .refund, .fee, .reimbursement, .interest],
+            .income: [.paymentTransferIn, .referralBonus, .giveawayBonus, .refund, .cashbackBonus, .fee, .reimbursement, .interest],
             .expense: [.paymentSpend, .fee, .reimbursement, .interest]
         ]
         for (accountType, transactionTypes) in types {
