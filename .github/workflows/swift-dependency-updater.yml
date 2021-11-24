@@ -26,7 +26,7 @@ jobs:
         fetch-depth: 0 # Fetching the whole repo is required to check if branches already exist
         token: ${{ steps.generate_token.outputs.token }} # Checkout repo pre-configured with right token
     - name: Install Swift
-      uses: fwal/setup-swift@v1.8.0
+      uses: fwal/setup-swift@v1.9.0
     - name: Checkout swift-dependency-updater
       uses: actions/checkout@v2
       with:
