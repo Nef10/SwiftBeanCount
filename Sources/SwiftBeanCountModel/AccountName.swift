@@ -89,7 +89,7 @@ public struct AccountName: AccountItem {
 extension AccountNameError: LocalizedError {
     public var errorDescription: String? {
         switch self {
-        case let AccountNameError.invaildName(error):
+        case let .invaildName(error):
             return "Invalid Account name: \(error)"
         }
     }
