@@ -76,7 +76,7 @@ public enum Parser {
     /// - Parameter line: string to check
     /// - Returns: if the line should be skipped
     private static func shouldSkipLine(_ line: String) -> Bool {
-        if line.isEmpty || line[line.startIndex] == Parser.comment {
+        if line.isEmpty || line[line.startIndex] == Self.comment {
             return true
         }
         return false
