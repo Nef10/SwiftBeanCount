@@ -1,4 +1,4 @@
-# Updated for 0.45.0
+# Updated for 0.45.1
 
 excluded:
   - ".build"
@@ -91,6 +91,7 @@ opt_in_rules:
   - private_subject
   - discouraged_none_name
   - redundant_type_annotation
+  - prefer_self_in_static_references
 
 disabled_rules:
   - trailing_comma

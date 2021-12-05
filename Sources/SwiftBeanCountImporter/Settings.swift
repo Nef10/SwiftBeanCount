@@ -91,7 +91,7 @@ public enum Settings {
     /// See also `dateTolerance` which offers this value as `TimeInterval`
     public static var dateToleranceInDays: Int {
         get {
-            if let daysString = storage.string(forKey: Settings.dateToleranceKey), let days = Int(daysString) {
+            if let daysString = storage.string(forKey: Self.dateToleranceKey), let days = Int(daysString) {
                 return days
             }
             return defaultDateTolerance

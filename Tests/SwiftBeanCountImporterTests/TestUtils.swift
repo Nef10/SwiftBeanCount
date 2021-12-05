@@ -257,8 +257,8 @@ enum TestUtils {
     // swiftlint:disable force_try
     static var ledgerCashUSD: Ledger = {
         let ledger = Ledger()
-        try! ledger.add(TestUtils.usdCommodity)
-        let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.usd)
+        try! ledger.add(Self.usdCommodity)
+        let account = Account(name: Self.cash, commoditySymbol: Self.usd)
         try! ledger.add(account)
         return ledger
 
@@ -266,12 +266,12 @@ enum TestUtils {
 
     static var lederAccountNumers: Ledger = {
         let ledger = Ledger()
-        try! ledger.add(TestUtils.usdCommodity)
-        let account1 = Account(name: TestUtils.chequing,
-                               commoditySymbol: TestUtils.usd,
+        try! ledger.add(Self.usdCommodity)
+        let account1 = Account(name: Self.chequing,
+                               commoditySymbol: Self.usd,
                                metaData: ["number": "\(accountNumberChequing)", Settings.importerTypeKey: TangerineAccountImporter.importerType] )
-        let account2 = Account(name: TestUtils.cash,
-                               commoditySymbol: TestUtils.usd,
+        let account2 = Account(name: Self.cash,
+                               commoditySymbol: Self.usd,
                                metaData: ["number": "\(accountNumberCash)", Settings.importerTypeKey: TangerineAccountImporter.importerType] )
         try! ledger.add(account1)
         try! ledger.add(account2)
@@ -280,8 +280,8 @@ enum TestUtils {
 
     static var lederAccounts: Ledger = {
         let ledger = Ledger()
-        let account1 = Account(name: TestUtils.chequing, commoditySymbol: TestUtils.usd)
-        let account2 = Account(name: TestUtils.cash, commoditySymbol: TestUtils.usd)
+        let account1 = Account(name: Self.chequing, commoditySymbol: Self.usd)
+        let account2 = Account(name: Self.cash, commoditySymbol: Self.usd)
         try! ledger.add(account1)
         try! ledger.add(account2)
         return ledger
@@ -289,11 +289,11 @@ enum TestUtils {
 
     static var transaction: Transaction = {
         let metaData = TransactionMetaData(date: Date(), payee: "a", narration: "b", flag: .incomplete, tags: [])
-        let posting1 = Posting(accountName: TestUtils.cash,
-                               amount: Amount(number: Decimal(10), commoditySymbol: TestUtils.usd, decimalDigits: 2),
+        let posting1 = Posting(accountName: Self.cash,
+                               amount: Amount(number: Decimal(10), commoditySymbol: Self.usd, decimalDigits: 2),
                                price: nil)
-        let posting2 = Posting(accountName: TestUtils.chequing,
-                               amount: Amount(number: Decimal(-10), commoditySymbol: TestUtils.usd, decimalDigits: 2),
+        let posting2 = Posting(accountName: Self.chequing,
+                               amount: Amount(number: Decimal(-10), commoditySymbol: Self.usd, decimalDigits: 2),
                                price: nil)
         return Transaction(metaData: metaData, postings: [posting1, posting2])
     }()
@@ -356,7 +356,7 @@ enum TestUtils {
         if let employeeVoluntary = employeeVoluntary {
             metaData["employee-voluntary-fraction"] = employeeVoluntary
         }
-        let account = Account(name: TestUtils.parking, commoditySymbol: TestUtils.usd, metaData: metaData)
+        let account = Account(name: Self.parking, commoditySymbol: Self.usd, metaData: metaData)
         try ledger.add(account)
         return ledger
     }
