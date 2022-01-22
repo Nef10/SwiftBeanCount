@@ -92,6 +92,7 @@ opt_in_rules:
   - discouraged_none_name
   - redundant_type_annotation
   - prefer_self_in_static_references
+  - weak_delegate
 
 disabled_rules:
   - trailing_comma
