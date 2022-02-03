@@ -184,7 +184,6 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
                         self.delegate?.error(error)
                         errorOccurred = true
                         group.leave()
-                        completion()
                     case let .success(positions):
                         do {
                             let (accountPrices, accountBalances) = try self.mapper.mapPositionsToPriceAndBalance(positions)
@@ -194,7 +193,6 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
                         } catch {
                             self.delegate?.error(error)
                             errorOccurred = true
-                            completion()
                             group.leave()
                         }
                     }
@@ -205,6 +203,8 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
         group.wait()
         if !errorOccurred {
             self.downloadTransactions(completion)
+        } else {
+            completion()
         }
     }
 
@@ -222,7 +222,6 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
                         self.delegate?.error(error)
                         errorOccurred = true
                         group.leave()
-                        completion()
                     case let .success(transactions):
                         do {
                             let (accountPrices, accountTransactions) = try self.mapper.mapTransactionsToPriceAndTransactions(transactions)
@@ -232,7 +231,6 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
                         } catch {
                             self.delegate?.error(error)
                             errorOccurred = true
-                            completion()
                             group.leave()
                         }
                     }
@@ -243,6 +241,8 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
         group.wait()
         if !errorOccurred {
             self.mapTransactions(downloadedTransactions, completion)
+        } else {
+            completion()
         }
     }
 
