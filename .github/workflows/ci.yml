@@ -41,7 +41,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Install Swift
-      uses: fwal/setup-swift@v1.12.0
+      uses: fwal/setup-swift@v1.13.1
     - name: Run tests
       run: swift test --enable-code-coverage -Xswiftc -warnings-as-errors
     - name: Save PR number
