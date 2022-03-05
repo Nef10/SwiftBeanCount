@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Check and output correct matrix
       id: output_data
       run: |
@@ -39,7 +39,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Install Swift
       uses: fwal/setup-swift@v1.13.1
     - name: Run tests
@@ -75,7 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Run SwiftLint --strict
         uses: norio-nomura/action-swiftlint@3.2.1
         with:
