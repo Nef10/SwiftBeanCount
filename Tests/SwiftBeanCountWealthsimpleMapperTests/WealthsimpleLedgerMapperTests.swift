@@ -130,6 +130,10 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         transaction.transactionType = .hst
         assert(try mapper.mapTransactionsToPriceAndTransactions([transaction]),
                throws: WealthsimpleConversionError.unsupportedTransactionType(transaction.transactionType.rawValue))
+    }
+
+    func testMapSpecialTransactionsErrors() throws {
+        var transaction = TestTransaction(accountId: accountId)
 
         // nrwt invalid description
         try? ledger.add(Commodity(symbol: "CAD"))
@@ -145,6 +149,15 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         dividend.fxRate = "1.2343"
         dividend.description = "Garbage2"
         assert(try mapper.mapTransactionsToPriceAndTransactions([dividend]), throws: WealthsimpleConversionError.unexpectedDescription(dividend.description))
+
+        // only one transaction for stock split
+        transaction.transactionType = .stockDistribution
+        assert(try mapper.mapTransactionsToPriceAndTransactions([transaction]), throws: WealthsimpleConversionError.unexpectedStockSplit(transaction.description))
+
+        // two buy transactions for stock split
+        var split = TestTransaction(accountId: accountId)
+        split.transactionType = .stockDistribution
+        assert(try mapper.mapTransactionsToPriceAndTransactions([transaction, split]), throws: WealthsimpleConversionError.unexpectedStockSplit(split.description))
     }
 
     func testMapTransactionsBuy() throws {
@@ -349,9 +362,30 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         XCTAssertEqual(transactions, [resultTransaction])
     }
 
-    private func posting(account: String = "Assets:W:Cash", number: String = "-11.76", commodity: String = "CAD", decimals: Int = 2, price: Amount? = nil) throws -> Posting {
-        Posting(accountName: try AccountName(account), amount: Amount(number: Decimal(string: number)!, commoditySymbol: commodity, decimalDigits: decimals), price: price)
+    func testSplitTransactions() throws {
+        var transaction1 = testTransaction
+        transaction1.transactionType = .stockDistribution
+        var transaction2 = testTransaction
+        transaction2.transactionType = .stockDistribution
+        transaction2.quantity = "-\(transaction2.quantity)"
+
+        let emptyCost = try Cost(amount: nil, date: nil, label: nil)
+        let resultTransaction = Transaction(metaData: TransactionMetaData(date: transaction1.processDate, metaData: [MetaDataKeys.id: transaction1.id]),
+                                            postings: [
+                                                try posting(account: "Assets:W:ETF", number: transaction2.quantity, commodity: transaction2.symbol, cost: emptyCost),
+                                                try posting(account: "Assets:W:ETF", number: transaction1.quantity, commodity: transaction1.symbol, cost: emptyCost),
+                                            ])
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction1, transaction2])
+        XCTAssert(prices.isEmpty)
+        XCTAssertEqual(transactions, [resultTransaction])
     }
+
+    // swiftlint:disable line_length
+    private func posting(account: String = "Assets:W:Cash", number: String = "-11.76", commodity: String = "CAD", decimals: Int = 2, price: Amount? = nil, cost: Cost? = nil) throws -> Posting {
+        Posting(accountName: try AccountName(account), amount: Amount(number: Decimal(string: number)!, commoditySymbol: commodity, decimalDigits: decimals), price: price, cost: cost)
+    }
+    // swiftlint:enable line_length
 
     private func priceAmount(number: String = "0.50", commodity: CommoditySymbol = "CAD", decimals: Int = 2) -> Amount {
         Amount(number: Decimal(string: number)!, commoditySymbol: commodity, decimalDigits: decimals)

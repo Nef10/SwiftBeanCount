@@ -24,6 +24,8 @@ public enum WealthsimpleConversionError: Error, Equatable {
     case accountNotFound(String)
     /// A commodity symbol was used which cannot be used as account name string
     case invalidCommoditySymbol(String)
+    /// A stock split was performed but two matching transactions do not exist
+    case unexpectedStockSplit(String)
 }
 
 extension WealthsimpleConversionError: LocalizedError {
@@ -49,6 +51,8 @@ extension WealthsimpleConversionError: LocalizedError {
             return "Wealthsimple returned an element from an account with id \(accountId) which was not found."
         case let .invalidCommoditySymbol(symbol):
             return "Could not generate account for commodity \(symbol). For the mapping to work commodity symbols must only contain charaters allowed in account names."
+        case let .unexpectedStockSplit(description):
+            return "A stock split happened, but two matching transaction could not be found: \(description)"
         }
     }
 }

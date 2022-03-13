@@ -127,10 +127,11 @@ public struct WealthsimpleLedgerMapper {
             throw WealthsimpleConversionError.accountNotFound(firstTransaction.accountId)
         }
         var nrwtTransactions = wealthsimpleTransactions.filter { $0.transactionType == .nonResidentWithholdingTax }
-        let transactionsToMap = wealthsimpleTransactions.filter { $0.transactionType != .nonResidentWithholdingTax }
+        let stockSplits = wealthsimpleTransactions.filter { $0.transactionType == .stockDistribution }
         var prices = [Price]()
         var transactions = [STransaction]()
-        for wealthsimpleTransaction in transactionsToMap {
+        for wealthsimpleTransaction in wealthsimpleTransactions where wealthsimpleTransaction.transactionType != .nonResidentWithholdingTax
+                                                                      && wealthsimpleTransaction.transactionType != .stockDistribution {
             var (price, transaction) = try mapTransaction(wealthsimpleTransaction, in: account)
             if !lookup.doesTransactionExistInLedger(transaction) {
                 if wealthsimpleTransaction.transactionType == .dividend,
@@ -149,6 +150,10 @@ public struct WealthsimpleLedgerMapper {
             if !lookup.doesTransactionExistInLedger(transaction) {
                 transactions.append(transaction)
             }
+        }
+        let splitTransactions = try mapStockSplits(stockSplits, in: account)
+        for splitTransaction in splitTransactions where !lookup.doesTransactionExistInLedger(splitTransaction) {
+            transactions.append(splitTransaction)
         }
         return (prices, transactions)
     }
@@ -265,6 +270,41 @@ public struct WealthsimpleLedgerMapper {
         let posting1 = Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash, price: price)
         let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: .transactionType(transaction.transactionType), in: account, ofType: [.expense]), amount: amount)
         return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [posting1, posting2])
+    }
+
+    private func mapStockSplits(_ transactions: [WTransaction], in account: WAccount) throws -> [STransaction] {
+        var splitPairs = [String: [WTransaction]]()
+        for transaction in transactions {
+            if splitPairs["\(transaction.symbol)"] == nil {
+                splitPairs["\(transaction.symbol)"] = []
+            }
+            splitPairs["\(transaction.symbol)"]?.append(transaction)
+        }
+        var transactions = [STransaction]()
+        for (_, transactionPair) in splitPairs {
+            transactions.append(try mapStockSplit(transactionPair, in: account))
+        }
+        return transactions
+    }
+
+    private func mapStockSplit(_ transactions: [WTransaction], in account: WAccount) throws -> STransaction {
+        guard transactions.count == 2 else {
+            throw WealthsimpleConversionError.unexpectedStockSplit(transactions.first!.description)
+        }
+        guard let buyTransaction = transactions.first(where: { !$0.quantity.starts(with: "-") }),
+              let sellTransaction = transactions.first(where: { $0.quantity.starts(with: "-") }) else {
+            throw WealthsimpleConversionError.unexpectedStockSplit(transactions.first!.description)
+        }
+        let metaData = TransactionMetaData(date: buyTransaction.processDate, narration: buyTransaction.description, metaData: [MetaDataKeys.id: buyTransaction.id])
+        let result = STransaction(metaData: metaData, postings: [
+            Posting(accountName: try lookup.ledgerAccountName(of: account, symbol: sellTransaction.symbol),
+                    amount: Amount(for: sellTransaction.quantity, in: try lookup.commoditySymbol(for: sellTransaction.symbol)),
+                    cost: try Cost(amount: nil, date: nil, label: nil)),
+            Posting(accountName: try lookup.ledgerAccountName(of: account, symbol: buyTransaction.symbol),
+                    amount: Amount(for: buyTransaction.quantity, in: try lookup.commoditySymbol(for: buyTransaction.symbol)),
+                    cost: try Cost(amount: nil, date: nil, label: nil))
+        ])
+        return result
     }
 
     // swiftlint:disable:next large_tuple

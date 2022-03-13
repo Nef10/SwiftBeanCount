@@ -38,6 +38,10 @@ final class WealthsimpleConversionErrorTests: XCTestCase {
             "\(WealthsimpleConversionError.invalidCommoditySymbol("InvalidSymbol:").localizedDescription)",
             "Could not generate account for commodity InvalidSymbol:. For the mapping to work commodity symbols must only contain charaters allowed in account names."
         )
+        XCTAssertEqual(
+            "\(WealthsimpleConversionError.unexpectedStockSplit("Split ABC on 2022-03-11").localizedDescription)",
+            "A stock split happened, but two matching transaction could not be found: Split ABC on 2022-03-11"
+        )
     }
 
 }
