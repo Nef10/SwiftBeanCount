@@ -48,14 +48,14 @@ private let balance = """
 private let transaction = """
 
     Transaction details
-    June 5, 2020 Contribution (Ref.# 12345678)
+    June 5, 2020 Bonus Contribution (Ref.# 12345678)
 
     To:			Amount($)
     ../Images/colour7.gif	 1234 ML Category Fund 9876 y8
     Contribution 0.44112 units @ $21.221/unit	9.36
     Total		9.36
     ../Images/colour10.gif	 \(TestUtils.fundName)
-    Contribution 15.29544 units @ $9.148/unit	139.92
+    Bonus Contribution 15.29544 units @ $9.148/unit	139.92
     Total		139.92
 
     """

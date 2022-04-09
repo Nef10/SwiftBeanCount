@@ -229,10 +229,10 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
     ///   - commodities: dictionary of name to account for commodities
     /// - Returns: Tupel with ManuLifeBuys and the purchase date
     private func parsePurchase(string input: String, commodities: [String: String]) -> ([ManuLifeBuy], Date?) {
-        let purchasePattern = #"\s*.*?\.gif\s*(\d{4}.*?[a-z]\d)\s*$\s*Contribution\s*([0-9.]*)\s*units\s*@\s*\$([0-9.]*)/unit\s*([0-9.]*)\s*$"#
+        let purchasePattern = #"\s*.*?\.gif\s*(\d{4}.*?[a-z]\d)\s*$\s*[a-zA-z]*[ ]?Contribution\s*([0-9.,]*)\s*units\s*@\s*\$([0-9.,]*)/unit\s*([0-9.,]*)\s*$"#
 
         // swiftlint:disable force_try
-        let dateRegex = try! NSRegularExpression(pattern: #"^(.*) Contribution \(Ref."#, options: [.anchorsMatchLines])
+        let dateRegex = try! NSRegularExpression(pattern: #"^(.*?) [a-zA-z]*[ ]?Contribution \(Ref."#, options: [.anchorsMatchLines])
         let regex = try! NSRegularExpression(pattern: purchasePattern, options: [.anchorsMatchLines])
         // swiftlint:enable force_try
 
