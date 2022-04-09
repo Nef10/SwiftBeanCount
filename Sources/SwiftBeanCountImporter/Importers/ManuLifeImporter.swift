@@ -154,14 +154,14 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
     ///   - commodities: dictionary of name to account for commodities
     /// - Returns: ManuLifeBalances
     private func parseBalances(string: String, commodities: [String: String]) -> [ManuLifeBalance] {
-        let unitValuePattern = #"\s*?(?:Employer Basic|Member Voluntary|Employee voluntary)\s*[0-9.]*\s*([0-9.]*)\s*[0-9.]*"#
+        let unitValuePattern = #"\s*?(?:Employer Basic|Member Voluntary|Employee voluntary)\s*[0-9.,]*\s*([0-9.,]*)\s*[0-9.,]*"#
 
         // swiftlint:disable force_try
         let commodityRegex = try! NSRegularExpression(pattern: #"\s*?(\d{4}\s*?-\s*?.*?[a-z]\d)\s*?$"#, options: [.anchorsMatchLines])
-        let employeeBasicRegex = try! NSRegularExpression(pattern: #"\s*?Employee Basic\s*([0-9.]*)"#, options: [.anchorsMatchLines])
-        let employeeVoluntaryRegex = try! NSRegularExpression(pattern: #"\s*?Employee voluntary\s*([0-9.]*)"#, options: [.anchorsMatchLines])
-        let employerBasicRegex = try! NSRegularExpression(pattern: #"\s*?Employer Basic\s*([0-9.]*)"#, options: [.anchorsMatchLines])
-        let employerMatchRegex = try! NSRegularExpression(pattern: #"\s*?Employer Match\s*([0-9.]*)"#, options: [.anchorsMatchLines])
+        let employeeBasicRegex = try! NSRegularExpression(pattern: #"\s*?Employee Basic\s*([0-9.,]*)"#, options: [.anchorsMatchLines])
+        let employeeVoluntaryRegex = try! NSRegularExpression(pattern: #"\s*?Employee voluntary\s*([0-9.,]*)"#, options: [.anchorsMatchLines])
+        let employerBasicRegex = try! NSRegularExpression(pattern: #"\s*?Employer Basic\s*([0-9.,]*)"#, options: [.anchorsMatchLines])
+        let employerMatchRegex = try! NSRegularExpression(pattern: #"\s*?Employer Match\s*([0-9.,]*)"#, options: [.anchorsMatchLines])
         let unitValueRegex = try! NSRegularExpression(pattern: unitValuePattern, options: [.anchorsMatchLines])
         // swiftlint:enable force_try
 

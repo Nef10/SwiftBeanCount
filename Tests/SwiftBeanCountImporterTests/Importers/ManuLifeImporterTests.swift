@@ -26,7 +26,7 @@ private let balance = """
 
     Employee Basic	8.0000	31.25	250.00
     Employee voluntary	5.6000	31.25	175.00
-    Employer Basic	10.4000	31.25	325.00
+    Employer Basic	1,010.4000	31.25	325.00
     Employer Match	8.0000	31.25	250.00
 
     TOTAL	$1,000.00
@@ -114,7 +114,7 @@ private var dateString: String = {
 private func balanceResult(fundSymbol: String = TestUtils.fundSymbol) -> String {
     """
     \(dateString) balance Assets:Cash:Employee:Basic:1234 ML Category Fund 9876 y8 8.0000 1234 ML Category Fund 9876 y8
-    \(dateString) balance Assets:Cash:Employer:Basic:1234 ML Category Fund 9876 y8 10.4000 1234 ML Category Fund 9876 y8
+    \(dateString) balance Assets:Cash:Employer:Basic:1234 ML Category Fund 9876 y8 1,010.4000 1234 ML Category Fund 9876 y8
     \(dateString) balance Assets:Cash:Employer:Match:1234 ML Category Fund 9876 y8 8.0000 1234 ML Category Fund 9876 y8
     \(dateString) balance Assets:Cash:Employee:Voluntary:1234 ML Category Fund 9876 y8 5.6000 1234 ML Category Fund 9876 y8
     \(dateString) balance Assets:Cash:Employee:Basic:\(fundSymbol) 11.7280 \(fundSymbol)
