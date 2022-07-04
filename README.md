@@ -6,7 +6,7 @@
 
 ## What
 
-This is a small library to convert downloaded data from Wealthsimple (via [RogersBankDownloader](https://github.com/Nef10/RogersBankDownloader)) to the Beancount format (via [SwiftBeanCountModel](https://github.com/Nef10/SwiftBeanCountModel)).
+This is a small library to convert downloaded data from a Rogers Bank Credit Card (via [RogersBankDownloader](https://github.com/Nef10/RogersBankDownloader)) to the Beancount format (via [SwiftBeanCountModel](https://github.com/Nef10/SwiftBeanCountModel)).
 
 ## Beancount meta data
 
