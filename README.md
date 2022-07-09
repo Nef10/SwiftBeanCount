@@ -94,6 +94,26 @@ flowchart LR
   swift-argument-parser ---> SwiftBeanCountCLI
   SwiftyTextTable ---> SwiftBeanCountCLI
   Rainbow ---> SwiftBeanCountCLI
+  click SwiftBeanCountModel "https://github.com/Nef10/SwiftBeanCountModel"
+  click SwiftBeanCountParser "https://github.com/Nef10/SwiftBeanCountParser"
+  click SwiftBeanCountParserUtils "https://github.com/Nef10/SwiftBeanCountParserUtils"
+  click SwiftBeanCountWealthsimpleMapper "https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper"
+  click WealthsimpleDownloader "https://github.com/Nef10/WealthsimpleDownloader"
+  click SwiftBeanCountRogersBankMapper "https://github.com/Nef10/SwiftBeanCountRogersBankMapper"
+  click RogersBankDownloader "https://github.com/Nef10/RogersBankDownloader"
+  click SwiftBeanCountImporter "https://github.com/Nef10/SwiftBeanCountImporter"
+  click SwiftBeanCountImporterApp "https://github.com/Nef10/SwiftBeanCountImporterApp"
+  click FileSelectorView "https://github.com/Nef10/FileSelectorView"
+  click SwiftBeanCountSheetSyncApp "https://github.com/Nef10/SwiftBeanCountSheetSyncApp"
+  click SwiftBeanCountSheetSync "https://github.com/Nef10/SwiftBeanCountSheetSync"
+  click SwiftBeanCountCLI "https://github.com/Nef10/SwiftBeanCountCLI"
+  click GoogleAuthentication "https://github.com/Nef10/GoogleAuthentication"
+  click swift-argument-parser "https://github.com/apple/swift-argument-parser"
+  click SwiftyTextTable "https://github.com/scottrhoyt/SwiftyTextTable"
+  click Rainbow "https://github.com/onevcat/Rainbow"
+  click OAuthSwift "https://github.com/OAuthSwift/OAuthSwift"
+  click KeychainAccess "https://github.com/kishikawakatsumi/KeychainAccess"
+  click CSV "https://github.com/yaslab/CSV.swift"
   classDef default fill:#99CCFF;
   classDef box fill:#F5F5F5;
   classDef app fill:#99FF99;
