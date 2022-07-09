@@ -52,6 +52,77 @@ The code is split up in several internal libraries, which allows functionality t
 * [RogersBankDownloader](https://github.com/Nef10/RogersBankDownloader): Library to download data from Rogers Bank
 * [SwiftBeanCountRogersBankMapper](https://github.com/Nef10/SwiftBeanCountRogersBankMapper): Library to convert downloaded data from Rogers Bank
 
+### Dependency Diagram
+
+A simplified diagram of the package dependencies:
+
+```mermaid
+flowchart LR
+  subgraph Core
+    SwiftBeanCountModel
+    SwiftBeanCountParser
+    SwiftBeanCountParserUtils
+    SwiftBeanCountModel --> SwiftBeanCountParser
+    SwiftBeanCountParserUtils --> SwiftBeanCountParser
+  end
+  subgraph Wealthsimple
+    SwiftBeanCountWealthsimpleMapper
+    WealthsimpleDownloader
+  end
+  subgraph Rogers
+    SwiftBeanCountRogersBankMapper
+    RogersBankDownloader
+  end
+  Wealthsimple --> SwiftBeanCountImporter
+  Rogers --> SwiftBeanCountImporter
+  RogersBankDownloader --> SwiftBeanCountRogersBankMapper
+  Core ---> SwiftBeanCountRogersBankMapper
+  Core --> SwiftBeanCountImporter
+  Core ---> SwiftBeanCountWealthsimpleMapper
+  Core --> SwiftBeanCountImporterApp
+  Core --> SwiftBeanCountSheetSync
+  SwiftBeanCountImporter --> SwiftBeanCountImporterApp
+  WealthsimpleDownloader --> SwiftBeanCountWealthsimpleMapper
+  KeychainAccess --> SwiftBeanCountImporterApp
+  KeychainAccess --> GoogleAuthentication
+  FileSelectorView ----> SwiftBeanCountSheetSyncApp
+  GoogleAuthentication --> SwiftBeanCountSheetSync
+  OAuthSwift --> GoogleAuthentication
+  SwiftBeanCountSheetSync ---> SwiftBeanCountSheetSyncApp
+  CSV ----> SwiftBeanCountImporter
+  Core ----> SwiftBeanCountCLI
+  swift-argument-parser ---> SwiftBeanCountCLI
+  SwiftyTextTable ---> SwiftBeanCountCLI
+  Rainbow ---> SwiftBeanCountCLI
+  classDef default fill:#99CCFF;
+  classDef box fill:#F5F5F5;
+  classDef app fill:#99FF99;
+  classDef external fill:#FF99FF;
+  classDef cli fill:#FFCC99;
+  class Core,Rogers,Wealthsimple box;
+  class SwiftBeanCountImporterApp,SwiftBeanCountSheetSyncApp,App app;
+  class CSV,OAuthSwift,KeychainAccess,External,swift-argument-parser,SwiftyTextTable,Rainbow external;
+  class SwiftBeanCountCLI cli;
+```
+```mermaid
+flowchart LR
+  subgraph Legend
+    Library
+    External[External Library]
+    CLI
+    App
+  end
+  classDef default fill:#99CCFF;
+  classDef box fill:#F5F5F5;
+  classDef app fill:#99FF99;
+  classDef external fill:#FF99FF;
+  classDef cli fill:#FFCC99;
+  class App app;
+  class External external;
+  class CLI cli;
+  class Legend box;
+```
+
 ##  Status
 
 This project is in an alpha stage, please do not use unless you are open to experiment or contribute.
