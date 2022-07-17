@@ -18,12 +18,17 @@ jobs:
     - name: Check and output correct matrix
       id: output_data
       run: |
+        macos='macOS-latest'
+        if [ -e .github/macos_version.txt ]
+        then
+            macos=$(cat ./.github/macos_version.txt)
+        fi
         if [ -e .github/macos_only ]
         then
-            echo "::set-output name=os_matrix::['macOS-latest']"
-            echo "::set-output name=coverage_os::macOS-latest"
+            echo "::set-output name=os_matrix::['$macos']"
+            echo "::set-output name=coverage_os::$macos"
         else
-            echo "::set-output name=os_matrix::['macOS-latest', 'ubuntu-latest']"
+            echo "::set-output name=os_matrix::['$macos', 'ubuntu-latest']"
             echo "::set-output name=coverage_os::ubuntu-latest"
         fi
     outputs:
