@@ -1,7 +1,7 @@
 import Foundation
 
 /// Errors which can happen when using SwiftBeanCountTangerineMapper
-enum SwiftBeanCountTangerineMapperError: Error, Equatable {
+public enum SwiftBeanCountTangerineMapperError: Error, Equatable {
     /// Account not found in ledger
     case missingAccount(account: String)
     /// invalid date in parsed transaction
