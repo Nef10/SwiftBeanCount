@@ -22,7 +22,7 @@ Beancount is an amazing project and I am an active user of it. I'd recommend it 
 
 As metioned above my goal is not to create a competitor to beancount. Beancount is used by a lot of people and has proven itself over years, while this project is the hobby of a single person.
 
-The goal is to supplement my usage of beancount and [fava](https://github.com/beancount/fava). As it operates on plain text files you can use them in beancount and SwiftBeanCount, perfoming operations in which tool better fits your needs, switching as often as you like. Therefore I aim to keep the syntax of SwiftBeanCount mostly a subset of the syntax beancount uses (read more about this below).
+The goal is to supplement my usage of beancount and [fava](https://github.com/beancount/fava). As it operates on plain text files, you can use them in beancount and SwiftBeanCount, perfoming operations in which tool better fits your needs, switching as often as you like. Therefore I aim to keep the syntax of SwiftBeanCount mostly a subset of the syntax beancount uses (read more about this below).
 
 ## How
 
@@ -51,6 +51,8 @@ The code is split up in several internal libraries, which allows functionality t
 * [SwiftBeanCountWealthsimpleMapper](https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper): Library to convert downloaded data from Wealthsimple
 * [RogersBankDownloader](https://github.com/Nef10/RogersBankDownloader): Library to download data from Rogers Bank
 * [SwiftBeanCountRogersBankMapper](https://github.com/Nef10/SwiftBeanCountRogersBankMapper): Library to convert downloaded data from Rogers Bank
+* [TangerineDownloader](https://github.com/Nef10/TangerineDownloader): Library to download data from Tangerine
+* [SwiftBeanCountTangerineMapper](https://github.com/Nef10/SwiftBeanCountTangerineMapper): Library to convert downloaded data from Tangerine
 
 ### Dependency Diagram
 
@@ -68,21 +70,28 @@ flowchart LR
   subgraph Wealthsimple
     SwiftBeanCountWealthsimpleMapper
     WealthsimpleDownloader
+    WealthsimpleDownloader --> SwiftBeanCountWealthsimpleMapper
   end
   subgraph Rogers
     SwiftBeanCountRogersBankMapper
     RogersBankDownloader
+    RogersBankDownloader --> SwiftBeanCountRogersBankMapper
   end
+  subgraph Tangerine
+    SwiftBeanCountTangerineMapper
+    TangerineDownloader
+  end
+  SwiftScraper --> TangerineDownloader
   Wealthsimple --> SwiftBeanCountImporter
+  Tangerine --> SwiftBeanCountImporter
   Rogers --> SwiftBeanCountImporter
-  RogersBankDownloader --> SwiftBeanCountRogersBankMapper
   Core ---> SwiftBeanCountRogersBankMapper
   Core --> SwiftBeanCountImporter
   Core ---> SwiftBeanCountWealthsimpleMapper
+  Core ---> SwiftBeanCountTangerineMapper
   Core --> SwiftBeanCountImporterApp
   Core --> SwiftBeanCountSheetSync
   SwiftBeanCountImporter --> SwiftBeanCountImporterApp
-  WealthsimpleDownloader --> SwiftBeanCountWealthsimpleMapper
   KeychainAccess --> SwiftBeanCountImporterApp
   KeychainAccess --> GoogleAuthentication
   FileSelectorView ----> SwiftBeanCountSheetSyncApp
@@ -101,6 +110,8 @@ flowchart LR
   click WealthsimpleDownloader "https://github.com/Nef10/WealthsimpleDownloader"
   click SwiftBeanCountRogersBankMapper "https://github.com/Nef10/SwiftBeanCountRogersBankMapper"
   click RogersBankDownloader "https://github.com/Nef10/RogersBankDownloader"
+  click SwiftBeanCountTangerineMapper "https://github.com/Nef10/SwiftBeanCountTangerineMapper"
+  click TangerineDownloader "https://github.com/Nef10/TangerineDownloader"
   click SwiftBeanCountImporter "https://github.com/Nef10/SwiftBeanCountImporter"
   click SwiftBeanCountImporterApp "https://github.com/Nef10/SwiftBeanCountImporterApp"
   click FileSelectorView "https://github.com/Nef10/FileSelectorView"
@@ -108,6 +119,7 @@ flowchart LR
   click SwiftBeanCountSheetSync "https://github.com/Nef10/SwiftBeanCountSheetSync"
   click SwiftBeanCountCLI "https://github.com/Nef10/SwiftBeanCountCLI"
   click GoogleAuthentication "https://github.com/Nef10/GoogleAuthentication"
+  click SwiftScraper "https://github.com/Nef10/SwiftScraper"
   click swift-argument-parser "https://github.com/apple/swift-argument-parser"
   click SwiftyTextTable "https://github.com/scottrhoyt/SwiftyTextTable"
   click Rainbow "https://github.com/onevcat/Rainbow"
@@ -119,7 +131,7 @@ flowchart LR
   classDef app fill:#99FF99;
   classDef external fill:#FF99FF;
   classDef cli fill:#FFCC99;
-  class Core,Rogers,Wealthsimple box;
+  class Core,Rogers,Wealthsimple,Tangerine box;
   class SwiftBeanCountImporterApp,SwiftBeanCountSheetSyncApp,App app;
   class CSV,OAuthSwift,KeychainAccess,External,swift-argument-parser,SwiftyTextTable,Rainbow external;
   class SwiftBeanCountCLI cli;
