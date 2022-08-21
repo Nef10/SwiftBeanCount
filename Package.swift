@@ -59,7 +59,7 @@ let package = Package(
                 "SwiftBeanCountRogersBankMapper",
                 "SwiftBeanCountWealthsimpleMapper",
                 .product(name: "TangerineDownloader", package: "TangerineDownloader", condition: .when(platforms: [.macOS, .iOS])),
-                .product(name: "SwiftBeanCountTangerineMapper", package: "TangerineDownloader", condition: .when(platforms: [.macOS, .iOS])),
+                .product(name: "SwiftBeanCountTangerineMapper", package: "SwiftBeanCountTangerineMapper", condition: .when(platforms: [.macOS, .iOS])),
                 .product(name: "Wealthsimple", package: "WealthsimpleDownloader"),
             ]
         ),
