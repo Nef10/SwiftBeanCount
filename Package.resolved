@@ -47,12 +47,39 @@
         }
       },
       {
+        "package": "SwiftBeanCountTangerineMapper",
+        "repositoryURL": "https://github.com/Nef10/SwiftBeanCountTangerineMapper.git",
+        "state": {
+          "branch": null,
+          "revision": "81ba50dc619694b96797966407bfdc46c990197e",
+          "version": "0.0.2"
+        }
+      },
+      {
         "package": "SwiftBeanCountWealthsimpleMapper",
         "repositoryURL": "https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper.git",
         "state": {
           "branch": null,
           "revision": "0ea9dea80ad2f3f2fc341698f8673e8e9073a2ec",
           "version": "1.5.0"
+        }
+      },
+      {
+        "package": "SwiftScraper",
+        "repositoryURL": "https://github.com/Nef10/SwiftScraper.git",
+        "state": {
+          "branch": null,
+          "revision": "d957a9e1e5ef3a3f5cd88654d8a480db54c1fd92",
+          "version": "0.5.1"
+        }
+      },
+      {
+        "package": "TangerineDownloader",
+        "repositoryURL": "https://github.com/Nef10/TangerineDownloader.git",
+        "state": {
+          "branch": null,
+          "revision": "003f165db122164527353c64eff1a90d3b1b0be5",
+          "version": "0.0.2"
         }
       },
       {

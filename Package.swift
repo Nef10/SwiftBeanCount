@@ -1,9 +1,10 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.3
 
 import PackageDescription
 
 let package = Package(
     name: "SwiftBeanCountImporter",
+    platforms: [.iOS(.v14), .macOS(.v11)],
     products: [
         .library(
             name: "SwiftBeanCountImporter",
@@ -38,6 +39,14 @@ let package = Package(
             url: "https://github.com/Nef10/RogersBankDownloader.git",
             .exact("0.0.7")
         ),
+        .package(
+            url: "https://github.com/Nef10/TangerineDownloader.git",
+            .exact("0.0.2")
+        ),
+        .package(
+            url: "https://github.com/Nef10/SwiftBeanCountTangerineMapper.git",
+            .exact("0.0.2")
+        )
     ],
     targets: [
         .target(
@@ -49,6 +58,8 @@ let package = Package(
                 "SwiftBeanCountParserUtils",
                 "SwiftBeanCountRogersBankMapper",
                 "SwiftBeanCountWealthsimpleMapper",
+                .product(name: "TangerineDownloader", package: "TangerineDownloader", condition: .when(platforms: [.macOS, .iOS])),
+                .product(name: "SwiftBeanCountTangerineMapper", package: "TangerineDownloader", condition: .when(platforms: [.macOS, .iOS])),
                 .product(name: "Wealthsimple", package: "WealthsimpleDownloader"),
             ]
         ),

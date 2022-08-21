@@ -241,4 +241,28 @@ extension InvalidAccountNameProvider: ImporterDelegate {
         XCTFail("error should not be called")
     }
 
+    #if canImport(UIKit)
+
+    func view() -> UIView? {
+        XCTFail("view should not be called")
+        return nil
+    }
+
+    #elseif canImport(AppKit)
+
+    func view() -> NSView? {
+        XCTFail("view should not be called")
+        return nil
+    }
+
+    #endif
+
+    #if canImport(UIKit) || canImport(AppKit)
+
+    func removeView() {
+        XCTFail("removeView should not be called")
+    }
+
+    #endif
+
 }

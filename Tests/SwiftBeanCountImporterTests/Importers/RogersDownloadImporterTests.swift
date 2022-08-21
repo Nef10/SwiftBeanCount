@@ -170,14 +170,14 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     func testLoadAuthenticationError() {
         let keys = ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo", "rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"]
         Self.load = { _, _, _, _ in .failure(DownloadError.invalidParameters(parameters: ["a": "bc"])) }
-        delegate = ErrorDelegate(error: DownloadError.invalidParameters(parameters: ["a": "bc"]),
-                                 inputNames: ["Username", "Password", "Device ID", "Device Info"],
+        delegate = ErrorDelegate(inputNames: ["Username", "Password", "Device ID", "Device Info"],
                                  inputSecrets: [false, true, false, false],
                                  inputReturnValues: ["name", "password123", "device-id", "device-info"],
                                  saveKeys: keys,
                                  saveValues: ["name", "password123", "device-id", "device-info", "", "", "", ""],
                                  readKeys: ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"],
-                                 readReturnValues: ["", "", "", ""])
+                                 readReturnValues: ["", "", "", ""],
+                                 error: DownloadError.invalidParameters(parameters: ["a": "bc"]))
         loadedImporter()
     }
 
@@ -382,14 +382,14 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 
     private func setErrorDelegate<T: EquatableError>(error: T) {
-        delegate = ErrorDelegate(error: error,
-                                 inputNames: ["Username", "Password", "Device ID", "Device Info"],
+        delegate = ErrorDelegate(inputNames: ["Username", "Password", "Device ID", "Device Info"],
                                  inputSecrets: [false, true, false, false],
                                  inputReturnValues: ["name", "password123", "device-id", "device-info"],
                                  saveKeys: ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"],
                                  saveValues: ["name", "password123", "device-id", "device-info"],
                                  readKeys: ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"],
-                                 readReturnValues: ["", "", "", ""])
+                                 readReturnValues: ["", "", "", ""],
+                                 error: error)
     }
 }
 

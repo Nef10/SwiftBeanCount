@@ -8,6 +8,11 @@
 
 import Foundation
 import SwiftBeanCountModel
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 /// The ImporterFactory is used to create the different importer types
 public enum ImporterFactory {
@@ -161,6 +166,27 @@ public protocol ImporterDelegate: AnyObject {
     /// Parameter: key: key used to save the value
     /// Returns: String with the value or nil if no value can be found
     func readCredential(_ key: String) -> String?
+
+    #if canImport(UIKit)
+
+    /// Request a view to show / operate in
+    /// Returns: UIView?
+    func view() -> UIView?
+
+    #elseif canImport(AppKit)
+
+    /// Request a view to show / operate in
+    /// Returns: NSView?
+    func view() -> NSView?
+
+    #endif
+
+    #if canImport(UIKit) || canImport(AppKit)
+
+    /// Request to remove the previously requested view from the screen
+    func removeView()
+
+    #endif
 
     /// Indicates an error occured
     ///
