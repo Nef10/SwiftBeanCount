@@ -1,4 +1,4 @@
-# Updated for 0.47.1
+# Updated for 0.49.0
 
 excluded:
   - ".build"
@@ -95,6 +95,7 @@ opt_in_rules:
   - weak_delegate
   - return_value_from_void_function
   - accessibility_label_for_image
+  - comma_inheritance
 
 disabled_rules:
   - trailing_comma
