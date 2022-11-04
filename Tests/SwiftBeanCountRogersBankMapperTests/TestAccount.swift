@@ -8,9 +8,9 @@ struct TestAmount: RogersBankDownloader.Amount {
 }
 
 struct TestForeignCurrency: ForeignCurrency {
-    var exchangeFee: Amount = TestAmount()
-    var conversionMarkupRate: Float = 0.025
-    var conversionRate: Float = 0.5
+    var exchangeFee: Amount? = TestAmount()
+    var conversionMarkupRate: Float? = 0.025
+    var conversionRate: Float? = 0.5
     var originalAmount: Amount = TestAmount()
 }
 
