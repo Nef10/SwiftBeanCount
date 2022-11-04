@@ -33,11 +33,11 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/Nef10/SwiftBeanCountRogersBankMapper.git",
-            .exact("0.0.7")
+            .exact("0.0.8")
         ),
         .package(
             url: "https://github.com/Nef10/RogersBankDownloader.git",
-            .exact("0.0.7")
+            .exact("0.0.8")
         ),
         .package(
             url: "https://github.com/Nef10/TangerineDownloader.git",
