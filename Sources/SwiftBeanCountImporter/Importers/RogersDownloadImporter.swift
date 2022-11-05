@@ -88,6 +88,7 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter {
 
     private func downloadAllActivities(accounts: [RogersBankDownloader.Account], _ completion: @escaping () -> Void) {
         let group = DispatchGroup()
+        let queue = DispatchQueue(label: "threadSafeDownloadedActivitiesArray")
         var downloadedActivities = [Activity]()
         var errorOccurred = false
 
@@ -102,8 +103,10 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter {
                             errorOccurred = true
                             group.leave()
                         case let .success(activities):
-                            downloadedActivities.append(contentsOf: activities)
-                            group.leave()
+                            queue.async {
+                                downloadedActivities.append(contentsOf: activities)
+                                group.leave()
+                            }
                         }
                     }
                 }
@@ -118,7 +121,9 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter {
 
         group.wait()
         if !errorOccurred {
-            self.mapActivities(downloadedActivities, completion)
+            queue.sync {
+                self.mapActivities(downloadedActivities, completion)
+            }
         } else {
             completion()
         }
