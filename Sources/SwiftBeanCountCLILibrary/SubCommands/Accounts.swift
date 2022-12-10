@@ -32,15 +32,9 @@ struct Accounts: FormattableLedgerCommand {
 
     func getResult(from ledger: Ledger, parsingDuration _: Double) -> FormattableResult {
         var accounts = ledger.accounts.sorted { $0.name.fullName < $1.name.fullName }
-        if !filter.isEmpty {
-            accounts = accounts.filter { $0.name.fullName.contains(filter) }
-        }
-        if !closed {
-            accounts = accounts.filter { $0.closing == nil || $0.closing! > Date() }
-        }
-        if !open {
-            accounts = accounts.filter { $0.closing != nil && $0.closing! < Date() }
-        }
+        if !filter.isEmpty { accounts = accounts.filter { $0.name.fullName.contains(filter) } }
+        if !closed { accounts = accounts.filter { $0.closing == nil || $0.closing! > Date() } }
+        if !open { accounts = accounts.filter { $0.closing != nil && $0.closing! < Date() } }
 
         let values: [[String]] = accounts.map { account in
             var result = [account.name.fullName]

@@ -1,7 +1,7 @@
 @testable import SwiftBeanCountCLILibrary
 import XCTest
 
-class AccountsTests: XCTestCase { // swiftlint:disable:this type_body_length
+class AccountsTests: XCTestCase {
 
     func testInvalidArguments() {
         let url = emptyFileURL()
