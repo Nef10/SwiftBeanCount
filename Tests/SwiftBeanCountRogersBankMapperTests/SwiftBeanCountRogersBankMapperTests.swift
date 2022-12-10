@@ -98,9 +98,7 @@ final class SwiftBeanCountRogersBankMapperTests: XCTestCase {
         activity2.activityCategory = .purchase
         activity2.postedDate = Date()
         activity2.referenceNumber = "852741963"
-        var amount = TestAmount()
-        amount.value = "2.79"
-        amount.currency = "USD"
+        let amount = TestAmount(value: "2.79", currency: "USD")
         var foreign = TestForeignCurrency()
         foreign.originalAmount = amount
         activity2.foreign = foreign

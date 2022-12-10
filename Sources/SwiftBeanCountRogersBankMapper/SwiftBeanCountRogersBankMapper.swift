@@ -34,16 +34,37 @@ public struct SwiftBeanCountRogersBankMapper {
         return Balance(date: Date(), accountName: accountName, amount: amount)
     }
 
+    /// Maps an activity to a transaction
+    /// - Parameters
+    ///   - activity: Activity to map
+    ///   - date: Date to use for the transaction
+    ///   - referenceNumber: Reference Number to add to the meta data
+    /// - Throws: RogersBankMappingError
+    /// - Returns: Transactions
+    private func mapActivity(_ activity: Activity, date: Date, referenceNumber: String) throws -> Transaction {
+        let accountName = try ledgerAccountName(lastFour: String(activity.cardNumber.suffix(4)))
+        let metaData = TransactionMetaData(date: date, narration: activity.merchant.name, metaData: [MetaDataKeys.activityId: referenceNumber])
+        let (number, decimalDigits) = activity.amount.value.amountDecimal()
+        let amount = Amount(number: number, commoditySymbol: activity.amount.currency, decimalDigits: decimalDigits)
+        let negatedAmount = Amount(number: -number, commoditySymbol: activity.amount.currency, decimalDigits: decimalDigits)
+        var postings = [Posting(accountName: accountName, amount: negatedAmount)]
+        if let foreign = activity.foreign {
+            let (number, decimalDigits) = foreign.originalAmount.value.amountDecimal()
+            let foreignAmount = Amount(number: number, commoditySymbol: foreign.originalAmount.currency, decimalDigits: decimalDigits)
+            postings.append(Posting(accountName: expenseAccountName, amount: foreignAmount, price: amount))
+        } else {
+            postings.append(Posting(accountName: expenseAccountName, amount: amount))
+        }
+        return Transaction(metaData: metaData, postings: postings)
+    }
+
     /// Maps activities to transactions
     /// - Parameter activities: Activities to map
     /// - Throws: RogersBankMappingError
     /// - Returns: Transactions
     public func mapActivitiesToTransactions(activities: [Activity]) throws -> [Transaction] {
         var transactions = [Transaction]()
-        for activity in activities {
-            guard activity.activityStatus == .approved && activity.activityType == .transaction else {
-                continue
-            }
+        for activity in activities where activity.activityStatus == .approved && activity.activityType == .transaction {
             guard let postedDate = activity.postedDate else {
                 throw RogersBankMappingError.missingActivityData(activity: activity, key: "postedDate")
             }
@@ -61,20 +82,7 @@ public struct SwiftBeanCountRogersBankMapper {
                 continue
             }
 
-            let accountName = try ledgerAccountName(lastFour: String(activity.cardNumber.suffix(4)))
-            let metaData = TransactionMetaData(date: postedDate, narration: activity.merchant.name, metaData: [MetaDataKeys.activityId: referenceNumber])
-            let (number, decimalDigits) = activity.amount.value.amountDecimal()
-            let amount = Amount(number: number, commoditySymbol: activity.amount.currency, decimalDigits: decimalDigits)
-            let negatedAmount = Amount(number: -number, commoditySymbol: activity.amount.currency, decimalDigits: decimalDigits)
-            var postings = [Posting(accountName: accountName, amount: negatedAmount)]
-            if let foreign = activity.foreign {
-                let (number, decimalDigits) = foreign.originalAmount.value.amountDecimal()
-                let foreignAmount = Amount(number: number, commoditySymbol: foreign.originalAmount.currency, decimalDigits: decimalDigits)
-                postings.append(Posting(accountName: expenseAccountName, amount: foreignAmount, price: amount))
-            } else {
-                postings.append(Posting(accountName: expenseAccountName, amount: amount))
-            }
-            transactions.append(Transaction(metaData: metaData, postings: postings))
+            transactions.append(try mapActivity(activity, date: postedDate, referenceNumber: referenceNumber))
         }
         return transactions
     }
