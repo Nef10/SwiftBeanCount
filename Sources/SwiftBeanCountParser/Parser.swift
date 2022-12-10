@@ -188,11 +188,7 @@ public enum Parser {
         let ledger = Ledger()
 
         // no dependencies
-        ledger.parsingErrors.append(contentsOf: result.parsingErrors)
-        ledger.option.append(contentsOf: result.options)
-        ledger.plugins.append(contentsOf: result.plugins)
-        ledger.custom.append(contentsOf: result.customs)
-        ledger.events.append(contentsOf: result.events)
+        addSimpleContent(result, to: ledger)
 
         // commodities do not have dependencies
         for (lineIndex, commodity) in result.commodities {
@@ -234,6 +230,20 @@ public enum Parser {
         return ledger
     }
 
+    /// Adds all the parsed objects objects which do not have dependencies to the ledger.
+    /// This means parsing errors, options, plugins, custom and events
+    /// To avoid errors the objects must be sorted by date beforehand.
+    /// - Parameters
+    ///   - result: parsed data which should be added to the ledger
+    ///   - ledger: ledger to add the parsed data to
+    private static func addSimpleContent(_ result: ParsingResult, to ledger: Ledger) {
+        ledger.parsingErrors.append(contentsOf: result.parsingErrors)
+        ledger.option.append(contentsOf: result.options)
+        ledger.plugins.append(contentsOf: result.plugins)
+        ledger.custom.append(contentsOf: result.customs)
+        ledger.events.append(contentsOf: result.events)
+    }
+
     /// Parses a single line
     ///
     /// - Parameters:
@@ -242,7 +252,7 @@ public enum Parser {
     ///   - metaData: metaData for this directive
     ///   - result: ParsingResult where the parsed data or errors should be saved
     /// - Returns: new open transaction or nil if no transaction open
-    private static func parse(_ line: String, index lineIndex: Int, metaData: [String: String], into result: ParsingResult) {
+    private static func parse(_ line: String, index lineIndex: Int, metaData: [String: String], into result: ParsingResult) { // swiftlint:disable:this function_body_length
 
         // Account
         if parseAccount(line, index: lineIndex, metaData: metaData, into: result) {
@@ -309,12 +319,7 @@ public enum Parser {
             if parsedAccount.closing != nil {
                 if existingAccount.closing == nil {
                     result.accounts.removeAll { _, _, account in account.name == parsedAccount.name }
-                    let newAccount = Account(name: existingAccount.name,
-                                             bookingMethod: existingAccount.bookingMethod,
-                                             commoditySymbol: existingAccount.commoditySymbol,
-                                             opening: existingAccount.opening,
-                                             closing: parsedAccount.closing,
-                                             metaData: existingAccount.metaData)
+                    let newAccount = accountFromTemplate(account: existingAccount, closing: parsedAccount.closing)
                     result.accounts.append((lineIndex, line, newAccount))
                 } else {
                     result.parsingErrors.append("Second closing for account \(parsedAccount.name) in line \(lineIndex + 1): \(line)")
@@ -322,12 +327,7 @@ public enum Parser {
             } else if parsedAccount.opening != nil {
                 if existingAccount.opening == nil {
                     result.accounts.removeAll { _, _, account in account.name == parsedAccount.name }
-                    let newAccount = Account(name: existingAccount.name,
-                                             bookingMethod: existingAccount.bookingMethod,
-                                             commoditySymbol: existingAccount.commoditySymbol,
-                                             opening: parsedAccount.opening,
-                                             closing: existingAccount.closing,
-                                             metaData: existingAccount.metaData)
+                    let newAccount = accountFromTemplate(account: existingAccount, opening: parsedAccount.opening)
                     result.accounts.append((lineIndex, line, newAccount))
                 } else {
                     result.parsingErrors.append("Second open for account \(parsedAccount.name) in line \(lineIndex + 1): \(line)")
@@ -337,6 +337,22 @@ public enum Parser {
             result.accounts.append((lineIndex, line, parsedAccount))
         }
         return true
+    }
+
+    /// Creates a new accounts based on an old account while overriding specified properties
+    /// It copies the name, bookingMEthod, commoditySymbol, opening, closing and metaData from the old account.
+    /// - Parameters:
+    ///   - account: to use as baseline
+    ///   - opening: optional opening if you want to override it
+    ///   - closing: optional closing if you want to override it
+    /// - Returns: a new account
+    private static func accountFromTemplate(account: Account, opening: Date? = nil, closing: Date? = nil) -> Account {
+        Account(name: account.name,
+                bookingMethod: account.bookingMethod,
+                commoditySymbol: account.commoditySymbol,
+                opening: opening ?? account.opening,
+                closing: closing ?? account.closing,
+                metaData: account.metaData)
     }
 
 }
