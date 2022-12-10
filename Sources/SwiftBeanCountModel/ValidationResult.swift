@@ -12,7 +12,7 @@ import Foundation
 ///
 /// - valid: the tested object is valid
 /// - invalid: the tested object is invalid, including an error message
-enum ValidationResult {
+enum ValidationResult: Equatable {
 
     case valid
     case invalid(String)
