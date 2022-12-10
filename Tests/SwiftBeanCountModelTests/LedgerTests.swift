@@ -340,7 +340,7 @@ class LedgerTests: XCTestCase {
         try ledger.add(account2)
         XCTAssertEqual(String(describing: ledger), String(describing: ledger.accounts.first!))
 
-        /// Test new line after account
+        // Test new line after account
         let price = try Price(date: TestUtils.date20170609, commoditySymbol: TestUtils.eur, amount: Amount(number: 10, commoditySymbol: TestUtils.cad, decimalDigits: 2))
         try ledger.add(price)
         XCTAssertEqual(String(describing: ledger), "\(String(describing: ledger.accounts.first!))\n\(String(describing: price))")

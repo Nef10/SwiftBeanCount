@@ -81,7 +81,7 @@ public struct MultiCurrencyAmount {
     ///
     /// - Returns: `ValidationResult`
     func validateZeroWithTolerance() -> ValidationResult {
-        let zero = MultiCurrencyAmount(amounts: [:], decimalDigits: self.decimalDigits)
+        let zero = Self(amounts: [:], decimalDigits: self.decimalDigits)
         return Self.equalWithinTolerance(amount1: self, amount2: zero)
     }
 
@@ -95,8 +95,8 @@ public struct MultiCurrencyAmount {
         var decimalDigits = amount.multiCurrencyAmount.decimalDigits
         decimalDigits[amount.commoditySymbol] = decimalDigitToKeep(amount.multiCurrencyAmount.decimalDigits[amount.commoditySymbol]!,
                                                                    self.decimalDigits[amount.commoditySymbol])
-        return Self.equalWithinTolerance(amount1: MultiCurrencyAmount(amounts: amount.multiCurrencyAmount.amounts,
-                                                                      decimalDigits: decimalDigits), amount2: self)
+        return Self.equalWithinTolerance(amount1: Self(amounts: amount.multiCurrencyAmount.amounts,
+                                                       decimalDigits: decimalDigits), amount2: self)
     }
 
 }

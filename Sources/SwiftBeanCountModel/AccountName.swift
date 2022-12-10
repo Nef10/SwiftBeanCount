@@ -49,10 +49,8 @@ public struct AccountName: AccountItem {
     /// - Returns: `AccountType` of the account with this name
     private static func getAccountType(for name: String) -> AccountType {
         var type = AccountType.asset
-        for accountType in AccountType.allValues() {
-            if name.starts(with: accountType.rawValue) {
-                type = accountType
-            }
+        for accountType in AccountType.allValues() where name.starts(with: accountType.rawValue) {
+            type = accountType
         }
         return type
     }
