@@ -75,14 +75,10 @@ enum SheetParser {
     }
 
     private static func convertToTransactionData(headings: [String], data: [[String]], name: String) -> [Result<TransactionData, SheetParserError>] {
-        guard let dateIndex = headings.firstIndex(of: "Date"),
-            let payeeIndex = headings.firstIndex(of: "Paid to"),
-            let amountIndex = headings.firstIndex(of: "Amount"),
-            let categoryIndex = headings.firstIndex(of: "Category"),
-            let payerIndex = headings.firstIndex(of: "Who paid"),
-            let narrationIndex = headings.firstIndex(of: "Comment"),
-            let payer2 = (data.first { $0[payerIndex] != name })?[payerIndex],
-            let amount1Index = headings.firstIndex(of: "Part \(name)"),
+        guard let dateIndex = headings.firstIndex(of: "Date"), let payeeIndex = headings.firstIndex(of: "Paid to"),
+            let amountIndex = headings.firstIndex(of: "Amount"), let categoryIndex = headings.firstIndex(of: "Category"),
+            let payerIndex = headings.firstIndex(of: "Who paid"), let narrationIndex = headings.firstIndex(of: "Comment"),
+            let payer2 = (data.first { $0[payerIndex] != name })?[payerIndex], let amount1Index = headings.firstIndex(of: "Part \(name)"),
             let amount2Index = headings.firstIndex(of: "Part \(payer2)") else {
             return [.failure(.missingHeader("Missing Header! Headers: \(headings)"))]
         }
@@ -103,14 +99,10 @@ enum SheetParser {
             guard let amount2 = getDecimalFromString(row[amount2Index]) else {
                 return .failure(.invalidValue("Parsing Error! Invalid Number: \(row[amount2Index])"))
             }
-            return .success(TransactionData(date: date,
-                                            payee: row[payeeIndex],
-                                            narration: row[narrationIndex],
-                                            category: row[categoryIndex],
-                                            amount: amount,
-                                            amount1: amount1,
-                                            amount2: amount2,
-                                            paidBy: row[payerIndex] == name ? .one : .two))
+            let payee = row[payeeIndex], narration = row[narrationIndex], category = row[categoryIndex]
+            let payedBy: Payer = row[payerIndex] == name ? .one : .two
+            let data = TransactionData(date: date, payee: payee, narration: narration, category: category, amount: amount, amount1: amount1, amount2: amount2, paidBy: payedBy)
+            return .success(data)
         }
     }
 
