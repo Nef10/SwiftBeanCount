@@ -128,8 +128,7 @@ public struct WealthsimpleLedgerMapper {
         }
         var nrwtTransactions = wealthsimpleTransactions.filter { $0.transactionType == .nonResidentWithholdingTax }
         let stockSplits = wealthsimpleTransactions.filter { $0.transactionType == .stockDistribution }
-        var prices = [Price]()
-        var transactions = [STransaction]()
+        var prices = [Price](), transactions = [STransaction]()
         for wealthsimpleTransaction in wealthsimpleTransactions where wealthsimpleTransaction.transactionType != .nonResidentWithholdingTax
                                                                       && wealthsimpleTransaction.transactionType != .stockDistribution {
             var (price, transaction) = try mapTransaction(wealthsimpleTransaction, in: account)
@@ -145,16 +144,10 @@ public struct WealthsimpleLedgerMapper {
                 prices.append(price)
             }
         }
-        for wealthsimpleTransaction in nrwtTransactions { // add nrwt transactions which could not be merged
-            let transaction = try mapNonResidentWithholdingTax(wealthsimpleTransaction, in: account)
-            if !lookup.doesTransactionExistInLedger(transaction) {
-                transactions.append(transaction)
-            }
-        }
-        let splitTransactions = try mapStockSplits(stockSplits, in: account)
-        for splitTransaction in splitTransactions where !lookup.doesTransactionExistInLedger(splitTransaction) {
-            transactions.append(splitTransaction)
-        }
+        // add nrwt transactions which could not be merged
+        transactions.append(contentsOf: try nrwtTransactions.map { try mapNonResidentWithholdingTax($0, in: account) }.filter { !lookup.doesTransactionExistInLedger($0) })
+
+        transactions.append(contentsOf: try mapStockSplits(stockSplits, in: account).filter { !lookup.doesTransactionExistInLedger($0) })
         return (prices, transactions)
     }
 
