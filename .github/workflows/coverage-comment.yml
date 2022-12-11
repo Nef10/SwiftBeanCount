@@ -45,7 +45,7 @@ jobs:
           hide-branch-coverage: true
           output-file: comment.html
       - name: Post code coverage report
-        uses: marocchino/sticky-pull-request-comment@v2.3.0
+        uses: marocchino/sticky-pull-request-comment@v2.3.1
         with:
           path: comment.html
           number: ${{ env.pr_number }}
