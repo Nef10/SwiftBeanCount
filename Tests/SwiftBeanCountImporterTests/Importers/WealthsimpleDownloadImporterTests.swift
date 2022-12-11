@@ -231,9 +231,7 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
         try ledger.add(SwiftBeanCountModel.Account(name: try AccountName("Assets:W:Cash"), metaData: ["importer-type": "wealthsimple", "number": "A1B2"]))
         try ledger.add(Commodity(symbol: "ETF"))
         try ledger.add(Commodity(symbol: "CAD"))
-        let importer = WealthsimpleDownloadImporter(ledger: ledger)
-        let account = TestAccount()
-        let transaction1 = TestTransaction()
+        let importer = WealthsimpleDownloadImporter(ledger: ledger), account = TestAccount(), transaction1 = TestTransaction()
         var transaction2 = TestTransaction()
         transaction2.transactionType = .paymentSpend
         Self.getAccounts = { .success([account]) }
@@ -325,7 +323,7 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
         XCTAssert(importer.balancesToImport().isEmpty)
     }
 
-    func testLoadAccounts() {
+    func testLoadAccounts() { // swiftlint:disable:this function_body_length
         let importer = WealthsimpleDownloadImporter(ledger: nil)
         var verifiedPositionsOne = false, verifiedPositionsTwo = false, verifiedTransactionsOne = false, verifiedTransactionsTwo = false
         let account1 = TestAccount(), account2 = TestAccount(id: "id222", number: "C2c2")

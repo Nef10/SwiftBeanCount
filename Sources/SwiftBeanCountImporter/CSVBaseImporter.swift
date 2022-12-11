@@ -44,22 +44,14 @@ class CSVBaseImporter: BaseImporter {
             return nil
         }
 
-        var description = sanitize(description: data.description)
+        var description = sanitize(description: data.description), payee = data.payee
         var categoryAccountName = try! AccountName(Settings.defaultAccountName) // swiftlint:disable:this force_try
-        var payee = data.payee
-        let originalPayee = payee
-        let originalDescription = description
+        let originalPayee = payee, originalDescription = description
 
         let (savedDescription, savedPayee) = savedDescriptionAndPayeeFor(description: description)
-        if let savedPayee = savedPayee {
-            payee = savedPayee
-        }
-        if let savedDescription = savedDescription {
-            description = savedDescription
-        }
-        if let accountName = savedAccountNameFor(payee: payee) {
-            categoryAccountName = accountName
-        }
+        if let savedPayee = savedPayee { payee = savedPayee }
+        if let savedDescription = savedDescription { description = savedDescription }
+        if let accountName = savedAccountNameFor(payee: payee) { categoryAccountName = accountName }
 
         let categoryAmount = Amount(number: -data.amount, commoditySymbol: commoditySymbol, decimalDigits: 2)
         let flag: Flag = description == originalDescription && payee == originalPayee ? .incomplete : .complete

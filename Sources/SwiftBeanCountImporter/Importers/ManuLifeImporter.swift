@@ -125,15 +125,11 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         let (balances, balancePrices) = convertBalances(parsedManuLifeBalances)
         prices.append(contentsOf: balancePrices)
 
-        for balance in balances {
-            if !(ledger?.accounts.flatMap { $0.balances }.contains(balance) ?? false) {
-                self.balances.append(balance)
-            }
+        for balance in balances where !(ledger?.accounts.flatMap { $0.balances }.contains(balance) ?? false) {
+            self.balances.append(balance)
         }
-        for price in prices {
-            if !(ledger?.prices.contains(price) ?? false) {
-                self.prices.append(price)
-            }
+        for price in prices where !(ledger?.prices.contains(price) ?? false) {
+            self.prices.append(price)
         }
 
         didReturnTransaction = true
@@ -265,33 +261,12 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
             return (nil, [])
         }
 
-        var totalAmount = Decimal()
-        var postings = [Posting]()
+        var totalAmount = Decimal(), postings = [Posting]()
 
         buys.forEach {
-            let unitFraction = Double($0.units)! / (employeeBasicFraction + employerBasicFraction + employerMatchFraction + employeeVoluntaryFraction)
-            let (buyAmount, _) = $0.total.amountDecimal()
+            let (buyPostings, buyAmount) = generatePostings(from: $0)
             totalAmount += buyAmount
-            guard let cost = try? Cost(amount: parseAmountFrom(string: $0.price, commoditySymbol: commoditySymbol), date: nil, label: nil) else {
-                return
-            }
-
-            if employeeBasicFraction != 0, let accountName = try? AccountName("\(accountString):Employee:Basic:\($0.commodity)") {
-                let amount = parseAmountFrom(string: String(format: unitFormat, unitFraction * employeeBasicFraction), commoditySymbol: $0.commodity)
-                postings.append(Posting(accountName: accountName, amount: amount, cost: cost))
-            }
-            if employerBasicFraction != 0, let accountName = try? AccountName("\(accountString):Employer:Basic:\($0.commodity)") {
-                let amount = parseAmountFrom(string: String(format: unitFormat, unitFraction * employerBasicFraction), commoditySymbol: $0.commodity)
-                postings.append(Posting(accountName: accountName, amount: amount, cost: cost))
-            }
-            if employerMatchFraction != 0, let accountName = try? AccountName("\(accountString):Employer:Match:\($0.commodity)") {
-                let amount = parseAmountFrom(string: String(format: unitFormat, unitFraction * employerMatchFraction), commoditySymbol: $0.commodity)
-                postings.append(Posting(accountName: accountName, amount: amount, cost: cost))
-            }
-            if employeeVoluntaryFraction != 0, let accountName = try? AccountName("\(accountString):Employee:Voluntary:\($0.commodity)") {
-                let amount = parseAmountFrom(string: String(format: unitFormat, unitFraction * employeeVoluntaryFraction), commoditySymbol: $0.commodity)
-                postings.append(Posting(accountName: accountName, amount: amount, cost: cost))
-            }
+            postings.append(contentsOf: buyPostings)
         }
 
         postings.insert(Posting(accountName: configuredAccountName, amount: Amount(number: -totalAmount, commoditySymbol: commoditySymbol, decimalDigits: 2)), at: 0)
@@ -301,8 +276,34 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         }
 
         let transaction = Transaction(metaData: TransactionMetaData(date: date, payee: "", narration: "", flag: .complete, tags: []), postings: postings)
-        let duplicate = getPossibleDuplicateFor(transaction)
-        return (ImportedTransaction(transaction, possibleDuplicate: duplicate), prices)
+        return (ImportedTransaction(transaction, possibleDuplicate: getPossibleDuplicateFor(transaction)), prices)
+    }
+
+    private func generatePostings(from buy: ManuLifeBuy) -> ([Posting], Decimal) {
+        var postings = [Posting]()
+        let unitFraction = Double(buy.units)! / (employeeBasicFraction + employerBasicFraction + employerMatchFraction + employeeVoluntaryFraction)
+        let (buyAmount, _) = buy.total.amountDecimal()
+        guard let cost = try? Cost(amount: parseAmountFrom(string: buy.price, commoditySymbol: commoditySymbol), date: nil, label: nil) else {
+            return([], 0)
+        }
+
+        if employeeBasicFraction != 0, let accountName = try? AccountName("\(accountString):Employee:Basic:\(buy.commodity)") {
+            let amount = parseAmountFrom(string: String(format: unitFormat, unitFraction * employeeBasicFraction), commoditySymbol: buy.commodity)
+            postings.append(Posting(accountName: accountName, amount: amount, cost: cost))
+        }
+        if employerBasicFraction != 0, let accountName = try? AccountName("\(accountString):Employer:Basic:\(buy.commodity)") {
+            let amount = parseAmountFrom(string: String(format: unitFormat, unitFraction * employerBasicFraction), commoditySymbol: buy.commodity)
+            postings.append(Posting(accountName: accountName, amount: amount, cost: cost))
+        }
+        if employerMatchFraction != 0, let accountName = try? AccountName("\(accountString):Employer:Match:\(buy.commodity)") {
+            let amount = parseAmountFrom(string: String(format: unitFormat, unitFraction * employerMatchFraction), commoditySymbol: buy.commodity)
+            postings.append(Posting(accountName: accountName, amount: amount, cost: cost))
+        }
+        if employeeVoluntaryFraction != 0, let accountName = try? AccountName("\(accountString):Employee:Voluntary:\(buy.commodity)") {
+            let amount = parseAmountFrom(string: String(format: unitFormat, unitFraction * employeeVoluntaryFraction), commoditySymbol: buy.commodity)
+            postings.append(Posting(accountName: accountName, amount: amount, cost: cost))
+        }
+        return (postings, buyAmount)
     }
 
     /// Returns the first match of the capture group regex in the input string

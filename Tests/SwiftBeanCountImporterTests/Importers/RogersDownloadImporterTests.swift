@@ -110,7 +110,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         var authenticated = true
 
         static func load(username: String, password: String, deviceId: String, deviceInfo: String, completion: @escaping (Result<User, DownloadError>) -> Void) {
-            completion(RogersDownloadImporterTests.load?(username, password, deviceId, deviceInfo) ?? .success(TestUser()))
+            completion(RogersDownloadImporterTests.load?(username, password, deviceId, deviceInfo) ?? .success(Self()))
         }
     }
 

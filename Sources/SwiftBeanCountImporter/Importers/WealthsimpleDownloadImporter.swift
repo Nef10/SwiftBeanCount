@@ -23,7 +23,6 @@ protocol WealthsimpleDownloaderProvider {
     )
 }
 
-// swiftlint:disable:next type_body_length
 class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
 
     override class var importerName: String { "Wealthsimple Download" }
@@ -171,7 +170,7 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
         }
     }
 
-    private func downloadPositions(_ completion: @escaping () -> Void) {
+    private func downloadPositions(_ completion: @escaping () -> Void) { // swiftlint:disable:this function_body_length
         let group = DispatchGroup()
         var errorOccurred = false
 
@@ -208,7 +207,7 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
         }
     }
 
-    private func downloadTransactions(_ completion: @escaping () -> Void) {
+    private func downloadTransactions(_ completion: @escaping () -> Void) { // swiftlint:disable:this function_body_length
         let group = DispatchGroup()
         var downloadedTransactions = [SwiftBeanCountModel.Transaction]()
         var errorOccurred = false

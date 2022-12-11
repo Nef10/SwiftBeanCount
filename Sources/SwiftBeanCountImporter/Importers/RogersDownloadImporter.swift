@@ -86,11 +86,9 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter {
         }
     }
 
-    private func downloadAllActivities(accounts: [RogersBankDownloader.Account], _ completion: @escaping () -> Void) {
-        let group = DispatchGroup()
-        let queue = DispatchQueue(label: "threadSafeDownloadedActivitiesArray")
-        var downloadedActivities = [Activity]()
-        var errorOccurred = false
+    private func downloadAllActivities(accounts: [RogersBankDownloader.Account], _ completion: @escaping () -> Void) { // swiftlint:disable:this function_body_length
+        let group = DispatchGroup(), queue = DispatchQueue(label: "threadSafeDownloadedActivitiesArray")
+        var downloadedActivities = [Activity](), errorOccurred = false
 
         accounts.forEach { account in
             for statementNumber in 0...statementsToLoad() - 1 {
@@ -176,7 +174,8 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter {
 
     private func statementsToLoad() -> Int {
         let statements = Int(existingLedger.custom.filter { $0.name == MetaDataKey.customsKey && $0.values.first == MetaDataKey.customStatementsToLoad }
-                                                  .max { $0.date < $1.date }?.values[1] ?? "")
+                                                  .max { $0.date < $1.date }?
+                                                  .values[1] ?? "")
         return statements ?? 3
     }
 

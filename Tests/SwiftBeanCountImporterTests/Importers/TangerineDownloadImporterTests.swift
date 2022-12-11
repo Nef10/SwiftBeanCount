@@ -207,7 +207,7 @@ final class TangerineDownloadImporterTests: XCTestCase {
         runImport()
     }
 
-    func testDownload() throws {
+    func testDownload() throws { // swiftlint:disable:this function_body_length
         let balance = Balance(date: Date(), accountName: try AccountName("Assets:Testing"), amount: Amount(number: Decimal(20.25), commoditySymbol: "CAD"))
         let transactions = ["A": [["TEST": 10]]]
 
