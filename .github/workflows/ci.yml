@@ -81,7 +81,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Run SwiftLint --strict
-        uses: norio-nomura/action-swiftlint@3.2.1
-        with:
-          args: --strict
+      - name: Install Swift
+        uses: swift-actions/setup-swift@v1.20.0
+      - name: Install SwiftLint
+        run: |
+          curl -L https://github.com/realm/SwiftLint/releases/download/0.50.0/swiftlint_linux.zip -o swiftlint.zip
+          unzip swiftlint.zip -d swiftlint
+          ./swiftlint/swiftlint --version
+      - name: Run SwiftLint
+        run: ./swiftlint/swiftlint --strict --reporter github-actions-logging
