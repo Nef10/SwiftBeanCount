@@ -47,7 +47,7 @@ class N26Importer: CSVBaseImporter, CSVImporter {
         let amount = Decimal(string: csvReader[Self.amount]!, locale: Locale(identifier: "en_CA"))!
         let amountForeignCurrency = Decimal(string: csvReader[Self.amountForeignCurrency]!, locale: Locale(identifier: "en_CA"))
         var price: Amount?
-        if let amountForeignCurrency = amountForeignCurrency, csvReader[Self.foreignCurrency] != commoditySymbol {
+        if let amountForeignCurrency, csvReader[Self.foreignCurrency] != commoditySymbol {
             price = Amount(number: -amountForeignCurrency, commoditySymbol: csvReader[Self.foreignCurrency]!, decimalDigits: 2)
         }
         return CSVLine(date: date, description: description, amount: amount, payee: "", price: price)

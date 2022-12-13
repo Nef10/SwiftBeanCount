@@ -145,7 +145,7 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
 
     private func download(_ completion: @escaping () -> Void) {
         downloader.authenticate { error in
-            if let error = error {
+            if let error {
                 self.delegate?.error(error)
                 completion()
             } else {

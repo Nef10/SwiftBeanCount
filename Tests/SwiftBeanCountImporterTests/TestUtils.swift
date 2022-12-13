@@ -137,7 +137,7 @@ enum TestUtils {
 
     static func csvReader(description: String, payee: String, date: Date? = nil) throws -> CSVReader {
         let dateString: String
-        if let date = date {
+        if let date {
             dateString = dateFormatter.string(from: date)
         } else {
             dateString = "2020-01-01"
@@ -160,16 +160,16 @@ enum TestUtils {
         let ledger = Ledger()
         try ledger.add(Commodity(symbol: fundSymbol, metaData: ["name": fundName]))
         var metaData = [String: String]()
-        if let employeeBasic = employeeBasic {
+        if let employeeBasic {
             metaData["employee-basic-fraction"] = employeeBasic
         }
-        if let employerBasic = employerBasic {
+        if let employerBasic {
             metaData["employer-basic-fraction"] = employerBasic
         }
-        if let employerMatch = employerMatch {
+        if let employerMatch {
             metaData["employer-match-fraction"] = employerMatch
         }
-        if let employeeVoluntary = employeeVoluntary {
+        if let employeeVoluntary {
             metaData["employee-voluntary-fraction"] = employeeVoluntary
         }
         let account = Account(name: Self.parking, commoditySymbol: Self.usd, metaData: metaData)

@@ -142,7 +142,7 @@ class TangerineDownloadImporter: BaseImporter, DownloadImporter {
         DispatchQueue.main.async {
             self.delegate?.removeView()
             DispatchQueue.global(qos: .userInitiated).async {
-                if let error = error {
+                if let error {
                     self.delegate?.error(error)
                 }
                 completion()

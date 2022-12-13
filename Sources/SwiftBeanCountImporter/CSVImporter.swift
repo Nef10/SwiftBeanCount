@@ -33,7 +33,7 @@ enum CSVImporterFactory {
     }
 
     static func new(ledger: Ledger?, url: URL?) -> FileImporter? {
-        guard let url = url, let csvReader = openFile(url), let headerRow = csvReader.headerRow else {
+        guard let url, let csvReader = openFile(url), let headerRow = csvReader.headerRow else {
             return nil
         }
         let importer = Self.importers.first {

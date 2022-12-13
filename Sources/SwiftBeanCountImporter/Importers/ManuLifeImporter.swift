@@ -257,7 +257,7 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
 
     /// Converts ManuLifeBuys to ImportedTransactions and SwiftBeanCountModel Prices
     private func convertPurchase(_ buys: [ManuLifeBuy], on date: Date?) -> (ImportedTransaction?, [Price]) {
-        guard !buys.isEmpty, let date = date else {
+        guard !buys.isEmpty, let date else {
             return (nil, [])
         }
 

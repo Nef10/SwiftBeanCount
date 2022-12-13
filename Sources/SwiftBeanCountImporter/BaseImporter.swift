@@ -42,7 +42,7 @@ class BaseImporter: Importer {
             accountName = ledgerAccounts.first!
             return accountName!
         }
-        guard let delegate = delegate else {
+        guard let delegate else {
             fatalError("No delegate")
         }
         let group = DispatchGroup()
@@ -113,7 +113,7 @@ class BaseImporter: Importer {
     }
 
     func getPossibleDuplicateFor(_ transaction: Transaction) -> Transaction? {
-        guard let ledger = ledger else {
+        guard let ledger else {
             return nil
         }
         return ledger.transactions.first {

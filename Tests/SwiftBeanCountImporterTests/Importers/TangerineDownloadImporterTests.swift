@@ -41,7 +41,7 @@ final class TangerineDownloadImporterTests: XCTestCase {
         }
 
         func ledgerAccountName(account: [String: Any]) throws -> AccountName {
-            if let ledgerAccountNameMapping = ledgerAccountNameMapping {
+            if let ledgerAccountNameMapping {
                 return try ledgerAccountNameMapping(account)
             }
             throw SwiftBeanCountTangerineMapperError.missingAccount(account: String(describing: account))
@@ -270,7 +270,7 @@ final class TangerineDownloadImporterTests: XCTestCase {
             importer.load()
             XCTAssert(importer.pricesToImport().isEmpty)
             XCTAssert(self.delegate!.verified)
-            if let verify = verify {
+            if let verify {
                 verify(importer)
             } else {
                 XCTAssertNil(importer.nextTransaction())

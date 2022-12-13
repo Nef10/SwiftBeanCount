@@ -125,7 +125,7 @@ public struct ImportedTransaction: Equatable {
         }
         if !payee.isEmpty {
             Settings.setPayeeMapping(key: originalDescription, payee: payee)
-            if let accountName = accountName {
+            if let accountName {
                 Settings.setAccountMapping(key: payee, account: accountName.fullName)
             }
         }

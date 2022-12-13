@@ -49,8 +49,8 @@ class CSVBaseImporter: BaseImporter {
         let originalPayee = payee, originalDescription = description
 
         let (savedDescription, savedPayee) = savedDescriptionAndPayeeFor(description: description)
-        if let savedPayee = savedPayee { payee = savedPayee }
-        if let savedDescription = savedDescription { description = savedDescription }
+        if let savedPayee { payee = savedPayee }
+        if let savedDescription { description = savedDescription }
         if let accountName = savedAccountNameFor(payee: payee) { categoryAccountName = accountName }
 
         let categoryAmount = Amount(number: -data.amount, commoditySymbol: commoditySymbol, decimalDigits: 2)
