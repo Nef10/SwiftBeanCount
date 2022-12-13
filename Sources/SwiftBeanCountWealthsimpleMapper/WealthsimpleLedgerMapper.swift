@@ -140,7 +140,7 @@ public struct WealthsimpleLedgerMapper {
                 }
                 transactions.append(transaction)
             }
-            if let price = price, !lookup.doesPriceExistInLedger(price) {
+            if let price, !lookup.doesPriceExistInLedger(price) {
                 prices.append(price)
             }
         }
