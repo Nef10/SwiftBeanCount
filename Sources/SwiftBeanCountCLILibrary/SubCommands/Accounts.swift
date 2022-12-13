@@ -83,7 +83,7 @@ struct Accounts: FormattableLedgerCommand {
     }
 
     private func dateString(_ date: Date?) -> String {
-        guard let date = date else {
+        guard let date else {
             return ""
         }
         return Self.dateFormatter.string(from: date)
