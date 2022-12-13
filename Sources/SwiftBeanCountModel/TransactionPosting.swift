@@ -73,7 +73,7 @@ public class TransactionPosting: Posting {
     /// - Throws: PostingError if the balance could not be calculated
     /// - Returns: MultiCurrencyAmount
     func balance(in ledger: Ledger) throws -> MultiCurrencyAmount {
-        if let cost = cost {
+        if let cost {
             if let postingAmount = ledger.postingPrices[transaction]?[self] {
                 return MultiCurrencyAmount(amounts: postingAmount.amounts,
                                            decimalDigits: [amount.commoditySymbol: amount.decimalDigits])
@@ -83,7 +83,7 @@ public class TransactionPosting: Posting {
             } else {
                 throw PostingError.noCost("Posting \(self) of transaction \(transaction) does not have an amount in the cost and adds to the inventory")
             }
-        } else if let price = price {
+        } else if let price {
             return MultiCurrencyAmount(amounts: [price.commoditySymbol: price.number * amount.number],
                                        decimalDigits: [amount.commoditySymbol: amount.decimalDigits])
         } else {
@@ -98,10 +98,10 @@ extension Posting: CustomStringConvertible {
     /// String to describe the posting in the ledget file
     public var description: String {
         var result = "  \(accountName) \(String(describing: amount))"
-        if let cost = cost {
+        if let cost {
             result += " \(String(describing: cost))"
         }
-        if let price = price {
+        if let price {
             result += " @ \(String(describing: price))"
         }
         if !metaData.isEmpty {

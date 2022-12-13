@@ -60,7 +60,7 @@ extension Commodity: CustomStringConvertible {
     ///
     /// If no opening is set it is an empty string
     public var description: String {
-        guard let opening = opening else {
+        guard let opening else {
             return ""
         }
         var result = "\(Self.dateFormatter.string(from: opening)) commodity \(symbol)"

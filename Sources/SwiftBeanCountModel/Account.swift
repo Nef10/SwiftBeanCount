@@ -163,8 +163,8 @@ public class Account: AccountItem {
     ///
     /// - Returns: `ValidationResult`
     func validate() -> ValidationResult {
-        if let closing = closing {
-            guard let opening = opening else {
+        if let closing {
+            guard let opening else {
                 return .invalid("Account \(self.name) has a closing date but no opening")
             }
             guard opening <= closing else {
@@ -209,7 +209,7 @@ public class Account: AccountItem {
             if posting.cost != nil {
                 do {
                     let pricePaid = try inventory.book(posting: posting)
-                    if let pricePaid = pricePaid {
+                    if let pricePaid {
                         if ledger.postingPrices[posting.transaction] != nil {
                             ledger.postingPrices[posting.transaction]![posting] = pricePaid
                         } else {

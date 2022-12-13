@@ -168,7 +168,7 @@ public func += (left: inout MultiCurrencyAmount, right: MultiCurrencyAmountRepre
 ///   - decimal2: secons decimal
 /// - Returns: the decimal which indicats higher precision
 private func decimalDigitToKeep(_ decimal1: Int, _ decimal2: Int?) -> Int {
-    guard let decimal2 = decimal2 else {
+    guard let decimal2 else {
         return decimal1
     }
     if min(decimal1, decimal2) == 0 {

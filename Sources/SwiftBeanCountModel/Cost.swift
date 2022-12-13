@@ -37,7 +37,7 @@ public class Cost {
         self.amount = amount
         self.date = date
         self.label = label
-        if let amount = amount {
+        if let amount {
             guard amount.number.sign == .plus else {
                 throw CostError.negativeAmount("\(self)")
             }
@@ -93,13 +93,13 @@ extension Cost: CustomStringConvertible {
     /// String to describe the cost in the ledger file
     public var description: String {
         var results = [String]()
-        if let date = date {
+        if let date {
             results.append(Self.dateFormatter.string(from: date))
         }
-        if let amount = amount {
+        if let amount {
             results.append(amount.description)
         }
-        if let label = label {
+        if let label {
             results.append("\"\(label)\"")
         }
         return "{\(results.joined(separator: ", "))}"
