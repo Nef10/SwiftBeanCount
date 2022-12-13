@@ -115,7 +115,7 @@ class AccountParserTests: XCTestCase {
         XCTAssertNil(account1!.closing)
         XCTAssertEqual(account1!.commoditySymbol, commoditySymbol)
 
-        if let bookingMethod = bookingMethod {
+        if let bookingMethod {
             XCTAssertEqual(account1!.bookingMethod, bookingMethod)
         }
 
