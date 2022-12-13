@@ -1,4 +1,4 @@
-# Updated for 0.49.1
+# Updated for 0.50.3
 
 excluded:
   - ".build"
@@ -97,6 +97,8 @@ opt_in_rules:
   - accessibility_label_for_image
   - comma_inheritance
   - self_binding
+  - accessibility_trait_for_button
+  - shorthand_optional_binding
 
 disabled_rules:
   - trailing_comma
