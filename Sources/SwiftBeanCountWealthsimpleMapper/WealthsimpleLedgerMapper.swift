@@ -204,7 +204,7 @@ public struct WealthsimpleLedgerMapper {
                     amount: Amount(for: transaction.quantity, in: try lookup.commoditySymbol(for: transaction.symbol)),
                     cost: try Cost(amount: transaction.marketPrice, date: nil, label: nil))
         ])
-        return (try Price(date: transaction.processDate, commoditySymbol: transaction.symbol, amount: transaction.marketPrice), result)
+        return (try Price(date: transaction.processDate, commoditySymbol: lookup.commoditySymbol(for: transaction.symbol), amount: transaction.marketPrice), result)
     }
 
     private func mapSell(_ transaction: WTransaction, in account: WAccount) throws -> (Price, STransaction) {
@@ -215,7 +215,7 @@ public struct WealthsimpleLedgerMapper {
                     price: transaction.marketPrice,
                     cost: try Cost(amount: nil, date: nil, label: nil))
         ])
-        return (try Price(date: transaction.processDate, commoditySymbol: transaction.symbol, amount: transaction.marketPrice), result)
+        return (try Price(date: transaction.processDate, commoditySymbol: lookup.commoditySymbol(for: transaction.symbol), amount: transaction.marketPrice), result)
     }
 
     private func mapTransfer(_ transaction: WTransaction, in account: WAccount, accountTypes: [SwiftBeanCountModel.AccountType], payee: String = "") throws -> STransaction {

@@ -92,7 +92,7 @@ struct LedgerLookup {
         case let .transactionType(transactionType):
             key = "\(MetaDataKeys.prefix)\("\(transactionType)".camelCaseToKebabCase())"
         case let .dividend(dividendSymbol):
-            key = "\(MetaDataKeys.dividendPrefix)\(dividendSymbol)"
+            key = "\(MetaDataKeys.dividendPrefix)\(try commoditySymbol(for: dividendSymbol))"
         case .contributionRoom:
             key = MetaDataKeys.contributionRoom
         case .rounding:

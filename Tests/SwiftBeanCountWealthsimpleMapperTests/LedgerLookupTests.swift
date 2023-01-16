@@ -105,6 +105,7 @@ final class LedgerLookupTests: XCTestCase {
         name = try AccountName("Income:Test")
         let symbol = "XGRO"
         try ledger.add(Account(name: name, metaData: ["\(MetaDataKeys.dividendPrefix)\(symbol)": number, "\(MetaDataKeys.prefix)giveaway-bonus": number]))
+        try ledger.add(Commodity(symbol: symbol))
         ledgerLookup = LedgerLookup(ledger)
         XCTAssertEqual(try ledgerLookup.ledgerAccountName(for: .dividend(symbol), in: TestAccount(number: number), ofType: [.income] ), name)
         XCTAssertEqual(try ledgerLookup.ledgerAccountName(for: .transactionType(.giveawayBonus), in: TestAccount(number: number), ofType: [.income] ), name)
