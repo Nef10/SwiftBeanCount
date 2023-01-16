@@ -71,6 +71,8 @@ public struct SwiftBeanCountRogersBankMapper {
             let referenceNumber: String
             if activity.activityCategory == .payment {
                 referenceNumber = "payment-\(Self.dateFormatter.string(from: postedDate))"
+            } else if activity.activityCategory == .overlimitFee {
+                referenceNumber = "overlimit-fee-\(Self.dateFormatter.string(from: postedDate))"
             } else {
                 guard let number = activity.referenceNumber else {
                     throw RogersBankMappingError.missingActivityData(activity: activity, key: "referenceNumber")

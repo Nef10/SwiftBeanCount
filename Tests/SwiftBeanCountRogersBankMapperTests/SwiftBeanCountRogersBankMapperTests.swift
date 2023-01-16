@@ -90,33 +90,63 @@ final class SwiftBeanCountRogersBankMapperTests: XCTestCase {
     func testMapActivities() throws {
         let accountName = try AccountName("Liabilities:CC:Rogers")
         try ledger.add(Account(name: accountName, metaData: ["last-four": "1234", "importer-type": "rogers"]))
-        var activity1 = TestActivity()
-        activity1.activityStatus = .approved
-        activity1.postedDate = Date()
-        var activity2 = TestActivity()
-        activity2.activityStatus = .approved
-        activity2.activityCategory = .purchase
-        activity2.postedDate = Date()
-        activity2.referenceNumber = "852741963"
+        var activity = TestActivity()
+        activity.activityStatus = .approved
+        activity.activityCategory = .purchase
+        activity.postedDate = Date()
+        activity.referenceNumber = "852741963"
         let amount = TestAmount(value: "2.79", currency: "USD")
         var foreign = TestForeignCurrency()
         foreign.originalAmount = amount
-        activity2.foreign = foreign
+        activity.foreign = foreign
         let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
-        let result = try mapper.mapActivitiesToTransactions(activities: [activity1, activity2])
-        XCTAssertEqual(result.count, 2)
-        var postings = [
+        let result = try mapper.mapActivitiesToTransactions(activities: [activity])
+        XCTAssertEqual(result.count, 1)
+        let postings = [
+            Posting(accountName: accountName, amount: SwiftBeanCountModel.Amount(number: Decimal(string: "-1.13")!, commoditySymbol: "CAD", decimalDigits: 2)),
+            Posting(accountName: mapper.expenseAccountName,
+                    amount: SwiftBeanCountModel.Amount(number: Decimal(string: "2.79")!, commoditySymbol: "USD", decimalDigits: 2),
+                    price: SwiftBeanCountModel.Amount(number: Decimal(string: "1.13")!, commoditySymbol: "CAD", decimalDigits: 2))
+        ]
+        let transactionMetaData = TransactionMetaData(date: activity.postedDate!, narration: "Test Merchant Name", metaData: [MetaDataKeys.activityId: "852741963"])
+        XCTAssertEqual(result[0], Transaction(metaData: transactionMetaData, postings: postings))
+    }
+
+    func testMapActivitiesPayment() throws {
+        let accountName = try AccountName("Liabilities:CC:Rogers")
+        try ledger.add(Account(name: accountName, metaData: ["last-four": "1234", "importer-type": "rogers"]))
+        var activity = TestActivity()
+        activity.activityStatus = .approved
+        activity.postedDate = Date()
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        let result = try mapper.mapActivitiesToTransactions(activities: [activity])
+        XCTAssertEqual(result.count, 1)
+        let postings = [
             Posting(accountName: accountName, amount: SwiftBeanCountModel.Amount(number: Decimal(string: "-1.13")!, commoditySymbol: "CAD", decimalDigits: 2)),
             Posting(accountName: mapper.expenseAccountName, amount: SwiftBeanCountModel.Amount(number: Decimal(string: "1.13")!, commoditySymbol: "CAD", decimalDigits: 2))
         ]
-        let metaData = [MetaDataKeys.activityId: "payment-\(Self.dateFormatter.string(from: activity1.postedDate!))"]
+        let metaData = [MetaDataKeys.activityId: "payment-\(Self.dateFormatter.string(from: activity.postedDate!))"]
         XCTAssertEqual(result[0],
-                       Transaction(metaData: TransactionMetaData(date: activity1.postedDate!, narration: "Test Merchant Name", metaData: metaData), postings: postings))
-        postings[1] = Posting(accountName: mapper.expenseAccountName,
-                              amount: SwiftBeanCountModel.Amount(number: Decimal(string: "2.79")!, commoditySymbol: "USD", decimalDigits: 2),
-                              price: SwiftBeanCountModel.Amount(number: Decimal(string: "1.13")!, commoditySymbol: "CAD", decimalDigits: 2))
-        let transactionMetaData = TransactionMetaData(date: activity2.postedDate!, narration: "Test Merchant Name", metaData: [MetaDataKeys.activityId: "852741963"])
-        XCTAssertEqual(result[1], Transaction(metaData: transactionMetaData, postings: postings))
+                       Transaction(metaData: TransactionMetaData(date: activity.postedDate!, narration: "Test Merchant Name", metaData: metaData), postings: postings))
+    }
+
+    func testMapActivitiesOverLimitFee() throws {
+        let accountName = try AccountName("Liabilities:CC:Rogers")
+        try ledger.add(Account(name: accountName, metaData: ["last-four": "1234", "importer-type": "rogers"]))
+        var activity = TestActivity()
+        activity.activityStatus = .approved
+        activity.activityCategory = .overlimitFee
+        activity.postedDate = Date()
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        let result = try mapper.mapActivitiesToTransactions(activities: [activity])
+        XCTAssertEqual(result.count, 1)
+        let postings = [
+            Posting(accountName: accountName, amount: SwiftBeanCountModel.Amount(number: Decimal(string: "-1.13")!, commoditySymbol: "CAD", decimalDigits: 2)),
+            Posting(accountName: mapper.expenseAccountName, amount: SwiftBeanCountModel.Amount(number: Decimal(string: "1.13")!, commoditySymbol: "CAD", decimalDigits: 2))
+        ]
+        let metaData: [String: String] = [MetaDataKeys.activityId: "overlimit-fee-\(Self.dateFormatter.string(from: activity.postedDate!))"]
+        XCTAssertEqual(result[0],
+                       Transaction(metaData: TransactionMetaData(date: activity.postedDate!, narration: "Test Merchant Name", metaData: metaData), postings: postings))
     }
 
     func testMapActivityDuplicate() throws {
