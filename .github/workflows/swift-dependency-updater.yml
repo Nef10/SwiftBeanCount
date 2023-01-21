@@ -15,7 +15,7 @@ jobs:
     steps:
     - name: Generate token
       id: generate_token
-      uses: tibdex/github-app-token@v1.6.0
+      uses: tibdex/github-app-token@v1.7.0
       with:
         app_id: ${{ secrets.APP_ID }} # These two secrets need to be added
         private_key: ${{ secrets.APP_PRIVATE_KEY }} # to your repository settings
@@ -26,7 +26,7 @@ jobs:
         fetch-depth: 0 # Fetching the whole repo is required to check if branches already exist
         token: ${{ steps.generate_token.outputs.token }} # Checkout repo pre-configured with right token
     - name: Install Swift
-      uses: swift-actions/setup-swift@v1.15.0
+      uses: swift-actions/setup-swift@v1.21.0
     - name: Checkout swift-dependency-updater
       uses: actions/checkout@v3
       with:

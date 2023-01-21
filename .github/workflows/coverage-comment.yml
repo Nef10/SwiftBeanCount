@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Download artifacts'
-        uses: actions/github-script@v6.3.1
+        uses: actions/github-script@v6.3.3
         with:
           script: |
             var artifacts = await github.rest.actions.listWorkflowRunArtifacts({
@@ -37,7 +37,7 @@ jobs:
         run: |
           echo "pr_number=$(cat ./NR)" >> $GITHUB_ENV
       - name: Generate code coverage report
-        uses: Nef10/lcov-reporter-action@v0.3.2
+        uses: Nef10/lcov-reporter-action@v0.4.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           lcov-file: lcov.info
@@ -45,7 +45,7 @@ jobs:
           hide-branch-coverage: true
           output-file: comment.html
       - name: Post code coverage report
-        uses: marocchino/sticky-pull-request-comment@v2.2.0
+        uses: marocchino/sticky-pull-request-comment@v2.3.1
         with:
           path: comment.html
           number: ${{ env.pr_number }}
