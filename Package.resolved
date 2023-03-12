@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/Nef10/SwiftScraper.git",
         "state": {
           "branch": null,
-          "revision": "d957a9e1e5ef3a3f5cd88654d8a480db54c1fd92",
-          "version": "0.5.1"
+          "revision": "d93707b290c6d5cf899cdcdd229a7c858f9f2f19",
+          "version": "0.6.0"
         }
       },
       {
@@ -78,8 +78,8 @@
         "repositoryURL": "https://github.com/Nef10/TangerineDownloader.git",
         "state": {
           "branch": null,
-          "revision": "003f165db122164527353c64eff1a90d3b1b0be5",
-          "version": "0.0.2"
+          "revision": "6c136d179a008542023e2fea46fe2a48450e5ef9",
+          "version": "0.0.3"
         }
       },
       {
