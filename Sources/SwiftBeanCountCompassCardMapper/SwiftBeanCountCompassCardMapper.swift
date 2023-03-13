@@ -32,12 +32,14 @@ public struct SwiftBeanCountCompassCardMapper {
     private static var dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM-dd-yyyy hh:mm a"
+        dateFormatter.timeZone = TimeZone(abbreviation: "PST")
         return dateFormatter
     }()
 
     private static var dateFormatterLoadId: DateFormatter = {
         var dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm"
+        dateFormatter.timeZone = TimeZone(abbreviation: "PST")
         return dateFormatter
     }()
 
