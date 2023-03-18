@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "CompassCardDownloader",
+        "repositoryURL": "https://github.com/Nef10/CompassCardDownloader.git",
+        "state": {
+          "branch": null,
+          "revision": "eab7329ae9272465c083245b462d1db7036fac14",
+          "version": "0.0.1"
+        }
+      },
+      {
         "package": "CSV.swift",
         "repositoryURL": "https://github.com/yaslab/CSV.swift.git",
         "state": {
@@ -17,6 +26,15 @@
           "branch": null,
           "revision": "4025b16ce86250b93feeddde5a4d7be4bffb451c",
           "version": "0.0.9"
+        }
+      },
+      {
+        "package": "SwiftBeanCountCompassCardMapper",
+        "repositoryURL": "https://github.com/Nef10/SwiftBeanCountCompassCardMapper.git",
+        "state": {
+          "branch": null,
+          "revision": "b14c8a3ac14e9a2f3a5293c5a816214261dd77e0",
+          "version": "0.0.1"
         }
       },
       {

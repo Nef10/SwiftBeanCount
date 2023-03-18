@@ -14,7 +14,11 @@ enum DownloadImporterFactory {
 
     static var importers: [DownloadImporter.Type] {
         #if canImport(UIKit) || canImport(AppKit)
-            [WealthsimpleDownloadImporter.self, RogersDownloadImporter.self, TangerineDownloadImporter.self]
+            if #available(iOS 14.5, macOS 11.3, *) {
+                return [WealthsimpleDownloadImporter.self, RogersDownloadImporter.self, TangerineDownloadImporter.self, CompassCardDownloadImporter.self]
+            } else {
+                return [WealthsimpleDownloadImporter.self, RogersDownloadImporter.self, TangerineDownloadImporter.self]
+            }
         #else
             [WealthsimpleDownloadImporter.self, RogersDownloadImporter.self]
         #endif

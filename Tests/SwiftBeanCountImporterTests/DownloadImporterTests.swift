@@ -15,7 +15,7 @@ final class DownloadImporterTests: XCTestCase {
 
     func testImporters() {
         #if canImport(UIKit) || canImport(AppKit)
-            XCTAssertEqual(DownloadImporterFactory.importers.count, 3)
+            XCTAssertEqual(DownloadImporterFactory.importers.count, 4)
         #else
             XCTAssertEqual(DownloadImporterFactory.importers.count, 2)
         #endif
