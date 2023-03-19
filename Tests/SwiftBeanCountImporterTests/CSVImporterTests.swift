@@ -14,7 +14,7 @@ import XCTest
 final class CSVImporterTests: XCTestCase {
 
     func testImporters() {
-        XCTAssertEqual(CSVImporterFactory.importers.count, 7)
+        XCTAssertEqual(CSVImporterFactory.importers.count, 8)
     }
 
     func testNew() {

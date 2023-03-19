@@ -223,6 +223,44 @@ class ErrorDelegate<T: EquatableError>: CredentialInputDelegate {
     }
 }
 
+class ErrorCheckDelegate: CredentialInputDelegate {
+    private let check: ((Error) -> Bool)?
+    private var errorVerified = false
+    override var verified: Bool {
+        super.verified && (errorVerified || check == nil)
+    }
+
+    init(
+        inputNames: [String] = [],
+        inputSecrets: [Bool] = [],
+        inputReturnValues: [String] = [],
+        saveKeys: [String] = [],
+        saveValues: [String] = [],
+        readKeys: [String] = [],
+        readReturnValues: [String?] = [],
+        checkError: ((Error) -> Bool)? = nil
+    ) {
+        self.check = checkError
+        super.init(inputNames: inputNames,
+                   inputSecrets: inputSecrets,
+                   inputReturnValues: inputReturnValues,
+                   saveKeys: saveKeys,
+                   saveValues: saveValues,
+                   readKeys: readKeys,
+                   readReturnValues: readReturnValues)
+    }
+
+    override func error(_ error: Error) {
+        guard let check else {
+            XCTFail("Received unexpected error: \(error)")
+            return
+        }
+        XCTAssert(check(error))
+        errorVerified = true
+    }
+
+}
+
 class CredentialInputAndViewDelegate: ErrorDelegate<TestError> {
 
     private var removeViewCalled = false

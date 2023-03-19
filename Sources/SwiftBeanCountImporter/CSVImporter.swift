@@ -28,7 +28,8 @@ enum CSVImporterFactory {
             LunchOnUsImporter.self,
             N26Importer.self,
             RogersImporter.self,
-            SimpliiImporter.self
+            SimpliiImporter.self,
+            CompassCardImporter.self
         ]
     }
 

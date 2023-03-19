@@ -53,7 +53,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/Nef10/SwiftBeanCountCompassCardMapper.git",
-            .exact("0.0.1")
+            .exact("0.0.2")
         ),
     ],
     targets: [
@@ -66,8 +66,8 @@ let package = Package(
                 "SwiftBeanCountParserUtils",
                 "SwiftBeanCountRogersBankMapper",
                 "SwiftBeanCountWealthsimpleMapper",
+                "SwiftBeanCountCompassCardMapper",
                 .product(name: "CompassCardDownloader", package: "CompassCardDownloader", condition: .when(platforms: [.macOS, .iOS])),
-                .product(name: "SwiftBeanCountCompassCardMapper", package: "SwiftBeanCountCompassCardMapper", condition: .when(platforms: [.macOS, .iOS])),
                 .product(name: "TangerineDownloader", package: "TangerineDownloader", condition: .when(platforms: [.macOS, .iOS])),
                 .product(name: "SwiftBeanCountTangerineMapper", package: "SwiftBeanCountTangerineMapper", condition: .when(platforms: [.macOS, .iOS])),
                 .product(name: "Wealthsimple", package: "WealthsimpleDownloader"),
