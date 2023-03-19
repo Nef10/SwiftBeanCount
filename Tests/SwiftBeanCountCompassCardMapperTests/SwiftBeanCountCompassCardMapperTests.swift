@@ -1,3 +1,4 @@
+import CSV
 @testable import SwiftBeanCountCompassCardMapper
 import SwiftBeanCountModel
 import XCTest
@@ -67,6 +68,21 @@ final class SwiftBeanCountCompassCardMapperTests: XCTestCase {
         })
     }
 
+    func testAutoLoadTransactionCSVReader() throws {
+        let reader = try CSVReader(string: "\(CSV.header)\(CSV.autoLoad)", hasHeaderRow: true)
+        let result = try mapper.createTransactions(account: try AccountName(accountName), reader: reader)
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result.first!.metaData.narration, "")
+        XCTAssertEqual(result.first!.metaData.metaData["journey-id"], "compass-card-load-2022-12-01-09-26")
+        XCTAssertEqual(result.first!.metaData.date, Date(timeIntervalSince1970: 1_669_915_560))
+        XCTAssert(result.first!.postings.contains {
+            $0.accountName.fullName == accountName && $0.amount.description == "20.00 CAD"
+        })
+        XCTAssert(result.first!.postings.contains {
+            $0.accountName == mapper.defaultAssetAccountName && $0.amount.description == "-20.00 CAD"
+        })
+    }
+
     func testAutoLoadTransactionNonDefaultAccount() throws {
         let loadAccountName = "Assets:Checking"
         let ledger = Ledger()
@@ -87,6 +103,21 @@ final class SwiftBeanCountCompassCardMapperTests: XCTestCase {
 
     func testCreateTransaction() throws {
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.transaction1)")
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result.first!.metaData.narration, "Bus Stop 60572")
+        XCTAssertEqual(result.first!.metaData.metaData["journey-id"], "2022-11-18T04:39:00.0000000Z")
+        XCTAssertEqual(result.first!.metaData.date, Date(timeIntervalSince1970: 1_668_746_340))
+        XCTAssert(result.first!.postings.contains {
+            $0.accountName.fullName == accountName && $0.amount.description == "-2.50 CAD"
+        })
+        XCTAssert(result.first!.postings.contains {
+            $0.accountName == mapper.defaultExpenseAccountName && $0.amount.description == "2.50 CAD"
+        })
+    }
+
+    func testCreateTransactionCSVReader() throws {
+        let reader = try CSVReader(string: "\(CSV.header)\(CSV.transaction1)", hasHeaderRow: true)
+        let result = try mapper.createTransactions(account: try AccountName(accountName), reader: reader)
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result.first!.metaData.narration, "Bus Stop 60572")
         XCTAssertEqual(result.first!.metaData.metaData["journey-id"], "2022-11-18T04:39:00.0000000Z")
