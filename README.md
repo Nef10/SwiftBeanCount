@@ -53,6 +53,8 @@ The code is split up in several internal libraries, which allows functionality t
 * [SwiftBeanCountRogersBankMapper](https://github.com/Nef10/SwiftBeanCountRogersBankMapper): Library to convert downloaded data from Rogers Bank
 * [TangerineDownloader](https://github.com/Nef10/TangerineDownloader): Library to download data from Tangerine
 * [SwiftBeanCountTangerineMapper](https://github.com/Nef10/SwiftBeanCountTangerineMapper): Library to convert downloaded data from Tangerine
+* [CompassCardDownloader](https://github.com/Nef10/CompassCardDownloader): Library to download data from the CompassCard website
+* [SwiftBeanCountCompassCardMapper](https://github.com/Nef10/SwiftBeanCountCompassCardMapper): Library to convert downloaded data from the CompassCard website
 
 ### Dependency Diagram
 
@@ -67,6 +69,14 @@ flowchart LR
     SwiftBeanCountModel --> SwiftBeanCountParser
     SwiftBeanCountParserUtils --> SwiftBeanCountParser
   end
+  subgraph CompassCard
+    SwiftBeanCountCompassCardMapper
+    CompassCardDownloader
+  end
+  subgraph Tangerine
+    SwiftBeanCountTangerineMapper
+    TangerineDownloader
+  end
   subgraph Wealthsimple
     SwiftBeanCountWealthsimpleMapper
     WealthsimpleDownloader
@@ -77,18 +87,17 @@ flowchart LR
     RogersBankDownloader
     RogersBankDownloader --> SwiftBeanCountRogersBankMapper
   end
-  subgraph Tangerine
-    SwiftBeanCountTangerineMapper
-    TangerineDownloader
-  end
   SwiftScraper --> TangerineDownloader
+  SwiftScraper --> CompassCardDownloader
   Wealthsimple --> SwiftBeanCountImporter
   Tangerine --> SwiftBeanCountImporter
+  CompassCard --> SwiftBeanCountImporter
   Rogers --> SwiftBeanCountImporter
-  Core ---> SwiftBeanCountRogersBankMapper
+  Core --> SwiftBeanCountRogersBankMapper
   Core --> SwiftBeanCountImporter
-  Core ---> SwiftBeanCountWealthsimpleMapper
-  Core ---> SwiftBeanCountTangerineMapper
+  Core --> SwiftBeanCountWealthsimpleMapper
+  Core --> SwiftBeanCountTangerineMapper
+  Core ---> SwiftBeanCountCompassCardMapper
   Core --> SwiftBeanCountImporterApp
   Core --> SwiftBeanCountSheetSync
   SwiftBeanCountImporter --> SwiftBeanCountImporterApp
@@ -99,6 +108,7 @@ flowchart LR
   OAuthSwift --> GoogleAuthentication
   SwiftBeanCountSheetSync ---> SwiftBeanCountSheetSyncApp
   CSV ----> SwiftBeanCountImporter
+  CSV --> SwiftBeanCountCompassCardMapper
   Core ----> SwiftBeanCountCLI
   swift-argument-parser ---> SwiftBeanCountCLI
   SwiftyTextTable ---> SwiftBeanCountCLI
@@ -111,6 +121,8 @@ flowchart LR
   click SwiftBeanCountRogersBankMapper "https://github.com/Nef10/SwiftBeanCountRogersBankMapper"
   click RogersBankDownloader "https://github.com/Nef10/RogersBankDownloader"
   click SwiftBeanCountTangerineMapper "https://github.com/Nef10/SwiftBeanCountTangerineMapper"
+  click CompassCardDownloader "https://github.com/Nef10/CompassCardDownloader"
+  click SwiftBeanCountCompassCardMapper "https://github.com/Nef10/SwiftBeanCountCompassCardMapper"
   click TangerineDownloader "https://github.com/Nef10/TangerineDownloader"
   click SwiftBeanCountImporter "https://github.com/Nef10/SwiftBeanCountImporter"
   click SwiftBeanCountImporterApp "https://github.com/Nef10/SwiftBeanCountImporterApp"
@@ -131,7 +143,7 @@ flowchart LR
   classDef app fill:#99FF99;
   classDef external fill:#FF99FF;
   classDef cli fill:#FFCC99;
-  class Core,Rogers,Wealthsimple,Tangerine box;
+  class Core,Rogers,Wealthsimple,Tangerine,CompassCard box;
   class SwiftBeanCountImporterApp,SwiftBeanCountSheetSyncApp,App app;
   class CSV,OAuthSwift,KeychainAccess,External,swift-argument-parser,SwiftyTextTable,Rainbow external;
   class SwiftBeanCountCLI cli;
