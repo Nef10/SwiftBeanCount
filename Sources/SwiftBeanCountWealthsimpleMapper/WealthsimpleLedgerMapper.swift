@@ -289,7 +289,7 @@ public struct WealthsimpleLedgerMapper {
             throw WealthsimpleConversionError.unexpectedStockSplit(transactions.first!.description)
         }
         let metaData = TransactionMetaData(date: buyTransaction.processDate, narration: buyTransaction.description, metaData: [MetaDataKeys.id: buyTransaction.id])
-        let result = STransaction(metaData: metaData, postings: [
+        return STransaction(metaData: metaData, postings: [
             Posting(accountName: try lookup.ledgerAccountName(of: account, symbol: sellTransaction.symbol),
                     amount: Amount(for: sellTransaction.quantity, in: try lookup.commoditySymbol(for: sellTransaction.symbol)),
                     cost: try Cost(amount: nil, date: nil, label: nil)),
@@ -297,7 +297,6 @@ public struct WealthsimpleLedgerMapper {
                     amount: Amount(for: buyTransaction.quantity, in: try lookup.commoditySymbol(for: buyTransaction.symbol)),
                     cost: try Cost(amount: nil, date: nil, label: nil))
         ])
-        return result
     }
 
     // swiftlint:disable:next large_tuple
