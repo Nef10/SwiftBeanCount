@@ -4,7 +4,8 @@ import SwiftBeanCountModel
 import SwiftBeanCountParser
 
 struct LedgerOption: ParsableArguments {
-    @Argument(help: "The file to parse.") var file: String
+    @Argument(help: "The file to parse.")
+    var file: String
 }
 
 protocol LedgerCommand: ParsableCommand {

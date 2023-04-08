@@ -7,9 +7,12 @@ struct Check: LedgerCommand, ColorizedCommand {
 
     static var configuration = CommandConfiguration(abstract: "Parses a ledger and prints any errors it finds")
 
-    @OptionGroup() var options: LedgerOption
-    @ArgumentParser.Flag(name: [.short, .long], help: "Don't print errors, only indicate via exit code.") private var quiet = false
-    @ArgumentParser.Flag(help: Self.noColorHelp()) var noColor = false
+    @OptionGroup()
+    var options: LedgerOption
+    @ArgumentParser.Flag(name: [.short, .long], help: "Don't print errors, only indicate via exit code.")
+    private var quiet = false
+    @ArgumentParser.Flag(help: Self.noColorHelp())
+    var noColor = false
 
     func run() throws {
         adjustColorization()

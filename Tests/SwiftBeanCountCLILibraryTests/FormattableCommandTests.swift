@@ -4,8 +4,10 @@ import Rainbow
 import XCTest
 
 struct TestFormattableCommand: FormattableCommand {
-        @ArgumentParser.Option() var format: Format
-        @ArgumentParser.Flag(help: Self.noColorHelp()) var noColor = false
+        @ArgumentParser.Option()
+        var format: Format
+        @ArgumentParser.Flag(help: Self.noColorHelp())
+        var noColor = false
 
         func getResult() throws -> FormattableResult {
             FormattableResult(title: "A", columns: ["B", "C"], values: [["D E", "F G"], ["H", "I"]], footer: "J")
