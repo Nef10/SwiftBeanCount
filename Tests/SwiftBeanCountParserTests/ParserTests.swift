@@ -271,8 +271,7 @@ class ParserTests: XCTestCase {
         case .metaData:
             string = Resources.metaData
         }
-        let ledger = Parser.parse(string: string)
-        return ledger
+        return Parser.parse(string: string)
     }
 
 }
