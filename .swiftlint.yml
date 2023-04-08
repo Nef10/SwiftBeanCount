@@ -111,3 +111,5 @@ identifier_name:
 type_name:
   max_length:
     warning: 45
+number_separator:
+  minimum_fraction_length: 3
