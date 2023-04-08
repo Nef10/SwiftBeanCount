@@ -154,7 +154,6 @@ public func + (left: MultiCurrencyAmountRepresentable, right: MultiCurrencyAmoun
 ///   - left: first MultiCurrencyAmount which at the same time will store the result
 ///   - right: MultiCurrencyAmountRepresentable of which the multiAccountAmount will be added
 public func += (left: inout MultiCurrencyAmount, right: MultiCurrencyAmountRepresentable) {
-    // swiftlint:disable:next shorthand_operator
     left = left + right
 }
 
