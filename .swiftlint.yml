@@ -55,7 +55,6 @@ opt_in_rules:
   - file_name
   - convenience_type
   - missing_docs
-  - unused_import
   - legacy_random
   - closure_body_length
   - toggle_bool
@@ -72,7 +71,6 @@ opt_in_rules:
   - nslocalizedstring_require_bundle
   - unowned_variable_capture
   - legacy_multiple
-  - unused_declaration
   - contains_over_filter_count
   - contains_over_filter_is_empty
   - empty_collection_literal
@@ -87,7 +85,6 @@ opt_in_rules:
   - test_case_accessibility
   - discouraged_assert
   - legacy_objc_type
-  - capture_variable
   - private_subject
   - discouraged_none_name
   - redundant_type_annotation
@@ -99,6 +96,8 @@ opt_in_rules:
   - self_binding
   - accessibility_trait_for_button
   - shorthand_optional_binding
+  - direct_return
+  - period_spacing
 
 disabled_rules:
   - trailing_comma
@@ -111,3 +110,5 @@ identifier_name:
 type_name:
   max_length:
     warning: 45
+number_separator:
+  minimum_fraction_length: 3
