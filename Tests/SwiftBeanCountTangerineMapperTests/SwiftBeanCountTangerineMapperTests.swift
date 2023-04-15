@@ -83,7 +83,7 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
     }
 
     func testCreateTransactions() throws {
-        let transactions = ["Assets:Checking": [["posted_date": "2022-10-10T10:10:10", "description": "ABC", "amount": 10.50]]]
+        let transactions = ["Assets:Checking": [["posted_date": "2022-10-10T10:10:10", "description": "ABC", "amount": 10.50] as [String: Any]]]
         let result = try mapper.createTransactions(transactions)
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result[0].description, """
@@ -95,7 +95,7 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
     }
 
     func testCreateTransactionsCommoditySymbol() throws {
-        let transactions = [ "Assets:Checking": [["posted_date": "2022-10-10T10:10:10", "description": "ABC", "amount": 10.50]]]
+        let transactions = [ "Assets:Checking": [["posted_date": "2022-10-10T10:10:10", "description": "ABC", "amount": 10.50] as [String: Any]]]
         let ledger = Ledger()
         try ledger.add(Account(name: try AccountName("Assets:Checking"), commoditySymbol: "USD"))
         let mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
