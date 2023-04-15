@@ -33,9 +33,8 @@ enum TransactionMapper {
         let otherPosting = Posting(accountName: ledgerSettings.accountName, amount: otherAmount)
         postings.append(otherPosting)
 
-        let result = Transaction(metaData: TransactionMetaData(date: data.date, payee: data.payee, narration: data.narration, flag: .complete, tags: [ledgerSettings.tag]),
-                                 postings: postings)
-        return result
+        return Transaction(metaData: TransactionMetaData(date: data.date, payee: data.payee, narration: data.narration, flag: .complete, tags: [ledgerSettings.tag]),
+                           postings: postings)
     }
 
 }
