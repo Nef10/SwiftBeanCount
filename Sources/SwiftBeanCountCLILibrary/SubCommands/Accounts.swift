@@ -40,7 +40,7 @@ struct Accounts: FormattableLedgerCommand {
         }
     }
 
-    func getResult(from ledger: Ledger, parsingDuration _: Double) -> FormattableResult {
+    func getResult(from ledger: Ledger, parsingDuration _: Double) -> [FormattableResult] {
         var accounts = ledger.accounts.sorted { $0.name.fullName < $1.name.fullName }
         if !filter.isEmpty { accounts = accounts.filter { $0.name.fullName.contains(filter) } }
         if !closed { accounts = accounts.filter { $0.closing == nil || $0.closing! > Date() } }
@@ -72,7 +72,7 @@ struct Accounts: FormattableLedgerCommand {
            footer = "\(accounts.count) Accounts"
         }
 
-        return FormattableResult(title: "Accounts", columns: columns(), values: values, footer: footer)
+        return [FormattableResult(title: "Accounts", columns: columns(), values: values, footer: footer)]
     }
 
      private func columns() -> [String] {

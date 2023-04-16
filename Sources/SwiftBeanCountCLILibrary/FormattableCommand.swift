@@ -24,7 +24,7 @@ protocol FormattableCommand: ColorizedCommand {
 
     var formatOptions: FormattableCommandOptions { get }
 
-    func getResult() throws -> FormattableResult
+    func getResult() throws -> [FormattableResult]
 
 }
 
@@ -32,7 +32,8 @@ extension FormattableCommand {
 
     func run() throws {
         adjustColorization()
-        print(formatted(try getResult()))
+        let results = try getResult()
+        print(results.map { formatted($0) }.joined(separator: "\n\n"))
     }
 
     func formatted(_ value: FormattableResult) -> String {

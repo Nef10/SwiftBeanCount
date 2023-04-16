@@ -7,8 +7,8 @@ struct TestFormattableCommand: FormattableCommand {
     var formatOptions = FormattableCommandOptions()
     var colorOptions = ColorizedCommandOptions()
 
-    func getResult() throws -> FormattableResult {
-        FormattableResult(title: "A", columns: ["B", "C"], values: [["D E", "F G"], ["H", "I"]], footer: "J")
+    func getResult() throws -> [FormattableResult] {
+        [FormattableResult(title: "A", columns: ["B", "C"], values: [["D E", "F G"], ["H", "I"]], footer: "J")]
     }
 }
 

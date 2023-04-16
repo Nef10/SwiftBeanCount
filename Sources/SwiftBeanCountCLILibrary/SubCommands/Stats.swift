@@ -12,7 +12,7 @@ struct Stats: FormattableLedgerCommand {
     @OptionGroup()
     var colorOptions: ColorizedCommandOptions
 
-    func getResult(from ledger: Ledger, parsingDuration: Double) -> FormattableResult {
+    func getResult(from ledger: Ledger, parsingDuration: Double) -> [FormattableResult] {
         let values: [[String]] = [
             ["Transactions", String(ledger.transactions.count)],
             ["Accounts", String(ledger.accounts.count)],
@@ -29,7 +29,7 @@ struct Stats: FormattableLedgerCommand {
         ]
 
         let footer = String(format: "Parsing time: %.3f sec", parsingDuration)
-        return FormattableResult(title: "Statistics", columns: ["Type", "Number"], values: values, footer: footer)
+        return [FormattableResult(title: "Statistics", columns: ["Type", "Number"], values: values, footer: footer)]
     }
 
 }
