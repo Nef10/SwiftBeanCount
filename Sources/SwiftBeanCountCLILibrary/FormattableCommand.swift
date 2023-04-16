@@ -15,19 +15,20 @@ struct FormattableResult {
     let footer: String?
 }
 
+struct FormattableCommandOptions: ParsableArguments {
+    @ArgumentParser.Option(name: [.short, .long], help: "Output format. Supported formats: \(Format.allCases.map { $0.rawValue }.joined(separator: ", "))")
+    var format: Format = .table
+}
+
 protocol FormattableCommand: ColorizedCommand {
 
-    var format: Format { get }
+    var formatOptions: FormattableCommandOptions { get }
 
     func getResult() throws -> FormattableResult
 
 }
 
 extension FormattableCommand {
-
-    static func supportedFormats() -> String {
-        "Supported formats: \(Format.allCases.map { $0.rawValue }.joined(separator: ", "))"
-    }
 
     func run() throws {
         adjustColorization()
@@ -36,7 +37,7 @@ extension FormattableCommand {
 
     func formatted(_ value: FormattableResult) -> String {
         var result: String
-        switch format {
+        switch formatOptions.format {
         case .text:
             var table = TextTable(columns: value.columns.map { TextTableColumn(header: $0.bold) })
             table.addRows(values: value.values)
@@ -53,7 +54,7 @@ extension FormattableCommand {
             result = value.columns.map { "\"\($0)\"" }.joined(separator: ", ") + "\n"
             result += value.values.map { $0.map { "\"\($0)\"" }.joined(separator: ", ") }.joined(separator: "\n")
         }
-        if let footer = value.footer, !footer.isEmpty, format != .csv {
+        if let footer = value.footer, !footer.isEmpty, formatOptions.format != .csv {
             result += "\n\n\(footer.lightBlack)"
         }
         return result

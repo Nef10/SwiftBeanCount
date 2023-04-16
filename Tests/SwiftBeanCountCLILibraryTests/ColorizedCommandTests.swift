@@ -3,7 +3,7 @@ import Rainbow
 import XCTest
 
 struct TestColorizedCommand: ColorizedCommand {
-    var noColor = false
+    var colorOptions = ColorizedCommandOptions()
 }
 
 class ColorizedCommandTests: XCTestCase {
@@ -13,7 +13,7 @@ class ColorizedCommandTests: XCTestCase {
         Rainbow.enabled = true
 
         var subject = TestColorizedCommand()
-        subject.noColor = true
+        subject.colorOptions.noColor = true
         subject.adjustColorization()
 
         XCTAssertFalse(Rainbow.enabled)

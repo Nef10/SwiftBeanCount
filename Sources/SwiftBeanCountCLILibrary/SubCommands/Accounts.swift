@@ -14,13 +14,13 @@ struct Accounts: FormattableLedgerCommand {
     }()
 
     @OptionGroup()
-    var options: LedgerOption
+    var ledgerOptions: LedgerCommandOptions
     @Argument(help: "String to filter account names by.")
     private var filter: String = ""
-    @ArgumentParser.Option(name: [.short, .long], help: "Output format. \(Self.supportedFormats())")
-    var format: Format = .table
-    @ArgumentParser.Flag(help: Self.noColorHelp())
-    var noColor = false
+    @OptionGroup()
+    var formatOptions: FormattableCommandOptions
+    @OptionGroup()
+    var colorOptions: ColorizedCommandOptions
     @ArgumentParser.Flag(inversion: .prefixedNo, help: "Show open accounts.")
     private var open = true
     @ArgumentParser.Flag(inversion: .prefixedNo, help: "Show closed accounts.")
@@ -35,7 +35,7 @@ struct Accounts: FormattableLedgerCommand {
     private var count = false
 
     func validate() throws {
-        if format == .csv && count {
+        if formatOptions.format == .csv && count {
             throw ValidationError("Cannot print count in csv format. Please remove count flag or specify another format.")
         }
     }
