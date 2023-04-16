@@ -1,5 +1,6 @@
 import ArgumentParser
 
+@main
 public struct SwiftBeanCountCLI: ParsableCommand {
 
     public static var configuration = CommandConfiguration(

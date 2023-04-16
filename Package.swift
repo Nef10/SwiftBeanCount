@@ -1,14 +1,10 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.5
 
 import PackageDescription
 
 let package = Package(
     name: "SwiftBeanCountCLI",
     products: [
-        .library(
-            name: "SwiftBeanCountCLILibrary",
-            targets: ["SwiftBeanCountCLILibrary"]
-        ),
         .executable(
             name: "swiftbeancount",
             targets: ["SwiftBeanCountCLI"]
@@ -41,8 +37,8 @@ let package = Package(
         ),
     ],
     targets: [
-        .target(
-            name: "SwiftBeanCountCLILibrary",
+        .executableTarget(
+            name: "SwiftBeanCountCLI",
             dependencies: [
                 "SwiftBeanCountModel",
                 "SwiftBeanCountParser",
@@ -53,15 +49,9 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "SwiftBeanCountCLILibraryTests",
+            name: "SwiftBeanCountCLITests",
             dependencies: [
-                "SwiftBeanCountCLILibrary"
-            ]
-        ),
-        .target(
-            name: "SwiftBeanCountCLI",
-            dependencies: [
-                "SwiftBeanCountCLILibrary"
+                "SwiftBeanCountCLI"
             ]
         ),
     ]

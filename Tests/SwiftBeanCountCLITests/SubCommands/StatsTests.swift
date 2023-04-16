@@ -1,4 +1,4 @@
-@testable import SwiftBeanCountCLILibrary
+@testable import SwiftBeanCountCLI
 import XCTest
 
 class StatsTests: XCTestCase {

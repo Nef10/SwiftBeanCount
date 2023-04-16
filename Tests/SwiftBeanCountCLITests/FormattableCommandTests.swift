@@ -1,6 +1,6 @@
 import ArgumentParser
 import Rainbow
-@testable import SwiftBeanCountCLILibrary
+@testable import SwiftBeanCountCLI
 import XCTest
 
 struct TestFormattableCommand: FormattableCommand {
