@@ -15,6 +15,7 @@ As this is currently an alpha version, it only supports this very limited list o
 * `check` Parses your ledger and prints any errors it finds
 * `stats` Statistics of a ledger (e.g. # of transactions)
 * `accounts` Print all accounts
+* `tax-slips` Outputs expected tax slips
 
 ## Installation
 
