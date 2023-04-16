@@ -45,6 +45,7 @@ The code is split up in several internal libraries, which allows functionality t
 * [SwiftBeanCountParser](https://github.com/Nef10/SwiftBeanCountParser): Parser which reads the plain text and transforms it into an instance of the model
 * [SwiftBeanCountParserUtils](https://github.com/Nef10/SwiftBeanCountParserUtils): Utility functions for parsing, which are shared by the parser and some importers / mappers
 * [SwiftBeanCountImporter](https://github.com/Nef10/SwiftBeanCountImporter): Library to read CSV files and texts (e.g. from banks) and transform them into transactions
+* [SwiftBeanCountTax](https://github.com/Nef10/SwiftBeanCountTax): Library to help calculate tax related values from your ledger
 * [SwiftBeanCountSheetSync](https://github.com/Nef10/SwiftBeanCountSheetSync): Library to sync transaction between a Google Sheet and a ledger
 * [GoogleAuthentication](https://github.com/Nef10/GoogleAuthentication): Library to help authenticate to Google APIs
 * [WealthsimpleDownloader](https://github.com/Nef10/WealthsimpleDownloader): Library to download data from Wealthsimple
@@ -109,6 +110,8 @@ flowchart LR
   SwiftBeanCountSheetSync ---> SwiftBeanCountSheetSyncApp
   CSV ----> SwiftBeanCountImporter
   CSV --> SwiftBeanCountCompassCardMapper
+  Core --> SwiftBeanCountTax
+  SwiftBeanCountTax --> SwiftBeanCountCLI
   Core ----> SwiftBeanCountCLI
   swift-argument-parser ---> SwiftBeanCountCLI
   SwiftyTextTable ---> SwiftBeanCountCLI
@@ -116,6 +119,7 @@ flowchart LR
   click SwiftBeanCountModel "https://github.com/Nef10/SwiftBeanCountModel"
   click SwiftBeanCountParser "https://github.com/Nef10/SwiftBeanCountParser"
   click SwiftBeanCountParserUtils "https://github.com/Nef10/SwiftBeanCountParserUtils"
+  click SwiftBeanCountTax "https://github.com/Nef10/SwiftBeanCountTax"
   click SwiftBeanCountWealthsimpleMapper "https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper"
   click WealthsimpleDownloader "https://github.com/Nef10/WealthsimpleDownloader"
   click SwiftBeanCountRogersBankMapper "https://github.com/Nef10/SwiftBeanCountRogersBankMapper"
