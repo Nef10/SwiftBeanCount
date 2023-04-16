@@ -185,7 +185,7 @@ extension TaxSlip: CustomStringConvertible {
         "\(issuer != nil ? "\(issuer!) " : "")\(name)"
     }
 
-    /// Hearder for the tax slip, the issuer, name and tax year
+    /// Header for the tax slip, the issuer, name and tax year
     public var header: String {
         "\(issuer ?? "Tax Slip") \(name) - Tax year \(year)"
     }
