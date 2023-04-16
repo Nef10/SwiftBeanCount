@@ -12,7 +12,16 @@ struct FormattableResult {
     let title: String
     let columns: [String]
     let values: [[String]]
+    let lastRowIsFooter: Bool
     let footer: String?
+
+    internal init(title: String, columns: [String], values: [[String]], lastRowIsFooter: Bool = false, footer: String? = nil) {
+        self.title = title
+        self.columns = columns
+        self.values = values
+        self.lastRowIsFooter = lastRowIsFooter
+        self.footer = footer
+    }
 }
 
 struct FormattableCommandOptions: ParsableArguments {
@@ -41,7 +50,10 @@ extension FormattableCommand {
         switch formatOptions.format {
         case .text:
             var table = TextTable(columns: value.columns.map { TextTableColumn(header: $0.bold) })
-            table.addRows(values: value.values)
+            table.addRows(values: value.values.dropLast())
+            if !value.values.isEmpty {
+                table.addRow(values: value.lastRowIsFooter ? value.values.last!.map { $0.bold } : value.values.last!)
+            }
             table.columnFence = ""
             table.rowFence = ""
             table.cornerFence = ""
@@ -49,7 +61,10 @@ extension FormattableCommand {
             result += table.render().split(whereSeparator: \.isNewline).map { $0.trimmingCharacters(in: .whitespaces) }.joined(separator: "\n")
         case .table:
             var table = TextTable(columns: value.columns.map { TextTableColumn(header: $0) }, header: value.title.bold)
-            table.addRows(values: value.values)
+            table.addRows(values: value.values.dropLast())
+            if !value.values.isEmpty {
+                table.addRow(values: value.lastRowIsFooter ? value.values.last!.map { $0.bold } : value.values.last!)
+            }
             result = table.render()
         case .csv:
             result = value.columns.map { "\"\($0)\"" }.joined(separator: ", ") + "\n"

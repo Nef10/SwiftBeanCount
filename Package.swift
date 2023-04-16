@@ -24,6 +24,10 @@ let package = Package(
             .exact("0.1.8")
         ),
         .package(
+            url: "https://github.com/Nef10/SwiftBeanCountTax.git",
+            .exact("0.0.2")
+        ),
+        .package(
             url: "https://github.com/apple/swift-argument-parser",
             .upToNextMinor(from: "1.2.0")
         ),
@@ -42,6 +46,7 @@ let package = Package(
             dependencies: [
                 "SwiftBeanCountModel",
                 "SwiftBeanCountParser",
+                "SwiftBeanCountTax",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 "SwiftyTextTable",
                 "Rainbow",

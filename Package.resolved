@@ -38,6 +38,15 @@
         }
       },
       {
+        "package": "SwiftBeanCountTax",
+        "repositoryURL": "https://github.com/Nef10/SwiftBeanCountTax.git",
+        "state": {
+          "branch": null,
+          "revision": "4f6569713587021518006195e27a2b97fb5b1d29",
+          "version": "0.0.2"
+        }
+      },
+      {
         "package": "SwiftyTextTable",
         "repositoryURL": "https://github.com/scottrhoyt/SwiftyTextTable.git",
         "state": {

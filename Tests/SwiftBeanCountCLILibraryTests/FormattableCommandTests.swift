@@ -18,6 +18,11 @@ class FormattableCommandTests: XCTestCase {
                                                 columns: ["Column A", "B", "C"],
                                                 values: [["1", "Value 2", "Value3"], ["Row 2", "Value 2", ""]],
                                                 footer: "Footer")
+    private let lastRowHighlightResult = FormattableResult(title: "Title",
+                                                           columns: ["Column A", "B", "C"],
+                                                           values: [["1", "Value 2", "Value3"], ["Row 2", "Value 2", ""]],
+                                                           lastRowIsFooter: true,
+                                                           footer: "Footer")
     private let oneColumnOneRowResult = FormattableResult(title: "Title", columns: ["Column A"], values: [["1"]], footer: nil)
     private let zeroRowResult = FormattableResult(title: "Title", columns: ["Column A", "B"], values: [], footer: nil)
 
@@ -54,7 +59,7 @@ class FormattableCommandTests: XCTestCase {
         Rainbow.enabled = true
         var subject = TestFormattableCommand()
         subject.formatOptions.format = .table
-        let result = subject.formatted(basicResult)
+        let result = subject.formatted(lastRowHighlightResult)
         XCTAssertEqual(result, """
             +-----------------------------+
             | \("Title".bold)                       |
@@ -62,7 +67,7 @@ class FormattableCommandTests: XCTestCase {
             | Column A | B       | C      |
             +----------+---------+--------+
             | 1        | Value 2 | Value3 |
-            | Row 2    | Value 2 |        |
+            | \("Row 2".bold)    | \("Value 2".bold) |        |
             +----------+---------+--------+
 
             \("Footer".lightBlack)
@@ -96,13 +101,13 @@ class FormattableCommandTests: XCTestCase {
         Rainbow.enabled = true
         var subject = TestFormattableCommand()
         subject.formatOptions.format = .text
-        let result = subject.formatted(basicResult)
+        let result = subject.formatted(lastRowHighlightResult)
         XCTAssertEqual(result, """
             \("Title".bold.underline)
 
             \("Column A".bold)  \("B".bold)        \("C".bold)
             1         Value 2  Value3
-            Row 2     Value 2
+            \("Row 2".bold)     \("Value 2".bold)
 
             \("Footer".lightBlack)
             """)

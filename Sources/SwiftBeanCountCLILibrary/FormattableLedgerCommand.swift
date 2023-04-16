@@ -2,7 +2,7 @@ import Foundation
 import SwiftBeanCountModel
 
 protocol FormattableLedgerCommand: FormattableCommand, LedgerCommand {
-    func getResult(from ledger: Ledger, parsingDuration: Double) -> [FormattableResult]
+    func getResult(from ledger: Ledger, parsingDuration: Double) throws -> [FormattableResult]
 }
 
 extension FormattableLedgerCommand {
@@ -12,7 +12,7 @@ extension FormattableLedgerCommand {
         let ledger = try parseLedger()
         let end = Date.timeIntervalSinceReferenceDate
         let time = end - start
-        return getResult(from: ledger, parsingDuration: time)
+        return try getResult(from: ledger, parsingDuration: time)
     }
 
 }
