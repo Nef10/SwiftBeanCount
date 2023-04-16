@@ -13,10 +13,12 @@ categories:
   - title: '🧰 Maintenance'
     labels:
       - 'refactoring'
-      - 'dependencies'
       - 'documentation'
       - 'tests'
       - 'maintenance'
+  - title: '📦 Dependencies'
+    labels:
+      - 'dependencies'
 exclude-labels:
   - 'skip-changelog'
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
