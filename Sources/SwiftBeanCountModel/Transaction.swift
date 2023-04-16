@@ -106,7 +106,7 @@ public class Transaction {
 
 extension Transaction: CustomStringConvertible {
 
-    /// the `String representation of this transaction for the ledger file
+    /// the `String` representation of this transaction for the ledger file
     public var description: String {
         var string = String(describing: metaData)
         postings.forEach { string += "\n\(String(describing: $0))" }
