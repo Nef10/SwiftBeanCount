@@ -16,7 +16,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/Nef10/SwiftBeanCountParserUtils.git",
-            .exact("0.0.1")
+            from: "1.0.0"
         ),
         .package(
             url: "https://github.com/Nef10/RogersBankDownloader.git",
