@@ -17,7 +17,5 @@ Check out the complete documentation of all offered methods [here](https://nef10
 The library supports the Swift Package Manger, so simply add a dependency in your `Package.swift`:
 
 ```
-.package(url: "https://github.com/Nef10/SwiftBeanCountParserUtils.git", .exact("X.Y.Z")),
+.package(url: "https://github.com/Nef10/SwiftBeanCountParserUtils.git", from: "1.0.0"),
 ```
-
-*Note: as per semantic versioning all versions changes < 1.0.0 can be breaking, so please use `.exact` for now*
