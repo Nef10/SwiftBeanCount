@@ -250,28 +250,32 @@ class ParserTests: XCTestCase {
     }
 
     private func ledgerFor(testFile: TestFile) -> Ledger {
-        let string: String
+        let url: URL
         switch testFile {
         case .minimal:
-            string = Resources.minimal
+            url = Bundle.module.url(forResource: "Minimal", withExtension: "beancount")!
         case .postingWithoutTransaction:
-            string = Resources.postingWithoutTransaction
+            url = Bundle.module.url(forResource: "PostingWithoutTransaction", withExtension: "beancount")!
         case .transactionWithoutPosting:
-            string = Resources.transactionWithoutPosting
+            url = Bundle.module.url(forResource: "TransactionWithoutPosting", withExtension: "beancount")!
         case .comments:
-            string = Resources.comments
+            url = Bundle.module.url(forResource: "Comments", withExtension: "beancount")!
         case .commentsEndOfLine:
-            string = Resources.commentsEndOfLine
+            url = Bundle.module.url(forResource: "CommentsEndOfLine", withExtension: "beancount")!
         case .whitespace:
-            string = Resources.whitespace
+            url = Bundle.module.url(forResource: "Whitespace", withExtension: "beancount")!
         case .big:
-            string = Resources.big
+            url = Bundle.module.url(forResource: "Big", withExtension: "beancount")!
         case .invalidCost:
-            string = Resources.invalidCost
+            url = Bundle.module.url(forResource: "InvalidCost", withExtension: "beancount")!
         case .metaData:
-            string = Resources.metaData
+            url = Bundle.module.url(forResource: "MetaData", withExtension: "beancount")!
         }
-        return Parser.parse(string: string)
+        guard let ledger = try? Parser.parse(contentOf: url) else {
+            XCTFail("Failed to parse ledger at URL: \(url.absoluteString)")
+            return Ledger()
+        }
+        return ledger
     }
 
 }

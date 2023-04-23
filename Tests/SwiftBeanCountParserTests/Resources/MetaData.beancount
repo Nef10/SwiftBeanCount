@@ -1,7 +1,3 @@
-extension Resources {
-
-  static var metaData: String {
-      """
 2017-06-08 commodity EUR
 
   metaData: "TestString"
@@ -51,7 +47,3 @@ extension Resources {
 
     metaData2: "TestString2"
     metaData: "TestString"
-
-"""
-  }
-}

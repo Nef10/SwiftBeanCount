@@ -1,8 +1,3 @@
-// swiftlint:disable file_length
-extension Resources {
-
-  static var big: String {
-    """
 ;; -*- mode: org; mode: beancount; -*-
 ;; Birth: 1980-05-12
 ;; Dates: 2015-01-01 - 2017-09-02
@@ -6596,8 +6591,3 @@ plugin "beancount.plugins.nounused"
 
 
 * Cash
-
-"""
-    }
-
-}
