@@ -2,6 +2,7 @@
 
 excluded:
   - ".build"
+  - "**/*pb.swift"
 
 opt_in_rules:
   - attributes
