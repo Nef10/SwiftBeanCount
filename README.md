@@ -10,7 +10,7 @@ This is the parser of SwiftBeanCount. It takes a string or a file and returns a 
 
 ## How
 
-While this library is very simple to use, you can still check out the complete documentation  [here](https://nef10.github.io/SwiftBeanCountParser/).
+Either call `Parser.parse(contentOf: URL)` or `Parser.parse(string: String)`. You can check out the complete documentation [here](https://nef10.github.io/SwiftBeanCountParser/).
 
 ## Usage
 
