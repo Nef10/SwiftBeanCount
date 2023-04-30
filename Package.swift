@@ -21,7 +21,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/Nef10/SwiftBeanCountParserUtils.git",
-            .exact("0.0.1")
+            from: "1.0.0"
         ),
         .package(
             url: "https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper.git",
@@ -33,7 +33,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/Nef10/SwiftBeanCountRogersBankMapper.git",
-            .exact("0.0.9")
+            .exact("0.0.10")
         ),
         .package(
             url: "https://github.com/Nef10/RogersBankDownloader.git",
@@ -45,7 +45,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/Nef10/SwiftBeanCountTangerineMapper.git",
-            .exact("0.0.2")
+            .exact("0.0.3")
         ),
         .package(
             url: "https://github.com/Nef10/CompassCardDownloader.git",
@@ -53,7 +53,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/Nef10/SwiftBeanCountCompassCardMapper.git",
-            .exact("0.0.2")
+            .exact("0.0.3")
         ),
     ],
     targets: [
