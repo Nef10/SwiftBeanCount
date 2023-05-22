@@ -1,4 +1,4 @@
-# Updated for 0.50.3
+# Updated for 0.52.2
 
 excluded:
   - ".build"
@@ -99,6 +99,9 @@ opt_in_rules:
   - shorthand_optional_binding
   - direct_return
   - period_spacing
+  - superfluous_else
+  - redundant_self_in_closure
+  - unhandled_throwing_task
 
 disabled_rules:
   - trailing_comma
