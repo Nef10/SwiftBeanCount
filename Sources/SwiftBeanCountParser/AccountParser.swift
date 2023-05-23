@@ -48,7 +48,8 @@ enum AccountParser {
             let commoditySymbol = !match[4].isEmpty ? match[5] : nil
             return bookingMethod != nil ? Account(name: accountName, bookingMethod: bookingMethod!, commoditySymbol: commoditySymbol, opening: date, metaData: metaData)
                 : Account(name: accountName, commoditySymbol: commoditySymbol, opening: date, metaData: metaData)
-        } else if match[2] == "close" && match[5].isEmpty {
+        }
+        if match[2] == "close" && match[5].isEmpty {
             guard bookingMethod == nil && metaData.isEmpty else {
                 return nil
             }

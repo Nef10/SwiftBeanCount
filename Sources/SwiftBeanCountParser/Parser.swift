@@ -311,7 +311,7 @@ public enum Parser {
     ///   - metaData: metaData of the account
     ///   - result: ParsingResult where the account or errors should be saved to
     /// - Returns: if the line contained an account
-    private static func parseAccount(_ line: String, index lineIndex: Int, metaData: [String: String], into result: Parser.ParsingResult) -> Bool {
+    private static func parseAccount(_ line: String, index lineIndex: Int, metaData: [String: String], into result: Self.ParsingResult) -> Bool {
         guard let parsedAccount = AccountParser.parseFrom(line: line, metaData: metaData) else {
             return false
         }
