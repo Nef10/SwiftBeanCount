@@ -26,9 +26,11 @@ func boxNumberSort(_ box1: String, _ box2: String) -> Bool {
 func addOriginalValues(_ sum: MultiCurrencyAmount?, _ entry: TaxSlipEntry) -> MultiCurrencyAmount? {
     if let sum, let originalValue = entry.originalValue {
         return sum + originalValue
-    } else if sum == nil && entry.originalValue == nil {
+    }
+    if sum == nil && entry.originalValue == nil {
         return nil
-    } else if sum == nil {
+    }
+    if sum == nil {
         return entry.originalValue
     }
     return sum

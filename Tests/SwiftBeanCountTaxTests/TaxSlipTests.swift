@@ -121,7 +121,7 @@ final class TaxSlipTests: XCTestCase {
         XCTAssertEqual(rows[1].values[1].box, "Box 2")
         XCTAssertEqual(rows[1].values[1].value, MultiCurrencyAmount())
         XCTAssertNil(rows[1].values[1].originalValue)
-        XCTAssert(rows[0].id != rows[1].id)
+        XCTAssertNotEqual(rows[0].id, rows[1].id)
     }
 
     func testRowsWithoutSymbols() throws {
