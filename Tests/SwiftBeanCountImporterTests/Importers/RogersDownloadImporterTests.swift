@@ -97,7 +97,7 @@ private struct TestActivity: Activity, Equatable {
     var postedDate: Date? = Date()
     var activityId: String?
 
-    static func == (lhs: TestActivity, rhs: TestActivity) -> Bool {
+    static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.uuid == rhs.uuid
     }
 }
@@ -406,7 +406,8 @@ extension RogersBankMappingError: EquatableError {
     public static func == (lhs: RogersBankMappingError, rhs: RogersBankMappingError) -> Bool {
         if case let .missingAccount(lhsString) = lhs, case let .missingAccount(rhsString) = rhs {
             return lhsString == rhsString
-        } else if case let .missingActivityData(lhsActivity, lhsString) = lhs, case let .missingActivityData(rhsActivity, rhsString) = rhs {
+        }
+        if case let .missingActivityData(lhsActivity, lhsString) = lhs, case let .missingActivityData(rhsActivity, rhsString) = rhs {
             return lhsString == rhsString && lhsActivity as? TestActivity != nil && (lhsActivity as? TestActivity) == (rhsActivity as? TestActivity)
         }
         return false

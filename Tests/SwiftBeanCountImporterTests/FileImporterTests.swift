@@ -36,7 +36,7 @@ final class FileImporterTests: XCTestCase {
             for header in importer.headers {
                 let url = temporaryFileURL()
                 createFile(at: url, content: "\(header.joined(separator: ", "))\n")
-                XCTAssertTrue(type(of: FileImporterFactory.new(ledger: nil, url: url)!) == importer)
+                XCTAssertTrue(type(of: FileImporterFactory.new(ledger: nil, url: url)!) == importer) // swiftlint:disable:this xct_specific_matcher
             }
         }
     }

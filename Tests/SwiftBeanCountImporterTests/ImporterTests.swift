@@ -46,7 +46,7 @@ final class ImporterTests: XCTestCase {
             for header in importer.headers {
                 let url = temporaryFileURL()
                 createFile(at: url, content: "\(header.joined(separator: ", "))\n")
-                XCTAssertTrue(type(of: ImporterFactory.new(ledger: nil, url: url)!) == importer)
+                XCTAssertTrue(type(of: ImporterFactory.new(ledger: nil, url: url)!) == importer) // swiftlint:disable:this xct_specific_matcher
             }
         }
     }
@@ -60,7 +60,7 @@ final class ImporterTests: XCTestCase {
     func testDownloadImporter() {
         let importers = DownloadImporterFactory.importers
         for importer in importers {
-            XCTAssertTrue(type(of: ImporterFactory.new(ledger: nil, name: importer.importerName)!) == importer)
+            XCTAssertTrue(type(of: ImporterFactory.new(ledger: nil, name: importer.importerName)!) == importer) // swiftlint:disable:this xct_specific_matcher
         }
     }
 
