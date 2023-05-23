@@ -899,7 +899,7 @@ extension InventoryTests { // Inventory.Lot Tests
         let cost = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
         let lot1 = Inventory.Lot(units: amount, cost: cost)
         let lot2 = Inventory.Lot(units: amount, cost: cost)
-        XCTAssertTrue(lot1 == lot2)
+        XCTAssertEqual(lot1, lot2)
     }
 
     func testLotEqualRespectsAmount() throws {
@@ -908,7 +908,7 @@ extension InventoryTests { // Inventory.Lot Tests
         let cost = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
         let lot1 = Inventory.Lot(units: amount1, cost: cost)
         let lot2 = Inventory.Lot(units: amount2, cost: cost)
-        XCTAssertFalse(lot1 == lot2)
+        XCTAssertNotEqual(lot1, lot2)
     }
 
     func testLotEqualRespectsCost() throws {
@@ -917,7 +917,7 @@ extension InventoryTests { // Inventory.Lot Tests
         let cost2 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
         let lot1 = Inventory.Lot(units: amount, cost: cost1)
         let lot2 = Inventory.Lot(units: amount, cost: cost2)
-        XCTAssertFalse(lot1 == lot2)
+        XCTAssertNotEqual(lot1, lot2)
     }
 
 }

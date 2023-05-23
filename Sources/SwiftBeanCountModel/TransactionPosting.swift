@@ -77,18 +77,18 @@ public class TransactionPosting: Posting {
             if let postingAmount = ledger.postingPrices[transaction]?[self] {
                 return MultiCurrencyAmount(amounts: postingAmount.amounts,
                                            decimalDigits: [amount.commoditySymbol: amount.decimalDigits])
-            } else if let costAmount = cost.amount, costAmount.number > 0 {
+            }
+            if let costAmount = cost.amount, costAmount.number > 0 {
                 return MultiCurrencyAmount(amounts: [costAmount.commoditySymbol: costAmount.number * amount.number],
                                            decimalDigits: [amount.commoditySymbol: amount.decimalDigits])
-            } else {
-                throw PostingError.noCost("Posting \(self) of transaction \(transaction) does not have an amount in the cost and adds to the inventory")
             }
-        } else if let price {
+            throw PostingError.noCost("Posting \(self) of transaction \(transaction) does not have an amount in the cost and adds to the inventory")
+        }
+        if let price {
             return MultiCurrencyAmount(amounts: [price.commoditySymbol: price.number * amount.number],
                                        decimalDigits: [amount.commoditySymbol: amount.decimalDigits])
-        } else {
-            return amount.multiCurrencyAmount
         }
+        return amount.multiCurrencyAmount
     }
 
 }

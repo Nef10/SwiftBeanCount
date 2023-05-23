@@ -37,7 +37,7 @@ public struct MultiCurrencyAmount {
     ///   - amount1: first amount
     ///   - amount2: second amount
     /// - Returns: `ValidationResult`
-    private static func equalWithinTolerance(amount1: MultiCurrencyAmount, amount2: MultiCurrencyAmount) -> ValidationResult {
+    private static func equalWithinTolerance(amount1: Self, amount2: Self) -> ValidationResult {
         for (commoditySymbol, decimal1) in amount1.amounts {
             let decimal2 = amount2.amounts[commoditySymbol] ?? 0
             let result = decimal1 - decimal2

@@ -31,7 +31,7 @@ public enum AccountType: String {
     /// Gets all types
     ///
     /// - Returns: `Array` with all five AccountTypes
-    public static func allValues() -> [AccountType] {
+    public static func allValues() -> [Self] {
         [.asset, .liability, .income, .expense, .equity]
     }
 }

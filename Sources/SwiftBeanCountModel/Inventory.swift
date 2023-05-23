@@ -142,7 +142,8 @@ class Inventory {
             inventory[index].adjustUnits(lot.units)
             let amount = inventory[index].cost.amount!
             return Amount(number: amount.number * lot.units.number, commoditySymbol: amount.commoditySymbol, decimalDigits: amount.decimalDigits).multiCurrencyAmount
-        } else if matches.isEmpty {
+        }
+        if matches.isEmpty {
             throw InventoryError.noLotFound("No Lot matching \(lot) found, inventory: \(self)")
         }
         return try reduceAmbigious(lot, matches: matches)

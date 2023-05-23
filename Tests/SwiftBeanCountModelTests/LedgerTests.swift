@@ -165,7 +165,7 @@ class LedgerTests: XCTestCase {
         XCTAssertTrue(ledger.accounts.first!.balances.isEmpty)
 
         ledger.add(balance)
-        XCTAssertTrue(ledger.accounts.first!.balances.first! == balance)
+        XCTAssertEqual(ledger.accounts.first!.balances.first!, balance)
     }
 
     func testParsingErrors() {
@@ -363,9 +363,9 @@ class LedgerTests: XCTestCase {
         XCTAssertEqual(String(describing: ledger), String(describing: option1))
         let option2 = Option(name: "z", value: "y")
         ledger.option.append(option2)
-        XCTAssert(String(describing: ledger) == "\(String(describing: option1))\n\(String(describing: option2))")
+        XCTAssertEqual(String(describing: ledger), "\(String(describing: option1))\n\(String(describing: option2))")
         ledger.plugins.append("p") // Test new line after options
-        XCTAssert(String(describing: ledger) == "\(String(describing: option1))\n\(String(describing: option2))\nplugin \"p\"")
+        XCTAssertEqual(String(describing: ledger), "\(String(describing: option1))\n\(String(describing: option2))\nplugin \"p\"")
     }
 
     func testDescriptionPlugins() {
@@ -373,10 +373,10 @@ class LedgerTests: XCTestCase {
         ledger.plugins.append("p")
         XCTAssertEqual(String(describing: ledger), "plugin \"p\"")
         ledger.plugins.append("p1")
-        XCTAssert(String(describing: ledger) == "plugin \"p\"\nplugin \"p1\"")
+        XCTAssertEqual(String(describing: ledger), "plugin \"p\"\nplugin \"p1\"")
         let custom = Custom(date: TestUtils.date20170610, name: "a", values: ["b"])
         ledger.custom.append(custom) // Test new line after plugins
-        XCTAssert(String(describing: ledger) == "plugin \"p\"\nplugin \"p1\"\n\(String(describing: custom))")
+        XCTAssertEqual(String(describing: ledger), "plugin \"p\"\nplugin \"p1\"\n\(String(describing: custom))")
     }
 
     func testDescriptionCustoms() {
@@ -386,10 +386,10 @@ class LedgerTests: XCTestCase {
         ledger.custom.append(custom1)
         XCTAssertEqual(String(describing: ledger), String(describing: custom1))
         ledger.custom.append(custom2)
-        XCTAssert(String(describing: ledger) == "\(String(describing: custom1))\n\(String(describing: custom2))")
+        XCTAssertEqual(String(describing: ledger), "\(String(describing: custom1))\n\(String(describing: custom2))")
         let event = Event(date: TestUtils.date20170610, name: "e", value: "e1")
         ledger.events.append(event) // Test new line after customs
-        XCTAssert(String(describing: ledger) == "\(String(describing: custom1))\n\(String(describing: custom2))\n\(String(describing: event))")
+        XCTAssertEqual(String(describing: ledger), "\(String(describing: custom1))\n\(String(describing: custom2))\n\(String(describing: event))")
     }
 
     func testDescriptionEvents() throws {
@@ -399,10 +399,10 @@ class LedgerTests: XCTestCase {
         ledger.events.append(event1)
         XCTAssertEqual(String(describing: ledger), String(describing: event1))
         ledger.events.append(event2)
-        XCTAssert(String(describing: ledger) == "\(String(describing: event1))\n\(String(describing: event2))")
+        XCTAssertEqual(String(describing: ledger), "\(String(describing: event1))\n\(String(describing: event2))")
         let commodity = Commodity(symbol: "EUR", opening: TestUtils.date20170609)
         try ledger.add(commodity) // Test new line after events
-        XCTAssert(String(describing: ledger) == "\(String(describing: event1))\n\(String(describing: event2))\n\(String(describing: commodity))")
+        XCTAssertEqual(String(describing: ledger), "\(String(describing: event1))\n\(String(describing: event2))\n\(String(describing: commodity))")
     }
 
     func testEqualEmpty() {

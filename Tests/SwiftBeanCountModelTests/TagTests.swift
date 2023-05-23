@@ -30,14 +30,14 @@ class TagTests: XCTestCase {
         let tag2 = Tag(name: string1)
         let tag3 = Tag(name: string2)
 
-        XCTAssert(tag1 == tag2)
         XCTAssertEqual(tag1, tag2)
+        XCTAssert(tag1 == tag2) // swiftlint:disable:this xct_specific_matcher
 
         XCTAssertNotEqual(tag1, tag3)
-        XCTAssert(tag1 != tag3)
+        XCTAssert(tag1 != tag3) // swiftlint:disable:this xct_specific_matcher
 
         XCTAssertNotEqual(tag2, tag3)
-        XCTAssert(tag2 != tag3)
+        XCTAssert(tag2 != tag3) // swiftlint:disable:this xct_specific_matcher
     }
 
     func testGreater() {
