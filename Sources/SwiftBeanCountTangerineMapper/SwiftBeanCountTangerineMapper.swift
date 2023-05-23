@@ -58,7 +58,7 @@ public struct SwiftBeanCountTangerineMapper {
     /// - Returns: Array of transactions
     public func createTransactions(_ rawTransactions: [String: [[String: Any]]]) throws -> [Transaction] {
         try rawTransactions.flatMap { accountName, transactions in
-            try self.createTransactions(transactions, for: accountName)
+            try createTransactions(transactions, for: accountName)
         }
     }
 
