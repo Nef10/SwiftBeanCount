@@ -244,7 +244,7 @@ public struct WealthsimpleLedgerMapper {
     }
 
     private func mapDividend(_ transaction: WTransaction, in account: WAccount) throws -> STransaction {
-        let (date, shares, foreignAmount) = try parseDividendDescription(transaction.description)
+        let (date, shares, foreignAmount) = parseDividendDescription(transaction.description)
         var income = transaction.negatedNetCash
         var price: Amount?
         if let amount = foreignAmount {
@@ -253,7 +253,13 @@ public struct WealthsimpleLedgerMapper {
         }
         let posting1 = Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash, price: price)
         let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: .dividend(transaction.symbol), in: account, ofType: [.income]), amount: income)
-        let metaDataDict = [MetaDataKeys.id: transaction.id, MetaDataKeys.dividendRecordDate: date, MetaDataKeys.dividendShares: shares]
+        var metaDataDict = [MetaDataKeys.id: transaction.id]
+        if let date {
+            metaDataDict[MetaDataKeys.dividendRecordDate] = date
+        }
+        if let shares {
+            metaDataDict[MetaDataKeys.dividendShares] = shares
+        }
         return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: metaDataDict), postings: [posting1, posting2])
     }
 
@@ -300,10 +306,10 @@ public struct WealthsimpleLedgerMapper {
     }
 
     // swiftlint:disable:next large_tuple
-    private func parseDividendDescription(_ string: String) throws -> (String, String, Amount?) {
+    private func parseDividendDescription(_ string: String) -> (String?, String?, Amount?) {
         let matches = string.matchingStrings(regex: Self.dividendRegEx)
         guard matches.count == 1, let date = Self.dividendDescriptionDateFormatter.date(from: matches[0][1]) else {
-            throw WealthsimpleConversionError.unexpectedDescription(string)
+            return (nil, nil, nil)
         }
         let match = matches[0]
         let resultAmount = !match[4].isEmpty ? Amount(for: match[4], in: match[7], negate: true) : nil

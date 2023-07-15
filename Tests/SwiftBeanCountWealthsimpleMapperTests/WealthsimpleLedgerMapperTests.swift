@@ -143,13 +143,6 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         nrwt.description = "Garbage"
         assert(try mapper.mapTransactionsToPriceAndTransactions([nrwt]), throws: WealthsimpleConversionError.unexpectedDescription(nrwt.description))
 
-        // dividend invalid description
-        var dividend = testTransaction
-        dividend.transactionType = .dividend
-        dividend.fxRate = "1.2343"
-        dividend.description = "Garbage2"
-        assert(try mapper.mapTransactionsToPriceAndTransactions([dividend]), throws: WealthsimpleConversionError.unexpectedDescription(dividend.description))
-
         // only one transaction for stock split
         transaction.transactionType = .stockDistribution
         assert(try mapper.mapTransactionsToPriceAndTransactions([transaction]), throws: WealthsimpleConversionError.unexpectedStockSplit(transaction.description))
@@ -294,7 +287,17 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         // dividend without fx
         dividend.description = "ZFL-BMO Long Federal Bond ETF: 25-JUN-21 (record date) 24.0020 shares"
         (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([dividend])
-        meta[MetaDataKeys.nrwtId] = nil
+        transaction = Transaction(metaData: TransactionMetaData(date: dividend.processDate, metaData: meta), postings: [
+            try posting(number: dividend.netCashAmount), try posting(account: "Income:t", number: "-32.42")
+        ])
+        XCTAssertEqual(transactions, [transaction])
+        XCTAssert(prices.isEmpty)
+
+        // dividend simple description
+        dividend.description = "Dividend 123.10 CAD WSE100"
+        (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([dividend])
+        meta[MetaDataKeys.dividendShares] = nil
+        meta[MetaDataKeys.dividendRecordDate] = nil
         transaction = Transaction(metaData: TransactionMetaData(date: dividend.processDate, metaData: meta), postings: [
             try posting(number: dividend.netCashAmount), try posting(account: "Income:t", number: "-32.42")
         ])
