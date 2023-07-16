@@ -25,7 +25,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper.git",
-            .upToNextMajor(from: "1.5.1")
+            .upToNextMajor(from: "1.5.3")
         ),
         .package(
             url: "https://github.com/Nef10/WealthsimpleDownloader.git",
