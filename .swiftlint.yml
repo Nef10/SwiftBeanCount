@@ -1,4 +1,4 @@
-# Updated for 0.52.2
+# Updated for 0.53.0
 
 excluded:
   - ".build"
@@ -102,6 +102,7 @@ opt_in_rules:
   - superfluous_else
   - redundant_self_in_closure
   - unhandled_throwing_task
+  - private_swiftui_state
 
 disabled_rules:
   - trailing_comma
