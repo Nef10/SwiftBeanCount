@@ -15,7 +15,7 @@ jobs:
     steps:
     - name: Generate token
       id: generate_token
-      uses: tibdex/github-app-token@v2.0.0
+      uses: tibdex/github-app-token@v2.1.0
       with:
         app_id: ${{ secrets.APP_ID }} # These two secrets need to be added
         private_key: ${{ secrets.APP_PRIVATE_KEY }} # to your repository settings
