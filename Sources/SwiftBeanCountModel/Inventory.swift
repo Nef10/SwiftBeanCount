@@ -40,16 +40,6 @@ class Inventory {
         /// Cost of the lot
         let cost: Cost
 
-        /// Creates a lot
-        ///
-        /// - Parameters:
-        ///   - units: units in the lot
-        ///   - cost: cost if the lot
-        init(units: Amount, cost: Cost) {
-            self.units = units
-            self.cost = cost
-        }
-
         /// Adjusts the units in the lot
         ///
         /// The max of the decimalDigits is used
