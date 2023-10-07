@@ -30,7 +30,7 @@ The synchronization relies on meta data in your beancount file for configuration
 - `account`: Account which is used to keep track of the balance between the people
 - `tag`: Tag which is appended to all transactions which are or should be synchronized
 - `name`: Your name - this will be used to identify the colunms of the sheet
-- `dateTolerance` Tolerance in days which will be used when checking if a transactions already exists
+- `dateTolerance`: Tolerance in days which will be used when checking if a transactions already exists
 
 These options are specified globally via `customs` like this (the date does not matter and will be ignored):
 
@@ -48,6 +48,19 @@ Example:
 2020-12-26 open Expenses:Communication:Internet
   sheet-sync-category: "Internet"
 ```
+
+## Google Sheet Format
+
+The Google sheet need to be in a specifc format in order to be read. The tab must be named `Expenses`.
+
+The following columns are required to be within colunms A-I, other columns are ignored:
+- `Date` in yyyy-MM-dd format
+- `Paid to` e.g. Store name, can be an empty string
+- `Amount` Use `.` as decimal point. `,` to separate thousand is ok, accouting style with brackets for negative values is supported
+- `Category` See account configuration above
+- `Part Name1` and `Part Name2`. `Name1` and `Name2` should be the name of the people (e.g. replace them). One of them must be the same as configured as name in the ledger (see above). Each column must contain a number which represents the amount this party is paying for the purchase. Same formatting rules as for amount apply.
+- `Who paid` One of the two names
+- `Comment` While the column is required, it can be an empty string
 
 ## Usage
 
