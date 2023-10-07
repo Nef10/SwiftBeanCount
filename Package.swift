@@ -32,7 +32,7 @@ let package = Package(
             .upToNextMajor(from: "2.0.1")
         ),
         .package(
-            url: "https://github.com/Nef10/SwiftBeanCountSheetSync",
+            url: "https://github.com/Nef10/SwiftBeanCountSheetSync.git",
             .upToNextMajor(from: "1.1.0")
         ),
         .package(

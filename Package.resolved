@@ -138,7 +138,7 @@
       },
       {
         "package": "SwiftBeanCountSheetSync",
-        "repositoryURL": "https://github.com/Nef10/SwiftBeanCountSheetSync",
+        "repositoryURL": "https://github.com/Nef10/SwiftBeanCountSheetSync.git",
         "state": {
           "branch": null,
           "revision": "279fb68904bad4932d012ea20b42c0b950090675",
