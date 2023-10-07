@@ -67,8 +67,13 @@ public struct SyncResult {
 /// Not for initialization, just as base class
 public class GenericSyncer {
 
+    private enum LedgerInput {
+        case url(URL)
+        case ledger(Ledger)
+    }
+
     private let sheetURL: String
-    private let ledgerURL: URL
+    private let ledgerInput: LedgerInput
 
     /// Creates a new Syncer
     /// - Parameters:
@@ -76,7 +81,16 @@ public class GenericSyncer {
     ///   - ledgerURL: File URL of the ledger file
     public required init(sheetURL: String, ledgerURL: URL) {
         self.sheetURL = sheetURL
-        self.ledgerURL = ledgerURL
+        self.ledgerInput = .url(ledgerURL)
+    }
+
+    /// Creates a new Syncer
+    /// - Parameters:
+    ///   - sheetURL: HTTP URL of the Google sheet
+    ///   - ledger: Ledger
+    public required init(sheetURL: String, ledger: Ledger) {
+        self.sheetURL = sheetURL
+        self.ledgerInput = .ledger(ledger)
     }
 
     func getTransactionsFromSheet(authentication: Authentication, ledgerSettings: LedgerSettings)
@@ -89,8 +103,14 @@ public class GenericSyncer {
     }
 
     func readLedgerSettingsAndTransactions() -> Result<([Transaction], LedgerSettings), Error> {
-        LedgerReader.readLedger(from: ledgerURL).flatMap { ledger -> Result<([Transaction], LedgerSettings), Error> in
-            LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger)
+        switch ledgerInput {
+        case .url(let ledgerURL):
+            return LedgerReader.readLedger(from: ledgerURL).flatMap { ledger -> Result<([Transaction], LedgerSettings), Error> in
+                LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger)
+            }
+
+        case .ledger(let ledger):
+            return LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger)
         }
     }
 
