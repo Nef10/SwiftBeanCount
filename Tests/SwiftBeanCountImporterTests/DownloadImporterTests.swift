@@ -15,7 +15,19 @@ final class DownloadImporterTests: XCTestCase {
 
     func testImporters() {
         #if canImport(UIKit) || canImport(AppKit)
-            XCTAssertEqual(DownloadImporterFactory.importers.count, 4)
+            if #available(iOS 14.5, macOS 11.3, *) {
+                #if os(macOS)
+                    XCTAssertEqual(DownloadImporterFactory.importers.count, 5)
+                #else
+                   XCTAssertEqual(DownloadImporterFactory.importers.count, 4)
+                #endif
+            } else {
+                #if os(macOS)
+                    XCTAssertEqual(DownloadImporterFactory.importers.count, 4)
+                #else
+                    XCTAssertEqual(DownloadImporterFactory.importers.count, 3)
+                #endif
+            }
         #else
             XCTAssertEqual(DownloadImporterFactory.importers.count, 2)
         #endif

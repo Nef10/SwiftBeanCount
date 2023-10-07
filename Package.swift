@@ -32,6 +32,10 @@ let package = Package(
             .upToNextMajor(from: "2.0.1")
         ),
         .package(
+            url: "https://github.com/Nef10/SwiftBeanCountSheetSync",
+            .upToNextMajor(from: "1.1.0")
+        ),
+        .package(
             url: "https://github.com/Nef10/SwiftBeanCountRogersBankMapper.git",
             .exact("0.0.10")
         ),
@@ -70,6 +74,7 @@ let package = Package(
                 .product(name: "CompassCardDownloader", package: "CompassCardDownloader", condition: .when(platforms: [.macOS, .iOS])),
                 .product(name: "TangerineDownloader", package: "TangerineDownloader", condition: .when(platforms: [.macOS, .iOS])),
                 .product(name: "SwiftBeanCountTangerineMapper", package: "SwiftBeanCountTangerineMapper", condition: .when(platforms: [.macOS, .iOS])),
+                .product(name: "SwiftBeanCountSheetSync", package: "SwiftBeanCountTangerineMapper", condition: .when(platforms: [.macOS])),
                 .product(name: "Wealthsimple", package: "WealthsimpleDownloader"),
             ]
         ),
