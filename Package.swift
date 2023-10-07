@@ -74,7 +74,7 @@ let package = Package(
                 .product(name: "CompassCardDownloader", package: "CompassCardDownloader", condition: .when(platforms: [.macOS, .iOS])),
                 .product(name: "TangerineDownloader", package: "TangerineDownloader", condition: .when(platforms: [.macOS, .iOS])),
                 .product(name: "SwiftBeanCountTangerineMapper", package: "SwiftBeanCountTangerineMapper", condition: .when(platforms: [.macOS, .iOS])),
-                .product(name: "SwiftBeanCountSheetSync", package: "SwiftBeanCountTangerineMapper", condition: .when(platforms: [.macOS])),
+                .product(name: "SwiftBeanCountSheetSync", package: "SwiftBeanCountSheetSync", condition: .when(platforms: [.macOS])),
                 .product(name: "Wealthsimple", package: "WealthsimpleDownloader"),
             ]
         ),
