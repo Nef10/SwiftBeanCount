@@ -33,7 +33,6 @@ The project is split across several repositories, please consult their readmes t
 Apps with a user interface:
 
 * [SwiftBeanCountImporterApp](https://github.com/Nef10/SwiftBeanCountImporterApp): App to import CSV files and texts from banks websites, as well as download data directly from there, and return the user transactions to add to their ledger
-* [SwiftBeanCountSheetSyncApp](https://github.com/Nef10/SwiftBeanCountSheetSyncApp): *not released yet* Tool to sync transaction between a Google Sheet and a ledger
 * [SwiftBeanCountCLI](https://github.com/Nef10/SwiftBeanCountCLI): CLI tool for basic operations on the ledger
 * [SwiftBeanCountApp](https://github.com/Nef10/SwiftBeanCountApp): GUI tool for basic operations on the ledger
 
@@ -73,10 +72,12 @@ flowchart LR
   subgraph CompassCard
     SwiftBeanCountCompassCardMapper
     CompassCardDownloader
+    SwiftBeanCountCompassCardMapper ~~~ CompassCardDownloader
   end
   subgraph Tangerine
     SwiftBeanCountTangerineMapper
     TangerineDownloader
+    SwiftBeanCountTangerineMapper ~~~ TangerineDownloader
   end
   subgraph Wealthsimple
     SwiftBeanCountWealthsimpleMapper
@@ -88,34 +89,37 @@ flowchart LR
     RogersBankDownloader
     RogersBankDownloader --> SwiftBeanCountRogersBankMapper
   end
+  subgraph GoogleSheets
+    SwiftBeanCountSheetSync
+    GoogleAuthentication
+    GoogleAuthentication --> SwiftBeanCountSheetSync
+  end
   SwiftScraper --> TangerineDownloader
   SwiftScraper --> CompassCardDownloader
+  CSV --> SwiftBeanCountCompassCardMapper
   Wealthsimple --> SwiftBeanCountImporter
-  Tangerine --> SwiftBeanCountImporter
+  Tangerine ---> SwiftBeanCountImporter
   CompassCard --> SwiftBeanCountImporter
   Rogers --> SwiftBeanCountImporter
   Core --> SwiftBeanCountRogersBankMapper
   Core --> SwiftBeanCountImporter
   Core --> SwiftBeanCountWealthsimpleMapper
   Core --> SwiftBeanCountTangerineMapper
-  Core ---> SwiftBeanCountCompassCardMapper
-  Core --> SwiftBeanCountImporterApp
+  Core --> SwiftBeanCountCompassCardMapper
+  Core ---> SwiftBeanCountImporterApp
   Core --> SwiftBeanCountSheetSync
   SwiftBeanCountImporter --> SwiftBeanCountImporterApp
-  KeychainAccess --> SwiftBeanCountImporterApp
-  KeychainAccess --> GoogleAuthentication
-  FileSelectorView ----> SwiftBeanCountSheetSyncApp
-  GoogleAuthentication --> SwiftBeanCountSheetSync
+  KeychainAccess ----> SwiftBeanCountImporterApp
+  KeychainAccess ---> GoogleAuthentication
   OAuthSwift --> GoogleAuthentication
-  SwiftBeanCountSheetSync ---> SwiftBeanCountSheetSyncApp
-  CSV ----> SwiftBeanCountImporter
-  CSV --> SwiftBeanCountCompassCardMapper
-  Core --> SwiftBeanCountTax
+  SwiftBeanCountSheetSync --> SwiftBeanCountImporter
+  Core ---> SwiftBeanCountTax
   SwiftBeanCountTax --> SwiftBeanCountCLI
   Core ----> SwiftBeanCountCLI
   swift-argument-parser ---> SwiftBeanCountCLI
   SwiftyTextTable ---> SwiftBeanCountCLI
   Rainbow ---> SwiftBeanCountCLI
+  CSV --> SwiftBeanCountImporter
   click SwiftBeanCountModel "https://github.com/Nef10/SwiftBeanCountModel"
   click SwiftBeanCountParser "https://github.com/Nef10/SwiftBeanCountParser"
   click SwiftBeanCountParserUtils "https://github.com/Nef10/SwiftBeanCountParserUtils"
@@ -130,8 +134,6 @@ flowchart LR
   click TangerineDownloader "https://github.com/Nef10/TangerineDownloader"
   click SwiftBeanCountImporter "https://github.com/Nef10/SwiftBeanCountImporter"
   click SwiftBeanCountImporterApp "https://github.com/Nef10/SwiftBeanCountImporterApp"
-  click FileSelectorView "https://github.com/Nef10/FileSelectorView"
-  click SwiftBeanCountSheetSyncApp "https://github.com/Nef10/SwiftBeanCountSheetSyncApp"
   click SwiftBeanCountSheetSync "https://github.com/Nef10/SwiftBeanCountSheetSync"
   click SwiftBeanCountCLI "https://github.com/Nef10/SwiftBeanCountCLI"
   click GoogleAuthentication "https://github.com/Nef10/GoogleAuthentication"
@@ -147,8 +149,8 @@ flowchart LR
   classDef app fill:#99FF99;
   classDef external fill:#FF99FF;
   classDef cli fill:#FFCC99;
-  class Core,Rogers,Wealthsimple,Tangerine,CompassCard box;
-  class SwiftBeanCountImporterApp,SwiftBeanCountSheetSyncApp,App app;
+  class Core,Rogers,Wealthsimple,Tangerine,CompassCard,GoogleSheets box;
+  class SwiftBeanCountImporterApp,App app;
   class CSV,OAuthSwift,KeychainAccess,External,swift-argument-parser,SwiftyTextTable,Rainbow external;
   class SwiftBeanCountCLI cli;
 ```
@@ -199,6 +201,7 @@ This project is in an alpha stage, please do not use unless you are open to expe
   - Plugins
   - Tag stacks ([Ticket](https://github.com/Nef10/SwiftBeanCountParser/issues/29))
   - Balance checks on parent accounts
+  - Accounts with more than one defined commodity
   - Lines with unrecognizable input (will output warning in SwiftBeanCount)
 
 #### Syntax SwiftBeanCount supports but beancount does not
