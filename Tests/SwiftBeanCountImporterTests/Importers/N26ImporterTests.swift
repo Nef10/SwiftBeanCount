@@ -25,6 +25,17 @@ final class N26ImporterTests: XCTestCase {
                 "Betrag (Fremdwährung)",
                 "Fremdwährung",
                 "Wechselkurs"
+            ],
+            [
+                "Datum",
+                "Empfänger",
+                "Kontonummer",
+                "Transaktionstyp",
+                "Verwendungszweck",
+                "Betrag (EUR)",
+                "Betrag (Fremdwährung)",
+                "Fremdwährung",
+                "Wechselkurs"
             ]
         ])
     }

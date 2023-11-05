@@ -19,7 +19,10 @@ class N26Importer: CSVBaseImporter, CSVImporter {
     private static let date = "Datum"
     private static let recipient = "Empfänger"
 
-    static let headers = [[date, recipient, "Kontonummer", "Transaktionstyp", description, "Kategorie", amount, amountForeignCurrency, foreignCurrency, exchangeRate]]
+    static let headers = [
+        [date, recipient, "Kontonummer", "Transaktionstyp", description, "Kategorie", amount, amountForeignCurrency, foreignCurrency, exchangeRate],
+        [date, recipient, "Kontonummer", "Transaktionstyp", description, amount, amountForeignCurrency, foreignCurrency, exchangeRate]
+    ]
 
     override class var importerName: String { "N26" }
     override class var importerType: String { "n26" }
