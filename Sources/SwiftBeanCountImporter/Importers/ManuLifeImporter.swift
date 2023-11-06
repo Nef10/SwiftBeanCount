@@ -225,11 +225,11 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
     ///   - commodities: dictionary of name to account for commodities
     /// - Returns: Tupel with ManuLifeBuys and the purchase date
     private func parsePurchase(string input: String, commodities: [String: String]) -> ([ManuLifeBuy], Date?) {
-        let purchasePattern = #"\s*.*?\.gif\s*(\d{4}.*?[a-z]\d)\s*$\s*[a-zA-z]*[ ]?Contribution\s*([0-9.,]*)\s*units\s*@\s*\$([0-9.,]*)/unit\s*([0-9.,]*)\s*$"#
+        let pattern = #"\s*.*?\.gif\s*(\d{4}.*?[a-z]\d)\s*$\s*[a-zA-z]*[ ]?(?:Contribution|Fund Transfer)\s*([0-9.,]*)\s*units\s*@\s*\$([0-9.,]*)/unit\s*(-?[0-9.,]*)\s*$"#
 
         // swiftlint:disable force_try
-        let dateRegex = try! NSRegularExpression(pattern: #"^(.*?) [a-zA-z]*[ ]?Contribution \(Ref."#, options: [.anchorsMatchLines])
-        let regex = try! NSRegularExpression(pattern: purchasePattern, options: [.anchorsMatchLines])
+        let dateRegex = try! NSRegularExpression(pattern: #"^(.*?) [a-zA-z]*[ ]?(?:Contribution|Fund Transfer) \(Ref."#, options: [.anchorsMatchLines])
+        let regex = try! NSRegularExpression(pattern: pattern, options: [.anchorsMatchLines])
         // swiftlint:enable force_try
 
         // Parse purchase date
@@ -269,7 +269,9 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
             postings.append(contentsOf: buyPostings)
         }
 
-        postings.insert(Posting(accountName: configuredAccountName, amount: Amount(number: -totalAmount, commoditySymbol: commoditySymbol, decimalDigits: 2)), at: 0)
+        if !totalAmount.isZero {
+            postings.insert(Posting(accountName: configuredAccountName, amount: Amount(number: -totalAmount, commoditySymbol: commoditySymbol, decimalDigits: 2)), at: 0)
+        }
 
         let prices: [Price] = buys.compactMap { manuLifeBuy -> Price? in
             try? Price(date: date, commoditySymbol: manuLifeBuy.commodity, amount: parseAmountFrom(string: manuLifeBuy.price, commoditySymbol: commoditySymbol))
@@ -283,25 +285,27 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         var postings = [Posting]()
         let unitFraction = Double(buy.units)! / (employeeBasicFraction + employerBasicFraction + employerMatchFraction + employeeVoluntaryFraction)
         let (buyAmount, _) = buy.total.amountDecimal()
-        guard let cost = try? Cost(amount: parseAmountFrom(string: buy.price, commoditySymbol: commoditySymbol), date: nil, label: nil) else {
+        let sign = buyAmount.sign == .minus ? -1.0 : 1.0
+        let price = parseAmountFrom(string: buy.price, commoditySymbol: commoditySymbol)
+        guard let cost = try? Cost(amount: buyAmount.sign == .minus ? nil : price, date: nil, label: nil) else {
             return([], 0)
         }
 
         if employeeBasicFraction != 0, let accountName = try? AccountName("\(accountString):Employee:Basic:\(buy.commodity)") {
-            let amount = parseAmountFrom(string: String(format: unitFormat, unitFraction * employeeBasicFraction), commoditySymbol: buy.commodity)
-            postings.append(Posting(accountName: accountName, amount: amount, cost: cost))
+            let amount = parseAmountFrom(string: String(format: unitFormat, sign * unitFraction * employeeBasicFraction), commoditySymbol: buy.commodity)
+            postings.append(Posting(accountName: accountName, amount: amount, price: buyAmount.sign == .minus ? price : nil, cost: cost))
         }
         if employerBasicFraction != 0, let accountName = try? AccountName("\(accountString):Employer:Basic:\(buy.commodity)") {
-            let amount = parseAmountFrom(string: String(format: unitFormat, unitFraction * employerBasicFraction), commoditySymbol: buy.commodity)
-            postings.append(Posting(accountName: accountName, amount: amount, cost: cost))
+            let amount = parseAmountFrom(string: String(format: unitFormat, sign * unitFraction * employerBasicFraction), commoditySymbol: buy.commodity)
+            postings.append(Posting(accountName: accountName, amount: amount, price: buyAmount.sign == .minus ? price : nil, cost: cost))
         }
         if employerMatchFraction != 0, let accountName = try? AccountName("\(accountString):Employer:Match:\(buy.commodity)") {
-            let amount = parseAmountFrom(string: String(format: unitFormat, unitFraction * employerMatchFraction), commoditySymbol: buy.commodity)
-            postings.append(Posting(accountName: accountName, amount: amount, cost: cost))
+            let amount = parseAmountFrom(string: String(format: unitFormat, sign * unitFraction * employerMatchFraction), commoditySymbol: buy.commodity)
+            postings.append(Posting(accountName: accountName, amount: amount, price: buyAmount.sign == .minus ? price : nil, cost: cost))
         }
         if employeeVoluntaryFraction != 0, let accountName = try? AccountName("\(accountString):Employee:Voluntary:\(buy.commodity)") {
-            let amount = parseAmountFrom(string: String(format: unitFormat, unitFraction * employeeVoluntaryFraction), commoditySymbol: buy.commodity)
-            postings.append(Posting(accountName: accountName, amount: amount, cost: cost))
+            let amount = parseAmountFrom(string: String(format: unitFormat, sign * unitFraction * employeeVoluntaryFraction), commoditySymbol: buy.commodity)
+            postings.append(Posting(accountName: accountName, amount: amount, price: buyAmount.sign == .minus ? price : nil, cost: cost))
         }
         return (postings, buyAmount)
     }
