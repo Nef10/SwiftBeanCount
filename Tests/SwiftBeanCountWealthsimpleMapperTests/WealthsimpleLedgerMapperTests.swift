@@ -34,6 +34,7 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
                         quantity: "5.25",
                         marketPriceAmount: "2.24",
                         marketPriceCurrency: "CAD",
+                        marketValueAmount: "11.76",
                         marketValueCurrency: "CAD",
                         netCashAmount: "-11.76",
                         netCashCurrency: "CAD",
@@ -305,6 +306,25 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         XCTAssert(prices.isEmpty)
     }
 
+    func testMapTransactionsStockDividend() throws {
+        var transaction = testTransaction
+        transaction.transactionType = .stockDividend
+
+        let accountName = try AccountName("Income:Dividend:ETF")
+        try ledger.add(SAccount(name: accountName, metaData: ["\(MetaDataKeys.dividendPrefix)ETF": accountNumber]))
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction])
+        let postings = [
+            Posting(accountName: accountName, amount: Amount(number: -Decimal(string: transaction.marketValueAmount)!, commoditySymbol: "CAD", decimalDigits: 2)),
+            Posting(accountName: try AccountName("Assets:W:ETF"),
+                    amount: Amount(number: Decimal(string: transaction.quantity)!, commoditySymbol: "ETF", decimalDigits: 2),
+                    cost: try Cost(amount: testTransactionPrice.amount, date: nil, label: nil))
+        ]
+        let resultTransaction = Transaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transactionId]), postings: postings)
+        XCTAssertEqual(prices, [testTransactionPrice])
+        XCTAssertEqual(transactions, [resultTransaction])
+    }
+
     func testMapTransactionsTransfers() throws {
         var count = 1
         let types: [SwiftBeanCountModel.AccountType: [Wealthsimple.TransactionType]] = [
@@ -395,3 +415,4 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
     }
 
 }
+// swiftlint:disable:this file_length

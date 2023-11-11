@@ -17,6 +17,10 @@ final class TransactionHelperTests: XCTestCase {
         XCTAssertEqual(transaction.netCash, Amount(number: Decimal(15.10), commoditySymbol: "CAD", decimalDigits: 2))
         XCTAssertEqual(transaction.negatedNetCash, Amount(number: Decimal(-15.10), commoditySymbol: "CAD", decimalDigits: 2))
 
+        transaction.marketValueAmount = "10.0110"
+        transaction.marketValueCurrency = "EUR"
+        XCTAssertEqual(transaction.negatedMarketValue, Amount(number: Decimal(-10.011_0), commoditySymbol: "EUR", decimalDigits: 4))
+
         transaction.marketValueCurrency = "CAD"
         XCTAssertFalse(transaction.useFx)
         transaction.marketValueCurrency = "EUR"

@@ -191,6 +191,8 @@ public struct WealthsimpleLedgerMapper {
             result = try mapTransfer(transaction, in: account, accountTypes: [.expense])
         case .fee, .reimbursement, .interest:
             result = try mapTransfer(transaction, in: account, accountTypes: [.expense, .income], payee: Self.payee)
+        case .stockDividend:
+            (price, result) = try mapStockDividend(transaction, in: account)
         default:
             throw WealthsimpleConversionError.unsupportedTransactionType(transaction.transactionType.rawValue)
         }
@@ -261,6 +263,16 @@ public struct WealthsimpleLedgerMapper {
             metaDataDict[MetaDataKeys.dividendShares] = shares
         }
         return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: metaDataDict), postings: [posting1, posting2])
+    }
+
+    private func mapStockDividend(_ transaction: WTransaction, in account: WAccount) throws -> (Price, STransaction) {
+        let result = STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [
+            Posting(accountName: try lookup.ledgerAccountName(for: .dividend(transaction.symbol), in: account, ofType: [.income]), amount: transaction.negatedMarketValue),
+            Posting(accountName: try lookup.ledgerAccountName(of: account, symbol: transaction.symbol),
+                    amount: Amount(for: transaction.quantity, in: try lookup.commoditySymbol(for: transaction.symbol)),
+                    cost: try Cost(amount: transaction.marketPrice, date: nil, label: nil))
+        ])
+        return (try Price(date: transaction.processDate, commoditySymbol: lookup.commoditySymbol(for: transaction.symbol), amount: transaction.marketPrice), result)
     }
 
     private func mapNonResidentWithholdingTax(_ transaction: WTransaction, in account: WAccount) throws -> STransaction {

@@ -14,6 +14,9 @@ extension Wealthsimple.Transaction {
     var marketPrice: Amount {
         Amount(for: marketPriceAmount, in: marketPriceCurrency)
     }
+    var negatedMarketValue: Amount {
+        Amount(for: marketValueAmount, in: marketValueCurrency, negate: true)
+    }
     var netCash: Amount {
         Amount(for: netCashAmount, in: netCashCurrency)
     }
