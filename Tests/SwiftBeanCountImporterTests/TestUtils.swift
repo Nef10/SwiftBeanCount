@@ -24,7 +24,7 @@ class TestStorage: SettingsStorage {
         storage[defaultName] as? String
     }
 
-    func dictionary(forKey defaultName: String) -> [String: Any]? {
+    func dictionary(forKey defaultName: String) -> [String: Any]? { // swiftlint:disable:this discouraged_optional_collection
         storage[defaultName] as? [String: Any]
     }
 }

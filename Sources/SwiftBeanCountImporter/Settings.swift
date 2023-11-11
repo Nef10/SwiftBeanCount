@@ -18,7 +18,7 @@ public protocol SettingsStorage {
     func string(forKey defaultName: String) -> String?
 
     /// Gets a saved dictionary for a given key
-    func dictionary(forKey defaultName: String) -> [String: Any]?
+    func dictionary(forKey defaultName: String) -> [String: Any]? // swiftlint:disable:this discouraged_optional_collection
 }
 
 /// Constants releated to settings of the importer
