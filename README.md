@@ -90,7 +90,7 @@ For accounts used in transactions to and from your Wealthsimple accounts you nee
 2) Assign the downloaded wealthsimple accounts to the `accounts` property on the mapper.
 3) Call `mapPositionsToPriceAndBalance` or `mapTransactionsToPriceAndTransactions` to map your downloaded positions / transactions to SwiftBeanCountModel Prices and Balances / Prices and Transactions.
 
-Please also check out the complete documentation [here](https://nef10.github.io/SwiftBeanCountWealthsimpleMapper/). Additionally, you can have a look at the [SwiftBeanCountDownloaderApp](https://github.com/Nef10/SwiftBeanCountDownloaderApp) which uses this library.
+Please also check out the complete documentation [here](https://nef10.github.io/SwiftBeanCountWealthsimpleMapper/). Additionally, you can have a look at the [SwiftBeanCountImporter](https://github.com/Nef10/SwiftBeanCountImporter) which uses this library.
 
 ## Usage
 
