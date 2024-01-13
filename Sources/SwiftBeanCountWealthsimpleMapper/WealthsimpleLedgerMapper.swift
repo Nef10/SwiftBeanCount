@@ -11,7 +11,7 @@ import SwiftBeanCountParserUtils
 import Wealthsimple
 
 /// Functions to transform downloaded Wealthsimple data into SwiftBeanCountModel types
-public struct WealthsimpleLedgerMapper {
+public struct WealthsimpleLedgerMapper { // swiftlint:disable:this type_body_length
 
     private typealias WTransaction = Wealthsimple.Transaction
     private typealias STransaction = SwiftBeanCountModel.Transaction
@@ -284,7 +284,7 @@ public struct WealthsimpleLedgerMapper {
     }
 
     private func mapStockSplits(_ transactions: [WTransaction], in account: WAccount) throws -> [STransaction] {
-        var splitPairs = [String: [WTransaction]]()
+        var splitPairs = [String: [WTransaction]](), splitNonPairs = [WTransaction]()
         for transaction in transactions {
             if splitPairs["\(transaction.symbol)"] == nil {
                 splitPairs["\(transaction.symbol)"] = []
@@ -293,15 +293,24 @@ public struct WealthsimpleLedgerMapper {
         }
         var transactions = [STransaction]()
         for (_, transactionPair) in splitPairs {
-            transactions.append(try mapStockSplit(transactionPair, in: account))
+            if transactionPair.count != 2 {
+                splitNonPairs.append(contentsOf: transactionPair)
+            } else {
+                transactions.append(try mapStockSplit(transactionPair, in: account))
+            }
+        }
+        if !splitNonPairs.isEmpty {
+            if splitNonPairs.count == 2 && (splitNonPairs[0].marketValueAmount == "-\(splitNonPairs[1].marketValueAmount)"
+                                            || "-\(splitNonPairs[0].marketValueAmount)" == splitNonPairs[1].marketValueAmount) {
+                transactions.append(try mapStockSplit(splitNonPairs, in: account))
+            } else {
+                throw WealthsimpleConversionError.unexpectedStockSplit(splitNonPairs.first!.description)
+            }
         }
         return transactions
     }
 
     private func mapStockSplit(_ transactions: [WTransaction], in account: WAccount) throws -> STransaction {
-        guard transactions.count == 2 else {
-            throw WealthsimpleConversionError.unexpectedStockSplit(transactions.first!.description)
-        }
         guard let buyTransaction = transactions.first(where: { !$0.quantity.starts(with: "-") }),
               let sellTransaction = transactions.first(where: { $0.quantity.starts(with: "-") }) else {
             throw WealthsimpleConversionError.unexpectedStockSplit(transactions.first!.description)
@@ -313,7 +322,7 @@ public struct WealthsimpleLedgerMapper {
                     cost: try Cost(amount: nil, date: nil, label: nil)),
             Posting(accountName: try lookup.ledgerAccountName(of: account, symbol: buyTransaction.symbol),
                     amount: Amount(for: buyTransaction.quantity, in: try lookup.commoditySymbol(for: buyTransaction.symbol)),
-                    cost: try Cost(amount: nil, date: nil, label: nil))
+                    cost: try Cost(amount: buyTransaction.symbol != sellTransaction.symbol ? buyTransaction.marketPrice : nil, date: nil, label: nil))
         ])
     }
 

@@ -391,12 +391,37 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         var transaction2 = testTransaction
         transaction2.transactionType = .stockDistribution
         transaction2.quantity = "-\(transaction2.quantity)"
+        transaction2.marketValueAmount = "-\(transaction2.marketValueAmount)"
 
         let emptyCost = try Cost(amount: nil, date: nil, label: nil)
         let resultTransaction = Transaction(metaData: TransactionMetaData(date: transaction1.processDate, metaData: [MetaDataKeys.id: transaction1.id]),
                                             postings: [
                                                 try posting(account: "Assets:W:ETF", number: transaction2.quantity, commodity: transaction2.symbol, cost: emptyCost),
                                                 try posting(account: "Assets:W:ETF", number: transaction1.quantity, commodity: transaction1.symbol, cost: emptyCost),
+                                            ])
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction1, transaction2])
+        XCTAssert(prices.isEmpty)
+        XCTAssertEqual(transactions, [resultTransaction])
+    }
+
+    func testSplitTransactionsDifferentCommodities() throws {
+        try? ledger.add(Commodity(symbol: "ETF2"))
+
+        var transaction1 = testTransaction
+        transaction1.transactionType = .stockDistribution
+        transaction1.symbol = "ETF2"
+        var transaction2 = testTransaction
+        transaction2.transactionType = .stockDistribution
+        transaction2.quantity = "-\(transaction2.quantity)"
+        transaction2.marketValueAmount = "-\(transaction2.marketValueAmount)"
+
+        let emptyCost = try Cost(amount: nil, date: nil, label: nil)
+        let cost = try Cost(amount: transaction2.marketPrice, date: nil, label: nil)
+        let resultTransaction = Transaction(metaData: TransactionMetaData(date: transaction1.processDate, metaData: [MetaDataKeys.id: transaction1.id]),
+                                            postings: [
+                                                try posting(account: "Assets:W:ETF", number: transaction2.quantity, commodity: transaction2.symbol, cost: emptyCost),
+                                                try posting(account: "Assets:W:ETF2", number: transaction1.quantity, commodity: transaction1.symbol, cost: cost),
                                             ])
 
         let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction1, transaction2])
