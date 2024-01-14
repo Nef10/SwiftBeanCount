@@ -48,7 +48,7 @@ jobs:
           output-file: comment.html
       - name: 'Prepend minimum coverage required'
         run: |
-          echo -e "Minimum coverage required: <b>$(cat ./.github/minimum_coverage.txt)</b>\n<br />\n$(cat comment.html)" > comment.html
+          echo -e "Minimum coverage required: <b>$(cat ./.github/minimum_coverage.txt)%</b>\n<br />\n$(cat comment.html)" > comment.html
       - name: 'Prepand failure info'
         if: ${{ github.event.workflow_run.conclusion != 'success' }}
         run: |
