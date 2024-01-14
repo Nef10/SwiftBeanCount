@@ -251,7 +251,7 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
                 strings.append("\(input[range])")
             }
             let commodity = commodities[strings[0]] ?? strings[0]
-            return ManuLifeBuy(commodity: commodity, units: strings[1], price: strings[2], total: strings[3])
+            return ManuLifeBuy(commodity: commodity, units: strings[1].replacingOccurrences(of: ",", with: ""), price: strings[2], total: strings[3])
         }, date)
     }
 
