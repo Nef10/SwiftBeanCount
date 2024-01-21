@@ -34,7 +34,7 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         """
         Enables importing of transactions and balances from ManuLife Group Retirement Accounts.
 
-        This text-based imported requires you to copy two texts from the website. After logging in:
+        This text-based importer requires you to copy two texts from the website. After logging in:
         - For the transaction text, go to My Account -> Transaction Summary and select the correct Contribution from the table. In the popup select all text.
         - For the balance text, go to My Account -> View My Account Balance and select Investment details at the bottom. Select all text starting from Investment details.
 
