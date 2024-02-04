@@ -63,6 +63,18 @@ enum TestUtils {
         Calendar.current.date(from: DateComponents(calendar: Calendar.current, timeZone: nil, era: nil, year: 2_020, month: 6, day: 5, hour: 0, minute: 0, second: 0))!
     }()
 
+    static var date20240101: Date = {
+        Calendar.current.date(from: DateComponents(calendar: Calendar.current, timeZone: nil, era: nil, year: 2_024, month: 1, day: 1, hour: 0, minute: 0, second: 0))!
+    }()
+
+    static var date20231202: Date = {
+        Calendar.current.date(from: DateComponents(calendar: Calendar.current, timeZone: nil, era: nil, year: 2_023, month: 12, day: 2, hour: 0, minute: 0, second: 0))!
+    }()
+
+    static var date20231231: Date = {
+        Calendar.current.date(from: DateComponents(calendar: Calendar.current, timeZone: nil, era: nil, year: 2_023, month: 12, day: 31, hour: 0, minute: 0, second: 0))!
+    }()
+
     static var ledger: Ledger = {
         let ledger = Ledger()
         let option = Option(name: "a", value: "b")

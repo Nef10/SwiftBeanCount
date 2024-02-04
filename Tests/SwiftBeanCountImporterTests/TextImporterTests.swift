@@ -13,9 +13,16 @@ import XCTest
 final class TextImporterTests: XCTestCase {
 
     func testNew() {
-        let result = TextImporterFactory.new(ledger: nil, transaction: "", balance: "")
+        var result = TextImporterFactory.new(ledger: nil, transaction: "", balance: "")
         XCTAssertNotNil(result)
         XCTAssertTrue(result is ManuLifeImporter)
+        result = TextImporterFactory.new(ledger: nil, transaction: "flatexDEGIRO", balance: "")
+        XCTAssertNotNil(result)
+        XCTAssertTrue(result is EquatePlusImporter)
+    }
+
+    func testImporters() {
+        XCTAssertEqual(TextImporterFactory.importers.count, 2)
     }
 
 }

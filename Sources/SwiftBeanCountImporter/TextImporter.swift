@@ -14,7 +14,7 @@ import SwiftBeanCountModel
 enum TextImporterFactory {
 
     static var importers: [TransactionBalanceTextImporter.Type] {
-        [ManuLifeImporter.self]
+        [ManuLifeImporter.self, EquatePlusImporter.self]
     }
 
     /// Returns the correct TextImporter, or nil if the text cannot be imported
@@ -25,7 +25,10 @@ enum TextImporterFactory {
     ///   - balance: text of a balance
     /// - Returns: TextImporter, or nil if the text cannot be imported
     static func new(ledger: Ledger?, transaction: String, balance: String) -> TextImporter? {
-        ManuLifeImporter(ledger: ledger, transaction: transaction, balance: balance)
+        if transaction.contains("flatexDEGIRO") {
+            return EquatePlusImporter(ledger: ledger, transaction: transaction, balance: balance)
+        }
+        return ManuLifeImporter(ledger: ledger, transaction: transaction, balance: balance)
     }
 
 }
