@@ -70,7 +70,7 @@ jobs:
       run: echo "minimum_coverage=$(cat ./.github/minimum_coverage.txt)" >> $GITHUB_ENV
     - name: Enforce test coverage threshhold
       if: ${{ matrix.os == needs.get_os.outputs.coverage_os }}
-      uses: VeryGoodOpenSource/very_good_coverage@v2.2.0
+      uses: VeryGoodOpenSource/very_good_coverage@v3.0.0
       with:
         path: ./pr/lcov.info
         min_coverage: ${{ env.minimum_coverage }}
