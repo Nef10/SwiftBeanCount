@@ -18,6 +18,8 @@ enum MetaDataKeys {
     static let description = "tax-description"
     /// meta data on an account the specific the tax slip issuer
     static let issuer = "tax-slip-issuer"
+    /// meta data on an account to specify it contains relavant sales together with the name to use
+    static let sales = "tax-sale"
 
     /// meta data on a transaction to modify the tax year that it should be counted towards
     static let year = "tax-year"
@@ -26,10 +28,12 @@ enum MetaDataKeys {
     static let commodityName = "name"
 }
 
-/// Utility to generate tax slips from a `Ledger`
+/// Utility to generate tax relevant data from a `Ledger`
 ///
-/// It relies heavily on meta data in the leadger.
+/// It relies heavily on meta data in the ledger.
 public enum TaxCalculator {
+
+    private static let rounding = "Rounding"
 
     /// Generates all tax slips based on the meta data in the ledger for a specifc tax year
     /// - Parameters:
@@ -45,10 +49,7 @@ public enum TaxCalculator {
         guard let slips = taxSlipNameSettings.min(by: { $0.date > $1.date })?.values.dropFirst(1), !slips.isEmpty else {
             throw TaxErrors.noTaxSlipConfigured(year)
         }
-        let taxYearTransactions = ledger.transactions.filter {
-            (Calendar.current.component(.year, from: $0.metaData.date) == year && Int($0.metaData.metaData[MetaDataKeys.year] ?? String(year)) == year)
-                || Int($0.metaData.metaData[MetaDataKeys.year] ?? "") == year
-        }
+        let taxYearTransactions = getTaxYearTransactions(ledger, year: year)
         return try slips.flatMap { slip throws in
             guard let commodity = taxSlipCurrencySettings.filter({ $0.values[1] == slip }).min(by: { $0.date > $1.date })?.values[2] else {
                 throw TaxErrors.noCurrencyDefined(slip, year)
@@ -57,6 +58,53 @@ public enum TaxCalculator {
             return try getTaxSlips(slip, year: year, commodity: commodity, splitAccounts: splitAccounts, taxYearTransactions: taxYearTransactions, ledger: ledger)
         }
         .sorted { "\($0.name)\($0.issuer ?? "")" < "\($1.name)\($1.issuer ?? "")" }
+    }
+
+    /// Gets all taxable sales from the ledger for a specific year
+    /// - Parameters:
+    ///   - ledger: ledger to get the transactions from
+    ///   - year: tax year
+    /// - Returns: Array of all sales
+    public static func getTaxableSales(from ledger: Ledger, for year: Int) throws -> [Sale] {
+        // All transactions which have a posting with a cost, a negative amount and the account is marked as tax-sale
+        let costTransactions = getTaxYearTransactions(ledger, year: year).filter {
+            $0.postings.contains { posting in
+                posting.cost != nil && posting.amount.number.isSignMinus && ledger.accounts.first { $0.name == posting.accountName }?.metaData[MetaDataKeys.sales] != nil
+            }
+        }
+
+        return costTransactions.compactMap { transaction -> Sale? in
+            // get relevant postings
+            let postings = transaction.postings.filter { $0.cost != nil && $0.amount.number.isSignMinus }
+            // if multiple postings, they all need to be for the same account and commodity
+            guard postings.allSatisfy({ $0.accountName == postings.first!.accountName && $0.amount.commoditySymbol == postings.first!.amount.commoditySymbol }) else {
+                return nil
+            }
+            let symbol = postings.first!.amount.commoditySymbol
+            let quantity = postings.reduce(Decimal()) { $0 + $1.amount.number }
+            // Gain is the sum of all income postings
+            let gain = transaction.postings.filter { $0.accountName.accountType == .income && $0.accountName.nameItem != rounding }.reduce(MultiCurrencyAmount()) {
+                $0 + Amount(number: -$1.amount.number, commoditySymbol: $1.amount.commoditySymbol)
+            }
+            // Proceeds is the sum of all asset and expense postings
+            let proceeds = transaction.postings.filter {
+                (($0.accountName.accountType == .asset && !$0.amount.number.isSignMinus ) || $0.accountName.accountType == .expense) && $0.accountName.nameItem != rounding
+            }
+            .reduce(MultiCurrencyAmount()) { $0 + $1.amount }
+
+            guard proceeds.amountFor(symbol: symbol).number.isZero else {
+                // E.g. stock split
+                return nil
+            }
+
+            return Sale(date: transaction.metaData.date,
+                        symbol: symbol,
+                        name: ledger.commodities.first { $0.symbol == symbol }?.metaData["name"],
+                        quantity: quantity.isSignMinus ? -quantity : quantity,
+                        proceeds: proceeds,
+                        gain: gain,
+                        provider: ledger.accounts.first { $0.name == postings.first!.accountName }!.metaData[MetaDataKeys.sales]!)
+        }
     }
 
     /// Gets a specifc tax slip from all issuers
@@ -111,6 +159,20 @@ public enum TaxCalculator {
                 return nil
             }
             return try TaxSlip(name: slip.capitalized, year: year, issuer: issuer.isEmpty ? nil : issuer, entries: entries)
+        }
+    }
+
+    /// Returns all transaction which occured in this tax year.
+    ///
+    /// This function returns all transactions which either have a posting within the year or the tax year meta data set to the year.
+    /// - Parameters:
+    ///   - ledger: Ledger to get the transactions from
+    ///   - year: tax year to filter for
+    /// - Returns: transactions for the tax year
+    private static func getTaxYearTransactions(_ ledger: Ledger, year: Int) -> [Transaction] {
+        ledger.transactions.filter {
+            (Calendar.current.component(.year, from: $0.metaData.date) == year && Int($0.metaData.metaData[MetaDataKeys.year] ?? String(year)) == year)
+                || Int($0.metaData.metaData[MetaDataKeys.year] ?? "") == year
         }
     }
 
