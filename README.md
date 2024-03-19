@@ -6,13 +6,19 @@
 
 ## What
 
-This is a library to help you during tax season. Right now it can generate expected tax slips based on your beancount file. This allows you to easily verify your received tax slips to check for errors on either the providers side or your tracking.
+This is a library to help you during tax season. Right now it can list taxable sales and generate expected tax slips based on your beancount file. This allows you to easily verify your received tax slips to check for errors on either the providers side or your tracking.
 
 ## Beancount meta data
 
 The library relies on meta data and custom directives in your Beancount file for configuration.
 
-### Basic Configuration
+### Taxable Sales
+
+On the account you are selling from, add the `"tax-sale"` meta data, specifing the name the sales should show be grouped by, usually the brokers name.
+
+### Tax Slips
+
+#### Basic Configuration
 
 * You first must configure the names of the slips you want to generate, and set a currency for each one
 * Afterwards, add meta data to the account in the form of tax slip name: Box name + number
@@ -30,7 +36,7 @@ Example:
   tax-slip-issuer: "BankABC"
 ```
 
-### Split Slips by Symbol
+#### Split Slips by Symbol
 
 Some tax slips are split up by individual stock / ETF. To configure this, either the last or second last part of the account name must match a configured commodity or you add `tax-symbol` meta-data to the account.
 
@@ -52,7 +58,7 @@ Example:
 ```
 If your account has the name matching to a commodity, but you don't want to treat it as one, add `tax-symbol: ""` to it.
 
-### Split accounts
+#### Split accounts
 
 Sometimes, if you split up your slip by stock, you don't want to create a separate account for everything. E.g. you track the dividends via different income accounts, but don't want to create separate expense accounts per stock for tax paid. To do this:
 
@@ -71,16 +77,18 @@ Example:
   Assets:Portfolio 7.50 CAD
 ```
 
+If multiple custom directives for the same setting exist, the latest one up until the end of the tax year is used. E.g. when generating tax slips for 2021, the latest directive up until 2021-12-31 is used.
+
 ### Dates
 
-Sometimes income is earned in one year, but only paid in another. You can change the year a transaction should count towards via the `tax-year` meta data on a transaction, e.g. `tax-year: "2022"`.
-
-If multiple custom directives for the same setting exist, the latest one up until the end of the tax year is used. E.g. when generating tax slips for 2021, the latest directive up until 2021-12-31 is used.
+Sometimes income is earned in one year, but only paid in another; or a sale is performed in one year but only settled in the next. You can change the year a transaction should count towards via the `tax-year` meta data on a transaction, e.g. `tax-year: "2022"`.
 
 ## How
 
 1) Load your ledger, e.g. via  [SwiftBeanCountParser](https://github.com/Nef10/SwiftBeanCountParser)
-2) Call `TaxCalculator.generateTaxSlips(from ledger: Ledger, for year: Int)`
+2) Call one of the public functions on `TaxCalculator`, for example:
+    1) `TaxCalculator.generateTaxSlips(from ledger: Ledger, for year: Int)`
+    2) `TaxCalculator.getTaxableSales(from ledger: Ledger, for year: Int)`
 
 Please also check out the complete documentation [here](https://nef10.github.io/SwiftBeanCountTax/).
 
