@@ -46,7 +46,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
     - name: Install Swift
-      uses: swift-actions/setup-swift@v2.0.0
+      uses: swift-actions/setup-swift@v2.1.0
     - name: Run tests
       run: swift test --enable-code-coverage -Xswiftc -warnings-as-errors
     - name: Save PR number
@@ -82,7 +82,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Install Swift
-        uses: swift-actions/setup-swift@v2.0.0
+        uses: swift-actions/setup-swift@v2.1.0
       - name: Install SwiftLint
         run: |
           curl -L https://github.com/realm/SwiftLint/releases/download/0.54.0/swiftlint_linux.zip -o swiftlint.zip
