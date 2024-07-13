@@ -19,7 +19,7 @@ public struct WealthsimpleLedgerMapper { // swiftlint:disable:this type_body_len
 
     /// Fallback account for payments if not account with the correct meta data could be found
     ///
-    /// Only used for transaction type payment spend
+    /// Only used for certain transaction types
     public static let fallbackExpenseAccountName = try! AccountName("Expenses:TODO") // swiftlint:disable:this force_try
 
     /// Payee used for fee transactions

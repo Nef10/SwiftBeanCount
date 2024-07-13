@@ -99,8 +99,13 @@ struct LedgerLookup {
             key = MetaDataKeys.rounding
         }
         guard let name = ledger.accounts.first(where: { accountTypes.contains($0.name.accountType) && $0.metaData[key]?.contains(account.number) ?? false })?.name else {
-            if case .transactionType(.paymentSpend) = type {
-                return WealthsimpleLedgerMapper.fallbackExpenseAccountName
+            if case let .transactionType(transactionType) = type {
+                switch transactionType {
+                case .onlineBillPayment, .deposit, .paymentSpend, .transferIn, .transferOut, .paymentTransferIn, .paymentTransferOut, .withdrawal:
+                    return WealthsimpleLedgerMapper.fallbackExpenseAccountName
+                default:
+                    throw WealthsimpleConversionError.missingAccount(key, account.number, accountTypes.map { $0.rawValue }.joined(separator: ", or "))
+                }
             }
             throw WealthsimpleConversionError.missingAccount(key, account.number, accountTypes.map { $0.rawValue }.joined(separator: ", or "))
         }

@@ -13,12 +13,17 @@ struct TestAccount: Wealthsimple.Account {
 final class LedgerLookupTests: XCTestCase {
 
     private let accountName = try! AccountName("Assets:Test") // swiftlint:disable:this force_try
+    private var ledger = Ledger()
+    private var ledgerLookup: LedgerLookup!
+
+    override func setUpWithError() throws {
+        ledger = Ledger()
+        ledgerLookup = LedgerLookup(ledger)
+    }
 
     func testLedgerAccountCommoditySymbol() throws {
         let name2 = try AccountName("Assets:Test1")
         let symbol = "CAD"
-        let ledger = Ledger()
-        var ledgerLookup = LedgerLookup(ledger)
 
         // account does not exist
         XCTAssertNil(ledgerLookup.ledgerAccountCommoditySymbol(of: accountName))
@@ -38,8 +43,6 @@ final class LedgerLookupTests: XCTestCase {
 
     func testLedgerAccountNameOf() throws {
         let account = TestAccount(number: "abc")
-        let ledger = Ledger()
-        var ledgerLookup = LedgerLookup(ledger)
 
         // not found
         assert(
@@ -65,8 +68,6 @@ final class LedgerLookupTests: XCTestCase {
     }
 
     func testLedgerAccountNameFor() throws {
-        let ledger = Ledger()
-        var ledgerLookup = LedgerLookup(ledger)
         var number = "abc123"
 
         // fallback for payment spend
@@ -76,6 +77,8 @@ final class LedgerLookupTests: XCTestCase {
         // not found
         assert(try ledgerLookup.ledgerAccountName(for: .rounding, in: TestAccount(number: number), ofType: [.income]),
                throws: WealthsimpleConversionError.missingAccount(MetaDataKeys.rounding, number, "Income"))
+        assert(try ledgerLookup.ledgerAccountName(for: .transactionType(.dividend), in: TestAccount(number: number), ofType: [.income]),
+               throws: WealthsimpleConversionError.missingAccount("\(MetaDataKeys.prefix)\(TransactionType.dividend)", number, "Income"))
 
         // rounding
         try ledger.add(Account(name: accountName, metaData: [MetaDataKeys.rounding: number]))
@@ -112,7 +115,6 @@ final class LedgerLookupTests: XCTestCase {
     }
 
     func testDoesTransactionExistInLedger() {
-        let ledger = Ledger()
         var metaData = TransactionMetaData(date: Date(), metaData: [MetaDataKeys.id: "abc"])
         var transaction = Transaction(metaData: metaData, postings: [])
         ledger.add(transaction)
@@ -147,11 +149,10 @@ final class LedgerLookupTests: XCTestCase {
     }
 
     func testDoesPriceExistInLedger() throws {
-        let ledger = Ledger()
         let date = Date()
         var price = try Price(date: date, commoditySymbol: "CAD", amount: Amount(number: Decimal(1), commoditySymbol: "EUR"))
         try ledger.add(price)
-        let ledgerLookup = LedgerLookup(ledger)
+        ledgerLookup = LedgerLookup(ledger)
 
         // same price
         XCTAssert(ledgerLookup.doesPriceExistInLedger(price))
@@ -170,11 +171,10 @@ final class LedgerLookupTests: XCTestCase {
     }
 
     func testDoesBalanceExistInLedger() throws {
-        let ledger = Ledger()
         let date = Date()
         var balance = Balance(date: date, accountName: accountName, amount: Amount(number: Decimal(1), commoditySymbol: "USD"))
         ledger.add(balance)
-        let ledgerLookup = LedgerLookup(ledger)
+        ledgerLookup = LedgerLookup(ledger)
 
         // same balance
         XCTAssert(ledgerLookup.doesBalanceExistInLedger(balance))
@@ -197,10 +197,9 @@ final class LedgerLookupTests: XCTestCase {
     }
 
     func testCommoditySymbolForAssetSymbol() throws {
-        let ledger = Ledger()
         var commodity = Commodity(symbol: "EUR")
         try ledger.add(commodity)
-        var ledgerLookup = LedgerLookup(ledger)
+        ledgerLookup = LedgerLookup(ledger)
 
         // not existing
         assert(
