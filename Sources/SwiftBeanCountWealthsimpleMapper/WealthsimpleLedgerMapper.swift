@@ -187,7 +187,7 @@ public struct WealthsimpleLedgerMapper { // swiftlint:disable:this type_body_len
             result = try mapTransfer(transaction, in: account, accountTypes: [.asset])
         case .paymentTransferIn, .referralBonus, .giveawayBonus, .refund, .cashbackBonus:
             result = try mapTransfer(transaction, in: account, accountTypes: [.asset, .income])
-        case .paymentSpend:
+        case .paymentSpend, .onlineBillPayment:
             result = try mapTransfer(transaction, in: account, accountTypes: [.expense])
         case .fee, .reimbursement, .interest:
             result = try mapTransfer(transaction, in: account, accountTypes: [.expense, .income], payee: Self.payee)
