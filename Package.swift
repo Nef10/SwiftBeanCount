@@ -29,7 +29,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/Nef10/WealthsimpleDownloader.git",
-            .upToNextMajor(from: "2.0.1")
+            .upToNextMajor(from: "2.0.2")
         ),
         .package(
             url: "https://github.com/Nef10/SwiftBeanCountSheetSync.git",

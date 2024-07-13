@@ -204,8 +204,8 @@
         "repositoryURL": "https://github.com/Nef10/WealthsimpleDownloader.git",
         "state": {
           "branch": null,
-          "revision": "ea3c4e8f98eb3d496232f20f1d72e35d47cb7d04",
-          "version": "2.0.1"
+          "revision": "af3e30a235d0311de7b37536095f8cf6470abd51",
+          "version": "2.0.2"
         }
       }
     ]
