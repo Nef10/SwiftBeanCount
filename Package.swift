@@ -20,7 +20,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/yaslab/CSV.swift.git",
-            .upToNextMinor(from: "2.4.3")
+            .upToNextMinor(from: "2.5.0")
         )
     ],
     targets: [
