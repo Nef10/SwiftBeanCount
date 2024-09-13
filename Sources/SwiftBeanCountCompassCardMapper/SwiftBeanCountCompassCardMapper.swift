@@ -26,7 +26,7 @@ public struct SwiftBeanCountCompassCardMapper {
         static let cardNumber = "card-number"
         static let journeyId = "journey-id"
         static let expense = "compass-card-expense"
-        static let autoLoad = "compass-card-load"
+        static let load = "compass-card-load"
     }
 
     private static var dateFormatter: DateFormatter = {
@@ -50,6 +50,8 @@ public struct SwiftBeanCountCompassCardMapper {
 
     /// String in CSV
     private let autoLoadTransaction = "AutoLoaded"
+    /// String in CSV
+    private let webLoadTransactions = "Web Order"
     /// Strings in CSV
     private let removeTransactionDescriptions = ["Tap in at", "Tap out at", "Transfer at", "Stn"]
 
@@ -135,8 +137,8 @@ public struct SwiftBeanCountCompassCardMapper {
         var currentTransactions = [TransactionRow]()
 
         for transaction in transactions {
-            if transaction.transaction == autoLoadTransaction {
-                result.append(createAutoLoadTransaction(transaction, cardNumber: cardNumber, account: account))
+            if transaction.transaction == autoLoadTransaction || transaction.transaction.contains(webLoadTransactions) {
+                result.append(createLoadTransaction(transaction, cardNumber: cardNumber, account: account))
             } else {
                 if currentJourney == transaction.journeyId {
                     currentTransactions.append(transaction)
@@ -193,13 +195,13 @@ public struct SwiftBeanCountCompassCardMapper {
         return Transaction(metaData: metaData, postings: [posting, posting2])
     }
 
-    private func createAutoLoadTransaction(_ transaction: TransactionRow, cardNumber: String?, account: AccountName) -> Transaction {
+    private func createLoadTransaction(_ transaction: TransactionRow, cardNumber: String?, account: AccountName) -> Transaction {
         let expenseAccount = ledgerLoadAccountName(cardNumber: cardNumber)
         let balanceString = transaction.amount.replacingOccurrences(of: "$", with: "").components(separatedBy: .whitespacesAndNewlines).joined()
         let (decimal, _) = balanceString.amountDecimal()
         let posting = Posting(accountName: account, amount: Amount(number: decimal, commoditySymbol: commodity, decimalDigits: 2))
         let posting2 = Posting(accountName: expenseAccount, amount: Amount(number: -decimal, commoditySymbol: commodity, decimalDigits: 2))
-        let id = "\(MetaDataKey.autoLoad)-\(Self.dateFormatterLoadId.string(from: transaction.date))"
+        let id = "\(MetaDataKey.load)-\(Self.dateFormatterLoadId.string(from: transaction.date))"
         let metaData = TransactionMetaData(date: transaction.date, narration: "", metaData: [MetaDataKey.journeyId: id])
         return Transaction(metaData: metaData, postings: [posting, posting2])
     }
@@ -227,7 +229,7 @@ public struct SwiftBeanCountCompassCardMapper {
             return defaultAssetAccountName
         }
         guard let accountName = ledger.accounts.first(where: {
-            $0.metaData[MetaDataKey.autoLoad]?.contains(cardNumber) ?? false
+            $0.metaData[MetaDataKey.load]?.contains(cardNumber) ?? false
         })?.name else {
             return defaultAssetAccountName
         }
