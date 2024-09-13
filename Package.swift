@@ -57,7 +57,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/Nef10/SwiftBeanCountCompassCardMapper.git",
-            .exact("0.0.3")
+            .exact("0.1.0")
         ),
     ],
     targets: [
