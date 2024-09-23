@@ -12,7 +12,8 @@ final class SwiftBeanCountCompassCardMapperTests: XCTestCase {
         static let transaction1 = "Nov-17-2022 08:39 PM,Tap in at Bus Stop 60572,Stored Value,,-$2.50,$7.45,2022-11-18T04:39:00.0000000Z,\"Tap in at Bus Stop 60572 Stored Value\",08:39 PM,,,,,\n"
         static let transaction2 = "Dec-06-2022 05:22 PM,Tap out at Edmonds Stn,Stored Value,,$1.05,$12.10,2022-12-07T00:59:00.0000000Z,\"Tap out at Edmonds Stn\nStored Value\",05:22 PM,,,,,\nDec-06-2022 05:11 PM,Transfer at Waterfront Stn,Stored Value,,-$1.05,$22.90,2022-12-07T00:59:00.0000000Z,\"Transfer at Waterfront Stn\nStored Value\",08:44 AM,,,,,\nDec-06-2022 05:09 PM,Tap out at Waterfront Stn,Stored Value,,$1.05,$23.95,2022-12-07T00:59:00.0000000Z,\"Tap out at Waterfront Stn\nStored Value\",08:43 AM,,,,,\nDec-06-2022 04:59 PM,Tap in at Stadium Stn,Stored Value,,-$4.70,$11.05,2022-12-07T00:59:00.0000000Z,\"Tap in at Stadium Stn\nStored Value\",04:59 PM,,,,,\n"
         static let refund = "Dec-01-2022 06:07 PM,Refund at Stadium Stn,Stored Value,,$4.70,$23.05,2022-12-02T02:05:00.0000000Z,\"Refund at Stadium Stn\nStored Value\",06:07 PM,,,,,\nDec-01-2022 06:05 PM,Tap in at Stadium Stn,Stored Value,,-$4.70,$18.35,2022-12-02T02:05:00.0000000Z,\"Tap in at Stadium Stn\nStored Value\",06:05 PM,,,,,\n"
-        static let webLoad = "Dec-01-2022 09:26 AM,\"#43926965\nWeb Order\",Transit value or product load,Add Stored Value,$20.00,,,\"#43926965\""
+        static let webLoad = "Dec-01-2022 09:26 AM,\"#43926965\nWeb Order\",Transit value or product load,Add Stored Value,$20.00,,,\"#43926965 Transit value or product load\",02:48 PM,Aug-30-2024 02:48 PM,MasterCard,43926965,05724E,$20.00\n"
+        static let load = "Dec-01-2022 09:26 AM,Loaded at Edmonds Stn,Stored Value,,$20.00,$30.70,,\"Loaded at Edmonds Stn\nStored Value\",09:15 AM,,,,,\n"
     }
     // swiftlint:enable line_length
 
@@ -72,6 +73,35 @@ final class SwiftBeanCountCompassCardMapperTests: XCTestCase {
     func testWebLoadTransaction() throws {
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.webLoad)")
         XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result.first!.metaData.narration, "")
+        XCTAssertEqual(result.first!.metaData.metaData["journey-id"], "compass-card-load-43926965")
+        XCTAssertEqual(result.first!.metaData.date, Date(timeIntervalSince1970: 1_669_915_560))
+        XCTAssert(result.first!.postings.contains {
+            $0.accountName.fullName == accountName && $0.amount.description == "20.00 CAD"
+        })
+        XCTAssert(result.first!.postings.contains {
+            $0.accountName == mapper.defaultAssetAccountName && $0.amount.description == "-20.00 CAD"
+        })
+    }
+
+    func testWebLoadAndLoadTransaction() throws {
+        let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.load)\(CSV.webLoad)")
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result.first!.metaData.narration, "")
+        XCTAssertEqual(result.first!.metaData.metaData["journey-id"], "compass-card-load-43926965")
+        XCTAssertEqual(result.first!.metaData.date, Date(timeIntervalSince1970: 1_669_915_560))
+        XCTAssert(result.first!.postings.contains {
+            $0.accountName.fullName == accountName && $0.amount.description == "20.00 CAD"
+        })
+        XCTAssert(result.first!.postings.contains {
+            $0.accountName == mapper.defaultAssetAccountName && $0.amount.description == "-20.00 CAD"
+        })
+    }
+
+    func testTwoLoadTransaction() throws {
+        let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.load)\(CSV.load)")
+        XCTAssertEqual(result.count, 2)
+        XCTAssertEqual(result[0], result[1])
         XCTAssertEqual(result.first!.metaData.narration, "")
         XCTAssertEqual(result.first!.metaData.metaData["journey-id"], "compass-card-load-2022-12-01-09-26")
         XCTAssertEqual(result.first!.metaData.date, Date(timeIntervalSince1970: 1_669_915_560))

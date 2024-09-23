@@ -11,12 +11,14 @@ public struct SwiftBeanCountCompassCardMapper {
         let transaction: String
         let amount: String
         let journeyId: String?
+        let orderNumber: Int?
 
         private enum CodingKeys: String, CodingKey { // swiftlint:disable:this nesting
             case date = "DateTime"
             case transaction = "Transaction"
             case amount = "Amount"
             case journeyId = "JourneyId"
+            case orderNumber = "OrderNumber"
         }
     }
 
@@ -52,6 +54,8 @@ public struct SwiftBeanCountCompassCardMapper {
     private let autoLoadTransaction = "AutoLoaded"
     /// String in CSV
     private let webLoadTransactions = "Web Order"
+    /// String in CSV
+    private let loadTransaction = "Loaded at"
     /// Strings in CSV
     private let removeTransactionDescriptions = ["Tap in at", "Tap out at", "Transfer at", "Stn"]
 
@@ -130,15 +134,26 @@ public struct SwiftBeanCountCompassCardMapper {
         return rows
     }
 
+    // swiftlint:disable:next function_body_length
     private func createTransactions(_ transactions: [TransactionRow], cardNumber: String?, account: AccountName) throws -> [Transaction] {
         var result = [Transaction]()
 
         var currentJourney = ""
-        var currentTransactions = [TransactionRow]()
+        var currentTransactions = [TransactionRow](), currentLoad = [TransactionRow]()
 
         for transaction in transactions {
             if transaction.transaction == autoLoadTransaction || transaction.transaction.contains(webLoadTransactions) {
+                if transaction.transaction.contains(webLoadTransactions), let activeLoad = currentLoad.first, activeLoad.amount == transaction.amount {
+                    // Web transactions are loaded when tapping the next time.
+                    // This creates a second entry. Ignoring it here.
+                    currentLoad = []
+                }
                 result.append(createLoadTransaction(transaction, cardNumber: cardNumber, account: account))
+            } else if transaction.transaction.contains(loadTransaction) {
+                if let activeLoad = currentLoad.first {
+                    result.append(createLoadTransaction(activeLoad, cardNumber: cardNumber, account: account))
+                }
+                currentLoad = [transaction]
             } else {
                 if currentJourney == transaction.journeyId {
                     currentTransactions.append(transaction)
@@ -153,10 +168,11 @@ public struct SwiftBeanCountCompassCardMapper {
                 }
             }
         }
-        if !currentTransactions.isEmpty {
-            if let transaction = createTransaction(currentTransactions, cardNumber: cardNumber, account: account) {
-                result.append(transaction)
-            }
+        if !currentTransactions.isEmpty, let transaction = createTransaction(currentTransactions, cardNumber: cardNumber, account: account) {
+            result.append(transaction)
+        }
+        if let activeLoad = currentLoad.first {
+            result.append(createLoadTransaction(activeLoad, cardNumber: cardNumber, account: account))
         }
 
         return result.filter { !doesTransactionExistInLedger($0.metaData.metaData["journey-id"] ?? "") }
@@ -201,7 +217,7 @@ public struct SwiftBeanCountCompassCardMapper {
         let (decimal, _) = balanceString.amountDecimal()
         let posting = Posting(accountName: account, amount: Amount(number: decimal, commoditySymbol: commodity, decimalDigits: 2))
         let posting2 = Posting(accountName: expenseAccount, amount: Amount(number: -decimal, commoditySymbol: commodity, decimalDigits: 2))
-        let id = "\(MetaDataKey.load)-\(Self.dateFormatterLoadId.string(from: transaction.date))"
+        let id = "\(MetaDataKey.load)-\(transaction.orderNumber.flatMap(String.init) ?? Self.dateFormatterLoadId.string(from: transaction.date))"
         let metaData = TransactionMetaData(date: transaction.date, narration: "", metaData: [MetaDataKey.journeyId: id])
         return Transaction(metaData: metaData, postings: [posting, posting2])
     }
