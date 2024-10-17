@@ -318,7 +318,8 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
 
         for transaction in transactions {
             if let matchingContribution = contributions.first(where: {
-                $0.purchaseDate == transaction.date && $0.purchasedSharesEmployer == transaction.matchAmount && $0.purchasedSharesYou == transaction.purchaseAmount
+                let range =  Calendar.current.date(byAdding: .day, value: -1, to: $0.purchaseDate)!...Calendar.current.date(byAdding: .day, value: 1, to: $0.purchaseDate)!
+                return range.contains(transaction.date) && $0.purchasedSharesEmployer == transaction.matchAmount && $0.purchasedSharesYou == transaction.purchaseAmount
             }) {
                 result.append(MatchedTransaction(
                     date: transaction.date,
