@@ -27,7 +27,7 @@ final class EquatePlusImporterTests: XCTestCase {
     private var parkingAccountDelegate: InputProviderDelegate! // swiftlint:disable:this weak_delegate
 
     override func setUpWithError() throws {
-        parkingAccountDelegate = InputProviderDelegate(names: ["Account"], secrets: [false], returnValues: [TestUtils.parking.fullName])
+        parkingAccountDelegate = InputProviderDelegate(names: ["Account"], types: [.text([])], returnValues: [TestUtils.parking.fullName])
         try super.setUpWithError()
     }
 
@@ -249,6 +249,10 @@ final class EquatePlusImporterTests: XCTestCase {
     }
 }
 
+#if hasFeature(RetroactiveAttribute)
+extension EquatePlusImporterError: @retroactive Equatable {}
+#endif
+
 extension EquatePlusImporterError: EquatableError {
     public static func == (lhs: EquatePlusImporterError, rhs: EquatePlusImporterError) -> Bool {
         if case let .balanceImportNotSupported(lhsString) = lhs, case let .balanceImportNotSupported(rhsString) = rhs {
@@ -272,6 +276,10 @@ extension EquatePlusImporterError: EquatableError {
         return false
     }
 }
+
+#if hasFeature(RetroactiveAttribute)
+extension AccountNameError: @retroactive Equatable {}
+#endif
 
 extension AccountNameError: EquatableError {
     public static func == (lhs: AccountNameError, rhs: AccountNameError) -> Bool {

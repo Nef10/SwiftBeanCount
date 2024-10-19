@@ -94,8 +94,8 @@ class TangerineDownloadImporter: BaseImporter, DownloadImporter {
     }
 
     private func download(_ completion: @escaping () -> Void) {
-        let username = getCredential(key: .username, name: "Username")
-        let pin = getCredential(key: .password, name: "PIN", isSecret: true)
+        let username = getCredential(key: .username, name: "Username", type: .text([]))
+        let pin = getCredential(key: .password, name: "PIN", type: .secret)
 
         downloader.authorizeAndGetAccounts(username: username, pin: pin) {
             switch $0 {
@@ -200,14 +200,14 @@ class TangerineDownloadImporter: BaseImporter, DownloadImporter {
         }
     }
 
-    private func getCredential(key: CredentialKey, name: String, isSecret: Bool = false, save: Bool = true) -> String {
+    private func getCredential(key: CredentialKey, name: String, type: ImporterInputRequestType, save: Bool = true) -> String {
         var value: String!
         if save, let savedValue = self.delegate?.readCredential("\(Self.importerType)-\(key.rawValue)"), !savedValue.isEmpty {
             value = savedValue
         } else {
             let group = DispatchGroup()
             group.enter()
-            delegate?.requestInput(name: name, suggestions: [], isSecret: isSecret) {
+            delegate?.requestInput(name: name, type: type) {
                 value = $0
                 group.leave()
                 return true
@@ -225,7 +225,7 @@ class TangerineDownloadImporter: BaseImporter, DownloadImporter {
 extension TangerineDownloadImporter: TangerineDownloaderDelegate {
 
     public func getOTPCode() -> String {
-        getCredential(key: .otp, name: "SMS Security Code", save: false)
+        getCredential(key: .otp, name: "SMS Security Code", type: .otp, save: false)
     }
 
     #if canImport(UIKit)

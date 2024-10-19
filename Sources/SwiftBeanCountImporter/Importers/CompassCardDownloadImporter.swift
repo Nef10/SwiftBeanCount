@@ -97,8 +97,8 @@ class CompassCardDownloadImporter: BaseImporter, DownloadImporter {
     }
 
     private func download(_ completion: @escaping () -> Void) {
-        let email = getCredential(key: .username, name: "Email")
-        let password = getCredential(key: .password, name: "Password", isSecret: true)
+        let email = getCredential(key: .username, name: "Email", type: .text([]))
+        let password = getCredential(key: .password, name: "Password", type: .secret)
 
         downloader.authorizeAndGetBalance(email: email, password: password) {
             switch $0 {
@@ -194,14 +194,14 @@ class CompassCardDownloadImporter: BaseImporter, DownloadImporter {
         }
     }
 
-    private func getCredential(key: CredentialKey, name: String, isSecret: Bool = false, save: Bool = true) -> String {
+    private func getCredential(key: CredentialKey, name: String, type: ImporterInputRequestType, save: Bool = true) -> String {
         var value: String!
         if save, let savedValue = self.delegate?.readCredential("\(Self.importerType)-\(key.rawValue)"), !savedValue.isEmpty {
             value = savedValue
         } else {
             let group = DispatchGroup()
             group.enter()
-            delegate?.requestInput(name: name, suggestions: [], isSecret: isSecret) {
+            delegate?.requestInput(name: name, type: type) {
                 value = $0
                 group.leave()
                 return true

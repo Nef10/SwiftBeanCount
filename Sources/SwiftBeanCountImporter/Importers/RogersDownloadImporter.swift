@@ -180,10 +180,10 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter {
     }
 
     private func getCredentials(callback: @escaping ((String, String, String, String) -> Void)) {
-        let username = getCredential(key: .username, name: "Username")
-        let password = getCredential(key: .password, name: "Password", isSecret: true)
-        let deviceId = getCredential(key: .deviceId, name: "Device ID")
-        let deviceInfo = getCredential(key: .deviceInfo, name: "Device Info")
+        let username = getCredential(key: .username, name: "Username", type: .text([]))
+        let password = getCredential(key: .password, name: "Password", type: .secret)
+        let deviceId = getCredential(key: .deviceId, name: "Device ID", type: .text([]))
+        let deviceInfo = getCredential(key: .deviceInfo, name: "Device Info", type: .text([]))
         callback(username, password, deviceId, deviceInfo)
     }
 
@@ -193,14 +193,14 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter {
         }
     }
 
-    private func getCredential(key: CredentialKey, name: String, isSecret: Bool = false) -> String {
+    private func getCredential(key: CredentialKey, name: String, type: ImporterInputRequestType) -> String {
         var value: String!
         if let savedValue = self.delegate?.readCredential("\(Self.importerType)-\(key.rawValue)"), !savedValue.isEmpty {
             value = savedValue
         } else {
             let group = DispatchGroup()
             group.enter()
-            delegate?.requestInput(name: name, suggestions: [], isSecret: isSecret) {
+            delegate?.requestInput(name: name, type: type) {
                 value = $0
                 group.leave()
                 return true

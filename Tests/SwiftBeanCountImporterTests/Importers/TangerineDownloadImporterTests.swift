@@ -107,7 +107,7 @@ final class TangerineDownloadImporterTests: XCTestCase {
             return .success([])
         }
         delegate = CredentialInputAndViewDelegate(inputNames: ["Username", "PIN", "SMS Security Code"],
-                                                  inputSecrets: [false, true, false],
+                                                  inputTypes: [.text([]), .secret, .otp],
                                                   inputReturnValues: ["name", "password123", "123456"],
                                                   saveKeys: ["tangerine-download-username", "tangerine-download-password"],
                                                   saveValues: ["name", "password123"],
@@ -125,7 +125,7 @@ final class TangerineDownloadImporterTests: XCTestCase {
             return .failure(error)
         }
         delegate = CredentialInputAndViewDelegate(inputNames: ["SMS Security Code"],
-                                                  inputSecrets: [false],
+                                                  inputTypes: [.otp],
                                                   inputReturnValues: ["123456"],
                                                   saveKeys: [
                                                     "tangerine-download-username",
@@ -283,7 +283,7 @@ final class TangerineDownloadImporterTests: XCTestCase {
 
     private func setDefaultDelegate(error: TestError? = nil) {
         delegate = CredentialInputAndViewDelegate(inputNames: ["SMS Security Code"],
-                                                  inputSecrets: [false],
+                                                  inputTypes: [.otp],
                                                   inputReturnValues: ["123456"],
                                                   saveKeys: ["tangerine-download-username", "tangerine-download-password"],
                                                   saveValues: ["name", "password123"],

@@ -14,7 +14,7 @@ import XCTest
 
 class BaseTestImporterDelegate: ImporterDelegate {
 
-    func requestInput(name: String, suggestions: [String], isSecret: Bool, completion: (String) -> Bool) {
+    func requestInput(name: String, type: ImporterInputRequestType, completion: (String) -> Bool) {
         XCTFail("requestInput should not be called")
     }
 
@@ -65,13 +65,9 @@ class AccountNameSuggestionVerifier: BaseTestImporterDelegate {
         self.expectedValues = expectedValues.map { $0.fullName }
     }
 
-    override func requestInput(name: String, suggestions: [String], isSecret: Bool, completion: (String) -> Bool) {
+    override func requestInput(name: String, type: ImporterInputRequestType, completion: (String) -> Bool) {
         XCTAssertEqual(name, "Account")
-        XCTAssertEqual(suggestions.count, expectedValues.count)
-        for suggestion in suggestions {
-            XCTAssert(expectedValues.contains(suggestion))
-        }
-        XCTAssertFalse(isSecret)
+        XCTAssertEqual(type, .text(expectedValues))
         verified = true
         _ = completion(TestUtils.cash.fullName)
     }
@@ -79,7 +75,7 @@ class AccountNameSuggestionVerifier: BaseTestImporterDelegate {
 
 class InputProviderDelegate: BaseTestImporterDelegate {
     private let names: [String]
-    private let secrets: [Bool]
+    private let types: [ImporterInputRequestType]
     private let returnValues: [String]
 
     private var verifiedInput = false
@@ -89,11 +85,15 @@ class InputProviderDelegate: BaseTestImporterDelegate {
         verifiedInput
     }
 
-    init(names: [String] = ["Username", "Password", "OTP"], secrets: [Bool] = [false, true, false], returnValues: [String] = ["testUserName", "testPassword", "testOTP"]) {
+    init(
+        names: [String] = ["Username", "Password", "OTP"],
+        types: [ImporterInputRequestType] = [.text([]), .secret, .otp],
+        returnValues: [String] = ["testUserName", "testPassword", "testOTP"]
+    ) {
         self.names = names
-        self.secrets = secrets
+        self.types = types
         self.returnValues = returnValues
-        if names.count != secrets.count || names.count != returnValues.count {
+        if names.count != types.count || names.count != returnValues.count {
             XCTFail("Invalid parameters")
         }
         if names.isEmpty {
@@ -101,14 +101,13 @@ class InputProviderDelegate: BaseTestImporterDelegate {
         }
     }
 
-    override func requestInput(name: String, suggestions: [String], isSecret: Bool, completion: (String) -> Bool) {
+    override func requestInput(name: String, type: ImporterInputRequestType, completion: (String) -> Bool) {
         guard index < names.count else {
             XCTFail("Called requestInput too often")
             return
         }
         XCTAssertEqual(name, names[index])
-        XCTAssert(suggestions.isEmpty)
-        XCTAssertEqual(isSecret, secrets[index])
+        XCTAssertEqual(types[index], type)
         XCTAssert(completion(returnValues[index]))
         index += 1
         if index == names.count {
@@ -132,14 +131,22 @@ class CredentialInputDelegate: InputProviderDelegate { // swiftlint:disable:this
     }
 
     convenience init() {
-        self.init(inputNames: [], inputSecrets: [], inputReturnValues: [], saveKeys: [], saveValues: [], readKeys: [], readReturnValues: [])
+        self.init(inputNames: [], inputTypes: [], inputReturnValues: [], saveKeys: [], saveValues: [], readKeys: [], readReturnValues: [])
     }
 
     convenience init(saveKeys: [String], saveValues: [String], readKeys: [String], readReturnValues: [String?]) {
-        self.init(inputNames: [], inputSecrets: [], inputReturnValues: [], saveKeys: saveKeys, saveValues: saveValues, readKeys: readKeys, readReturnValues: readReturnValues)
+        self.init(inputNames: [], inputTypes: [], inputReturnValues: [], saveKeys: saveKeys, saveValues: saveValues, readKeys: readKeys, readReturnValues: readReturnValues)
     }
 
-    init(inputNames: [String], inputSecrets: [Bool], inputReturnValues: [String], saveKeys: [String], saveValues: [String], readKeys: [String], readReturnValues: [String?]) {
+    init(
+        inputNames: [String],
+        inputTypes: [ImporterInputRequestType],
+        inputReturnValues: [String],
+        saveKeys: [String],
+        saveValues: [String],
+        readKeys: [String],
+        readReturnValues: [String?]
+    ) {
         self.saveKeys = saveKeys
         self.saveValues = saveValues
         self.readKeys = readKeys
@@ -153,7 +160,7 @@ class CredentialInputDelegate: InputProviderDelegate { // swiftlint:disable:this
         if readKeys.isEmpty {
             verifiedRead = true
         }
-        super.init(names: inputNames, secrets: inputSecrets, returnValues: inputReturnValues)
+        super.init(names: inputNames, types: inputTypes, returnValues: inputReturnValues)
     }
 
     override func saveCredential(_ value: String, for key: String) {
@@ -191,12 +198,12 @@ class ErrorDelegate<T: EquatableError>: CredentialInputDelegate {
     }
 
     convenience init(error: T?) {
-        self.init(inputNames: [], inputSecrets: [], inputReturnValues: [], saveKeys: [], saveValues: [], readKeys: [], readReturnValues: [], error: error)
+        self.init(inputNames: [], inputTypes: [], inputReturnValues: [], saveKeys: [], saveValues: [], readKeys: [], readReturnValues: [], error: error)
     }
 
     init(
         inputNames: [String],
-        inputSecrets: [Bool],
+        inputTypes: [ImporterInputRequestType],
         inputReturnValues: [String],
         saveKeys: [String],
         saveValues: [String],
@@ -206,7 +213,7 @@ class ErrorDelegate<T: EquatableError>: CredentialInputDelegate {
     ) {
         self.error = error
         super.init(inputNames: inputNames,
-                   inputSecrets: inputSecrets,
+                   inputTypes: inputTypes,
                    inputReturnValues: inputReturnValues,
                    saveKeys: saveKeys,
                    saveValues: saveValues,
@@ -232,7 +239,7 @@ class ErrorCheckDelegate: CredentialInputDelegate {
 
     init(
         inputNames: [String] = [],
-        inputSecrets: [Bool] = [],
+        inputTypes: [ImporterInputRequestType] = [],
         inputReturnValues: [String] = [],
         saveKeys: [String] = [],
         saveValues: [String] = [],
@@ -242,7 +249,7 @@ class ErrorCheckDelegate: CredentialInputDelegate {
     ) {
         self.check = checkError
         super.init(inputNames: inputNames,
-                   inputSecrets: inputSecrets,
+                   inputTypes: inputTypes,
                    inputReturnValues: inputReturnValues,
                    saveKeys: saveKeys,
                    saveValues: saveValues,

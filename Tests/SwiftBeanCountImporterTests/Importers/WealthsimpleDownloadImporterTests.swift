@@ -421,6 +421,10 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
 
 }
 
+#if hasFeature(RetroactiveAttribute)
+extension Wealthsimple.AccountError: @retroactive Equatable {}
+#endif
+
 extension Wealthsimple.AccountError: EquatableError {
     public static func == (lhs: Wealthsimple.AccountError, rhs: Wealthsimple.AccountError) -> Bool {
         if case let .httpError(lhsString) = lhs, case let .httpError(rhsString) = rhs {
@@ -430,6 +434,10 @@ extension Wealthsimple.AccountError: EquatableError {
     }
 }
 
+#if hasFeature(RetroactiveAttribute)
+extension Wealthsimple.PositionError: @retroactive Equatable {}
+#endif
+
 extension Wealthsimple.PositionError: EquatableError {
     public static func == (lhs: Wealthsimple.PositionError, rhs: Wealthsimple.PositionError) -> Bool {
         if case let .httpError(lhsString) = lhs, case let .httpError(rhsString) = rhs {
@@ -438,6 +446,10 @@ extension Wealthsimple.PositionError: EquatableError {
         return false
     }
 }
+
+#if hasFeature(RetroactiveAttribute)
+extension Wealthsimple.TransactionError: @retroactive Equatable {}
+#endif
 
 extension Wealthsimple.TransactionError: EquatableError {
     public static func == (lhs: Wealthsimple.TransactionError, rhs: Wealthsimple.TransactionError) -> Bool {

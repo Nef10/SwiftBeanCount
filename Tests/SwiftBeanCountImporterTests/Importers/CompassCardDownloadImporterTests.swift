@@ -79,7 +79,7 @@ final class CompassCardDownloadImporterTests: XCTestCase {
             return .failure(error)
         }
         delegate = CredentialInputAndViewDelegate(inputNames: [],
-                                                  inputSecrets: [],
+                                                  inputTypes: [],
                                                   inputReturnValues: [],
                                                   saveKeys: [
                                                     "compass-card-download-username",
@@ -190,7 +190,7 @@ final class CompassCardDownloadImporterTests: XCTestCase {
 
     private func setDefaultDelegate(error: TestError? = nil) {
         delegate = CredentialInputAndViewDelegate(inputNames: ["Email", "Password"],
-                                                  inputSecrets: [false, true],
+                                                  inputTypes: [.text([]), .secret],
                                                   inputReturnValues: ["name", "password123"],
                                                   saveKeys: ["compass-card-download-username", "compass-card-download-password"],
                                                   saveValues: ["name", "password123"],

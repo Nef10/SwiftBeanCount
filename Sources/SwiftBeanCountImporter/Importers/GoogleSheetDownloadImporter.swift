@@ -79,7 +79,7 @@ class GoogleSheetDownloadImporter: BaseImporter, DownloadImporter {
         var sheet = ""
         let group = DispatchGroup()
         group.enter()
-        delegate?.requestInput(name: "URL", suggestions: [], isSecret: false) {
+        delegate?.requestInput(name: "URL", type: .text([])) {
             sheet = $0
             group.leave()
             return true

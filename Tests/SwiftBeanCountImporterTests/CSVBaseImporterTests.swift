@@ -37,7 +37,7 @@ final class CSVBaseImporterTests: XCTestCase {
     private var cashAccountDelegate: InputProviderDelegate! // swiftlint:disable:this weak_delegate
 
     override func setUpWithError() throws {
-        cashAccountDelegate = InputProviderDelegate(names: ["Account"], secrets: [false], returnValues: [TestUtils.cash.fullName])
+        cashAccountDelegate = InputProviderDelegate(names: ["Account"], types: [.text([])], returnValues: [TestUtils.cash.fullName])
         try super.setUpWithError()
     }
 
@@ -163,7 +163,7 @@ final class CSVBaseImporterTests: XCTestCase {
         ledger.add(transaction)
 
         let importer = TestCSVBaseImporter(ledger: ledger, csvReader: try TestUtils.csvReader(description: "a", payee: "b", date: transaction.metaData.date), fileName: "")
-        let delegate = InputProviderDelegate(names: ["Account"], secrets: [false], returnValues: [TestUtils.chequing.fullName])
+        let delegate = InputProviderDelegate(names: ["Account"], types: [.text([])], returnValues: [TestUtils.chequing.fullName])
         importer.delegate = delegate
         importer.load()
         let importedTransaction = importer.nextTransaction()
@@ -196,7 +196,7 @@ final class CSVBaseImporterTests: XCTestCase {
 
     private func transactionHelper(description: String, payee: String = "payee") throws -> Transaction {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: try TestUtils.csvReader(description: description, payee: payee), fileName: "")
-        cashAccountDelegate = InputProviderDelegate(names: ["Account"], secrets: [false], returnValues: [TestUtils.cash.fullName])
+        cashAccountDelegate = InputProviderDelegate(names: ["Account"], types: [.text([])], returnValues: [TestUtils.cash.fullName])
         importer.delegate = cashAccountDelegate
         importer.load()
         let importedTransaction = importer.nextTransaction()

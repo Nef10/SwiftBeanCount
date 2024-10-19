@@ -124,7 +124,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
 
     override func setUpWithError() throws {
         delegate = CredentialInputDelegate(inputNames: ["Username", "Password", "Device ID", "Device Info"],
-                                           inputSecrets: [false, true, false, false],
+                                           inputTypes: [.text([]), .secret, .text([]), .text([])],
                                            inputReturnValues: ["name", "password123", "device-id", "device-info"],
                                            saveKeys: ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"],
                                            saveValues: ["name", "password123", "device-id", "device-info"],
@@ -171,7 +171,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         let keys = ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo", "rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"]
         Self.load = { _, _, _, _ in .failure(DownloadError.invalidParameters(parameters: ["a": "bc"])) }
         delegate = ErrorDelegate(inputNames: ["Username", "Password", "Device ID", "Device Info"],
-                                 inputSecrets: [false, true, false, false],
+                                 inputTypes: [.text([]), .secret, .text([]), .text([])],
                                  inputReturnValues: ["name", "password123", "device-id", "device-info"],
                                  saveKeys: keys,
                                  saveValues: ["name", "password123", "device-id", "device-info", "", "", "", ""],
@@ -351,7 +351,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         }
         // All saved
         delegate = CredentialInputDelegate(inputNames: [],
-                                           inputSecrets: [],
+                                           inputTypes: [],
                                            inputReturnValues: [],
                                            saveKeys: ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"],
                                            saveValues: ["name", "password123", "device-id", "device-info"],
@@ -361,7 +361,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
 
         // All but one saved
         delegate = CredentialInputDelegate(inputNames: ["Password"],
-                                           inputSecrets: [true],
+                                           inputTypes: [.secret],
                                            inputReturnValues: ["password123"],
                                            saveKeys: ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"],
                                            saveValues: ["name", "password123", "device-id", "device-info"],
@@ -383,7 +383,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
 
     private func setErrorDelegate<T: EquatableError>(error: T) {
         delegate = ErrorDelegate(inputNames: ["Username", "Password", "Device ID", "Device Info"],
-                                 inputSecrets: [false, true, false, false],
+                                 inputTypes: [.text([]), .secret, .text([]), .text([])],
                                  inputReturnValues: ["name", "password123", "device-id", "device-info"],
                                  saveKeys: ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"],
                                  saveValues: ["name", "password123", "device-id", "device-info"],
@@ -393,6 +393,10 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 }
 
+#if hasFeature(RetroactiveAttribute)
+extension DownloadError: @retroactive Equatable {}
+#endif
+
 extension DownloadError: EquatableError {
     public static func == (lhs: DownloadError, rhs: DownloadError) -> Bool {
         if case let .invalidParameters(lhsDict) = lhs, case let .invalidParameters(rhsDict) = rhs {
@@ -401,6 +405,10 @@ extension DownloadError: EquatableError {
         return false
     }
 }
+
+#if hasFeature(RetroactiveAttribute)
+extension RogersBankMappingError: @retroactive Equatable {}
+#endif
 
 extension RogersBankMappingError: EquatableError {
     public static func == (lhs: RogersBankMappingError, rhs: RogersBankMappingError) -> Bool {

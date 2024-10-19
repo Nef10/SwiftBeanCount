@@ -278,21 +278,21 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
         let group = DispatchGroup()
         group.enter()
 
-        delegate?.requestInput(name: "Username", suggestions: [], isSecret: false) {
+        delegate?.requestInput(name: "Username", type: .text([])) {
             username = $0
             group.leave()
             return true
         }
         group.wait()
         group.enter()
-        delegate?.requestInput(name: "Password", suggestions: [], isSecret: true) {
+        delegate?.requestInput(name: "Password", type: .secret) {
             password = $0
             group.leave()
             return true
         }
         group.wait()
         group.enter()
-        delegate?.requestInput(name: "OTP", suggestions: [], isSecret: false) {
+        delegate?.requestInput(name: "OTP", type: .otp) {
             otp = $0
             group.leave()
             return true

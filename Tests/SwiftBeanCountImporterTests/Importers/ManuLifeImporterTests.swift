@@ -136,7 +136,7 @@ final class ManuLifeImporterTests: XCTestCase {
     private var parkingAccountDelegate: InputProviderDelegate! // swiftlint:disable:this weak_delegate
 
     override func setUpWithError() throws {
-        parkingAccountDelegate = InputProviderDelegate(names: ["Account"], secrets: [false], returnValues: [TestUtils.parking.fullName])
+        parkingAccountDelegate = InputProviderDelegate(names: ["Account"], types: [.text([])], returnValues: [TestUtils.parking.fullName])
         try super.setUpWithError()
     }
 

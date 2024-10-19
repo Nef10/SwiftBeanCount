@@ -62,7 +62,7 @@ final class BaseImporterTests: XCTestCase {
         var importer = BaseImporter(ledger: TestUtils.ledger)
         XCTAssertEqual(importer.commoditySymbol, Settings.fallbackCommodity)
 
-        let cashAccountDelegate = InputProviderDelegate(names: ["Account"], secrets: [false], returnValues: [TestUtils.cash.fullName])
+        let cashAccountDelegate = InputProviderDelegate(names: ["Account"], types: [.text([])], returnValues: [TestUtils.cash.fullName])
         importer = BaseImporter(ledger: TestUtils.ledgerCashUSD)
         importer.delegate = cashAccountDelegate
         XCTAssertEqual(importer.commoditySymbol, TestUtils.usd)
@@ -221,7 +221,7 @@ final class BaseImporterTests: XCTestCase {
 
 extension InvalidAccountNameProvider: ImporterDelegate {
 
-    func requestInput(name: String, suggestions: [String], isSecret: Bool, completion: (String) -> Bool) {
+    func requestInput(name: String, type: ImporterInputRequestType, completion: (String) -> Bool) {
         var result = completion("Not an valid account name")
         XCTAssertFalse(result)
         result = completion(TestUtils.cash.fullName)

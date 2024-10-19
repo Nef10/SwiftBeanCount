@@ -69,7 +69,7 @@ final class CompassCardImporterTests: XCTestCase {
 
     func testError() throws {
         let reader = try CSVReader(string: ",\n,", hasHeaderRow: true)
-        let delegate = ErrorCheckDelegate(inputNames: ["Account"], inputSecrets: [false], inputReturnValues: ["Assets:CompassCard"]) {
+        let delegate = ErrorCheckDelegate(inputNames: ["Account"], inputTypes: [.text([])], inputReturnValues: ["Assets:CompassCard"]) {
             if case let DecodingError.keyNotFound(key, _) = $0 {
                 return key.stringValue == "DateTime"
             }

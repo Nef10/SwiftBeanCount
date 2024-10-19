@@ -134,6 +134,18 @@ public struct ImportedTransaction: Equatable {
 
 }
 
+/// Type of user input requested by the importer
+public enum ImporterInputRequestType {
+    /// Normal text, with suggestions (optional)
+    case text([String])
+    /// Secrect, should not be visible if the user enters it
+    case secret
+    /// one time passcase, can offer the use auto fill from text or similr
+    case otp
+    /// a questions which the user can answer with yes or no
+    case bool
+}
+
 /// Protocol of the delegate of an Importer
 public protocol ImporterDelegate: AnyObject {
 
@@ -141,11 +153,10 @@ public protocol ImporterDelegate: AnyObject {
     ///
     /// - Parameters:
     ///   - name: name of the input required
-    ///   - suggestions: suggestions for the input - may be empty
-    ///   - isSecret: if the requested input is considered a secret, e.g. to show a password type input field
+    ///   - type: type of the input requested
     ///   - completion: function to pass input to. Returns if the input was accepted.
     ///                 In case an input was not accepted, please call the function again.
-    func requestInput(name: String, suggestions: [String], isSecret: Bool, completion: @escaping (String) -> Bool)
+    func requestInput(name: String, type: ImporterInputRequestType, completion: @escaping (String) -> Bool)
 
     /// Request to save a credential
     ///
@@ -240,4 +251,19 @@ public protocol Importer {
     /// Only call this function after you received all transactions
     func pricesToImport() -> [Price]
 
+}
+
+extension ImporterInputRequestType: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        switch (lhs, rhs) {
+        case (.secret, .secret),
+             (.otp, .otp),
+             (.bool, .bool):
+            return true
+        case let (.text(lhsArray), .text(rhsArray)):
+            return lhsArray.sorted() == rhsArray.sorted()
+        default:
+            return false
+        }
+    }
 }
