@@ -65,6 +65,8 @@ final class ImporterTests: XCTestCase {
     }
 
     func testDownloadImporterNames() {
+        // see https://github.com/realm/SwiftLint/issues/5831
+        // swiftlint:disable:next prefer_key_path
         XCTAssertEqual(ImporterFactory.downloadImporterNames, DownloadImporterFactory.importers.map { $0.importerName })
     }
 

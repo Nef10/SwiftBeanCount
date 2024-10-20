@@ -63,10 +63,12 @@ private struct TestAccount: RogersBankDownloader.Account {
         completion(activityCallback?(statementNumber) ?? .success([]))
     }
 
-    func downloadStatement(statement: Statement, completion: @escaping (Result<URL, DownloadError>) -> Void) {
+    func downloadStatement(statement _: Statement, completion _: @escaping (Result<URL, DownloadError>) -> Void) {
+        // Empty
     }
 
-    func searchStatements(completion: @escaping (Result<[Statement], DownloadError>) -> Void) {
+    func searchStatements(completion _: @escaping (Result<[Statement], DownloadError>) -> Void) {
+        // Empty
     }
 
 }
@@ -416,7 +418,7 @@ extension RogersBankMappingError: EquatableError {
             return lhsString == rhsString
         }
         if case let .missingActivityData(lhsActivity, lhsString) = lhs, case let .missingActivityData(rhsActivity, rhsString) = rhs {
-            return lhsString == rhsString && lhsActivity as? TestActivity != nil && (lhsActivity as? TestActivity) == (rhsActivity as? TestActivity)
+            return lhsString == rhsString && lhsActivity is TestActivity && (lhsActivity as? TestActivity) == (rhsActivity as? TestActivity)
         }
         return false
     }

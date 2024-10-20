@@ -14,15 +14,15 @@ import XCTest
 
 class BaseTestImporterDelegate: ImporterDelegate {
 
-    func requestInput(name: String, type: ImporterInputRequestType, completion: (String) -> Bool) {
+    func requestInput(name _: String, type _: ImporterInputRequestType, completion _: (String) -> Bool) {
         XCTFail("requestInput should not be called")
     }
 
-    func saveCredential(_ value: String, for key: String) {
+    func saveCredential(_: String, for _: String) {
         XCTFail("saveCredential should not be called")
     }
 
-    func readCredential(_ key: String) -> String? {
+    func readCredential(_: String) -> String? {
         XCTFail("readCredential should not be called")
         return nil
     }
@@ -62,7 +62,7 @@ class AccountNameSuggestionVerifier: BaseTestImporterDelegate {
     var verified = false
 
     init (expectedValues: [AccountName]) {
-        self.expectedValues = expectedValues.map { $0.fullName }
+        self.expectedValues = expectedValues.map(\.fullName)
     }
 
     override func requestInput(name: String, type: ImporterInputRequestType, completion: (String) -> Bool) {

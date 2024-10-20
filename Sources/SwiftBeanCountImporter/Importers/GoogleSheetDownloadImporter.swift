@@ -14,7 +14,7 @@ import SwiftBeanCountModel
 import SwiftBeanCountSheetSync
 
 class AuthenticationPresentationContextProvider: NSObject, ASWebAuthenticationPresentationContextProviding {
-    func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+    func presentationAnchor(for _: ASWebAuthenticationSession) -> ASPresentationAnchor {
         ASPresentationAnchor()
     }
 }

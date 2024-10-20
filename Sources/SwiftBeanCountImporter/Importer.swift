@@ -33,6 +33,8 @@ public enum ImporterFactory {
     ///
     /// - Returns: The names of all existing download importer types
     public static var downloadImporterNames: [String] {
+        // see https://github.com/realm/SwiftLint/issues/5831
+        // swiftlint:disable:next prefer_key_path
         DownloadImporterFactory.importers.map { $0.importerName }
     }
 

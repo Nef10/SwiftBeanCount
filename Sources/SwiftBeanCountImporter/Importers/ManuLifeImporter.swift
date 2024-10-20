@@ -125,7 +125,7 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         let (balances, balancePrices) = convertBalances(parsedManuLifeBalances)
         prices.append(contentsOf: balancePrices)
 
-        for balance in balances where !(ledger?.accounts.flatMap { $0.balances }.contains(balance) ?? false) {
+        for balance in balances where !(ledger?.accounts.flatMap(\.balances).contains(balance) ?? false) {
             self.balances.append(balance)
         }
         for price in prices where !(ledger?.prices.contains(price) ?? false) {

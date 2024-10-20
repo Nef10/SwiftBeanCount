@@ -48,7 +48,7 @@ class BaseImporter: Importer {
         let group = DispatchGroup()
         group.enter()
 
-        delegate.requestInput(name: "Account", type: .text(ledgerAccounts.map { $0.fullName })) {
+        delegate.requestInput(name: "Account", type: .text(ledgerAccounts.map(\.fullName))) {
             guard let name = try? AccountName($0) else {
                 return false
             }
@@ -71,7 +71,7 @@ class BaseImporter: Importer {
 
     func accountsFromLedger() -> [AccountName] {
         // Override if neccessary, e.g. to do more filtering based on more meta data, e.g. account numbers
-        ledger?.accounts.filter { $0.metaData[Settings.importerTypeKey] == Self.importerType }.map { $0.name } ?? []
+        ledger?.accounts.filter { $0.metaData[Settings.importerTypeKey] == Self.importerType }.map(\.name) ?? []
     }
 
     func load() {
