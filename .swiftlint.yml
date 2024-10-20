@@ -1,4 +1,4 @@
-# Updated for 0.53.0
+# Updated for 0.57.0
 
 excluded:
   - ".build"
@@ -103,6 +103,10 @@ opt_in_rules:
   - redundant_self_in_closure
   - unhandled_throwing_task
   - private_swiftui_state
+  - final_test_case
+  - prefer_key_path
+  - no_empty_block
+  - unused_parameter
 
 disabled_rules:
   - trailing_comma
