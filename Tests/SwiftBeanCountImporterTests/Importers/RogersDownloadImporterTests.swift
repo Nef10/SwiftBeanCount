@@ -170,9 +170,9 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     func testLoadAuthenticationError() {
         let keys = ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo", "rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"]
         Self.load = { _, _, _, _ in .failure(DownloadError.invalidParameters(parameters: ["a": "bc"])) }
-        delegate = ErrorDelegate(inputNames: ["Username", "Password", "Device ID", "Device Info"],
-                                 inputTypes: [.text([]), .secret, .text([]), .text([])],
-                                 inputReturnValues: ["name", "password123", "device-id", "device-info"],
+        delegate = ErrorDelegate(inputNames: ["Username", "Password", "Device ID", "Device Info", "The login failed. Do you want to remove the saved credentials"],
+                                 inputTypes: [.text([]), .secret, .text([]), .text([]), .bool],
+                                 inputReturnValues: ["name", "password123", "device-id", "device-info", "true"],
                                  saveKeys: keys,
                                  saveValues: ["name", "password123", "device-id", "device-info", "", "", "", ""],
                                  readKeys: ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"],
@@ -341,7 +341,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         XCTAssertEqual(importer.balancesToImport().count, 1)
     }
 
-    func testLoadSavedCredentails() {
+    func testLoadSavedCredentials() {
         Self.load = {
             XCTAssertEqual($0, "name")
             XCTAssertEqual($1, "password123")

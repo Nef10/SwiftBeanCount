@@ -78,9 +78,9 @@ final class CompassCardDownloadImporterTests: XCTestCase {
             XCTAssertEqual($1, "password123")
             return .failure(error)
         }
-        delegate = CredentialInputAndViewDelegate(inputNames: [],
-                                                  inputTypes: [],
-                                                  inputReturnValues: [],
+        delegate = CredentialInputAndViewDelegate(inputNames: ["The login failed. Do you want to remove the saved credentials"],
+                                                  inputTypes: [.bool],
+                                                  inputReturnValues: ["true"],
                                                   saveKeys: [
                                                     "compass-card-download-username",
                                                     "compass-card-download-password",

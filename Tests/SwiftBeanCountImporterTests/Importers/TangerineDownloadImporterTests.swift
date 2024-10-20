@@ -124,9 +124,9 @@ final class TangerineDownloadImporterTests: XCTestCase {
             XCTAssertEqual($1, "password123")
             return .failure(error)
         }
-        delegate = CredentialInputAndViewDelegate(inputNames: ["SMS Security Code"],
-                                                  inputTypes: [.otp],
-                                                  inputReturnValues: ["123456"],
+        delegate = CredentialInputAndViewDelegate(inputNames: ["SMS Security Code", "The login failed. Do you want to remove the saved credentials"],
+                                                  inputTypes: [.otp, .bool],
+                                                  inputReturnValues: ["123456", "true"],
                                                   saveKeys: [
                                                     "tangerine-download-username",
                                                     "tangerine-download-password",

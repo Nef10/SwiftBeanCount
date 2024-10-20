@@ -112,8 +112,9 @@ class TangerineDownloadImporter: BaseImporter, DownloadImporter {
                     return
                 }
             case .failure(let error):
-                self.removeSavedCredentials()
-                self.importFinished(error: error, completion: completion)
+                self.removeSavedCredentials {
+                    self.importFinished(error: error, completion: completion)
+                }
                 return
             }
         }
@@ -194,9 +195,18 @@ class TangerineDownloadImporter: BaseImporter, DownloadImporter {
         return Date(timeIntervalSinceNow: -60 * 60 * 24 * Double(days) )
     }
 
-    private func removeSavedCredentials() {
-        for key in CredentialKey.allCases {
-            self.delegate?.saveCredential("", for: "\(Self.importerType)-\(key.rawValue)")
+    private func removeSavedCredentials(_ completion: @escaping () -> Void) {
+        self.delegate?.requestInput(name: "The login failed. Do you want to remove the saved credentials", type: .bool) {
+            guard let bool = Bool($0) else {
+                return false
+            }
+            if bool {
+                for key in CredentialKey.allCases {
+                    self.delegate?.saveCredential("", for: "\(Self.importerType)-\(key.rawValue)")
+                }
+            }
+            completion()
+            return true
         }
     }
 

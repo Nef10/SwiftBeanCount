@@ -74,9 +74,10 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter {
             self.userClass.load(username: $0, password: $1, deviceId: $2, deviceInfo: $3) { result in
                 switch result {
                 case let .failure(error):
-                    self.removeSavedCredentails()
-                    self.delegate?.error(error)
-                    completion()
+                    self.removeSavedCredentials {
+                        self.delegate?.error(error)
+                        completion()
+                    }
                 case let .success(user):
                     DispatchQueue.global(qos: .userInitiated).async {
                         self.downloadAllActivities(accounts: user.accounts, completion)
@@ -186,10 +187,18 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter {
         let deviceInfo = getCredential(key: .deviceInfo, name: "Device Info", type: .text([]))
         callback(username, password, deviceId, deviceInfo)
     }
-
-    private func removeSavedCredentails() {
-        for key in CredentialKey.allCases {
-            self.delegate?.saveCredential("", for: "\(Self.importerType)-\(key.rawValue)")
+    private func removeSavedCredentials(_ completion: @escaping () -> Void) {
+        self.delegate?.requestInput(name: "The login failed. Do you want to remove the saved credentials", type: .bool) {
+            guard let bool = Bool($0) else {
+                return false
+            }
+            if bool {
+                for key in CredentialKey.allCases {
+                    self.delegate?.saveCredential("", for: "\(Self.importerType)-\(key.rawValue)")
+                }
+            }
+            completion()
+            return true
         }
     }
 
