@@ -106,17 +106,27 @@ private struct TestActivity: Activity, Equatable {
 
 final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this type_body_length
 
+    private class TestAuthenticator: Authenticator {
+        weak var delegate: (any RogersBankDownloader.RogersAuthenticatorDelegate)?
+
+        required init() {
+            // Empty
+        }
+
+        // swiftlint:disable:next line_length
+        func login(username: String, password: String, deviceId: String?, completion: @escaping (Result<any RogersBankDownloader.User, RogersBankDownloader.DownloadError>) -> Void) {
+            completion(RogersDownloadImporterTests.load?(username, password, deviceId) ?? .success(TestUser()))
+        }
+
+    }
+
     private struct TestUser: User {
         var userName = "Rogers Bank Username"
         var accounts = [RogersBankDownloader.Account]()
         var authenticated = true
-
-        static func load(username: String, password: String, deviceId: String, deviceInfo: String, completion: @escaping (Result<User, DownloadError>) -> Void) {
-            completion(RogersDownloadImporterTests.load?(username, password, deviceId, deviceInfo) ?? .success(Self()))
-        }
     }
 
-    private static var load: ((String, String, String, String) -> Result<User, DownloadError>)?
+    private static var load: ((String, String, String?) -> Result<User, DownloadError>)?
 
     private var accountName: AccountName!
     private var ledger: Ledger!
@@ -125,17 +135,17 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     private var delegate: CredentialInputDelegate! // swiftlint:disable:this weak_delegate
 
     override func setUpWithError() throws {
-        delegate = CredentialInputDelegate(inputNames: ["Username", "Password", "Device ID", "Device Info"],
-                                           inputTypes: [.text([]), .secret, .text([]), .text([])],
-                                           inputReturnValues: ["name", "password123", "device-id", "device-info"],
-                                           saveKeys: ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"],
-                                           saveValues: ["name", "password123", "device-id", "device-info"],
-                                           readKeys: ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"],
-                                           readReturnValues: ["", "", "", ""])
+        delegate = CredentialInputDelegate(inputNames: ["Username", "Password"],
+                                           inputTypes: [.text([]), .secret],
+                                           inputReturnValues: ["name", "password123"],
+                                           saveKeys: ["rogers-username", "rogers-password"],
+                                           saveValues: ["name", "password123"],
+                                           readKeys: ["rogers-username", "rogers-password", "rogers-deviceId"],
+                                           readReturnValues: ["", "", ""])
         accountName = try AccountName("Liabilities:CC:Rogers")
         ledger = Ledger()
         user = TestUser()
-        Self.load = { _, _, _, _ in .success(self.user) }
+        Self.load = { _, _, _ in .success(self.user) }
         try ledger.add(SwiftBeanCountModel.Account(name: accountName, metaData: ["last-four": "8520", "importer-type": "rogers"]))
         try super.setUpWithError()
     }
@@ -160,8 +170,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         Self.load = {
             XCTAssertEqual($0, "name")
             XCTAssertEqual($1, "password123")
-            XCTAssertEqual($2, "device-id")
-            XCTAssertEqual($3, "device-info")
+            XCTAssertEqual($2, "")
             return .success(TestUser())
         }
         let importer = loadedImporter()
@@ -170,15 +179,14 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 
     func testLoadAuthenticationError() {
-        let keys = ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo", "rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"]
-        Self.load = { _, _, _, _ in .failure(DownloadError.invalidParameters(parameters: ["a": "bc"])) }
-        delegate = ErrorDelegate(inputNames: ["Username", "Password", "Device ID", "Device Info", "The login failed. Do you want to remove the saved credentials"],
-                                 inputTypes: [.text([]), .secret, .text([]), .text([]), .bool],
-                                 inputReturnValues: ["name", "password123", "device-id", "device-info", "true"],
-                                 saveKeys: keys,
-                                 saveValues: ["name", "password123", "device-id", "device-info", "", "", "", ""],
-                                 readKeys: ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"],
-                                 readReturnValues: ["", "", "", ""],
+        Self.load = { _, _, _ in .failure(DownloadError.invalidParameters(parameters: ["a": "bc"])) }
+        delegate = ErrorDelegate(inputNames: ["Username", "Password", "The login failed. Do you want to remove the saved credentials"],
+                                 inputTypes: [.text([]), .secret, .bool],
+                                 inputReturnValues: ["name", "password123", "true"],
+                                 saveKeys: ["rogers-username", "rogers-password", "rogers-username", "rogers-password", "rogers-deviceId"],
+                                 saveValues: ["name", "password123", "", "", ""],
+                                 readKeys: ["rogers-username", "rogers-password", "rogers-deviceId"],
+                                 readReturnValues: ["", "", ""],
                                  error: DownloadError.invalidParameters(parameters: ["a": "bc"]))
         loadedImporter()
     }
@@ -348,49 +356,111 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
             XCTAssertEqual($0, "name")
             XCTAssertEqual($1, "password123")
             XCTAssertEqual($2, "device-id")
-            XCTAssertEqual($3, "device-info")
             return .success(TestUser())
         }
         // All saved
         delegate = CredentialInputDelegate(inputNames: [],
                                            inputTypes: [],
                                            inputReturnValues: [],
-                                           saveKeys: ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"],
-                                           saveValues: ["name", "password123", "device-id", "device-info"],
-                                           readKeys: ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"],
-                                           readReturnValues: ["name", "password123", "device-id", "device-info"])
+                                           saveKeys: [],
+                                           saveValues: [],
+                                           readKeys: ["rogers-username", "rogers-password", "rogers-deviceId"],
+                                           readReturnValues: ["name", "password123", "device-id"])
         loadedImporter()
 
         // All but one saved
         delegate = CredentialInputDelegate(inputNames: ["Password"],
                                            inputTypes: [.secret],
                                            inputReturnValues: ["password123"],
-                                           saveKeys: ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"],
-                                           saveValues: ["name", "password123", "device-id", "device-info"],
-                                           readKeys: ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"],
-                                           readReturnValues: ["name", "", "device-id", "device-info"])
+                                           saveKeys: ["rogers-password"],
+                                           saveValues: ["password123"],
+                                           readKeys: ["rogers-username", "rogers-password", "rogers-deviceId"],
+                                           readReturnValues: ["name", "", "device-id"])
         loadedImporter()
+    }
+
+    func testGetTwoFactorCode() {
+        delegate = CredentialInputDelegate(inputNames: ["One Time Password"],
+                                           inputTypes: [.otp],
+                                           inputReturnValues: ["123456"],
+                                           saveKeys: [],
+                                           saveValues: [],
+                                           readKeys: [],
+                                           readReturnValues: [])
+        let importer = RogersDownloadImporter(ledger: ledger)
+        importer.authenticatorClass = TestAuthenticator.self
+        importer.delegate = delegate
+        XCTAssertEqual(importer.getTwoFactorCode(), "123456")
+        XCTAssert(delegate.verified, delegate.verificationInfo)
+    }
+
+    func testSelectTwoFactorPreferenceOneOption() throws {
+        delegate = CredentialInputDelegate(inputNames: [],
+                                           inputTypes: [],
+                                           inputReturnValues: [],
+                                           saveKeys: [],
+                                           saveValues: [],
+                                           readKeys: [],
+                                           readReturnValues: [])
+        let importer = RogersDownloadImporter(ledger: ledger)
+        importer.authenticatorClass = TestAuthenticator.self
+        importer.delegate = delegate
+        let pref = try JSONDecoder().decode(TwoFactorPreference.self, from: Data("{\"type\":\"SMS\",\"value\":\"123456789\"}".utf8))
+        XCTAssertEqual(importer.selectTwoFactorPreference([pref]).type, pref.type)
+        XCTAssert(delegate.verified, delegate.verificationInfo)
+    }
+
+    func testSelectTwoFactorPreferenceTwoOptions() throws {
+        delegate = CredentialInputDelegate(inputNames: ["prefered One Time Password option"],
+                                           inputTypes: [.choice(["123456789", "abc@def.ge"])],
+                                           inputReturnValues: ["abc@def.ge"],
+                                           saveKeys: [],
+                                           saveValues: [],
+                                           readKeys: [],
+                                           readReturnValues: [])
+        let importer = RogersDownloadImporter(ledger: ledger)
+        importer.authenticatorClass = TestAuthenticator.self
+        importer.delegate = delegate
+        let pref1 = try JSONDecoder().decode(TwoFactorPreference.self, from: Data("{\"type\":\"SMS\",\"value\":\"123456789\"}".utf8))
+        let pref2 = try JSONDecoder().decode(TwoFactorPreference.self, from: Data("{\"type\":\"Email\",\"value\":\"abc@def.ge\"}".utf8))
+        XCTAssertEqual(importer.selectTwoFactorPreference([pref1, pref2]).type, pref2.type)
+        XCTAssert(delegate.verified, delegate.verificationInfo)
+    }
+
+    func testSaveDeviceId() {
+        delegate = CredentialInputDelegate(inputNames: [],
+                                           inputTypes: [],
+                                           inputReturnValues: [],
+                                           saveKeys: ["rogers-deviceId"],
+                                           saveValues: ["qwerty1223654"],
+                                           readKeys: [],
+                                           readReturnValues: [])
+        let importer = RogersDownloadImporter(ledger: ledger)
+        importer.authenticatorClass = TestAuthenticator.self
+        importer.delegate = delegate
+        importer.saveDeviceId("qwerty1223654")
+        XCTAssert(delegate.verified, delegate.verificationInfo)
     }
 
     @discardableResult
     private func loadedImporter(ledger: Ledger? = nil) -> Importer {
         let importer = RogersDownloadImporter(ledger: ledger)
-        importer.userClass = TestUser.self
+        importer.authenticatorClass = TestAuthenticator.self
         importer.delegate = delegate
         importer.load()
         XCTAssert(importer.pricesToImport().isEmpty)
-        XCTAssert(delegate.verified)
+        XCTAssert(delegate.verified, delegate.verificationInfo)
         return importer
     }
 
     private func setErrorDelegate<T: EquatableError>(error: T) {
-        delegate = ErrorDelegate(inputNames: ["Username", "Password", "Device ID", "Device Info"],
-                                 inputTypes: [.text([]), .secret, .text([]), .text([])],
-                                 inputReturnValues: ["name", "password123", "device-id", "device-info"],
-                                 saveKeys: ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"],
-                                 saveValues: ["name", "password123", "device-id", "device-info"],
-                                 readKeys: ["rogers-username", "rogers-password", "rogers-deviceId", "rogers-deviceInfo"],
-                                 readReturnValues: ["", "", "", ""],
+        delegate = ErrorDelegate(inputNames: ["Username", "Password"],
+                                 inputTypes: [.text([]), .secret],
+                                 inputReturnValues: ["name", "password123"],
+                                 saveKeys: ["rogers-username", "rogers-password"],
+                                 saveValues: ["name", "password123"],
+                                 readKeys: ["rogers-username", "rogers-password", "rogers-deviceId"],
+                                 readReturnValues: ["", "", ""],
                                  error: error)
     }
 }

@@ -11,7 +11,7 @@ import RogersBankDownloader
 import SwiftBeanCountModel
 import SwiftBeanCountRogersBankMapper
 
-class RogersDownloadImporter: BaseImporter, DownloadImporter {
+class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticatorDelegate {
 
     enum MetaDataKey {
         static let customsKey = "rogers-download-importer"
@@ -22,7 +22,6 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter {
         case username
         case password
         case deviceId
-        case deviceInfo
     }
 
     override class var importerName: String { "Rogers Bank Download" }
@@ -42,7 +41,7 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter {
     } //  swiftlint:enable line_length
 
     override var importName: String { "Rogers Bank Download" }
-    var userClass: User.Type = RogersUser.self
+    var authenticatorClass: Authenticator.Type = RogersAuthenticator.self
 
     private let existingLedger: Ledger
 
@@ -71,7 +70,9 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter {
 
     private func download(_ completion: @escaping () -> Void) {
         getCredentials {
-            self.userClass.load(username: $0, password: $1, deviceId: $2, deviceInfo: $3) { result in
+            var authenticator = self.authenticatorClass.init()
+            authenticator.delegate = self
+            authenticator.login(username: $0, password: $1, deviceId: $2) { result in
                 switch result {
                 case let .failure(error):
                     self.removeSavedCredentials {
@@ -173,6 +174,42 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter {
        balances
     }
 
+    func selectTwoFactorPreference(_ preferences: [RogersBankDownloader.TwoFactorPreference]) -> RogersBankDownloader.TwoFactorPreference {
+        if preferences.count == 1 {
+            return preferences.first!
+        }
+        let group = DispatchGroup()
+        group.enter()
+        var result: String!
+        self.delegate?.requestInput(name: "prefered One Time Password option", type: .choice(preferences.map(\.value))) {
+            guard preferences.map(\.value).contains($0) else {
+                return false
+            }
+            result = $0
+            group.leave()
+            return true
+        }
+        group.wait()
+        return preferences.first { $0.value == result }!
+    }
+
+    func getTwoFactorCode() -> String {
+        var value: String!
+        let group = DispatchGroup()
+        group.enter()
+        delegate?.requestInput(name: "One Time Password", type: .otp) {
+            value = $0
+            group.leave()
+            return true
+        }
+        group.wait()
+        return value
+    }
+
+    func saveDeviceId(_ deviceId: String) {
+        self.delegate?.saveCredential(deviceId, for: "\(Self.importerType)-\(CredentialKey.deviceId.rawValue)")
+    }
+
     private func statementsToLoad() -> Int {
         let statements = Int(existingLedger.custom.filter { $0.name == MetaDataKey.customsKey && $0.values.first == MetaDataKey.customStatementsToLoad }
                                                   .max { $0.date < $1.date }?
@@ -180,19 +217,19 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter {
         return statements ?? 3
     }
 
-    private func getCredentials(callback: @escaping ((String, String, String, String) -> Void)) {
+    private func getCredentials(callback: @escaping ((String, String, String) -> Void)) {
         let username = getCredential(key: .username, name: "Username", type: .text([]))
         let password = getCredential(key: .password, name: "Password", type: .secret)
-        let deviceId = getCredential(key: .deviceId, name: "Device ID", type: .text([]))
-        let deviceInfo = getCredential(key: .deviceInfo, name: "Device Info", type: .text([]))
-        callback(username, password, deviceId, deviceInfo)
+        let deviceId = self.delegate?.readCredential("\(Self.importerType)-\(CredentialKey.deviceId.rawValue)") ?? ""
+        callback(username, password, deviceId)
     }
+
     private func removeSavedCredentials(_ completion: @escaping () -> Void) {
         self.delegate?.requestInput(name: "The login failed. Do you want to remove the saved credentials", type: .bool) {
-            guard let bool = Bool($0) else {
+            guard let delete = Bool($0) else {
                 return false
             }
-            if bool {
+            if delete {
                 for key in CredentialKey.allCases {
                     self.delegate?.saveCredential("", for: "\(Self.importerType)-\(key.rawValue)")
                 }
@@ -215,8 +252,8 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter {
                 return true
             }
             group.wait()
+            self.delegate?.saveCredential(value, for: "\(Self.importerType)-\(key.rawValue)")
         }
-        self.delegate?.saveCredential(value, for: "\(Self.importerType)-\(key.rawValue)")
         return value
     }
 

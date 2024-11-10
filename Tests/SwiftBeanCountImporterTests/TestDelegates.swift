@@ -85,6 +85,10 @@ class InputProviderDelegate: BaseTestImporterDelegate {
         verifiedInput
     }
 
+    var verificationInfo: String {
+        verified ? "verified" : "Requested \(index)/\(names.count) inputs"
+    }
+
     init(
         names: [String] = ["Username", "Password", "OTP"],
         types: [ImporterInputRequestType] = [.text([]), .secret, .otp],
@@ -128,6 +132,11 @@ class CredentialInputDelegate: InputProviderDelegate { // swiftlint:disable:this
     private var readIndex = 0
     override var verified: Bool {
         super.verified && verifiedSave && verifiedRead
+    }
+
+    override var verificationInfo: String {
+        // swiftlint:disable:next line_length
+        "Inputs: \(super.verificationInfo) Saves: \(verifiedSave ? "verified" : "Saved \(saveIndex)/\(saveKeys.count)") Reads: \(verifiedRead ? "verified" : "Read \(readIndex)/\(readKeys.count)")"
     }
 
     convenience init() {

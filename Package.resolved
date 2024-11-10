@@ -87,8 +87,8 @@
         "repositoryURL": "https://github.com/Nef10/RogersBankDownloader.git",
         "state": {
           "branch": null,
-          "revision": "919c9bdbd09c03c8c904b11943cbae7817b5904c",
-          "version": "0.1.0"
+          "revision": "c0b2f07fe6bbcd68b8956e4713a87533597aae0e",
+          "version": "0.2.1"
         }
       },
       {
@@ -141,8 +141,8 @@
         "repositoryURL": "https://github.com/Nef10/SwiftBeanCountRogersBankMapper.git",
         "state": {
           "branch": null,
-          "revision": "9b76aa24f7696324bcb569ff167dd92f4932d01b",
-          "version": "0.0.11"
+          "revision": "2a77c3430d2f69ff9d76e953f4b000f9e7abd2f1",
+          "version": "0.0.13"
         }
       },
       {

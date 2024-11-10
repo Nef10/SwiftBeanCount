@@ -146,6 +146,8 @@ public enum ImporterInputRequestType {
     case otp
     /// a questions which the user can answer with yes or no
     case bool
+    /// a choice betweeen multiple options
+    case choice([String])
 }
 
 /// Protocol of the delegate of an Importer
@@ -263,6 +265,8 @@ extension ImporterInputRequestType: Equatable {
              (.bool, .bool):
             return true
         case let (.text(lhsArray), .text(rhsArray)):
+            return lhsArray.sorted() == rhsArray.sorted()
+        case let (.choice(lhsArray), .choice(rhsArray)):
             return lhsArray.sorted() == rhsArray.sorted()
         default:
             return false
