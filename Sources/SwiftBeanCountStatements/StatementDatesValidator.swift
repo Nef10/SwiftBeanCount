@@ -71,13 +71,13 @@ public enum StatementDatesValidator {
 
     /// Checks an array of dates for a recurring pattern
     ///
-    /// Identified if the dates occur on a monthly, quarterly or yearly pattern
+    /// Identifies if the dates occur on a monthly, quarterly or yearly pattern
     /// If a pattern is identified, it will check for any missing occurrences.
     ///
     /// - Parameters:
     ///   - dates: array of dates to check
     ///   - name: file name, will be added to the result
-    /// - Returns: Statement Result
+    /// - Returns: `StatementResult` with the identified frequency, errors and warnings
     public static func checkDates(_ dates: [Date], for name: String) -> StatementResult {
         let dates = dates.sorted(by: <)
         let frequency = identifyFrequency(dates)
@@ -97,6 +97,43 @@ public enum StatementDatesValidator {
             errors = ["Frequency could not be determined"]
         }
         return StatementResult(name: name, frequency: frequency, errors: Array(Set(errors)), warnings: Array(Set(warnings)), startDate: dates.first!, endDate: dates.last!)
+    }
+
+    /// Tried to determine the frequency of statements based on the dates
+    ///
+    /// Identifies if the dates occur on a monthly, quarterly or yearly pattern
+    ///
+    /// - Parameters:
+    ///   - dates: array of dates to check
+    /// - Returns: `StatementFrequency`
+    public static func identifyFrequency(_ dates: [Date]) -> StatementFrequency {
+        guard dates.count > 1 else {
+            return .single
+        }
+        var lastDate: Date?
+        var differences = [Int]()
+        for date in dates {
+            guard let previousDate = lastDate else {
+                lastDate = date
+                continue
+            }
+            if let difference = Calendar.current.dateComponents([.day], from: previousDate, to: date).day {
+                differences.append(difference)
+            }
+            lastDate = date
+        }
+        differences.sort()
+        let median = Double(differences[differences.count / 2] + (differences.reversed()[differences.count / 2])) / 2.0
+        if median >= 25 && median <= 31 {
+            return .monthly
+        }
+        if median >= 83 && median <= 98 {
+            return .quarterly
+        }
+        if median >= 320 && median <= 400 {
+            return .yearly
+        }
+        return .unkown
     }
 
     // swiftlint:disable:next cyclomatic_complexity function_body_length
@@ -202,36 +239,6 @@ public enum StatementDatesValidator {
             lastYear = year.year!
         }
         return errors
-    }
-
-    private static func identifyFrequency(_ dates: [Date]) -> StatementFrequency {
-        guard dates.count > 1 else {
-            return .single
-        }
-        var lastDate: Date?
-        var differences = [Int]()
-        for date in dates {
-            guard let previousDate = lastDate else {
-                lastDate = date
-                continue
-            }
-            if let difference = Calendar.current.dateComponents([.day], from: previousDate, to: date).day {
-                differences.append(difference)
-            }
-            lastDate = date
-        }
-        differences.sort()
-        let median = Double(differences[differences.count / 2] + (differences.reversed()[differences.count / 2])) / 2.0
-        if median >= 25 && median <= 31 {
-            return .monthly
-        }
-        if median >= 83 && median <= 98 {
-            return .quarterly
-        }
-        if median >= 320 && median <= 400 {
-            return .yearly
-        }
-        return .unkown
     }
 
 }
