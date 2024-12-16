@@ -1,64 +1,28 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.7
 
 import PackageDescription
 
 let package = Package(
     name: "SwiftBeanCountImporter",
-    platforms: [.iOS(.v14), .macOS(.v11)],
+    platforms: [.iOS(.v16), .macOS(.v11)],
     products: [
         .library(
             name: "SwiftBeanCountImporter",
             targets: ["SwiftBeanCountImporter"]),
     ],
     dependencies: [
-        .package(
-            url: "https://github.com/Nef10/SwiftBeanCountModel.git",
-            .exact("0.1.6")
-        ),
-        .package(
-            url: "https://github.com/yaslab/CSV.swift.git",
-            from: "2.4.3"
-        ),
-        .package(
-            url: "https://github.com/Nef10/SwiftBeanCountParserUtils.git",
-            from: "1.0.0"
-        ),
-        .package(
-            url: "https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper.git",
-            .upToNextMajor(from: "1.6.2")
-        ),
-        .package(
-            url: "https://github.com/Nef10/WealthsimpleDownloader.git",
-            .upToNextMajor(from: "2.0.2")
-        ),
-        .package(
-            url: "https://github.com/Nef10/SwiftBeanCountSheetSync.git",
-            .upToNextMajor(from: "1.1.0")
-        ),
-        .package(
-            url: "https://github.com/Nef10/SwiftBeanCountRogersBankMapper.git",
-            .exact("0.0.13")
-        ),
-        .package(
-            url: "https://github.com/Nef10/RogersBankDownloader.git",
-            .exact("0.2.1")
-        ),
-        .package(
-            url: "https://github.com/Nef10/TangerineDownloader.git",
-            .exact("0.0.3")
-        ),
-        .package(
-            url: "https://github.com/Nef10/SwiftBeanCountTangerineMapper.git",
-            .exact("0.0.3")
-        ),
-        .package(
-            url: "https://github.com/Nef10/CompassCardDownloader.git",
-            .exact("0.0.1")
-        ),
-        .package(
-            url: "https://github.com/Nef10/SwiftBeanCountCompassCardMapper.git",
-            .exact("0.1.1")
-        ),
+        .package(url: "https://github.com/Nef10/SwiftBeanCountModel.git", exact: "0.1.6"),
+        .package(url: "https://github.com/yaslab/CSV.swift.git", from: "2.4.3"),
+        .package(url: "https://github.com/Nef10/SwiftBeanCountParserUtils.git", from: "1.0.0"),
+        .package(url: "https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper.git", from: "1.6.2"),
+        .package(url: "https://github.com/Nef10/WealthsimpleDownloader.git", from: "2.0.2"),
+        .package(url: "https://github.com/Nef10/SwiftBeanCountSheetSync.git", from: "1.1.0"),
+        .package(url: "https://github.com/Nef10/SwiftBeanCountRogersBankMapper.git", exact: "0.0.13"),
+        .package(url: "https://github.com/Nef10/RogersBankDownloader.git", exact: "0.2.1"),
+        .package(url: "https://github.com/Nef10/TangerineDownloader.git", exact: "0.0.3"),
+        .package(url: "https://github.com/Nef10/SwiftBeanCountTangerineMapper.git", exact: "0.0.3"),
+        .package(url: "https://github.com/Nef10/CompassCardDownloader.git", exact: "0.0.1"),
+        .package(url: "https://github.com/Nef10/SwiftBeanCountCompassCardMapper.git", exact: "0.1.1"),
     ],
     targets: [
         .target(
