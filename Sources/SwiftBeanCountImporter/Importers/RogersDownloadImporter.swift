@@ -75,9 +75,10 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
             authenticator.login(username: $0, password: $1, deviceId: $2) { result in
                 switch result {
                 case let .failure(error):
-                    self.removeSavedCredentials {
-                        self.delegate?.error(error)
-                        completion()
+                    self.delegate?.error(error) {
+                        self.removeSavedCredentials {
+                            completion()
+                        }
                     }
                 case let .success(user):
                     DispatchQueue.global(qos: .userInitiated).async {
@@ -99,8 +100,8 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
                     account.downloadActivities(statementNumber: statementNumber) { result in
                         switch result {
                         case let .failure(error):
-                            self.delegate?.error(error)
                             errorOccurred = true
+                            self.showError(error)
                             group.leave()
                         case let .success(activities):
                             queue.async {
@@ -114,7 +115,7 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
             do {
                 self.balances.append(try self.mapper.mapAccountToBalance(account: account))
             } catch {
-                self.delegate?.error(error)
+                showError(error)
                 errorOccurred = true
             }
         }
@@ -134,8 +135,9 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
         do {
             transactions.append(contentsOf: try self.mapper.mapActivitiesToTransactions(activities: activities))
         } catch {
-            self.delegate?.error(error)
-            completion()
+            self.delegate?.error(error) {
+                completion()
+            }
             return
         }
 
@@ -208,6 +210,15 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
 
     func saveDeviceId(_ deviceId: String) {
         self.delegate?.saveCredential(deviceId, for: "\(Self.importerType)-\(CredentialKey.deviceId.rawValue)")
+    }
+
+    private func showError(_ error: Error) {
+        let group = DispatchGroup()
+        group.enter()
+        self.delegate?.error(error) {
+            group.leave()
+        }
+        group.wait()
     }
 
     private func statementsToLoad() -> Int {

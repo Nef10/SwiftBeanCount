@@ -45,7 +45,12 @@ class CompassCardImporter: BaseImporter, CSVImporter {
         do {
             try mapTransactions(SwiftBeanCountCompassCardMapper(ledger: existingLedger).createTransactions(account: configuredAccountName, reader: csvReader))
         } catch {
-            self.delegate?.error(error)
+            let group = DispatchGroup()
+            group.enter()
+            self.delegate?.error(error) {
+                group.leave()
+            }
+            group.wait()
         }
     }
 

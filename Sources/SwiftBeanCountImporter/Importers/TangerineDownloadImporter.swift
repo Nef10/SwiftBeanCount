@@ -112,8 +112,10 @@ class TangerineDownloadImporter: BaseImporter, DownloadImporter {
                     return
                 }
             case .failure(let error):
-                self.removeSavedCredentials {
-                    self.importFinished(error: error, completion: completion)
+                self.importFinished(error: error) {
+                    self.removeSavedCredentials {
+                        completion()
+                    }
                 }
                 return
             }
@@ -144,9 +146,12 @@ class TangerineDownloadImporter: BaseImporter, DownloadImporter {
             self.delegate?.removeView()
             DispatchQueue.global(qos: .userInitiated).async {
                 if let error {
-                    self.delegate?.error(error)
+                    self.delegate?.error(error) {
+                        completion()
+                    }
+                } else {
+                    completion()
                 }
-                completion()
             }
         }
     }

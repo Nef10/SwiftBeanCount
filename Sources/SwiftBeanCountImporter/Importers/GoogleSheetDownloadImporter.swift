@@ -96,8 +96,9 @@ class GoogleSheetDownloadImporter: BaseImporter, DownloadImporter {
                         group.leave()
                     }
                 case .failure(let error):
-                    delegate?.error(error)
-                    group.leave()
+                    delegate?.error(error) {
+                        group.leave()
+                    }
                 }
             }
         }
@@ -105,14 +106,28 @@ class GoogleSheetDownloadImporter: BaseImporter, DownloadImporter {
     }
 
     private func process(_ result: Result<SyncResult, Error>) {
+        if case let .success(result) = result {
+            transactions = result.transactions.map { ImportedTransaction($0) }
+        }
+        guard let delegate else {
+            return
+        }
+        let group = DispatchGroup()
         switch result {
         case .success(let result):
             for error in result.parserErrors {
-                delegate?.error(error)
+                group.enter()
+                delegate.error(error) {
+                    group.leave()
+                }
+                group.wait()
             }
-            transactions = result.transactions.map { ImportedTransaction($0) }
         case .failure(let error):
-            delegate?.error(error)
+            group.enter()
+            delegate.error(error) {
+                group.leave()
+            }
+            group.wait()
         }
     }
 

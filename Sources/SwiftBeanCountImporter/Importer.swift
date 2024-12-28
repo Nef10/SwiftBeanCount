@@ -205,8 +205,10 @@ public protocol ImporterDelegate: AnyObject {
 
     /// Indicates an error occured
     ///
-    /// Parameter: error: The error which occured. Display the localized description to the user
-    func error(_: Error)
+    /// - Parameters:
+    ///   - error: The error which occured. Display the localized description to the user
+    ///   - completion: completion handler to call when the user has acknowledged the error
+    func error(_: Error, completion: @escaping () -> Void)
 
 }
 

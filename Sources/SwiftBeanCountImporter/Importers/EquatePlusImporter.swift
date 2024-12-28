@@ -133,7 +133,12 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
 
     override func load() {
         if !balanceInputString.isEmpty {
-            self.delegate?.error(EquatePlusImporterError.balanceImportNotSupported(balanceInputString))
+            let group = DispatchGroup()
+            group.enter()
+            self.delegate?.error(EquatePlusImporterError.balanceImportNotSupported(balanceInputString)) {
+                group.leave()
+            }
+            group.wait()
         }
         if !transactionInputString.isEmpty {
             do {
@@ -141,7 +146,12 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
                 transactions = parsedTransactions
                 prices = parsedPrices
             } catch {
-                self.delegate?.error(error)
+                let group = DispatchGroup()
+                group.enter()
+                self.delegate?.error(error) {
+                    group.leave()
+                }
+                group.wait()
             }
         }
     }

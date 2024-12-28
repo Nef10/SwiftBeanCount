@@ -110,9 +110,7 @@ class CompassCardDownloadImporter: BaseImporter, DownloadImporter {
                     self.importFinished(error: error, completion: completion)
                 }
             case .failure(let error):
-                self.removeSavedCredentials {
-                    self.importFinished(error: error, completion: completion)
-                }
+                self.importFinished(error: error, removeCredentials: true, completion: completion)
             }
         }
     }
@@ -137,14 +135,29 @@ class CompassCardDownloadImporter: BaseImporter, DownloadImporter {
         }
     }
 
-    private func importFinished(error: Error? = nil, completion: @escaping () -> Void) {
+    private func importFinished(error: Error? = nil, removeCredentials: Bool = false, completion: @escaping () -> Void) {
         DispatchQueue.main.async {
             self.delegate?.removeView()
             DispatchQueue.global(qos: .userInitiated).async {
                 if let error {
-                    self.delegate?.error(error)
+                    self.delegate?.error(error) {
+                        if removeCredentials {
+                            self.removeSavedCredentials {
+                                completion()
+                            }
+                        } else {
+                            completion()
+                        }
+                    }
+                } else {
+                    if removeCredentials {
+                        self.removeSavedCredentials {
+                            completion()
+                        }
+                    } else {
+                        completion()
+                    }
                 }
-                completion()
             }
         }
     }
