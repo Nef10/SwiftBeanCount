@@ -14,7 +14,7 @@ let package = Package(
         .package(url: "https://github.com/Nef10/SwiftBeanCountModel.git", exact: "0.1.6"),
         .package(url: "https://github.com/yaslab/CSV.swift.git", from: "2.4.3"),
         .package(url: "https://github.com/Nef10/SwiftBeanCountParserUtils.git", from: "1.0.0"),
-        .package(url: "https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper.git", from: "1.6.2"),
+        .package(url: "https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper.git", from: "1.7.0"),
         .package(url: "https://github.com/Nef10/WealthsimpleDownloader.git", from: "2.0.2"),
         .package(url: "https://github.com/Nef10/SwiftBeanCountSheetSync.git", from: "1.1.0"),
         .package(url: "https://github.com/Nef10/SwiftBeanCountRogersBankMapper.git", exact: "0.0.13"),

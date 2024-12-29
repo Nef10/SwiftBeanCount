@@ -1,214 +1,212 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "BrightFutures",
-        "repositoryURL": "https://github.com/Thomvis/BrightFutures.git",
-        "state": {
-          "branch": null,
-          "revision": "fa66fa183dce7196d431244d0215748cd14c5758",
-          "version": "8.2.0"
-        }
-      },
-      {
-        "package": "CompassCardDownloader",
-        "repositoryURL": "https://github.com/Nef10/CompassCardDownloader.git",
-        "state": {
-          "branch": null,
-          "revision": "eab7329ae9272465c083245b462d1db7036fac14",
-          "version": "0.0.1"
-        }
-      },
-      {
-        "package": "CSV.swift",
-        "repositoryURL": "https://github.com/yaslab/CSV.swift.git",
-        "state": {
-          "branch": null,
-          "revision": "b4371dc833ba22ab6ead90fb63d267c3cf9ce773",
-          "version": "2.5.2"
-        }
-      },
-      {
-        "package": "Erik",
-        "repositoryURL": "https://github.com/phimage/Erik.git",
-        "state": {
-          "branch": null,
-          "revision": "109a130e9cdb00789a43a7a625293eeb12d22989",
-          "version": "5.1.0"
-        }
-      },
-      {
-        "package": "FileKit",
-        "repositoryURL": "https://github.com/nvzqz/FileKit.git",
-        "state": {
-          "branch": null,
-          "revision": "9006d2888025fbe893c3c396327b2fe45a8c177b",
-          "version": "6.1.0"
-        }
-      },
-      {
-        "package": "GoogleAuthentication",
-        "repositoryURL": "https://github.com/Nef10/GoogleAuthentication.git",
-        "state": {
-          "branch": null,
-          "revision": "15de3ccfb5773c21c6d4cf382549603b7d7929d1",
-          "version": "1.0.3"
-        }
-      },
-      {
-        "package": "Kanna",
-        "repositoryURL": "https://github.com/tid-kijyun/Kanna.git",
-        "state": {
-          "branch": null,
-          "revision": "41c3d28ea0eac07e4551b28def9de1ede702e739",
-          "version": "5.3.0"
-        }
-      },
-      {
-        "package": "KeychainAccess",
-        "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess.git",
-        "state": {
-          "branch": null,
-          "revision": "84e546727d66f1adc5439debad16270d0fdd04e7",
-          "version": "4.2.2"
-        }
-      },
-      {
-        "package": "OAuthSwift",
-        "repositoryURL": "https://github.com/OAuthSwift/OAuthSwift.git",
-        "state": {
-          "branch": null,
-          "revision": "d85964b96dbce94df961f28b996187c835089903",
-          "version": "2.2.0"
-        }
-      },
-      {
-        "package": "RogersBankDownloader",
-        "repositoryURL": "https://github.com/Nef10/RogersBankDownloader.git",
-        "state": {
-          "branch": null,
-          "revision": "c0b2f07fe6bbcd68b8956e4713a87533597aae0e",
-          "version": "0.2.1"
-        }
-      },
-      {
-        "package": "swift-crypto",
-        "repositoryURL": "https://github.com/apple/swift-crypto.git",
-        "state": {
-          "branch": null,
-          "revision": "ddb07e896a2a8af79512543b1c7eb9797f8898a5",
-          "version": "1.1.7"
-        }
-      },
-      {
-        "package": "SwiftBeanCountCompassCardMapper",
-        "repositoryURL": "https://github.com/Nef10/SwiftBeanCountCompassCardMapper.git",
-        "state": {
-          "branch": null,
-          "revision": "c1af5fc33aa9062ce635f77bacc722a085a90d2b",
-          "version": "0.1.1"
-        }
-      },
-      {
-        "package": "SwiftBeanCountModel",
-        "repositoryURL": "https://github.com/Nef10/SwiftBeanCountModel.git",
-        "state": {
-          "branch": null,
-          "revision": "a72ca4e46e816638be644ddfbb3c3f9233a5c944",
-          "version": "0.1.6"
-        }
-      },
-      {
-        "package": "SwiftBeanCountParser",
-        "repositoryURL": "https://github.com/Nef10/SwiftBeanCountParser.git",
-        "state": {
-          "branch": null,
-          "revision": "4299b420e43abeb113a315467b1a70a5017ca758",
-          "version": "0.1.8"
-        }
-      },
-      {
-        "package": "SwiftBeanCountParserUtils",
-        "repositoryURL": "https://github.com/Nef10/SwiftBeanCountParserUtils.git",
-        "state": {
-          "branch": null,
-          "revision": "aca01058f63c6d8bc66911bafcac0efdf9ce10ed",
-          "version": "1.0.0"
-        }
-      },
-      {
-        "package": "SwiftBeanCountRogersBankMapper",
-        "repositoryURL": "https://github.com/Nef10/SwiftBeanCountRogersBankMapper.git",
-        "state": {
-          "branch": null,
-          "revision": "2a77c3430d2f69ff9d76e953f4b000f9e7abd2f1",
-          "version": "0.0.13"
-        }
-      },
-      {
-        "package": "SwiftBeanCountSheetSync",
-        "repositoryURL": "https://github.com/Nef10/SwiftBeanCountSheetSync.git",
-        "state": {
-          "branch": null,
-          "revision": "279fb68904bad4932d012ea20b42c0b950090675",
-          "version": "1.1.0"
-        }
-      },
-      {
-        "package": "SwiftBeanCountTangerineMapper",
-        "repositoryURL": "https://github.com/Nef10/SwiftBeanCountTangerineMapper.git",
-        "state": {
-          "branch": null,
-          "revision": "db1a30b42d0e7c57ff5e69e86552646a6eee5216",
-          "version": "0.0.3"
-        }
-      },
-      {
-        "package": "SwiftBeanCountWealthsimpleMapper",
-        "repositoryURL": "https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper.git",
-        "state": {
-          "branch": null,
-          "revision": "49a0d32f6fecd8cab5003f54fdf161784bab245b",
-          "version": "1.6.2"
-        }
-      },
-      {
-        "package": "Swifter",
-        "repositoryURL": "https://github.com/httpswift/swifter.git",
-        "state": {
-          "branch": null,
-          "revision": "9483a5d459b45c3ffd059f7b55f9638e268632fd",
-          "version": "1.5.0"
-        }
-      },
-      {
-        "package": "SwiftScraper",
-        "repositoryURL": "https://github.com/Nef10/SwiftScraper.git",
-        "state": {
-          "branch": null,
-          "revision": "d93707b290c6d5cf899cdcdd229a7c858f9f2f19",
-          "version": "0.6.0"
-        }
-      },
-      {
-        "package": "TangerineDownloader",
-        "repositoryURL": "https://github.com/Nef10/TangerineDownloader.git",
-        "state": {
-          "branch": null,
-          "revision": "6c136d179a008542023e2fea46fe2a48450e5ef9",
-          "version": "0.0.3"
-        }
-      },
-      {
-        "package": "WealthsimpleDownloader",
-        "repositoryURL": "https://github.com/Nef10/WealthsimpleDownloader.git",
-        "state": {
-          "branch": null,
-          "revision": "af3e30a235d0311de7b37536095f8cf6470abd51",
-          "version": "2.0.2"
-        }
+  "pins" : [
+    {
+      "identity" : "brightfutures",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Thomvis/BrightFutures.git",
+      "state" : {
+        "revision" : "fa66fa183dce7196d431244d0215748cd14c5758",
+        "version" : "8.2.0"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "compasscarddownloader",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Nef10/CompassCardDownloader.git",
+      "state" : {
+        "revision" : "eab7329ae9272465c083245b462d1db7036fac14",
+        "version" : "0.0.1"
+      }
+    },
+    {
+      "identity" : "csv.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/yaslab/CSV.swift.git",
+      "state" : {
+        "revision" : "b4371dc833ba22ab6ead90fb63d267c3cf9ce773",
+        "version" : "2.5.2"
+      }
+    },
+    {
+      "identity" : "erik",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/phimage/Erik.git",
+      "state" : {
+        "revision" : "109a130e9cdb00789a43a7a625293eeb12d22989",
+        "version" : "5.1.0"
+      }
+    },
+    {
+      "identity" : "filekit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nvzqz/FileKit.git",
+      "state" : {
+        "revision" : "9006d2888025fbe893c3c396327b2fe45a8c177b",
+        "version" : "6.1.0"
+      }
+    },
+    {
+      "identity" : "googleauthentication",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Nef10/GoogleAuthentication.git",
+      "state" : {
+        "revision" : "15de3ccfb5773c21c6d4cf382549603b7d7929d1",
+        "version" : "1.0.3"
+      }
+    },
+    {
+      "identity" : "kanna",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tid-kijyun/Kanna.git",
+      "state" : {
+        "revision" : "41c3d28ea0eac07e4551b28def9de1ede702e739",
+        "version" : "5.3.0"
+      }
+    },
+    {
+      "identity" : "keychainaccess",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kishikawakatsumi/KeychainAccess.git",
+      "state" : {
+        "revision" : "84e546727d66f1adc5439debad16270d0fdd04e7",
+        "version" : "4.2.2"
+      }
+    },
+    {
+      "identity" : "oauthswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/OAuthSwift/OAuthSwift.git",
+      "state" : {
+        "revision" : "d85964b96dbce94df961f28b996187c835089903",
+        "version" : "2.2.0"
+      }
+    },
+    {
+      "identity" : "rogersbankdownloader",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Nef10/RogersBankDownloader.git",
+      "state" : {
+        "revision" : "c0b2f07fe6bbcd68b8956e4713a87533597aae0e",
+        "version" : "0.2.1"
+      }
+    },
+    {
+      "identity" : "swift-crypto",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-crypto.git",
+      "state" : {
+        "revision" : "ddb07e896a2a8af79512543b1c7eb9797f8898a5",
+        "version" : "1.1.7"
+      }
+    },
+    {
+      "identity" : "swiftbeancountcompasscardmapper",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Nef10/SwiftBeanCountCompassCardMapper.git",
+      "state" : {
+        "revision" : "c1af5fc33aa9062ce635f77bacc722a085a90d2b",
+        "version" : "0.1.1"
+      }
+    },
+    {
+      "identity" : "swiftbeancountmodel",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Nef10/SwiftBeanCountModel.git",
+      "state" : {
+        "revision" : "a72ca4e46e816638be644ddfbb3c3f9233a5c944",
+        "version" : "0.1.6"
+      }
+    },
+    {
+      "identity" : "swiftbeancountparser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Nef10/SwiftBeanCountParser.git",
+      "state" : {
+        "revision" : "4299b420e43abeb113a315467b1a70a5017ca758",
+        "version" : "0.1.8"
+      }
+    },
+    {
+      "identity" : "swiftbeancountparserutils",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Nef10/SwiftBeanCountParserUtils.git",
+      "state" : {
+        "revision" : "aca01058f63c6d8bc66911bafcac0efdf9ce10ed",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "swiftbeancountrogersbankmapper",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Nef10/SwiftBeanCountRogersBankMapper.git",
+      "state" : {
+        "revision" : "2a77c3430d2f69ff9d76e953f4b000f9e7abd2f1",
+        "version" : "0.0.13"
+      }
+    },
+    {
+      "identity" : "swiftbeancountsheetsync",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Nef10/SwiftBeanCountSheetSync.git",
+      "state" : {
+        "revision" : "279fb68904bad4932d012ea20b42c0b950090675",
+        "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "swiftbeancounttangerinemapper",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Nef10/SwiftBeanCountTangerineMapper.git",
+      "state" : {
+        "revision" : "db1a30b42d0e7c57ff5e69e86552646a6eee5216",
+        "version" : "0.0.3"
+      }
+    },
+    {
+      "identity" : "swiftbeancountwealthsimplemapper",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper.git",
+      "state" : {
+        "revision" : "412f5a8609c43ee6b4a4fb601944e151cc8aa107",
+        "version" : "1.7.0"
+      }
+    },
+    {
+      "identity" : "swifter",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/httpswift/swifter.git",
+      "state" : {
+        "revision" : "9483a5d459b45c3ffd059f7b55f9638e268632fd",
+        "version" : "1.5.0"
+      }
+    },
+    {
+      "identity" : "swiftscraper",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Nef10/SwiftScraper.git",
+      "state" : {
+        "revision" : "d93707b290c6d5cf899cdcdd229a7c858f9f2f19",
+        "version" : "0.6.0"
+      }
+    },
+    {
+      "identity" : "tangerinedownloader",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Nef10/TangerineDownloader.git",
+      "state" : {
+        "revision" : "6c136d179a008542023e2fea46fe2a48450e5ef9",
+        "version" : "0.0.3"
+      }
+    },
+    {
+      "identity" : "wealthsimpledownloader",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Nef10/WealthsimpleDownloader.git",
+      "state" : {
+        "revision" : "af3e30a235d0311de7b37536095f8cf6470abd51",
+        "version" : "2.0.2"
+      }
+    }
+  ],
+  "version" : 2
 }
