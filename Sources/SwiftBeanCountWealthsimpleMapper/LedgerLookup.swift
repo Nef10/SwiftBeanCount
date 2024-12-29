@@ -37,7 +37,7 @@ struct LedgerLookup {
             return false
         }
         return self.ledger.transactions.contains {
-            $0.metaData.metaData[MetaDataKeys.id] == id ||
+            $0.metaData.metaData[MetaDataKeys.id]?.contains(id) ?? false ||
             $0.metaData.metaData[MetaDataKeys.nrwtId] == id
         }
     }
@@ -121,7 +121,7 @@ struct LedgerLookup {
     func ledgerAccountName(of account: Wealthsimple.Account, symbol assetSymbol: String? = nil) throws -> AccountName {
         let baseAccount = ledger.accounts.first {
             $0.metaData[MetaDataKeys.importerType] == MetaData.importerType &&
-            $0.metaData[MetaDataKeys.number] == account.number
+            $0.metaData[MetaDataKeys.number]?.contains(account.number) ?? false
         }
         guard let accountName = baseAccount?.name else {
             throw WealthsimpleConversionError.missingWealthsimpleAccount(account.number)
