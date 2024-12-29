@@ -104,10 +104,10 @@ struct LedgerLookup {
                 case .onlineBillPayment, .deposit, .paymentSpend, .transferIn, .transferOut, .paymentTransferIn, .paymentTransferOut, .withdrawal:
                     return WealthsimpleLedgerMapper.fallbackExpenseAccountName
                 default:
-                    throw WealthsimpleConversionError.missingAccount(key, account.number, accountTypes.map { $0.rawValue }.joined(separator: ", or "))
+                    throw WealthsimpleConversionError.missingAccount(key, account.number, accountTypes.map(\.rawValue).joined(separator: ", or "))
                 }
             }
-            throw WealthsimpleConversionError.missingAccount(key, account.number, accountTypes.map { $0.rawValue }.joined(separator: ", or "))
+            throw WealthsimpleConversionError.missingAccount(key, account.number, accountTypes.map(\.rawValue).joined(separator: ", or "))
         }
         return name
     }
