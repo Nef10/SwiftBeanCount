@@ -79,6 +79,17 @@ Example:
 
 If multiple custom directives for the same setting exist, the latest one up until the end of the tax year is used. E.g. when generating tax slips for 2021, the latest directive up until 2021-12-31 is used.
 
+#### Special Characters
+
+Tax Slips only support letters and numbers. The only exceptions are round brackets `()`. To use them, add them into the `tax-slip` meta data:
+
+```
+2020-01-01 custom "tax-slip-settings" "slip-names" "t4a(p)"
+```
+
+At all other places used, remove the brackes, e.g. use `t4ap`.
+
+
 ### Dates
 
 Sometimes income is earned in one year, but only paid in another; or a sale is performed in one year but only settled in the next. You can change the year a transaction should count towards via the `tax-year` meta data on a transaction, e.g. `tax-year: "2022"`.
