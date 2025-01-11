@@ -111,7 +111,7 @@ public struct TaxSlip: Identifiable {
 
     /// Boxes which have a value on the slip
     public var boxes: [String] {
-        Array(Set(entries.map { $0.box })).sorted(by: boxNumberSort)
+        Array(Set(entries.map(\.box))).sorted(by: boxNumberSort)
     }
 
     /// If a slip is split by symbols (e.g. stocks), this contains the list of symbols, otherwise is is empty
@@ -166,7 +166,7 @@ extension TaxSlipRow: CustomStringConvertible {
     }
 
     public var description: String {
-        "\(displayName != nil ? "\(displayName!):\n" : "")\(values.sorted(by: rowValueBoxNumberSort).map { $0.description }.joined(separator: "\n") )"
+        "\(displayName != nil ? "\(displayName!):\n" : "")\(values.sorted(by: rowValueBoxNumberSort).map(\.description).joined(separator: "\n") )"
     }
 }
 
@@ -193,7 +193,7 @@ extension TaxSlip: CustomStringConvertible {
     }
 
     public var description: String {
-        "\(header)\n\(rows.map { $0.description }.joined(separator: "\n"))\(symbols.isEmpty ? "" : "\nSum:\n\(sumRow.description)")"
+        "\(header)\n\(rows.map(\.description).joined(separator: "\n"))\(symbols.isEmpty ? "" : "\nSum:\n\(sumRow.description)")"
     }
 }
 

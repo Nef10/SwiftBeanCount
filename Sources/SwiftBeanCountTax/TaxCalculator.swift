@@ -131,8 +131,8 @@ public enum TaxCalculator {
         return try issuers.compactMap { issuer throws -> TaxSlip? in
             let issuerTaxSlipRelevantAccounts = taxSlipRelevantAccounts.filter { $0.metaData[MetaDataKeys.issuer] ?? "" == issuer }
             // collect all transactions which have a posting to a split account AND an account for this issuer
-            var splitTransactions = taxYearTransactions.filter { $0.postings.contains { issuerTaxSlipRelevantAccounts.map { $0.name }.contains($0.accountName) }
-              && $0.postings.contains { splitAccounts.map { $0.0 }.contains($0.accountName.fullName) }
+            var splitTransactions = taxYearTransactions.filter { $0.postings.contains { issuerTaxSlipRelevantAccounts.map(\.name).contains($0.accountName) }
+              && $0.postings.contains { splitAccounts.map(\.0).contains($0.accountName.fullName) }
             }
             let entries = issuerTaxSlipRelevantAccounts.flatMap { account -> [TaxSlipEntry] in
                 let postings = taxYearTransactions.flatMap { $0.postings.filter { $0.accountName == account.name } }
@@ -146,10 +146,10 @@ public enum TaxCalculator {
                 // split accounts
                 entries.append(contentsOf: splitAccounts.compactMap { splitAccount -> TaxSlipEntry? in
                     // filter splitTransactions for transactions for the current account, and get the posting to the split account
-                    let splitPostings = splitTransactions.filter { [account.name.fullName, splitAccount.0].allSatisfy($0.postings.map { $0.accountName.fullName }.contains) }
+                    let splitPostings = splitTransactions.filter { [account.name.fullName, splitAccount.0].allSatisfy($0.postings.map(\.accountName.fullName).contains) }
                         .flatMap { $0.postings.filter { $0.accountName.fullName == splitAccount.0 } }
                     // rmove the processed transactions - otherwise when a transaction has multiple accounts and a split account, it would be counted multiple times
-                    splitTransactions.removeAll { [account.name.fullName, splitAccount.0].allSatisfy($0.postings.map { $0.accountName.fullName }.contains) }
+                    splitTransactions.removeAll { [account.name.fullName, splitAccount.0].allSatisfy($0.postings.map(\.accountName.fullName).contains) }
                     if let (value, originalValue) = getValues(commodity: commodity, postings: splitPostings) {
                         return TaxSlipEntry(symbol: symbol, name: name, box: splitAccount.1, value: value, originalValue: originalValue)
                     }
