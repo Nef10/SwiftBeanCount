@@ -10,17 +10,26 @@ func extractInt(from string: String) -> Int? {
 
 /// For sorting two string based on the number in them
 ///
-/// In case there is not a number is both strings, the strings are compared instead
+/// In case there is not a number is both strings, the strings are compared instead.
+/// In case there is a number in one string but not in the other, the string with the number is considered smaller.
 ///
 /// - Parameters:
 ///   - box1: string 1
 ///   - box2: string 2
 /// - Returns: Bool if the number in string 1 is smaller then the number in string 2
 func boxNumberSort(_ box1: String, _ box2: String) -> Bool {
-    if let number1 = extractInt(from: box1), let number2 = extractInt(from: box2) {
+    let number1 = extractInt(from: box1)
+    let number2 = extractInt(from: box2)
+    if let number1, let number2 {
         return number1 < number2
     }
-    return box1 < box2
+    if number1 != nil {
+        return true
+    }
+    if number2 != nil {
+        return false
+    }
+    return box1.lowercased() < box2.lowercased()
 }
 
 func addOriginalValues(_ sum: MultiCurrencyAmount?, _ entry: TaxSlipEntry) -> MultiCurrencyAmount? {
