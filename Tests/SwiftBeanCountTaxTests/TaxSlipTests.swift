@@ -2,6 +2,7 @@ import SwiftBeanCountModel
 @testable import SwiftBeanCountTax
 import XCTest
 
+// swiftlint:disable:next type_body_length
 final class TaxSlipTests: XCTestCase {
 
     func testExtractInt() {
@@ -71,6 +72,18 @@ final class TaxSlipTests: XCTestCase {
         ]
         let taxSlip: TaxSlip = try TaxSlip(name: "Test", year: 2_023, issuer: "Test Issuer", entries: entries)
         XCTAssertEqual(taxSlip.boxes, ["Box 1", "Box 2"])
+    }
+
+    func testBoxesNumbers() throws {
+        let entries = [
+            TaxSlipEntry(symbol: "A", name: "Name A", box: "Box", value: MultiCurrencyAmount(), originalValue: nil),
+            TaxSlipEntry(symbol: "A", name: "Name A", box: "Box 1", value: MultiCurrencyAmount(), originalValue: nil),
+            TaxSlipEntry(symbol: "B", name: "Name B", box: "Box 1", value: MultiCurrencyAmount(), originalValue: nil)
+        ]
+        let taxSlip: TaxSlip = try TaxSlip(name: "Test", year: 2_023, issuer: "Test Issuer", entries: entries)
+        XCTAssertEqual(taxSlip.boxes, ["Box 1", "Box"])
+        XCTAssertEqual(taxSlip.boxesWithNumbers, ["Box 1"])
+        XCTAssertEqual(taxSlip.boxesWithoutNumbers, ["Box"])
     }
 
     func testSymbols() throws {
@@ -146,6 +159,34 @@ final class TaxSlipTests: XCTestCase {
         XCTAssertEqual(rows[0].values[1].originalValue, amount)
     }
 
+    func testRowsNumbers() throws {
+        let amount = Amount(number: Decimal(10), commoditySymbol: "USD").multiCurrencyAmount
+
+        let entries = [
+            TaxSlipEntry(symbol: nil, name: nil, box: "Box", value: amount, originalValue: nil),
+            TaxSlipEntry(symbol: nil, name: nil, box: "Box 1", value: amount, originalValue: amount),
+            TaxSlipEntry(symbol: nil, name: nil, box: "Box 1", value: amount, originalValue: nil),
+        ]
+        let taxSlip = try TaxSlip(name: "Test", year: 2_023, issuer: "Test Issuer", entries: entries)
+        var rows = taxSlip.rowsWithBoxNumbers
+        XCTAssertEqual(rows.count, 1)
+        XCTAssertNil(rows[0].symbol)
+        XCTAssertNil(rows[0].name)
+        XCTAssertEqual(rows[0].values.count, 1)
+        XCTAssertEqual(rows[0].values[0].box, "Box 1")
+        XCTAssertEqual(rows[0].values[0].value, amount + amount)
+        XCTAssertEqual(rows[0].values[0].originalValue, amount)
+
+        rows = taxSlip.rowsWithoutBoxNumbers
+        XCTAssertEqual(rows.count, 1)
+        XCTAssertNil(rows[0].symbol)
+        XCTAssertNil(rows[0].name)
+        XCTAssertEqual(rows[0].values.count, 1)
+        XCTAssertEqual(rows[0].values[0].box, "Box")
+        XCTAssertEqual(rows[0].values[0].value, amount)
+        XCTAssertNil(rows[0].values[0].originalValue)
+    }
+
     func testSumRows() throws {
         let amount = Amount(number: Decimal(10), commoditySymbol: "USD").multiCurrencyAmount
 
@@ -166,6 +207,33 @@ final class TaxSlipTests: XCTestCase {
         XCTAssertEqual(sumRow.values[1].box, "Box 2")
         XCTAssertEqual(sumRow.values[1].value, amount + amount)
         XCTAssertEqual(sumRow.values[1].originalValue, amount)
+    }
+
+    func testSumRowsNumbers() throws {
+        let amount = Amount(number: Decimal(10), commoditySymbol: "USD").multiCurrencyAmount
+
+        let entries = [
+            TaxSlipEntry(symbol: "A", name: "Name A", box: "Box 1", value: amount, originalValue: nil),
+            TaxSlipEntry(symbol: "A", name: "Name A", box: "Box", value: amount, originalValue: amount),
+            TaxSlipEntry(symbol: "A", name: "Name A", box: "Box", value: amount, originalValue: nil),
+            TaxSlipEntry(symbol: "B", name: "Name B", box: "Box 1", value: amount, originalValue: nil),
+        ]
+        let taxSlip = try TaxSlip(name: "Test", year: 2_023, issuer: "Test Issuer", entries: entries)
+        var sumRow = taxSlip.sumRowWithBoxNumbers
+        XCTAssertNil(sumRow.symbol)
+        XCTAssertNil(sumRow.name)
+        XCTAssertEqual(sumRow.values.count, 1)
+        XCTAssertEqual(sumRow.values[0].box, "Box 1")
+        XCTAssertEqual(sumRow.values[0].value, amount + amount)
+        XCTAssertNil(sumRow.values[0].originalValue)
+
+        sumRow = taxSlip.sumRowWithoutBoxNumbers
+        XCTAssertNil(sumRow.symbol)
+        XCTAssertNil(sumRow.name)
+        XCTAssertEqual(sumRow.values.count, 1)
+        XCTAssertEqual(sumRow.values[0].box, "Box")
+        XCTAssertEqual(sumRow.values[0].value, amount + amount)
+        XCTAssertEqual(sumRow.values[0].originalValue, amount)
     }
 
     func testTaxSlipStrings() throws {

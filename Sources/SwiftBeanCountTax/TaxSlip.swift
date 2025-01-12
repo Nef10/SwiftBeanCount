@@ -123,6 +123,16 @@ public struct TaxSlip: Identifiable {
         Array(Set(entries.map(\.box))).sorted(by: boxNumberSort)
     }
 
+    /// Boxes with numbers in the name which have a value on the slip
+    public var boxesWithNumbers: [String] {
+        Array(Set(entries.map(\.box))).filter { extractInt(from: $0) != nil }.sorted(by: boxNumberSort)
+    }
+
+    /// Boxes without numbers in the name which have a value on the slip
+    public var boxesWithoutNumbers: [String] {
+        Array(Set(entries.map(\.box))).filter { extractInt(from: $0) == nil }.sorted(by: boxNumberSort)
+    }
+
     /// If a slip is split by symbols (e.g. stocks), this contains the list of symbols, otherwise is is empty
     public var symbols: [String] {
         Array(Set(entries.compactMap { $0.symbol })).sorted()
@@ -132,12 +142,23 @@ public struct TaxSlip: Identifiable {
     ///
     /// If the slip is not broken down by symbol, there is only a single row, otherwise one per symbol
     public var rows: [TaxSlipRow] {
-        (symbols.isEmpty ? [nil] as [String?] : symbols).map { symbol in
-            let values = boxes.map { box in
-                TaxSlipRowValue(box: box, entries: entries.filter { $0.symbol == symbol && $0.box == box })
-            }
-            return TaxSlipRow(symbol: symbol, name: entries.first { $0.symbol == symbol }!.name, values: values)
-        }
+        rowFrom(boxes: boxes)
+    }
+
+    /// Rows on the tax slip
+    ///
+    /// Only includes boxes with numbers in the name
+    /// If the slip is not broken down by symbol, there is only a single row, otherwise one per symbol
+    public var rowsWithBoxNumbers: [TaxSlipRow] {
+        rowFrom(boxes: boxesWithNumbers)
+    }
+
+    /// Rows on the tax slip
+    ///
+    /// Only includes boxes without numbers in the name
+    /// If the slip is not broken down by symbol, there is only a single row, otherwise one per symbol
+    public var rowsWithoutBoxNumbers: [TaxSlipRow] {
+        rowFrom(boxes: boxesWithoutNumbers)
     }
 
     /// Row with the sum of all values per box
@@ -145,10 +166,25 @@ public struct TaxSlip: Identifiable {
     /// If the slip is broken down by symbol and e.g. for box 1 there is a value for two symbols, the sum row will contain the sum of these values for box 1
     /// In case the slip is not broken down by symbol. this is the same as the row
     public var sumRow: TaxSlipRow {
-        let values = boxes.map { box in
-            TaxSlipRowValue(box: box, entries: entries.filter { $0.box == box })
-        }
-        return TaxSlipRow(symbol: nil, name: nil, values: values)
+        sumRowFrom(boxes: boxes)
+    }
+
+    /// Row with the sum of all values per box
+    ///
+    /// Only includes boxes with numbers in the name
+    /// If the slip is broken down by symbol and e.g. for box 1 there is a value for two symbols, the sum row will contain the sum of these values for box 1
+    /// In case the slip is not broken down by symbol. this is the same as the row
+    public var sumRowWithBoxNumbers: TaxSlipRow {
+        sumRowFrom(boxes: boxesWithNumbers)
+    }
+
+    /// Row with the sum of all values per box
+    ///
+    /// Only includes boxes without numbers in the name
+    /// If the slip is broken down by symbol and e.g. for box 1 there is a value for two symbols, the sum row will contain the sum of these values for box 1
+    /// In case the slip is not broken down by symbol. this is the same as the row
+    public var sumRowWithoutBoxNumbers: TaxSlipRow {
+        sumRowFrom(boxes: boxesWithoutNumbers)
     }
 
     init(name: String, year: Int, issuer: String?, entries: [TaxSlipEntry]) throws {
@@ -159,6 +195,22 @@ public struct TaxSlip: Identifiable {
         guard entries.allSatisfy({ $0.symbol == nil }) || entries.allSatisfy({ $0.symbol != nil }) else {
             throw TaxErrors.entriesWithAndWithoutSymbol(name, year, issuer)
         }
+    }
+
+    private func rowFrom(boxes: [String]) -> [TaxSlipRow] {
+        (symbols.isEmpty ? [nil] as [String?] : symbols).map { symbol in
+            let values = boxes.map { box in
+                TaxSlipRowValue(box: box, entries: entries.filter { $0.symbol == symbol && $0.box == box })
+            }
+            return TaxSlipRow(symbol: symbol, name: entries.first { $0.symbol == symbol }!.name, values: values)
+        }
+    }
+
+    private func sumRowFrom( boxes: [String]) -> TaxSlipRow {
+        let values = boxes.map { box in
+            TaxSlipRowValue(box: box, entries: entries.filter { $0.box == box })
+        }
+        return TaxSlipRow(symbol: nil, name: nil, values: values)
     }
 }
 
