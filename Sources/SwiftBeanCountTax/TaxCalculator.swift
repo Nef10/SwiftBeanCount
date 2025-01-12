@@ -130,37 +130,66 @@ public enum TaxCalculator {
         let issuers = Array(Set(taxSlipRelevantAccounts.map { $0.metaData[MetaDataKeys.issuer] ?? "" }))
         return try issuers.compactMap { issuer throws -> TaxSlip? in
             let issuerTaxSlipRelevantAccounts = taxSlipRelevantAccounts.filter { $0.metaData[MetaDataKeys.issuer] ?? "" == issuer }
-            // collect all transactions which have a posting to a split account AND an account for this issuer
-            var splitTransactions = taxYearTransactions.filter { $0.postings.contains { issuerTaxSlipRelevantAccounts.map(\.name).contains($0.accountName) }
-              && $0.postings.contains { splitAccounts.map(\.0).contains($0.accountName.fullName) }
-            }
-            let entries = issuerTaxSlipRelevantAccounts.flatMap { account -> [TaxSlipEntry] in
+            var entries = issuerTaxSlipRelevantAccounts.compactMap { account -> TaxSlipEntry? in
                 let postings = taxYearTransactions.flatMap { $0.postings.filter { $0.accountName == account.name } }
                 let symbol = taxSymbol(for: account, in: ledger), name = taxDescription(for: account, in: ledger)
-                var entries = [TaxSlipEntry]()
-
-                if let (value, originalValue) = getValues(commodity: commodity, postings: postings) {
-                    entries.append(TaxSlipEntry(symbol: symbol, name: name, box: account.metaData[slip]!, value: value, originalValue: originalValue))
-                }
-
-                // split accounts
-                entries.append(contentsOf: splitAccounts.compactMap { splitAccount -> TaxSlipEntry? in
-                    // filter splitTransactions for transactions for the current account, and get the posting to the split account
-                    let splitPostings = splitTransactions.filter { [account.name.fullName, splitAccount.0].allSatisfy($0.postings.map(\.accountName.fullName).contains) }
-                        .flatMap { $0.postings.filter { $0.accountName.fullName == splitAccount.0 } }
-                    // rmove the processed transactions - otherwise when a transaction has multiple accounts and a split account, it would be counted multiple times
-                    splitTransactions.removeAll { [account.name.fullName, splitAccount.0].allSatisfy($0.postings.map(\.accountName.fullName).contains) }
-                    if let (value, originalValue) = getValues(commodity: commodity, postings: splitPostings) {
-                        return TaxSlipEntry(symbol: symbol, name: name, box: splitAccount.1, value: value, originalValue: originalValue)
-                    }
+                guard let (value, originalValue) = getValues(commodity: commodity, postings: postings) else {
                     return nil
-                })
-                return entries
+                }
+                return TaxSlipEntry(symbol: symbol, name: name, box: account.metaData[slip]!, value: value, originalValue: originalValue)
             }
+            try entries.append(contentsOf:
+                getSplitAccountEntries(splitAccounts,
+                                       issuerTaxSlipRelevantAccounts: issuerTaxSlipRelevantAccounts,
+                                       taxYearTransactions: taxYearTransactions,
+                                       commodity: commodity,
+                                       ledger: ledger))
             guard !entries.isEmpty else {
                 return nil
             }
             return try TaxSlip(name: slipName.capitalized, year: year, issuer: issuer.isEmpty ? nil : issuer, entries: entries)
+        }
+    }
+
+    private static func getSplitAccountEntries(
+        _ splitAccounts: [(String, String)],
+        issuerTaxSlipRelevantAccounts: [Account],
+        taxYearTransactions: [Transaction],
+        commodity: String,
+        ledger: Ledger
+    ) throws -> [TaxSlipEntry] {
+        // collect all transactions which have a posting to a split account AND an account for this issuer
+        let splitTransactions = taxYearTransactions.filter { $0.postings.contains { issuerTaxSlipRelevantAccounts.map(\.name).contains($0.accountName) }
+          && $0.postings.contains { splitAccounts.map(\.0).contains($0.accountName.fullName) }
+        }
+        return try splitAccounts.flatMap { splitAccount -> [TaxSlipEntry] in
+            let splitPostings = splitTransactions.filter { $0.postings.map(\.accountName.fullName).contains(splitAccount.0) }
+                .flatMap { $0.postings.filter { $0.accountName.fullName == splitAccount.0 } }
+
+            var splitPostingsSymbolMap: [String: [TransactionPosting]] = [:]
+            var symbolDescriptionMap: [String: String] = [:]
+
+            try splitPostings.forEach { posting in
+                let otherAccounts = posting.transaction.postings.map(\.accountName.fullName)
+                    .filter { $0 != posting.accountName.fullName && issuerTaxSlipRelevantAccounts.map(\.name.fullName).contains($0) }
+                    .map { name in ledger.accounts.first { $0.name.fullName == name }! }
+                let symbols = otherAccounts.compactMap { taxSymbol(for: $0, in: ledger) }
+                let descriptions = otherAccounts.compactMap { taxDescription(for: $0, in: ledger) }
+                guard symbols.allSatisfy({ $0 == symbols.first }) && descriptions.allSatisfy({ $0 == descriptions.first }) else {
+                    throw TaxErrors.splitAccountDifferentSymbols(posting.transaction.description, symbols.joined(separator: ", "), descriptions.joined(separator: ", "))
+                }
+                splitPostingsSymbolMap[symbols.first ?? ""] = (splitPostingsSymbolMap[symbols.first ?? ""] ?? []) + [posting]
+                if let description = descriptions.first {
+                    symbolDescriptionMap[symbols.first ?? ""] = description
+                }
+            }
+
+            return splitPostingsSymbolMap.compactMap { symbol, postings in
+                if let (value, originalValue) = getValues(commodity: commodity, postings: postings) {
+                    return TaxSlipEntry(symbol: symbol, name: symbolDescriptionMap[symbol], box: splitAccount.1, value: value, originalValue: originalValue)
+                }
+                return nil
+            }
         }
     }
 

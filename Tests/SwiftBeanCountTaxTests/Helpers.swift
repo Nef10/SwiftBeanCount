@@ -29,11 +29,11 @@ func basicLedger() throws -> Ledger {
         Posting(accountName: try AccountName("Expenses:Tax"), amount: Amount(number: -150, commoditySymbol: "EUR"))
     ]))
 
-    ledger.custom.append(Custom(date: date, name: MetaDataKeys.settings, values: [MetaDataKeys.slipNames, "Taxslip1", "Taxslip2"]))
-    ledger.custom.append(Custom(date: Date(timeIntervalSince1970: 1_618_477_015), name: MetaDataKeys.settings, values: [MetaDataKeys.slipNames, "Taxslip1"]))
-    ledger.custom.append(Custom(date: date, name: MetaDataKeys.settings, values: [MetaDataKeys.slipCurrency, "Taxslip1", "USD"]))
-    ledger.custom.append(Custom(date: date, name: MetaDataKeys.settings, values: [MetaDataKeys.slipCurrency, "Taxslip2", "EUR"]))
-    ledger.custom.append(Custom(date: date.advanced(by: -20_000), name: MetaDataKeys.settings, values: [MetaDataKeys.slipCurrency, "Taxslip2", "CAD"]))
+    ledger.custom.append(Custom(date: Date(timeIntervalSince1970: 1_610_463_065), name: MetaDataKeys.settings, values: [MetaDataKeys.slipNames, "Taxslip1", "Taxslip2"]))
+    ledger.custom.append(Custom(date: Date(timeIntervalSince1970: 1_547_304_665), name: MetaDataKeys.settings, values: [MetaDataKeys.slipNames, "Taxslip1"]))
+    ledger.custom.append(Custom(date: Date(timeIntervalSince1970: 1_547_304_665), name: MetaDataKeys.settings, values: [MetaDataKeys.slipCurrency, "Taxslip1", "USD"]))
+    ledger.custom.append(Custom(date: Date(timeIntervalSince1970: 1_641_999_065), name: MetaDataKeys.settings, values: [MetaDataKeys.slipCurrency, "Taxslip2", "EUR"]))
+    ledger.custom.append(Custom(date: date, name: MetaDataKeys.settings, values: [MetaDataKeys.slipCurrency, "Taxslip2", "CAD"]))
 
     return ledger
 }
@@ -132,6 +132,66 @@ func splitAccountLedger() throws -> Ledger {
     ledger.custom.append(Custom(date: date, name: MetaDataKeys.settings, values: [MetaDataKeys.slipNames, "Taxslip1", "Taxslip2"]))
     ledger.custom.append(Custom(date: date, name: MetaDataKeys.settings, values: [MetaDataKeys.slipCurrency, "Taxslip1", "USD"]))
     ledger.custom.append(Custom(date: date, name: MetaDataKeys.settings, values: [MetaDataKeys.slipCurrency, "Taxslip2", "EUR"]))
+    ledger.custom.append(Custom(date: date, name: MetaDataKeys.settings, values: [MetaDataKeys.account, "Taxslip1", "SplitBox3", "Expenses:Tax"]))
+
+    return ledger
+}
+
+func splitSymbolLedger() throws -> Ledger {
+    let ledger = Ledger()
+    let date = Date(timeIntervalSince1970: 1_650_013_015)
+
+    try ledger.add(Account(name: try AccountName("Assets:Account1:SYM"), metaData: ["Taxslip1": "TaxBox1"]))
+    try ledger.add(Account(name: try AccountName("Assets:Account2:SYM"), metaData: ["Taxslip1": "TaxBox4"]))
+    try ledger.add(Account(name: try AccountName("Assets:Account1:SYMB:Acc"), metaData: ["Taxslip1": "TaxBox2"]))
+    try ledger.add(Account(name: try AccountName("Expenses:Tax")))
+    try ledger.add(Account(name: try AccountName("Expenses:Other")))
+
+    try ledger.add(Commodity(symbol: "SYM"))
+    try ledger.add(Commodity(symbol: "SYMB", metaData: [MetaDataKeys.commodityName: "DescB"]))
+
+    ledger.add(Transaction(metaData: TransactionMetaData(date: date), postings: [
+        Posting(accountName: try AccountName("Assets:Account1:SYM"), amount: Amount(number: 100, commoditySymbol: "USD")),
+        Posting(accountName: try AccountName("Expenses:Tax"), amount: Amount(number: -80, commoditySymbol: "USD")),
+        Posting(accountName: try AccountName("Expenses:Other"), amount: Amount(number: -20, commoditySymbol: "USD"))
+    ]))
+    ledger.add(Transaction(metaData: TransactionMetaData(date: date), postings: [
+        Posting(accountName: try AccountName("Assets:Account2:SYM"), amount: Amount(number: 70, commoditySymbol: "USD")),
+        Posting(accountName: try AccountName("Expenses:Tax"), amount: Amount(number: -10, commoditySymbol: "USD")),
+        Posting(accountName: try AccountName("Expenses:Other"), amount: Amount(number: -60, commoditySymbol: "USD"))
+    ]))
+    ledger.add(Transaction(metaData: TransactionMetaData(date: date), postings: [
+        Posting(accountName: try AccountName("Assets:Account1:SYMB:Acc"), amount: Amount(number: 50, commoditySymbol: "USD")),
+        Posting(accountName: try AccountName("Expenses:Tax"), amount: Amount(number: -50, commoditySymbol: "USD"))
+    ]))
+
+    ledger.custom.append(Custom(date: date, name: MetaDataKeys.settings, values: [MetaDataKeys.slipNames, "Taxslip1"]))
+    ledger.custom.append(Custom(date: date, name: MetaDataKeys.settings, values: [MetaDataKeys.slipCurrency, "Taxslip1", "USD"]))
+    ledger.custom.append(Custom(date: date, name: MetaDataKeys.settings, values: [MetaDataKeys.account, "Taxslip1", "SplitBox3", "Expenses:Tax"]))
+
+    return ledger
+}
+
+func splitSymbolErrorLedger() throws -> Ledger {
+    let ledger = Ledger()
+    let date = Date(timeIntervalSince1970: 1_650_013_015)
+
+    try ledger.add(Account(name: try AccountName("Assets:Account1:SYM"), metaData: ["Taxslip1": "TaxBox1"]))
+    try ledger.add(Account(name: try AccountName("Assets:Account1:SYMB:Acc"), metaData: ["Taxslip1": "TaxBox2"]))
+    try ledger.add(Account(name: try AccountName("Expenses:Tax")))
+
+    try ledger.add(Commodity(symbol: "SYM"))
+    try ledger.add(Commodity(symbol: "SYMB", metaData: [MetaDataKeys.commodityName: "DescB"]))
+
+    ledger.add(Transaction(metaData: TransactionMetaData(date: date), postings: [
+        Posting(accountName: try AccountName("Assets:Account1:SYM"), amount: Amount(number: 100, commoditySymbol: "USD")),
+        Posting(accountName: try AccountName("Assets:Account1:SYMB:Acc"), amount: Amount(number: 50, commoditySymbol: "USD")),
+        Posting(accountName: try AccountName("Expenses:Tax"), amount: Amount(number: -150, commoditySymbol: "USD")),
+        Posting(accountName: try AccountName("Expenses:Other"), amount: Amount(number: -70, commoditySymbol: "USD"))
+    ]))
+
+    ledger.custom.append(Custom(date: date, name: MetaDataKeys.settings, values: [MetaDataKeys.slipNames, "Taxslip1"]))
+    ledger.custom.append(Custom(date: date, name: MetaDataKeys.settings, values: [MetaDataKeys.slipCurrency, "Taxslip1", "USD"]))
     ledger.custom.append(Custom(date: date, name: MetaDataKeys.settings, values: [MetaDataKeys.account, "Taxslip1", "SplitBox3", "Expenses:Tax"]))
 
     return ledger

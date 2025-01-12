@@ -21,4 +21,10 @@ final class TaxErrorsTests: XCTestCase { // swiftlint:disable line_length
         XCTAssertEqual(error.localizedDescription, expectedDescription)
     }
 
+    func testSplitAccountDifferentSymbols() {
+        let error = TaxErrors.splitAccountDifferentSymbols("A", "b", "c")
+        let expectedDescription = "The transaction A has a split account plus multiple other tax slip relevant accounts. These accounts have different symbols or descriptions. This does not work, as it is unclear to which symbol the amount booked to the split account should be counted for. Symbols: b Descriptions: c"
+        XCTAssertEqual(error.localizedDescription, expectedDescription)
+    }
+
 } // swiftlint:enable line_length

@@ -64,7 +64,7 @@ Sometimes, if you split up your slip by stock, you don't want to create a separa
 
 1. Configure the tax slip and box via a customs directive instead of account meta data, as shown below
 1. Make sure the transaction with the posting to this account has another posting from an account configured via meta data for the same tax slip
-1. Make sure the other account has a symbol configured
+1. Make sure the other account has a symbol configured (Note: This also works on slips not split by symbol. E.g. When you share a tax expense account across the whole ledger, you can still add it to your employment slip this way)
 
 Example:
 
@@ -81,14 +81,18 @@ If multiple custom directives for the same setting exist, the latest one up unti
 
 #### Special Characters
 
-Tax Slips only support letters and numbers. The only exceptions are round brackets `()`. To use them, add them into the `tax-slip` meta data:
+Tax Slips only support letters and numbers. The only exceptions are round brackets `()`. To use them, add them into the `slip-names` meta data:
 
 ```
 2020-01-01 custom "tax-slip-settings" "slip-names" "t4a(p)"
 ```
 
-At all other places used, remove the brackes, e.g. use `t4ap`.
+At all other places used, remove the brackets, e.g. use `t4ap`:
 
+```
+2020-01-01 open Income:CPP CAD
+  t4ap: "Taxable CPP benefits (Box 20)"
+```
 
 ### Dates
 

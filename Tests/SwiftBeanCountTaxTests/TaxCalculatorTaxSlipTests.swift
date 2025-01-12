@@ -51,11 +51,14 @@ final class TaxCalculatorTaxSlipTests: XCTestCase {
         XCTAssertEqual(row2.values[0].box, "TaxBox1")
         XCTAssertEqual(row2.values[0].value, Amount(number: 150, commoditySymbol: "EUR").multiCurrencyAmount)
 
-        // No tax slips
-        XCTAssertThrowsError(try TaxCalculator.generateTaxSlips(from: ledger, for: 2_020))
+        // No tax slips configured
+        XCTAssertThrowsError(try TaxCalculator.generateTaxSlips(from: ledger, for: 2_000))
 
-        // No tax slip currency
+        // No tax slip currency configured
         XCTAssertThrowsError(try TaxCalculator.generateTaxSlips(from: ledger, for: 2_021))
+
+        // No transactions
+        XCTAssertEqual(try TaxCalculator.generateTaxSlips(from: ledger, for: 2_020).count, 0)
     }
 
     func testGenerateTaxSlipsWithSymbol() throws {
@@ -196,4 +199,63 @@ final class TaxCalculatorTaxSlipTests: XCTestCase {
         XCTAssertEqual(row2.values[0].box, "TaxBox1")
         XCTAssertEqual(row2.values[0].value, Amount(number: 150, commoditySymbol: "EUR").multiCurrencyAmount)
     }
+
+     func testGenerateSplitTaxSlipsWithSymbol() throws {
+        let taxSlips = try TaxCalculator.generateTaxSlips(from: try splitSymbolLedger(), for: 2_022)
+        XCTAssertEqual(taxSlips.count, 1)
+
+        // Check tax slip
+        let taxSlip1 = taxSlips[0]
+        XCTAssertEqual(taxSlip1.name, "Taxslip1")
+        XCTAssertEqual(taxSlip1.boxes.count, 4)
+        XCTAssertEqual(taxSlip1.rows.count, 2)
+
+        // Check row 1
+        let row1 = taxSlip1.rows[0]
+        XCTAssertEqual(row1.symbol, "SYM")
+        XCTAssertNil(row1.name)
+
+        // Check tax box 1 in row 1
+        XCTAssertEqual(row1.values[0].box, "TaxBox1")
+        XCTAssertEqual(row1.values[0].value, Amount(number: 100, commoditySymbol: "USD").multiCurrencyAmount)
+
+        // Check tax box 2 in row 1
+        XCTAssertEqual(row1.values[1].box, "TaxBox2")
+        XCTAssertEqual(row1.values[1].value, MultiCurrencyAmount())
+
+        // Check tax box 3 in row 1
+        XCTAssertEqual(row1.values[2].box, "SplitBox3")
+        XCTAssertEqual(row1.values[2].value, Amount(number: -90, commoditySymbol: "USD").multiCurrencyAmount)
+
+        // Check tax box 4 in row 1
+        XCTAssertEqual(row1.values[3].box, "TaxBox4")
+        XCTAssertEqual(row1.values[3].value, Amount(number: 70, commoditySymbol: "USD").multiCurrencyAmount)
+
+        // Check row 2
+        let row2 = taxSlip1.rows[1]
+        XCTAssertEqual(row2.symbol, "SYMB")
+        XCTAssertEqual(row2.name, "DescB")
+
+        // Check tax box 1 in row 2
+        XCTAssertEqual(row2.values[0].box, "TaxBox1")
+        XCTAssertEqual(row2.values[0].value, MultiCurrencyAmount())
+
+        // Check tax box 2 in row 2
+        XCTAssertEqual(row2.values[1].box, "TaxBox2")
+        XCTAssertEqual(row2.values[1].value, Amount(number: 50, commoditySymbol: "USD").multiCurrencyAmount)
+
+        // Check tax box 3 in row 2
+        XCTAssertEqual(row2.values[2].box, "SplitBox3")
+        XCTAssertEqual(row2.values[2].value, Amount(number: -50, commoditySymbol: "USD").multiCurrencyAmount)
+
+        // Check tax box 4 in row 2
+        XCTAssertEqual(row2.values[3].box, "TaxBox4")
+        XCTAssertEqual(row2.values[3].value, MultiCurrencyAmount())
+    }
+
+    func testSplitAccountError() throws {
+        let ledger = try splitSymbolErrorLedger()
+        XCTAssertThrowsError(try TaxCalculator.generateTaxSlips(from: ledger, for: 2_022))
+    }
+
 }

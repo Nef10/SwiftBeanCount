@@ -10,6 +10,8 @@ public enum TaxErrors: Error {
     case noTaxSlipConfigured(Int)
     /// When a tax slip has no currency defined (values are tax slip name and tax year)
     case noCurrencyDefined(String, Int)
+    /// When a transaction has a split account and more then one other tax split relevant account, and these accounts have different symbols
+    case splitAccountDifferentSymbols(String, String, String)
 }
 
 extension TaxErrors: LocalizedError {
@@ -21,6 +23,9 @@ extension TaxErrors: LocalizedError {
             return "There was no configured tax slip found for year \(year).\n\nMake sure your ledger contains a custom directive like this: YYYY-MM-DD custom \"\(MetaDataKeys.settings)\" \"\(MetaDataKeys.slipNames)\" \"tax-slip-name1\" \"tax-slip-name2\"\n\nAdditionally, check that the date is in or before the tax year you are tring to generate slips for."
         case let .noCurrencyDefined(slip, year):
             return "There was no currency for tax slip \(slip) in year \(year) found.\n\nMake sure your ledger contains a custom directive like this: YYYY-MM-DD custom \"\(MetaDataKeys.settings)\" \"\(MetaDataKeys.slipCurrency)\" \"tax-slip-name\" \"currencySymbol\"\n\nAdditionally, check that the date is in or before the tax year you are tring to generate slips for."
+        case let .splitAccountDifferentSymbols(transaction, symbols, descriptions):
+            return "The transaction \(transaction) has a split account plus multiple other tax slip relevant accounts. These accounts have different symbols or descriptions. This does not work, as it is unclear to which symbol the amount booked to the split account should be counted for. Symbols: \(symbols) Descriptions: \(descriptions)"
+
         }
     } // swiftlint:enable line_length
 }
