@@ -2,6 +2,7 @@ import SwiftBeanCountModel
 @testable import SwiftBeanCountTangerineMapper
 import XCTest
 
+// swiftlint:disable:next type_body_length
 final class SwiftBeanCountTangerineMapperTests: XCTestCase {
 
     private let creditCard: [String: Any] = ["type": "CREDIT_CARD", "account_balance": 10.50, "currency_type": "CAD", "display_name": "1234 XXXX YYYY 1583"]
@@ -91,6 +92,84 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
           tangerine-id: "0"
           Assets:Checking 10.50 CAD
           Expenses:TODO -10.50 CAD
+        """)
+    }
+
+    func testCreateTransactionCreditCardRewardNotSetup() throws {
+        let transactions: [String: [[String: Any]]] =
+            ["Assets:Savings:Tangerine": [["id": 852_254, "posted_date": "2022-10-10T10:10:10", "description": "ABC", "amount": 10.50, "type": "CC_RE"] as [String: Any]]]
+        let result = try mapper.createTransactions(transactions)
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result[0].description, """
+        2022-10-10 * "Tangerine" ""
+          tangerine-id: "852254"
+          Assets:Savings:Tangerine 10.50 CAD
+          Expenses:TODO -10.50 CAD
+        """)
+    }
+
+    func testCreateTransactionCreditCardReward() throws {
+        let ledger = Ledger()
+        let accountName1 = try AccountName("Assets:Savings:Tangerine")
+        try ledger.add(Account(name: accountName1, metaData: ["number": "1001"]))
+        let accountName2 = try AccountName("Income:CashBack:Tangerine")
+        try ledger.add(Account(name: accountName2, metaData: ["tangerine-rewards": "1001"]))
+        let accountName3 = try AccountName("Income:CashBack:Tangerine1")
+        try ledger.add(Account(name: accountName3, metaData: ["tangerine-rewards": "1002"]))
+        let mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+
+        let transactions: [String: [[String: Any]]] =
+            ["Assets:Savings:Tangerine": [["id": 852_254, "posted_date": "2022-10-10T10:10:10", "description": "ABC", "amount": 10.50, "type": "CC_RE"] as [String: Any]]]
+        let result = try mapper.createTransactions(transactions)
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result[0].description, """
+        2022-10-10 * "Tangerine" ""
+          tangerine-id: "852254"
+          Assets:Savings:Tangerine 10.50 CAD
+          Income:CashBack:Tangerine -10.50 CAD
+        """)
+    }
+
+    func testCreateInterestTransactionNotSetup() throws {
+        let ledger = Ledger()
+        let accountName1 = try AccountName("Assets:Savings:Tangerine")
+        try ledger.add(Account(name: accountName1, metaData: ["number": "1001"]))
+        let mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+
+        let transactions: [String: [[String: Any]]] =
+            ["Assets:Savings:Tangerine": [["posted_date": "2022-10-10T10:10:10", "description": "Interest Paid", "amount": 10.50, "type": "INTEREST"] as [String: Any]]]
+        let result = try mapper.createTransactions(transactions)
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result[0].description, """
+        2022-10-10 * "Tangerine" ""
+          tangerine-id: "0"
+          Assets:Savings:Tangerine 10.50 CAD
+          Expenses:TODO -10.50 CAD
+        """)
+    }
+
+    func testCreateInterestTransaction() throws {
+        let ledger = Ledger()
+        let accountName1 = try AccountName("Assets:Savings:Tangerine")
+        try ledger.add(Account(name: accountName1, metaData: ["number": "1001"]))
+        let accountName2 = try AccountName("Income:Interest:Tangerine")
+        try ledger.add(Account(name: accountName2, metaData: ["tangerine-interest": "1001"]))
+        let accountName3 = try AccountName("Income:Interest:Tangerine1")
+        try ledger.add(Account(name: accountName3, metaData: ["tangerine-interest": "1002"]))
+        let mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+
+        let transactions: [String: [[String: Any]]] =
+            [
+                "Assets:Savings:Tangerine":
+                [["id": 786, "posted_date": "2022-10-10T10:10:10", "description": "Promotional Bonus Interest", "amount": 10.50, "type": "INTEREST"] as [String: Any]]
+            ]
+        let result = try mapper.createTransactions(transactions)
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result[0].description, """
+        2022-10-10 * "Tangerine" "Promotional Bonus Interest"
+          tangerine-id: "786"
+          Assets:Savings:Tangerine 10.50 CAD
+          Income:Interest:Tangerine -10.50 CAD
         """)
     }
 

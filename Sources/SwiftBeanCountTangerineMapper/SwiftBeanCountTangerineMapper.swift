@@ -12,6 +12,8 @@ public struct SwiftBeanCountTangerineMapper {
         static let lastFour = "last-four"
         static let number = "number"
         static let id = "tangerine-id"
+        static let rewards = "tangerine-rewards"
+        static let interest = "tangerine-interest"
     }
 
     private static var dateFormatterTransaction: DateFormatter = {
@@ -97,22 +99,43 @@ public struct SwiftBeanCountTangerineMapper {
     }
 
     private func createTransactions(_ transactions: [[String: Any]], for accountName: String) throws -> [Transaction] {
-        try transactions.compactMap {
-            guard !doesTransactionExistInLedger($0) else {
+        try transactions.compactMap { (json: [String: Any]) -> Transaction? in
+            guard !doesTransactionExistInLedger(json) else {
                 return nil
             }
-            guard let date = Self.dateFormatterTransaction.date(from: $0["posted_date"] as? String ?? "") else {
-                throw SwiftBeanCountTangerineMapperError.invalidDate(date: $0["posted_date"] as? String ?? "")
+            guard let date = Self.dateFormatterTransaction.date(from: json["posted_date"] as? String ?? "") else {
+                throw SwiftBeanCountTangerineMapperError.invalidDate(date: json["posted_date"] as? String ?? "")
             }
             let accountName = try AccountName(accountName)
 
-            let description = $0["description"] as? String ?? ""
-            let (decimal, _) = (String($0["amount"] as? Double ?? 0)).amountDecimal()
+            var description = json["description"] as? String ?? ""
+            let (decimal, _) = (String(json["amount"] as? Double ?? 0)).amountDecimal()
+            var otherAccountName = defaultAccountName
+            var payee = ""
+            if json["type"] as? String == "CC_RE" || json["type"] as? String == "INTEREST" {
+                payee = "Tangerine"
+                if json["type"] as? String == "CC_RE" {
+                    otherAccountName = account(type: MetaDataKey.rewards, for: accountName)
+                    description = ""
+                } else {
+                    otherAccountName = account(type: MetaDataKey.interest, for: accountName)
+                    if description == "Interest Paid" {
+                        description = ""
+                    }
+                }
+            }
             let posting = Posting(accountName: accountName, amount: Amount(number: decimal, commoditySymbol: commoditySymbol(for: accountName), decimalDigits: 2))
-            let posting2 = Posting(accountName: defaultAccountName, amount: Amount(number: -decimal, commoditySymbol: commoditySymbol(for: accountName), decimalDigits: 2))
-            let metaData = TransactionMetaData(date: date, narration: description, metaData: [MetaDataKey.id: String($0["id"] as? Int ?? 0)])
+            let posting2 = Posting(accountName: otherAccountName, amount: Amount(number: -decimal, commoditySymbol: commoditySymbol(for: accountName), decimalDigits: 2))
+            let metaData = TransactionMetaData(date: date, payee: payee, narration: description, metaData: [MetaDataKey.id: String(json["id"] as? Int ?? 0)])
             return Transaction(metaData: metaData, postings: [posting, posting2])
         }
+    }
+
+    private func account(type: String, for account: AccountName) -> AccountName {
+        guard let accountNumber = ledger.accounts.first(where: { $0.name == account })?.metaData[MetaDataKey.number] else {
+            return defaultAccountName
+        }
+        return ledger.accounts.first { $0.metaData[type]?.contains(accountNumber) ?? false }?.name ?? defaultAccountName
     }
 
     private func commoditySymbol(for account: AccountName) -> CommoditySymbol {
