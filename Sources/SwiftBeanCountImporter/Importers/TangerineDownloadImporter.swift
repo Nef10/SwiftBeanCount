@@ -158,6 +158,9 @@ class TangerineDownloadImporter: BaseImporter, DownloadImporter {
 
     private func mapTransactions(_ downloadedTransactions: [String: [[String: Any]]]) throws {
         transactions = try mapper.createTransactions(downloadedTransactions).map {
+            if !$0.metaData.payee.isEmpty || $0.metaData.metaData["id"]?.contains(" ") ?? false {
+                return ImportedTransaction($0, shouldAllowUserToEdit: false)
+            }
             var expenseAccounts = [mapper.defaultAccountName]
             let description = sanitize(description: $0.metaData.narration)
             let (savedDescription, savedPayee) = savedDescriptionAndPayeeFor(description: description)
