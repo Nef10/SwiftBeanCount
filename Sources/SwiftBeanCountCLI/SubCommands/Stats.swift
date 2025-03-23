@@ -18,7 +18,7 @@ struct Stats: FormattableLedgerCommand {
             ["Accounts", String(ledger.accounts.count)],
             ["Account openings", String(ledger.accounts.filter { $0.opening != nil }.count)],
             ["Account closings", String(ledger.accounts.filter { $0.closing != nil }.count)],
-            ["Balances", String(ledger.accounts.map { $0.balances.count }.reduce(0) { $0 + $1 })],
+            ["Balances", String(ledger.accounts.map(\.balances.count).reduce(0) { $0 + $1 })],
             ["Prices", String(ledger.prices.count)],
             ["Commodities", String(ledger.commodities.count)],
             ["Tags", String(ledger.tags.count)],

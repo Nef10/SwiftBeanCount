@@ -6,7 +6,7 @@ struct TestColorizedCommand: ColorizedCommand {
     var colorOptions = ColorizedCommandOptions()
 }
 
-class ColorizedCommandTests: XCTestCase {
+final class ColorizedCommandTests: XCTestCase {
 
     func testHelp() {
         let originalValue = Rainbow.enabled

@@ -53,7 +53,7 @@ struct Accounts: FormattableLedgerCommand {
             }
             if activity {
                 let transactionDates = ledger.transactions.compactMap { $0.postings.contains { $0.accountName == account.name } ? $0.metaData.date : nil }
-                let balanceDates = account.balances.map { $0.date }
+                let balanceDates = account.balances.map(\.date)
                 let allDates = transactionDates + balanceDates + [account.opening] + [account.closing]
                 let dates = allDates.compactMap { $0 }.sorted(by: >)
                 result.append(dateString(dates.first))

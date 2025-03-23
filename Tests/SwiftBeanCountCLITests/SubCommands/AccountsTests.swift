@@ -1,7 +1,7 @@
 @testable import SwiftBeanCountCLI
 import XCTest
 
-class AccountsTests: XCTestCase {
+final class AccountsTests: XCTestCase {
 
     func testInvalidArguments() {
         let url = emptyFileURL()

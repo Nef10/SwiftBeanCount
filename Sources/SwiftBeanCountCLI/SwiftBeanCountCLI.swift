@@ -11,6 +11,7 @@ public struct SwiftBeanCountCLI: ParsableCommand {
     )
 
     public init() {
+        // Empty
     }
 
 }

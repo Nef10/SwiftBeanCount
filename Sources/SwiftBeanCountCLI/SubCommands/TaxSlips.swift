@@ -18,13 +18,13 @@ struct TaxSlips: FormattableLedgerCommand {
     @OptionGroup()
     var colorOptions: ColorizedCommandOptions
 
-    func getResult(from ledger: Ledger, parsingDuration: Double) throws -> [FormattableResult] {
+    func getResult(from ledger: Ledger, parsingDuration _: Double) throws -> [FormattableResult] {
         try TaxCalculator.generateTaxSlips(from: ledger, for: year).filter { slip != nil ? $0.name.lowercased() == slip!.lowercased() : true }.map { slip in
             var values: [[String]] = slip.rows.map {
-                slip.symbols.isEmpty ? $0.values.map { $0.displayValue } : [$0.symbol!, $0.name!] + $0.values.map { $0.displayValue }
+                slip.symbols.isEmpty ? $0.values.map(\.displayValue) : [$0.symbol!, $0.name!] + $0.values.map(\.displayValue)
             }
             if !slip.symbols.isEmpty {
-                values.append([" ", "Sum"] + slip.sumRow.values.map { $0.displayValue })
+                values.append([" ", "Sum"] + slip.sumRow.values.map(\.displayValue))
             }
             let columns = slip.symbols.isEmpty ? slip.boxes : ["Symbol", "Name"] + slip.boxes
             return FormattableResult(title: slip.header, columns: columns, values: values, lastRowIsFooter: !slip.symbols.isEmpty)

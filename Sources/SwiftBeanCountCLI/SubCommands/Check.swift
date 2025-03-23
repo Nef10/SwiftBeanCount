@@ -24,7 +24,8 @@ struct Check: LedgerCommand, ColorizedCommand {
                 print(errors.joined(separator: "\n"))
             }
             throw ExitCode(65)
-        } else if !quiet {
+        }
+        if !quiet {
             print("No errors found.".green)
         }
     }

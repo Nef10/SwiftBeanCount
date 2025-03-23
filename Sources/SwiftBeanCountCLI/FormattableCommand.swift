@@ -25,7 +25,7 @@ struct FormattableResult {
 }
 
 struct FormattableCommandOptions: ParsableArguments {
-    @ArgumentParser.Option(name: [.short, .long], help: "Output format. Supported formats: \(Format.allCases.map { $0.rawValue }.joined(separator: ", "))")
+    @ArgumentParser.Option(name: [.short, .long], help: "Output format. Supported formats: \(Format.allCases.map(\.rawValue).joined(separator: ", "))")
     var format: Format = .table
 }
 
@@ -52,7 +52,7 @@ extension FormattableCommand {
             var table = TextTable(columns: value.columns.map { TextTableColumn(header: $0.bold) })
             table.addRows(values: value.values.dropLast())
             if !value.values.isEmpty {
-                table.addRow(values: value.lastRowIsFooter ? value.values.last!.map { $0.bold } : value.values.last!)
+                table.addRow(values: value.lastRowIsFooter ? value.values.last!.map(\.bold) : value.values.last!)
             }
             table.columnFence = ""
             table.rowFence = ""
@@ -63,7 +63,7 @@ extension FormattableCommand {
             var table = TextTable(columns: value.columns.map { TextTableColumn(header: $0) }, header: value.title.bold)
             table.addRows(values: value.values.dropLast())
             if !value.values.isEmpty {
-                table.addRow(values: value.lastRowIsFooter ? value.values.last!.map { $0.bold } : value.values.last!)
+                table.addRow(values: value.lastRowIsFooter ? value.values.last!.map(\.bold) : value.values.last!)
             }
             result = table.render()
         case .csv:

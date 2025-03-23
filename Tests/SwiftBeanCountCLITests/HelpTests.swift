@@ -1,7 +1,7 @@
 @testable import SwiftBeanCountCLI
 import XCTest
 
-class HelpTests: XCTestCase {
+final class HelpTests: XCTestCase {
 
    func testHelp() {
         let result = outputFromExecutionWith(arguments: ["--help"])

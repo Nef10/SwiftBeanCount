@@ -12,7 +12,7 @@ struct TestFormattableCommand: FormattableCommand {
     }
 }
 
-class FormattableCommandTests: XCTestCase {
+final class FormattableCommandTests: XCTestCase {
 
     private let basicResult = FormattableResult(title: "Title",
                                                 columns: ["Column A", "B", "C"],

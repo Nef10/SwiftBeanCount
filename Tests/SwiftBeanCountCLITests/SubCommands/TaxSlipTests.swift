@@ -1,7 +1,7 @@
 @testable import SwiftBeanCountCLI
 import XCTest
 
-class TaxSlipTests: XCTestCase {
+final class TaxSlipTests: XCTestCase {
 
     func testFileDoesNotExist() {
         let url = temporaryFileURL()
