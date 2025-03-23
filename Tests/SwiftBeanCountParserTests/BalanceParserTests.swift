@@ -10,7 +10,7 @@ import SwiftBeanCountModel
 @testable import SwiftBeanCountParser
 import XCTest
 
-class BalanceParserTests: XCTestCase {
+final class BalanceParserTests: XCTestCase {
 
     private let basicString = "2017-06-09 balance Assets:Cash 10.00 CAD"
     private let whitespaceString = "2017-06-09    balance    Assets:Cash     10.00      CAD"

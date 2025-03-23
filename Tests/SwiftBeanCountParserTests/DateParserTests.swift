@@ -9,7 +9,7 @@
 @testable import SwiftBeanCountParser
 import XCTest
 
-class DateParserTests: XCTestCase {
+final class DateParserTests: XCTestCase {
 
     func testNormalParsing() {
         let date = DateParser.parseFrom(string: "2017-06-09")

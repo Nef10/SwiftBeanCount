@@ -10,7 +10,7 @@ import SwiftBeanCountModel
 @testable import SwiftBeanCountParser
 import XCTest
 
-class PriceParserTests: XCTestCase {
+final class PriceParserTests: XCTestCase {
 
     // swiftlint:disable:next force_try
     private let price = try! Price(date: TestUtils.date20170609,

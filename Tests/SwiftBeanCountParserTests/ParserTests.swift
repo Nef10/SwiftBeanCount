@@ -10,7 +10,7 @@ import SwiftBeanCountModel
 @testable import SwiftBeanCountParser
 import XCTest
 
-class ParserTests: XCTestCase {
+final class ParserTests: XCTestCase {
 
     private enum TestFile: String {
         case minimal = "Minimal"

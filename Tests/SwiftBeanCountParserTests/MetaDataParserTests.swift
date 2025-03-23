@@ -9,7 +9,7 @@
 @testable import SwiftBeanCountParser
 import XCTest
 
-class MetaDataParserTests: XCTestCase {
+final class MetaDataParserTests: XCTestCase {
 
     private let basicString = "  test:\"ABC\""
     private let whitespaceString = "  test:    \"A B C\"        "

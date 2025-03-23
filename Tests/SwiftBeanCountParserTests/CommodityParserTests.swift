@@ -10,7 +10,7 @@ import SwiftBeanCountModel
 @testable import SwiftBeanCountParser
 import XCTest
 
-class CommodityParserTests: XCTestCase {
+final class CommodityParserTests: XCTestCase {
 
     private let basicString = "2017-06-09 commodity CAD"
     private let whitespaceString = "2017-06-09    commodity        CAD"

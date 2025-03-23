@@ -10,7 +10,7 @@ import SwiftBeanCountModel
 @testable import SwiftBeanCountParser
 import XCTest
 
-class CustomsParserTests: XCTestCase {
+final class CustomsParserTests: XCTestCase {
 
     private let basicString = "2017-06-09 custom \"ABC\" \"DEF\""
     private let multipleValuesString = "2017-06-09 custom \"ABC\" \"DEF\" \"GHI\" \"JKL\" \"MNO\""

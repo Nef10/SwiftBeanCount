@@ -10,7 +10,7 @@ import SwiftBeanCountModel
 @testable import SwiftBeanCountParser
 import XCTest
 
-class PluginParserTests: XCTestCase {
+final class PluginParserTests: XCTestCase {
 
     private let basicString = "plugin \"ABC\""
     private let whitespaceString = "plugin    \"  A B C  \"        "

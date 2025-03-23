@@ -10,7 +10,7 @@ import SwiftBeanCountModel
 @testable import SwiftBeanCountParser
 import XCTest
 
-class AccountParserTests: XCTestCase {
+final class AccountParserTests: XCTestCase {
 
     private let basicOpeningString = "2017-06-09 open Assets:Cash"
     private let basicClosingString = "2017-06-09 close Assets:Cash"

@@ -10,7 +10,7 @@ import SwiftBeanCountModel
 @testable import SwiftBeanCountParser
 import XCTest
 
-class OptionParserTests: XCTestCase {
+final class OptionParserTests: XCTestCase {
 
     private let basicString = "option \"ABC\" \"DEF\""
     private let whitespaceString = "option    \"  A B C  \"       \"  D E F  \"     "

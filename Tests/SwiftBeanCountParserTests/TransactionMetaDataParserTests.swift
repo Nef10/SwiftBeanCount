@@ -10,7 +10,7 @@ import SwiftBeanCountModel
 @testable import SwiftBeanCountParser
 import XCTest
 
-class TransactionMetaDataParserTests: XCTestCase {
+final class TransactionMetaDataParserTests: XCTestCase {
 
     private let basicTransactionMetaDataString = "2017-06-09 * \"Payee\" \"Narration\""
     private let whitespaceTransactionMetaDataString = "2017-06-09   *    \"Payee\"   \"Narration\""

@@ -10,7 +10,7 @@ import SwiftBeanCountModel
 @testable import SwiftBeanCountParser
 import XCTest
 
-class CostParserTests: XCTestCase {
+final class CostParserTests: XCTestCase {
 
     private static let regex: NSRegularExpression = {
         // swiftlint:disable:next force_try

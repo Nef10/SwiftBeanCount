@@ -10,7 +10,7 @@ import SwiftBeanCountModel
 @testable import SwiftBeanCountParser
 import XCTest
 
-class EventParserTests: XCTestCase {
+final class EventParserTests: XCTestCase {
 
     private let basicString = "2017-06-09 event \"ABC\" \"DEF\""
     private let whitespaceString = "2017-06-09 event    \"  A B C  \"       \"  D E F  \"     "
