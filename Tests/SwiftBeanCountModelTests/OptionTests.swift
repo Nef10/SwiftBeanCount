@@ -9,7 +9,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
-class OptionTests: XCTestCase {
+final class OptionTests: XCTestCase {
 
     func testDescription() {
         let option = Option(name: "name", value: "value1")

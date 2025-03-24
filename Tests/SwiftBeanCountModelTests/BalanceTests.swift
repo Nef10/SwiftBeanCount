@@ -9,7 +9,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
-class BalanceTests: XCTestCase {
+final class BalanceTests: XCTestCase {
 
     func testDescription() {
         let account = Account(name: TestUtils.cash)

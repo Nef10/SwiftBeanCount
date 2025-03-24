@@ -9,7 +9,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
-class EventTests: XCTestCase {
+final class EventTests: XCTestCase {
 
     func testEqual() {
         let event1 = Event(date: TestUtils.date20170608, name: "A", value: "B")

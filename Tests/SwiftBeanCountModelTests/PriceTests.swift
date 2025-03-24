@@ -9,7 +9,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
-class PriceTests: XCTestCase {
+final class PriceTests: XCTestCase {
 
     func testInit() {
         let amount = Amount(number: Decimal(1), commoditySymbol: TestUtils.cad)

@@ -9,7 +9,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
-class CostTests: XCTestCase {
+final class CostTests: XCTestCase {
 
     private let label1 = "1"
     private let label2 = "2"

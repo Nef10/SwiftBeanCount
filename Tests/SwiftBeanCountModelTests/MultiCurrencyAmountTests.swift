@@ -9,7 +9,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
-class MultiCurrencyAmountTests: XCTestCase {
+final class MultiCurrencyAmountTests: XCTestCase {
 
     func testInit() {
         let multiCurrencyAmount = MultiCurrencyAmount()

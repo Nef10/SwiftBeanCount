@@ -9,7 +9,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
-class TransactionMetaDataTests: XCTestCase {
+final class TransactionMetaDataTests: XCTestCase {
 
     private let payee = "Payee"
     private let narration = "Narration"

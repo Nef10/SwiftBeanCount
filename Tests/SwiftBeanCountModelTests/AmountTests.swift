@@ -9,7 +9,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
-class AmountTests: XCTestCase {
+final class AmountTests: XCTestCase {
 
     func testEqual() {
         XCTAssertEqual(TestUtils.amount, Amount(number: Decimal(1), commoditySymbol: TestUtils.cad))

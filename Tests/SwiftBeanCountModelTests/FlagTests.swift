@@ -9,7 +9,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
-class FlagTests: XCTestCase {
+final class FlagTests: XCTestCase {
 
     func testDescription() {
         let complete = Flag.complete

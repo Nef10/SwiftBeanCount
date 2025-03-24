@@ -10,7 +10,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
-class InventoryTests: XCTestCase {
+final class InventoryTests: XCTestCase {
 
     private let bookingMethods = [BookingMethod.strict, BookingMethod.lifo, BookingMethod.fifo]
 

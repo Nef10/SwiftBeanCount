@@ -9,7 +9,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
-class TransactionTests: XCTestCase {
+final class TransactionTests: XCTestCase {
 
     private var transaction1WithoutPosting: Transaction!
     private var transaction2WithoutPosting: Transaction!

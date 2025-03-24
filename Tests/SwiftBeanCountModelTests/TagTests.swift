@@ -9,7 +9,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
-class TagTests: XCTestCase {
+final class TagTests: XCTestCase {
 
     func testDescription() {
         let string = "String"

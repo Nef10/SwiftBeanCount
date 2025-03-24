@@ -11,7 +11,7 @@
 import XCTest
 
 // swiftlint:disable:next type_body_length
-class AccountTests: XCTestCase {
+final class AccountTests: XCTestCase {
 
     func testBookingMethod() {
         let defaultAccount = Account(name: TestUtils.cash)

@@ -9,7 +9,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
-class CommodityTests: XCTestCase {
+final class CommodityTests: XCTestCase {
 
     func testDescription() {
         let commodity = Commodity(symbol: TestUtils.cad)

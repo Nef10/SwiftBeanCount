@@ -11,7 +11,7 @@
 import XCTest
 
 // swiftlint:disable:next type_body_length
-class LedgerTests: XCTestCase {
+final class LedgerTests: XCTestCase {
 
     func testCommodities() throws {
         let ledger = Ledger()
@@ -64,7 +64,7 @@ class LedgerTests: XCTestCase {
         let ledger = Ledger()
         XCTAssertEqual(ledger.accountGroups.count, AccountType.allValues().count)
         for accountGroup in ledger.accountGroups {
-            XCTAssert(AccountType.allValues().map { $0.rawValue }.contains(accountGroup.nameItem))
+            XCTAssert(AccountType.allValues().map(\.rawValue).contains(accountGroup.nameItem))
         }
     }
 

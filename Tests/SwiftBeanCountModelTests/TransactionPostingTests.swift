@@ -9,7 +9,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
-class TransactionPostingTests: XCTestCase {
+final class TransactionPostingTests: XCTestCase {
 
     private var posting1 = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
 

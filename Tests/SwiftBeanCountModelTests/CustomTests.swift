@@ -9,7 +9,7 @@
 @testable import SwiftBeanCountModel
 import XCTest
 
-class CustomTests: XCTestCase {
+final class CustomTests: XCTestCase {
 
     func testEqual() {
         var custom1 = Custom(date: TestUtils.date20170608, name: "A", values: ["B"])
