@@ -484,7 +484,7 @@ final class LedgerTests: XCTestCase {
         let amount1 = Amount(number: 1, commoditySymbol: TestUtils.cad, decimalDigits: 1)
         let amount2 = Amount(number: 1, commoditySymbol: TestUtils.cad, decimalDigits: 2)
         let price1 = try Price(date: Date(), commoditySymbol: TestUtils.eur, amount: amount1)
-        let price2 = try Price(date: Date(), commoditySymbol: TestUtils.eur, amount: amount2)
+        let price2 = try Price(date: Date() + 1, commoditySymbol: TestUtils.eur, amount: amount2)
 
         try ledger1.add(price1)
         XCTAssertNotEqual(ledger1, ledger2)
