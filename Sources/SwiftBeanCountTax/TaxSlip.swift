@@ -135,7 +135,7 @@ public struct TaxSlip: Identifiable {
 
     /// If a slip is split by symbols (e.g. stocks), this contains the list of symbols, otherwise is is empty
     public var symbols: [String] {
-        Array(Set(entries.compactMap { $0.symbol })).sorted()
+        Array(Set(entries.compactMap(\.symbol))).sorted()
     }
 
     /// Rows on the tax slip
