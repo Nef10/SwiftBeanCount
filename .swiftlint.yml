@@ -111,7 +111,9 @@ opt_in_rules:
 disabled_rules:
   - trailing_comma
 
-line_length: 175
+line_length:
+  warning: 175
+  ignores_multiline_strings: true
 function_body_length: 30
 identifier_name:
   max_length:
