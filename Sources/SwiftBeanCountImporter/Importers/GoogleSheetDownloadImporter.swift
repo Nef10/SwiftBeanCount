@@ -23,7 +23,7 @@ class GoogleSheetDownloadImporter: BaseImporter, DownloadImporter {
 
     override class var importerName: String { "Google Sheet Download" }
     override class var importerType: String { "google-sheet" }
-    override class var helpText: String { //  swiftlint:disable line_length
+    override class var helpText: String {
         """
         Downloads transactions from a Google Sheet.
 
@@ -57,7 +57,7 @@ class GoogleSheetDownloadImporter: BaseImporter, DownloadImporter {
         - Who paid: One of the two names
         - Comment: While the column is required, it can be an empty string
         """
-    } //  swiftlint:enable line_length
+    }
 
     override var importName: String { "Google Sheet Download" }
 

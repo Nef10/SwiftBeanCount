@@ -48,7 +48,7 @@ class CompassCardDownloadImporter: BaseImporter, DownloadImporter {
 
     override class var importerName: String { "Compass Card Download" }
     override class var importerType: String { "compass-card-download" }
-    override class var helpText: String { //  swiftlint:disable line_length
+    override class var helpText: String {
         """
         Downloads transactions and the current balance from the Compass Card website.
 
@@ -59,7 +59,7 @@ class CompassCardDownloadImporter: BaseImporter, DownloadImporter {
 
         By default the last two month of data are loaded. To control this, add a custom options like this to your file: YYYY-MM-DD custom "compass-card-download-importer" "pastDaysToLoad" "5".
         """
-    } //  swiftlint:enable line_length
+    }
 
     override var importName: String { "Compass Card Download" }
 

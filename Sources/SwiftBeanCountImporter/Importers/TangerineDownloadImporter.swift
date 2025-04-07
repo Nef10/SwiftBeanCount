@@ -47,7 +47,7 @@ class TangerineDownloadImporter: BaseImporter, DownloadImporter {
 
     override class var importerName: String { "Tangerine Download" }
     override class var importerType: String { "tangerine-download" }
-    override class var helpText: String { //  swiftlint:disable line_length
+    override class var helpText: String {
         """
         Downloads transactions and the current balance from the Tangerine website.
 
@@ -56,7 +56,7 @@ class TangerineDownloadImporter: BaseImporter, DownloadImporter {
 
         By default the last two month of data are loaded. To control this, add a custom options like this to your file: YYYY-MM-DD custom "tangerine-download-importer" "pastDaysToLoad" "5".
         """
-    } //  swiftlint:enable line_length
+    }
 
     override var importName: String { "Tangerine Download" }
 

@@ -27,7 +27,7 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlin
 
     override class var importerName: String { "Wealthsimple Download" }
     override class var importerType: String { "wealthsimple" }
-    override class var helpText: String { //  swiftlint:disable line_length
+    override class var helpText: String {
         """
         Downloads transactions, prices and balances from Wealthsimple.
 
@@ -96,7 +96,7 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlin
 
         2020-07-31 open Expenses:TFSAContributionRoom TFSA.ROOM
           wealthsimple-contribution-room: "B002"
-        """ //  swiftlint:enable line_length
+        """
     }
 
     override var importName: String { "Wealthsimple Download" }
