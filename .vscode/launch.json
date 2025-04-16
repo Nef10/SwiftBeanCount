@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:SwiftBeanCountCLI}",
+            "name": "Debug swiftbeancount",
+            "program": "${workspaceFolder:SwiftBeanCountCLI}/.build/debug/swiftbeancount",
+            "preLaunchTask": "swift: Build Debug swiftbeancount"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:SwiftBeanCountCLI}",
+            "name": "Release swiftbeancount",
+            "program": "${workspaceFolder:SwiftBeanCountCLI}/.build/release/swiftbeancount",
+            "preLaunchTask": "swift: Build Release swiftbeancount"
+        }
+    ]
+}

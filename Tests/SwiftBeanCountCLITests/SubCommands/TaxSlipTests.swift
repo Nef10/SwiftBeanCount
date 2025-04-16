@@ -9,7 +9,7 @@ final class TaxSlipTests: XCTestCase {
         XCTAssertEqual(result.exitCode, 1)
         XCTAssert(result.errorOutput.isEmpty)
         #if os(Linux)
-        XCTAssertEqual(result.output, "The operation could not be completed. No such file or directory")
+        XCTAssertEqual(result.output, "The operation could not be completed. The file doesn’t exist.")
         #else
         XCTAssertEqual(result.output, "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
         #endif
