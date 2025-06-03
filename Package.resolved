@@ -86,8 +86,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Nef10/RogersBankDownloader.git",
       "state" : {
-        "revision" : "c0b2f07fe6bbcd68b8956e4713a87533597aae0e",
-        "version" : "0.2.1"
+        "revision" : "a14c66a7f181d870e7d52831f14df3991d79b0ba",
+        "version" : "0.2.2"
       }
     },
     {
@@ -140,8 +140,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Nef10/SwiftBeanCountRogersBankMapper.git",
       "state" : {
-        "revision" : "2a77c3430d2f69ff9d76e953f4b000f9e7abd2f1",
-        "version" : "0.0.13"
+        "revision" : "b52fbcdfc71bea76cfae09a9150c2f0bd2c88ab8",
+        "version" : "0.0.14"
       }
     },
     {
