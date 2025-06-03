@@ -54,7 +54,7 @@ jobs:
         run: |
           echo -e "❌ <b>Minimum coverage check failed!</b>\n<br />\n$(cat comment.html)" > comment.html
       - name: Post code coverage report
-        uses: marocchino/sticky-pull-request-comment@v2.9.1
+        uses: marocchino/sticky-pull-request-comment@v2.9.2
         with:
           path: comment.html
           number: ${{ env.pr_number }}
