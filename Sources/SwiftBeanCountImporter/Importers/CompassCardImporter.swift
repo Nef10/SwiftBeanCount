@@ -13,7 +13,7 @@ import SwiftBeanCountModel
 class CompassCardImporter: BaseImporter, CSVImporter {
 
     // swiftlint:disable:next line_length
-    static var headers = [["DateTime", "Transaction", "Product", "LineItem", "Amount", "BalanceDetails", "JourneyId", "LocationDisplay", "TransactonTime", "OrderDate", "Payment", "OrderNumber", "AuthCode", "Total"]]
+    static let headers = [["DateTime", "Transaction", "Product", "LineItem", "Amount", "BalanceDetails", "JourneyId", "LocationDisplay", "TransactonTime", "OrderDate", "Payment", "OrderNumber", "AuthCode", "Total"]]
 
     override class var importerName: String { "Compass Card" }
     override class var importerType: String { "compass-card" }

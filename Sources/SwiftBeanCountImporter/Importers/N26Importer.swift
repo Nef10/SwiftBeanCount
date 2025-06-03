@@ -34,7 +34,7 @@ class N26Importer: CSVBaseImporter, CSVImporter {
         """
     }
 
-    private static var dateFormatter: DateFormatter = {
+    private static let dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter

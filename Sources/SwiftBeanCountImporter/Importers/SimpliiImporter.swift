@@ -27,7 +27,7 @@ class SimpliiImporter: CSVBaseImporter, CSVImporter {
         """
     }
 
-    private static var dateFormatter: DateFormatter = {
+    private static let dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
         return dateFormatter

@@ -30,7 +30,7 @@ class TangerineAccountImporter: CSVBaseImporter, CSVImporter {
         """
     }
 
-    private static var dateFormatter: DateFormatter = {
+    private static let dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "M/d/yyyy"
         return dateFormatter
