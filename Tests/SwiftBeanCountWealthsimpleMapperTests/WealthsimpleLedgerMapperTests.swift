@@ -385,6 +385,22 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         XCTAssertEqual(transactions, [resultTransaction])
     }
 
+    func testMapTransactionsStockLoanTypesAreIgnored() throws {
+        var transaction = testTransaction
+
+        // Test .stockLoanBorrow
+        transaction.transactionType = .stockLoanBorrow
+        var (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction])
+        XCTAssert(prices.isEmpty)
+        XCTAssert(transactions.isEmpty)
+
+        // Test .stockLoanReturn
+        transaction.transactionType = .stockLoanReturn
+        (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction])
+        XCTAssert(prices.isEmpty)
+        XCTAssert(transactions.isEmpty)
+    }
+
     func testSplitTransactions() throws {
         var transaction1 = testTransaction
         transaction1.transactionType = .stockDistribution
