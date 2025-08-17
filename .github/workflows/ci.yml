@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
     - name: Check and output correct matrix
       id: output_data
       run: |
@@ -44,9 +44,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
     - name: Install Swift
-      uses: swift-actions/setup-swift@v2.2.0
+      uses: swift-actions/setup-swift@v2.3.0
     - name: Run tests
       run: swift test --enable-code-coverage -Xswiftc -warnings-as-errors
     - name: Save PR number
@@ -80,12 +80,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Install Swift
-        uses: swift-actions/setup-swift@v2.2.0
+        uses: swift-actions/setup-swift@v2.3.0
       - name: Install SwiftLint
         run: |
-          curl -L https://github.com/realm/SwiftLint/releases/download/0.59.0/swiftlint_linux.zip -o swiftlint.zip
+          curl -L https://github.com/realm/SwiftLint/releases/download/0.59.1/swiftlint_linux.zip -o swiftlint.zip
           unzip swiftlint.zip -d swiftlint
           ./swiftlint/swiftlint --version
       - name: Run SwiftLint
