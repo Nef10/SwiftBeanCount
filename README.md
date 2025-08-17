@@ -8,6 +8,11 @@
 
 This is a small library to convert downloaded data from Wealthsimple (via [WealthsimpleDownloader](https://github.com/Nef10/WealthsimpleDownloader)) to the Beancount format (via [SwiftBeanCountModel](https://github.com/Nef10/SwiftBeanCountModel)).
 
+## Limitations
+
+1. Renames of stock tickers are not imported.
+1. Return of capital and non cash distributions are also not imported, as these usually appear very late.
+
 ## Beancount meta data
 
 The library relies heavily on meta data in your Beancount file to find accounts and commodities. Please add these to your Beancount file:
