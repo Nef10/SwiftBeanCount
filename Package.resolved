@@ -167,8 +167,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper.git",
       "state" : {
-        "revision" : "412f5a8609c43ee6b4a4fb601944e151cc8aa107",
-        "version" : "1.7.0"
+        "revision" : "06ef41907dcd0e4f0d6338c3c831d98948173a87",
+        "version" : "1.8.0"
       }
     },
     {
@@ -203,8 +203,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Nef10/WealthsimpleDownloader.git",
       "state" : {
-        "revision" : "af3e30a235d0311de7b37536095f8cf6470abd51",
-        "version" : "2.0.2"
+        "revision" : "27247fbbbc8bb62bb8cfad66bec9b3a38806bac4",
+        "version" : "2.0.5"
       }
     }
   ],
