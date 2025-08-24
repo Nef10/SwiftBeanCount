@@ -399,4 +399,9 @@ final class AccountTests: XCTestCase {
         XCTAssertNotEqual(account1, account2)
     }
 
+    func testNameSeperatorIsPublic() {
+        // Test that the nameSeperator property is publicly accessible
+        XCTAssertEqual(Account.nameSeperator, Character(":"))
+    }
+
 }

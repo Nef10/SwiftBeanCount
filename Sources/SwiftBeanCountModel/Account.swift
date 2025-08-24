@@ -93,7 +93,7 @@ public class AccountGroup: AccountItem {
 /// It does hot hold any `Transaction`s
 public class Account: AccountItem {
 
-    static let nameSeperator = Character(":")
+    public static let nameSeperator = Character(":")
 
     /// Name of the account
     public let name: AccountName
