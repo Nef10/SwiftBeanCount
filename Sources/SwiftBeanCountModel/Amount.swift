@@ -50,7 +50,7 @@ extension Amount: CustomStringConvertible {
     public var description: String { "\(amountString) \(commoditySymbol)" }
 
     // swiftlint:disable:next legacy_objc_type
-    private var amountString: String { Self.numberFormatter(fractionDigits: decimalDigits).string(from: number as NSDecimalNumber)! }
+    public var amountString: String { Self.numberFormatter(fractionDigits: decimalDigits).string(from: number as NSDecimalNumber)! }
 
     private static func numberFormatter(fractionDigits: Int) -> NumberFormatter {
         let numberFormatter = self.numberFormatter

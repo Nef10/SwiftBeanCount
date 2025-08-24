@@ -68,4 +68,21 @@ final class AmountTests: XCTestCase {
         XCTAssertEqual(amount.multiCurrencyAmount.decimalDigits, [TestUtils.eur: 2])
     }
 
+    func testAmountStringPublic() {
+        // Test that amountString is publicly accessible and returns formatted number without commodity
+        let amountInteger = Amount(number: Decimal(123), commoditySymbol: TestUtils.cad, decimalDigits: 0)
+        XCTAssertEqual(amountInteger.amountString, "123")
+
+        let amountFloat = Amount(number: Decimal(125.50), commoditySymbol: TestUtils.cad, decimalDigits: 2)
+        XCTAssertEqual(amountFloat.amountString, "125.50")
+
+        let amountThousands = Amount(number: Decimal(1_234_567.89), commoditySymbol: TestUtils.cad, decimalDigits: 2)
+        XCTAssertEqual(amountThousands.amountString, "1,234,567.89")
+
+        // Verify it matches the number part of description (before the space and commodity)
+        let description = String(describing: amountFloat)
+        let expectedDescription = "\(amountFloat.amountString) \(TestUtils.cad)"
+        XCTAssertEqual(description, expectedDescription)
+    }
+
 }
