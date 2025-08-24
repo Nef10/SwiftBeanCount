@@ -11,7 +11,10 @@ import XCTest
 
 final class AccountNameTests: XCTestCase {
 
-    private let invalidNames = ["Assets", "Liabilities", "Income", "Expenses", "Equity", "Assets:", "Assets:Test:", "Assets:Test:", "Assets:Test::Test", "💰", ""]
+    private let invalidNames = [
+        "Assets", "Liabilities", "Income", "Expenses", "Equity", "Assets:", "Assets:Test:", "Assets:Test:", "Assets:Test::Test", "💰", "",
+        "Assets:Cash Account", "Assets: Cash", "Expenses:Grocery Store", "Liabilities:Credit Card"
+    ]
     private let validNames = ["Assets:Cash", "Assets:Cash:Test:Test:A", "Assets:Cash:Ca💰h:Test:💰", "Liabilities:Test", "Income:Test", "Expenses:Test", "Equity:Test"]
 
     func testInitNames() {
