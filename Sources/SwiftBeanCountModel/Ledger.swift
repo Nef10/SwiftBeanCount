@@ -169,6 +169,16 @@ public class Ledger {
                 result.append(error)
             }
         }
+
+        // Check for unused accounts if the nounused plugin is enabled
+        if plugins.contains("beancount.plugins.nounused") {
+            accounts.forEach { account in
+                if !account.hasPostings(in: self) {
+                    result.append("Account \(account.name) has no postings")
+                }
+            }
+        }
+
         transactions.forEach {
             if case .invalid(let error) = $0.validate(in: self) {
                 result.append(error)

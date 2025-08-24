@@ -236,6 +236,17 @@ public class Account: AccountItem {
         return postings
     }
 
+    /// Checks if the account has any postings in the ledger
+    ///
+    /// - Parameter ledger: ledger with the transactions with the postings
+    /// - Returns: true if the account has any postings, false otherwise
+    func hasPostings(in ledger: Ledger) -> Bool {
+        for transaction in ledger.transactions where transaction.postings.contains(where: { $0.accountName == self.name }) {
+            return true
+        }
+        return false
+    }
+
     private func wasOpen(at date: Date) -> Bool {
         if let opening = self.opening, opening <= date {
             if let closing = self.closing {

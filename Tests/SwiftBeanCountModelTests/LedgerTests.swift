@@ -593,4 +593,92 @@ final class LedgerTests: XCTestCase {
         XCTAssertEqual(ledger1, ledger2)
     }
 
+    func testValidateUnusedAccountsWithoutPlugin() throws {
+        let ledger = Ledger()
+        let account = Account(name: TestUtils.cash)
+        try ledger.add(account)
+
+        // Without the nounused plugin, no errors should be generated for unused accounts
+        XCTAssertTrue(ledger.errors.isEmpty)
+    }
+
+    func testValidateUnusedAccountsWithPlugin() throws {
+        let ledger = Ledger()
+        ledger.plugins.append("beancount.plugins.nounused")
+        let account = Account(name: TestUtils.cash)
+        try ledger.add(account)
+
+        // With the nounused plugin, unused accounts should generate errors
+        XCTAssertFalse(ledger.errors.isEmpty)
+        XCTAssertEqual(ledger.errors.count, 1)
+        XCTAssertEqual(ledger.errors[0], "Account Assets:Cash has no postings")
+    }
+
+    func testValidateUsedAccountsWithPlugin() throws {
+        let ledger = Ledger()
+        ledger.plugins.append("beancount.plugins.nounused")
+
+        // Add commodity with opening date
+        try ledger.add(Commodity(symbol: TestUtils.cad, opening: TestUtils.date20170608))
+
+        // Add accounts with opening dates
+        let cashAccount = Account(name: TestUtils.cash, opening: TestUtils.date20170608)
+        let incomeAccount = Account(name: TestUtils.income, opening: TestUtils.date20170608)
+        try ledger.add(cashAccount)
+        try ledger.add(incomeAccount)
+
+        // Add a balanced transaction that uses the account
+        let posting1 = Posting(accountName: TestUtils.cash, amount: Amount(number: 10, commoditySymbol: TestUtils.cad))
+        let posting2 = Posting(accountName: TestUtils.income, amount: Amount(number: -10, commoditySymbol: TestUtils.cad))
+        let metaData = TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: .complete, tags: [])
+        let transaction = Transaction(metaData: metaData, postings: [posting1, posting2])
+        ledger.add(transaction)
+
+        // With the nounused plugin, used accounts should not generate errors
+        XCTAssertTrue(ledger.errors.isEmpty)
+    }
+
+    func testValidateMultipleUnusedAccountsWithPlugin() throws {
+        let ledger = Ledger()
+        ledger.plugins.append("beancount.plugins.nounused")
+
+        let account1 = Account(name: TestUtils.cash)
+        let account2 = Account(name: TestUtils.chequing)
+        try ledger.add(account1)
+        try ledger.add(account2)
+
+        // Both accounts should generate errors
+        XCTAssertFalse(ledger.errors.isEmpty)
+        XCTAssertEqual(ledger.errors.count, 2)
+        XCTAssert(ledger.errors.contains("Account Assets:Cash has no postings"))
+        XCTAssert(ledger.errors.contains("Account Assets:Chequing has no postings"))
+    }
+
+    func testValidateMixedAccountsWithPlugin() throws {
+        let ledger = Ledger()
+        ledger.plugins.append("beancount.plugins.nounused")
+
+        // Add commodity with opening date
+        try ledger.add(Commodity(symbol: TestUtils.cad, opening: TestUtils.date20170608))
+
+        let unusedAccount = Account(name: TestUtils.cash)
+        let usedAccount = Account(name: TestUtils.chequing, opening: TestUtils.date20170608)
+        let incomeAccount = Account(name: TestUtils.income, opening: TestUtils.date20170608)
+        try ledger.add(unusedAccount)
+        try ledger.add(usedAccount)
+        try ledger.add(incomeAccount)
+
+        // Add a balanced transaction that only uses one account
+        let posting1 = Posting(accountName: TestUtils.chequing, amount: Amount(number: 10, commoditySymbol: TestUtils.cad))
+        let posting2 = Posting(accountName: TestUtils.income, amount: Amount(number: -10, commoditySymbol: TestUtils.cad))
+        let metaData = TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: .complete, tags: [])
+        let transaction = Transaction(metaData: metaData, postings: [posting1, posting2])
+        ledger.add(transaction)
+
+        // Only the unused account should generate an error
+        XCTAssertFalse(ledger.errors.isEmpty)
+        XCTAssertEqual(ledger.errors.count, 1)
+        XCTAssertEqual(ledger.errors[0], "Account Assets:Cash has no postings")
+    }
+
 }
