@@ -61,4 +61,110 @@ final class PriceTests: XCTestCase {
         XCTAssertNotEqual(price, price6)
     }
 
+    func testValidateWithoutPlugin() throws {
+        // Test that price validation is skipped when plugin is not enabled
+        let ledger = Ledger()
+
+        // Add commodities with opening dates after the price date
+        let eurCommodity = Commodity(symbol: TestUtils.eur, opening: TestUtils.date20170609)
+        let cadCommodity = Commodity(symbol: TestUtils.cad, opening: TestUtils.date20170609)
+        try ledger.add(eurCommodity)
+        try ledger.add(cadCommodity)
+
+        // Create price before commodity opening dates
+        let amount = Amount(number: Decimal(1.2), commoditySymbol: TestUtils.cad)
+        let price = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount)
+
+        // Should be valid since plugin is not enabled
+        guard case .valid = price.validate(in: ledger) else {
+            XCTFail("Price should be valid when check_commodity plugin is not enabled")
+            return
+        }
+    }
+
+    func testValidateWithPlugin() throws {
+        // Test that price validation works when plugin is enabled
+        let ledger = Ledger()
+        ledger.plugins.append("beancount.plugins.check_commodity")
+
+        // Add commodities with opening dates after the price date
+        let eurCommodity = Commodity(symbol: TestUtils.eur, opening: TestUtils.date20170609)
+        let cadCommodity = Commodity(symbol: TestUtils.cad, opening: TestUtils.date20170609)
+        try ledger.add(eurCommodity)
+        try ledger.add(cadCommodity)
+
+        // Create price before commodity opening dates
+        let amount = Amount(number: Decimal(1.2), commoditySymbol: TestUtils.cad)
+        let price = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount)
+
+        // Should be invalid since EUR commodity is used before opening
+        if case .invalid(let error) = price.validate(in: ledger) {
+            XCTAssertTrue(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
+        } else {
+            XCTFail("Price should be invalid when commodity is used before opening date")
+        }
+    }
+
+    func testValidateAmountCommodityUsageDate() throws {
+        // Test validation of amount commodity usage date
+        let ledger = Ledger()
+        ledger.plugins.append("beancount.plugins.check_commodity")
+
+        // Add commodities with different opening dates
+        let eurCommodity = Commodity(symbol: TestUtils.eur, opening: TestUtils.date20170608)
+        let cadCommodity = Commodity(symbol: TestUtils.cad, opening: TestUtils.date20170609)
+        try ledger.add(eurCommodity)
+        try ledger.add(cadCommodity)
+
+        // Create price where amount commodity (CAD) is used before its opening
+        let amount = Amount(number: Decimal(1.2), commoditySymbol: TestUtils.cad)
+        let price = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount)
+
+        // Should be invalid since CAD (amount commodity) is used before opening
+        if case .invalid(let error) = price.validate(in: ledger) {
+            XCTAssertTrue(error.contains("CAD used on 2017-06-08 before its opening date of 2017-06-09"))
+        } else {
+            XCTFail("Price should be invalid when amount commodity is used before opening date")
+        }
+    }
+
+    func testValidateValid() throws {
+        // Test that validation passes when commodities are used on or after opening dates
+        let ledger = Ledger()
+        ledger.plugins.append("beancount.plugins.check_commodity")
+
+        // Add commodities with opening dates before or on the price date
+        let eurCommodity = Commodity(symbol: TestUtils.eur, opening: TestUtils.date20170608)
+        let cadCommodity = Commodity(symbol: TestUtils.cad, opening: TestUtils.date20170608)
+        try ledger.add(eurCommodity)
+        try ledger.add(cadCommodity)
+
+        // Create price on the commodity opening dates
+        let amount = Amount(number: Decimal(1.2), commoditySymbol: TestUtils.cad)
+        let price = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount)
+
+        // Should be valid since commodities are used on or after opening dates
+        guard case .valid = price.validate(in: ledger) else {
+            XCTFail("Price should be valid when commodities are used on or after opening dates")
+            return
+        }
+    }
+
+    func testValidateWithAutoCreatedCommodities() throws {
+        // Test with auto-created commodities (no explicit opening date)
+        let ledger = Ledger()
+        ledger.plugins.append("beancount.plugins.check_commodity")
+
+        // Auto-created commodities don't have opening dates
+        // Create price - should validate as if commodities were auto-created
+        let amount = Amount(number: Decimal(1.2), commoditySymbol: TestUtils.cad)
+        let price = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount)
+
+        // Should be valid since auto-created commodities are not in the ledger commodities collection
+        guard case .valid = price.validate(in: ledger) else {
+            XCTFail("Price should be valid when commodities are auto-created")
+            return
+        }
+    }
+
 }

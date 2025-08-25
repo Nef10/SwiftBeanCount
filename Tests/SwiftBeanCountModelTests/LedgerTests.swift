@@ -681,4 +681,71 @@ final class LedgerTests: XCTestCase {
         XCTAssertEqual(ledger.errors[0], "Account Assets:Cash has no postings")
     }
 
+    func testValidateCommodityUsageDatesIntegration() throws {
+        // Integration test for commodity usage date validation across different entities
+        let ledger = Ledger()
+        ledger.plugins.append("beancount.plugins.check_commodity")
+
+        // Add commodity with opening date
+        let eurCommodity = Commodity(symbol: TestUtils.eur, opening: TestUtils.date20170609)
+        try ledger.add(eurCommodity)
+
+        // Add transaction using commodity before opening date
+        let transactionMetaData = TransactionMetaData(date: TestUtils.date20170608, payee: "Test", narration: "Test", flag: .complete, tags: [])
+        let posting = Posting(accountName: TestUtils.cash, amount: Amount(number: Decimal(100), commoditySymbol: TestUtils.eur))
+        let transaction = Transaction(metaData: transactionMetaData, postings: [posting])
+        ledger.add(transaction)
+
+        // Add price using commodity before opening date
+        let priceAmount = Amount(number: Decimal(1.2), commoditySymbol: TestUtils.cad)
+        let price = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: priceAmount)
+        try ledger.add(price)
+
+        // Add balance using commodity before opening date (this will create the account)
+        let balanceAmount = Amount(number: Decimal(50), commoditySymbol: TestUtils.eur)
+        let balance = Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: balanceAmount)
+        ledger.add(balance)
+
+        // Check that all validation errors are present
+        let errors = ledger.errors
+        let commodityUsageErrors = errors.filter { $0.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09") }
+
+        // Should have commodity usage errors showing that the validation is working
+        XCTAssertTrue(commodityUsageErrors.count >= 1, "Should have commodity usage errors showing validation is working")
+    }
+
+    func testValidateCommodityUsageDatesIntegrationValid() throws {
+        // Integration test for valid commodity usage dates
+        let ledger = Ledger()
+        ledger.plugins.append("beancount.plugins.check_commodity")
+
+        // Add commodity with opening date before usage
+        let eurCommodity = Commodity(symbol: TestUtils.eur, opening: TestUtils.date20170608)
+        try ledger.add(eurCommodity)
+
+        // Add transaction using commodity on opening date
+        let transactionMetaData = TransactionMetaData(date: TestUtils.date20170608, payee: "Test", narration: "Test", flag: .complete, tags: [])
+        let posting1 = Posting(accountName: TestUtils.cash, amount: Amount(number: Decimal(100), commoditySymbol: TestUtils.eur))
+        let posting2 = Posting(accountName: TestUtils.chequing, amount: Amount(number: Decimal(-100), commoditySymbol: TestUtils.eur))
+        let transaction = Transaction(metaData: transactionMetaData, postings: [posting1, posting2])
+        ledger.add(transaction)
+
+        // Add price using commodity on opening date
+        let priceAmount = Amount(number: Decimal(1.2), commoditySymbol: TestUtils.cad)
+        let price = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: priceAmount)
+        try ledger.add(price)
+
+        // Add balance using commodity on opening date (this will create the account)
+        let balanceAmount = Amount(number: Decimal(100), commoditySymbol: TestUtils.eur)
+        let balance = Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: balanceAmount)
+        ledger.add(balance)
+
+        // Check that no commodity usage errors are present
+        let errors = ledger.errors
+        let commodityUsageErrors = errors.filter { $0.contains("used on") && $0.contains("before its opening date") }
+
+        // Should have no commodity usage errors (balance error is expected due to transaction not being balanced)
+        XCTAssertTrue(commodityUsageErrors.isEmpty, "Should have no commodity usage date errors when all commodities are used on or after opening dates")
+    }
+
 }

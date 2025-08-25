@@ -158,6 +158,17 @@ public class Ledger {
     /// Validates ledger and returns all validation errors
     private func validate() -> [String] {
         var result = [String]()
+        result.append(contentsOf: validateAccounts())
+        result.append(contentsOf: validateTransactions())
+        result.append(contentsOf: validateCommodities())
+        result.append(contentsOf: validatePrices())
+        result.append(contentsOf: validateBalanceAssertions())
+        return result
+    }
+
+    /// Validates all accounts
+    private func validateAccounts() -> [String] {
+        var result = [String]()
         accounts.forEach {
             if case .invalid(let error) = $0.validate() {
                 result.append(error)
@@ -178,15 +189,50 @@ public class Ledger {
                 }
             }
         }
+        return result
+    }
 
+    /// Validates all transactions
+    private func validateTransactions() -> [String] {
+        var result = [String]()
         transactions.forEach {
             if case .invalid(let error) = $0.validate(in: self) {
                 result.append(error)
             }
         }
+        return result
+    }
+
+    /// Validates all commodities
+    private func validateCommodities() -> [String] {
+        var result = [String]()
         commodities.forEach {
             if case .invalid(let error) = $0.validate(in: self) {
                 result.append(error)
+            }
+        }
+        return result
+    }
+
+    /// Validates all prices
+    private func validatePrices() -> [String] {
+        var result = [String]()
+        prices.forEach {
+            if case .invalid(let error) = $0.validate(in: self) {
+                result.append(error)
+            }
+        }
+        return result
+    }
+
+    /// Validates all balance assertions
+    private func validateBalanceAssertions() -> [String] {
+        var result = [String]()
+        accounts.forEach { account in
+            account.balances.forEach { balance in
+                if case .invalid(let error) = balance.validate(in: self) {
+                    result.append(error)
+                }
             }
         }
         return result

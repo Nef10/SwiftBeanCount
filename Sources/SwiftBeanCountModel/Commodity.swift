@@ -51,6 +51,33 @@ public class Commodity {
         return .valid
     }
 
+    /// Validates that the commodity is not used before its opening date
+    ///
+    /// If the beancount.plugins.check_commodity plugin is enabled, validates that the commodity
+    /// is not used before its opening date.
+    ///
+    /// - Parameters:
+    ///   - date: The date when the commodity is being used
+    ///   - ledger: The ledger context containing enabled plugins
+    /// - Returns: `ValidationResult`
+    func validateUsageDate(_ date: Date, in ledger: Ledger) -> ValidationResult {
+        // Only check if opening date is set. If it is not set, the validate will ouput an error
+        // already, so we do not need to do this again.
+        // Also only check usage dates if the check_commodity plugin is enabled
+        guard let opening, ledger.plugins.contains("beancount.plugins.check_commodity") else {
+            return .valid
+        }
+
+        guard date >= opening else {
+            let dateFormatter = Self.dateFormatter
+            let usageDateString = dateFormatter.string(from: date)
+            let openingDateString = dateFormatter.string(from: opening)
+            return .invalid("Commodity \(symbol) used on \(usageDateString) before its opening date of \(openingDateString)")
+        }
+
+        return .valid
+    }
+
 }
 
 extension Commodity: CustomStringConvertible {

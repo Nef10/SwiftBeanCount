@@ -36,6 +36,17 @@ public struct Balance {
         self.metaData = metaData
     }
 
+    /// Validates that the commodity used in the balance is not used before its opening date
+    ///
+    /// - Parameter ledger: The ledger context
+    /// - Returns: `ValidationResult`
+    func validate(in ledger: Ledger) -> ValidationResult {
+        if let commodity = ledger.commodities.first(where: { $0.symbol == amount.commoditySymbol }) {
+            return commodity.validateUsageDate(date, in: ledger)
+        }
+        return .valid
+    }
+
 }
 
 extension Balance: CustomStringConvertible {

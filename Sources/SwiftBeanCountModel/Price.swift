@@ -46,6 +46,30 @@ public struct Price {
         }
     }
 
+    /// Validates that the commodities used in the price are not used before their opening dates
+    ///
+    /// - Parameter ledger: The ledger context
+    /// - Returns: `ValidationResult`
+    func validate(in ledger: Ledger) -> ValidationResult {
+        // Validate the main commodity
+        if let commodity = ledger.commodities.first(where: { $0.symbol == commoditySymbol }) {
+            let validation = commodity.validateUsageDate(date, in: ledger)
+            guard case .valid = validation else {
+                return validation
+            }
+        }
+
+        // Validate the amount commodity
+        if let commodity = ledger.commodities.first(where: { $0.symbol == amount.commoditySymbol }) {
+            let validation = commodity.validateUsageDate(date, in: ledger)
+            guard case .valid = validation else {
+                return validation
+            }
+        }
+
+        return .valid
+    }
+
 }
 
 extension Price: CustomStringConvertible {

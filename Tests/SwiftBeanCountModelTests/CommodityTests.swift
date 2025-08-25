@@ -80,9 +80,63 @@ final class CommodityTests: XCTestCase {
 
         XCTAssert(eur > cad)
         XCTAssertFalse(eur < cad)
-
         XCTAssertFalse(eur > eur) // swiftlint:disable:this identical_operands
         XCTAssertFalse(cad < cad) // swiftlint:disable:this identical_operands
+    }
+
+    func testValidateUsageDate() {
+        // Test commodity with opening date - usage on same date should be valid
+        let commodity = Commodity(symbol: "EUR", opening: TestUtils.date20170608)
+        let ledgerWithPlugin = Ledger()
+        ledgerWithPlugin.plugins.append("beancount.plugins.check_commodity")
+
+        guard case .valid = commodity.validateUsageDate(TestUtils.date20170608, in: ledgerWithPlugin) else {
+            XCTFail("Using commodity on opening date should be valid")
+            return
+        }
+
+        // Test usage after opening date should be valid
+        guard case .valid = commodity.validateUsageDate(TestUtils.date20170609, in: ledgerWithPlugin) else {
+            XCTFail("Using commodity after opening date should be valid")
+            return
+        }
+    }
+
+    func testValidateUsageDateBeforeOpening() {
+        // Test commodity with opening date - usage before opening should be invalid
+        let commodity = Commodity(symbol: "EUR", opening: TestUtils.date20170609)
+        let ledgerWithPlugin = Ledger()
+        ledgerWithPlugin.plugins.append("beancount.plugins.check_commodity")
+
+        if case .invalid(let error) = commodity.validateUsageDate(TestUtils.date20170608, in: ledgerWithPlugin) {
+            XCTAssertTrue(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
+        } else {
+            XCTFail("Using commodity before opening date should be invalid")
+        }
+    }
+
+    func testValidateUsageDateWithoutPlugin() {
+        // Test without plugin - should always be valid regardless of dates
+        let commodity = Commodity(symbol: "EUR", opening: TestUtils.date20170609)
+        let ledgerWithoutPlugin = Ledger()
+
+        guard case .valid = commodity.validateUsageDate(TestUtils.date20170608, in: ledgerWithoutPlugin) else {
+            XCTFail("Usage date validation should be skipped when plugin is not enabled")
+            return
+        }
+    }
+
+    func testValidateUsageDateWithoutOpeningDate() {
+        // Test commodity without opening date
+        let commodity = Commodity(symbol: "EUR")
+        let ledgerWithPlugin = Ledger()
+        ledgerWithPlugin.plugins.append("beancount.plugins.check_commodity")
+
+        guard case .valid = commodity.validateUsageDate(TestUtils.date20170608, in: ledgerWithPlugin) else {
+            XCTFail("Using commodity without opening date should be ignored in the validateUsageDate, as it is tested in the valdiate function")
+            return
+        }
+
     }
 
 }

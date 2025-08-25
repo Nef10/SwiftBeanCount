@@ -43,6 +43,13 @@ public class Transaction {
         guard case .valid = balanced else {
             return balanced
         }
+
+        // Validate commodity usage dates
+        let commodityValidation = validateCommodityUsageDates(in: ledger)
+        guard case .valid = commodityValidation else {
+            return commodityValidation
+        }
+
         for posting in postings {
             guard let account = ledger.accounts.first(where: { $0.name == posting.accountName }) else {
                 return .invalid("Account \(posting.accountName) does not exist in the ledger")
@@ -52,6 +59,46 @@ public class Transaction {
                 return validationResult
             }
         }
+        return .valid
+    }
+
+    /// Validates that all commodities used in the transaction are not used before their opening dates
+    ///
+    /// - Parameter ledger: The ledger context
+    /// - Returns: `ValidationResult`
+    private func validateCommodityUsageDates(in ledger: Ledger) -> ValidationResult {
+        let transactionDate = metaData.date
+
+        for posting in postings {
+            // Validate main amount commodity
+            if let commodity = ledger.commodities.first(where: { $0.symbol == posting.amount.commoditySymbol }) {
+                let validation = commodity.validateUsageDate(transactionDate, in: ledger)
+                guard case .valid = validation else {
+                    return validation
+                }
+            }
+
+            // Validate price commodity if present
+            if let priceAmount = posting.price {
+                if let commodity = ledger.commodities.first(where: { $0.symbol == priceAmount.commoditySymbol }) {
+                    let validation = commodity.validateUsageDate(transactionDate, in: ledger)
+                    guard case .valid = validation else {
+                        return validation
+                    }
+                }
+            }
+
+            // Validate cost commodity if present
+            if let cost = posting.cost, let costAmount = cost.amount {
+                if let commodity = ledger.commodities.first(where: { $0.symbol == costAmount.commoditySymbol }) {
+                    let validation = commodity.validateUsageDate(transactionDate, in: ledger)
+                    guard case .valid = validation else {
+                        return validation
+                    }
+                }
+            }
+        }
+
         return .valid
     }
 
