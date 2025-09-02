@@ -26,7 +26,7 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
 
     override class var importerName: String { "Rogers Bank Download" }
     override class var importerType: String { "rogers" }
-    override class var helpText: String { //  swiftlint:disable line_length
+    override class var helpText: String {
         """
         Downloads transactions and the current balance from the Rogers Bank website.
 
@@ -38,7 +38,7 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
         By default transaction from the current and the last two statements are loaded. To control this, and for example only load the current statement, add a custom option to your file: YYYY-MM-DD custom "\(MetaDataKey.customsKey)" "\(MetaDataKey.customStatementsToLoad)" "1".
 
         """
-    } //  swiftlint:enable line_length
+    }
 
     override var importName: String { "Rogers Bank Download" }
     var authenticatorClass: Authenticator.Type = RogersAuthenticator.self

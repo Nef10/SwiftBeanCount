@@ -225,7 +225,6 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
     ///   - commodities: dictionary of name to account for commodities
     /// - Returns: Tupel with ManuLifeBuys and the purchase date
     private func parsePurchase(string input: String, commodities: [String: String]) -> ([ManuLifeBuy], Date?) {
-        // swiftlint:disable:next line_length
         let pattern = #"\s*.*?\.gif\s*(\d{4}.*?[a-z]\d)\s*$\s*[a-zA-z]*[ ]?(?:Contribution|Fund Transfer|Withdrawal)\s*([0-9.,]*)\s*units\s*@\s*\$([0-9.,]*)/unit\s*(-?[0-9.,]*)\s*$"#
 
         // swiftlint:disable force_try
