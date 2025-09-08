@@ -193,7 +193,7 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
 
     private func parseContributions(_ input: String) throws -> [Contribution] {
         var result = [Contribution]()
-        let pattern = #"((Jan\.|Feb\.|Mar\.|Apr\.|May|Jun\.|Jul\.|Aug\.|Sep\.|Oct\.|Nov\.|Dec\.) \d{1,2}, \d{4})([^$\d]*)\$ ([\d,]+\.\d+)[^€\d]*€ ([\d,]+\.\d+)((Jan\.|Feb\.|Mar\.|Apr\.|May|Jun\.|Jul\.|Aug\.|Sep\.|Oct\.|Nov\.|Dec\.) \d{1,2}, \d{4})(\d*.\d*)"#
+        let pattern = #"((Jan\.|Feb\.|Mar\.|Apr\.|May|Jun\.|Jul\.|Aug\.|Sep\.|Oct\.|Nov\.|Dec\.) \d{1,2}, \d{4})([^$\d]*)\$ ([\d,]+\.\d+)[^€\d]*€ ([\d,]+\.\d+)((Jan\.|Feb\.|Mar\.|Apr\.|May|Jun\.|Jul\.|Aug\.|Sep\.|Oct\.|Nov\.|Dec\.) \d{1,2}, \d{4})(\d*.\d*)"# // swiftlint:disable:this line_length
         let regex = try! NSRegularExpression(pattern: pattern, options: []) // swiftlint:disable:this force_try
         let matches = regex.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
 
