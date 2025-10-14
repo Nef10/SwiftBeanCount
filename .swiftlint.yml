@@ -1,4 +1,4 @@
-# Updated for 0.57.0
+# Updated for 0.62.1
 
 excluded:
   - ".build"
@@ -107,6 +107,7 @@ opt_in_rules:
   - prefer_key_path
   - no_empty_block
   - unused_parameter
+  - prefer_asset_symbols
 
 disabled_rules:
   - trailing_comma
