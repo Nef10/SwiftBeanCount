@@ -15,11 +15,11 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/Nef10/SwiftBeanCountModel.git",
-            .exact("0.1.6")
+            .exact("0.2.0")
         ),
         .package(
             url: "https://github.com/Nef10/SwiftBeanCountParser.git",
-            .exact("0.1.8")
+            .exact("0.1.9")
         ),
         .package(
             url: "https://github.com/Nef10/GoogleAuthentication.git",
