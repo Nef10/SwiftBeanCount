@@ -328,9 +328,9 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
     func testMapTransactionsTransfers() throws {
         var count = 1
         let types: [SwiftBeanCountModel.AccountType: [Wealthsimple.TransactionType]] = [
-            .asset: [.deposit, .withdrawal, .paymentTransferOut, .transferIn, .transferOut, .paymentTransferIn, .referralBonus, .giveawayBonus, .refund, .contribution],
-            .income: [.paymentTransferIn, .referralBonus, .giveawayBonus, .refund, .cashbackBonus, .fee, .reimbursement, .interest],
-            .expense: [.paymentSpend, .fee, .reimbursement, .interest]
+            .asset: [.deposit, .withdrawal, .paymentTransferOut, .transferIn, .transferOut, .paymentTransferIn, .referralBonus, .giveawayBonus, .contribution, .payment],
+            .income: [.paymentTransferIn, .referralBonus, .giveawayBonus, .cashbackBonus, .fee, .reimbursement, .interest],
+            .expense: [.paymentSpend, .fee, .reimbursement, .interest, .refund, .purchase]
         ]
         for (accountType, transactionTypes) in types {
             for transactionType in transactionTypes {
@@ -357,6 +357,49 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
             try ledger.add(Commodity(symbol: "ETF"))
             try ledger.add(Commodity(symbol: "CAD"))
         }
+    }
+
+    func testMapTransferFX() throws {
+        var transaction = testTransaction
+        transaction.transactionType = .purchase
+        transaction.netCashCurrency = "USD"
+        transaction.netCashAmount = "-11.76"
+        transaction.description = "Purchase description"
+
+        let expenseAccount = try AccountName("Expenses:PurchaseTest")
+        try ledger.add(SAccount(name: expenseAccount, metaData: ["\(MetaDataKeys.prefix)\("\(transaction.transactionType)".camelCaseToKebabCase())": accountNumber]))
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction])
+
+        let posting1 = try posting(number: transaction.netCashAmount, commodity: "USD")
+        let posting2 = try Posting(accountName: expenseAccount,
+                                   amount: Amount(number: Decimal(string: "-\(transaction.quantity)")!, commoditySymbol: "ETF", decimalDigits: 2),
+                                   price: priceAmount(number: "11.76", commodity: "USD"),
+                                   priceType: .total)
+        let result = Transaction(metaData: TransactionMetaData(date: transaction.processDate, narration: transaction.description, metaData: [MetaDataKeys.id: transactionId]),
+                                 postings: [posting1, posting2])
+        XCTAssert(prices.isEmpty)
+        XCTAssertEqual(transactions, [result])
+    }
+
+    func testMapTransferAllowFXFalseButFXPresent() throws {
+        var transaction = testTransaction
+        transaction.transactionType = .payment
+        transaction.netCashCurrency = "USD"
+        transaction.netCashAmount = "-11.76"
+
+        let assetAccount = try AccountName("Assets:PaymentTest")
+        try ledger.add(SAccount(name: assetAccount, metaData: ["\(MetaDataKeys.prefix)\("\(transaction.transactionType)".camelCaseToKebabCase())": accountNumber]))
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction])
+
+        let posting1 = try posting(number: transaction.netCashAmount, commodity: "USD")
+        let posting2 = Posting(accountName: assetAccount,
+                               amount: Amount(number: Decimal(string: "11.76")!, commoditySymbol: "USD", decimalDigits: 2))
+        let result = Transaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transactionId]),
+                                 postings: [posting1, posting2])
+        XCTAssert(prices.isEmpty)
+        XCTAssertEqual(transactions, [result])
     }
 
     func testMapTransactionsContributionRoom() throws {

@@ -101,7 +101,7 @@ struct LedgerLookup {
         guard let name = ledger.accounts.first(where: { accountTypes.contains($0.name.accountType) && $0.metaData[key]?.contains(account.number) ?? false })?.name else {
             if case let .transactionType(transactionType) = type {
                 switch transactionType {
-                case .onlineBillPayment, .deposit, .paymentSpend, .transferIn, .transferOut, .paymentTransferIn, .paymentTransferOut, .withdrawal:
+                case .onlineBillPayment, .deposit, .paymentSpend, .transferIn, .transferOut, .paymentTransferIn, .paymentTransferOut, .withdrawal, .purchase, .refund:
                     return WealthsimpleLedgerMapper.fallbackExpenseAccountName
                 default:
                     throw WealthsimpleConversionError.missingAccount(key, account.number, accountTypes.map(\.rawValue).joined(separator: ", or "))

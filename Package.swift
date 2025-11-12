@@ -12,7 +12,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/Nef10/SwiftBeanCountModel.git",
-            .exact("0.1.6")
+            .exact("0.2.0")
         ),
         .package(
             url: "https://github.com/Nef10/SwiftBeanCountParserUtils.git",
@@ -20,7 +20,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/Nef10/WealthsimpleDownloader.git",
-            .upToNextMajor(from: "2.0.5")
+            .upToNextMajor(from: "3.0.0")
         ),
     ],
     targets: [

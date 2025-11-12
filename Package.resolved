@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/Nef10/SwiftBeanCountModel.git",
         "state": {
           "branch": null,
-          "revision": "a72ca4e46e816638be644ddfbb3c3f9233a5c944",
-          "version": "0.1.6"
+          "revision": "a6660604559c66714e2908d6287a49a527d81c5a",
+          "version": "0.2.0"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/Nef10/WealthsimpleDownloader.git",
         "state": {
           "branch": null,
-          "revision": "27247fbbbc8bb62bb8cfad66bec9b3a38806bac4",
-          "version": "2.0.5"
+          "revision": "bab5b50f815adc982b9fde2bce409aa65a621357",
+          "version": "3.0.0"
         }
       }
     ]

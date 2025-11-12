@@ -186,12 +186,12 @@ public struct WealthsimpleLedgerMapper { // swiftlint:disable:this type_body_len
             result = try mapDividend(transaction, in: account, manufactured: transaction.transactionType == .manufacturedDividend)
         case .contribution:
             result = try mapContribution(transaction, in: account)
-        case .deposit, .withdrawal, .paymentTransferOut, .transferIn, .transferOut:
+        case .deposit, .withdrawal, .paymentTransferOut, .transferIn, .transferOut, .payment:
             result = try mapTransfer(transaction, in: account, accountTypes: [.asset])
-        case .paymentTransferIn, .referralBonus, .giveawayBonus, .refund, .cashbackBonus:
+        case .paymentTransferIn, .referralBonus, .giveawayBonus, .cashbackBonus:
             result = try mapTransfer(transaction, in: account, accountTypes: [.asset, .income])
-        case .paymentSpend, .onlineBillPayment:
-            result = try mapTransfer(transaction, in: account, accountTypes: [.expense])
+        case .paymentSpend, .onlineBillPayment, .purchase, .refund:
+            result = try mapTransfer(transaction, in: account, accountTypes: [.expense], allowFx: true, includeDescription: true)
         case .fee, .reimbursement, .interest:
             result = try mapTransfer(transaction, in: account, accountTypes: [.expense, .income], payee: Self.payee)
         case .stockDividend:
@@ -225,11 +225,22 @@ public struct WealthsimpleLedgerMapper { // swiftlint:disable:this type_body_len
         return (try Price(date: transaction.processDate, commoditySymbol: lookup.commoditySymbol(for: transaction.symbol), amount: transaction.marketPrice), result)
     }
 
-    private func mapTransfer(_ transaction: WTransaction, in account: WAccount, accountTypes: [SwiftBeanCountModel.AccountType], payee: String = "") throws -> STransaction {
+    private func mapTransfer(
+        _ transaction: WTransaction,
+        in account: WAccount,
+        accountTypes: [SwiftBeanCountModel.AccountType],
+        payee: String = "",
+        allowFx: Bool = false,
+        includeDescription: Bool = false
+    ) throws -> STransaction {
         let accountName = try lookup.ledgerAccountName(for: .transactionType(transaction.transactionType), in: account, ofType: accountTypes)
+        let hasFX = allowFx && transaction.netCashCurrency != transaction.symbol
+        let amount = hasFX ? Amount(for: transaction.quantity, in: try lookup.commoditySymbol(for: transaction.symbol), negate: true) : transaction.negatedNetCash
+        let price = hasFX ? (transaction.netCash.number.isSignMinus ? transaction.negatedNetCash : transaction.netCash) : nil
         let posting1 = Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash)
-        let posting2 = Posting(accountName: accountName, amount: transaction.negatedNetCash)
-        return STransaction(metaData: TransactionMetaData(date: transaction.processDate, payee: payee, metaData: [MetaDataKeys.id: transaction.id]),
+        let posting2 = try Posting(accountName: accountName, amount: amount, price: price, priceType: hasFX ? .total : nil)
+        let narration = includeDescription ? transaction.description : ""
+        return STransaction(metaData: TransactionMetaData(date: transaction.processDate, payee: payee, narration: narration, metaData: [MetaDataKeys.id: transaction.id]),
                             postings: [posting1, posting2])
     }
 
