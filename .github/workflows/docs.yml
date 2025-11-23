@@ -10,7 +10,7 @@ jobs:
     runs-on: macOS-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
     - name: Install Jazzy
       run: sudo gem install jazzy
     - name: Generate documentation
