@@ -61,7 +61,7 @@ jobs:
         output-file: ./pr/lcov.info
     - name: Upload Coverage Information for Comment
       if: ${{ matrix.os == needs.get_os.outputs.coverage_os }}
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: pr
         path: pr/
