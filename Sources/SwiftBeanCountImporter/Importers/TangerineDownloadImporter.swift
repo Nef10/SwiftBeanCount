@@ -20,7 +20,7 @@ import AppKit
 protocol TangerineDownloaderProvider: AnyObject {
     var delegate: TangerineDownloaderDelegate? { get set }
 
-    func authorizeAndGetAccounts(username: String, pin: String, _ completion: @escaping (Result<[[String: Any]], Error>) -> Void)
+    func authorizeAndGetAccounts(username: String, password: String, _ completion: @escaping (Result<[[String: Any]], Error>) -> Void)
     func downloadAccountTransactions(accounts: [String: [String: Any]], dateToLoadFrom: Date) -> Result<[String: [[String: Any]]], Error>
 }
 
@@ -97,7 +97,7 @@ class TangerineDownloadImporter: BaseImporter, DownloadImporter {
         let username = getCredential(key: .username, name: "Username", type: .text([]))
         let pin = getCredential(key: .password, name: "PIN", type: .secret)
 
-        downloader.authorizeAndGetAccounts(username: username, pin: pin) {
+        downloader.authorizeAndGetAccounts(username: username, password: pin) {
             switch $0 {
             case .success(let accounts):
                 do {

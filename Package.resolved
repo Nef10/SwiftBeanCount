@@ -194,8 +194,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Nef10/TangerineDownloader.git",
       "state" : {
-        "revision" : "6a8ac17191e158941c57e2346ebadedf4ac41c4d",
-        "version" : "0.0.4"
+        "revision" : "c05d790d4768372952bc69c7dcc095b12a7f9b64",
+        "version" : "0.1.0"
       }
     },
     {

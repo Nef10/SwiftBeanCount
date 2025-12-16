@@ -19,7 +19,7 @@ let package = Package(
         .package(url: "https://github.com/Nef10/SwiftBeanCountSheetSync.git", from: "1.1.1"),
         .package(url: "https://github.com/Nef10/SwiftBeanCountRogersBankMapper.git", exact: "0.0.15"),
         .package(url: "https://github.com/Nef10/RogersBankDownloader.git", exact: "0.2.2"),
-        .package(url: "https://github.com/Nef10/TangerineDownloader.git", exact: "0.0.4"),
+        .package(url: "https://github.com/Nef10/TangerineDownloader.git", exact: "0.1.0"),
         .package(url: "https://github.com/Nef10/SwiftBeanCountTangerineMapper.git", exact: "0.0.4"),
         .package(url: "https://github.com/Nef10/CompassCardDownloader.git", exact: "0.0.2"),
         .package(url: "https://github.com/Nef10/SwiftBeanCountCompassCardMapper.git", exact: "0.1.2"),
