@@ -74,10 +74,6 @@ private func transactionResult(fundSymbol: String = TestUtils.fundSymbol, curren
     """
     2020-06-05 * "" ""
       Assets:Cash:Parking -149.28 \(currencySymbol)
-      Assets:Cash:Employee:Basic:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 \(currencySymbol)}
-      Assets:Cash:Employer:Basic:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 \(currencySymbol)}
-      Assets:Cash:Employer:Match:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 \(currencySymbol)}
-      Assets:Cash:Employee:Voluntary:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 \(currencySymbol)}
       Assets:Cash:Employee:Basic:\(fundSymbol) 3.82386 \(fundSymbol) {9.148 \(currencySymbol)}
       Assets:Cash:Employer:Basic:\(fundSymbol) 3.82386 \(fundSymbol) {9.148 \(currencySymbol)}
       Assets:Cash:Employer:Match:\(fundSymbol) 3.82386 \(fundSymbol) {9.148 \(currencySymbol)}
@@ -113,10 +109,6 @@ private var dateString: String = {
 
 private func balanceResult(fundSymbol: String = TestUtils.fundSymbol) -> String {
     """
-    \(dateString) balance Assets:Cash:Employee:Basic:1234 ML Category Fund 9876 y8 8.0000 1234 ML Category Fund 9876 y8
-    \(dateString) balance Assets:Cash:Employer:Basic:1234 ML Category Fund 9876 y8 1,010.4000 1234 ML Category Fund 9876 y8
-    \(dateString) balance Assets:Cash:Employer:Match:1234 ML Category Fund 9876 y8 8.0000 1234 ML Category Fund 9876 y8
-    \(dateString) balance Assets:Cash:Employee:Voluntary:1234 ML Category Fund 9876 y8 5.6000 1234 ML Category Fund 9876 y8
     \(dateString) balance Assets:Cash:Employee:Basic:\(fundSymbol) 11.7280 \(fundSymbol)
     \(dateString) balance Assets:Cash:Employer:Basic:\(fundSymbol) 15.24640 \(fundSymbol)
     \(dateString) balance Assets:Cash:Employer:Match:\(fundSymbol) 11.72800 \(fundSymbol)
@@ -168,7 +160,7 @@ final class ManuLifeImporterTests: XCTestCase {
         XCTAssertNil(importer.nextTransaction())
         let balances = importer.balancesToImport()
         let prices = importer.pricesToImport()
-        XCTAssertEqual(balances.count, 8)
+        XCTAssertEqual(balances.count, 4)
         XCTAssertEqual(prices.count, 2)
 
         XCTAssertEqual(
@@ -203,7 +195,7 @@ final class ManuLifeImporterTests: XCTestCase {
         XCTAssertNotNil(transaction)
         let balances = importer.balancesToImport()
         let prices = importer.pricesToImport()
-        XCTAssertEqual(balances.count, 8)
+        XCTAssertEqual(balances.count, 4)
         XCTAssertEqual(prices.count, 4)
         XCTAssertEqual(
             "\(transaction!.transaction)\n\n\(balances.map { "\($0)" }.joined(separator: "\n"))\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))",
@@ -218,12 +210,16 @@ final class ManuLifeImporterTests: XCTestCase {
         XCTAssertNotNil(transaction)
         let balances = importer.balancesToImport()
         let prices = importer.pricesToImport()
-        XCTAssertEqual(balances.count, 8)
+        XCTAssertEqual(balances.count, 0)
         XCTAssertEqual(prices.count, 4)
         XCTAssertEqual(
             "\(transaction!.transaction)\n\n\(balances.map { "\($0)" }.joined(separator: "\n"))\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))",
             """
-            \(transactionResult(fundSymbol: "5678 ML Easy BB q9", currencySymbol: "CAD"))\n\n\(balanceResult(fundSymbol: "5678 ML Easy BB q9"))\n
+            2020-06-05 * "" ""
+              Assets:Cash:Parking -149.28 CAD
+
+
+
             \(transactionPricesResult(fundSymbol: "5678 ML Easy BB q9", currencySymbol: "CAD"))
             \(balancePricesResult(fundSymbol: "5678 ML Easy BB q9", currencySymbol: "CAD"))
             """
@@ -245,7 +241,7 @@ final class ManuLifeImporterTests: XCTestCase {
         _ = importer.nextTransaction()
         let balances = importer.balancesToImport()
         let prices = importer.pricesToImport()
-        XCTAssertEqual(balances.count, 7)
+        XCTAssertEqual(balances.count, 3)
         XCTAssertEqual(prices.count, 2)
         XCTAssertFalse(balances.contains(balanceObject))
         XCTAssertFalse(prices.contains(price1))
@@ -262,10 +258,6 @@ final class ManuLifeImporterTests: XCTestCase {
         XCTAssertEqual("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))", """
             2020-06-05 * "" ""
               Assets:Cash:Parking -149.28 USD
-              Assets:Cash:Employee:Basic:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
-              Assets:Cash:Employer:Basic:1234 ML Category Fund 9876 y8 0.14336 1234 ML Category Fund 9876 y8 {21.221 USD}
-              Assets:Cash:Employer:Match:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
-              Assets:Cash:Employee:Voluntary:1234 ML Category Fund 9876 y8 0.07720 1234 ML Category Fund 9876 y8 {21.221 USD}
               Assets:Cash:Employee:Basic:\(TestUtils.fundSymbol) 3.82386 \(TestUtils.fundSymbol) {9.148 USD}
               Assets:Cash:Employer:Basic:\(TestUtils.fundSymbol) 4.97102 \(TestUtils.fundSymbol) {9.148 USD}
               Assets:Cash:Employer:Match:\(TestUtils.fundSymbol) 3.82386 \(TestUtils.fundSymbol) {9.148 USD}
@@ -287,9 +279,6 @@ final class ManuLifeImporterTests: XCTestCase {
         XCTAssertEqual("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))", """
             2020-06-05 * "" ""
               Assets:Cash:Parking -149.28 USD
-              Assets:Cash:Employee:Basic:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
-              Assets:Cash:Employer:Basic:1234 ML Category Fund 9876 y8 0.22056 1234 ML Category Fund 9876 y8 {21.221 USD}
-              Assets:Cash:Employer:Match:1234 ML Category Fund 9876 y8 0.11028 1234 ML Category Fund 9876 y8 {21.221 USD}
               Assets:Cash:Employee:Basic:\(TestUtils.fundSymbol) 3.82386 \(TestUtils.fundSymbol) {9.148 USD}
               Assets:Cash:Employer:Basic:\(TestUtils.fundSymbol) 7.64772 \(TestUtils.fundSymbol) {9.148 USD}
               Assets:Cash:Employer:Match:\(TestUtils.fundSymbol) 3.82386 \(TestUtils.fundSymbol) {9.148 USD}
@@ -309,7 +298,6 @@ final class ManuLifeImporterTests: XCTestCase {
         XCTAssertEqual("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))", """
             2020-06-05 * "" ""
               Assets:Cash:Parking -149.28 USD
-              Assets:Cash:Employee:Voluntary:1234 ML Category Fund 9876 y8 0.44112 1234 ML Category Fund 9876 y8 {21.221 USD}
               Assets:Cash:Employee:Voluntary:\(TestUtils.fundSymbol) 15.29544 \(TestUtils.fundSymbol) {9.148 USD}
 
             2020-06-05 price 1234 ML Category Fund 9876 y8 21.221 USD

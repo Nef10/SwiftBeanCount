@@ -104,8 +104,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Nef10/SwiftBeanCountCompassCardMapper.git",
       "state" : {
-        "revision" : "c1af5fc33aa9062ce635f77bacc722a085a90d2b",
-        "version" : "0.1.1"
+        "revision" : "e38eb33cf51c5760e6d52c1b889a9b03d258497d",
+        "version" : "0.1.2"
       }
     },
     {
@@ -113,8 +113,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Nef10/SwiftBeanCountModel.git",
       "state" : {
-        "revision" : "a72ca4e46e816638be644ddfbb3c3f9233a5c944",
-        "version" : "0.1.6"
+        "revision" : "a6660604559c66714e2908d6287a49a527d81c5a",
+        "version" : "0.2.0"
       }
     },
     {
@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Nef10/SwiftBeanCountParser.git",
       "state" : {
-        "revision" : "4299b420e43abeb113a315467b1a70a5017ca758",
-        "version" : "0.1.8"
+        "revision" : "a47e8f01bfe464945c7648af9d675a2455f99fbc",
+        "version" : "0.1.9"
       }
     },
     {
@@ -140,8 +140,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Nef10/SwiftBeanCountRogersBankMapper.git",
       "state" : {
-        "revision" : "b52fbcdfc71bea76cfae09a9150c2f0bd2c88ab8",
-        "version" : "0.0.14"
+        "revision" : "3fe28188fe6fae3dcecd865dbc8de2645d650533",
+        "version" : "0.0.15"
       }
     },
     {
@@ -149,8 +149,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Nef10/SwiftBeanCountSheetSync.git",
       "state" : {
-        "revision" : "279fb68904bad4932d012ea20b42c0b950090675",
-        "version" : "1.1.0"
+        "revision" : "7cd15040c0bb7caa524687b90f6d5e23edd57194",
+        "version" : "1.1.1"
       }
     },
     {
@@ -158,8 +158,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Nef10/SwiftBeanCountTangerineMapper.git",
       "state" : {
-        "revision" : "db1a30b42d0e7c57ff5e69e86552646a6eee5216",
-        "version" : "0.0.3"
+        "revision" : "c5f660f3b5675f4ab939fbf2dac538c377fcf2db",
+        "version" : "0.0.4"
       }
     },
     {
@@ -167,8 +167,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper.git",
       "state" : {
-        "revision" : "06ef41907dcd0e4f0d6338c3c831d98948173a87",
-        "version" : "1.8.0"
+        "revision" : "1601b38713c4b3af91c036a1f271b42fe9604eb9",
+        "version" : "1.9.0"
       }
     },
     {
@@ -203,8 +203,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Nef10/WealthsimpleDownloader.git",
       "state" : {
-        "revision" : "27247fbbbc8bb62bb8cfad66bec9b3a38806bac4",
-        "version" : "2.0.5"
+        "revision" : "bab5b50f815adc982b9fde2bce409aa65a621357",
+        "version" : "3.0.0"
       }
     }
   ],

@@ -18,7 +18,7 @@ protocol WealthsimpleDownloaderProvider {
     func getPositions(in account: Wealthsimple.Account, date: Date?, completion: @escaping (Result<[Wealthsimple.Position], Wealthsimple.PositionError>) -> Void)
     func getTransactions(
         in account: Wealthsimple.Account,
-        startDate: Date?,
+        startDate: Date,
         completion: @escaping (Result<[Wealthsimple.Transaction], Wealthsimple.TransactionError>) -> Void
     )
 }
@@ -246,9 +246,29 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlin
     private func mapTransactions(_ transactions: [SwiftBeanCountModel.Transaction], _ completion: @escaping () -> Void) {
         self.transactions = transactions.map {
             if $0.postings.contains(where: { $0.accountName == WealthsimpleLedgerMapper.fallbackExpenseAccountName }) {
-                return ImportedTransaction($0,
+                var expenseAccounts = [WealthsimpleLedgerMapper.fallbackExpenseAccountName]
+                let description = sanitize(description: $0.metaData.narration)
+                let (savedDescription, savedPayee) = savedDescriptionAndPayeeFor(description: description)
+                let metaData = TransactionMetaData(date: $0.metaData.date,
+                                                   payee: savedPayee ?? $0.metaData.payee,
+                                                   narration: savedDescription ?? description,
+                                                   metaData: $0.metaData.metaData)
+                var transaction = Transaction(metaData: metaData, postings: $0.postings)
+                if let account = savedAccountNameFor(payee: metaData.payee),
+                    let posting = transaction.postings.first(where: { $0.accountName == WealthsimpleLedgerMapper.fallbackExpenseAccountName }) {
+                    expenseAccounts.append(account)
+                    var postings: [Posting] = transaction.postings.filter { $0 != posting }
+                    let price = posting.priceType == .total ? posting.totalPrice : posting.price
+                    guard let newPosting = try? Posting(accountName: account, amount: posting.amount, price: price, priceType: posting.priceType, cost: posting.cost) else {
+                        fatalError("Invalid price configuration in posting")
+                    }
+                    postings.append(newPosting)
+                    transaction = Transaction(metaData: transaction.metaData, postings: postings)
+                }
+                return ImportedTransaction(transaction,
+                                           originalDescription: description,
                                            shouldAllowUserToEdit: true,
-                                           accountName: $0.postings.first { $0.accountName != WealthsimpleLedgerMapper.fallbackExpenseAccountName }!.accountName)
+                                           accountName: transaction.postings.first { !expenseAccounts.contains($0.accountName) }!.accountName)
             }
             return ImportedTransaction($0)
         }

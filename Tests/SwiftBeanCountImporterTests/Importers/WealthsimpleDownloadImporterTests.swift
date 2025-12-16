@@ -79,7 +79,7 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
 
         func getTransactions(
             in account: Wealthsimple.Account,
-            startDate: Date?,
+            startDate: Date,
             completion: @escaping (Result<[Wealthsimple.Transaction], Wealthsimple.TransactionError>) -> Void
         ) {
             completion(WealthsimpleDownloadImporterTests.getTransactions?(account, startDate) ?? .success([]))
@@ -234,28 +234,28 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
         let importer = WealthsimpleDownloadImporter(ledger: ledger), account = TestAccount(), transaction1 = TestTransaction()
         var transaction2 = TestTransaction()
         transaction2.transactionType = .paymentSpend
+        transaction2.quantity = "-5.25"
         Self.getAccounts = { .success([account]) }
         Self.getPositions = { _, _ in .success([]) }
         Self.getTransactions = { _, _ in .success([transaction1, transaction2]) }
         importer.downloaderClass = TestDownloader.self
         importer.load()
-        var postings = [
+        let postings = [
             Posting(accountName: try AccountName("Assets:W:Cash"), amount: Amount(number: Decimal(string: "-11.76")!, commoditySymbol: "CAD", decimalDigits: 2)),
             Posting(accountName: try AccountName("Assets:W:ETF"),
                     amount: Amount(number: Decimal(string: transaction1.quantity)!, commoditySymbol: "ETF", decimalDigits: 2),
                     cost: try Cost(amount: Amount(number: Decimal(string: "2.24")!, commoditySymbol: "CAD", decimalDigits: 2), date: nil, label: nil))
         ]
-        var transaction = STransaction(metaData: TransactionMetaData(date: transaction1.processDate, metaData: ["wealthsimple-id": "transID"]), postings: postings)
-        XCTAssertEqual(importer.nextTransaction(), ImportedTransaction(transaction))
-        postings[1] = Posting(accountName: try AccountName("Expenses:TODO"), amount: Amount(number: Decimal(string: "11.76")!, commoditySymbol: "CAD", decimalDigits: 2))
-        transaction = STransaction(metaData: TransactionMetaData(date: transaction1.processDate, metaData: ["wealthsimple-id": "transID"]), postings: postings)
-        XCTAssertEqual(importer.nextTransaction(),
-                       ImportedTransaction(transaction, shouldAllowUserToEdit: true, accountName: try AccountName("Assets:W:Cash")))
+        let metaData = TransactionMetaData(date: transaction1.processDate, metaData: ["wealthsimple-id": "transID"])
+        XCTAssertEqual(importer.nextTransaction(), ImportedTransaction(STransaction(metaData: metaData, postings: postings)))
+        let price = Amount(number: Decimal(string: "11.76")!, commoditySymbol: "CAD", decimalDigits: 2)
+        let transaction = STransaction(metaData: metaData, postings: [
+            postings[0],
+            try Posting(accountName: try AccountName("Expenses:TODO"), amount: postings[1].amount, price: price, priceType: .total)
+        ])
+        XCTAssertEqual(importer.nextTransaction(), ImportedTransaction(transaction, shouldAllowUserToEdit: true, accountName: postings[0].accountName))
         XCTAssertNil(importer.nextTransaction())
-        XCTAssertEqual(
-            importer.pricesToImport(),
-            [try Price(date: transaction1.processDate, commoditySymbol: "ETF", amount: Amount(number: Decimal(string: "2.24")!, commoditySymbol: "CAD", decimalDigits: 2))]
-        )
+        XCTAssertEqual(importer.pricesToImport(), [try Price(date: transaction1.processDate, commoditySymbol: "ETF", amount: postings[1].cost!.amount!)])
         XCTAssert(importer.balancesToImport().isEmpty)
     }
 
@@ -421,10 +421,6 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
 
 }
 
-#if hasFeature(RetroactiveAttribute)
-extension Wealthsimple.AccountError: @retroactive Equatable {}
-#endif
-
 extension Wealthsimple.AccountError: EquatableError {
     public static func == (lhs: Wealthsimple.AccountError, rhs: Wealthsimple.AccountError) -> Bool {
         if case let .httpError(lhsString) = lhs, case let .httpError(rhsString) = rhs {
@@ -434,10 +430,6 @@ extension Wealthsimple.AccountError: EquatableError {
     }
 }
 
-#if hasFeature(RetroactiveAttribute)
-extension Wealthsimple.PositionError: @retroactive Equatable {}
-#endif
-
 extension Wealthsimple.PositionError: EquatableError {
     public static func == (lhs: Wealthsimple.PositionError, rhs: Wealthsimple.PositionError) -> Bool {
         if case let .httpError(lhsString) = lhs, case let .httpError(rhsString) = rhs {
@@ -446,10 +438,6 @@ extension Wealthsimple.PositionError: EquatableError {
         return false
     }
 }
-
-#if hasFeature(RetroactiveAttribute)
-extension Wealthsimple.TransactionError: @retroactive Equatable {}
-#endif
 
 extension Wealthsimple.TransactionError: EquatableError {
     public static func == (lhs: Wealthsimple.TransactionError, rhs: Wealthsimple.TransactionError) -> Bool {
