@@ -349,8 +349,7 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
             var postings = [Posting]()
 
             let amount = Amount(number: -$0.contribution.number, commoditySymbol: $0.contribution.commoditySymbol, decimalDigits: $0.contribution.decimalDigits)
-            // swiftlint:disable:next todo
-            postings.append(Posting(accountName: configuredAccountName, amount: amount, price: $0.purchaseAmount)) // TODO: price needs to be full instead of per unit
+            postings.append(try Posting(accountName: configuredAccountName, amount: amount, price: $0.purchaseAmount, priceType: .total))
 
             let cost = try? Cost(amount: $0.price, date: nil, label: nil)
             postings.append(Posting(accountName: try stockAccountName ?? (try AccountName("Assets:\(stockCommodity)")), amount: $0.amount, cost: cost))

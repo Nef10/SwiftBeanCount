@@ -150,7 +150,7 @@ final class EquatePlusImporterTests: XCTestCase {
         XCTAssertEqual(beancountTransaction1!.metaData.flag, .complete)
         XCTAssertEqual(beancountTransaction1!.metaData.date, TestUtils.date20231202)
         XCTAssert(beancountTransaction1!.postings.contains {
-            $0.accountName == TestUtils.parking && $0.amount.description == "-863.19 UNKNOWN" && $0.price!.description == "580.48 UNKNOWN"
+            $0.accountName == TestUtils.parking && $0.amount.description == "-863.19 UNKNOWN" && $0.price?.description == "-0.67 UNKNOWN"
         })
         XCTAssert(beancountTransaction1!.postings.contains {
             $0.accountName.fullName == "Assets:Cash:UNKNOWN" && $0.amount.description == "3.910474 UNKNOWN" && $0.cost!.amount!.description == "59.37774 UNKNOWN"
@@ -160,7 +160,7 @@ final class EquatePlusImporterTests: XCTestCase {
         XCTAssertEqual(beancountTransaction2!.metaData.flag, .complete)
         XCTAssertEqual(beancountTransaction2!.metaData.date, TestUtils.date20240101)
         XCTAssert(beancountTransaction2!.postings.contains {
-            $0.accountName == TestUtils.parking && $0.amount.description == "-755.30 UNKNOWN" && $0.price!.description == "515.85 UNKNOWN"
+            $0.accountName == TestUtils.parking && $0.amount.description == "-755.30 UNKNOWN" && $0.price?.description == "-0.68 UNKNOWN"
         })
         XCTAssert(beancountTransaction2!.postings.contains {
             $0.accountName.fullName == "Assets:Cash:UNKNOWN" && $0.amount.description == "3.744300 UNKNOWN" && $0.cost!.amount!.description == "48.21871 UNKNOWN"
@@ -187,13 +187,13 @@ final class EquatePlusImporterTests: XCTestCase {
         XCTAssertNotNil(beancountTransaction1)
         XCTAssertNotNil(beancountTransaction2)
         XCTAssert(beancountTransaction1!.postings.contains {
-            $0.accountName.fullName == "Assets:EP:Cash" && $0.amount.description == "-863.19 EUR" && $0.price!.description == "580.48 USD"
+            $0.accountName.fullName == "Assets:EP:Cash" && $0.amount.description == "-863.19 EUR" && $0.price!.description == "-0.67 USD"
         })
         XCTAssert(beancountTransaction1!.postings.contains {
             $0.accountName.fullName == "Assets:EP:STOCK" && $0.amount.description == "3.910474 STOCK" && $0.cost!.amount!.description == "59.37774 USD"
         })
         XCTAssert(beancountTransaction2!.postings.contains {
-            $0.accountName.fullName == "Assets:EP:Cash" && $0.amount.description == "-755.30 EUR" && $0.price!.description == "515.85 USD"
+            $0.accountName.fullName == "Assets:EP:Cash" && $0.amount.description == "-755.30 EUR" && $0.price?.description == "-0.68 USD"
         })
         XCTAssert(beancountTransaction2!.postings.contains {
             $0.accountName.fullName == "Assets:EP:STOCK" && $0.amount.description == "3.744300 STOCK" && $0.cost!.amount!.description == "48.21871 USD"
