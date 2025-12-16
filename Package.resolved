@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Nef10/CompassCardDownloader.git",
       "state" : {
-        "revision" : "eab7329ae9272465c083245b462d1db7036fac14",
-        "version" : "0.0.1"
+        "revision" : "cba3c97127fa60620893feda57c63c108405ad70",
+        "version" : "0.0.2"
       }
     },
     {
@@ -185,8 +185,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Nef10/SwiftScraper.git",
       "state" : {
-        "revision" : "d93707b290c6d5cf899cdcdd229a7c858f9f2f19",
-        "version" : "0.6.0"
+        "revision" : "f35c7a03358ad0182c7a2cec12a41055afe44139",
+        "version" : "0.7.0"
       }
     },
     {
@@ -194,8 +194,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Nef10/TangerineDownloader.git",
       "state" : {
-        "revision" : "6c136d179a008542023e2fea46fe2a48450e5ef9",
-        "version" : "0.0.3"
+        "revision" : "6a8ac17191e158941c57e2346ebadedf4ac41c4d",
+        "version" : "0.0.4"
       }
     },
     {
