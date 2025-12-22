@@ -50,7 +50,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v6
     - name: Install Swift
-      uses: swift-actions/setup-swift@v3.0.0-beta.1
+      uses: swift-actions/setup-swift@v3
       with:
         swift-version: "6.2"
     - name: Run tests
