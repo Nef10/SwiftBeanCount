@@ -9,7 +9,7 @@
 import Foundation
 
 /// Errors an AccountName can throw
-public enum AccountNameError: Error {
+public enum AccountNameError: Error, Equatable {
     /// an invalid account name
     case invaildName(String)
 }

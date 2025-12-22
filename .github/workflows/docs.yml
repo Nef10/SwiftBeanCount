@@ -5,24 +5,58 @@ on:
     types: [published]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
-  test:
-    name: Generate and Publish documentation
+  build:
+    name: Generate and upload documentation
     runs-on: macOS-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v6
-    - name: Install Jazzy
-      run: sudo gem install jazzy
-    - name: Generate documentation
-      run: swift package --allow-writing-to-directory docs \
-        generate-documentation \
-        --disable-indexing \
-        --transform-for-static-hosting \
-        --hosting-base-path SwiftBeanCount \
-        --output-path docs
-    - name: Publish documentation
-      uses: peaceiris/actions-gh-pages@v4.0.0
+    - name: Install Swift
+      uses: swift-actions/setup-swift@v3.0.0-beta.1
       with:
-        publish_dir: ./docs
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        swift-version: "6.2.3"
+    - run: mkdir docs
+    - name: Generate documentation
+      run: |
+        TARGETS=$(swift package dump-package | jq -r ".targets | map(select(.type == \"regular\")) | map(.|= \"--target \" + .name) | join(\" \")")
+        swift package --allow-writing-to-directory docs generate-documentation --enable-experimental-combined-documentation --disable-indexing --transform-for-static-hosting --hosting-base-path ${{ github.event.repository.name }} --output-path docs $TARGETS
+      env:
+        DOCC_JSON_PRETTYPRINT: YES
+    - name: Create documentation index
+      run: |
+        echo "<!DOCTYPE html>
+        <html lang='en'>
+        <head>
+          <meta charset='utf-8'>
+          <title>${{ github.event.repository.name }} Documentation</title>
+          <meta http-equiv='refresh' content='0; url=documentation'>
+        </head>
+        <body>
+          <p>If you are not redirected automatically, follow this <a href='documentation'>link to the documentation</a>.</p>
+        </body>
+        </html>" > docs/index.html
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v4
+      with:
+        path: './docs'
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    name: Deploy documentation to GitHub Pages
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

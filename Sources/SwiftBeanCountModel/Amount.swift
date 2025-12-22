@@ -49,8 +49,34 @@ extension Amount: CustomStringConvertible {
     /// Returns a `String` for the ledger which contains the number with the correct number of decimal digits as well as the `commodity`
     public var description: String { "\(amountString) \(commoditySymbol)" }
 
-    // swiftlint:disable:next legacy_objc_type
-    public var amountString: String { Self.numberFormatter(fractionDigits: decimalDigits).string(from: number as NSDecimalNumber)! }
+    public var amountString: String {
+#if canImport(Darwin)
+        return Self.numberFormatter(fractionDigits: decimalDigits).string(for: number)!
+#else // Ugly workaround for https://github.com/swiftlang/swift-corelibs-foundation/issues/4221
+        let formatter = Self.numberFormatter
+        let separator = Character(formatter.decimalSeparator)
+
+        formatter.minimumFractionDigits = 0 // Set to 0 first to respect maximumFractionDigits
+        formatter.maximumFractionDigits = decimalDigits
+        // Max will have the maximum length allowed, but might not have enough decimal digits
+        let max = formatter.string(for: number)!
+        let maxDecimalDigits = max.contains(separator) ? max.split(separator: separator).last!.count : 0
+        if maxDecimalDigits == decimalDigits {
+            return max
+        }
+
+        // Min will have the minimum length required, but might have too many decimal digits
+        formatter.minimumFractionDigits = decimalDigits
+        formatter.maximumFractionDigits = decimalDigits // will be ignored
+        let min = formatter.string(for: number)!
+        let minDecimalDigits = min.contains(separator) ? min.split(separator: separator).last!.count : 0
+        if minDecimalDigits == decimalDigits {
+            return min
+        }
+
+        fatalError("Unable to format amountString for number: \(number) with decimalDigits: \(decimalDigits)")
+#endif
+    }
 
     private static func numberFormatter(fractionDigits: Int) -> NumberFormatter {
         let numberFormatter = self.numberFormatter

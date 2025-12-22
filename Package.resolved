@@ -1,4 +1,5 @@
 {
+  "originHash" : "550f56de908c727c7175f83d934837517f0262bfbfa0b01c7b624d018d6d5446",
   "pins" : [
     {
       "identity" : "brightfutures",
@@ -95,8 +96,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Nef10/RogersBankDownloader.git",
       "state" : {
-        "revision" : "a14c66a7f181d870e7d52831f14df3991d79b0ba",
-        "version" : "0.2.2"
+        "revision" : "8719750b0e1200604d1424f832fc02e1170dc887",
+        "version" : "0.3.0"
       }
     },
     {
@@ -104,8 +105,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser",
       "state" : {
-        "revision" : "cdd0ef3755280949551dc26dee5de9ddeda89f54",
-        "version" : "1.6.2"
+        "revision" : "c5d11a805e765f52ba34ec7284bd4fcd6ba68615",
+        "version" : "1.7.0"
       }
     },
     {
@@ -181,5 +182,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
