@@ -186,6 +186,7 @@ final class EquatePlusImporterTests: XCTestCase {
         let beancountTransaction2 = [transaction1!.transaction, transaction2!.transaction].first { $0.metaData.date == TestUtils.date20240101 }
         XCTAssertNotNil(beancountTransaction1)
         XCTAssertNotNil(beancountTransaction2)
+        print(beancountTransaction1!.postings)
         XCTAssert(beancountTransaction1!.postings.contains {
             $0.accountName.fullName == "Assets:EP:Cash" && $0.amount.description == "-863.19 EUR" && $0.price!.description == "-0.67 USD"
         })
@@ -249,43 +250,8 @@ final class EquatePlusImporterTests: XCTestCase {
     }
 }
 
-#if hasFeature(RetroactiveAttribute)
-extension EquatePlusImporterError: @retroactive Equatable {}
-#endif
-
 extension EquatePlusImporterError: EquatableError {
-    public static func == (lhs: EquatePlusImporterError, rhs: EquatePlusImporterError) -> Bool {
-        if case let .balanceImportNotSupported(lhsString) = lhs, case let .balanceImportNotSupported(rhsString) = rhs {
-            return lhsString == rhsString
-        }
-        if case let .failedToParseDate(lhsString) = lhs, case let .failedToParseDate(rhsString) = rhs {
-            return lhsString == rhsString
-        }
-        if case let .unknownContributionType(lhsString) = lhs, case let .unknownContributionType(rhsString) = rhs {
-            return lhsString == rhsString
-        }
-        if case let .unknownTransactionType(lhsString) = lhs, case let .unknownTransactionType(rhsString) = rhs {
-            return lhsString == rhsString
-        }
-        if case let .invalidContributionMapping(lhsString1, lhsString2) = lhs, case let .invalidContributionMapping(rhsString1, rhsString2) = rhs {
-            return lhsString1 == rhsString1 && lhsString2 == rhsString2
-        }
-        if case let .invalidTransactionMapping(lhsString1, lhsString2) = lhs, case let .invalidTransactionMapping(rhsString1, rhsString2) = rhs {
-            return lhsString1 == rhsString1 && lhsString2 == rhsString2
-        }
-        return false
-    }
 }
 
-#if hasFeature(RetroactiveAttribute)
-extension AccountNameError: @retroactive Equatable {}
-#endif
-
 extension AccountNameError: EquatableError {
-    public static func == (lhs: AccountNameError, rhs: AccountNameError) -> Bool {
-        if case let .invaildName(lhsString) = lhs, case let .invaildName(rhsString) = rhs {
-            return lhsString == rhsString
-        }
-        return false
-    }
 }

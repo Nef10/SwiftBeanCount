@@ -85,4 +85,22 @@ final class AmountTests: XCTestCase {
         XCTAssertEqual(description, expectedDescription)
     }
 
+    func testAmountStringMinMaxDecimalDigits() {
+        // Fill with zeros to the right number of decimal digits
+        let amount = Amount(number: Decimal(0.67), commoditySymbol: TestUtils.cad, decimalDigits: 3)
+        XCTAssertEqual(amount.amountString, "0.670")
+
+        // Round down to the correct number of decimal digits
+        let amount2 = Amount(number: Decimal(0.673), commoditySymbol: TestUtils.cad, decimalDigits: 2)
+        XCTAssertEqual(amount2.amountString, "0.67")
+
+        // Round up to the correct number of decimal digits
+        let amount3 = Amount(number: Decimal(0.677), commoditySymbol: TestUtils.cad, decimalDigits: 2)
+        XCTAssertEqual(amount3.amountString, "0.68")
+
+        // No decimal digits
+        let amount4 = Amount(number: Decimal(234.56), commoditySymbol: TestUtils.cad, decimalDigits: 0)
+        XCTAssertEqual(amount4.amountString, "235")
+    }
+
 }

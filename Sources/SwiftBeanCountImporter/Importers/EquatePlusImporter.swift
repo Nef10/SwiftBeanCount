@@ -11,7 +11,7 @@ import SwiftBeanCountModel
 import SwiftBeanCountParserUtils
 
 /// Errors which can happen when importing
-enum EquatePlusImporterError: Error {
+enum EquatePlusImporterError: Error, Equatable {
     case balanceImportNotSupported(String)
     case failedToParseDate(String)
     case unknownContributionType(String)
