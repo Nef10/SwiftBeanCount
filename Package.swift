@@ -20,9 +20,17 @@ let package = Package(
         .library(
             name: "SwiftBeanCountTax",
             targets: ["SwiftBeanCountTax"]
-        )
+        ),
+        .library(
+            name: "SwiftBeanCountRogersBankMapper",
+            targets: ["SwiftBeanCountRogersBankMapper"]
+        ),
     ],
     dependencies: [
+        .package(
+            url: "https://github.com/Nef10/RogersBankDownloader.git",
+            .exact("0.2.2")
+        ),
     ],
     targets: [
         .target(
@@ -43,6 +51,14 @@ let package = Package(
             dependencies: ["SwiftBeanCountModel"],
             exclude: ["README.md"]
         ),
+        .target(
+            name: "SwiftBeanCountRogersBankMapper",
+            dependencies: [
+                "SwiftBeanCountModel",
+                "SwiftBeanCountParserUtils",
+                "RogersBankDownloader",
+            ]
+        ),
         .testTarget(
             name: "SwiftBeanCountModelTests",
             dependencies: ["SwiftBeanCountModel"]
@@ -59,6 +75,10 @@ let package = Package(
         .testTarget(
             name: "SwiftBeanCountTaxTests",
             dependencies: ["SwiftBeanCountTax"]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountRogersBankMapperTests",
+            dependencies: ["SwiftBeanCountRogersBankMapper"]
         ),
     ]
 )

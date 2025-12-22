@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "RogersBankDownloader",
+        "repositoryURL": "https://github.com/Nef10/RogersBankDownloader.git",
+        "state": {
+          "branch": null,
+          "revision": "a14c66a7f181d870e7d52831f14df3991d79b0ba",
+          "version": "0.2.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
