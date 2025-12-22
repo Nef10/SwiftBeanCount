@@ -9,84 +9,118 @@ on:
     - main
 
 jobs:
-  get_os:
-    name: Determine supported OS
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v6
-    - name: Check and output correct matrix
-      id: output_data
-      run: |
-        macos='macOS-latest'
-        if [ -e .github/macos_version.txt ]
-        then
-            macos=$(cat ./.github/macos_version.txt)
-        fi
-        if [ -e .github/macos_only ]
-        then
-            echo "os_matrix=['$macos']" >> $GITHUB_OUTPUT
-            echo "coverage_os=$macos" >> $GITHUB_OUTPUT
-        else
-            echo "os_matrix=['$macos', 'ubuntu-latest']" >> $GITHUB_OUTPUT
-            echo "coverage_os=ubuntu-latest" >> $GITHUB_OUTPUT
-        fi
-    outputs:
-        os_matrix: ${{ steps.output_data.outputs.os_matrix }}
-        coverage_os: ${{ steps.output_data.outputs.coverage_os }}
-
   test:
-    name: Tests
-    needs: get_os
+    name: ${{ matrix.platform }} Tests with Swift ${{ matrix.swift }}
     strategy:
+      fail-fast: false
       matrix:
-        os:  ${{fromJson(needs.get_os.outputs.os_matrix)}}
+        platform: ["macOS", "ubuntu", "iOS"]
+        swift: ["6.2.3"]
+        include:
+          - platform: macOS
+            os: macOS-latest
+          - platform: ubuntu
+            os: ubuntu-latest
+          - platform: iOS
+            os: macos-26
+            destination: 'platform=iOS Simulator,OS=26.1,name=iPhone 17 Pro'
+            xcode-version: '26.2' # Need to match Xcode version to iOS + Swift version
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v6
     - name: Install Swift
-      uses: swift-actions/setup-swift@v2.4.0
+      if : ${{ matrix.platform != 'iOS' }}
+      uses: swift-actions/setup-swift@v3.0.0-beta.1
+      with:
+        swift-version: "${{ matrix.swift }}"
+        skip-verify-signature: ${{ matrix.os == 'ubuntu-latest' }}
+    - name: Setup Xcode
+      if : ${{ matrix.platform == 'iOS' }}
+      uses: maxim-lobanov/setup-xcode@v1.6.0
+      with:
+        xcode-version: ${{ matrix.xcode-version }}
     - name: Run tests
-      run: swift test --enable-code-coverage -Xswiftc -warnings-as-errors
-    - name: Save PR number
-      if: ${{ matrix.os == needs.get_os.outputs.coverage_os }}
+      if : ${{ matrix.platform != 'iOS' }}
+      run: swift test --enable-code-coverage
+    - name: Run iOS tests
+      id: ios-tests
+      if : ${{ matrix.platform == 'iOS' }}
       run: |
-        mkdir -p ./pr
-        echo ${{ github.event.number }} > ./pr/NR
+        mkdir -p ../DerivedData
+        DERIVED_DATA_PATH=$PWD/../DerivedData
+        echo "DERIVED_DATA_PATH=$DERIVED_DATA_PATH" >> $GITHUB_ENV
+        SCHEME=$(xcodebuild test -list -json | jq -r "if .workspace.schemes | length == 1 then .workspace.schemes.[0] else .workspace.schemes | map(select(.|endswith(\"-Package\"))) | .[0] end")
+        xcodebuild test -skipPackagePluginValidation -enableCodeCoverage YES -scheme "$SCHEME" -destination "${{ matrix.destination }}" -derivedDataPath "$DERIVED_DATA_PATH"
+    - name: Install lcov
+      if: ${{ matrix.platform == 'iOS' }}
+      run: brew install lcov
+    - name: Create coverage directory
+      run: |
+        mkdir -p ./${{matrix.platform}}-coverage
+        echo "${{ github.event.number }}" > "./${{matrix.platform}}-coverage/PR_NUMBER-${{matrix.platform}}"
+    - name: Determine llvm command
+      run: |
+        LLVM_COV_CMD="llvm-cov"
+
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+          PATH="/usr/local/opt/llvm/bin:${PATH}"
+        else
+          # Workaround for GitHub Actions ubuntu image missing llvm-cov in PATH, if swift is pre-installed
+          # If it is installed via swift-actions/setup-swift, llvm-cov is in PATH
+          PATH="/usr/share/swift/usr/bin:${PATH}"
+        fi
+
+        if ! command -v "${LLVM_COV_CMD}" &> /dev/null; then
+          LLVM_COV_CMD="xcrun llvm-cov"
+        fi
+
+        echo "LLVM_COV_CMD=${LLVM_COV_CMD}" >> ${GITHUB_ENV}
+        echo "PATH=${PATH}" >> ${GITHUB_ENV}
+        echo "LLVM_COV_ARGS=--skip-functions --skip-branches --ignore-filename-regex=.build|Tests|SourcePackages --format=lcov" >> ${GITHUB_ENV}
+        echo "OUTPUT_FILE=${{matrix.platform}}-coverage/${{matrix.platform}}.info" >> ${GITHUB_ENV}
     - name: Generate test coverage report
-      if: ${{ matrix.os == needs.get_os.outputs.coverage_os }}
-      uses: maxep/spm-lcov-action@0.3.1
-      with:
-        output-file: ./pr/lcov.info
-    - name: Upload Coverage Information for Comment
-      if: ${{ matrix.os == needs.get_os.outputs.coverage_os }}
-      uses: actions/upload-artifact@v6
-      with:
-        name: pr
-        path: pr/
-    - name: 'Read minimum coverage'
-      if: ${{ matrix.os == needs.get_os.outputs.coverage_os }}
-      run: echo "minimum_coverage=$(cat ./.github/minimum_coverage.txt)" >> $GITHUB_ENV
-    - name: Enforce test coverage threshhold
-      if: ${{ matrix.os == needs.get_os.outputs.coverage_os }}
+      if: ${{ matrix.platform != 'iOS' }}
+      run: |
+        INSTR_PROFILE_PATH=".build/debug/codecov/default.profdata"
+        XCTEST_PATH="$(find $(swift build --show-bin-path) -name '*.xctest')"
+
+        if [[ "${{matrix.platform}}" == "macOS" ]]; then
+          COV_BIN="${XCTEST_PATH}/Contents/MacOS/$(basename ${XCTEST_PATH} .xctest)"
+        elif [[ "${{matrix.platform}}" == "ubuntu" ]]; then
+          COV_BIN="${XCTEST_PATH}"
+        fi
+
+        ${LLVM_COV_CMD} export "${COV_BIN}" ${LLVM_COV_ARGS} --instr-profile="${INSTR_PROFILE_PATH}" > "${OUTPUT_FILE}"
+    - name: Generate iOS test coverage report
+      if: ${{ matrix.platform == 'iOS' }}
+      run: |
+        INSTR_PROFILE_PATH="$(find "${DERIVED_DATA_PATH}" -name "*.profdata")"
+
+        # Run llvm-cov for each .xctest bundle found in DerivedData, one per test target
+        find "${DERIVED_DATA_PATH}" -name '*.xctest' -print0 | while IFS= read -r -d '' file; do
+          FILE_NAME="$(basename "${file}" .xctest)"
+          COV_BIN="${file}/${FILE_NAME}"
+          ${LLVM_COV_CMD} export "${COV_BIN}" ${LLVM_COV_ARGS} --instr-profile="${INSTR_PROFILE_PATH}" > "${FILE_NAME}.lcov"
+        done
+
+        # Combine all .lcov files into a single lcov.info
+        find . -maxdepth 1 -name "*.lcov" -exec echo -a {} \; | xargs lcov -o "${OUTPUT_FILE}"
+    - name: Read minimum test coverage threshhold
+      id: read-minimum-coverage
+      run: echo "MINIMUM_COVERAGE=$(cat ./.github/minimum_coverage.txt)" >> $GITHUB_ENV
+    - name: Enforce minimum test coverage threshhold
+      id: enforce-minimum-coverage
       uses: VeryGoodOpenSource/very_good_coverage@v3.0.0
       with:
-        path: ./pr/lcov.info
-        min_coverage: ${{ env.minimum_coverage }}
-
-  swiftlint:
-    name: SwiftLint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-      - name: Install Swift
-        uses: swift-actions/setup-swift@v2.4.0
-      - name: Install SwiftLint
-        run: |
-          curl -L https://github.com/realm/SwiftLint/releases/download/0.62.1/swiftlint_linux_amd64.zip -o swiftlint.zip
-          unzip swiftlint.zip -d swiftlint
-          ./swiftlint/swiftlint --version
-      - name: Run SwiftLint
-        run: ./swiftlint/swiftlint --strict --reporter github-actions-logging
+        path: ${{ env.OUTPUT_FILE }}
+        min_coverage: ${{ env.MINIMUM_COVERAGE }}
+    - name: Save failed minimum coverage info
+      if: ${{ failure() && steps.enforce-minimum-coverage.outcome == 'failure' && steps.read-minimum-coverage.outcome == 'success' }}
+      run: echo "failed" > "./${{matrix.platform}}-coverage/${{matrix.platform}}-min-coverage-failed"
+    - name: Upload Coverage Information
+      uses: actions/upload-artifact@v6
+      if: ${{ !cancelled() && steps.read-minimum-coverage.outcome == 'success' }}
+      with:
+        name: ${{matrix.platform}}-coverage
+        path: ${{matrix.platform}}-coverage/

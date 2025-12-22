@@ -7,7 +7,9 @@
 //
 
 import Foundation
+#if os(macOS) || os(iOS)
 import GoogleAuthentication
+#endif
 import SwiftBeanCountModel
 import SwiftBeanCountParser
 
@@ -61,6 +63,8 @@ public struct SyncResult {
         self.ledgerSettings = ledgerSettings
     }
 }
+
+#if os(macOS) || os(iOS)
 
 /// Base class with helpers for specific syncers
 ///
@@ -188,3 +192,5 @@ public protocol Syncer: GenericSyncer {
     ///   - completion: result of the sync
     func start(authentication: Authentication, completion: @escaping (Result<SyncResult, Error>) -> Void)
 }
+
+#endif

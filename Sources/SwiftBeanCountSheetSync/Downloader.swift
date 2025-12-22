@@ -6,6 +6,8 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+#if os(macOS) || os(iOS)
+
 import Foundation
 import GoogleAuthentication
 import SwiftBeanCountModel
@@ -68,3 +70,5 @@ public class Downloader: GenericSyncer, Syncer {
     }
 
 }
+
+#endif

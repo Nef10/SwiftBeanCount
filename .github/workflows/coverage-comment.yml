@@ -9,50 +9,53 @@ on:
 jobs:
   comment:
     if: ${{ github.event.workflow_run.event == 'pull_request' }}
-    name: 'Comment Code Coverage'
+    name: Comment Code Coverage
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
-      - name: 'Download artifacts'
+      - name: Download Artifacts
         uses: actions/github-script@v8.0.0
         with:
           script: |
-            var artifacts = await github.rest.actions.listWorkflowRunArtifacts({
-               owner: context.repo.owner,
-               repo: context.repo.repo,
-               run_id: ${{github.event.workflow_run.id }},
-            });
-            var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
-              return artifact.name == "pr"
-            })[0];
-            var download = await github.rest.actions.downloadArtifact({
-               owner: context.repo.owner,
-               repo: context.repo.repo,
-               artifact_id: matchArtifact.id,
-               archive_format: 'zip',
-            });
             var fs = require('fs');
-            fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
-      - run: unzip pr.zip
-      - name: 'Get PR number'
-        run: |
-          echo "pr_number=$(cat ./NR)" >> $GITHUB_ENV
+            var artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: ${{github.event.workflow_run.id }},
+            });
+            for artifact of artifacts.data.artifacts {
+              var download = await github.rest.actions.downloadArtifact({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                artifact_id: artifact.id,
+                archive_format: 'zip',
+              });
+
+              fs.writeFileSync('${{github.workspace}}/' + artifact.name + '.zip', Buffer.from(download.data));
+            }
+      - name: unzip Artifacts
+        run: unzip '*.zip'
+      - name: Get PR number
+        run: | # Use the most recent PR_NUMBER file
+          echo "pr_number=$(cat '$(ls -t PR_NUMBER* | head -n 1)')" >> $GITHUB_ENV
       - name: Generate code coverage report
         uses: Nef10/lcov-reporter-action@v0.5.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          lcov-file: lcov.info
+          lcov-file: macOS.info
           pr-number: ${{ env.pr_number }}
           hide-branch-coverage: true
           output-file: comment.html
-      - name: 'Prepend minimum coverage required'
+      - name: Prepend minimum coverage required
+        run: 'sed -i "1iMinimum coverage required: <b>$(cat ./.github/minimum_coverage.txt)%</b>\n<br />\n" comment.html'
+      - name: Prepand failure info if needed
         run: |
-          echo -e "Minimum coverage required: <b>$(cat ./.github/minimum_coverage.txt)%</b>\n<br />\n$(cat comment.html)" > comment.html
-      - name: 'Prepand failure info'
-        if: ${{ github.event.workflow_run.conclusion != 'success' }}
-        run: |
-          echo -e "❌ <b>Minimum coverage check failed!</b>\n<br />\n$(cat comment.html)" > comment.html
+          files=($(compgen -G "*-min-coverage-failed"))
+          if (( ${#files[@]} )); then
+            list=$(echo ${files} | sed 's/-min-coverage-failed$//' | paste -sd', ' -)
+            sed -i "1i❌ <b>Minimum coverage check failed on: ${list}!</b>\n<br />\n" comment.html
+          fi
       - name: Post code coverage report
         uses: marocchino/sticky-pull-request-comment@v2.9.4
         with:

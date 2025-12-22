@@ -170,19 +170,6 @@ final class SwiftBeanCountRogersBankMapperTests: XCTestCase {
 
 }
 
-#if hasFeature(RetroactiveAttribute)
-extension RogersBankMappingError: @retroactive Equatable {
-    public static func == (lhs: RogersBankMappingError, rhs: RogersBankMappingError) -> Bool {
-        if case let .missingAccount(lhsString) = lhs, case let .missingAccount(rhsString) = rhs {
-            return lhsString == rhsString
-        }
-        if case let .missingActivityData(lhsActivity, lhsString) = lhs, case let .missingActivityData(rhsActivity, rhsString) = rhs {
-            return (lhsActivity as! TestActivity).id == (rhsActivity as! TestActivity).id && lhsString == rhsString // swiftlint:disable:this force_cast
-        }
-        return false
-    }
-}
-#else
 extension RogersBankMappingError: Equatable {
     public static func == (lhs: RogersBankMappingError, rhs: RogersBankMappingError) -> Bool {
         if case let .missingAccount(lhsString) = lhs, case let .missingAccount(rhsString) = rhs {
@@ -194,4 +181,3 @@ extension RogersBankMappingError: Equatable {
         return false
     }
 }
-#endif
