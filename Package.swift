@@ -25,8 +25,16 @@ let package = Package(
             name: "SwiftBeanCountRogersBankMapper",
             targets: ["SwiftBeanCountRogersBankMapper"]
         ),
+        .library(
+            name: "SwiftBeanCountCompassCardMapper",
+            targets: ["SwiftBeanCountCompassCardMapper"]
+        ),
     ],
     dependencies: [
+        .package(
+            url: "https://github.com/yaslab/CSV.swift.git",
+            from: "2.5.2"
+        ),
         .package(
             url: "https://github.com/Nef10/RogersBankDownloader.git",
             .exact("0.2.2")
@@ -57,7 +65,17 @@ let package = Package(
                 "SwiftBeanCountModel",
                 "SwiftBeanCountParserUtils",
                 "RogersBankDownloader",
-            ]
+            ],
+            exclude: ["README.md"]
+        ),
+        .target(
+            name: "SwiftBeanCountCompassCardMapper",
+            dependencies: [
+                "SwiftBeanCountParserUtils",
+                "SwiftBeanCountModel",
+                .product(name: "CSV", package: "CSV.swift"),
+            ],
+            exclude: ["README.md"]
         ),
         .testTarget(
             name: "SwiftBeanCountModelTests",
@@ -79,6 +97,10 @@ let package = Package(
         .testTarget(
             name: "SwiftBeanCountRogersBankMapperTests",
             dependencies: ["SwiftBeanCountRogersBankMapper"]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountCompassCardMapperTests",
+            dependencies: ["SwiftBeanCountCompassCardMapper"]
         ),
     ]
 )
