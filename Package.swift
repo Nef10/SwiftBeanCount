@@ -13,12 +13,12 @@ let package = Package(
             name: "SwiftBeanCountParser",
             targets: ["SwiftBeanCountParser"]
         ),
+        .library(
+            name: "SwiftBeanCountParserUtils",
+            targets: ["SwiftBeanCountParserUtils"]
+        ),
     ],
     dependencies: [
-        .package(
-            url: "https://github.com/Nef10/SwiftBeanCountParserUtils.git",
-            from: "1.0.0"
-        ),
     ],
     targets: [
         .target(
@@ -31,6 +31,11 @@ let package = Package(
             dependencies: ["SwiftBeanCountModel", "SwiftBeanCountParserUtils"],
             exclude: ["README.md"]
         ),
+        .target(
+            name: "SwiftBeanCountParserUtils",
+            dependencies: [],
+            exclude: ["README.md"]
+        ),
         .testTarget(
             name: "SwiftBeanCountModelTests",
             dependencies: ["SwiftBeanCountModel"]
@@ -39,6 +44,10 @@ let package = Package(
             name: "SwiftBeanCountParserTests",
             dependencies: ["SwiftBeanCountParser"],
             resources: [.copy("Resources")]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountParserUtilsTests",
+            dependencies: ["SwiftBeanCountParserUtils"]
         ),
     ]
 )
