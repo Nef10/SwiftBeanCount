@@ -9,88 +9,28 @@ let package = Package(
         .iOS(.v14)
     ],
     products: [
-        .executable(
-            name: "swiftbeancount",
-            targets: ["SwiftBeanCountCLI"],
-        ),
-        .library(
-            name: "SwiftBeanCountModel",
-            targets: ["SwiftBeanCountModel"]
-        ),
-        .library(
-            name: "SwiftBeanCountParser",
-            targets: ["SwiftBeanCountParser"]
-        ),
-        .library(
-            name: "SwiftBeanCountParserUtils",
-            targets: ["SwiftBeanCountParserUtils"]
-        ),
-        .library(
-            name: "SwiftBeanCountTax",
-            targets: ["SwiftBeanCountTax"]
-        ),
-        .library(
-            name: "SwiftBeanCountRogersBankMapper",
-            targets: ["SwiftBeanCountRogersBankMapper"]
-        ),
-        .library(
-            name: "SwiftBeanCountCompassCardMapper",
-            targets: ["SwiftBeanCountCompassCardMapper"]
-        ),
-        .library(
-            name: "SwiftBeanCountTangerineMapper",
-            targets: ["SwiftBeanCountTangerineMapper"]
-        ),
-        .library(
-            name: "SwiftBeanCountWealthsimpleMapper",
-            targets: ["SwiftBeanCountWealthsimpleMapper"]
-        ),
-        .library(
-            name: "SwiftBeanCountSheetSync",
-            targets: ["SwiftBeanCountSheetSync"]
-        ),
-        .library(
-            name: "SwiftBeanCountImporter",
-            targets: ["SwiftBeanCountImporter"]
-        ),
+        .executable(name: "swiftbeancount", targets: ["SwiftBeanCountCLI"]),
+        .library(name: "SwiftBeanCountModel", targets: ["SwiftBeanCountModel"]),
+        .library(name: "SwiftBeanCountParser", targets: ["SwiftBeanCountParser"]),
+        .library(name: "SwiftBeanCountParserUtils", targets: ["SwiftBeanCountParserUtils"]),
+        .library(name: "SwiftBeanCountTax", targets: ["SwiftBeanCountTax"]),
+        .library(name: "SwiftBeanCountRogersBankMapper", targets: ["SwiftBeanCountRogersBankMapper"]),
+        .library(name: "SwiftBeanCountCompassCardMapper", targets: ["SwiftBeanCountCompassCardMapper"]),
+        .library(name: "SwiftBeanCountTangerineMapper", targets: ["SwiftBeanCountTangerineMapper"]),
+        .library(name: "SwiftBeanCountWealthsimpleMapper", targets: ["SwiftBeanCountWealthsimpleMapper"]),
+        .library(name: "SwiftBeanCountSheetSync", targets: ["SwiftBeanCountSheetSync"]),
+        .library(name: "SwiftBeanCountImporter", targets: ["SwiftBeanCountImporter"]),
     ],
     dependencies: [
-        .package(
-            url: "https://github.com/yaslab/CSV.swift.git",
-            from: "2.5.2"
-        ),
-        .package(
-            url: "https://github.com/Nef10/RogersBankDownloader.git",
-            exact: "0.2.2"
-        ),
-        .package(
-            url: "https://github.com/Nef10/WealthsimpleDownloader.git",
-            .upToNextMajor(from: "3.0.0")
-        ),
-        .package(
-            url: "https://github.com/Nef10/GoogleAuthentication.git",
-            .upToNextMajor(from: "1.0.3")
-        ),
-        .package(
-            url: "https://github.com/Nef10/TangerineDownloader.git",
-            exact: "0.1.0"
-        ),
-        .package(
-            url: "https://github.com/Nef10/CompassCardDownloader.git",
-            exact: "0.0.2"
-        ),
-        .package(
-            url: "https://github.com/apple/swift-argument-parser",
-            .upToNextMinor(from: "1.6.1")
-        ),
-        .package(
-            url: "https://github.com/scottrhoyt/SwiftyTextTable.git",
-            .upToNextMinor(from: "0.9.0")
-        ),
-        .package(
-            url: "https://github.com/onevcat/Rainbow",
-            .upToNextMajor(from: "4.2.0")
-        ),
+        .package(url: "https://github.com/Nef10/RogersBankDownloader.git", exact: "0.2.2"),
+        .package(url: "https://github.com/Nef10/WealthsimpleDownloader.git", from: "3.0.0"),
+        .package(url: "https://github.com/Nef10/GoogleAuthentication.git", from: "1.0.3"),
+        .package(url: "https://github.com/Nef10/TangerineDownloader.git", exact: "0.1.0"),
+        .package(url: "https://github.com/Nef10/CompassCardDownloader.git", exact: "0.0.2"),
+        .package(url: "https://github.com/yaslab/CSV.swift.git", from: "2.5.2"),
+        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.6.1"),
+        .package(url: "https://github.com/onevcat/Rainbow", from: "4.2.0"),
+        .package(url: "https://github.com/scottrhoyt/SwiftyTextTable.git", exact: "0.9.0"),
     ],
     targets: [
         .executableTarget(
@@ -185,50 +125,16 @@ let package = Package(
             ],
             exclude: ["README.md"]
         ),
-        .testTarget(
-            name: "SwiftBeanCountCLITests",
-            dependencies: ["SwiftBeanCountCLI"]
-        ),
-        .testTarget(
-            name: "SwiftBeanCountModelTests",
-            dependencies: ["SwiftBeanCountModel"]
-        ),
-        .testTarget(
-            name: "SwiftBeanCountParserTests",
-            dependencies: ["SwiftBeanCountParser"],
-            resources: [.copy("Resources")]
-        ),
-        .testTarget(
-            name: "SwiftBeanCountParserUtilsTests",
-            dependencies: ["SwiftBeanCountParserUtils"]
-        ),
-        .testTarget(
-            name: "SwiftBeanCountTaxTests",
-            dependencies: ["SwiftBeanCountTax"]
-        ),
-        .testTarget(
-            name: "SwiftBeanCountRogersBankMapperTests",
-            dependencies: ["SwiftBeanCountRogersBankMapper"]
-        ),
-        .testTarget(
-            name: "SwiftBeanCountCompassCardMapperTests",
-            dependencies: ["SwiftBeanCountCompassCardMapper"]
-        ),
-        .testTarget(
-            name: "SwiftBeanCountTangerineMapperTests",
-            dependencies: ["SwiftBeanCountTangerineMapper"]
-        ),
-        .testTarget(
-            name: "SwiftBeanCountWealthsimpleMapperTests",
-            dependencies: ["SwiftBeanCountWealthsimpleMapper"]
-        ),
-        .testTarget(
-            name: "SwiftBeanCountSheetSyncTests",
-            dependencies: ["SwiftBeanCountSheetSync"]
-        ),
-        .testTarget(
-            name: "SwiftBeanCountImporterTests",
-            dependencies: ["SwiftBeanCountImporter"]
-        ),
+        .testTarget(name: "SwiftBeanCountCLITests", dependencies: ["SwiftBeanCountCLI"]),
+        .testTarget(name: "SwiftBeanCountModelTests", dependencies: ["SwiftBeanCountModel"]),
+        .testTarget(name: "SwiftBeanCountParserTests", dependencies: ["SwiftBeanCountParser"], resources: [.copy("Resources")]),
+        .testTarget(name: "SwiftBeanCountParserUtilsTests", dependencies: ["SwiftBeanCountParserUtils"]),
+        .testTarget(name: "SwiftBeanCountTaxTests", dependencies: ["SwiftBeanCountTax"]),
+        .testTarget(name: "SwiftBeanCountRogersBankMapperTests", dependencies: ["SwiftBeanCountRogersBankMapper"]),
+        .testTarget(name: "SwiftBeanCountCompassCardMapperTests", dependencies: ["SwiftBeanCountCompassCardMapper"]),
+        .testTarget(name: "SwiftBeanCountTangerineMapperTests", dependencies: ["SwiftBeanCountTangerineMapper"]),
+        .testTarget(name: "SwiftBeanCountWealthsimpleMapperTests", dependencies: ["SwiftBeanCountWealthsimpleMapper"]),
+        .testTarget(name: "SwiftBeanCountSheetSyncTests", dependencies: ["SwiftBeanCountSheetSync"]),
+        .testTarget(name: "SwiftBeanCountImporterTests", dependencies: ["SwiftBeanCountImporter"]),
     ]
 )
