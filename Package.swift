@@ -32,6 +32,7 @@ let package = Package(
         .package(url: "https://github.com/onevcat/Rainbow", from: "4.2.0"),
         .package(url: "https://github.com/scottrhoyt/SwiftyTextTable.git", exact: "0.9.0"),
         .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", exact: "0.62.2"),
+        .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.4.5"),
     ],
     targets: [
         .executableTarget(
