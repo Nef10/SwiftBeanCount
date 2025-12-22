@@ -1,11 +1,11 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.7
 
 import PackageDescription
 
 let package = Package(
     name: "SwiftBeanCount",
     platforms: [
-        .macOS(.v10_15),
+        .macOS(.v11),
         .iOS(.v14)
     ],
     products: [
@@ -45,6 +45,10 @@ let package = Package(
             name: "SwiftBeanCountSheetSync",
             targets: ["SwiftBeanCountSheetSync"]
         ),
+        .library(
+            name: "SwiftBeanCountImporter",
+            targets: ["SwiftBeanCountImporter"]
+        ),
     ],
     dependencies: [
         .package(
@@ -53,7 +57,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/Nef10/RogersBankDownloader.git",
-            .exact("0.2.2")
+            exact: "0.2.2"
         ),
         .package(
             url: "https://github.com/Nef10/WealthsimpleDownloader.git",
@@ -62,6 +66,14 @@ let package = Package(
         .package(
             url: "https://github.com/Nef10/GoogleAuthentication.git",
             .upToNextMajor(from: "1.0.3")
+        ),
+        .package(
+            url: "https://github.com/Nef10/TangerineDownloader.git",
+            exact: "0.1.0"
+        ),
+        .package(
+            url: "https://github.com/Nef10/CompassCardDownloader.git",
+            exact: "0.0.2"
         ),
     ],
     targets: [
@@ -127,6 +139,24 @@ let package = Package(
             ],
             exclude: ["README.md"]
         ),
+        .target(
+            name: "SwiftBeanCountImporter",
+            dependencies: [
+                .product(name: "CSV", package: "CSV.swift"),
+                "RogersBankDownloader",
+                "SwiftBeanCountModel",
+                "SwiftBeanCountParserUtils",
+                "SwiftBeanCountRogersBankMapper",
+                "SwiftBeanCountWealthsimpleMapper",
+                "SwiftBeanCountCompassCardMapper",
+                "CompassCardDownloader",
+                "TangerineDownloader",
+                "SwiftBeanCountTangerineMapper",
+                "SwiftBeanCountSheetSync",
+                .product(name: "Wealthsimple", package: "WealthsimpleDownloader"),
+            ],
+            exclude: ["README.md"]
+        ),
         .testTarget(
             name: "SwiftBeanCountModelTests",
             dependencies: ["SwiftBeanCountModel"]
@@ -163,6 +193,10 @@ let package = Package(
         .testTarget(
             name: "SwiftBeanCountSheetSyncTests",
             dependencies: ["SwiftBeanCountSheetSync"]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountImporterTests",
+            dependencies: ["SwiftBeanCountImporter"]
         ),
     ]
 )
