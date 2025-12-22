@@ -1,0 +1,60 @@
+name: Code Coverage Comment
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+
+jobs:
+  comment:
+    if: ${{ github.event.workflow_run.event == 'pull_request' }}
+    name: 'Comment Code Coverage'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: 'Download artifacts'
+        uses: actions/github-script@v8.0.0
+        with:
+          script: |
+            var artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: ${{github.event.workflow_run.id }},
+            });
+            var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "pr"
+            })[0];
+            var download = await github.rest.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: matchArtifact.id,
+               archive_format: 'zip',
+            });
+            var fs = require('fs');
+            fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
+      - run: unzip pr.zip
+      - name: 'Get PR number'
+        run: |
+          echo "pr_number=$(cat ./NR)" >> $GITHUB_ENV
+      - name: Generate code coverage report
+        uses: Nef10/lcov-reporter-action@v0.5.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          lcov-file: lcov.info
+          pr-number: ${{ env.pr_number }}
+          hide-branch-coverage: true
+          output-file: comment.html
+      - name: 'Prepend minimum coverage required'
+        run: |
+          echo -e "Minimum coverage required: <b>$(cat ./.github/minimum_coverage.txt)%</b>\n<br />\n$(cat comment.html)" > comment.html
+      - name: 'Prepand failure info'
+        if: ${{ github.event.workflow_run.conclusion != 'success' }}
+        run: |
+          echo -e "❌ <b>Minimum coverage check failed!</b>\n<br />\n$(cat comment.html)" > comment.html
+      - name: Post code coverage report
+        uses: marocchino/sticky-pull-request-comment@v2.9.4
+        with:
+          path: comment.html
+          number: ${{ env.pr_number }}
