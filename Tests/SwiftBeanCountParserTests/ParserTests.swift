@@ -253,23 +253,23 @@ final class ParserTests: XCTestCase {
         let url: URL
         switch testFile {
         case .minimal:
-            url = Bundle.module.url(forResource: "Minimal", withExtension: "beancount")!
+            url = Bundle.module.url(forResource: "Resource/Minimal", withExtension: "beancount")!
         case .postingWithoutTransaction:
-            url = Bundle.module.url(forResource: "PostingWithoutTransaction", withExtension: "beancount")!
+            url = Bundle.module.url(forResource: "Resource/PostingWithoutTransaction", withExtension: "beancount")!
         case .transactionWithoutPosting:
-            url = Bundle.module.url(forResource: "TransactionWithoutPosting", withExtension: "beancount")!
+            url = Bundle.module.url(forResource: "Resource/TransactionWithoutPosting", withExtension: "beancount")!
         case .comments:
-            url = Bundle.module.url(forResource: "Comments", withExtension: "beancount")!
+            url = Bundle.module.url(forResource: "Resource/Comments", withExtension: "beancount")!
         case .commentsEndOfLine:
-            url = Bundle.module.url(forResource: "CommentsEndOfLine", withExtension: "beancount")!
+            url = Bundle.module.url(forResource: "Resource/CommentsEndOfLine", withExtension: "beancount")!
         case .whitespace:
-            url = Bundle.module.url(forResource: "Whitespace", withExtension: "beancount")!
+            url = Bundle.module.url(forResource: "Resource/Whitespace", withExtension: "beancount")!
         case .big:
-            url = Bundle.module.url(forResource: "Big", withExtension: "beancount")!
+            url = Bundle.module.url(forResource: "Resource/Big", withExtension: "beancount")!
         case .invalidCost:
-            url = Bundle.module.url(forResource: "InvalidCost", withExtension: "beancount")!
+            url = Bundle.module.url(forResource: "Resource/InvalidCost", withExtension: "beancount")!
         case .metaData:
-            url = Bundle.module.url(forResource: "MetaData", withExtension: "beancount")!
+            url = Bundle.module.url(forResource: "Resource/MetaData", withExtension: "beancount")!
         }
         guard let ledger = try? Parser.parse(contentOf: url) else {
             XCTFail("Failed to parse ledger at URL: \(url.absoluteString)")

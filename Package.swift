@@ -127,7 +127,7 @@ let package = Package(
         ),
         .testTarget(name: "SwiftBeanCountCLITests", dependencies: ["SwiftBeanCountCLI"]),
         .testTarget(name: "SwiftBeanCountModelTests", dependencies: ["SwiftBeanCountModel"]),
-        .testTarget(name: "SwiftBeanCountParserTests", dependencies: ["SwiftBeanCountParser"], resources: [.copy("Resources")]),
+        .testTarget(name: "SwiftBeanCountParserTests", dependencies: ["SwiftBeanCountParser"], resources: [.copy("Resource")]),
         .testTarget(name: "SwiftBeanCountParserUtilsTests", dependencies: ["SwiftBeanCountParserUtils"]),
         .testTarget(name: "SwiftBeanCountTaxTests", dependencies: ["SwiftBeanCountTax"]),
         .testTarget(name: "SwiftBeanCountRogersBankMapperTests", dependencies: ["SwiftBeanCountRogersBankMapper"]),
