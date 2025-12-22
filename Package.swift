@@ -29,6 +29,10 @@ let package = Package(
             name: "SwiftBeanCountCompassCardMapper",
             targets: ["SwiftBeanCountCompassCardMapper"]
         ),
+        .library(
+            name: "SwiftBeanCountTangerineMapper",
+            targets: ["SwiftBeanCountTangerineMapper"]
+        ),
     ],
     dependencies: [
         .package(
@@ -77,6 +81,14 @@ let package = Package(
             ],
             exclude: ["README.md"]
         ),
+        .target(
+            name: "SwiftBeanCountTangerineMapper",
+            dependencies: [
+                "SwiftBeanCountParserUtils",
+                "SwiftBeanCountModel",
+            ],
+            exclude: ["README.md"]
+        ),
         .testTarget(
             name: "SwiftBeanCountModelTests",
             dependencies: ["SwiftBeanCountModel"]
@@ -101,6 +113,10 @@ let package = Package(
         .testTarget(
             name: "SwiftBeanCountCompassCardMapperTests",
             dependencies: ["SwiftBeanCountCompassCardMapper"]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountTangerineMapperTests",
+            dependencies: ["SwiftBeanCountTangerineMapper"]
         ),
     ]
 )
