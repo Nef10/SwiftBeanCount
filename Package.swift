@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "SwiftBeanCount",
     platforms: [
-        .macOS(.v11),
+        .macOS(.v12),
         .iOS(.v16)
     ],
     products: [
@@ -31,6 +31,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.6.1"),
         .package(url: "https://github.com/onevcat/Rainbow", from: "4.2.0"),
         .package(url: "https://github.com/scottrhoyt/SwiftyTextTable.git", exact: "0.9.0"),
+        .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", exact: "0.62.2"),
     ],
     targets: [
         .executableTarget(
@@ -43,25 +44,30 @@ let package = Package(
                 "SwiftyTextTable",
                 "Rainbow",
             ],
-            exclude: ["README.md"]
+            exclude: ["README.md"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .target(
             name: "SwiftBeanCountModel",
-            exclude: ["README.md"]
+            exclude: ["README.md"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .target(
             name: "SwiftBeanCountParser",
             dependencies: ["SwiftBeanCountModel", "SwiftBeanCountParserUtils"],
-            exclude: ["README.md"]
+            exclude: ["README.md"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .target(
             name: "SwiftBeanCountParserUtils",
-            exclude: ["README.md"]
+            exclude: ["README.md"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .target(
             name: "SwiftBeanCountTax",
             dependencies: ["SwiftBeanCountModel"],
-            exclude: ["README.md"]
+            exclude: ["README.md"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .target(
             name: "SwiftBeanCountRogersBankMapper",
@@ -70,7 +76,8 @@ let package = Package(
                 "SwiftBeanCountParserUtils",
                 "RogersBankDownloader",
             ],
-            exclude: ["README.md"]
+            exclude: ["README.md"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .target(
             name: "SwiftBeanCountCompassCardMapper",
@@ -79,7 +86,8 @@ let package = Package(
                 "SwiftBeanCountModel",
                 .product(name: "CSV", package: "CSV.swift"),
             ],
-            exclude: ["README.md"]
+            exclude: ["README.md"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .target(
             name: "SwiftBeanCountTangerineMapper",
@@ -87,7 +95,8 @@ let package = Package(
                 "SwiftBeanCountParserUtils",
                 "SwiftBeanCountModel",
             ],
-            exclude: ["README.md"]
+            exclude: ["README.md"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .target(
             name: "SwiftBeanCountWealthsimpleMapper",
@@ -96,7 +105,8 @@ let package = Package(
                 "SwiftBeanCountParserUtils",
                 .product(name: "Wealthsimple", package: "WealthsimpleDownloader")
             ],
-            exclude: ["README.md"]
+            exclude: ["README.md"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .target(
             name: "SwiftBeanCountSheetSync",
@@ -105,7 +115,8 @@ let package = Package(
                 "SwiftBeanCountParser",
                 "GoogleAuthentication"
             ],
-            exclude: ["README.md"]
+            exclude: ["README.md"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .target(
             name: "SwiftBeanCountImporter",
@@ -123,18 +134,64 @@ let package = Package(
                 "SwiftBeanCountSheetSync",
                 .product(name: "Wealthsimple", package: "WealthsimpleDownloader"),
             ],
-            exclude: ["README.md"]
+            exclude: ["README.md"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
-        .testTarget(name: "SwiftBeanCountCLITests", dependencies: ["SwiftBeanCountCLI"]),
-        .testTarget(name: "SwiftBeanCountModelTests", dependencies: ["SwiftBeanCountModel"]),
-        .testTarget(name: "SwiftBeanCountParserTests", dependencies: ["SwiftBeanCountParser"], resources: [.copy("Resource")]),
-        .testTarget(name: "SwiftBeanCountParserUtilsTests", dependencies: ["SwiftBeanCountParserUtils"]),
-        .testTarget(name: "SwiftBeanCountTaxTests", dependencies: ["SwiftBeanCountTax"]),
-        .testTarget(name: "SwiftBeanCountRogersBankMapperTests", dependencies: ["SwiftBeanCountRogersBankMapper"]),
-        .testTarget(name: "SwiftBeanCountCompassCardMapperTests", dependencies: ["SwiftBeanCountCompassCardMapper"]),
-        .testTarget(name: "SwiftBeanCountTangerineMapperTests", dependencies: ["SwiftBeanCountTangerineMapper"]),
-        .testTarget(name: "SwiftBeanCountWealthsimpleMapperTests", dependencies: ["SwiftBeanCountWealthsimpleMapper"]),
-        .testTarget(name: "SwiftBeanCountSheetSyncTests", dependencies: ["SwiftBeanCountSheetSync"]),
-        .testTarget(name: "SwiftBeanCountImporterTests", dependencies: ["SwiftBeanCountImporter"]),
+        .testTarget(
+            name: "SwiftBeanCountCLITests",
+            dependencies: ["SwiftBeanCountCLI"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountModelTests",
+            dependencies: ["SwiftBeanCountModel"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountParserTests",
+            dependencies: ["SwiftBeanCountParser"],
+            resources: [.copy("Resource")],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountParserUtilsTests",
+            dependencies: ["SwiftBeanCountParserUtils"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountTaxTests",
+            dependencies: ["SwiftBeanCountTax"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountRogersBankMapperTests",
+            dependencies: ["SwiftBeanCountRogersBankMapper"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountCompassCardMapperTests",
+            dependencies: ["SwiftBeanCountCompassCardMapper"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountTangerineMapperTests",
+            dependencies: ["SwiftBeanCountTangerineMapper"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountWealthsimpleMapperTests",
+            dependencies: ["SwiftBeanCountWealthsimpleMapper"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountSheetSyncTests",
+            dependencies: ["SwiftBeanCountSheetSync"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountImporterTests",
+            dependencies: ["SwiftBeanCountImporter"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
     ]
 )
