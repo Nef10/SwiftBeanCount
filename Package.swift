@@ -6,7 +6,7 @@ let package = Package(
     name: "SwiftBeanCount",
     platforms: [
         .macOS(.v11),
-        .iOS(.v14)
+        .iOS(.v16)
     ],
     products: [
         .executable(name: "swiftbeancount", targets: ["SwiftBeanCountCLI"]),
