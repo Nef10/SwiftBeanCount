@@ -9,6 +9,10 @@ let package = Package(
         .iOS(.v14)
     ],
     products: [
+        .executable(
+            name: "swiftbeancount",
+            targets: ["SwiftBeanCountCLI"],
+        ),
         .library(
             name: "SwiftBeanCountModel",
             targets: ["SwiftBeanCountModel"]
@@ -75,8 +79,32 @@ let package = Package(
             url: "https://github.com/Nef10/CompassCardDownloader.git",
             exact: "0.0.2"
         ),
+        .package(
+            url: "https://github.com/apple/swift-argument-parser",
+            .upToNextMinor(from: "1.6.1")
+        ),
+        .package(
+            url: "https://github.com/scottrhoyt/SwiftyTextTable.git",
+            .upToNextMinor(from: "0.9.0")
+        ),
+        .package(
+            url: "https://github.com/onevcat/Rainbow",
+            .upToNextMajor(from: "4.2.0")
+        ),
     ],
     targets: [
+        .executableTarget(
+            name: "SwiftBeanCountCLI",
+            dependencies: [
+                "SwiftBeanCountModel",
+                "SwiftBeanCountParser",
+                "SwiftBeanCountTax",
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                "SwiftyTextTable",
+                "Rainbow",
+            ],
+            exclude: ["README.md"]
+        ),
         .target(
             name: "SwiftBeanCountModel",
             exclude: ["README.md"]
@@ -156,6 +184,10 @@ let package = Package(
                 .product(name: "Wealthsimple", package: "WealthsimpleDownloader"),
             ],
             exclude: ["README.md"]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountCLITests",
+            dependencies: ["SwiftBeanCountCLI"]
         ),
         .testTarget(
             name: "SwiftBeanCountModelTests",
