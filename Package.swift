@@ -1,22 +1,44 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.3
 
 import PackageDescription
 
 let package = Package(
-    name: "SwiftBeanCountModel",
+    name: "SwiftBeanCount",
     products: [
         .library(
             name: "SwiftBeanCountModel",
-            targets: ["SwiftBeanCountModel"]),
+            targets: ["SwiftBeanCountModel"]
+        ),
+        .library(
+            name: "SwiftBeanCountParser",
+            targets: ["SwiftBeanCountParser"]
+        ),
     ],
     dependencies: [
+        .package(
+            url: "https://github.com/Nef10/SwiftBeanCountParserUtils.git",
+            from: "1.0.0"
+        ),
     ],
     targets: [
         .target(
             name: "SwiftBeanCountModel",
-            dependencies: []),
+            dependencies: [],
+            exclude: ["README.md"]
+        ),
+        .target(
+            name: "SwiftBeanCountParser",
+            dependencies: ["SwiftBeanCountModel", "SwiftBeanCountParserUtils"],
+            exclude: ["README.md"]
+        ),
         .testTarget(
             name: "SwiftBeanCountModelTests",
-            dependencies: ["SwiftBeanCountModel"]),
+            dependencies: ["SwiftBeanCountModel"]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountParserTests",
+            dependencies: ["SwiftBeanCountParser"],
+            resources: [.copy("Resources")]
+        ),
     ]
 )
