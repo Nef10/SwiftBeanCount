@@ -33,6 +33,10 @@ let package = Package(
             name: "SwiftBeanCountTangerineMapper",
             targets: ["SwiftBeanCountTangerineMapper"]
         ),
+        .library(
+            name: "SwiftBeanCountWealthsimpleMapper",
+            targets: ["SwiftBeanCountWealthsimpleMapper"]
+        ),
     ],
     dependencies: [
         .package(
@@ -42,6 +46,10 @@ let package = Package(
         .package(
             url: "https://github.com/Nef10/RogersBankDownloader.git",
             .exact("0.2.2")
+        ),
+        .package(
+            url: "https://github.com/Nef10/WealthsimpleDownloader.git",
+            .upToNextMajor(from: "3.0.0")
         ),
     ],
     targets: [
@@ -89,6 +97,15 @@ let package = Package(
             ],
             exclude: ["README.md"]
         ),
+        .target(
+            name: "SwiftBeanCountWealthsimpleMapper",
+            dependencies: [
+                "SwiftBeanCountModel",
+                "SwiftBeanCountParserUtils",
+                .product(name: "Wealthsimple", package: "WealthsimpleDownloader")
+            ],
+            exclude: ["README.md"]
+        ),
         .testTarget(
             name: "SwiftBeanCountModelTests",
             dependencies: ["SwiftBeanCountModel"]
@@ -117,6 +134,10 @@ let package = Package(
         .testTarget(
             name: "SwiftBeanCountTangerineMapperTests",
             dependencies: ["SwiftBeanCountTangerineMapper"]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountWealthsimpleMapperTests",
+            dependencies: ["SwiftBeanCountWealthsimpleMapper"]
         ),
     ]
 )

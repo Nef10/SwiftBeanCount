@@ -18,6 +18,15 @@
           "revision": "a14c66a7f181d870e7d52831f14df3991d79b0ba",
           "version": "0.2.2"
         }
+      },
+      {
+        "package": "WealthsimpleDownloader",
+        "repositoryURL": "https://github.com/Nef10/WealthsimpleDownloader.git",
+        "state": {
+          "branch": null,
+          "revision": "bab5b50f815adc982b9fde2bce409aa65a621357",
+          "version": "3.0.0"
+        }
       }
     ]
   },
