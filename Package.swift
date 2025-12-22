@@ -4,6 +4,10 @@ import PackageDescription
 
 let package = Package(
     name: "SwiftBeanCount",
+    platforms: [
+        .macOS(.v10_15),
+        .iOS(.v14)
+    ],
     products: [
         .library(
             name: "SwiftBeanCountModel",
@@ -37,6 +41,10 @@ let package = Package(
             name: "SwiftBeanCountWealthsimpleMapper",
             targets: ["SwiftBeanCountWealthsimpleMapper"]
         ),
+        .library(
+            name: "SwiftBeanCountSheetSync",
+            targets: ["SwiftBeanCountSheetSync"]
+        ),
     ],
     dependencies: [
         .package(
@@ -50,6 +58,10 @@ let package = Package(
         .package(
             url: "https://github.com/Nef10/WealthsimpleDownloader.git",
             .upToNextMajor(from: "3.0.0")
+        ),
+        .package(
+            url: "https://github.com/Nef10/GoogleAuthentication.git",
+            .upToNextMajor(from: "1.0.3")
         ),
     ],
     targets: [
@@ -106,6 +118,15 @@ let package = Package(
             ],
             exclude: ["README.md"]
         ),
+        .target(
+            name: "SwiftBeanCountSheetSync",
+            dependencies: [
+                "SwiftBeanCountModel",
+                "SwiftBeanCountParser",
+                "GoogleAuthentication"
+            ],
+            exclude: ["README.md"]
+        ),
         .testTarget(
             name: "SwiftBeanCountModelTests",
             dependencies: ["SwiftBeanCountModel"]
@@ -138,6 +159,10 @@ let package = Package(
         .testTarget(
             name: "SwiftBeanCountWealthsimpleMapperTests",
             dependencies: ["SwiftBeanCountWealthsimpleMapper"]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountSheetSyncTests",
+            dependencies: ["SwiftBeanCountSheetSync"]
         ),
     ]
 )

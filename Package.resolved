@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "BrightFutures",
+        "repositoryURL": "https://github.com/Thomvis/BrightFutures.git",
+        "state": {
+          "branch": null,
+          "revision": "fa66fa183dce7196d431244d0215748cd14c5758",
+          "version": "8.2.0"
+        }
+      },
+      {
         "package": "CSV.swift",
         "repositoryURL": "https://github.com/yaslab/CSV.swift.git",
         "state": {
@@ -11,12 +20,75 @@
         }
       },
       {
+        "package": "Erik",
+        "repositoryURL": "https://github.com/phimage/Erik.git",
+        "state": {
+          "branch": null,
+          "revision": "109a130e9cdb00789a43a7a625293eeb12d22989",
+          "version": "5.1.0"
+        }
+      },
+      {
+        "package": "FileKit",
+        "repositoryURL": "https://github.com/nvzqz/FileKit.git",
+        "state": {
+          "branch": null,
+          "revision": "9006d2888025fbe893c3c396327b2fe45a8c177b",
+          "version": "6.1.0"
+        }
+      },
+      {
+        "package": "GoogleAuthentication",
+        "repositoryURL": "https://github.com/Nef10/GoogleAuthentication.git",
+        "state": {
+          "branch": null,
+          "revision": "15de3ccfb5773c21c6d4cf382549603b7d7929d1",
+          "version": "1.0.3"
+        }
+      },
+      {
+        "package": "Kanna",
+        "repositoryURL": "https://github.com/tid-kijyun/Kanna.git",
+        "state": {
+          "branch": null,
+          "revision": "41c3d28ea0eac07e4551b28def9de1ede702e739",
+          "version": "5.3.0"
+        }
+      },
+      {
+        "package": "KeychainAccess",
+        "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess.git",
+        "state": {
+          "branch": null,
+          "revision": "84e546727d66f1adc5439debad16270d0fdd04e7",
+          "version": "4.2.2"
+        }
+      },
+      {
+        "package": "OAuthSwift",
+        "repositoryURL": "https://github.com/OAuthSwift/OAuthSwift.git",
+        "state": {
+          "branch": null,
+          "revision": "d85964b96dbce94df961f28b996187c835089903",
+          "version": "2.2.0"
+        }
+      },
+      {
         "package": "RogersBankDownloader",
         "repositoryURL": "https://github.com/Nef10/RogersBankDownloader.git",
         "state": {
           "branch": null,
           "revision": "a14c66a7f181d870e7d52831f14df3991d79b0ba",
           "version": "0.2.2"
+        }
+      },
+      {
+        "package": "Swifter",
+        "repositoryURL": "https://github.com/httpswift/swifter.git",
+        "state": {
+          "branch": null,
+          "revision": "9483a5d459b45c3ffd059f7b55f9638e268632fd",
+          "version": "1.5.0"
         }
       },
       {
