@@ -1,3 +1,5 @@
+#if os(macOS)
+
 import Rainbow
 @testable import SwiftBeanCountCLI
 import XCTest
@@ -22,3 +24,5 @@ final class ColorizedCommandTests: XCTestCase {
     }
 
 }
+
+#endif // os(macOS)

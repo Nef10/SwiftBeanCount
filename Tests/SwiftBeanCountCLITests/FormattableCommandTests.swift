@@ -1,3 +1,5 @@
+#if os(macOS)
+
 import ArgumentParser
 import Rainbow
 @testable import SwiftBeanCountCLI
@@ -202,3 +204,5 @@ final class FormattableCommandTests: XCTestCase {
     }
 
 }
+
+#endif // os(macOS)

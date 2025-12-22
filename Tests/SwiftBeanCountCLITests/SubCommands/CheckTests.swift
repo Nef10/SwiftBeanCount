@@ -1,3 +1,5 @@
+#if os(macOS)
+
 @testable import SwiftBeanCountCLI
 import XCTest
 
@@ -70,3 +72,5 @@ final class CheckTests: XCTestCase {
     }
 
 }
+
+#endif // os(macOS)

@@ -1,3 +1,5 @@
+#if os(macOS)
+
 @testable import SwiftBeanCountCLI
 import XCTest
 
@@ -104,3 +106,5 @@ final class TaxSlipTests: XCTestCase {
     }
 
 }
+
+#endif // os(macOS)

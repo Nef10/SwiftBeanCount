@@ -17,6 +17,8 @@ extension XCTest {
         return url.appendingPathComponent("swiftbeancount")
     }
 
+#if os(macOS)
+
     func outputFromExecutionWith(arguments: [String]) -> ExecutionResult {
         let output = Pipe()
         let error = Pipe()
@@ -62,5 +64,7 @@ extension XCTest {
         XCTAssert(result.errorOutput.isEmpty)
         XCTAssertEqual(result.output, output)
     }
+
+#endif // os(macOS)
 
 }
