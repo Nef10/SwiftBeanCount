@@ -17,13 +17,16 @@ let package = Package(
             name: "SwiftBeanCountParserUtils",
             targets: ["SwiftBeanCountParserUtils"]
         ),
+        .library(
+            name: "SwiftBeanCountTax",
+            targets: ["SwiftBeanCountTax"]
+        )
     ],
     dependencies: [
     ],
     targets: [
         .target(
             name: "SwiftBeanCountModel",
-            dependencies: [],
             exclude: ["README.md"]
         ),
         .target(
@@ -33,7 +36,11 @@ let package = Package(
         ),
         .target(
             name: "SwiftBeanCountParserUtils",
-            dependencies: [],
+            exclude: ["README.md"]
+        ),
+        .target(
+            name: "SwiftBeanCountTax",
+            dependencies: ["SwiftBeanCountModel"],
             exclude: ["README.md"]
         ),
         .testTarget(
@@ -48,6 +55,10 @@ let package = Package(
         .testTarget(
             name: "SwiftBeanCountParserUtilsTests",
             dependencies: ["SwiftBeanCountParserUtils"]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountTaxTests",
+            dependencies: ["SwiftBeanCountTax"]
         ),
     ]
 )
