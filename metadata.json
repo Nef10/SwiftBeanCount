@@ -1,6 +1,6 @@
 {
-  "bundleDisplayName" : "SwiftBeanCountParserUtils",
-  "bundleID" : "SwiftBeanCountParserUtils",
+  "bundleDisplayName" : "SwiftBeanCountModel",
+  "bundleID" : "SwiftBeanCountModel",
   "schemaVersion" : {
     "major" : 0,
     "minor" : 1,

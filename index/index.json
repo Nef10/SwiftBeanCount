@@ -1,12 +1,12 @@
 {
   "includedArchiveIdentifiers" : [
-    "SwiftBeanCountParserUtils",
     "SwiftBeanCountModel",
-    "SwiftBeanCountTangerineMapper",
-    "SwiftBeanCountCompassCardMapper",
-    "SwiftBeanCountWealthsimpleMapper",
-    "SwiftBeanCountRogersBankMapper",
+    "SwiftBeanCountParserUtils",
     "SwiftBeanCountTax",
+    "SwiftBeanCountCompassCardMapper",
+    "SwiftBeanCountTangerineMapper",
+    "SwiftBeanCountRogersBankMapper",
+    "SwiftBeanCountWealthsimpleMapper",
     "SwiftBeanCountParser",
     "SwiftBeanCountSheetSync",
     "SwiftBeanCountImporter"
@@ -15,49 +15,6 @@
     "swift" : [
       {
         "children" : [
-          {
-            "children" : [
-              {
-                "title" : "Extended Modules",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Extended Structures",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "children" : [
-                      {
-                        "title" : "Instance Methods",
-                        "type" : "groupMarker"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancountparserutils\/swift\/string\/amountdecimal()",
-                        "title" : "func amountDecimal() -> (Decimal, Int)",
-                        "type" : "method"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancountparserutils\/swift\/string\/matchingstrings(regex:)",
-                        "title" : "func matchingStrings(regex: NSRegularExpression) -> [[String]]",
-                        "type" : "method"
-                      }
-                    ],
-                    "path" : "\/documentation\/swiftbeancountparserutils\/swift\/string",
-                    "title" : "String",
-                    "type" : "extension"
-                  }
-                ],
-                "path" : "\/documentation\/swiftbeancountparserutils\/swift",
-                "title" : "Swift",
-                "type" : "extension"
-              }
-            ],
-            "path" : "\/documentation\/swiftbeancountparserutils",
-            "title" : "SwiftBeanCountParserUtils",
-            "type" : "module"
-          },
           {
             "children" : [
               {
@@ -2719,607 +2676,44 @@
           {
             "children" : [
               {
-                "title" : "Structures",
+                "title" : "Extended Modules",
                 "type" : "groupMarker"
               },
               {
                 "children" : [
                   {
-                    "title" : "Initializers",
+                    "title" : "Extended Structures",
                     "type" : "groupMarker"
                   },
                   {
-                    "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper\/init(ledger:)",
-                    "title" : "init(ledger: Ledger)",
-                    "type" : "init"
-                  },
-                  {
-                    "title" : "Instance Properties",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper\/defaultaccountname",
-                    "title" : "let defaultAccountName: AccountName",
-                    "type" : "property"
-                  },
-                  {
-                    "title" : "Instance Methods",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper\/createbalances(accounts:date:)",
-                    "title" : "func createBalances(accounts: [[String : Any]], date: Date) throws -> [Balance]",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper\/createtransactions(_:)",
-                    "title" : "func createTransactions([String : [[String : Any]]]) throws -> [Transaction]",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper\/ledgeraccountname(account:)",
-                    "title" : "func ledgerAccountName(account: [String : Any]) throws -> AccountName",
-                    "type" : "method"
+                    "children" : [
+                      {
+                        "title" : "Instance Methods",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancountparserutils\/swift\/string\/amountdecimal()",
+                        "title" : "func amountDecimal() -> (Decimal, Int)",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancountparserutils\/swift\/string\/matchingstrings(regex:)",
+                        "title" : "func matchingStrings(regex: NSRegularExpression) -> [[String]]",
+                        "type" : "method"
+                      }
+                    ],
+                    "path" : "\/documentation\/swiftbeancountparserutils\/swift\/string",
+                    "title" : "String",
+                    "type" : "extension"
                   }
                 ],
-                "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper",
-                "title" : "SwiftBeanCountTangerineMapper",
-                "type" : "struct"
-              },
-              {
-                "title" : "Enumerations",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Enumeration Cases",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/invaliddate(date:)",
-                    "title" : "case invalidDate(date: String)",
-                    "type" : "case"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/missingaccount(account:)",
-                    "title" : "case missingAccount(account: String)",
-                    "type" : "case"
-                  },
-                  {
-                    "title" : "Default Implementations",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "children" : [
-                      {
-                        "title" : "Operators",
-                        "type" : "groupMarker"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/!=(_:_:)",
-                        "title" : "static func != (Self, Self) -> Bool",
-                        "type" : "op"
-                      }
-                    ],
-                    "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/equatable-implementations",
-                    "title" : "Equatable Implementations",
-                    "type" : "symbol"
-                  },
-                  {
-                    "children" : [
-                      {
-                        "title" : "Instance Properties",
-                        "type" : "groupMarker"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/localizeddescription",
-                        "title" : "var localizedDescription: String",
-                        "type" : "property"
-                      }
-                    ],
-                    "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/error-implementations",
-                    "title" : "Error Implementations",
-                    "type" : "symbol"
-                  },
-                  {
-                    "children" : [
-                      {
-                        "title" : "Instance Properties",
-                        "type" : "groupMarker"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/errordescription",
-                        "title" : "var errorDescription: String?",
-                        "type" : "property"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/failurereason",
-                        "title" : "var failureReason: String?",
-                        "type" : "property"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/helpanchor",
-                        "title" : "var helpAnchor: String?",
-                        "type" : "property"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/recoverysuggestion",
-                        "title" : "var recoverySuggestion: String?",
-                        "type" : "property"
-                      }
-                    ],
-                    "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/localizederror-implementations",
-                    "title" : "LocalizedError Implementations",
-                    "type" : "symbol"
-                  }
-                ],
-                "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror",
-                "title" : "SwiftBeanCountTangerineMapperError",
-                "type" : "enum"
+                "path" : "\/documentation\/swiftbeancountparserutils\/swift",
+                "title" : "Swift",
+                "type" : "extension"
               }
             ],
-            "path" : "\/documentation\/swiftbeancounttangerinemapper",
-            "title" : "SwiftBeanCountTangerineMapper",
-            "type" : "module"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Structures",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Initializers",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/init(ledger:)",
-                    "title" : "init(ledger: Ledger)",
-                    "type" : "init"
-                  },
-                  {
-                    "title" : "Instance Properties",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/defaultassetaccountname",
-                    "title" : "let defaultAssetAccountName: AccountName",
-                    "type" : "property"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/defaultexpenseaccountname",
-                    "title" : "let defaultExpenseAccountName: AccountName",
-                    "type" : "property"
-                  },
-                  {
-                    "title" : "Instance Methods",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/createbalance(cardnumber:balance:date:)",
-                    "title" : "func createBalance(cardNumber: String, balance: String, date: Date?) throws -> Balance",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/createtransactions(account:reader:)",
-                    "title" : "func createTransactions(account: AccountName, reader: CSVReader) throws -> [Transaction]",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/createtransactions(cardnumber:transactions:)",
-                    "title" : "func createTransactions(cardNumber: String, transactions: String) throws -> [Transaction]",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/ledgercardaccountname(cardnumber:)",
-                    "title" : "func ledgerCardAccountName(cardNumber: String) throws -> AccountName",
-                    "type" : "method"
-                  }
-                ],
-                "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper",
-                "title" : "SwiftBeanCountCompassCardMapper",
-                "type" : "struct"
-              },
-              {
-                "title" : "Enumerations",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Enumeration Cases",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/missingaccount(cardnumber:)",
-                    "title" : "case missingAccount(cardNumber: String)",
-                    "type" : "case"
-                  },
-                  {
-                    "title" : "Default Implementations",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "children" : [
-                      {
-                        "title" : "Operators",
-                        "type" : "groupMarker"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/!=(_:_:)",
-                        "title" : "static func != (Self, Self) -> Bool",
-                        "type" : "op"
-                      }
-                    ],
-                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/equatable-implementations",
-                    "title" : "Equatable Implementations",
-                    "type" : "symbol"
-                  },
-                  {
-                    "children" : [
-                      {
-                        "title" : "Instance Properties",
-                        "type" : "groupMarker"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/localizeddescription",
-                        "title" : "var localizedDescription: String",
-                        "type" : "property"
-                      }
-                    ],
-                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/error-implementations",
-                    "title" : "Error Implementations",
-                    "type" : "symbol"
-                  },
-                  {
-                    "children" : [
-                      {
-                        "title" : "Instance Properties",
-                        "type" : "groupMarker"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/errordescription",
-                        "title" : "var errorDescription: String?",
-                        "type" : "property"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/failurereason",
-                        "title" : "var failureReason: String?",
-                        "type" : "property"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/helpanchor",
-                        "title" : "var helpAnchor: String?",
-                        "type" : "property"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/recoverysuggestion",
-                        "title" : "var recoverySuggestion: String?",
-                        "type" : "property"
-                      }
-                    ],
-                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/localizederror-implementations",
-                    "title" : "LocalizedError Implementations",
-                    "type" : "symbol"
-                  }
-                ],
-                "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror",
-                "title" : "SwiftBeanCountCompassCardMapperError",
-                "type" : "enum"
-              }
-            ],
-            "path" : "\/documentation\/swiftbeancountcompasscardmapper",
-            "title" : "SwiftBeanCountCompassCardMapper",
-            "type" : "module"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Structures",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Initializers",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/init(ledger:)",
-                    "title" : "init(ledger: Ledger)",
-                    "type" : "init"
-                  },
-                  {
-                    "title" : "Instance Properties",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/accounts",
-                    "title" : "var accounts: [any Account]",
-                    "type" : "property"
-                  },
-                  {
-                    "title" : "Instance Methods",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/mappositionstopriceandbalance(_:)",
-                    "title" : "func mapPositionsToPriceAndBalance([any Position]) throws -> ([Price], [Balance])",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/maptransactionstopriceandtransactions(_:)",
-                    "title" : "func mapTransactionsToPriceAndTransactions([any Transaction]) throws -> ([Price], [Transaction])",
-                    "type" : "method"
-                  },
-                  {
-                    "title" : "Type Properties",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/fallbackexpenseaccountname",
-                    "title" : "static let fallbackExpenseAccountName: AccountName",
-                    "type" : "property"
-                  }
-                ],
-                "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper",
-                "title" : "WealthsimpleLedgerMapper",
-                "type" : "struct"
-              },
-              {
-                "title" : "Enumerations",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Enumeration Cases",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/accountnotfound(_:)",
-                    "title" : "case accountNotFound(String)",
-                    "type" : "case"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/invalidcommoditysymbol(_:)",
-                    "title" : "case invalidCommoditySymbol(String)",
-                    "type" : "case"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/missingaccount(_:_:_:)",
-                    "title" : "case missingAccount(String, String, String)",
-                    "type" : "case"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/missingcommodity(_:)",
-                    "title" : "case missingCommodity(String)",
-                    "type" : "case"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/missingwealthsimpleaccount(_:)",
-                    "title" : "case missingWealthsimpleAccount(String)",
-                    "type" : "case"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/unexpecteddescription(_:)",
-                    "title" : "case unexpectedDescription(String)",
-                    "type" : "case"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/unexpectedstocksplit(_:)",
-                    "title" : "case unexpectedStockSplit(String)",
-                    "type" : "case"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/unsupportedtransactiontype(_:)",
-                    "title" : "case unsupportedTransactionType(String)",
-                    "type" : "case"
-                  },
-                  {
-                    "title" : "Default Implementations",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "children" : [
-                      {
-                        "title" : "Operators",
-                        "type" : "groupMarker"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/!=(_:_:)",
-                        "title" : "static func != (Self, Self) -> Bool",
-                        "type" : "op"
-                      }
-                    ],
-                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/equatable-implementations",
-                    "title" : "Equatable Implementations",
-                    "type" : "symbol"
-                  },
-                  {
-                    "children" : [
-                      {
-                        "title" : "Instance Properties",
-                        "type" : "groupMarker"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/localizeddescription",
-                        "title" : "var localizedDescription: String",
-                        "type" : "property"
-                      }
-                    ],
-                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/error-implementations",
-                    "title" : "Error Implementations",
-                    "type" : "symbol"
-                  },
-                  {
-                    "children" : [
-                      {
-                        "title" : "Instance Properties",
-                        "type" : "groupMarker"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/errordescription",
-                        "title" : "var errorDescription: String?",
-                        "type" : "property"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/failurereason",
-                        "title" : "var failureReason: String?",
-                        "type" : "property"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/helpanchor",
-                        "title" : "var helpAnchor: String?",
-                        "type" : "property"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/recoverysuggestion",
-                        "title" : "var recoverySuggestion: String?",
-                        "type" : "property"
-                      }
-                    ],
-                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/localizederror-implementations",
-                    "title" : "LocalizedError Implementations",
-                    "type" : "symbol"
-                  }
-                ],
-                "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror",
-                "title" : "WealthsimpleConversionError",
-                "type" : "enum"
-              }
-            ],
-            "path" : "\/documentation\/swiftbeancountwealthsimplemapper",
-            "title" : "SwiftBeanCountWealthsimpleMapper",
-            "type" : "module"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Structures",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Initializers",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper\/init(ledger:)",
-                    "title" : "init(ledger: Ledger)",
-                    "type" : "init"
-                  },
-                  {
-                    "title" : "Instance Properties",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper\/expenseaccountname",
-                    "title" : "let expenseAccountName: AccountName",
-                    "type" : "property"
-                  },
-                  {
-                    "title" : "Instance Methods",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper\/mapaccounttobalance(account:)",
-                    "title" : "func mapAccountToBalance(account: any Account) throws -> Balance",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper\/mapactivitiestotransactions(activities:)",
-                    "title" : "func mapActivitiesToTransactions(activities: [any Activity]) throws -> [Transaction]",
-                    "type" : "method"
-                  }
-                ],
-                "path" : "\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper",
-                "title" : "SwiftBeanCountRogersBankMapper",
-                "type" : "struct"
-              },
-              {
-                "title" : "Enumerations",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Enumeration Cases",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/missingaccount(lastfour:)",
-                    "title" : "case missingAccount(lastFour: String)",
-                    "type" : "case"
-                  },
-                  {
-                    "path" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/missingactivitydata(activity:key:)",
-                    "title" : "case missingActivityData(activity: any Activity, key: String)",
-                    "type" : "case"
-                  },
-                  {
-                    "title" : "Default Implementations",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "children" : [
-                      {
-                        "title" : "Instance Properties",
-                        "type" : "groupMarker"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/localizeddescription",
-                        "title" : "var localizedDescription: String",
-                        "type" : "property"
-                      }
-                    ],
-                    "path" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/error-implementations",
-                    "title" : "Error Implementations",
-                    "type" : "symbol"
-                  },
-                  {
-                    "children" : [
-                      {
-                        "title" : "Instance Properties",
-                        "type" : "groupMarker"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/errordescription",
-                        "title" : "var errorDescription: String?",
-                        "type" : "property"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/failurereason",
-                        "title" : "var failureReason: String?",
-                        "type" : "property"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/helpanchor",
-                        "title" : "var helpAnchor: String?",
-                        "type" : "property"
-                      },
-                      {
-                        "path" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/recoverysuggestion",
-                        "title" : "var recoverySuggestion: String?",
-                        "type" : "property"
-                      }
-                    ],
-                    "path" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/localizederror-implementations",
-                    "title" : "LocalizedError Implementations",
-                    "type" : "symbol"
-                  }
-                ],
-                "path" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror",
-                "title" : "RogersBankMappingError",
-                "type" : "enum"
-              }
-            ],
-            "path" : "\/documentation\/swiftbeancountrogersbankmapper",
-            "title" : "SwiftBeanCountRogersBankMapper",
+            "path" : "\/documentation\/swiftbeancountparserutils",
+            "title" : "SwiftBeanCountParserUtils",
             "type" : "module"
           },
           {
@@ -3763,6 +3157,612 @@
             ],
             "path" : "\/documentation\/swiftbeancounttax",
             "title" : "SwiftBeanCountTax",
+            "type" : "module"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Structures",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Initializers",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/init(ledger:)",
+                    "title" : "init(ledger: Ledger)",
+                    "type" : "init"
+                  },
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/defaultassetaccountname",
+                    "title" : "let defaultAssetAccountName: AccountName",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/defaultexpenseaccountname",
+                    "title" : "let defaultExpenseAccountName: AccountName",
+                    "type" : "property"
+                  },
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/createbalance(cardnumber:balance:date:)",
+                    "title" : "func createBalance(cardNumber: String, balance: String, date: Date?) throws -> Balance",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/createtransactions(account:reader:)",
+                    "title" : "func createTransactions(account: AccountName, reader: CSVReader) throws -> [Transaction]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/createtransactions(cardnumber:transactions:)",
+                    "title" : "func createTransactions(cardNumber: String, transactions: String) throws -> [Transaction]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/ledgercardaccountname(cardnumber:)",
+                    "title" : "func ledgerCardAccountName(cardNumber: String) throws -> AccountName",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper",
+                "title" : "SwiftBeanCountCompassCardMapper",
+                "type" : "struct"
+              },
+              {
+                "title" : "Enumerations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Enumeration Cases",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/missingaccount(cardnumber:)",
+                    "title" : "case missingAccount(cardNumber: String)",
+                    "type" : "case"
+                  },
+                  {
+                    "title" : "Default Implementations",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Operators",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/!=(_:_:)",
+                        "title" : "static func != (Self, Self) -> Bool",
+                        "type" : "op"
+                      }
+                    ],
+                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/equatable-implementations",
+                    "title" : "Equatable Implementations",
+                    "type" : "symbol"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Instance Properties",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/localizeddescription",
+                        "title" : "var localizedDescription: String",
+                        "type" : "property"
+                      }
+                    ],
+                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/error-implementations",
+                    "title" : "Error Implementations",
+                    "type" : "symbol"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Instance Properties",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/errordescription",
+                        "title" : "var errorDescription: String?",
+                        "type" : "property"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/failurereason",
+                        "title" : "var failureReason: String?",
+                        "type" : "property"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/helpanchor",
+                        "title" : "var helpAnchor: String?",
+                        "type" : "property"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/recoverysuggestion",
+                        "title" : "var recoverySuggestion: String?",
+                        "type" : "property"
+                      }
+                    ],
+                    "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/localizederror-implementations",
+                    "title" : "LocalizedError Implementations",
+                    "type" : "symbol"
+                  }
+                ],
+                "path" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror",
+                "title" : "SwiftBeanCountCompassCardMapperError",
+                "type" : "enum"
+              }
+            ],
+            "path" : "\/documentation\/swiftbeancountcompasscardmapper",
+            "title" : "SwiftBeanCountCompassCardMapper",
+            "type" : "module"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Structures",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Initializers",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper\/init(ledger:)",
+                    "title" : "init(ledger: Ledger)",
+                    "type" : "init"
+                  },
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper\/defaultaccountname",
+                    "title" : "let defaultAccountName: AccountName",
+                    "type" : "property"
+                  },
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper\/createbalances(accounts:date:)",
+                    "title" : "func createBalances(accounts: [[String : Any]], date: Date) throws -> [Balance]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper\/createtransactions(_:)",
+                    "title" : "func createTransactions([String : [[String : Any]]]) throws -> [Transaction]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper\/ledgeraccountname(account:)",
+                    "title" : "func ledgerAccountName(account: [String : Any]) throws -> AccountName",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper",
+                "title" : "SwiftBeanCountTangerineMapper",
+                "type" : "struct"
+              },
+              {
+                "title" : "Enumerations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Enumeration Cases",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/invaliddate(date:)",
+                    "title" : "case invalidDate(date: String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/missingaccount(account:)",
+                    "title" : "case missingAccount(account: String)",
+                    "type" : "case"
+                  },
+                  {
+                    "title" : "Default Implementations",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Operators",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/!=(_:_:)",
+                        "title" : "static func != (Self, Self) -> Bool",
+                        "type" : "op"
+                      }
+                    ],
+                    "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/equatable-implementations",
+                    "title" : "Equatable Implementations",
+                    "type" : "symbol"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Instance Properties",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/localizeddescription",
+                        "title" : "var localizedDescription: String",
+                        "type" : "property"
+                      }
+                    ],
+                    "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/error-implementations",
+                    "title" : "Error Implementations",
+                    "type" : "symbol"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Instance Properties",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/errordescription",
+                        "title" : "var errorDescription: String?",
+                        "type" : "property"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/failurereason",
+                        "title" : "var failureReason: String?",
+                        "type" : "property"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/helpanchor",
+                        "title" : "var helpAnchor: String?",
+                        "type" : "property"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/recoverysuggestion",
+                        "title" : "var recoverySuggestion: String?",
+                        "type" : "property"
+                      }
+                    ],
+                    "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/localizederror-implementations",
+                    "title" : "LocalizedError Implementations",
+                    "type" : "symbol"
+                  }
+                ],
+                "path" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror",
+                "title" : "SwiftBeanCountTangerineMapperError",
+                "type" : "enum"
+              }
+            ],
+            "path" : "\/documentation\/swiftbeancounttangerinemapper",
+            "title" : "SwiftBeanCountTangerineMapper",
+            "type" : "module"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Structures",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Initializers",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper\/init(ledger:)",
+                    "title" : "init(ledger: Ledger)",
+                    "type" : "init"
+                  },
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper\/expenseaccountname",
+                    "title" : "let expenseAccountName: AccountName",
+                    "type" : "property"
+                  },
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper\/mapaccounttobalance(account:)",
+                    "title" : "func mapAccountToBalance(account: any Account) throws -> Balance",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper\/mapactivitiestotransactions(activities:)",
+                    "title" : "func mapActivitiesToTransactions(activities: [any Activity]) throws -> [Transaction]",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper",
+                "title" : "SwiftBeanCountRogersBankMapper",
+                "type" : "struct"
+              },
+              {
+                "title" : "Enumerations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Enumeration Cases",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/missingaccount(lastfour:)",
+                    "title" : "case missingAccount(lastFour: String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/missingactivitydata(activity:key:)",
+                    "title" : "case missingActivityData(activity: any Activity, key: String)",
+                    "type" : "case"
+                  },
+                  {
+                    "title" : "Default Implementations",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Instance Properties",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/localizeddescription",
+                        "title" : "var localizedDescription: String",
+                        "type" : "property"
+                      }
+                    ],
+                    "path" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/error-implementations",
+                    "title" : "Error Implementations",
+                    "type" : "symbol"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Instance Properties",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/errordescription",
+                        "title" : "var errorDescription: String?",
+                        "type" : "property"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/failurereason",
+                        "title" : "var failureReason: String?",
+                        "type" : "property"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/helpanchor",
+                        "title" : "var helpAnchor: String?",
+                        "type" : "property"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/recoverysuggestion",
+                        "title" : "var recoverySuggestion: String?",
+                        "type" : "property"
+                      }
+                    ],
+                    "path" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/localizederror-implementations",
+                    "title" : "LocalizedError Implementations",
+                    "type" : "symbol"
+                  }
+                ],
+                "path" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror",
+                "title" : "RogersBankMappingError",
+                "type" : "enum"
+              }
+            ],
+            "path" : "\/documentation\/swiftbeancountrogersbankmapper",
+            "title" : "SwiftBeanCountRogersBankMapper",
+            "type" : "module"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Structures",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Initializers",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/init(ledger:)",
+                    "title" : "init(ledger: Ledger)",
+                    "type" : "init"
+                  },
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/accounts",
+                    "title" : "var accounts: [any Account]",
+                    "type" : "property"
+                  },
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/mappositionstopriceandbalance(_:)",
+                    "title" : "func mapPositionsToPriceAndBalance([any Position]) throws -> ([Price], [Balance])",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/maptransactionstopriceandtransactions(_:)",
+                    "title" : "func mapTransactionsToPriceAndTransactions([any Transaction]) throws -> ([Price], [Transaction])",
+                    "type" : "method"
+                  },
+                  {
+                    "title" : "Type Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/fallbackexpenseaccountname",
+                    "title" : "static let fallbackExpenseAccountName: AccountName",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper",
+                "title" : "WealthsimpleLedgerMapper",
+                "type" : "struct"
+              },
+              {
+                "title" : "Enumerations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Enumeration Cases",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/accountnotfound(_:)",
+                    "title" : "case accountNotFound(String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/invalidcommoditysymbol(_:)",
+                    "title" : "case invalidCommoditySymbol(String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/missingaccount(_:_:_:)",
+                    "title" : "case missingAccount(String, String, String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/missingcommodity(_:)",
+                    "title" : "case missingCommodity(String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/missingwealthsimpleaccount(_:)",
+                    "title" : "case missingWealthsimpleAccount(String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/unexpecteddescription(_:)",
+                    "title" : "case unexpectedDescription(String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/unexpectedstocksplit(_:)",
+                    "title" : "case unexpectedStockSplit(String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/unsupportedtransactiontype(_:)",
+                    "title" : "case unsupportedTransactionType(String)",
+                    "type" : "case"
+                  },
+                  {
+                    "title" : "Default Implementations",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Operators",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/!=(_:_:)",
+                        "title" : "static func != (Self, Self) -> Bool",
+                        "type" : "op"
+                      }
+                    ],
+                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/equatable-implementations",
+                    "title" : "Equatable Implementations",
+                    "type" : "symbol"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Instance Properties",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/localizeddescription",
+                        "title" : "var localizedDescription: String",
+                        "type" : "property"
+                      }
+                    ],
+                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/error-implementations",
+                    "title" : "Error Implementations",
+                    "type" : "symbol"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Instance Properties",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/errordescription",
+                        "title" : "var errorDescription: String?",
+                        "type" : "property"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/failurereason",
+                        "title" : "var failureReason: String?",
+                        "type" : "property"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/helpanchor",
+                        "title" : "var helpAnchor: String?",
+                        "type" : "property"
+                      },
+                      {
+                        "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/recoverysuggestion",
+                        "title" : "var recoverySuggestion: String?",
+                        "type" : "property"
+                      }
+                    ],
+                    "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/localizederror-implementations",
+                    "title" : "LocalizedError Implementations",
+                    "type" : "symbol"
+                  }
+                ],
+                "path" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror",
+                "title" : "WealthsimpleConversionError",
+                "type" : "enum"
+              }
+            ],
+            "path" : "\/documentation\/swiftbeancountwealthsimplemapper",
+            "title" : "SwiftBeanCountWealthsimpleMapper",
             "type" : "module"
           },
           {

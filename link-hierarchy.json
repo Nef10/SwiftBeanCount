@@ -1,98 +1,5180 @@
 {
-  "bundleID" : "SwiftBeanCountParserUtils",
+  "bundleID" : "SwiftBeanCountModel",
   "nonSymbolPaths" : {
-    "0" : "\/tutorials",
-    "6" : "\/tutorials\/SwiftBeanCountParserUtils"
+    "100" : "\/documentation\/SwiftBeanCountModel\/Posting\/CustomStringConvertible-Implementations",
+    "102" : "\/documentation\/SwiftBeanCountModel\/Event\/Comparable-Implementations",
+    "108" : "\/documentation\/SwiftBeanCountModel\/Balance\/Equatable-Implementations",
+    "13" : "\/documentation\/SwiftBeanCountModel\/LedgerError\/LocalizedError-Implementations",
+    "14" : "\/documentation\/SwiftBeanCountModel\/Cost\/CustomStringConvertible-Implementations",
+    "147" : "\/documentation\/SwiftBeanCountModel\/Custom\/CustomStringConvertible-Implementations",
+    "15" : "\/documentation\/SwiftBeanCountModel\/Transaction\/Equatable-Implementations",
+    "151" : "\/documentation\/SwiftBeanCountModel\/TransactionMetaData\/CustomStringConvertible-Implementations",
+    "152" : "\/documentation\/SwiftBeanCountModel\/AccountName\/Equatable-Implementations",
+    "155" : "\/documentation\/SwiftBeanCountModel\/BookingMethod\/CustomStringConvertible-Implementations",
+    "157" : "\/documentation\/SwiftBeanCountModel\/Commodity\/CustomStringConvertible-Implementations",
+    "158" : "\/documentation\/SwiftBeanCountModel\/Flag\/Equatable-Implementations",
+    "177" : "\/documentation\/SwiftBeanCountModel\/AccountNameError\/Equatable-Implementations",
+    "18" : "\/documentation\/SwiftBeanCountModel\/Option\/Comparable-Implementations",
+    "188" : "\/documentation\/SwiftBeanCountModel\/TransactionMetaData\/Equatable-Implementations",
+    "190" : "\/documentation\/SwiftBeanCountModel\/Posting\/Equatable-Implementations",
+    "199" : "\/documentation\/SwiftBeanCountModel\/Tag\/Hashable-Implementations",
+    "204" : "\/documentation\/SwiftBeanCountModel\/TransactionMetaData\/Hashable-Implementations",
+    "21" : "\/documentation\/SwiftBeanCountModel\/Price\/Equatable-Implementations",
+    "211" : "\/documentation\/SwiftBeanCountModel\/Transaction\/Comparable-Implementations",
+    "214" : "\/documentation\/SwiftBeanCountModel\/Balance\/CustomStringConvertible-Implementations",
+    "226" : "\/documentation\/SwiftBeanCountModel\/Custom\/Comparable-Implementations",
+    "227" : "\/documentation\/SwiftBeanCountModel\/PriceError\/LocalizedError-Implementations",
+    "229" : "\/documentation\/SwiftBeanCountModel\/Commodity\/Equatable-Implementations",
+    "234" : "\/documentation\/SwiftBeanCountModel\/Custom\/Equatable-Implementations",
+    "245" : "\/documentation\/SwiftBeanCountModel\/Amount\/MultiCurrencyAmountRepresentable-Implementations",
+    "247" : "\/documentation\/SwiftBeanCountModel\/Tag\/Comparable-Implementations",
+    "252" : "\/documentation\/SwiftBeanCountModel\/AccountName\/Hashable-Implementations",
+    "256" : "\/tutorials\/SwiftBeanCountModel",
+    "277" : "\/documentation\/SwiftBeanCountModel\/Ledger\/Equatable-Implementations",
+    "28" : "\/documentation\/SwiftBeanCountModel\/PostingError\/Equatable-Implementations",
+    "280" : "\/documentation\/SwiftBeanCountModel\/Tag\/Equatable-Implementations",
+    "282" : "\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount\/MultiCurrencyAmountRepresentable-Implementations",
+    "284" : "\/documentation\/SwiftBeanCountModel\/AccountNameError\/LocalizedError-Implementations",
+    "288" : "\/documentation\/SwiftBeanCountModel\/AccountNameError\/Error-Implementations",
+    "289" : "\/documentation\/SwiftBeanCountModel\/InventoryError\/LocalizedError-Implementations",
+    "301" : "\/documentation\/SwiftBeanCountModel\/Amount\/CustomStringConvertible-Implementations",
+    "303" : "\/documentation\/SwiftBeanCountModel\/Option\/Equatable-Implementations",
+    "305" : "\/documentation\/SwiftBeanCountModel\/PostingPriceType\/Equatable-Implementations",
+    "306" : "\/documentation\/SwiftBeanCountModel\/PostingError\/Error-Implementations",
+    "31" : "\/documentation\/SwiftBeanCountModel\/Transaction\/CustomStringConvertible-Implementations",
+    "311" : "\/documentation\/SwiftBeanCountModel\/AccountName\/CustomStringConvertible-Implementations",
+    "318" : "\/documentation\/SwiftBeanCountModel\/Tag\/CustomStringConvertible-Implementations",
+    "319" : "\/documentation\/SwiftBeanCountModel\/CostError\/LocalizedError-Implementations",
+    "320" : "\/documentation\/SwiftBeanCountModel\/Flag\/RawRepresentable-Implementations",
+    "323" : "\/tutorials",
+    "335" : "\/documentation\/SwiftBeanCountModel\/BookingMethod\/Equatable-Implementations",
+    "336" : "\/documentation\/SwiftBeanCountModel\/Account\/CustomStringConvertible-Implementations",
+    "34" : "\/documentation\/SwiftBeanCountModel\/Amount\/Equatable-Implementations",
+    "355" : "\/documentation\/SwiftBeanCountModel\/Posting\/Hashable-Implementations",
+    "362" : "\/documentation\/SwiftBeanCountModel\/Amount\/Hashable-Implementations",
+    "363" : "\/documentation\/SwiftBeanCountModel\/Price\/CustomStringConvertible-Implementations",
+    "366" : "\/documentation\/SwiftBeanCountModel\/Cost\/Equatable-Implementations",
+    "5" : "\/documentation\/SwiftBeanCountModel\/Event\/Equatable-Implementations",
+    "53" : "\/documentation\/SwiftBeanCountModel\/AccountType\/RawRepresentable-Implementations",
+    "59" : "\/documentation\/SwiftBeanCountModel\/Event\/CustomStringConvertible-Implementations",
+    "61" : "\/documentation\/SwiftBeanCountModel\/LedgerError\/Error-Implementations",
+    "64" : "\/documentation\/SwiftBeanCountModel\/InventoryError\/Error-Implementations",
+    "76" : "\/documentation\/SwiftBeanCountModel\/Account\/Equatable-Implementations",
+    "8" : "\/documentation\/SwiftBeanCountModel\/Transaction\/Hashable-Implementations",
+    "81" : "\/documentation\/SwiftBeanCountModel\/Flag\/CustomStringConvertible-Implementations",
+    "88" : "\/documentation\/SwiftBeanCountModel\/Ledger\/CustomStringConvertible-Implementations",
+    "89" : "\/documentation\/SwiftBeanCountModel\/Option\/CustomStringConvertible-Implementations",
+    "9" : "\/documentation\/SwiftBeanCountModel\/CostError\/Error-Implementations",
+    "90" : "\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount\/Equatable-Implementations",
+    "91" : "\/documentation\/SwiftBeanCountModel\/Cost\/Hashable-Implementations",
+    "93" : "\/documentation\/SwiftBeanCountModel\/PriceError\/Error-Implementations",
+    "94" : "\/documentation\/SwiftBeanCountModel\/AccountType\/Equatable-Implementations"
   },
   "pathHierarchy" : {
-    "articlesContainer" : 5,
+    "articlesContainer" : 19,
     "modules" : [
-      5
+      19
     ],
     "nodes" : [
       {
-        "name" : "tutorials"
+        "name" : "narration",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel19TransactionMetaDataV9narrationSSvp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel13BookingMethodO"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "..<(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzlopys16PartialRangeUpToVyxGxFZ::SYNTHESIZED::s:19SwiftBeanCountModel6OptionV"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : ">(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE1goiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel6CustomV"
+        }
+      },
+      {
+        "name" : "init(number:commoditySymbol:decimalDigits:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6AmountV6number15commoditySymbol13decimalDigitsACSo9NSDecimala_SSSitcfc"
+        }
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "name" : "metaData",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6CustomV8metaDataSDyS2SGvp"
+        }
+      },
+      {
+        "name" : "description",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel19TransactionMetaDataV11descriptionSSvp"
+        }
+      },
+      {
+        "name" : "Hashable-Implementations"
+      },
+      {
+        "name" : "Error-Implementations"
+      },
+      {
+        "disfavored" : 3,
+        "name" : "...(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzzopys19PartialRangeThroughVyxGxFZ::SYNTHESIZED::s:19SwiftBeanCountModel5EventV"
+        }
+      },
+      {
+        "name" : "init(rawValue:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11AccountTypeO8rawValueACSgSS_tcfc"
+        }
+      },
+      {
+        "name" : "description",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7PostingC11descriptionSSvp"
+        }
+      },
+      {
+        "name" : "LocalizedError-Implementations"
+      },
+      {
+        "name" : "CustomStringConvertible-Implementations"
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel19TransactionMetaDataV"
+        }
+      },
+      {
+        "name" : "expense",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11AccountTypeO7expenseyA2CmF"
+        }
+      },
+      {
+        "name" : "Comparable-Implementations"
       },
       {
         "children" : [
           {
-            "hash" : "2dc1h",
-            "kind" : "method",
-            "nodeID" : 4,
+            "hash" : "8pbqf",
+            "kind" : "protocol",
+            "nodeID" : 46
+          },
+          {
+            "hash" : "8329j",
+            "kind" : "struct",
+            "nodeID" : 218
+          },
+          {
+            "hash" : "24zv0",
+            "kind" : "enum",
+            "nodeID" : 205
+          },
+          {
+            "hash" : "2511n",
+            "kind" : "protocol",
+            "nodeID" : 332
+          },
+          {
+            "hash" : "64mpw",
+            "kind" : "struct",
+            "nodeID" : 209
+          },
+          {
+            "hash" : "3uw91",
+            "kind" : "struct",
+            "nodeID" : 346
+          },
+          {
+            "hash" : "6ripe",
+            "kind" : "class",
+            "nodeID" : 126
+          },
+          {
+            "hash" : "6e0vk",
+            "kind" : "typealias",
+            "nodeID" : 42
+          },
+          {
+            "hash" : "12n74",
+            "kind" : "struct",
+            "nodeID" : 266
+          },
+          {
+            "hash" : "9jp8y",
+            "kind" : "enum",
+            "nodeID" : 32
+          },
+          {
+            "hash" : "1t1hx",
+            "kind" : "class",
+            "nodeID" : 38
+          },
+          {
+            "hash" : "6h61x",
+            "kind" : "struct",
+            "nodeID" : 113
+          },
+          {
+            "hash" : "5kf3v",
+            "kind" : "struct",
+            "nodeID" : 317
+          },
+          {
+            "hash" : "1ur8b",
+            "kind" : "enum",
+            "nodeID" : 143
+          },
+          {
+            "hash" : "861sx",
+            "kind" : "struct",
+            "nodeID" : 327
+          },
+          {
+            "hash" : "7205w",
+            "kind" : "enum",
+            "nodeID" : 72
+          },
+          {
+            "hash" : "8uouq",
+            "kind" : "struct",
+            "nodeID" : 66
+          },
+          {
+            "hash" : "7id3l",
+            "kind" : "enum",
+            "nodeID" : 86
+          },
+          {
+            "hash" : "63ydl",
+            "kind" : "struct",
+            "nodeID" : 95
+          },
+          {
+            "hash" : "1ucrr",
+            "kind" : "class",
+            "nodeID" : 287
+          },
+          {
+            "hash" : "2lydj",
+            "kind" : "struct",
+            "nodeID" : 360
+          },
+          {
+            "hash" : "13ml8",
+            "kind" : "class",
+            "nodeID" : 166
+          },
+          {
+            "hash" : "4ahpe",
+            "kind" : "class",
+            "nodeID" : 254
+          },
+          {
+            "hash" : "67peb",
+            "kind" : "enum",
+            "nodeID" : 240
+          },
+          {
+            "hash" : "89pmv",
+            "kind" : "class",
+            "nodeID" : 203
+          },
+          {
+            "hash" : "6idd6",
+            "kind" : "enum",
+            "nodeID" : 148
+          },
+          {
+            "hash" : "47hd1",
+            "kind" : "class",
+            "nodeID" : 50
+          },
+          {
+            "hash" : "42mhk",
+            "kind" : "func.op",
+            "nodeID" : 275,
             "parameterTypes" : [
-              "NSRegularExpression"
+              "MultiCurrencyAmount",
+              "MultiCurrencyAmountRepresentable"
             ],
             "returnTypes" : [
-              "[[String]]"
+
             ]
           },
           {
-            "hash" : "9ruhp",
+            "hash" : "9gvmk",
+            "kind" : "enum",
+            "nodeID" : 255
+          },
+          {
+            "hash" : "6g0cd",
+            "kind" : "class",
+            "nodeID" : 257
+          },
+          {
+            "hash" : "gzow",
+            "kind" : "enum",
+            "nodeID" : 224
+          },
+          {
+            "hash" : "8fv8x",
+            "kind" : "enum",
+            "nodeID" : 73
+          },
+          {
+            "hash" : "4ahhe",
+            "kind" : "func.op",
+            "nodeID" : 160,
+            "parameterTypes" : [
+              "MultiCurrencyAmountRepresentable",
+              "MultiCurrencyAmountRepresentable"
+            ],
+            "returnTypes" : [
+              "MultiCurrencyAmount"
+            ]
+          }
+        ],
+        "name" : "SwiftBeanCountModel",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "SwiftBeanCountModel"
+        }
+      },
+      {
+        "name" : "opening",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7AccountC7opening10Foundation4DateVSgvp"
+        }
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "name" : "accountType",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11AccountNameV11accountTypeAA0eH0Ovp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "helpAnchor",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:10Foundation14LocalizedErrorPAAE10helpAnchorSSSgvp::SYNTHESIZED::s:19SwiftBeanCountModel11LedgerErrorO"
+        }
+      },
+      {
+        "name" : "metaData",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel5EventV8metaDataSDyS2SGvp"
+        }
+      },
+      {
+        "name" : "value",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6OptionV5valueSSvp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "..<(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzlopys16PartialRangeUpToVyxGxFZ::SYNTHESIZED::s:19SwiftBeanCountModel5EventV"
+        }
+      },
+      {
+        "name" : "==(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel9CommodityC2eeoiySbAC_ACtFZ"
+        }
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "name" : "accountName",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7BalanceV11accountNameAA07AccountG0Vvp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel7PostingC"
+        }
+      },
+      {
+        "name" : "CustomStringConvertible-Implementations"
+      },
+      {
+        "children" : [
+          {
+            "hash" : "456mp",
+            "kind" : "property",
+            "nodeID" : 351
+          },
+          {
+            "hash" : "8adz8",
+            "kind" : "property",
+            "nodeID" : 330
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 93
+          },
+          {
+            "hash" : "9naje",
+            "kind" : "property",
+            "nodeID" : 299
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 227
+          },
+          {
+            "hash" : "16ejl",
+            "kind" : "enum.case",
+            "nodeID" : 343
+          },
+          {
+            "hash" : "gkas",
+            "kind" : "property",
+            "nodeID" : 97
+          },
+          {
+            "hash" : "1b2h4",
+            "kind" : "property",
+            "nodeID" : 180
+          }
+        ],
+        "name" : "PriceError",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel10PriceErrorO"
+        }
+      },
+      {
+        "name" : "bookingMethod",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7AccountC13bookingMethodAA07BookingG0Ovp"
+        }
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel4FlagO"
+        }
+      },
+      {
+        "name" : "init(rawValue:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel4FlagO8rawValueACSgSS_tcfc"
+        }
+      },
+      {
+        "name" : "init(date:name:values:metaData:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6CustomV4date4name6values8metaDataAC10Foundation4DateV_SSSaySSGSDyS2SGtcfc"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "3gv9t",
+            "kind" : "func.op",
+            "nodeID" : 58,
+            "parameterTypes" : [
+              "Cost",
+              "Cost"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "11v06",
+            "kind" : "init",
+            "nodeID" : 221,
+            "parameterTypes" : [
+              "Amount?",
+              "Date?",
+              "String?"
+            ],
+            "returnTypes" : [
+              ""
+            ]
+          },
+          {
+            "hash" : "6e63k",
             "kind" : "method",
-            "nodeID" : 3,
+            "nodeID" : 285,
+            "parameterTypes" : [
+              "Hasher"
+            ],
+            "returnTypes" : [
+
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 366
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 14
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 91
+          },
+          {
+            "hash" : "jt5x",
+            "kind" : "property",
+            "nodeID" : 70
+          },
+          {
+            "hash" : "6mftu",
+            "kind" : "func.op",
+            "nodeID" : 75,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "55sqo",
+            "kind" : "property",
+            "nodeID" : 121
+          },
+          {
+            "hash" : "4kzmt",
+            "kind" : "property",
+            "nodeID" : 144
+          },
+          {
+            "hash" : "4hiqh",
+            "kind" : "property",
+            "nodeID" : 326
+          }
+        ],
+        "name" : "Cost",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel4CostC"
+        }
+      },
+      {
+        "name" : "price",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7PostingC5priceAA6AmountVSgvp"
+        }
+      },
+      {
+        "name" : "isZeroWithTolerance()",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV19isZeroWithToleranceSbyF"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "...(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzzopys19PartialRangeThroughVyxGxFZ::SYNTHESIZED::s:19SwiftBeanCountModel6CustomV"
+        }
+      },
+      {
+        "name" : "CommoditySymbol",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel15CommoditySymbola"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "..<(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzloiySnyxGx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel11TransactionC"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "failureReason",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:10Foundation14LocalizedErrorPAAE13failureReasonSSSgvp::SYNTHESIZED::s:19SwiftBeanCountModel14InventoryErrorO"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "failureReason",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:10Foundation14LocalizedErrorPAAE13failureReasonSSSgvp::SYNTHESIZED::s:19SwiftBeanCountModel16AccountNameErrorO"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "110px",
+            "kind" : "property",
+            "nodeID" : 230
+          }
+        ],
+        "name" : "AccountItem",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11AccountItemP"
+        }
+      },
+      {
+        "name" : "<(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11TransactionC1loiySbAC_ACtFZ"
+        }
+      },
+      {
+        "name" : "tags",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerC4tagsSayAA3TagVGvp"
+        }
+      },
+      {
+        "name" : "description",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel4FlagO11descriptionSSvp"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "26qqb",
+            "kind" : "property",
+            "nodeID" : 65
+          },
+          {
+            "hash" : "5j95q",
+            "kind" : "property",
+            "nodeID" : 176
+          },
+          {
+            "hash" : "1rt6z",
+            "kind" : "func.op",
+            "nodeID" : 183,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "4vxgz",
+            "kind" : "property",
+            "nodeID" : 130
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 88
+          },
+          {
+            "hash" : "6yhit",
+            "kind" : "property",
+            "nodeID" : 302
+          },
+          {
+            "hash" : "9405j",
+            "kind" : "func.op",
+            "nodeID" : 168,
+            "parameterTypes" : [
+              "Ledger",
+              "Ledger"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "4fwkt",
+            "kind" : "init",
+            "nodeID" : 164,
             "parameterTypes" : [
 
             ],
             "returnTypes" : [
-              "Decimal",
-              "Int"
+              ""
+            ]
+          },
+          {
+            "hash" : "33ny3",
+            "kind" : "property",
+            "nodeID" : 48
+          },
+          {
+            "hash" : "5sgli",
+            "kind" : "method",
+            "nodeID" : 207,
+            "parameterTypes" : [
+              "Transaction"
+            ],
+            "returnTypes" : [
+
+            ]
+          },
+          {
+            "hash" : "2eg4m",
+            "kind" : "method",
+            "nodeID" : 84,
+            "parameterTypes" : [
+              "Account"
+            ],
+            "returnTypes" : [
+
+            ]
+          },
+          {
+            "hash" : "6tzr1",
+            "kind" : "method",
+            "nodeID" : 307,
+            "parameterTypes" : [
+              "Commodity"
+            ],
+            "returnTypes" : [
+
+            ]
+          },
+          {
+            "hash" : "9vfqm",
+            "kind" : "method",
+            "nodeID" : 300,
+            "parameterTypes" : [
+              "Price"
+            ],
+            "returnTypes" : [
+
+            ]
+          },
+          {
+            "hash" : "90mqm",
+            "kind" : "method",
+            "nodeID" : 131,
+            "parameterTypes" : [
+              "Balance"
+            ],
+            "returnTypes" : [
+
+            ]
+          },
+          {
+            "hash" : "22pfj",
+            "kind" : "property",
+            "nodeID" : 276
+          },
+          {
+            "hash" : "2nn7q",
+            "kind" : "property",
+            "nodeID" : 349
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 277
+          },
+          {
+            "hash" : "2hzjd",
+            "kind" : "property",
+            "nodeID" : 216
+          },
+          {
+            "hash" : "67pw5",
+            "kind" : "property",
+            "nodeID" : 197
+          },
+          {
+            "hash" : "15uph",
+            "kind" : "property",
+            "nodeID" : 271
+          },
+          {
+            "hash" : "3mjqn",
+            "kind" : "property",
+            "nodeID" : 171
+          },
+          {
+            "hash" : "7xfbp",
+            "kind" : "property",
+            "nodeID" : 104
+          },
+          {
+            "hash" : "4jkyv",
+            "kind" : "property",
+            "nodeID" : 161
+          },
+          {
+            "hash" : "9iiga",
+            "kind" : "property",
+            "nodeID" : 342
+          }
+        ],
+        "name" : "Ledger",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerC"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "hash(into:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SYsSHRzSH8RawValueSYRpzrlE4hash4intoys6HasherVz_tF::SYNTHESIZED::s:19SwiftBeanCountModel4FlagO"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel5PriceV"
+        }
+      },
+      {
+        "name" : "RawRepresentable-Implementations"
+      },
+      {
+        "disfavored" : 3,
+        "name" : "failureReason",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:10Foundation14LocalizedErrorPAAE13failureReasonSSSgvp::SYNTHESIZED::s:19SwiftBeanCountModel9CostErrorO"
+        }
+      },
+      {
+        "name" : "description",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel13BookingMethodO11descriptionSSvp"
+        }
+      },
+      {
+        "name" : "==(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7PostingC2eeoiySbAC_ACtFZ"
+        }
+      },
+      {
+        "name" : "cost",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7PostingC4costAA4CostCSgvp"
+        }
+      },
+      {
+        "name" : "==(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel4CostC2eeoiySbAC_ACtFZ"
+        }
+      },
+      {
+        "name" : "CustomStringConvertible-Implementations"
+      },
+      {
+        "disfavored" : 3,
+        "name" : ">=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE2geoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel11TransactionC"
+        }
+      },
+      {
+        "name" : "Error-Implementations"
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel11AccountNameV"
+        }
+      },
+      {
+        "name" : "payee",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel19TransactionMetaDataV5payeeSSvp"
+        }
+      },
+      {
+        "name" : "Error-Implementations"
+      },
+      {
+        "name" : "ledgerErrors",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerC12ledgerErrorsSaySSGvp"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "4ir2h",
+            "kind" : "func.op",
+            "nodeID" : 62,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "32k8e",
+            "kind" : "func.op",
+            "nodeID" : 198,
+            "parameterTypes" : [
+              "AccountName",
+              "AccountName"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "1moxu",
+            "kind" : "property",
+            "nodeID" : 128
+          },
+          {
+            "hash" : "7ivih",
+            "kind" : "property",
+            "nodeID" : 22
+          },
+          {
+            "hash" : "9ah2t",
+            "kind" : "method",
+            "nodeID" : 101,
+            "parameterTypes" : [
+              "Hasher"
+            ],
+            "returnTypes" : [
+
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 252
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 152
+          },
+          {
+            "hash" : "9aeli",
+            "kind" : "type.method",
+            "nodeID" : 105,
+            "parameterTypes" : [
+              "String"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "8hyau",
+            "kind" : "init",
+            "nodeID" : 80,
+            "parameterTypes" : [
+              "String"
+            ],
+            "returnTypes" : [
+              ""
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 311
+          },
+          {
+            "hash" : "1aagm",
+            "kind" : "property",
+            "nodeID" : 262
+          },
+          {
+            "hash" : "4z62a",
+            "kind" : "property",
+            "nodeID" : 106
+          }
+        ],
+        "name" : "AccountName",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11AccountNameV"
+        }
+      },
+      {
+        "name" : "metaData",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel9CommodityC8metaDataSDyS2SGvp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "...(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzzoiySNyxGx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel3TagV"
+        }
+      },
+      {
+        "name" : "metaData",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7BalanceV8metaDataSDyS2SGvp"
+        }
+      },
+      {
+        "name" : "date",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel4CostC4date10Foundation4DateVSgvp"
+        }
+      },
+      {
+        "name" : "metaData",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel5PriceV8metaDataSDyS2SGvp"
+        }
+      },
+      {
+        "children" : [
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 155
+          },
+          {
+            "hash" : "1zfr2",
+            "kind" : "enum.case",
+            "nodeID" : 358
+          },
+          {
+            "hash" : "8y2ot",
+            "kind" : "property",
+            "nodeID" : 55
+          },
+          {
+            "hash" : "7kn57",
+            "kind" : "func.op",
+            "nodeID" : 1,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 335
+          },
+          {
+            "hash" : "53qpb",
+            "kind" : "enum.case",
+            "nodeID" : 331
+          },
+          {
+            "hash" : "93red",
+            "kind" : "enum.case",
+            "nodeID" : 201
+          }
+        ],
+        "name" : "BookingMethod",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel13BookingMethodO"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "c2mg",
+            "kind" : "property",
+            "nodeID" : 87
+          },
+          {
+            "hash" : "7eyu6",
+            "kind" : "enum.case",
+            "nodeID" : 172
+          },
+          {
+            "hash" : "8rcdx",
+            "kind" : "property",
+            "nodeID" : 49
+          },
+          {
+            "hash" : "4o03e",
+            "kind" : "func.op",
+            "nodeID" : 35,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 81
+          },
+          {
+            "hash" : "6jj4t",
+            "kind" : "method",
+            "nodeID" : 51,
+            "parameterTypes" : [
+              "Hasher"
+            ],
+            "returnTypes" : [
+
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 158
+          },
+          {
+            "hash" : "eemg",
+            "kind" : "enum.case",
+            "nodeID" : 186
+          },
+          {
+            "hash" : "6nifa",
+            "kind" : "init",
+            "nodeID" : 36,
+            "parameterTypes" : [
+              "String"
+            ],
+            "returnTypes" : [
+              ""
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 320
+          }
+        ],
+        "name" : "Flag",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel4FlagO"
+        }
+      },
+      {
+        "name" : "amountFor(symbol:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV9amountFor6symbolAA0G0VSS_tF"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel4CostC"
+        }
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "disfavored" : 3,
+        "name" : "...(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzzoPys16PartialRangeFromVyxGxFZ::SYNTHESIZED::s:19SwiftBeanCountModel3TagV"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "...(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzzoPys16PartialRangeFromVyxGxFZ::SYNTHESIZED::s:19SwiftBeanCountModel5EventV"
+        }
+      },
+      {
+        "name" : "alreadyExists(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11LedgerErrorO13alreadyExistsyACSScACmF"
+        }
+      },
+      {
+        "name" : "init(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11AccountNameVyACSSKcfc"
+        }
+      },
+      {
+        "name" : "CustomStringConvertible-Implementations"
+      },
+      {
+        "name" : "errorDescription",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11LedgerErrorO16errorDescriptionSSSgvp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "<=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE2leoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel6OptionV"
+        }
+      },
+      {
+        "name" : "add(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerC3addyyAA7AccountCKF"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "<=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE2leoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel11TransactionC"
+        }
+      },
+      {
+        "children" : [
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 9
+          },
+          {
+            "hash" : "25y9f",
+            "kind" : "property",
+            "nodeID" : 241
+          },
+          {
+            "hash" : "2rwl3",
+            "kind" : "property",
+            "nodeID" : 92
+          },
+          {
+            "hash" : "8mxhc",
+            "kind" : "property",
+            "nodeID" : 200
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 319
+          },
+          {
+            "hash" : "7cqli",
+            "kind" : "property",
+            "nodeID" : 54
+          },
+          {
+            "hash" : "kqcm",
+            "kind" : "property",
+            "nodeID" : 96
+          },
+          {
+            "hash" : "8k05l",
+            "kind" : "enum.case",
+            "nodeID" : 356
+          }
+        ],
+        "name" : "CostError",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel9CostErrorO"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "hashValue",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SYsSHRzSH8RawValueSYRpzrlE04hashB0Sivp::SYNTHESIZED::s:19SwiftBeanCountModel4FlagO"
+        }
+      },
+      {
+        "name" : "CustomStringConvertible-Implementations"
+      },
+      {
+        "name" : "CustomStringConvertible-Implementations"
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "name" : "Hashable-Implementations"
+      },
+      {
+        "name" : "errorDescription",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel9CostErrorO16errorDescriptionSSSgvp"
+        }
+      },
+      {
+        "name" : "Error-Implementations"
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "children" : [
+          {
+            "hash" : "7jsph",
+            "kind" : "func.op",
+            "nodeID" : 16,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "1x1qg",
+            "kind" : "method",
+            "nodeID" : 246,
+            "parameterTypes" : [
+              "Hasher"
+            ],
+            "returnTypes" : [
+
+            ]
+          },
+          {
+            "hash" : "5ebxs",
+            "kind" : "property",
+            "nodeID" : 0
+          },
+          {
+            "hash" : "22zm3",
+            "kind" : "property",
+            "nodeID" : 365
+          },
+          {
+            "hash" : "6nkv6",
+            "kind" : "property",
+            "nodeID" : 7
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 151
+          },
+          {
+            "hash" : "s566",
+            "kind" : "property",
+            "nodeID" : 258
+          },
+          {
+            "hash" : "5plq",
+            "kind" : "func.op",
+            "nodeID" : 182,
+            "parameterTypes" : [
+              "TransactionMetaData",
+              "TransactionMetaData"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "7lb1j",
+            "kind" : "init",
+            "nodeID" : 309,
+            "parameterTypes" : [
+              "Date",
+              "String",
+              "String",
+              "Flag",
+              "[Tag]",
+              "[String:String]"
+            ],
+            "returnTypes" : [
+              ""
+            ]
+          },
+          {
+            "hash" : "6q6z3",
+            "kind" : "property",
+            "nodeID" : 63
+          },
+          {
+            "hash" : "53mz5",
+            "kind" : "property",
+            "nodeID" : 146
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 188
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 204
+          },
+          {
+            "hash" : "1o90w",
+            "kind" : "property",
+            "nodeID" : 109
+          }
+        ],
+        "name" : "TransactionMetaData",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel19TransactionMetaDataV"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "recoverySuggestion",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:10Foundation14LocalizedErrorPAAE18recoverySuggestionSSSgvp::SYNTHESIZED::s:19SwiftBeanCountModel9CostErrorO"
+        }
+      },
+      {
+        "name" : "errorDescription",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel10PriceErrorO16errorDescriptionSSSgvp"
+        }
+      },
+      {
+        "name" : "amount",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7PostingC6amountAA6AmountVvp"
+        }
+      },
+      {
+        "name" : "nameItem",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel12AccountGroupC8nameItemSSvp"
+        }
+      },
+      {
+        "name" : "CustomStringConvertible-Implementations"
+      },
+      {
+        "name" : "hash(into:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11AccountNameV4hash4intoys6HasherVz_tF"
+        }
+      },
+      {
+        "name" : "Comparable-Implementations"
+      },
+      {
+        "name" : "init(nameItem:accountType:baseGroup:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel12AccountGroupC8nameItem11accountType04baseF0ACSS_AA0eJ0OSbtcfc"
+        }
+      },
+      {
+        "name" : "errors",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerC6errorsSaySSGvp"
+        }
+      },
+      {
+        "name" : "isNameValid(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11AccountNameV02isF5ValidySbSSFZ"
+        }
+      },
+      {
+        "name" : "nameItem",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11AccountNameV8nameItemSSvp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : ">(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE1goiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel3TagV"
+        }
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "name" : "flag",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel19TransactionMetaDataV4flagAA4FlagOvp"
+        }
+      },
+      {
+        "name" : "init(date:name:value:metaData:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel5EventV4date4name5value8metaDataAC10Foundation4DateV_S2SSDyS2SGtcfc"
+        }
+      },
+      {
+        "name" : "description",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel5PriceV11descriptionSSvp"
+        }
+      },
+      {
+        "name" : "init(name:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel3TagV4nameACSS_tcfc"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "5my08",
+            "kind" : "func.op",
+            "nodeID" : 329,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Range<Self>"
+            ]
+          },
+          {
+            "hash" : "7gljd",
+            "kind" : "func.op",
+            "nodeID" : 268,
+            "parameterTypes" : [
+              "Tag",
+              "Tag"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "4w7qm",
+            "kind" : "property",
+            "nodeID" : 165
+          },
+          {
+            "hash" : "7v2sa",
+            "kind" : "func.op",
+            "nodeID" : 259,
+            "parameterTypes" : [
+              "Tag",
+              "Tag"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "4ib9i",
+            "kind" : "method",
+            "nodeID" : 267,
+            "parameterTypes" : [
+              "Hasher"
+            ],
+            "returnTypes" : [
+
+            ]
+          },
+          {
+            "hash" : "4gpeb",
+            "kind" : "func.op",
+            "nodeID" : 208,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 280
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 199
+          },
+          {
+            "hash" : "413g4",
+            "kind" : "init",
+            "nodeID" : 112,
+            "parameterTypes" : [
+              "String"
+            ],
+            "returnTypes" : [
+              ""
+            ]
+          },
+          {
+            "hash" : "1ahyl",
+            "kind" : "property",
+            "nodeID" : 314
+          },
+          {
+            "hash" : "1ndzk",
+            "kind" : "func.op",
+            "nodeID" : 191,
+            "parameterTypes" : [
+              "Self"
+            ],
+            "returnTypes" : [
+              "PartialRangeThrough<Self>"
+            ]
+          },
+          {
+            "hash" : "88245",
+            "kind" : "func.op",
+            "nodeID" : 77,
+            "parameterTypes" : [
+              "Self"
+            ],
+            "returnTypes" : [
+              "PartialRangeFrom<Self>"
+            ]
+          },
+          {
+            "hash" : "3x4iq",
+            "kind" : "func.op",
+            "nodeID" : 322,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 247
+          },
+          {
+            "hash" : "6jtzu",
+            "kind" : "func.op",
+            "nodeID" : 333,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "1dfnj",
+            "kind" : "func.op",
+            "nodeID" : 68,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "ClosedRange<Self>"
+            ]
+          },
+          {
+            "hash" : "8r7tg",
+            "kind" : "func.op",
+            "nodeID" : 107,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "3pj75",
+            "kind" : "func.op",
+            "nodeID" : 219,
+            "parameterTypes" : [
+              "Self"
+            ],
+            "returnTypes" : [
+              "PartialRangeUpTo<Self>"
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 318
+          }
+        ],
+        "name" : "Tag",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel3TagV"
+        }
+      },
+      {
+        "name" : "commoditySymbol",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel5PriceV15commoditySymbolSSvp"
+        }
+      },
+      {
+        "name" : "date",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel5EventV4date10Foundation4DateVvp"
+        }
+      },
+      {
+        "name" : "date",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6CustomV4date10Foundation4DateVvp"
+        }
+      },
+      {
+        "name" : "accountType",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel12AccountGroupC11accountTypeAA0eH0Ovp"
+        }
+      },
+      {
+        "name" : "init(date:commoditySymbol:amount:metaData:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel5PriceV4date15commoditySymbol6amount8metaDataAC10Foundation4DateV_SSAA6AmountVSDyS2SGtKcfc"
+        }
+      },
+      {
+        "name" : "description",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6OptionV11descriptionSSvp"
+        }
+      },
+      {
+        "name" : "opening",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel9CommodityC7opening10Foundation4DateVSgvp"
+        }
+      },
+      {
+        "name" : "description",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel4CostC11descriptionSSvp"
+        }
+      },
+      {
+        "name" : "commoditySymbol",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7AccountC15commoditySymbolSSSgvp"
+        }
+      },
+      {
+        "name" : "balances",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7AccountC8balancesSayAA7BalanceVGvp"
+        }
+      },
+      {
+        "name" : "==(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7AccountC2eeoiySbAC_ACtFZ"
+        }
+      },
+      {
+        "name" : "priceType",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7PostingC9priceTypeAA0e5PriceG0OSgvp"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "390ss",
+            "kind" : "property",
+            "nodeID" : 137
+          }
+        ],
+        "name" : "TransactionPosting",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel18TransactionPostingC"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel11AccountTypeO"
+        }
+      },
+      {
+        "name" : "description",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11AccountNameV11descriptionSSvp"
+        }
+      },
+      {
+        "name" : "init(accountName:amount:price:priceType:cost:metaData:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7PostingC11accountName6amount5price0I4Type4cost8metaDataAcA07AccountG0V_AA6AmountVAMSgAA0e5PriceJ0OSgAA4CostCSgSDyS2SGtKcfc"
+        }
+      },
+      {
+        "name" : "accountGroups",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerC13accountGroupsSayAA12AccountGroupCGvp"
+        }
+      },
+      {
+        "name" : "add(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerC3addyyAA7BalanceVF"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel5EventV"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel6CustomV"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "..<(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzloiySnyxGx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel6CustomV"
+        }
+      },
+      {
+        "name" : "init()",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel19MultiCurrencyAmountVACycfc"
+        }
+      },
+      {
+        "name" : "==(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11TransactionC2eeoiySbAC_ACtFZ"
+        }
+      },
+      {
+        "name" : "transaction",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel18TransactionPostingC11transactionAA0E0Cvp"
+        }
+      },
+      {
+        "name" : "description",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7AccountC11descriptionSSvp"
+        }
+      },
+      {
+        "name" : "description",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11TransactionC11descriptionSSvp"
+        }
+      },
+      {
+        "name" : "baseGroup",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel12AccountGroupC04baseF0Sbvp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "...(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzzoiySNyxGx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel6OptionV"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "helpAnchor",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:10Foundation14LocalizedErrorPAAE10helpAnchorSSSgvp::SYNTHESIZED::s:19SwiftBeanCountModel16AccountNameErrorO"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "68vn8",
+            "kind" : "enum.case",
+            "nodeID" : 156
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 306
+          },
+          {
+            "hash" : "4fzvd",
+            "kind" : "property",
+            "nodeID" : 316
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 28
+          },
+          {
+            "hash" : "8equ3",
+            "kind" : "enum.case",
+            "nodeID" : 222
+          },
+          {
+            "hash" : "893z5",
+            "kind" : "enum.case",
+            "nodeID" : 368
+          },
+          {
+            "hash" : "91j71",
+            "kind" : "func.op",
+            "nodeID" : 196,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
             ]
           }
         ],
-        "name" : "String",
+        "name" : "PostingError",
         "symbolID" : {
           "interfaceLanguage" : "swift",
-          "precise" : "s:e:s:SS25SwiftBeanCountParserUtilsE15matchingStrings5regexSaySaySSGGSo19NSRegularExpressionC_tF"
+          "precise" : "s:19SwiftBeanCountModel12PostingErrorO"
+        }
+      },
+      {
+        "name" : "label",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel4CostC5labelSSSgvp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "localizedDescription",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:s5ErrorP10FoundationE20localizedDescriptionSSvp::SYNTHESIZED::s:19SwiftBeanCountModel14InventoryErrorO"
+        }
+      },
+      {
+        "name" : "tags",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel19TransactionMetaDataV4tagsSayAA3TagVGvp"
+        }
+      },
+      {
+        "name" : "CustomStringConvertible-Implementations"
+      },
+      {
+        "children" : [
+          {
+            "hash" : "4p81s",
+            "kind" : "type.method",
+            "nodeID" : 321,
+            "parameterTypes" : [
+
+            ],
+            "returnTypes" : [
+              "[AccountType]"
+            ]
+          },
+          {
+            "hash" : "50g58",
+            "kind" : "enum.case",
+            "nodeID" : 315
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 53
+          },
+          {
+            "hash" : "28qcr",
+            "kind" : "method",
+            "nodeID" : 231,
+            "parameterTypes" : [
+              "Hasher"
+            ],
+            "returnTypes" : [
+
+            ]
+          },
+          {
+            "hash" : "7i74e",
+            "kind" : "enum.case",
+            "nodeID" : 150
+          },
+          {
+            "hash" : "3u2r1",
+            "kind" : "property",
+            "nodeID" : 357
+          },
+          {
+            "hash" : "6wy4k",
+            "kind" : "enum.case",
+            "nodeID" : 206
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 94
+          },
+          {
+            "hash" : "3acxc",
+            "kind" : "init",
+            "nodeID" : 11,
+            "parameterTypes" : [
+              "String"
+            ],
+            "returnTypes" : [
+              ""
+            ]
+          },
+          {
+            "hash" : "1wh5r",
+            "kind" : "func.op",
+            "nodeID" : 127,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "gcj0",
+            "kind" : "enum.case",
+            "nodeID" : 17
+          },
+          {
+            "hash" : "8soer",
+            "kind" : "enum.case",
+            "nodeID" : 270
+          }
+        ],
+        "name" : "AccountType",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11AccountTypeO"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel19MultiCurrencyAmountV"
+        }
+      },
+      {
+        "name" : "liability",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11AccountTypeO9liabilityyA2CmF"
+        }
+      },
+      {
+        "name" : "CustomStringConvertible-Implementations"
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "disfavored" : 3,
+        "name" : "..<(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzlopys16PartialRangeUpToVyxGxFZ::SYNTHESIZED::s:19SwiftBeanCountModel11TransactionC"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "<=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE2leoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel5EventV"
+        }
+      },
+      {
+        "name" : "CustomStringConvertible-Implementations"
+      },
+      {
+        "name" : "priceWithoutType",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel12PostingErrorO16priceWithoutTypeyA2CmF"
+        }
+      },
+      {
+        "name" : "CustomStringConvertible-Implementations"
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "name" : "==(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel5PriceV2eeoiySbAC_ACtFZ"
+        }
+      },
+      {
+        "name" : "+(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel1poiyAA19MultiCurrencyAmountVAA0efG13Representable_p_AaE_ptF"
+        }
+      },
+      {
+        "name" : "accounts",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerC8accountsSayAA7AccountCGvp"
+        }
+      },
+      {
+        "name" : "init(accountName:amount:price:cost:metaData:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7PostingC11accountName6amount5price4cost8metaDataAcA07AccountG0V_AA6AmountVALSgAA4CostCSgSDyS2SGtcfc"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "...(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzzoPys16PartialRangeFromVyxGxFZ::SYNTHESIZED::s:19SwiftBeanCountModel6CustomV"
+        }
+      },
+      {
+        "name" : "init()",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerCACycfc"
+        }
+      },
+      {
+        "name" : "name",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel3TagV4nameSSvp"
         }
       },
       {
         "children" : [
           {
-            "hash" : "699mg",
-            "kind" : "struct.extension",
-            "nodeID" : 1
+            "hash" : "8v4px",
+            "kind" : "property",
+            "nodeID" : 140
+          },
+          {
+            "hash" : "2x44m",
+            "kind" : "property",
+            "nodeID" : 99
+          },
+          {
+            "hash" : "40qx7",
+            "kind" : "method",
+            "nodeID" : 286,
+            "parameterTypes" : [
+
+            ],
+            "returnTypes" : [
+              "[AccountItem]"
+            ]
+          },
+          {
+            "hash" : "705uq",
+            "kind" : "property",
+            "nodeID" : 117
+          },
+          {
+            "hash" : "7ucna",
+            "kind" : "init",
+            "nodeID" : 103,
+            "parameterTypes" : [
+              "String",
+              "AccountType",
+              "Bool"
+            ],
+            "returnTypes" : [
+              ""
+            ]
           }
         ],
-        "name" : "Swift",
+        "name" : "AccountGroup",
         "symbolID" : {
           "interfaceLanguage" : "swift",
-          "precise" : "s:m:s:e:s:SS25SwiftBeanCountParserUtilsE15matchingStrings5regexSaySaySSGGSo19NSRegularExpressionC_tF"
+          "precise" : "s:19SwiftBeanCountModel12AccountGroupC"
         }
       },
       {
-        "name" : "amountDecimal()",
+        "name" : "init(metaData:postings:)",
         "symbolID" : {
           "interfaceLanguage" : "swift",
-          "precise" : "s:SS25SwiftBeanCountParserUtilsE13amountDecimalSo9NSDecimala_SityF"
+          "precise" : "s:19SwiftBeanCountModel11TransactionC8metaData8postingsAcA0e4MetaG0V_SayAA7PostingCGtcfc"
         }
       },
       {
-        "name" : "matchingStrings(regex:)",
+        "name" : "==(_:_:)",
         "symbolID" : {
           "interfaceLanguage" : "swift",
-          "precise" : "s:SS25SwiftBeanCountParserUtilsE15matchingStrings5regexSaySaySSGGSo19NSRegularExpressionC_tF"
+          "precise" : "s:19SwiftBeanCountModel6LedgerC2eeoiySbAC_ACtFZ"
+        }
+      },
+      {
+        "name" : "name",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7AccountC4nameAA0E4NameVvp"
+        }
+      },
+      {
+        "name" : "amount",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel5PriceV6amountAA6AmountVvp"
+        }
+      },
+      {
+        "name" : "parsingErrors",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerC13parsingErrorsSaySSGvp"
+        }
+      },
+      {
+        "name" : "complete",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel4FlagO8completeyA2CmF"
+        }
+      },
+      {
+        "name" : "name",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel5EventV4nameSSvp"
+        }
+      },
+      {
+        "name" : "balance(in:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11TransactionC7balance2inAA19MultiCurrencyAmountVAA6LedgerC_tKF"
+        }
+      },
+      {
+        "name" : "==(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7BalanceV2eeoiySbAC_ACtFZ"
+        }
+      },
+      {
+        "name" : "prices",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerC6pricesSayAA5PriceVGvp"
+        }
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "name" : "multiCurrencyAmount",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel32MultiCurrencyAmountRepresentableP05multifG0AA0efG0Vvp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : ">=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE2geoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel6CustomV"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "helpAnchor",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:10Foundation14LocalizedErrorPAAE10helpAnchorSSSgvp::SYNTHESIZED::s:19SwiftBeanCountModel10PriceErrorO"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "<=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE2leoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel6CustomV"
+        }
+      },
+      {
+        "name" : "==(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel19TransactionMetaDataV2eeoiySbAC_ACtFZ"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel6LedgerC"
+        }
+      },
+      {
+        "name" : "errorDescription",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel14InventoryErrorO16errorDescriptionSSSgvp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "...(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzzopys19PartialRangeThroughVyxGxFZ::SYNTHESIZED::s:19SwiftBeanCountModel11TransactionC"
+        }
+      },
+      {
+        "name" : "incomplete",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel4FlagO10incompleteyA2CmF"
+        }
+      },
+      {
+        "name" : "init(name:bookingMethod:commoditySymbol:opening:closing:metaData:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7AccountC4name13bookingMethod15commoditySymbol7opening7closing8metaDataAcA0E4NameV_AA07BookingH0OSSSg10Foundation4DateVSgARSDyS2SGtcfc"
+        }
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel7BalanceV"
+        }
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "disfavored" : 3,
+        "name" : "...(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzzopys19PartialRangeThroughVyxGxFZ::SYNTHESIZED::s:19SwiftBeanCountModel3TagV"
+        }
+      },
+      {
+        "name" : "noLotFound(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel14InventoryErrorO10noLotFoundyACSScACmF"
+        }
+      },
+      {
+        "name" : "closing",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7AccountC7closing10Foundation4DateVSgvp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel9CommodityC"
+        }
+      },
+      {
+        "name" : "nameSeperator",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7AccountC13nameSeperatorSJvpZ"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel12PostingErrorO"
+        }
+      },
+      {
+        "name" : "transactions",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerC12transactionsSayAA11TransactionCGvp"
+        }
+      },
+      {
+        "name" : "==(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11AccountNameV2eeoiySbAC_ACtFZ"
+        }
+      },
+      {
+        "name" : "Hashable-Implementations"
+      },
+      {
+        "disfavored" : 3,
+        "name" : "helpAnchor",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:10Foundation14LocalizedErrorPAAE10helpAnchorSSSgvp::SYNTHESIZED::s:19SwiftBeanCountModel9CostErrorO"
+        }
+      },
+      {
+        "name" : "lifo",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel13BookingMethodO4lifoyA2CmF"
+        }
+      },
+      {
+        "name" : "symbol",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel9CommodityC6symbolSSvp"
         }
       },
       {
         "children" : [
           {
-            "hash" : "6i94o",
-            "kind" : "module.extension",
-            "nodeID" : 2
+            "hash" : "7b6w4",
+            "kind" : "init",
+            "nodeID" : 162,
+            "parameterTypes" : [
+              "AccountName",
+              "Amount",
+              "Amount?",
+              "Cost?",
+              "[String:String]"
+            ],
+            "returnTypes" : [
+              ""
+            ]
+          },
+          {
+            "hash" : "1cbsa",
+            "kind" : "method",
+            "nodeID" : 225,
+            "parameterTypes" : [
+              "Hasher"
+            ],
+            "returnTypes" : [
+
+            ]
+          },
+          {
+            "hash" : "1sbpw",
+            "kind" : "property",
+            "nodeID" : 12
+          },
+          {
+            "hash" : "1nht9",
+            "kind" : "property",
+            "nodeID" : 98
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 190
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 100
+          },
+          {
+            "hash" : "nwev",
+            "kind" : "func.op",
+            "nodeID" : 56,
+            "parameterTypes" : [
+              "Posting",
+              "Posting"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 355
+          },
+          {
+            "hash" : "2zei0",
+            "kind" : "property",
+            "nodeID" : 334
+          },
+          {
+            "hash" : "26fsw",
+            "kind" : "property",
+            "nodeID" : 39
+          },
+          {
+            "hash" : "18jod",
+            "kind" : "property",
+            "nodeID" : 125
+          },
+          {
+            "hash" : "5ebm5",
+            "kind" : "func.op",
+            "nodeID" : 30,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "5qeib",
+            "kind" : "property",
+            "nodeID" : 338
+          },
+          {
+            "hash" : "5z4du",
+            "kind" : "init",
+            "nodeID" : 129,
+            "parameterTypes" : [
+              "AccountName",
+              "Amount",
+              "Amount?",
+              "PostingPriceType?",
+              "Cost?",
+              "[String:String]"
+            ],
+            "returnTypes" : [
+              ""
+            ]
+          },
+          {
+            "hash" : "7vzt0",
+            "kind" : "property",
+            "nodeID" : 295
+          },
+          {
+            "hash" : "9l7f1",
+            "kind" : "property",
+            "nodeID" : 57
           }
         ],
-        "name" : "SwiftBeanCountParserUtils",
+        "name" : "Posting",
         "symbolID" : {
           "interfaceLanguage" : "swift",
-          "precise" : "SwiftBeanCountParserUtils"
+          "precise" : "s:19SwiftBeanCountModel7PostingC"
         }
       },
       {
-        "name" : "SwiftBeanCountParserUtils"
+        "name" : "Hashable-Implementations"
+      },
+      {
+        "children" : [
+          {
+            "hash" : "2dobh",
+            "kind" : "enum.case",
+            "nodeID" : 79
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 13
+          },
+          {
+            "hash" : "njgq",
+            "kind" : "property",
+            "nodeID" : 250
+          },
+          {
+            "hash" : "23tks",
+            "kind" : "property",
+            "nodeID" : 23
+          },
+          {
+            "hash" : "8w2j6",
+            "kind" : "property",
+            "nodeID" : 82
+          },
+          {
+            "hash" : "7oc1w",
+            "kind" : "property",
+            "nodeID" : 337
+          },
+          {
+            "hash" : "3ztij",
+            "kind" : "property",
+            "nodeID" : 264
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 61
+          }
+        ],
+        "name" : "LedgerError",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11LedgerErrorO"
+        }
+      },
+      {
+        "name" : "equity",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11AccountTypeO6equityyA2CmF"
+        }
+      },
+      {
+        "name" : "add(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerC3addyyAA11TransactionCF"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel3TagV"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "4fekc",
+            "kind" : "func.op",
+            "nodeID" : 281,
+            "parameterTypes" : [
+              "MultiCurrencyAmount",
+              "MultiCurrencyAmount"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "5mphi",
+            "kind" : "property",
+            "nodeID" : 294
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 282
+          },
+          {
+            "hash" : "lpvr",
+            "kind" : "func.op",
+            "nodeID" : 149,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "4tr50",
+            "kind" : "method",
+            "nodeID" : 74,
+            "parameterTypes" : [
+              "CommoditySymbol"
+            ],
+            "returnTypes" : [
+              "Amount"
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 90
+          },
+          {
+            "hash" : "5w1nf",
+            "kind" : "method",
+            "nodeID" : 40,
+            "parameterTypes" : [
+
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "9e00s",
+            "kind" : "init",
+            "nodeID" : 135,
+            "parameterTypes" : [
+
+            ],
+            "returnTypes" : [
+              ""
+            ]
+          },
+          {
+            "hash" : "cs45",
+            "kind" : "property",
+            "nodeID" : 361
+          }
+        ],
+        "name" : "MultiCurrencyAmount",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV"
+        }
+      },
+      {
+        "name" : "values",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6CustomV6valuesSaySSGvp"
+        }
+      },
+      {
+        "name" : "Comparable-Implementations"
+      },
+      {
+        "name" : "<(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6OptionV1loiySbAC_ACtFZ"
+        }
+      },
+      {
+        "name" : "name",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6OptionV4nameSSvp"
+        }
+      },
+      {
+        "name" : "CustomStringConvertible-Implementations"
+      },
+      {
+        "name" : "metaData",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7AccountC8metaDataSDyS2SGvp"
+        }
+      },
+      {
+        "name" : "option",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerC6optionSayAA6OptionVGvp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "...(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzzoPys16PartialRangeFromVyxGxFZ::SYNTHESIZED::s:19SwiftBeanCountModel6OptionV"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "8qaki",
+            "kind" : "func.op",
+            "nodeID" : 26,
+            "parameterTypes" : [
+              "Self"
+            ],
+            "returnTypes" : [
+              "PartialRangeUpTo<Self>"
+            ]
+          },
+          {
+            "hash" : "4qfz2",
+            "kind" : "property",
+            "nodeID" : 265
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 59
+          },
+          {
+            "hash" : "7m19w",
+            "kind" : "property",
+            "nodeID" : 173
+          },
+          {
+            "hash" : "37b63",
+            "kind" : "func.op",
+            "nodeID" : 132,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "7onql",
+            "kind" : "func.op",
+            "nodeID" : 348,
+            "parameterTypes" : [
+              "Event",
+              "Event"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 5
+          },
+          {
+            "hash" : "3icjr",
+            "kind" : "func.op",
+            "nodeID" : 354,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "16uct",
+            "kind" : "func.op",
+            "nodeID" : 10,
+            "parameterTypes" : [
+              "Self"
+            ],
+            "returnTypes" : [
+              "PartialRangeThrough<Self>"
+            ]
+          },
+          {
+            "hash" : "1x7lc",
+            "kind" : "func.op",
+            "nodeID" : 78,
+            "parameterTypes" : [
+              "Self"
+            ],
+            "returnTypes" : [
+              "PartialRangeFrom<Self>"
+            ]
+          },
+          {
+            "hash" : "6hin3",
+            "kind" : "func.op",
+            "nodeID" : 260,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Range<Self>"
+            ]
+          },
+          {
+            "hash" : "727s4",
+            "kind" : "property",
+            "nodeID" : 278
+          },
+          {
+            "hash" : "7ceps",
+            "kind" : "func.op",
+            "nodeID" : 312,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "5mhut",
+            "kind" : "func.op",
+            "nodeID" : 364,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "ClosedRange<Self>"
+            ]
+          },
+          {
+            "hash" : "3dgnu",
+            "kind" : "init",
+            "nodeID" : 110,
+            "parameterTypes" : [
+              "Date",
+              "String",
+              "String",
+              "[String:String]"
+            ],
+            "returnTypes" : [
+              ""
+            ]
+          },
+          {
+            "hash" : "5ztwn",
+            "kind" : "func.op",
+            "nodeID" : 340,
+            "parameterTypes" : [
+              "Event",
+              "Event"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "9iaz5",
+            "kind" : "property",
+            "nodeID" : 24
+          },
+          {
+            "hash" : "8kjut",
+            "kind" : "func.op",
+            "nodeID" : 154,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "8m0a0",
+            "kind" : "property",
+            "nodeID" : 115
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 102
+          }
+        ],
+        "name" : "Event",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel5EventV"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "..<(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzlopys16PartialRangeUpToVyxGxFZ::SYNTHESIZED::s:19SwiftBeanCountModel3TagV"
+        }
+      },
+      {
+        "name" : "init(symbol:opening:metaData:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel9CommodityC6symbol7opening8metaDataACSS_10Foundation4DateVSgSDyS2SGtcfc"
+        }
+      },
+      {
+        "name" : "init(amount:date:label:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel4CostC6amount4date5labelAcA6AmountVSg_10Foundation4DateVSgSSSgtKcfc"
+        }
+      },
+      {
+        "name" : "noCost(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel12PostingErrorO6noCostyACSScACmF"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "...(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzzopys19PartialRangeThroughVyxGxFZ::SYNTHESIZED::s:19SwiftBeanCountModel6OptionV"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "qemi",
+            "kind" : "property",
+            "nodeID" : 45
+          },
+          {
+            "hash" : "1jfip",
+            "kind" : "property",
+            "nodeID" : 313
+          },
+          {
+            "hash" : "9l6qm",
+            "kind" : "property",
+            "nodeID" : 236
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 177
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 284
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 288
+          },
+          {
+            "hash" : "1hx8v",
+            "kind" : "property",
+            "nodeID" : 142
+          },
+          {
+            "hash" : "3ixno",
+            "kind" : "func.op",
+            "nodeID" : 248,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "6yvga",
+            "kind" : "enum.case",
+            "nodeID" : 279
+          },
+          {
+            "hash" : "84op4",
+            "kind" : "property",
+            "nodeID" : 235
+          }
+        ],
+        "name" : "AccountNameError",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel16AccountNameErrorO"
+        }
+      },
+      {
+        "name" : "hash(into:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7PostingC4hash4intoys6HasherVz_tF"
+        }
+      },
+      {
+        "name" : "Comparable-Implementations"
+      },
+      {
+        "name" : "LocalizedError-Implementations"
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel16PostingPriceTypeO"
+        }
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "name" : "nameItem",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11AccountItemP04nameF0SSvp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "hash(into:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SYsSHRzSH8RawValueSYRpzrlE4hash4intoys6HasherVz_tF::SYNTHESIZED::s:19SwiftBeanCountModel11AccountTypeO"
+        }
+      },
+      {
+        "name" : "metaData",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11TransactionC8metaDataAA0e4MetaG0Vvp"
+        }
+      },
+      {
+        "name" : "number",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6AmountV6numberSo9NSDecimalavp"
+        }
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "disfavored" : 3,
+        "name" : "localizedDescription",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:s5ErrorP10FoundationE20localizedDescriptionSSvp::SYNTHESIZED::s:19SwiftBeanCountModel16AccountNameErrorO"
+        }
+      },
+      {
+        "name" : "errorDescription",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel16AccountNameErrorO16errorDescriptionSSSgvp"
+        }
+      },
+      {
+        "name" : "lotNotBigEnough(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel14InventoryErrorO15lotNotBigEnoughyACSScACmF"
+        }
+      },
+      {
+        "name" : "decimalDigits",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6AmountV13decimalDigitsSivp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "..<(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzloiySnyxGx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel6OptionV"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "7ym9a",
+            "kind" : "enum.case",
+            "nodeID" : 339
+          },
+          {
+            "hash" : "14gam",
+            "kind" : "enum.case",
+            "nodeID" : 269
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 305
+          },
+          {
+            "hash" : "37t7k",
+            "kind" : "func.op",
+            "nodeID" : 228,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          }
+        ],
+        "name" : "PostingPriceType",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel16PostingPriceTypeO"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "localizedDescription",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:s5ErrorP10FoundationE20localizedDescriptionSSvp::SYNTHESIZED::s:19SwiftBeanCountModel9CostErrorO"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : ">(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE1goiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel6OptionV"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel6AmountV"
+        }
+      },
+      {
+        "name" : "effect(in:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11TransactionC6effect2inAA19MultiCurrencyAmountVAA6LedgerC_tKF"
+        }
+      },
+      {
+        "name" : "MultiCurrencyAmountRepresentable-Implementations"
+      },
+      {
+        "name" : "hash(into:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel19TransactionMetaDataV4hash4intoys6HasherVz_tF"
+        }
+      },
+      {
+        "name" : "Comparable-Implementations"
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel16AccountNameErrorO"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "..<(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzlopys16PartialRangeUpToVyxGxFZ::SYNTHESIZED::s:19SwiftBeanCountModel6CustomV"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "recoverySuggestion",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:10Foundation14LocalizedErrorPAAE18recoverySuggestionSSSgvp::SYNTHESIZED::s:19SwiftBeanCountModel11LedgerErrorO"
+        }
+      },
+      {
+        "name" : "amount",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7BalanceV6amountAA6AmountVvp"
+        }
+      },
+      {
+        "name" : "Hashable-Implementations"
+      },
+      {
+        "name" : "date",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel5PriceV4date10Foundation4DateVvp"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "52i7x",
+            "kind" : "func.op",
+            "nodeID" : 293,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "125kx",
+            "kind" : "type.property",
+            "nodeID" : 195
+          },
+          {
+            "hash" : "40ahw",
+            "kind" : "property",
+            "nodeID" : 33
+          },
+          {
+            "hash" : "7xhcg",
+            "kind" : "property",
+            "nodeID" : 122
+          },
+          {
+            "hash" : "3ima4",
+            "kind" : "property",
+            "nodeID" : 193
+          },
+          {
+            "hash" : "2mlgc",
+            "kind" : "property",
+            "nodeID" : 123
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 336
+          },
+          {
+            "hash" : "g81u",
+            "kind" : "property",
+            "nodeID" : 169
+          },
+          {
+            "hash" : "10rxd",
+            "kind" : "property",
+            "nodeID" : 215
+          },
+          {
+            "hash" : "5l233",
+            "kind" : "property",
+            "nodeID" : 138
+          },
+          {
+            "hash" : "5e9p0",
+            "kind" : "init",
+            "nodeID" : 187,
+            "parameterTypes" : [
+              "AccountName",
+              "BookingMethod",
+              "CommoditySymbol?",
+              "Date?",
+              "Date?",
+              "[String:String]"
+            ],
+            "returnTypes" : [
+              ""
+            ]
+          },
+          {
+            "hash" : "3ktog",
+            "kind" : "func.op",
+            "nodeID" : 124,
+            "parameterTypes" : [
+              "Account",
+              "Account"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 76
+          },
+          {
+            "hash" : "907p2",
+            "kind" : "property",
+            "nodeID" : 20
+          },
+          {
+            "hash" : "10qe",
+            "kind" : "property",
+            "nodeID" : 297
+          }
+        ],
+        "name" : "Account",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7AccountC"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "69psq",
+            "kind" : "enum.case",
+            "nodeID" : 272
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 289
+          },
+          {
+            "hash" : "7nx5k",
+            "kind" : "property",
+            "nodeID" : 145
+          },
+          {
+            "hash" : "4j6ew",
+            "kind" : "enum.case",
+            "nodeID" : 237
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 64
+          },
+          {
+            "hash" : "798op",
+            "kind" : "property",
+            "nodeID" : 273
+          },
+          {
+            "hash" : "8jdv3",
+            "kind" : "property",
+            "nodeID" : 184
+          },
+          {
+            "hash" : "4piyk",
+            "kind" : "enum.case",
+            "nodeID" : 192
+          },
+          {
+            "hash" : "2a5dn",
+            "kind" : "property",
+            "nodeID" : 44
+          },
+          {
+            "hash" : "4s9fv",
+            "kind" : "property",
+            "nodeID" : 344
+          }
+        ],
+        "name" : "InventoryError",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel14InventoryErrorO"
+        }
+      },
+      {
+        "name" : "SwiftBeanCountModel"
+      },
+      {
+        "children" : [
+          {
+            "hash" : "5zffq",
+            "kind" : "func.op",
+            "nodeID" : 47,
+            "parameterTypes" : [
+              "Transaction",
+              "Transaction"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "9r2ey",
+            "kind" : "func.op",
+            "nodeID" : 274,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "ClosedRange<Self>"
+            ]
+          },
+          {
+            "hash" : "1dika",
+            "kind" : "func.op",
+            "nodeID" : 85,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "812d9",
+            "kind" : "property",
+            "nodeID" : 232
+          },
+          {
+            "hash" : "6b52b",
+            "kind" : "func.op",
+            "nodeID" : 153,
+            "parameterTypes" : [
+              "Self"
+            ],
+            "returnTypes" : [
+              "PartialRangeUpTo<Self>"
+            ]
+          },
+          {
+            "hash" : "9f30",
+            "kind" : "method",
+            "nodeID" : 244,
+            "parameterTypes" : [
+              "Ledger"
+            ],
+            "returnTypes" : [
+              "MultiCurrencyAmount"
+            ]
+          },
+          {
+            "hash" : "5jtui",
+            "kind" : "func.op",
+            "nodeID" : 43,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Range<Self>"
+            ]
+          },
+          {
+            "hash" : "6n9sj",
+            "kind" : "method",
+            "nodeID" : 296,
+            "parameterTypes" : [
+              "Hasher"
+            ],
+            "returnTypes" : [
+
+            ]
+          },
+          {
+            "hash" : "6lzqy",
+            "kind" : "func.op",
+            "nodeID" : 136,
+            "parameterTypes" : [
+              "Transaction",
+              "Transaction"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 31
+          },
+          {
+            "hash" : "3f817",
+            "kind" : "property",
+            "nodeID" : 369
+          },
+          {
+            "hash" : "9u72i",
+            "kind" : "init",
+            "nodeID" : 167,
+            "parameterTypes" : [
+              "TransactionMetaData",
+              "[Posting]"
+            ],
+            "returnTypes" : [
+              ""
+            ]
+          },
+          {
+            "hash" : "1kahc",
+            "kind" : "func.op",
+            "nodeID" : 310,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "7sscb",
+            "kind" : "func.op",
+            "nodeID" : 185,
+            "parameterTypes" : [
+              "Self"
+            ],
+            "returnTypes" : [
+              "PartialRangeThrough<Self>"
+            ]
+          },
+          {
+            "hash" : "fkt4",
+            "kind" : "func.op",
+            "nodeID" : 283,
+            "parameterTypes" : [
+              "Self"
+            ],
+            "returnTypes" : [
+              "PartialRangeFrom<Self>"
+            ]
+          },
+          {
+            "hash" : "537m7",
+            "kind" : "func.op",
+            "nodeID" : 60,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 15
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 8
+          },
+          {
+            "hash" : "2aahg",
+            "kind" : "method",
+            "nodeID" : 174,
+            "parameterTypes" : [
+              "Ledger"
+            ],
+            "returnTypes" : [
+              "MultiCurrencyAmount"
+            ]
+          },
+          {
+            "hash" : "4wmzr",
+            "kind" : "property",
+            "nodeID" : 139
+          },
+          {
+            "hash" : "7ei6a",
+            "kind" : "func.op",
+            "nodeID" : 345,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 211
+          }
+        ],
+        "name" : "Transaction",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11TransactionC"
+        }
+      },
+      {
+        "name" : "metaData",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel19TransactionMetaDataV04metaG0SDyS2SGvp"
+        }
+      },
+      {
+        "name" : "==(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel3TagV2eeoiySbAC_ACtFZ"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "..<(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzloiySnyxGx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel5EventV"
+        }
+      },
+      {
+        "name" : "description",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6CustomV11descriptionSSvp"
+        }
+      },
+      {
+        "name" : "fullName",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11AccountNameV04fullF0SSvp"
+        }
+      },
+      {
+        "name" : "name",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6CustomV4nameSSvp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "failureReason",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:10Foundation14LocalizedErrorPAAE13failureReasonSSSgvp::SYNTHESIZED::s:19SwiftBeanCountModel11LedgerErrorO"
+        }
+      },
+      {
+        "name" : "value",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel5EventV5valueSSvp"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "6k1eh",
+            "kind" : "func.op",
+            "nodeID" : 175,
+            "parameterTypes" : [
+              "Balance",
+              "Balance"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "9xh9b",
+            "kind" : "init",
+            "nodeID" : 359,
+            "parameterTypes" : [
+              "Date",
+              "AccountName",
+              "Amount",
+              "[String:String]"
+            ],
+            "returnTypes" : [
+              ""
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 108
+          },
+          {
+            "hash" : "7t7ll",
+            "kind" : "property",
+            "nodeID" : 29
+          },
+          {
+            "hash" : "8t91y",
+            "kind" : "property",
+            "nodeID" : 69
+          },
+          {
+            "hash" : "465qj",
+            "kind" : "property",
+            "nodeID" : 350
+          },
+          {
+            "hash" : "7aio2",
+            "kind" : "property",
+            "nodeID" : 328
+          },
+          {
+            "hash" : "p4h4",
+            "kind" : "property",
+            "nodeID" : 251
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 214
+          },
+          {
+            "hash" : "76d8z",
+            "kind" : "func.op",
+            "nodeID" : 189,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          }
+        ],
+        "name" : "Balance",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7BalanceV"
+        }
+      },
+      {
+        "name" : "hash(into:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel3TagV4hash4intoys6HasherVz_tF"
+        }
+      },
+      {
+        "name" : "<(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel3TagV1loiySbAC_ACtFZ"
+        }
+      },
+      {
+        "name" : "total",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel16PostingPriceTypeO5totalyA2CmF"
+        }
+      },
+      {
+        "name" : "asset",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11AccountTypeO5assetyA2CmF"
+        }
+      },
+      {
+        "name" : "events",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerC6eventsSayAA5EventVGvp"
+        }
+      },
+      {
+        "name" : "ambiguousBooking(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel14InventoryErrorO16ambiguousBookingyACSScACmF"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "helpAnchor",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:10Foundation14LocalizedErrorPAAE10helpAnchorSSSgvp::SYNTHESIZED::s:19SwiftBeanCountModel14InventoryErrorO"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "...(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzzoiySNyxGx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel11TransactionC"
+        }
+      },
+      {
+        "name" : "+=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel2peoiyyAA19MultiCurrencyAmountVz_AA0fgH13Representable_ptF"
+        }
+      },
+      {
+        "name" : "description",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerC11descriptionSSvp"
+        }
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "name" : "description",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel5EventV11descriptionSSvp"
+        }
+      },
+      {
+        "name" : "invaildName(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel16AccountNameErrorO07invaildF0yACSScACmF"
+        }
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "name" : "==(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV2eeoiySbAC_ACtFZ"
+        }
+      },
+      {
+        "name" : "MultiCurrencyAmountRepresentable-Implementations"
+      },
+      {
+        "disfavored" : 3,
+        "name" : "...(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzzoPys16PartialRangeFromVyxGxFZ::SYNTHESIZED::s:19SwiftBeanCountModel11TransactionC"
+        }
+      },
+      {
+        "name" : "LocalizedError-Implementations"
+      },
+      {
+        "name" : "hash(into:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel4CostC4hash4intoys6HasherVz_tF"
+        }
+      },
+      {
+        "name" : "children()",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel12AccountGroupC8childrenSayAA0E4Item_pGyF"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "92m8i",
+            "kind" : "property",
+            "nodeID" : 202
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 157
+          },
+          {
+            "hash" : "38haf",
+            "kind" : "func.op",
+            "nodeID" : 27,
+            "parameterTypes" : [
+              "Commodity",
+              "Commodity"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "70j0p",
+            "kind" : "property",
+            "nodeID" : 290
+          },
+          {
+            "hash" : "1smkd",
+            "kind" : "property",
+            "nodeID" : 67
+          },
+          {
+            "hash" : "4mvlp",
+            "kind" : "func.op",
+            "nodeID" : 194,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "3juqq",
+            "kind" : "init",
+            "nodeID" : 220,
+            "parameterTypes" : [
+              "CommoditySymbol",
+              "Date?",
+              "[String:String]"
+            ],
+            "returnTypes" : [
+              ""
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 229
+          },
+          {
+            "hash" : "4gezz",
+            "kind" : "property",
+            "nodeID" : 120
+          }
+        ],
+        "name" : "Commodity",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel9CommodityC"
+        }
+      },
+      {
+        "name" : "Error-Implementations"
+      },
+      {
+        "name" : "LocalizedError-Implementations"
+      },
+      {
+        "name" : "description",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel9CommodityC11descriptionSSvp"
+        }
+      },
+      {
+        "name" : "multiCurrencyAmount",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6AmountV013multiCurrencyE0AA05MultigE0Vvp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "...(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzzoiySNyxGx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel6CustomV"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel7AccountC"
+        }
+      },
+      {
+        "name" : "amounts",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV7amountsSDySSSo9NSDecimalaGvp"
+        }
+      },
+      {
+        "name" : "metaData",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7PostingC8metaDataSDyS2SGvp"
+        }
+      },
+      {
+        "name" : "hash(into:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11TransactionC4hash4intoys6HasherVz_tF"
+        }
+      },
+      {
+        "name" : "nameItem",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7AccountC8nameItemSSvp"
+        }
+      },
+      {
+        "name" : "description",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6AmountV11descriptionSSvp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "failureReason",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:10Foundation14LocalizedErrorPAAE13failureReasonSSSgvp::SYNTHESIZED::s:19SwiftBeanCountModel10PriceErrorO"
+        }
+      },
+      {
+        "name" : "add(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerC3addyyAA5PriceVKF"
+        }
+      },
+      {
+        "name" : "CustomStringConvertible-Implementations"
+      },
+      {
+        "name" : "commodities",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerC11commoditiesSayAA9CommodityCGvp"
+        }
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "name" : "init(name:value:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6OptionV4name5valueACSS_SStcfc"
+        }
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "name" : "Error-Implementations"
+      },
+      {
+        "name" : "add(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerC3addyyAA9CommodityCKF"
+        }
+      },
+      {
+        "name" : "==(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6CustomV2eeoiySbAC_ACtFZ"
+        }
+      },
+      {
+        "name" : "init(date:payee:narration:flag:tags:metaData:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel19TransactionMetaDataV4date5payee9narration4flag4tags04metaG0AC10Foundation4DateV_S2SAA4FlagOSayAA3TagVGSDyS2SGtcfc"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : ">(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE1goiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel11TransactionC"
+        }
+      },
+      {
+        "name" : "CustomStringConvertible-Implementations"
+      },
+      {
+        "disfavored" : 3,
+        "name" : ">(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE1goiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel5EventV"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "recoverySuggestion",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:10Foundation14LocalizedErrorPAAE18recoverySuggestionSSSgvp::SYNTHESIZED::s:19SwiftBeanCountModel16AccountNameErrorO"
+        }
+      },
+      {
+        "name" : "description",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel3TagV11descriptionSSvp"
+        }
+      },
+      {
+        "name" : "income",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11AccountTypeO6incomeyA2CmF"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "localizedDescription",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:s5ErrorP10FoundationE20localizedDescriptionSSvp::SYNTHESIZED::s:19SwiftBeanCountModel12PostingErrorO"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "14ta7",
+            "kind" : "func.op",
+            "nodeID" : 292,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "ClosedRange<Self>"
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 147
+          },
+          {
+            "hash" : "v3p5",
+            "kind" : "func.op",
+            "nodeID" : 249,
+            "parameterTypes" : [
+              "Self"
+            ],
+            "returnTypes" : [
+              "PartialRangeUpTo<Self>"
+            ]
+          },
+          {
+            "hash" : "1x93k",
+            "kind" : "func.op",
+            "nodeID" : 41,
+            "parameterTypes" : [
+              "Self"
+            ],
+            "returnTypes" : [
+              "PartialRangeThrough<Self>"
+            ]
+          },
+          {
+            "hash" : "3e1sw",
+            "kind" : "func.op",
+            "nodeID" : 163,
+            "parameterTypes" : [
+              "Self"
+            ],
+            "returnTypes" : [
+              "PartialRangeFrom<Self>"
+            ]
+          },
+          {
+            "hash" : "228ca",
+            "kind" : "property",
+            "nodeID" : 261
+          },
+          {
+            "hash" : "syu1",
+            "kind" : "func.op",
+            "nodeID" : 179,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "14joo",
+            "kind" : "func.op",
+            "nodeID" : 308,
+            "parameterTypes" : [
+              "Custom",
+              "Custom"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "72nru",
+            "kind" : "func.op",
+            "nodeID" : 133,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "1z39m",
+            "kind" : "property",
+            "nodeID" : 116
+          },
+          {
+            "hash" : "7fvpr",
+            "kind" : "func.op",
+            "nodeID" : 134,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Range<Self>"
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 226
+          },
+          {
+            "hash" : "kgcl",
+            "kind" : "property",
+            "nodeID" : 6
+          },
+          {
+            "hash" : "5zv9e",
+            "kind" : "property",
+            "nodeID" : 263
+          },
+          {
+            "hash" : "dxui",
+            "kind" : "func.op",
+            "nodeID" : 3,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 234
+          },
+          {
+            "hash" : "khe4",
+            "kind" : "property",
+            "nodeID" : 210
+          },
+          {
+            "hash" : "8h4s2",
+            "kind" : "init",
+            "nodeID" : 37,
+            "parameterTypes" : [
+              "Date",
+              "String",
+              "[String]",
+              "[String:String]"
+            ],
+            "returnTypes" : [
+              ""
+            ]
+          },
+          {
+            "hash" : "9eweq",
+            "kind" : "func.op",
+            "nodeID" : 181,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "34491",
+            "kind" : "func.op",
+            "nodeID" : 347,
+            "parameterTypes" : [
+              "Custom",
+              "Custom"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          }
+        ],
+        "name" : "Custom",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6CustomV"
+        }
+      },
+      {
+        "name" : "CustomStringConvertible-Implementations"
+      },
+      {
+        "name" : "LocalizedError-Implementations"
+      },
+      {
+        "name" : "RawRepresentable-Implementations"
+      },
+      {
+        "name" : "allValues()",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11AccountTypeO9allValuesSayACGyFZ"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "<=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE2leoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel3TagV"
+        }
+      },
+      {
+        "name" : "tutorials"
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel6OptionV"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : ">=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE2geoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel6OptionV"
+        }
+      },
+      {
+        "name" : "amount",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel4CostC6amountAA6AmountVSgvp"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "xq4x",
+            "kind" : "func.op",
+            "nodeID" : 141,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "ClosedRange<Self>"
+            ]
+          },
+          {
+            "hash" : "6kuui",
+            "kind" : "property",
+            "nodeID" : 119
+          },
+          {
+            "hash" : "29ao4",
+            "kind" : "property",
+            "nodeID" : 25
+          },
+          {
+            "hash" : "9eaia",
+            "kind" : "func.op",
+            "nodeID" : 212,
+            "parameterTypes" : [
+              "Option",
+              "Option"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 18
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 303
+          },
+          {
+            "hash" : "6lrpj",
+            "kind" : "property",
+            "nodeID" : 213
+          },
+          {
+            "hash" : "2azeh",
+            "kind" : "func.op",
+            "nodeID" : 324,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "8muq1",
+            "kind" : "func.op",
+            "nodeID" : 239,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Range<Self>"
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 89
+          },
+          {
+            "hash" : "4tqr4",
+            "kind" : "func.op",
+            "nodeID" : 83,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "4yzy4",
+            "kind" : "func.op",
+            "nodeID" : 2,
+            "parameterTypes" : [
+              "Self"
+            ],
+            "returnTypes" : [
+              "PartialRangeUpTo<Self>"
+            ]
+          },
+          {
+            "hash" : "7byqw",
+            "kind" : "init",
+            "nodeID" : 304,
+            "parameterTypes" : [
+              "String",
+              "String"
+            ],
+            "returnTypes" : [
+              ""
+            ]
+          },
+          {
+            "hash" : "8kudm",
+            "kind" : "func.op",
+            "nodeID" : 242,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "60vuh",
+            "kind" : "func.op",
+            "nodeID" : 325,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "1lemq",
+            "kind" : "func.op",
+            "nodeID" : 223,
+            "parameterTypes" : [
+              "Self"
+            ],
+            "returnTypes" : [
+              "PartialRangeThrough<Self>"
+            ]
+          },
+          {
+            "hash" : "5szqk",
+            "kind" : "func.op",
+            "nodeID" : 217,
+            "parameterTypes" : [
+              "Self"
+            ],
+            "returnTypes" : [
+              "PartialRangeFrom<Self>"
+            ]
+          }
+        ],
+        "name" : "Option",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6OptionV"
+        }
+      },
+      {
+        "name" : "date",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7BalanceV4date10Foundation4DateVvp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "..<(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzloiySnyxGx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel3TagV"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "recoverySuggestion",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:10Foundation14LocalizedErrorPAAE18recoverySuggestionSSSgvp::SYNTHESIZED::s:19SwiftBeanCountModel10PriceErrorO"
+        }
+      },
+      {
+        "name" : "strict",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel13BookingMethodO6strictyA2CmF"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "ssm0",
+            "kind" : "property",
+            "nodeID" : 178
+          }
+        ],
+        "name" : "MultiCurrencyAmountRepresentable",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel32MultiCurrencyAmountRepresentableP"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : ">=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE2geoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel3TagV"
+        }
+      },
+      {
+        "name" : "accountName",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7PostingC11accountNameAA07AccountG0Vvp"
+        }
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "name" : "CustomStringConvertible-Implementations"
+      },
+      {
+        "disfavored" : 3,
+        "name" : "localizedDescription",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:s5ErrorP10FoundationE20localizedDescriptionSSvp::SYNTHESIZED::s:19SwiftBeanCountModel11LedgerErrorO"
+        }
+      },
+      {
+        "name" : "totalPrice",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7PostingC10totalPriceAA6AmountVSgvp"
+        }
+      },
+      {
+        "name" : "perUnit",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel16PostingPriceTypeO7perUnityA2CmF"
+        }
+      },
+      {
+        "name" : "==(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel5EventV2eeoiySbAC_ACtFZ"
+        }
+      },
+      {
+        "name" : "commoditySymbol",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6AmountV15commoditySymbolSSvp"
+        }
+      },
+      {
+        "name" : "custom",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerC6customSayAA6CustomVGvp"
+        }
+      },
+      {
+        "name" : "sameCommodity(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel10PriceErrorO13sameCommodityyACSScACmF"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "recoverySuggestion",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:10Foundation14LocalizedErrorPAAE18recoverySuggestionSSSgvp::SYNTHESIZED::s:19SwiftBeanCountModel14InventoryErrorO"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "!=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel11TransactionC"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "299jg",
+            "kind" : "init",
+            "nodeID" : 118,
+            "parameterTypes" : [
+              "Date",
+              "CommoditySymbol",
+              "Amount",
+              "[String:String]"
+            ],
+            "returnTypes" : [
+              ""
+            ]
+          },
+          {
+            "hash" : "20y9e",
+            "kind" : "func.op",
+            "nodeID" : 159,
+            "parameterTypes" : [
+              "Price",
+              "Price"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 21
+          },
+          {
+            "hash" : "7py7n",
+            "kind" : "func.op",
+            "nodeID" : 52,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "7k53k",
+            "kind" : "property",
+            "nodeID" : 170
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 363
+          },
+          {
+            "hash" : "58rpp",
+            "kind" : "property",
+            "nodeID" : 253
+          },
+          {
+            "hash" : "724je",
+            "kind" : "property",
+            "nodeID" : 114
+          },
+          {
+            "hash" : "646o6",
+            "kind" : "property",
+            "nodeID" : 111
+          },
+          {
+            "hash" : "5f4vp",
+            "kind" : "property",
+            "nodeID" : 71
+          }
+        ],
+        "name" : "Price",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel5PriceV"
+        }
+      },
+      {
+        "name" : "<(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6CustomV1loiySbAC_ACtFZ"
+        }
+      },
+      {
+        "name" : "<(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel5EventV1loiySbAC_ACtFZ"
+        }
+      },
+      {
+        "name" : "plugins",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6LedgerC7pluginsSaySSGvp"
+        }
+      },
+      {
+        "name" : "description",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7BalanceV11descriptionSSvp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "localizedDescription",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:s5ErrorP10FoundationE20localizedDescriptionSSvp::SYNTHESIZED::s:19SwiftBeanCountModel10PriceErrorO"
+        }
+      },
+      {
+        "name" : "==(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6AmountV2eeoiySbAC_ACtFZ"
+        }
+      },
+      {
+        "name" : "amountString",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6AmountV12amountStringSSvp"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : ">=(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE2geoiySbx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel5EventV"
+        }
+      },
+      {
+        "name" : "Hashable-Implementations"
+      },
+      {
+        "name" : "negativeAmount(_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel9CostErrorO14negativeAmountyACSScACmF"
+        }
+      },
+      {
+        "disfavored" : 3,
+        "name" : "hashValue",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SYsSHRzSH8RawValueSYRpzrlE04hashB0Sivp::SYNTHESIZED::s:19SwiftBeanCountModel11AccountTypeO"
+        }
+      },
+      {
+        "name" : "fifo",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel13BookingMethodO4fifoyA2CmF"
+        }
+      },
+      {
+        "name" : "init(date:accountName:amount:metaData:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel7BalanceV4date11accountName6amount8metaDataAC10Foundation4DateV_AA07AccountH0VAA6AmountVSDyS2SGtcfc"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "a1tn",
+            "kind" : "func.op",
+            "nodeID" : 243,
+            "parameterTypes" : [
+              "Self",
+              "Self"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "hash" : "2kfpe",
+            "kind" : "method",
+            "nodeID" : 367,
+            "parameterTypes" : [
+              "Hasher"
+            ],
+            "returnTypes" : [
+
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 34
+          },
+          {
+            "hash" : "imcb",
+            "kind" : "property",
+            "nodeID" : 298
+          },
+          {
+            "hash" : "10k0l",
+            "kind" : "property",
+            "nodeID" : 353
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 301
+          },
+          {
+            "hash" : "5e3l4",
+            "kind" : "func.op",
+            "nodeID" : 352,
+            "parameterTypes" : [
+              "Amount",
+              "Amount"
+            ],
+            "returnTypes" : [
+              "Bool"
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 362
+          },
+          {
+            "hash" : "2jjyx",
+            "kind" : "property",
+            "nodeID" : 291
+          },
+          {
+            "hash" : "5xppc",
+            "kind" : "init",
+            "nodeID" : 4,
+            "parameterTypes" : [
+              "Decimal",
+              "CommoditySymbol",
+              "Int"
+            ],
+            "returnTypes" : [
+              ""
+            ]
+          },
+          {
+            "kind" : "taskGroup",
+            "nodeID" : 245
+          },
+          {
+            "hash" : "2na9f",
+            "kind" : "property",
+            "nodeID" : 238
+          },
+          {
+            "hash" : "ru1u",
+            "kind" : "property",
+            "nodeID" : 233
+          },
+          {
+            "hash" : "uw3s",
+            "kind" : "property",
+            "nodeID" : 341
+          }
+        ],
+        "name" : "Amount",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6AmountV"
+        }
+      },
+      {
+        "name" : "multiCurrencyAmount",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV05multifG0ACvp"
+        }
+      },
+      {
+        "name" : "Hashable-Implementations"
+      },
+      {
+        "name" : "CustomStringConvertible-Implementations"
+      },
+      {
+        "disfavored" : 3,
+        "name" : "...(_:_:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SLsE3zzzoiySNyxGx_xtFZ::SYNTHESIZED::s:19SwiftBeanCountModel5EventV"
+        }
+      },
+      {
+        "name" : "date",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel19TransactionMetaDataV4date10Foundation4DateVvp"
+        }
+      },
+      {
+        "name" : "Equatable-Implementations"
+      },
+      {
+        "name" : "hash(into:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel6AmountV4hash4intoys6HasherVz_tF"
+        }
+      },
+      {
+        "name" : "priceTypeWithoutPrice",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel12PostingErrorO21priceTypeWithoutPriceyA2CmF"
+        }
+      },
+      {
+        "name" : "postings",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:19SwiftBeanCountModel11TransactionC8postingsSayAA0E7PostingCGvp"
+        }
       }
     ],
-    "tutorialContainer" : 6,
-    "tutorialOverviewContainer" : 0
+    "tutorialContainer" : 256,
+    "tutorialOverviewContainer" : 323
   },
   "version" : {
     "major" : 0,
