@@ -1,1 +1,539 @@
-{"topicSections":[{"title":"Initializers","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/init(metaData:postings:)"],"generated":true,"anchor":"Initializers"},{"title":"Instance Properties","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/metaData","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/postings"],"generated":true,"anchor":"Instance-Properties"},{"title":"Instance Methods","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/balance(in:)","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/effect(in:)"],"generated":true,"anchor":"Instance-Methods"},{"title":"Default Implementations","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/Comparable-Implementations","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/CustomStringConvertible-Implementations","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/Equatable-Implementations","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/Hashable-Implementations"],"generated":true,"anchor":"Default-Implementations"}],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction"},"kind":"symbol","metadata":{"role":"symbol","symbolKind":"class","fragments":[{"text":"class","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Transaction","kind":"identifier"}],"externalID":"s:19SwiftBeanCountModel11TransactionC","modules":[{"name":"SwiftBeanCountModel"}],"roleHeading":"Class","navigatorTitle":[{"text":"Transaction","kind":"identifier"}],"title":"Transaction"},"sections":[],"abstract":[{"text":"A Transaction has meta data as well as multiple postings","type":"text"}],"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"class","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Transaction","kind":"identifier"}],"platforms":["macOS"],"languages":["swift"]}]}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"]]},"schemaVersion":{"patch":0,"major":0,"minor":3},"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/transaction"],"traits":[{"interfaceLanguage":"swift"}]}],"relationshipsSections":[{"kind":"relationships","title":"Conforms To","identifiers":["doc:\/\/SwiftBeanCountModel\/SL","doc:\/\/SwiftBeanCountModel\/s8CopyableP","doc:\/\/SwiftBeanCountModel\/s23CustomStringConvertibleP","doc:\/\/SwiftBeanCountModel\/SQ","doc:\/\/SwiftBeanCountModel\/SH"],"type":"conformsTo"}],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/CustomStringConvertible-Implementations":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/CustomStringConvertible-Implementations","url":"\/documentation\/swiftbeancountmodel\/transaction\/customstringconvertible-implementations","kind":"article","role":"collectionGroup","type":"topic","title":"CustomStringConvertible Implementations","abstract":[]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/Comparable-Implementations":{"kind":"article","title":"Comparable Implementations","type":"topic","role":"collectionGroup","url":"\/documentation\/swiftbeancountmodel\/transaction\/comparable-implementations","abstract":[],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/Comparable-Implementations"},"doc://SwiftBeanCountModel/SL":{"identifier":"doc:\/\/SwiftBeanCountModel\/SL","type":"unresolvable","title":"Swift.Comparable"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/Hashable-Implementations":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/Hashable-Implementations","abstract":[],"kind":"article","title":"Hashable Implementations","role":"collectionGroup","type":"topic","url":"\/documentation\/swiftbeancountmodel\/transaction\/hashable-implementations"},"doc://SwiftBeanCountModel/s8CopyableP":{"identifier":"doc:\/\/SwiftBeanCountModel\/s8CopyableP","type":"unresolvable","title":"Swift.Copyable"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/metaData":{"abstract":[{"text":"Meta data of the Transaction","type":"text"}],"title":"metaData","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"metaData","kind":"identifier"},{"text":": ","kind":"text"},{"text":"TransactionMetaData","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel19TransactionMetaDataV"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/metaData","url":"\/documentation\/swiftbeancountmodel\/transaction\/metadata","kind":"symbol","role":"symbol","type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/postings":{"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/postings","abstract":[{"text":"Arrary of the ","type":"text"},{"type":"codeVoice","code":"Posting"},{"text":"s of the transaction.","type":"text"}],"type":"topic","url":"\/documentation\/swiftbeancountmodel\/transaction\/postings","title":"postings","role":"symbol","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"postings","kind":"identifier"},{"text":": [","kind":"text"},{"text":"TransactionPosting","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel18TransactionPostingC"},{"text":"]","kind":"text"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/balance(in:)":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/balance(in:)","kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/transaction\/balance(in:)","abstract":[{"text":"Gets the balance of a transaction, should be zero (within tolerance)","type":"text"}],"role":"symbol","title":"balance(in:)","fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"balance","kind":"identifier"},{"text":"(","kind":"text"},{"text":"in","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"Ledger","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC","kind":"typeIdentifier"},{"text":") ","kind":"text"},{"text":"throws","kind":"keyword"},{"text":" -> ","kind":"text"},{"text":"MultiCurrencyAmount","preciseIdentifier":"s:19SwiftBeanCountModel19MultiCurrencyAmountV","kind":"typeIdentifier"}],"type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction","fragments":[{"text":"class","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Transaction","kind":"identifier"}],"type":"topic","kind":"symbol","abstract":[{"text":"A Transaction has meta data as well as multiple postings","type":"text"}],"title":"Transaction","url":"\/documentation\/swiftbeancountmodel\/transaction","role":"symbol","navigatorTitle":[{"text":"Transaction","kind":"identifier"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/Equatable-Implementations":{"title":"Equatable Implementations","abstract":[],"kind":"article","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/Equatable-Implementations","url":"\/documentation\/swiftbeancountmodel\/transaction\/equatable-implementations","type":"topic","role":"collectionGroup"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/effect(in:)":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/effect(in:)","role":"symbol","kind":"symbol","type":"topic","fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"effect"},{"kind":"text","text":"("},{"kind":"externalParam","text":"in"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC","text":"Ledger"},{"kind":"text","text":") "},{"kind":"keyword","text":"throws"},{"kind":"text","text":" -> "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel19MultiCurrencyAmountV","text":"MultiCurrencyAmount"}],"abstract":[{"type":"text","text":"Returns the effect (income + expenses) a transaction has"}],"title":"effect(in:)","url":"\/documentation\/swiftbeancountmodel\/transaction\/effect(in:)"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/init(metaData:postings:)":{"url":"\/documentation\/swiftbeancountmodel\/transaction\/init(metadata:postings:)","role":"symbol","kind":"symbol","abstract":[{"type":"text","text":"Creates a transaction"}],"type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/init(metaData:postings:)","fragments":[{"kind":"identifier","text":"init"},{"kind":"text","text":"("},{"kind":"externalParam","text":"metaData"},{"kind":"text","text":": "},{"preciseIdentifier":"s:19SwiftBeanCountModel19TransactionMetaDataV","kind":"typeIdentifier","text":"TransactionMetaData"},{"kind":"text","text":", "},{"kind":"externalParam","text":"postings"},{"kind":"text","text":": ["},{"preciseIdentifier":"s:19SwiftBeanCountModel7PostingC","kind":"typeIdentifier","text":"Posting"},{"kind":"text","text":"])"}],"title":"init(metaData:postings:)"},"doc://SwiftBeanCountModel/SQ":{"identifier":"doc:\/\/SwiftBeanCountModel\/SQ","type":"unresolvable","title":"Swift.Equatable"},"doc://SwiftBeanCountModel/SH":{"title":"Swift.Hashable","type":"unresolvable","identifier":"doc:\/\/SwiftBeanCountModel\/SH"},"doc://SwiftBeanCountModel/s23CustomStringConvertibleP":{"identifier":"doc:\/\/SwiftBeanCountModel\/s23CustomStringConvertibleP","type":"unresolvable","title":"Swift.CustomStringConvertible"}}}
+{
+  "abstract" : [
+    {
+      "text" : "A Transaction has meta data as well as multiple postings",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel11TransactionC",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "class"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "Transaction"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "Transaction"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Class",
+    "symbolKind" : "class",
+    "title" : "Transaction"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "class"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "Transaction"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/SL",
+        "doc:\/\/SwiftBeanCountModel\/s8CopyableP",
+        "doc:\/\/SwiftBeanCountModel\/s23CustomStringConvertibleP",
+        "doc:\/\/SwiftBeanCountModel\/SQ",
+        "doc:\/\/SwiftBeanCountModel\/SH"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Initializers",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/init(metaData:postings:)"
+      ],
+      "title" : "Initializers"
+    },
+    {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/metaData",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/postings"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "anchor" : "Instance-Methods",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/balance(in:)",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/effect(in:)"
+      ],
+      "title" : "Instance Methods"
+    },
+    {
+      "anchor" : "Default-Implementations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/Comparable-Implementations",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/CustomStringConvertible-Implementations",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/Equatable-Implementations",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/Hashable-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/transaction"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/SH": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/SH",
+  "title" : "Swift.Hashable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/SL": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/SL",
+  "title" : "Swift.Comparable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/SQ": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/SQ",
+  "title" : "Swift.Equatable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction": {
+  "abstract" : [
+    {
+      "text" : "A Transaction has meta data as well as multiple postings",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Transaction"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Transaction"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Transaction",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/Comparable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/Comparable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Comparable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction\/comparable-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/CustomStringConvertible-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/CustomStringConvertible-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "CustomStringConvertible Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction\/customstringconvertible-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/Equatable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/Equatable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Equatable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction\/equatable-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/Hashable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/Hashable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Hashable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction\/hashable-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/balance(in:)": {
+  "abstract" : [
+    {
+      "text" : "Gets the balance of a transaction, should be zero (within tolerance)",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "balance"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "in"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+      "text" : "Ledger"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV",
+      "text" : "MultiCurrencyAmount"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/balance(in:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "balance(in:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction\/balance(in:)"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/effect(in:)": {
+  "abstract" : [
+    {
+      "text" : "Returns the effect (income + expenses) a transaction has",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "effect"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "in"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+      "text" : "Ledger"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV",
+      "text" : "MultiCurrencyAmount"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/effect(in:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "effect(in:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction\/effect(in:)"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/init(metaData:postings:)": {
+  "abstract" : [
+    {
+      "text" : "Creates a transaction",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "metaData"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel19TransactionMetaDataV",
+      "text" : "TransactionMetaData"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "postings"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel7PostingC",
+      "text" : "Posting"
+    },
+    {
+      "kind" : "text",
+      "text" : "])"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/init(metaData:postings:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(metaData:postings:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction\/init(metadata:postings:)"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/metaData": {
+  "abstract" : [
+    {
+      "text" : "Meta data of the Transaction",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "metaData"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel19TransactionMetaDataV",
+      "text" : "TransactionMetaData"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/metaData",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "metaData",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction\/metadata"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/postings": {
+  "abstract" : [
+    {
+      "text" : "Arrary of the ",
+      "type" : "text"
+    },
+    {
+      "code" : "Posting",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "s of the transaction.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "postings"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel18TransactionPostingC",
+      "text" : "TransactionPosting"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/postings",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "postings",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction\/postings"
+},
+"doc://SwiftBeanCountModel/s23CustomStringConvertibleP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s23CustomStringConvertibleP",
+  "title" : "Swift.CustomStringConvertible",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/s8CopyableP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s8CopyableP",
+  "title" : "Swift.Copyable",
+  "type" : "unresolvable"
+}
+}
+}

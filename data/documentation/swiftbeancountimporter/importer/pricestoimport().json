@@ -1,1 +1,270 @@
-{"metadata":{"fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"pricesToImport","kind":"identifier"},{"text":"() -> [","kind":"text"},{"preciseIdentifier":"s:19SwiftBeanCountModel5PriceV","text":"Price","kind":"typeIdentifier"},{"text":"]","kind":"text"}],"role":"symbol","title":"pricesToImport()","modules":[{"name":"SwiftBeanCountImporter"}],"required":true,"externalID":"s:22SwiftBeanCountImporter0D0P14pricesToImportSay0abC5Model5PriceVGyF","symbolKind":"method","roleHeading":"Instance Method"},"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"pricesToImport","kind":"identifier"},{"text":"() -> [","kind":"text"},{"text":"Price","preciseIdentifier":"s:19SwiftBeanCountModel5PriceV","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Price","kind":"typeIdentifier"},{"text":"]","kind":"text"}],"platforms":["macOS"],"languages":["swift"]}]},{"kind":"content","content":[{"level":2,"text":"Discussion","type":"heading","anchor":"discussion"},{"type":"paragraph","inlineContent":[{"type":"text","text":"Only some importer can import prices, so it might return an empty array"},{"type":"text","text":" "},{"type":"text","text":"Only call this function after you received all transactions"}]}]}],"sections":[],"abstract":[{"text":"Returns prices to be imported","type":"text"}],"variants":[{"paths":["\/documentation\/swiftbeancountimporter\/importer\/pricestoimport()"],"traits":[{"interfaceLanguage":"swift"}]}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer"]]},"schemaVersion":{"minor":3,"patch":0,"major":0},"kind":"symbol","identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer\/pricesToImport()"},"references":{"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Importer/pricesToImport()":{"required":true,"abstract":[{"text":"Returns prices to be imported","type":"text"}],"type":"topic","role":"symbol","url":"\/documentation\/swiftbeancountimporter\/importer\/pricestoimport()","title":"pricesToImport()","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer\/pricesToImport()","kind":"symbol","fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"pricesToImport","kind":"identifier"},{"text":"() -> [","kind":"text"},{"text":"Price","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel5PriceV"},{"text":"]","kind":"text"}]},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","url":"\/documentation\/swiftbeancountimporter","abstract":[],"role":"collection","title":"SwiftBeanCountImporter","kind":"symbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Price":{"kind":"symbol","type":"topic","title":"Price","url":"\/documentation\/swiftbeancountmodel\/price","role":"symbol","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Price","kind":"identifier"}],"abstract":[{"text":"Price of a commodity in another commodity on a given date","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Price"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Importer":{"type":"topic","fragments":[{"kind":"keyword","text":"protocol"},{"kind":"text","text":" "},{"kind":"identifier","text":"Importer"}],"role":"symbol","abstract":[{"type":"text","text":"Protocol to represent an Importer, regardless of type"}],"title":"Importer","url":"\/documentation\/swiftbeancountimporter\/importer","navigatorTitle":[{"kind":"identifier","text":"Importer"}],"identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer","kind":"symbol"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Returns prices to be imported",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer\/pricesToImport()"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:22SwiftBeanCountImporter0D0P14pricesToImportSay0abC5Model5PriceVGyF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "pricesToImport"
+      },
+      {
+        "kind" : "text",
+        "text" : "() -> ["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel5PriceV",
+        "text" : "Price"
+      },
+      {
+        "kind" : "text",
+        "text" : "]"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountImporter"
+      }
+    ],
+    "required" : true,
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "pricesToImport()"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "pricesToImport"
+            },
+            {
+              "kind" : "text",
+              "text" : "() -> ["
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Price",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel5PriceV",
+              "text" : "Price"
+            },
+            {
+              "kind" : "text",
+              "text" : "]"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Only some importer can import prices, so it might return an empty array",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "Only call this function after you received all transactions",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountimporter\/importer\/pricestoimport()"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountImporter",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Importer": {
+  "abstract" : [
+    {
+      "text" : "Protocol to represent an Importer, regardless of type",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Importer"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Importer"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Importer",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importer"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Importer/pricesToImport()": {
+  "abstract" : [
+    {
+      "text" : "Returns prices to be imported",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "pricesToImport"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel5PriceV",
+      "text" : "Price"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer\/pricesToImport()",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "pricesToImport()",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importer\/pricestoimport()"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Price": {
+  "abstract" : [
+    {
+      "text" : "Price of a commodity in another commodity on a given date",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Price"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Price",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "Price",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/price"
+}
+}
+}

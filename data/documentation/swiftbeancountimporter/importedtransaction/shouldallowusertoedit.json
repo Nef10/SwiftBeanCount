@@ -1,1 +1,227 @@
-{"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountimporter\/importedtransaction\/shouldallowusertoedit"]}],"kind":"symbol","hierarchy":{"paths":[["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction"]]},"metadata":{"symbolKind":"property","modules":[{"name":"SwiftBeanCountImporter"}],"externalID":"s:22SwiftBeanCountImporter19ImportedTransactionV21shouldAllowUserToEditSbvp","role":"symbol","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"shouldAllowUserToEdit","kind":"identifier"},{"text":": ","kind":"text"},{"preciseIdentifier":"s:Sb","text":"Bool","kind":"typeIdentifier"}],"title":"shouldAllowUserToEdit","roleHeading":"Instance Property"},"sections":[],"schemaVersion":{"minor":3,"patch":0,"major":0},"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction\/shouldAllowUserToEdit"},"abstract":[{"type":"text","text":"Indicates if the app should allow the user to edit the imported transaction."}],"primaryContentSections":[{"declarations":[{"platforms":["macOS"],"languages":["swift"],"tokens":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"shouldAllowUserToEdit"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"Bool","preciseIdentifier":"s:Sb"}]}],"kind":"declarations"},{"content":[{"level":2,"type":"heading","text":"Discussion","anchor":"discussion"},{"inlineContent":[{"type":"text","text":"Some importer output transactions which normally do not require edits"},{"type":"text","text":" "},{"type":"text","text":"e.g. from stock purchases. These indicate this by settings this value to false."}],"type":"paragraph"}],"kind":"content"}],"references":{"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImportedTransaction":{"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction","title":"ImportedTransaction","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"ImportedTransaction","kind":"identifier"}],"navigatorTitle":[{"text":"ImportedTransaction","kind":"identifier"}],"url":"\/documentation\/swiftbeancountimporter\/importedtransaction","abstract":[{"text":"Struct describing a transaction which has been imported","type":"text"}],"role":"symbol","type":"topic"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","url":"\/documentation\/swiftbeancountimporter","abstract":[],"role":"collection","title":"SwiftBeanCountImporter","kind":"symbol"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImportedTransaction/shouldAllowUserToEdit":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction\/shouldAllowUserToEdit","url":"\/documentation\/swiftbeancountimporter\/importedtransaction\/shouldallowusertoedit","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"shouldAllowUserToEdit","kind":"identifier"},{"text":": ","kind":"text"},{"text":"Bool","kind":"typeIdentifier","preciseIdentifier":"s:Sb"}],"kind":"symbol","title":"shouldAllowUserToEdit","abstract":[{"text":"Indicates if the app should allow the user to edit the imported transaction.","type":"text"}],"role":"symbol"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Indicates if the app should allow the user to edit the imported transaction.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction\/shouldAllowUserToEdit"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:22SwiftBeanCountImporter19ImportedTransactionV21shouldAllowUserToEditSbvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "shouldAllowUserToEdit"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sb",
+        "text" : "Bool"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountImporter"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "shouldAllowUserToEdit"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "shouldAllowUserToEdit"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sb",
+              "text" : "Bool"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Some importer output transactions which normally do not require edits",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "e.g. from stock purchases. These indicate this by settings this value to false.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountimporter\/importedtransaction\/shouldallowusertoedit"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountImporter",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImportedTransaction": {
+  "abstract" : [
+    {
+      "text" : "Struct describing a transaction which has been imported",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ImportedTransaction"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ImportedTransaction"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ImportedTransaction",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importedtransaction"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImportedTransaction/shouldAllowUserToEdit": {
+  "abstract" : [
+    {
+      "text" : "Indicates if the app should allow the user to edit the imported transaction.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "shouldAllowUserToEdit"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction\/shouldAllowUserToEdit",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "shouldAllowUserToEdit",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importedtransaction\/shouldallowusertoedit"
+}
+}
+}

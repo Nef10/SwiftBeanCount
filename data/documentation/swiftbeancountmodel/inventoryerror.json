@@ -1,1 +1,354 @@
-{"metadata":{"externalID":"s:19SwiftBeanCountModel14InventoryErrorO","role":"symbol","roleHeading":"Enumeration","title":"InventoryError","navigatorTitle":[{"kind":"identifier","text":"InventoryError"}],"fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"InventoryError","kind":"identifier"}],"modules":[{"name":"SwiftBeanCountModel"}],"symbolKind":"enum"},"schemaVersion":{"minor":3,"patch":0,"major":0},"relationshipsSections":[{"kind":"relationships","title":"Conforms To","identifiers":["doc:\/\/SwiftBeanCountModel\/10Foundation14LocalizedErrorP","doc:\/\/SwiftBeanCountModel\/s8CopyableP","doc:\/\/SwiftBeanCountModel\/s5ErrorP","doc:\/\/SwiftBeanCountModel\/s8SendableP","doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP"],"type":"conformsTo"}],"primaryContentSections":[{"kind":"declarations","declarations":[{"platforms":["macOS"],"tokens":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"InventoryError","kind":"identifier"}],"languages":["swift"]}]}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountmodel\/inventoryerror"]}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"]]},"topicSections":[{"title":"Enumeration Cases","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/ambiguousBooking(_:)","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/lotNotBigEnough(_:)","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/noLotFound(_:)"],"generated":true,"anchor":"Enumeration-Cases"},{"title":"Default Implementations","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/Error-Implementations","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/LocalizedError-Implementations"],"generated":true,"anchor":"Default-Implementations"}],"sections":[],"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError","interfaceLanguage":"swift"},"kind":"symbol","abstract":[{"type":"text","text":"Errors an inventory booking can throw"}],"references":{"doc://SwiftBeanCountModel/s5ErrorP":{"identifier":"doc:\/\/SwiftBeanCountModel\/s5ErrorP","title":"Swift.Error","type":"unresolvable"},"doc://SwiftBeanCountModel/s8SendableP":{"type":"unresolvable","identifier":"doc:\/\/SwiftBeanCountModel\/s8SendableP","title":"Swift.Sendable"},"doc://SwiftBeanCountModel/s8CopyableP":{"identifier":"doc:\/\/SwiftBeanCountModel\/s8CopyableP","title":"Swift.Copyable","type":"unresolvable"},"doc://SwiftBeanCountModel/s16SendableMetatypeP":{"type":"unresolvable","identifier":"doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP","title":"Swift.SendableMetatype"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError/Error-Implementations":{"role":"collectionGroup","kind":"article","type":"topic","abstract":[],"title":"Error Implementations","url":"\/documentation\/swiftbeancountmodel\/inventoryerror\/error-implementations","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/Error-Implementations"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError":{"abstract":[{"type":"text","text":"Errors an inventory booking can throw"}],"type":"topic","url":"\/documentation\/swiftbeancountmodel\/inventoryerror","kind":"symbol","role":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError","title":"InventoryError","fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"InventoryError","kind":"identifier"}],"navigatorTitle":[{"text":"InventoryError","kind":"identifier"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError/LocalizedError-Implementations":{"title":"LocalizedError Implementations","url":"\/documentation\/swiftbeancountmodel\/inventoryerror\/localizederror-implementations","role":"collectionGroup","kind":"article","abstract":[],"type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/LocalizedError-Implementations"},"doc://SwiftBeanCountModel/10Foundation14LocalizedErrorP":{"identifier":"doc:\/\/SwiftBeanCountModel\/10Foundation14LocalizedErrorP","title":"Foundation.LocalizedError","type":"unresolvable"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError/lotNotBigEnough(_:)":{"title":"InventoryError.lotNotBigEnough(_:)","url":"\/documentation\/swiftbeancountmodel\/inventoryerror\/lotnotbigenough(_:)","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/lotNotBigEnough(_:)","type":"topic","fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"lotNotBigEnough","kind":"identifier"},{"text":"(","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":")","kind":"text"}],"abstract":[{"text":"trying to reduce a lot by more units than it has","type":"text"}],"kind":"symbol","role":"symbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError/ambiguousBooking(_:)":{"abstract":[{"type":"text","text":"an ambiguous match when trying to reduce the inventory"}],"kind":"symbol","type":"topic","url":"\/documentation\/swiftbeancountmodel\/inventoryerror\/ambiguousbooking(_:)","role":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/ambiguousBooking(_:)","fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"ambiguousBooking","kind":"identifier"},{"text":"(","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":")","kind":"text"}],"title":"InventoryError.ambiguousBooking(_:)"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError/noLotFound(_:)":{"abstract":[{"type":"text","text":"no matching lot to reduce was found"}],"url":"\/documentation\/swiftbeancountmodel\/inventoryerror\/nolotfound(_:)","role":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/noLotFound(_:)","kind":"symbol","fragments":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"noLotFound"},{"kind":"text","text":"("},{"kind":"typeIdentifier","preciseIdentifier":"s:SS","text":"String"},{"kind":"text","text":")"}],"title":"InventoryError.noLotFound(_:)","type":"topic"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Errors an inventory booking can throw",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel14InventoryErrorO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "InventoryError"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "InventoryError"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "InventoryError"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "InventoryError"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/10Foundation14LocalizedErrorP",
+        "doc:\/\/SwiftBeanCountModel\/s8CopyableP",
+        "doc:\/\/SwiftBeanCountModel\/s5ErrorP",
+        "doc:\/\/SwiftBeanCountModel\/s8SendableP",
+        "doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Enumeration-Cases",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/ambiguousBooking(_:)",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/lotNotBigEnough(_:)",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/noLotFound(_:)"
+      ],
+      "title" : "Enumeration Cases"
+    },
+    {
+      "anchor" : "Default-Implementations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/Error-Implementations",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/LocalizedError-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/inventoryerror"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/10Foundation14LocalizedErrorP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/10Foundation14LocalizedErrorP",
+  "title" : "Foundation.LocalizedError",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError": {
+  "abstract" : [
+    {
+      "text" : "Errors an inventory booking can throw",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "InventoryError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "InventoryError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "InventoryError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/inventoryerror"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError/Error-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/Error-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Error Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/inventoryerror\/error-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError/LocalizedError-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/LocalizedError-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "LocalizedError Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/inventoryerror\/localizederror-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError/ambiguousBooking(_:)": {
+  "abstract" : [
+    {
+      "text" : "an ambiguous match when trying to reduce the inventory",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ambiguousBooking"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/ambiguousBooking(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "InventoryError.ambiguousBooking(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/inventoryerror\/ambiguousbooking(_:)"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError/lotNotBigEnough(_:)": {
+  "abstract" : [
+    {
+      "text" : "trying to reduce a lot by more units than it has",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "lotNotBigEnough"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/lotNotBigEnough(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "InventoryError.lotNotBigEnough(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/inventoryerror\/lotnotbigenough(_:)"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError/noLotFound(_:)": {
+  "abstract" : [
+    {
+      "text" : "no matching lot to reduce was found",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "noLotFound"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/noLotFound(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "InventoryError.noLotFound(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/inventoryerror\/nolotfound(_:)"
+},
+"doc://SwiftBeanCountModel/s16SendableMetatypeP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP",
+  "title" : "Swift.SendableMetatype",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/s5ErrorP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s5ErrorP",
+  "title" : "Swift.Error",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/s8CopyableP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s8CopyableP",
+  "title" : "Swift.Copyable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/s8SendableP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s8SendableP",
+  "title" : "Swift.Sendable",
+  "type" : "unresolvable"
+}
+}
+}

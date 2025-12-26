@@ -1,1 +1,161 @@
-{"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount\/init()","interfaceLanguage":"swift"},"schemaVersion":{"major":0,"patch":0,"minor":3},"metadata":{"extendedModule":"SwiftBeanCountModel","modules":[{"name":"SwiftBeanCountModel"}],"fragments":[{"kind":"identifier","text":"init"},{"kind":"text","text":"()"}],"title":"init()","externalID":"s:19SwiftBeanCountModel19MultiCurrencyAmountVACycfc","symbolKind":"init","role":"symbol","roleHeading":"Initializer"},"kind":"symbol","sections":[],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount"]]},"primaryContentSections":[{"declarations":[{"tokens":[{"kind":"keyword","text":"init"},{"kind":"text","text":"()"}],"languages":["swift"],"platforms":["macOS"]}],"kind":"declarations"}],"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/multicurrencyamount\/init()"],"traits":[{"interfaceLanguage":"swift"}]}],"abstract":[{"type":"text","text":"Creates an empty MultiCurrencyAmount"}],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount":{"url":"\/documentation\/swiftbeancountmodel\/multicurrencyamount","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"MultiCurrencyAmount","kind":"identifier"}],"abstract":[{"text":"Represents an amout which consists of amouts in multiple currencies","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount","navigatorTitle":[{"text":"MultiCurrencyAmount","kind":"identifier"}],"role":"symbol","title":"MultiCurrencyAmount","kind":"symbol","type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount/init()":{"url":"\/documentation\/swiftbeancountmodel\/multicurrencyamount\/init()","abstract":[{"type":"text","text":"Creates an empty MultiCurrencyAmount"}],"kind":"symbol","type":"topic","title":"init()","fragments":[{"text":"init","kind":"identifier"},{"text":"()","kind":"text"}],"role":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount\/init()"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Creates an empty MultiCurrencyAmount",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount\/init()"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "SwiftBeanCountModel",
+    "externalID" : "s:19SwiftBeanCountModel19MultiCurrencyAmountVACycfc",
+    "fragments" : [
+      {
+        "kind" : "identifier",
+        "text" : "init"
+      },
+      {
+        "kind" : "text",
+        "text" : "()"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Initializer",
+    "symbolKind" : "init",
+    "title" : "init()"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "init"
+            },
+            {
+              "kind" : "text",
+              "text" : "()"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/multicurrencyamount\/init()"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount": {
+  "abstract" : [
+    {
+      "text" : "Represents an amout which consists of amouts in multiple currencies",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "MultiCurrencyAmount"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "MultiCurrencyAmount"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "MultiCurrencyAmount",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/multicurrencyamount"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount/init()": {
+  "abstract" : [
+    {
+      "text" : "Creates an empty MultiCurrencyAmount",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "()"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount\/init()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init()",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/multicurrencyamount\/init()"
+}
+}
+}

@@ -1,1 +1,228 @@
-{"sections":[],"metadata":{"modules":[{"name":"SwiftBeanCountCompassCardMapper"}],"role":"symbol","title":"defaultExpenseAccountName","roleHeading":"Instance Property","externalID":"s:31SwiftBeanCountCompassCardMapperAAV25defaultExpenseAccountName0abC5Model0iJ0Vvp","fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"defaultExpenseAccountName"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV","text":"AccountName"}],"symbolKind":"property"},"primaryContentSections":[{"declarations":[{"tokens":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"defaultExpenseAccountName","kind":"identifier"},{"text":": ","kind":"text"},{"text":"AccountName","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV","kind":"typeIdentifier"}],"platforms":["macOS"],"languages":["swift"]}],"kind":"declarations"}],"abstract":[{"type":"text","text":"AccountName for the other leg of a transaction"}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/defaultexpenseaccountname"]}],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapper\/defaultExpenseAccountName"},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper","doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapper"]]},"schemaVersion":{"minor":3,"patch":0,"major":0},"kind":"symbol","references":{"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapper":{"kind":"symbol","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SwiftBeanCountCompassCardMapper","kind":"identifier"}],"type":"topic","title":"SwiftBeanCountCompassCardMapper","identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapper","role":"symbol","navigatorTitle":[{"text":"SwiftBeanCountCompassCardMapper","kind":"identifier"}],"url":"\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper","abstract":[{"text":"Mapper to map downloaded accounts and transactions to BeanCoutModel objects","type":"text"}]},"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapper/defaultExpenseAccountName":{"kind":"symbol","url":"\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/defaultexpenseaccountname","abstract":[{"type":"text","text":"AccountName for the other leg of a transaction"}],"title":"defaultExpenseAccountName","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"defaultExpenseAccountName","kind":"identifier"},{"text":": ","kind":"text"},{"text":"AccountName","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV","kind":"typeIdentifier"}],"type":"topic","identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapper\/defaultExpenseAccountName","role":"symbol"},"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper":{"title":"SwiftBeanCountCompassCardMapper","url":"\/documentation\/swiftbeancountcompasscardmapper","kind":"symbol","abstract":[],"role":"collection","type":"topic","identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName":{"title":"AccountName","kind":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName","url":"\/documentation\/swiftbeancountmodel\/accountname","role":"symbol","abstract":[{"type":"text","text":"Struct with represents just the name of an Account"}],"fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"AccountName"}],"type":"topic"}}}
+{
+  "abstract" : [
+    {
+      "text" : "AccountName for the other leg of a transaction",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper",
+        "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapper"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapper\/defaultExpenseAccountName"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:31SwiftBeanCountCompassCardMapperAAV25defaultExpenseAccountName0abC5Model0iJ0Vvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "defaultExpenseAccountName"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+        "text" : "AccountName"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountCompassCardMapper"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "defaultExpenseAccountName"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "defaultExpenseAccountName"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+              "text" : "AccountName"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/defaultexpenseaccountname"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountCompassCardMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountcompasscardmapper"
+},
+"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapper": {
+  "abstract" : [
+    {
+      "text" : "Mapper to map downloaded accounts and transactions to BeanCoutModel objects",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountCompassCardMapper"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapper",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountCompassCardMapper"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SwiftBeanCountCompassCardMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper"
+},
+"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapper/defaultExpenseAccountName": {
+  "abstract" : [
+    {
+      "text" : "AccountName for the other leg of a transaction",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "defaultExpenseAccountName"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+      "text" : "AccountName"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapper\/defaultExpenseAccountName",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "defaultExpenseAccountName",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/defaultexpenseaccountname"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName": {
+  "abstract" : [
+    {
+      "text" : "Struct with represents just the name of an Account",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AccountName"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "AccountName",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountname"
+}
+}
+}

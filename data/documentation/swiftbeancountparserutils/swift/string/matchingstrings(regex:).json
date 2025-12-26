@@ -1,1 +1,315 @@
-{"schemaVersion":{"minor":3,"patch":0,"major":0},"abstract":[{"text":"Returns the matches of a NSRegularExpression on a string","type":"text"}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils","doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift","doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String"]]},"variants":[{"paths":["\/documentation\/swiftbeancountparserutils\/swift\/string\/matchingstrings(regex:)"],"traits":[{"interfaceLanguage":"swift"}]}],"metadata":{"externalID":"s:SS25SwiftBeanCountParserUtilsE15matchingStrings5regexSaySaySSGGSo19NSRegularExpressionC_tF","symbolKind":"method","role":"symbol","extendedModule":"Swift","roleHeading":"Instance Method","modules":[{"name":"SwiftBeanCountParserUtils","relatedModules":["Swift"]}],"title":"matchingStrings(regex:)","fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"matchingStrings","kind":"identifier"},{"text":"(","kind":"text"},{"text":"regex","kind":"externalParam"},{"text":": ","kind":"text"},{"preciseIdentifier":"c:objc(cs)NSRegularExpression","text":"NSRegularExpression","kind":"typeIdentifier"},{"text":") -> [[","kind":"text"},{"preciseIdentifier":"s:SS","text":"String","kind":"typeIdentifier"},{"text":"]]","kind":"text"}]},"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"matchingStrings","kind":"identifier"},{"text":"(","kind":"text"},{"text":"regex","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"NSRegularExpression","kind":"typeIdentifier","preciseIdentifier":"c:objc(cs)NSRegularExpression"},{"text":") -> [[","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":"]]","kind":"text"}],"platforms":["macOS"],"languages":["swift"]}]},{"kind":"parameters","parameters":[{"content":[{"type":"paragraph","inlineContent":[{"type":"text","text":"NSRegularExpression to match"}]}],"name":"regex"}]},{"kind":"content","content":[{"level":2,"type":"heading","text":"Return Value","anchor":"return-value"},{"type":"paragraph","inlineContent":[{"text":"[[String]], the outer array contains an entry for each match and the inner arrays contain an entry for each capturing group","type":"text"}]}]}],"kind":"symbol","sections":[],"identifier":{"url":"doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String\/matchingStrings(regex:)","interfaceLanguage":"swift"},"references":{"doc://SwiftBeanCountParserUtils/documentation/SwiftBeanCountParserUtils":{"role":"collection","url":"\/documentation\/swiftbeancountparserutils","type":"topic","title":"SwiftBeanCountParserUtils","identifier":"doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils","kind":"symbol","abstract":[]},"doc://SwiftBeanCountParserUtils/documentation/SwiftBeanCountParserUtils/Swift/String":{"title":"String","abstract":[],"role":"symbol","type":"topic","navigatorTitle":[{"text":"String","kind":"identifier"}],"url":"\/documentation\/swiftbeancountparserutils\/swift\/string","kind":"symbol","identifier":"doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String","fragments":[{"kind":"keyword","text":"extension"},{"kind":"text","text":" "},{"kind":"identifier","text":"String","preciseIdentifier":"s:SS"}]},"doc://SwiftBeanCountParserUtils/documentation/SwiftBeanCountParserUtils/Swift":{"title":"Swift","abstract":[],"identifier":"doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift","role":"collection","type":"topic","kind":"symbol","url":"\/documentation\/swiftbeancountparserutils\/swift"},"doc://SwiftBeanCountParserUtils/documentation/SwiftBeanCountParserUtils/Swift/String/matchingStrings(regex:)":{"title":"matchingStrings(regex:)","abstract":[{"type":"text","text":"Returns the matches of a NSRegularExpression on a string"}],"role":"symbol","type":"topic","kind":"symbol","url":"\/documentation\/swiftbeancountparserutils\/swift\/string\/matchingstrings(regex:)","identifier":"doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String\/matchingStrings(regex:)","fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"matchingStrings"},{"kind":"text","text":"("},{"kind":"externalParam","text":"regex"},{"kind":"text","text":": "},{"preciseIdentifier":"c:objc(cs)NSRegularExpression","kind":"typeIdentifier","text":"NSRegularExpression"},{"kind":"text","text":") -> [["},{"preciseIdentifier":"s:SS","kind":"typeIdentifier","text":"String"},{"kind":"text","text":"]]"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Returns the matches of a NSRegularExpression on a string",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils",
+        "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift",
+        "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String\/matchingStrings(regex:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "Swift",
+    "externalID" : "s:SS25SwiftBeanCountParserUtilsE15matchingStrings5regexSaySaySSGGSo19NSRegularExpressionC_tF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "matchingStrings"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "regex"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "c:objc(cs)NSRegularExpression",
+        "text" : "NSRegularExpression"
+      },
+      {
+        "kind" : "text",
+        "text" : ") -> [["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : "]]"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountParserUtils",
+        "relatedModules" : [
+          "Swift"
+        ]
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "matchingStrings(regex:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "matchingStrings"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "regex"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "c:objc(cs)NSRegularExpression",
+              "text" : "NSRegularExpression"
+            },
+            {
+              "kind" : "text",
+              "text" : ") -> [["
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : "]]"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "NSRegularExpression to match",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "regex"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "[[String]], the outer array contains an entry for each match and the inner arrays contain an entry for each capturing group",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountparserutils\/swift\/string\/matchingstrings(regex:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountParserUtils/documentation/SwiftBeanCountParserUtils": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountParserUtils",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountparserutils"
+},
+"doc://SwiftBeanCountParserUtils/documentation/SwiftBeanCountParserUtils/Swift": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "Swift",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountparserutils\/swift"
+},
+"doc://SwiftBeanCountParserUtils/documentation/SwiftBeanCountParserUtils/Swift/String": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "extension"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "String"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "String",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountparserutils\/swift\/string"
+},
+"doc://SwiftBeanCountParserUtils/documentation/SwiftBeanCountParserUtils/Swift/String/matchingStrings(regex:)": {
+  "abstract" : [
+    {
+      "text" : "Returns the matches of a NSRegularExpression on a string",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "matchingStrings"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "regex"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:objc(cs)NSRegularExpression",
+      "text" : "NSRegularExpression"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> [["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "]]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String\/matchingStrings(regex:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "matchingStrings(regex:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountparserutils\/swift\/string\/matchingstrings(regex:)"
+}
+}
+}

@@ -1,1 +1,180 @@
-{"metadata":{"role":"collectionGroup","title":"CustomStringConvertible Implementations","modules":[{"name":"SwiftBeanCountModel"}],"roleHeading":"API Collection"},"kind":"article","sections":[],"schemaVersion":{"minor":3,"patch":0,"major":0},"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/posting\/customstringconvertible-implementations"],"traits":[{"interfaceLanguage":"swift"}]}],"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting\/CustomStringConvertible-Implementations","interfaceLanguage":"swift"},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting"]]},"topicSections":[{"title":"Instance Properties","generated":true,"identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting\/description"],"anchor":"Instance-Properties"}],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Posting/description":{"fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"description","kind":"identifier"},{"text":": ","kind":"text"},{"preciseIdentifier":"s:SS","text":"String","kind":"typeIdentifier"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting\/description","role":"symbol","abstract":[{"type":"text","text":"String to describe the posting in the ledget file"}],"url":"\/documentation\/swiftbeancountmodel\/posting\/description","title":"description","kind":"symbol","type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Posting":{"role":"symbol","type":"topic","navigatorTitle":[{"text":"Posting","kind":"identifier"}],"fragments":[{"text":"class","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Posting","kind":"identifier"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting","abstract":[{"type":"text","text":"A Posting contains an "},{"type":"codeVoice","code":"AccountName"},{"type":"text","text":" with the corresponding "},{"type":"codeVoice","code":"Amount"},{"type":"text","text":","},{"type":"text","text":" "},{"type":"text","text":"as well as the "},{"type":"codeVoice","code":"price"},{"type":"text","text":" and "},{"type":"codeVoice","code":"cost"},{"type":"text","text":" (if applicable)."}],"title":"Posting","kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/posting"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"}}}
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting\/CustomStringConvertible-Implementations"
+  },
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "collectionGroup",
+    "roleHeading" : "API Collection",
+    "title" : "CustomStringConvertible Implementations"
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting\/description"
+      ],
+      "title" : "Instance Properties"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/posting\/customstringconvertible-implementations"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Posting": {
+  "abstract" : [
+    {
+      "text" : "A Posting contains an ",
+      "type" : "text"
+    },
+    {
+      "code" : "AccountName",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " with the corresponding ",
+      "type" : "text"
+    },
+    {
+      "code" : "Amount",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ",",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "as well as the ",
+      "type" : "text"
+    },
+    {
+      "code" : "price",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " and ",
+      "type" : "text"
+    },
+    {
+      "code" : "cost",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " (if applicable).",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Posting"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Posting"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Posting",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/posting"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Posting/description": {
+  "abstract" : [
+    {
+      "text" : "String to describe the posting in the ledget file",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "description"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting\/description",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "description",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/posting\/description"
+}
+}
+}

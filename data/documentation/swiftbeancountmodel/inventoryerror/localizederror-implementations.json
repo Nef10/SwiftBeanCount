@@ -1,1 +1,258 @@
-{"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError"]]},"topicSections":[{"identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/errorDescription","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/failureReason","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/helpAnchor","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/recoverySuggestion"],"title":"Instance Properties","generated":true,"anchor":"Instance-Properties"}],"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/inventoryerror\/localizederror-implementations"],"traits":[{"interfaceLanguage":"swift"}]}],"metadata":{"modules":[{"name":"SwiftBeanCountModel"}],"roleHeading":"API Collection","title":"LocalizedError Implementations","role":"collectionGroup"},"kind":"article","schemaVersion":{"major":0,"patch":0,"minor":3},"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/LocalizedError-Implementations","interfaceLanguage":"swift"},"sections":[],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError/failureReason":{"abstract":[],"type":"topic","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"failureReason","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":"?","kind":"text"}],"title":"failureReason","role":"symbol","kind":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/failureReason","url":"\/documentation\/swiftbeancountmodel\/inventoryerror\/failurereason"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError/recoverySuggestion":{"role":"symbol","kind":"symbol","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"recoverySuggestion","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":"?","kind":"text"}],"title":"recoverySuggestion","abstract":[],"url":"\/documentation\/swiftbeancountmodel\/inventoryerror\/recoverysuggestion","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/recoverySuggestion","type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError":{"abstract":[{"type":"text","text":"Errors an inventory booking can throw"}],"type":"topic","url":"\/documentation\/swiftbeancountmodel\/inventoryerror","kind":"symbol","role":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError","title":"InventoryError","fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"InventoryError","kind":"identifier"}],"navigatorTitle":[{"text":"InventoryError","kind":"identifier"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError/errorDescription":{"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/errorDescription","title":"errorDescription","abstract":[],"role":"symbol","url":"\/documentation\/swiftbeancountmodel\/inventoryerror\/errordescription","type":"topic","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"errorDescription","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":"?","kind":"text"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError/helpAnchor":{"kind":"symbol","role":"symbol","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"helpAnchor","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":"?","kind":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/helpAnchor","title":"helpAnchor","url":"\/documentation\/swiftbeancountmodel\/inventoryerror\/helpanchor","abstract":[],"type":"topic"}}}
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/LocalizedError-Implementations"
+  },
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "collectionGroup",
+    "roleHeading" : "API Collection",
+    "title" : "LocalizedError Implementations"
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/errorDescription",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/failureReason",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/helpAnchor",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/recoverySuggestion"
+      ],
+      "title" : "Instance Properties"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/inventoryerror\/localizederror-implementations"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError": {
+  "abstract" : [
+    {
+      "text" : "Errors an inventory booking can throw",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "InventoryError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "InventoryError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "InventoryError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/inventoryerror"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError/errorDescription": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "errorDescription"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/errorDescription",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "errorDescription",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/inventoryerror\/errordescription"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError/failureReason": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "failureReason"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/failureReason",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "failureReason",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/inventoryerror\/failurereason"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError/helpAnchor": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "helpAnchor"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/helpAnchor",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "helpAnchor",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/inventoryerror\/helpanchor"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError/recoverySuggestion": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "recoverySuggestion"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/recoverySuggestion",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "recoverySuggestion",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/inventoryerror\/recoverysuggestion"
+}
+}
+}

@@ -1,1 +1,282 @@
-{"abstract":[{"code":"AccountName","type":"codeVoice"},{"text":" of the account the posting is in","type":"text"}],"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/posting\/accountname"],"traits":[{"interfaceLanguage":"swift"}]}],"schemaVersion":{"patch":0,"minor":3,"major":0},"sections":[],"primaryContentSections":[{"declarations":[{"platforms":["macOS"],"languages":["swift"],"tokens":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"accountName"},{"kind":"text","text":": "},{"preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV","kind":"typeIdentifier","text":"AccountName","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName"}]}],"kind":"declarations"}],"metadata":{"role":"symbol","modules":[{"name":"SwiftBeanCountModel"}],"symbolKind":"property","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"accountName","kind":"identifier"},{"text":": ","kind":"text"},{"text":"AccountName","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV"}],"externalID":"s:19SwiftBeanCountModel7PostingC11accountNameAA07AccountG0Vvp","title":"accountName","roleHeading":"Instance Property"},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting"]]},"kind":"symbol","identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting\/accountName","interfaceLanguage":"swift"},"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Posting/accountName":{"kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/posting\/accountname","abstract":[{"code":"AccountName","type":"codeVoice"},{"type":"text","text":" of the account the posting is in"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting\/accountName","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"accountName","kind":"identifier"},{"text":": ","kind":"text"},{"text":"AccountName","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV"}],"title":"accountName","role":"symbol","type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName":{"role":"symbol","kind":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName","title":"AccountName","url":"\/documentation\/swiftbeancountmodel\/accountname","fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"AccountName"}],"type":"topic","abstract":[{"type":"text","text":"Struct with represents just the name of an Account"}],"navigatorTitle":[{"kind":"identifier","text":"AccountName"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Posting":{"role":"symbol","type":"topic","navigatorTitle":[{"text":"Posting","kind":"identifier"}],"fragments":[{"text":"class","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Posting","kind":"identifier"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting","abstract":[{"type":"text","text":"A Posting contains an "},{"type":"codeVoice","code":"AccountName"},{"type":"text","text":" with the corresponding "},{"type":"codeVoice","code":"Amount"},{"type":"text","text":","},{"type":"text","text":" "},{"type":"text","text":"as well as the "},{"type":"codeVoice","code":"price"},{"type":"text","text":" and "},{"type":"codeVoice","code":"cost"},{"type":"text","text":" (if applicable)."}],"title":"Posting","kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/posting"}}}
+{
+  "abstract" : [
+    {
+      "code" : "AccountName",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " of the account the posting is in",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting\/accountName"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel7PostingC11accountNameAA07AccountG0Vvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "accountName"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+        "text" : "AccountName"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "accountName"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "accountName"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+              "text" : "AccountName"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/posting\/accountname"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName": {
+  "abstract" : [
+    {
+      "text" : "Struct with represents just the name of an Account",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AccountName"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "AccountName"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AccountName",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountname"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Posting": {
+  "abstract" : [
+    {
+      "text" : "A Posting contains an ",
+      "type" : "text"
+    },
+    {
+      "code" : "AccountName",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " with the corresponding ",
+      "type" : "text"
+    },
+    {
+      "code" : "Amount",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ",",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "as well as the ",
+      "type" : "text"
+    },
+    {
+      "code" : "price",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " and ",
+      "type" : "text"
+    },
+    {
+      "code" : "cost",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " (if applicable).",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Posting"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Posting"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Posting",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/posting"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Posting/accountName": {
+  "abstract" : [
+    {
+      "code" : "AccountName",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " of the account the posting is in",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "accountName"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+      "text" : "AccountName"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting\/accountName",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "accountName",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/posting\/accountname"
+}
+}
+}

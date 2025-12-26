@@ -1,1 +1,288 @@
-{"abstract":[{"text":"Errors an AccountName can throw","type":"text"}],"topicSections":[{"generated":true,"title":"Enumeration Cases","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountNameError\/invaildName(_:)"],"anchor":"Enumeration-Cases"},{"generated":true,"title":"Default Implementations","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountNameError\/Equatable-Implementations","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountNameError\/Error-Implementations","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountNameError\/LocalizedError-Implementations"],"anchor":"Default-Implementations"}],"kind":"symbol","hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"]]},"relationshipsSections":[{"kind":"relationships","type":"conformsTo","title":"Conforms To","identifiers":["doc:\/\/SwiftBeanCountModel\/10Foundation14LocalizedErrorP","doc:\/\/SwiftBeanCountModel\/s8CopyableP","doc:\/\/SwiftBeanCountModel\/SQ","doc:\/\/SwiftBeanCountModel\/s5ErrorP","doc:\/\/SwiftBeanCountModel\/s8SendableP","doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP"]}],"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"AccountNameError"}],"platforms":["macOS"],"languages":["swift"]}]}],"metadata":{"externalID":"s:19SwiftBeanCountModel16AccountNameErrorO","role":"symbol","title":"AccountNameError","symbolKind":"enum","navigatorTitle":[{"kind":"identifier","text":"AccountNameError"}],"fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"AccountNameError"}],"modules":[{"name":"SwiftBeanCountModel"}],"roleHeading":"Enumeration"},"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/accountnameerror"],"traits":[{"interfaceLanguage":"swift"}]}],"sections":[],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountNameError"},"schemaVersion":{"major":0,"minor":3,"patch":0},"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/s16SendableMetatypeP":{"identifier":"doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP","type":"unresolvable","title":"Swift.SendableMetatype"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountNameError/LocalizedError-Implementations":{"kind":"article","role":"collectionGroup","abstract":[],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountNameError\/LocalizedError-Implementations","url":"\/documentation\/swiftbeancountmodel\/accountnameerror\/localizederror-implementations","type":"topic","title":"LocalizedError Implementations"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountNameError/Error-Implementations":{"kind":"article","role":"collectionGroup","url":"\/documentation\/swiftbeancountmodel\/accountnameerror\/error-implementations","abstract":[],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountNameError\/Error-Implementations","type":"topic","title":"Error Implementations"},"doc://SwiftBeanCountModel/s5ErrorP":{"identifier":"doc:\/\/SwiftBeanCountModel\/s5ErrorP","type":"unresolvable","title":"Swift.Error"},"doc://SwiftBeanCountModel/SQ":{"type":"unresolvable","identifier":"doc:\/\/SwiftBeanCountModel\/SQ","title":"Swift.Equatable"},"doc://SwiftBeanCountModel/s8SendableP":{"identifier":"doc:\/\/SwiftBeanCountModel\/s8SendableP","type":"unresolvable","title":"Swift.Sendable"},"doc://SwiftBeanCountModel/10Foundation14LocalizedErrorP":{"type":"unresolvable","identifier":"doc:\/\/SwiftBeanCountModel\/10Foundation14LocalizedErrorP","title":"Foundation.LocalizedError"},"doc://SwiftBeanCountModel/s8CopyableP":{"identifier":"doc:\/\/SwiftBeanCountModel\/s8CopyableP","type":"unresolvable","title":"Swift.Copyable"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountNameError":{"role":"symbol","fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"AccountNameError","kind":"identifier"}],"kind":"symbol","navigatorTitle":[{"text":"AccountNameError","kind":"identifier"}],"url":"\/documentation\/swiftbeancountmodel\/accountnameerror","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountNameError","abstract":[{"text":"Errors an AccountName can throw","type":"text"}],"title":"AccountNameError","type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountNameError/invaildName(_:)":{"kind":"symbol","role":"symbol","abstract":[{"type":"text","text":"an invalid account name"}],"type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountNameError\/invaildName(_:)","title":"AccountNameError.invaildName(_:)","fragments":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"invaildName"},{"kind":"text","text":"("},{"kind":"typeIdentifier","preciseIdentifier":"s:SS","text":"String"},{"kind":"text","text":")"}],"url":"\/documentation\/swiftbeancountmodel\/accountnameerror\/invaildname(_:)"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountNameError/Equatable-Implementations":{"kind":"article","abstract":[],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountNameError\/Equatable-Implementations","type":"topic","title":"Equatable Implementations","url":"\/documentation\/swiftbeancountmodel\/accountnameerror\/equatable-implementations","role":"collectionGroup"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Errors an AccountName can throw",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountNameError"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel16AccountNameErrorO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "AccountNameError"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "AccountNameError"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "AccountNameError"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "AccountNameError"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/10Foundation14LocalizedErrorP",
+        "doc:\/\/SwiftBeanCountModel\/s8CopyableP",
+        "doc:\/\/SwiftBeanCountModel\/SQ",
+        "doc:\/\/SwiftBeanCountModel\/s5ErrorP",
+        "doc:\/\/SwiftBeanCountModel\/s8SendableP",
+        "doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Enumeration-Cases",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountNameError\/invaildName(_:)"
+      ],
+      "title" : "Enumeration Cases"
+    },
+    {
+      "anchor" : "Default-Implementations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountNameError\/Equatable-Implementations",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountNameError\/Error-Implementations",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountNameError\/LocalizedError-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/accountnameerror"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/10Foundation14LocalizedErrorP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/10Foundation14LocalizedErrorP",
+  "title" : "Foundation.LocalizedError",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/SQ": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/SQ",
+  "title" : "Swift.Equatable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountNameError": {
+  "abstract" : [
+    {
+      "text" : "Errors an AccountName can throw",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AccountNameError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountNameError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "AccountNameError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AccountNameError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountnameerror"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountNameError/Equatable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountNameError\/Equatable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Equatable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountnameerror\/equatable-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountNameError/Error-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountNameError\/Error-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Error Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountnameerror\/error-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountNameError/LocalizedError-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountNameError\/LocalizedError-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "LocalizedError Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountnameerror\/localizederror-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountNameError/invaildName(_:)": {
+  "abstract" : [
+    {
+      "text" : "an invalid account name",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "invaildName"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountNameError\/invaildName(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "AccountNameError.invaildName(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountnameerror\/invaildname(_:)"
+},
+"doc://SwiftBeanCountModel/s16SendableMetatypeP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP",
+  "title" : "Swift.SendableMetatype",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/s5ErrorP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s5ErrorP",
+  "title" : "Swift.Error",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/s8CopyableP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s8CopyableP",
+  "title" : "Swift.Copyable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/s8SendableP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s8SendableP",
+  "title" : "Swift.Sendable",
+  "type" : "unresolvable"
+}
+}
+}

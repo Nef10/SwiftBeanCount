@@ -1,1 +1,695 @@
-{"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting"]]},"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting\/init(accountName:amount:price:cost:metaData:)","interfaceLanguage":"swift"},"primaryContentSections":[{"declarations":[{"platforms":["macOS"],"languages":["swift"],"tokens":[{"text":"init","kind":"keyword"},{"text":"(","kind":"text"},{"text":"accountName","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"AccountName","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName","kind":"typeIdentifier"},{"text":", ","kind":"text"},{"text":"amount","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"Amount","preciseIdentifier":"s:19SwiftBeanCountModel6AmountV","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount","kind":"typeIdentifier"},{"text":", ","kind":"text"},{"text":"price","kind":"externalParam"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"Amount","preciseIdentifier":"s:19SwiftBeanCountModel6AmountV","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount"},{"kind":"text","text":"? = nil, "},{"kind":"externalParam","text":"cost"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"Cost","preciseIdentifier":"s:19SwiftBeanCountModel4CostC","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Cost"},{"kind":"text","text":"? = nil, "},{"kind":"externalParam","text":"metaData"},{"kind":"text","text":": ["},{"kind":"typeIdentifier","text":"String","preciseIdentifier":"s:SS"},{"kind":"text","text":" : "},{"kind":"typeIdentifier","text":"String","preciseIdentifier":"s:SS"},{"kind":"text","text":"] = [:])"}]}],"kind":"declarations"},{"parameters":[{"content":[{"type":"paragraph","inlineContent":[{"text":"","type":"text"},{"code":"AccountName","type":"codeVoice"}]}],"name":"accountName"},{"content":[{"inlineContent":[{"text":"","type":"text"},{"type":"codeVoice","code":"Amount"}],"type":"paragraph"}],"name":"amount"},{"content":[{"type":"paragraph","inlineContent":[{"text":"Optional ","type":"text"},{"code":"Amount","type":"codeVoice"},{"text":" which was paid to get this ","type":"text"},{"code":"amount","type":"codeVoice"}]}],"name":"price"},{"content":[{"inlineContent":[{"type":"text","text":"Optional "},{"type":"codeVoice","code":"Cost"},{"type":"text","text":" which was paid to get this "},{"type":"codeVoice","code":"amount"}],"type":"paragraph"}],"name":"cost"},{"content":[{"type":"paragraph","inlineContent":[{"type":"text","text":"Metadata dictionary"}]}],"name":"metaData"}],"kind":"parameters"}],"metadata":{"symbolKind":"init","roleHeading":"Initializer","fragments":[{"kind":"identifier","text":"init"},{"kind":"text","text":"("},{"kind":"externalParam","text":"accountName"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"AccountName","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV"},{"kind":"text","text":", "},{"kind":"externalParam","text":"amount"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"Amount","preciseIdentifier":"s:19SwiftBeanCountModel6AmountV"},{"kind":"text","text":", "},{"kind":"externalParam","text":"price"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"Amount","preciseIdentifier":"s:19SwiftBeanCountModel6AmountV"},{"kind":"text","text":"?, "},{"kind":"externalParam","text":"cost"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"Cost","preciseIdentifier":"s:19SwiftBeanCountModel4CostC"},{"kind":"text","text":"?, "},{"kind":"externalParam","text":"metaData"},{"kind":"text","text":": ["},{"kind":"typeIdentifier","text":"String","preciseIdentifier":"s:SS"},{"kind":"text","text":" : "},{"kind":"typeIdentifier","text":"String","preciseIdentifier":"s:SS"},{"kind":"text","text":"])"}],"modules":[{"name":"SwiftBeanCountModel"}],"title":"init(accountName:amount:price:cost:metaData:)","role":"symbol","externalID":"s:19SwiftBeanCountModel7PostingC11accountName6amount5price4cost8metaDataAcA07AccountG0V_AA6AmountVALSgAA4CostCSgSDyS2SGtcfc"},"schemaVersion":{"patch":0,"minor":3,"major":0},"abstract":[{"type":"text","text":"Creats an posting with the given parameters"}],"sections":[],"kind":"symbol","variants":[{"paths":["\/documentation\/swiftbeancountmodel\/posting\/init(accountname:amount:price:cost:metadata:)"],"traits":[{"interfaceLanguage":"swift"}]}],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Posting/init(accountName:amount:price:cost:metaData:)":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting\/init(accountName:amount:price:cost:metaData:)","fragments":[{"kind":"identifier","text":"init"},{"kind":"text","text":"("},{"kind":"externalParam","text":"accountName"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV","text":"AccountName"},{"kind":"text","text":", "},{"kind":"externalParam","text":"amount"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel6AmountV","text":"Amount"},{"kind":"text","text":", "},{"kind":"externalParam","text":"price"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel6AmountV","text":"Amount"},{"kind":"text","text":"?, "},{"kind":"externalParam","text":"cost"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel4CostC","text":"Cost"},{"kind":"text","text":"?, "},{"kind":"externalParam","text":"metaData"},{"kind":"text","text":": ["},{"kind":"typeIdentifier","preciseIdentifier":"s:SS","text":"String"},{"kind":"text","text":" : "},{"kind":"typeIdentifier","preciseIdentifier":"s:SS","text":"String"},{"kind":"text","text":"])"}],"role":"symbol","kind":"symbol","type":"topic","abstract":[{"type":"text","text":"Creats an posting with the given parameters"}],"url":"\/documentation\/swiftbeancountmodel\/posting\/init(accountname:amount:price:cost:metadata:)","title":"init(accountName:amount:price:cost:metaData:)"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Cost":{"url":"\/documentation\/swiftbeancountmodel\/cost","navigatorTitle":[{"text":"Cost","kind":"identifier"}],"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Cost","role":"symbol","fragments":[{"text":"class","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Cost","kind":"identifier"}],"title":"Cost","type":"topic","abstract":[{"type":"text","text":"Cost of a posting"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Posting":{"role":"symbol","type":"topic","navigatorTitle":[{"text":"Posting","kind":"identifier"}],"fragments":[{"text":"class","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Posting","kind":"identifier"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting","abstract":[{"type":"text","text":"A Posting contains an "},{"type":"codeVoice","code":"AccountName"},{"type":"text","text":" with the corresponding "},{"type":"codeVoice","code":"Amount"},{"type":"text","text":","},{"type":"text","text":" "},{"type":"text","text":"as well as the "},{"type":"codeVoice","code":"price"},{"type":"text","text":" and "},{"type":"codeVoice","code":"cost"},{"type":"text","text":" (if applicable)."}],"title":"Posting","kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/posting"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Amount":{"role":"symbol","url":"\/documentation\/swiftbeancountmodel\/amount","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount","navigatorTitle":[{"kind":"identifier","text":"Amount"}],"type":"topic","fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"Amount"}],"abstract":[{"text":"Represents an Amount - a number with a commodity","type":"text"}],"title":"Amount","kind":"symbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName":{"role":"symbol","kind":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName","title":"AccountName","url":"\/documentation\/swiftbeancountmodel\/accountname","fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"AccountName"}],"type":"topic","abstract":[{"type":"text","text":"Struct with represents just the name of an Account"}],"navigatorTitle":[{"kind":"identifier","text":"AccountName"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Creats an posting with the given parameters",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting\/init(accountName:amount:price:cost:metaData:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel7PostingC11accountName6amount5price4cost8metaDataAcA07AccountG0V_AA6AmountVALSgAA4CostCSgSDyS2SGtcfc",
+    "fragments" : [
+      {
+        "kind" : "identifier",
+        "text" : "init"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "accountName"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+        "text" : "AccountName"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "amount"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel6AmountV",
+        "text" : "Amount"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "price"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel6AmountV",
+        "text" : "Amount"
+      },
+      {
+        "kind" : "text",
+        "text" : "?, "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "cost"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel4CostC",
+        "text" : "Cost"
+      },
+      {
+        "kind" : "text",
+        "text" : "?, "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "metaData"
+      },
+      {
+        "kind" : "text",
+        "text" : ": ["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : " : "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : "])"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Initializer",
+    "symbolKind" : "init",
+    "title" : "init(accountName:amount:price:cost:metaData:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "init"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "accountName"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+              "text" : "AccountName"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "amount"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel6AmountV",
+              "text" : "Amount"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "price"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel6AmountV",
+              "text" : "Amount"
+            },
+            {
+              "kind" : "text",
+              "text" : "? = nil, "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "cost"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Cost",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel4CostC",
+              "text" : "Cost"
+            },
+            {
+              "kind" : "text",
+              "text" : "? = nil, "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "metaData"
+            },
+            {
+              "kind" : "text",
+              "text" : ": ["
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : "] = [:])"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "",
+                  "type" : "text"
+                },
+                {
+                  "code" : "AccountName",
+                  "type" : "codeVoice"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "accountName"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "",
+                  "type" : "text"
+                },
+                {
+                  "code" : "Amount",
+                  "type" : "codeVoice"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "amount"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Optional ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "Amount",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " which was paid to get this ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "amount",
+                  "type" : "codeVoice"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "price"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Optional ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "Cost",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " which was paid to get this ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "amount",
+                  "type" : "codeVoice"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "cost"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Metadata dictionary",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "metaData"
+        }
+      ]
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/posting\/init(accountname:amount:price:cost:metadata:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName": {
+  "abstract" : [
+    {
+      "text" : "Struct with represents just the name of an Account",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AccountName"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "AccountName"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AccountName",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountname"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Amount": {
+  "abstract" : [
+    {
+      "text" : "Represents an Amount - a number with a commodity",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Amount"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Amount"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Amount",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/amount"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Cost": {
+  "abstract" : [
+    {
+      "text" : "Cost of a posting",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Cost"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Cost",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Cost"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Cost",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/cost"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Posting": {
+  "abstract" : [
+    {
+      "text" : "A Posting contains an ",
+      "type" : "text"
+    },
+    {
+      "code" : "AccountName",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " with the corresponding ",
+      "type" : "text"
+    },
+    {
+      "code" : "Amount",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ",",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "as well as the ",
+      "type" : "text"
+    },
+    {
+      "code" : "price",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " and ",
+      "type" : "text"
+    },
+    {
+      "code" : "cost",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " (if applicable).",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Posting"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Posting"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Posting",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/posting"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Posting/init(accountName:amount:price:cost:metaData:)": {
+  "abstract" : [
+    {
+      "text" : "Creats an posting with the given parameters",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "accountName"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+      "text" : "AccountName"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "amount"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel6AmountV",
+      "text" : "Amount"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "price"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel6AmountV",
+      "text" : "Amount"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "cost"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel4CostC",
+      "text" : "Cost"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "metaData"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : " : "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "])"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting\/init(accountName:amount:price:cost:metaData:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(accountName:amount:price:cost:metaData:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/posting\/init(accountname:amount:price:cost:metadata:)"
+}
+}
+}

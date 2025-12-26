@@ -1,1 +1,104 @@
-{"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser"},"kind":"symbol","schemaVersion":{"major":0,"minor":3,"patch":0},"topicSections":[{"identifiers":["doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser\/Parser"],"generated":true,"title":"Enumerations","anchor":"Enumerations"}],"sections":[],"hierarchy":{"paths":[[]]},"metadata":{"roleHeading":"Framework","title":"SwiftBeanCountParser","modules":[{"name":"SwiftBeanCountParser"}],"role":"collection","externalID":"SwiftBeanCountParser","symbolKind":"module"},"variants":[{"paths":["\/documentation\/swiftbeancountparser"],"traits":[{"interfaceLanguage":"swift"}]}],"references":{"doc://SwiftBeanCountParser/documentation/SwiftBeanCountParser":{"url":"\/documentation\/swiftbeancountparser","abstract":[],"identifier":"doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser","role":"collection","title":"SwiftBeanCountParser","type":"topic","kind":"symbol"},"doc://SwiftBeanCountParser/documentation/SwiftBeanCountParser/Parser":{"fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"kind":"identifier","text":"Parser"}],"navigatorTitle":[{"kind":"identifier","text":"Parser"}],"title":"Parser","abstract":[{"type":"text","text":"Parser to parse a string of a file into a Ledger"}],"url":"\/documentation\/swiftbeancountparser\/parser","type":"topic","identifier":"doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser\/Parser","role":"symbol","kind":"symbol"}}}
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "SwiftBeanCountParser",
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountParser"
+      }
+    ],
+    "role" : "collection",
+    "roleHeading" : "Framework",
+    "symbolKind" : "module",
+    "title" : "SwiftBeanCountParser"
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Enumerations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser\/Parser"
+      ],
+      "title" : "Enumerations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountparser"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountParser/documentation/SwiftBeanCountParser": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountParser",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountparser"
+},
+"doc://SwiftBeanCountParser/documentation/SwiftBeanCountParser/Parser": {
+  "abstract" : [
+    {
+      "text" : "Parser to parse a string of a file into a Ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Parser"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser\/Parser",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Parser"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Parser",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountparser\/parser"
+}
+}
+}

@@ -1,1 +1,208 @@
-{"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlipRowValue\/id"},"sections":[],"abstract":[{"text":"Inherited from ","type":"text"},{"code":"Identifiable.id","type":"codeVoice"},{"text":".","type":"text"}],"schemaVersion":{"patch":0,"minor":3,"major":0},"primaryContentSections":[{"declarations":[{"languages":["swift"],"tokens":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"id"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:10Foundation4UUIDV","text":"UUID"}],"platforms":["macOS"]}],"kind":"declarations"}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancounttax\/taxsliprowvalue\/id"]}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax","doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlipRowValue"]]},"metadata":{"modules":[{"name":"SwiftBeanCountTax"}],"role":"symbol","symbolKind":"property","externalID":"s:17SwiftBeanCountTax0D12SlipRowValueV2id10Foundation4UUIDVvp","title":"id","roleHeading":"Instance Property","fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"id"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"UUID","preciseIdentifier":"s:10Foundation4UUIDV"}]},"kind":"symbol","references":{"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax":{"abstract":[],"title":"SwiftBeanCountTax","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax","kind":"symbol","type":"topic","url":"\/documentation\/swiftbeancounttax","role":"collection"},"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/TaxSlipRowValue":{"fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"TaxSlipRowValue"}],"abstract":[{"text":"A Value on a ","type":"text"},{"code":"TaxSlip","type":"codeVoice"}],"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlipRowValue","title":"TaxSlipRowValue","url":"\/documentation\/swiftbeancounttax\/taxsliprowvalue","role":"symbol","type":"topic","navigatorTitle":[{"kind":"identifier","text":"TaxSlipRowValue"}]},"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/TaxSlipRowValue/id":{"fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"id","kind":"identifier"},{"text":": ","kind":"text"},{"preciseIdentifier":"s:10Foundation4UUIDV","text":"UUID","kind":"typeIdentifier"}],"type":"topic","title":"id","url":"\/documentation\/swiftbeancounttax\/taxsliprowvalue\/id","abstract":[],"identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlipRowValue\/id","role":"symbol","kind":"symbol"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Inherited from ",
+      "type" : "text"
+    },
+    {
+      "code" : "Identifiable.id",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax",
+        "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlipRowValue"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlipRowValue\/id"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:17SwiftBeanCountTax0D12SlipRowValueV2id10Foundation4UUIDVvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "id"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:10Foundation4UUIDV",
+        "text" : "UUID"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountTax"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "id"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "id"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:10Foundation4UUIDV",
+              "text" : "UUID"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancounttax\/taxsliprowvalue\/id"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountTax",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax"
+},
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/TaxSlipRowValue": {
+  "abstract" : [
+    {
+      "text" : "A Value on a ",
+      "type" : "text"
+    },
+    {
+      "code" : "TaxSlip",
+      "type" : "codeVoice"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "TaxSlipRowValue"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlipRowValue",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "TaxSlipRowValue"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "TaxSlipRowValue",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax\/taxsliprowvalue"
+},
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/TaxSlipRowValue/id": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "id"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4UUIDV",
+      "text" : "UUID"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlipRowValue\/id",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "id",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax\/taxsliprowvalue\/id"
+}
+}
+}

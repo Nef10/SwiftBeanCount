@@ -1,1 +1,264 @@
-{"schemaVersion":{"major":0,"patch":0,"minor":3},"identifier":{"url":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlipRowValue\/value","interfaceLanguage":"swift"},"kind":"symbol","metadata":{"modules":[{"name":"SwiftBeanCountTax"}],"symbolKind":"property","title":"value","fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"value"},{"kind":"text","text":": "},{"preciseIdentifier":"s:19SwiftBeanCountModel19MultiCurrencyAmountV","kind":"typeIdentifier","text":"MultiCurrencyAmount"},{"kind":"text","text":"?"}],"externalID":"s:17SwiftBeanCountTax0D12SlipRowValueV5value0abC5Model19MultiCurrencyAmountVSgvp","roleHeading":"Instance Property","role":"symbol"},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax","doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlipRowValue"]]},"abstract":[{"text":"The value of this box","type":"text"}],"sections":[],"primaryContentSections":[{"declarations":[{"languages":["swift"],"tokens":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"value","kind":"identifier"},{"text":": ","kind":"text"},{"text":"MultiCurrencyAmount","preciseIdentifier":"s:19SwiftBeanCountModel19MultiCurrencyAmountV","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount","kind":"typeIdentifier"},{"text":"?","kind":"text"}],"platforms":["macOS"]}],"kind":"declarations"},{"kind":"content","content":[{"anchor":"discussion","type":"heading","level":2,"text":"Discussion"},{"inlineContent":[{"text":"This is converted to the configured currency of the slip, if possible","type":"text"}],"type":"paragraph"}]}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancounttax\/taxsliprowvalue\/value"]}],"references":{"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/TaxSlipRowValue":{"fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"TaxSlipRowValue"}],"abstract":[{"text":"A Value on a ","type":"text"},{"code":"TaxSlip","type":"codeVoice"}],"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlipRowValue","title":"TaxSlipRowValue","url":"\/documentation\/swiftbeancounttax\/taxsliprowvalue","role":"symbol","type":"topic","navigatorTitle":[{"kind":"identifier","text":"TaxSlipRowValue"}]},"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/TaxSlipRowValue/value":{"type":"topic","role":"symbol","title":"value","kind":"symbol","abstract":[{"text":"The value of this box","type":"text"}],"url":"\/documentation\/swiftbeancounttax\/taxsliprowvalue\/value","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlipRowValue\/value","fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"value"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"MultiCurrencyAmount","preciseIdentifier":"s:19SwiftBeanCountModel19MultiCurrencyAmountV"},{"kind":"text","text":"?"}]},"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax":{"abstract":[],"title":"SwiftBeanCountTax","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax","kind":"symbol","type":"topic","url":"\/documentation\/swiftbeancounttax","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount","kind":"symbol","fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"MultiCurrencyAmount"}],"url":"\/documentation\/swiftbeancountmodel\/multicurrencyamount","title":"MultiCurrencyAmount","abstract":[{"type":"text","text":"Represents an amout which consists of amouts in multiple currencies"}],"role":"symbol","type":"topic"}}}
+{
+  "abstract" : [
+    {
+      "text" : "The value of this box",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax",
+        "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlipRowValue"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlipRowValue\/value"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:17SwiftBeanCountTax0D12SlipRowValueV5value0abC5Model19MultiCurrencyAmountVSgvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "value"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV",
+        "text" : "MultiCurrencyAmount"
+      },
+      {
+        "kind" : "text",
+        "text" : "?"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountTax"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "value"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "value"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV",
+              "text" : "MultiCurrencyAmount"
+            },
+            {
+              "kind" : "text",
+              "text" : "?"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "This is converted to the configured currency of the slip, if possible",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancounttax\/taxsliprowvalue\/value"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount": {
+  "abstract" : [
+    {
+      "text" : "Represents an amout which consists of amouts in multiple currencies",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "MultiCurrencyAmount"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "MultiCurrencyAmount",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/multicurrencyamount"
+},
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountTax",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax"
+},
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/TaxSlipRowValue": {
+  "abstract" : [
+    {
+      "text" : "A Value on a ",
+      "type" : "text"
+    },
+    {
+      "code" : "TaxSlip",
+      "type" : "codeVoice"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "TaxSlipRowValue"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlipRowValue",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "TaxSlipRowValue"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "TaxSlipRowValue",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax\/taxsliprowvalue"
+},
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/TaxSlipRowValue/value": {
+  "abstract" : [
+    {
+      "text" : "The value of this box",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "value"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV",
+      "text" : "MultiCurrencyAmount"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlipRowValue\/value",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "value",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax\/taxsliprowvalue\/value"
+}
+}
+}

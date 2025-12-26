@@ -1,1 +1,427 @@
-{"metadata":{"externalID":"s:19SwiftBeanCountModel11TransactionC6effect2inAA19MultiCurrencyAmountVAA6LedgerC_tKF","title":"effect(in:)","role":"symbol","roleHeading":"Instance Method","modules":[{"name":"SwiftBeanCountModel"}],"symbolKind":"method","fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"effect"},{"kind":"text","text":"("},{"kind":"externalParam","text":"in"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC","text":"Ledger"},{"kind":"text","text":") "},{"kind":"keyword","text":"throws"},{"kind":"text","text":" -> "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel19MultiCurrencyAmountV","text":"MultiCurrencyAmount"}]},"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/effect(in:)","interfaceLanguage":"swift"},"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountmodel\/transaction\/effect(in:)"]}],"kind":"symbol","hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction"]]},"primaryContentSections":[{"declarations":[{"languages":["swift"],"tokens":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"effect","kind":"identifier"},{"text":"(","kind":"text"},{"text":"in","kind":"externalParam"},{"text":" ","kind":"text"},{"text":"ledger","kind":"internalParam"},{"text":": ","kind":"text"},{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC","text":"Ledger","kind":"typeIdentifier"},{"text":") ","kind":"text"},{"text":"throws","kind":"keyword"},{"text":" -> ","kind":"text"},{"preciseIdentifier":"s:19SwiftBeanCountModel19MultiCurrencyAmountV","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount","text":"MultiCurrencyAmount","kind":"typeIdentifier"}],"platforms":["macOS"]}],"kind":"declarations"},{"kind":"parameters","parameters":[{"name":"ledger","content":[{"type":"paragraph","inlineContent":[{"text":"Ledger to calculate in","type":"text"}]}]}]},{"kind":"content","content":[{"text":"Return Value","anchor":"return-value","level":2,"type":"heading"},{"inlineContent":[{"text":"MultiCurrencyAmount","type":"text"}],"type":"paragraph"}]},{"kind":"content","content":[{"anchor":"discussion","type":"heading","level":2,"text":"Discussion"},{"inlineContent":[{"text":"This methods adds up the amount of all postings from income and expense accounts in the transaction","type":"text"}],"type":"paragraph"},{"style":"note","name":"Throws","type":"aside","content":[{"inlineContent":[{"text":"If the effect cannot be calculated","type":"text"}],"type":"paragraph"}]}]}],"sections":[],"abstract":[{"type":"text","text":"Returns the effect (income + expenses) a transaction has"}],"schemaVersion":{"minor":3,"major":0,"patch":0},"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/effect(in:)":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/effect(in:)","role":"symbol","kind":"symbol","type":"topic","fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"effect"},{"kind":"text","text":"("},{"kind":"externalParam","text":"in"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC","text":"Ledger"},{"kind":"text","text":") "},{"kind":"keyword","text":"throws"},{"kind":"text","text":" -> "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel19MultiCurrencyAmountV","text":"MultiCurrencyAmount"}],"abstract":[{"type":"text","text":"Returns the effect (income + expenses) a transaction has"}],"title":"effect(in:)","url":"\/documentation\/swiftbeancountmodel\/transaction\/effect(in:)"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger":{"navigatorTitle":[{"kind":"identifier","text":"Ledger"}],"abstract":[{"type":"text","text":"A Ledger is the main part of the model, it contains all necessary information."}],"type":"topic","title":"Ledger","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger","url":"\/documentation\/swiftbeancountmodel\/ledger","kind":"symbol","role":"symbol","fragments":[{"kind":"keyword","text":"class"},{"kind":"text","text":" "},{"kind":"identifier","text":"Ledger"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction","fragments":[{"text":"class","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Transaction","kind":"identifier"}],"type":"topic","kind":"symbol","abstract":[{"text":"A Transaction has meta data as well as multiple postings","type":"text"}],"title":"Transaction","url":"\/documentation\/swiftbeancountmodel\/transaction","role":"symbol","navigatorTitle":[{"text":"Transaction","kind":"identifier"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount":{"url":"\/documentation\/swiftbeancountmodel\/multicurrencyamount","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"MultiCurrencyAmount","kind":"identifier"}],"abstract":[{"text":"Represents an amout which consists of amouts in multiple currencies","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount","navigatorTitle":[{"text":"MultiCurrencyAmount","kind":"identifier"}],"role":"symbol","title":"MultiCurrencyAmount","kind":"symbol","type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Returns the effect (income + expenses) a transaction has",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/effect(in:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel11TransactionC6effect2inAA19MultiCurrencyAmountVAA6LedgerC_tKF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "effect"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "in"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+        "text" : "Ledger"
+      },
+      {
+        "kind" : "text",
+        "text" : ") "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "throws"
+      },
+      {
+        "kind" : "text",
+        "text" : " -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV",
+        "text" : "MultiCurrencyAmount"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "effect(in:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "effect"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "in"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "ledger"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+              "text" : "Ledger"
+            },
+            {
+              "kind" : "text",
+              "text" : ") "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "throws"
+            },
+            {
+              "kind" : "text",
+              "text" : " -> "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV",
+              "text" : "MultiCurrencyAmount"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Ledger to calculate in",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "ledger"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "MultiCurrencyAmount",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "This methods adds up the amount of all postings from income and expense accounts in the transaction",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "If the effect cannot be calculated",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Throws",
+          "style" : "note",
+          "type" : "aside"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/transaction\/effect(in:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger": {
+  "abstract" : [
+    {
+      "text" : "A Ledger is the main part of the model, it contains all necessary information.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Ledger"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Ledger"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Ledger",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount": {
+  "abstract" : [
+    {
+      "text" : "Represents an amout which consists of amouts in multiple currencies",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "MultiCurrencyAmount"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "MultiCurrencyAmount"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "MultiCurrencyAmount",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/multicurrencyamount"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction": {
+  "abstract" : [
+    {
+      "text" : "A Transaction has meta data as well as multiple postings",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Transaction"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Transaction"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Transaction",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/effect(in:)": {
+  "abstract" : [
+    {
+      "text" : "Returns the effect (income + expenses) a transaction has",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "effect"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "in"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+      "text" : "Ledger"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV",
+      "text" : "MultiCurrencyAmount"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/effect(in:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "effect(in:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction\/effect(in:)"
+}
+}
+}

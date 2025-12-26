@@ -1,1 +1,258 @@
-{"metadata":{"platforms":[{"introducedAt":"8.0","name":"iOS","deprecated":false,"beta":false,"unavailable":false},{"introducedAt":"10.10","name":"macOS","deprecated":false,"beta":false,"unavailable":false},{"introducedAt":"9.0","name":"tvOS","deprecated":false,"beta":false,"unavailable":false},{"introducedAt":"2.0","name":"watchOS","deprecated":false,"beta":false,"unavailable":false}],"roleHeading":"Instance Property","role":"symbol","title":"failureReason","externalID":"s:10Foundation14LocalizedErrorPAAE13failureReasonSSSgvp::SYNTHESIZED::s:30SwiftBeanCountRogersBankMapper0dE12MappingErrorO","fragments":[{"kind":"keyword","text":"var"},{"kind":"text","text":" "},{"kind":"identifier","text":"failureReason"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"String","preciseIdentifier":"s:SS"},{"kind":"text","text":"?"}],"extendedModule":"Foundation","modules":[{"relatedModules":["Foundation"],"name":"SwiftBeanCountRogersBankMapper"}],"symbolKind":"property"},"schemaVersion":{"patch":0,"major":0,"minor":3},"abstract":[{"type":"text","text":"Inherited from "},{"type":"codeVoice","code":"LocalizedError.failureReason"},{"type":"text","text":"."}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper","doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError"]]},"identifier":{"url":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError\/failureReason","interfaceLanguage":"swift"},"kind":"symbol","primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"failureReason","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":"? { ","kind":"text"},{"text":"get","kind":"keyword"},{"text":" }","kind":"text"}],"platforms":["macOS"],"languages":["swift"]}]}],"sections":[],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/failurereason"]}],"references":{"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/RogersBankMappingError/failureReason":{"abstract":[],"kind":"symbol","fragments":[{"kind":"keyword","text":"var"},{"kind":"text","text":" "},{"kind":"identifier","text":"failureReason"},{"kind":"text","text":": "},{"preciseIdentifier":"s:SS","kind":"typeIdentifier","text":"String"},{"kind":"text","text":"?"}],"title":"failureReason","url":"\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/failurereason","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError\/failureReason","type":"topic","role":"symbol"},"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper":{"title":"SwiftBeanCountRogersBankMapper","role":"collection","type":"topic","url":"\/documentation\/swiftbeancountrogersbankmapper","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper","abstract":[],"kind":"symbol"},"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/RogersBankMappingError":{"title":"RogersBankMappingError","role":"symbol","type":"topic","kind":"symbol","abstract":[{"type":"text","text":"Error while mapping the downloaded data into BeanCount format"}],"fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"RogersBankMappingError","kind":"identifier"}],"identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError","url":"\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror","navigatorTitle":[{"text":"RogersBankMappingError","kind":"identifier"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Inherited from ",
+      "type" : "text"
+    },
+    {
+      "code" : "LocalizedError.failureReason",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper",
+        "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError\/failureReason"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "Foundation",
+    "externalID" : "s:10Foundation14LocalizedErrorPAAE13failureReasonSSSgvp::SYNTHESIZED::s:30SwiftBeanCountRogersBankMapper0dE12MappingErrorO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "var"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "failureReason"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : "?"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountRogersBankMapper",
+        "relatedModules" : [
+          "Foundation"
+        ]
+      }
+    ],
+    "platforms" : [
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "8.0",
+        "name" : "iOS",
+        "unavailable" : false
+      },
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "10.10",
+        "name" : "macOS",
+        "unavailable" : false
+      },
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "9.0",
+        "name" : "tvOS",
+        "unavailable" : false
+      },
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "2.0",
+        "name" : "watchOS",
+        "unavailable" : false
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "failureReason"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "var"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "failureReason"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : "? { "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "get"
+            },
+            {
+              "kind" : "text",
+              "text" : " }"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/failurereason"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountRogersBankMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountrogersbankmapper"
+},
+"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/RogersBankMappingError": {
+  "abstract" : [
+    {
+      "text" : "Error while mapping the downloaded data into BeanCount format",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "RogersBankMappingError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "RogersBankMappingError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "RogersBankMappingError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror"
+},
+"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/RogersBankMappingError/failureReason": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "failureReason"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError\/failureReason",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "failureReason",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/failurereason"
+}
+}
+}

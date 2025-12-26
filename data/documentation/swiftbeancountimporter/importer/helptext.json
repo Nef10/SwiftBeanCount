@@ -1,1 +1,237 @@
-{"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer"]]},"abstract":[{"text":"Help text for the importer","type":"text"}],"primaryContentSections":[{"kind":"declarations","declarations":[{"languages":["swift"],"tokens":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"helpText","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":" { ","kind":"text"},{"text":"get","kind":"keyword"},{"text":" }","kind":"text"}],"platforms":["macOS"]}]}],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer\/helpText"},"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountimporter\/importer\/helptext"]}],"metadata":{"symbolKind":"property","fragments":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"helpText","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"}],"modules":[{"name":"SwiftBeanCountImporter"}],"externalID":"s:22SwiftBeanCountImporter0D0P8helpTextSSvpZ","roleHeading":"Type Property","title":"helpText","role":"symbol","required":true},"kind":"symbol","sections":[],"schemaVersion":{"patch":0,"minor":3,"major":0},"references":{"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","url":"\/documentation\/swiftbeancountimporter","abstract":[],"role":"collection","title":"SwiftBeanCountImporter","kind":"symbol"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Importer/helpText":{"kind":"symbol","type":"topic","abstract":[{"text":"Help text for the importer","type":"text"}],"required":true,"fragments":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"helpText","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"}],"role":"symbol","url":"\/documentation\/swiftbeancountimporter\/importer\/helptext","title":"helpText","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer\/helpText"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Importer":{"type":"topic","fragments":[{"kind":"keyword","text":"protocol"},{"kind":"text","text":" "},{"kind":"identifier","text":"Importer"}],"role":"symbol","abstract":[{"type":"text","text":"Protocol to represent an Importer, regardless of type"}],"title":"Importer","url":"\/documentation\/swiftbeancountimporter\/importer","navigatorTitle":[{"kind":"identifier","text":"Importer"}],"identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer","kind":"symbol"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Help text for the importer",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer\/helpText"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:22SwiftBeanCountImporter0D0P8helpTextSSvpZ",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "static"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "var"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "helpText"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountImporter"
+      }
+    ],
+    "required" : true,
+    "role" : "symbol",
+    "roleHeading" : "Type Property",
+    "symbolKind" : "property",
+    "title" : "helpText"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "static"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "var"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "helpText"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : " { "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "get"
+            },
+            {
+              "kind" : "text",
+              "text" : " }"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountimporter\/importer\/helptext"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountImporter",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Importer": {
+  "abstract" : [
+    {
+      "text" : "Protocol to represent an Importer, regardless of type",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Importer"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Importer"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Importer",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importer"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Importer/helpText": {
+  "abstract" : [
+    {
+      "text" : "Help text for the importer",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "helpText"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer\/helpText",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "helpText",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importer\/helptext"
+}
+}
+}

@@ -1,1 +1,491 @@
-{"metadata":{"title":"SwiftBeanCountTangerineMapper","modules":[{"name":"SwiftBeanCountTangerineMapper"}],"roleHeading":"Structure","externalID":"s:29SwiftBeanCountTangerineMapperAAV","role":"symbol","symbolKind":"struct","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SwiftBeanCountTangerineMapper","kind":"identifier"}],"navigatorTitle":[{"text":"SwiftBeanCountTangerineMapper","kind":"identifier"}]},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper"]]},"schemaVersion":{"minor":3,"patch":0,"major":0},"sections":[],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper"},"abstract":[{"type":"text","text":"Mapper to map downloaded accounts and transactions to BeanCoutModel objects"}],"topicSections":[{"generated":true,"anchor":"Initializers","title":"Initializers","identifiers":["doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper\/init(ledger:)"]},{"generated":true,"anchor":"Instance-Properties","title":"Instance Properties","identifiers":["doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper\/defaultAccountName"]},{"generated":true,"anchor":"Instance-Methods","title":"Instance Methods","identifiers":["doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper\/createBalances(accounts:date:)","doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper\/createTransactions(_:)","doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper\/ledgerAccountName(account:)"]}],"kind":"symbol","primaryContentSections":[{"declarations":[{"tokens":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"SwiftBeanCountTangerineMapper"}],"platforms":["macOS"],"languages":["swift"]}],"kind":"declarations"}],"variants":[{"paths":["\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper"],"traits":[{"interfaceLanguage":"swift"}]}],"references":{"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapper/init(ledger:)":{"kind":"symbol","type":"topic","fragments":[{"text":"init","kind":"identifier"},{"text":"(","kind":"text"},{"text":"ledger","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"Ledger","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC"},{"text":")","kind":"text"}],"identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper\/init(ledger:)","abstract":[{"text":"Creates a mapper","type":"text"}],"title":"init(ledger:)","role":"symbol","url":"\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper\/init(ledger:)"},"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapper/ledgerAccountName(account:)":{"identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper\/ledgerAccountName(account:)","url":"\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper\/ledgeraccountname(account:)","type":"topic","kind":"symbol","fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"ledgerAccountName","kind":"identifier"},{"text":"(","kind":"text"},{"text":"account","kind":"externalParam"},{"text":": [","kind":"text"},{"preciseIdentifier":"s:SS","text":"String","kind":"typeIdentifier"},{"text":" : ","kind":"text"},{"text":"Any","kind":"keyword"},{"text":"]) ","kind":"text"},{"text":"throws","kind":"keyword"},{"text":" -> ","kind":"text"},{"preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV","text":"AccountName","kind":"typeIdentifier"}],"role":"symbol","title":"ledgerAccountName(account:)","abstract":[{"text":"Gets the correct account from the ledger based on the downloaded account JSON","type":"text"}]},"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapper/createTransactions(_:)":{"type":"topic","title":"createTransactions(_:)","kind":"symbol","fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"createTransactions"},{"kind":"text","text":"(["},{"preciseIdentifier":"s:SS","kind":"typeIdentifier","text":"String"},{"kind":"text","text":" : [["},{"preciseIdentifier":"s:SS","kind":"typeIdentifier","text":"String"},{"kind":"text","text":" : "},{"kind":"keyword","text":"Any"},{"kind":"text","text":"]]]) "},{"kind":"keyword","text":"throws"},{"kind":"text","text":" -> ["},{"preciseIdentifier":"s:19SwiftBeanCountModel11TransactionC","kind":"typeIdentifier","text":"Transaction"},{"kind":"text","text":"]"}],"role":"symbol","url":"\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper\/createtransactions(_:)","abstract":[{"type":"text","text":"Creates Transactions from JSON objects downloaded from the API"}],"identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper\/createTransactions(_:)"},"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper":{"role":"collection","identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper","abstract":[],"type":"topic","title":"SwiftBeanCountTangerineMapper","url":"\/documentation\/swiftbeancounttangerinemapper","kind":"symbol"},"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapper/createBalances(accounts:date:)":{"type":"topic","title":"createBalances(accounts:date:)","kind":"symbol","fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"createBalances"},{"kind":"text","text":"("},{"kind":"externalParam","text":"accounts"},{"kind":"text","text":": [["},{"preciseIdentifier":"s:SS","kind":"typeIdentifier","text":"String"},{"kind":"text","text":" : "},{"kind":"keyword","text":"Any"},{"kind":"text","text":"]], "},{"kind":"externalParam","text":"date"},{"kind":"text","text":": "},{"preciseIdentifier":"s:10Foundation4DateV","kind":"typeIdentifier","text":"Date"},{"kind":"text","text":") "},{"kind":"keyword","text":"throws"},{"kind":"text","text":" -> ["},{"preciseIdentifier":"s:19SwiftBeanCountModel7BalanceV","kind":"typeIdentifier","text":"Balance"},{"kind":"text","text":"]"}],"role":"symbol","url":"\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper\/createbalances(accounts:date:)","abstract":[{"type":"text","text":"Creates balance assertions from the downloaded account JSON"}],"identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper\/createBalances(accounts:date:)"},"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapper":{"url":"\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper","kind":"symbol","title":"SwiftBeanCountTangerineMapper","identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper","abstract":[{"type":"text","text":"Mapper to map downloaded accounts and transactions to BeanCoutModel objects"}],"role":"symbol","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SwiftBeanCountTangerineMapper","kind":"identifier"}],"navigatorTitle":[{"text":"SwiftBeanCountTangerineMapper","kind":"identifier"}],"type":"topic"},"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapper/defaultAccountName":{"identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper\/defaultAccountName","title":"defaultAccountName","url":"\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper\/defaultaccountname","kind":"symbol","type":"topic","abstract":[{"type":"text","text":"AccountName for the other leg of the transaction"}],"role":"symbol","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"defaultAccountName","kind":"identifier"},{"text":": ","kind":"text"},{"preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV","text":"AccountName","kind":"typeIdentifier"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Mapper to map downloaded accounts and transactions to BeanCoutModel objects",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:29SwiftBeanCountTangerineMapperAAV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "SwiftBeanCountTangerineMapper"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountTangerineMapper"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "SwiftBeanCountTangerineMapper"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "SwiftBeanCountTangerineMapper"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "SwiftBeanCountTangerineMapper"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Initializers",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper\/init(ledger:)"
+      ],
+      "title" : "Initializers"
+    },
+    {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper\/defaultAccountName"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "anchor" : "Instance-Methods",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper\/createBalances(accounts:date:)",
+        "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper\/createTransactions(_:)",
+        "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper\/ledgerAccountName(account:)"
+      ],
+      "title" : "Instance Methods"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountTangerineMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttangerinemapper"
+},
+"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapper": {
+  "abstract" : [
+    {
+      "text" : "Mapper to map downloaded accounts and transactions to BeanCoutModel objects",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountTangerineMapper"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountTangerineMapper"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SwiftBeanCountTangerineMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper"
+},
+"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapper/createBalances(accounts:date:)": {
+  "abstract" : [
+    {
+      "text" : "Creates balance assertions from the downloaded account JSON",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "createBalances"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "accounts"
+    },
+    {
+      "kind" : "text",
+      "text" : ": [["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : " : "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "Any"
+    },
+    {
+      "kind" : "text",
+      "text" : "]], "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "date"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4DateV",
+      "text" : "Date"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel7BalanceV",
+      "text" : "Balance"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper\/createBalances(accounts:date:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "createBalances(accounts:date:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper\/createbalances(accounts:date:)"
+},
+"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapper/createTransactions(_:)": {
+  "abstract" : [
+    {
+      "text" : "Creates Transactions from JSON objects downloaded from the API",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "createTransactions"
+    },
+    {
+      "kind" : "text",
+      "text" : "(["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : " : [["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : " : "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "Any"
+    },
+    {
+      "kind" : "text",
+      "text" : "]]]) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11TransactionC",
+      "text" : "Transaction"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper\/createTransactions(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "createTransactions(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper\/createtransactions(_:)"
+},
+"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapper/defaultAccountName": {
+  "abstract" : [
+    {
+      "text" : "AccountName for the other leg of the transaction",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "defaultAccountName"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+      "text" : "AccountName"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper\/defaultAccountName",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "defaultAccountName",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper\/defaultaccountname"
+},
+"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapper/init(ledger:)": {
+  "abstract" : [
+    {
+      "text" : "Creates a mapper",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "ledger"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+      "text" : "Ledger"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper\/init(ledger:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(ledger:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper\/init(ledger:)"
+},
+"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapper/ledgerAccountName(account:)": {
+  "abstract" : [
+    {
+      "text" : "Gets the correct account from the ledger based on the downloaded account JSON",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ledgerAccountName"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "account"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : " : "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "Any"
+    },
+    {
+      "kind" : "text",
+      "text" : "]) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+      "text" : "AccountName"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper\/ledgerAccountName(account:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "ledgerAccountName(account:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper\/ledgeraccountname(account:)"
+}
+}
+}

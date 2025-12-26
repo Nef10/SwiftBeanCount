@@ -1,1 +1,242 @@
-{"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountmodel\/accountgroup\/accounttype"]}],"abstract":[{"type":"text","text":"Type, see "},{"type":"codeVoice","code":"AccountType"}],"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountGroup\/accountType","interfaceLanguage":"swift"},"metadata":{"modules":[{"name":"SwiftBeanCountModel"}],"externalID":"s:19SwiftBeanCountModel12AccountGroupC11accountTypeAA0eH0Ovp","role":"symbol","roleHeading":"Instance Property","symbolKind":"property","title":"accountType","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"accountType","kind":"identifier"},{"text":": ","kind":"text"},{"text":"AccountType","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11AccountTypeO"}]},"sections":[],"kind":"symbol","hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountGroup"]]},"schemaVersion":{"major":0,"patch":0,"minor":3},"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"accountType"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"AccountType","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountType","preciseIdentifier":"s:19SwiftBeanCountModel11AccountTypeO"}],"languages":["swift"],"platforms":["macOS"]}]}],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountGroup/accountType":{"abstract":[{"text":"Type, see ","type":"text"},{"code":"AccountType","type":"codeVoice"}],"title":"accountType","type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountGroup\/accountType","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"accountType","kind":"identifier"},{"text":": ","kind":"text"},{"preciseIdentifier":"s:19SwiftBeanCountModel11AccountTypeO","text":"AccountType","kind":"typeIdentifier"}],"role":"symbol","kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/accountgroup\/accounttype"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountType":{"kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/accounttype","type":"topic","title":"AccountType","abstract":[{"text":"AccountType represents the five base account types","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountType","role":"symbol","fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"AccountType"}],"navigatorTitle":[{"kind":"identifier","text":"AccountType"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountGroup":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountGroup","type":"topic","url":"\/documentation\/swiftbeancountmodel\/accountgroup","kind":"symbol","navigatorTitle":[{"kind":"identifier","text":"AccountGroup"}],"role":"symbol","title":"AccountGroup","abstract":[{"type":"text","text":"A group of accounts."}],"fragments":[{"kind":"keyword","text":"class"},{"kind":"text","text":" "},{"kind":"identifier","text":"AccountGroup"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Type, see ",
+      "type" : "text"
+    },
+    {
+      "code" : "AccountType",
+      "type" : "codeVoice"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountGroup"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountGroup\/accountType"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel12AccountGroupC11accountTypeAA0eH0Ovp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "accountType"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountTypeO",
+        "text" : "AccountType"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "accountType"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "accountType"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountType",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountTypeO",
+              "text" : "AccountType"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/accountgroup\/accounttype"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountGroup": {
+  "abstract" : [
+    {
+      "text" : "A group of accounts.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AccountGroup"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountGroup",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "AccountGroup"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AccountGroup",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountgroup"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountGroup/accountType": {
+  "abstract" : [
+    {
+      "text" : "Type, see ",
+      "type" : "text"
+    },
+    {
+      "code" : "AccountType",
+      "type" : "codeVoice"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "accountType"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountTypeO",
+      "text" : "AccountType"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountGroup\/accountType",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "accountType",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountgroup\/accounttype"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountType": {
+  "abstract" : [
+    {
+      "text" : "AccountType represents the five base account types",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AccountType"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountType",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "AccountType"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AccountType",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accounttype"
+}
+}
+}

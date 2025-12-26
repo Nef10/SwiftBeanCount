@@ -1,1 +1,342 @@
-{"kind":"symbol","abstract":[{"type":"text","text":"Parses a given String into a Ledger"}],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser\/Parser\/parse(string:)"},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser","doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser\/Parser"]]},"variants":[{"paths":["\/documentation\/swiftbeancountparser\/parser\/parse(string:)"],"traits":[{"interfaceLanguage":"swift"}]}],"sections":[],"metadata":{"symbolKind":"method","roleHeading":"Type Method","title":"parse(string:)","role":"symbol","fragments":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"parse","kind":"identifier"},{"text":"(","kind":"text"},{"text":"string","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":") -> ","kind":"text"},{"text":"Ledger","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC","kind":"typeIdentifier"}],"modules":[{"name":"SwiftBeanCountParser"}],"externalID":"s:20SwiftBeanCountParser0D0O5parse6string0abC5Model6LedgerCSS_tFZ"},"schemaVersion":{"minor":3,"patch":0,"major":0},"primaryContentSections":[{"declarations":[{"languages":["swift"],"tokens":[{"kind":"keyword","text":"static"},{"kind":"text","text":" "},{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"parse"},{"kind":"text","text":"("},{"kind":"externalParam","text":"string"},{"kind":"text","text":": "},{"preciseIdentifier":"s:SS","kind":"typeIdentifier","text":"String"},{"kind":"text","text":") -> "},{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC","kind":"typeIdentifier","text":"Ledger"}],"platforms":["macOS"]}],"kind":"declarations"},{"parameters":[{"name":"string","content":[{"type":"paragraph","inlineContent":[{"type":"text","text":"String to parse"}]}]}],"kind":"parameters"},{"kind":"content","content":[{"text":"Return Value","type":"heading","level":2,"anchor":"return-value"},{"type":"paragraph","inlineContent":[{"type":"text","text":"Ledger with parsed content"}]}]}],"references":{"doc://SwiftBeanCountParser/documentation/SwiftBeanCountParser/Parser":{"fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"kind":"identifier","text":"Parser"}],"navigatorTitle":[{"kind":"identifier","text":"Parser"}],"title":"Parser","abstract":[{"type":"text","text":"Parser to parse a string of a file into a Ledger"}],"url":"\/documentation\/swiftbeancountparser\/parser","type":"topic","identifier":"doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser\/Parser","role":"symbol","kind":"symbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger":{"fragments":[{"kind":"keyword","text":"class"},{"kind":"text","text":" "},{"kind":"identifier","text":"Ledger"}],"title":"Ledger","abstract":[{"type":"text","text":"A Ledger is the main part of the model, it contains all necessary information."}],"url":"\/documentation\/swiftbeancountmodel\/ledger","type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger","role":"symbol","kind":"symbol"},"doc://SwiftBeanCountParser/documentation/SwiftBeanCountParser/Parser/parse(string:)":{"identifier":"doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser\/Parser\/parse(string:)","fragments":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"parse","kind":"identifier"},{"text":"(","kind":"text"},{"text":"string","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":") -> ","kind":"text"},{"text":"Ledger","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC"}],"title":"parse(string:)","role":"symbol","kind":"symbol","url":"\/documentation\/swiftbeancountparser\/parser\/parse(string:)","abstract":[{"text":"Parses a given String into a Ledger","type":"text"}],"type":"topic"},"doc://SwiftBeanCountParser/documentation/SwiftBeanCountParser":{"identifier":"doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser","title":"SwiftBeanCountParser","role":"collection","url":"\/documentation\/swiftbeancountparser","abstract":[],"type":"topic","kind":"symbol"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Parses a given String into a Ledger",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser",
+        "doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser\/Parser"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser\/Parser\/parse(string:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:20SwiftBeanCountParser0D0O5parse6string0abC5Model6LedgerCSS_tFZ",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "static"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "parse"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "string"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : ") -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+        "text" : "Ledger"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountParser"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Type Method",
+    "symbolKind" : "method",
+    "title" : "parse(string:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "static"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "parse"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "string"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : ") -> "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+              "text" : "Ledger"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "String to parse",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "string"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Ledger with parsed content",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountparser\/parser\/parse(string:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger": {
+  "abstract" : [
+    {
+      "text" : "A Ledger is the main part of the model, it contains all necessary information.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Ledger"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "Ledger",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger"
+},
+"doc://SwiftBeanCountParser/documentation/SwiftBeanCountParser": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountParser",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountparser"
+},
+"doc://SwiftBeanCountParser/documentation/SwiftBeanCountParser/Parser": {
+  "abstract" : [
+    {
+      "text" : "Parser to parse a string of a file into a Ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Parser"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser\/Parser",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Parser"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Parser",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountparser\/parser"
+},
+"doc://SwiftBeanCountParser/documentation/SwiftBeanCountParser/Parser/parse(string:)": {
+  "abstract" : [
+    {
+      "text" : "Parses a given String into a Ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "parse"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "string"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+      "text" : "Ledger"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser\/Parser\/parse(string:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "parse(string:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountparser\/parser\/parse(string:)"
+}
+}
+}

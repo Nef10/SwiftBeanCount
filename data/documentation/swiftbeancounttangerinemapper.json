@@ -1,1 +1,146 @@
-{"topicSections":[{"anchor":"Structures","title":"Structures","identifiers":["doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper"],"generated":true},{"title":"Enumerations","generated":true,"identifiers":["doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError"],"anchor":"Enumerations"}],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper"},"kind":"symbol","hierarchy":{"paths":[[]]},"sections":[],"metadata":{"title":"SwiftBeanCountTangerineMapper","externalID":"SwiftBeanCountTangerineMapper","symbolKind":"module","modules":[{"name":"SwiftBeanCountTangerineMapper"}],"roleHeading":"Framework","role":"collection"},"schemaVersion":{"minor":3,"major":0,"patch":0},"variants":[{"paths":["\/documentation\/swiftbeancounttangerinemapper"],"traits":[{"interfaceLanguage":"swift"}]}],"references":{"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapper":{"url":"\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper","kind":"symbol","title":"SwiftBeanCountTangerineMapper","identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper","abstract":[{"type":"text","text":"Mapper to map downloaded accounts and transactions to BeanCoutModel objects"}],"role":"symbol","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SwiftBeanCountTangerineMapper","kind":"identifier"}],"navigatorTitle":[{"text":"SwiftBeanCountTangerineMapper","kind":"identifier"}],"type":"topic"},"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapperError":{"title":"SwiftBeanCountTangerineMapperError","role":"symbol","fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SwiftBeanCountTangerineMapperError","kind":"identifier"}],"url":"\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror","abstract":[{"text":"Errors which can happen when using SwiftBeanCountTangerineMapper","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError","navigatorTitle":[{"text":"SwiftBeanCountTangerineMapperError","kind":"identifier"}],"type":"topic","kind":"symbol"},"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper":{"role":"collection","identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper","abstract":[],"type":"topic","title":"SwiftBeanCountTangerineMapper","url":"\/documentation\/swiftbeancounttangerinemapper","kind":"symbol"}}}
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "SwiftBeanCountTangerineMapper",
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountTangerineMapper"
+      }
+    ],
+    "role" : "collection",
+    "roleHeading" : "Framework",
+    "symbolKind" : "module",
+    "title" : "SwiftBeanCountTangerineMapper"
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Structures",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper"
+      ],
+      "title" : "Structures"
+    },
+    {
+      "anchor" : "Enumerations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError"
+      ],
+      "title" : "Enumerations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancounttangerinemapper"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountTangerineMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttangerinemapper"
+},
+"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapper": {
+  "abstract" : [
+    {
+      "text" : "Mapper to map downloaded accounts and transactions to BeanCoutModel objects",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountTangerineMapper"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapper",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountTangerineMapper"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SwiftBeanCountTangerineMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemapper"
+},
+"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapperError": {
+  "abstract" : [
+    {
+      "text" : "Errors which can happen when using SwiftBeanCountTangerineMapper",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountTangerineMapperError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountTangerineMapperError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SwiftBeanCountTangerineMapperError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror"
+}
+}
+}

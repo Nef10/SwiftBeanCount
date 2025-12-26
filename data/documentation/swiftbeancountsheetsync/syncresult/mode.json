@@ -1,1 +1,234 @@
-{"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountsheetsync\/syncresult\/mode"]}],"metadata":{"externalID":"s:23SwiftBeanCountSheetSync0E6ResultV4modeAA0E4ModeOvp","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"mode","kind":"identifier"},{"text":": ","kind":"text"},{"text":"SyncMode","kind":"typeIdentifier","preciseIdentifier":"s:23SwiftBeanCountSheetSync0E4ModeO"}],"roleHeading":"Instance Property","symbolKind":"property","modules":[{"name":"SwiftBeanCountSheetSync"}],"role":"symbol","title":"mode"},"abstract":[{"text":"Mode in which the syncronization was performed","type":"text"}],"sections":[],"schemaVersion":{"major":0,"minor":3,"patch":0},"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"mode","kind":"identifier"},{"text":": ","kind":"text"},{"text":"SyncMode","preciseIdentifier":"s:23SwiftBeanCountSheetSync0E4ModeO","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode","kind":"typeIdentifier"}],"platforms":["macOS"],"languages":["swift"]}]}],"kind":"symbol","hierarchy":{"paths":[["doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult"]]},"identifier":{"url":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/mode","interfaceLanguage":"swift"},"references":{"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncMode":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode","url":"\/documentation\/swiftbeancountsheetsync\/syncmode","navigatorTitle":[{"text":"SyncMode","kind":"identifier"}],"fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SyncMode","kind":"identifier"}],"title":"SyncMode","role":"symbol","abstract":[{"type":"text","text":"Which way the sync is done"}],"kind":"symbol"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncResult":{"navigatorTitle":[{"text":"SyncResult","kind":"identifier"}],"fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SyncResult","kind":"identifier"}],"identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult","abstract":[{"type":"text","text":"Result of the syncronization"}],"type":"topic","kind":"symbol","url":"\/documentation\/swiftbeancountsheetsync\/syncresult","title":"SyncResult","role":"symbol"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync":{"abstract":[],"kind":"symbol","title":"SwiftBeanCountSheetSync","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync","role":"collection","url":"\/documentation\/swiftbeancountsheetsync","type":"topic"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncResult/mode":{"identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/mode","title":"mode","fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"mode"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:23SwiftBeanCountSheetSync0E4ModeO","text":"SyncMode"}],"type":"topic","kind":"symbol","role":"symbol","url":"\/documentation\/swiftbeancountsheetsync\/syncresult\/mode","abstract":[{"type":"text","text":"Mode in which the syncronization was performed"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Mode in which the syncronization was performed",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/mode"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:23SwiftBeanCountSheetSync0E6ResultV4modeAA0E4ModeOvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "mode"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:23SwiftBeanCountSheetSync0E4ModeO",
+        "text" : "SyncMode"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountSheetSync"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "mode"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "mode"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:23SwiftBeanCountSheetSync0E4ModeO",
+              "text" : "SyncMode"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountsheetsync\/syncresult\/mode"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountSheetSync",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncMode": {
+  "abstract" : [
+    {
+      "text" : "Which way the sync is done",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SyncMode"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SyncMode"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SyncMode",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/syncmode"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncResult": {
+  "abstract" : [
+    {
+      "text" : "Result of the syncronization",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SyncResult"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SyncResult"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SyncResult",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/syncresult"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncResult/mode": {
+  "abstract" : [
+    {
+      "text" : "Mode in which the syncronization was performed",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "mode"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:23SwiftBeanCountSheetSync0E4ModeO",
+      "text" : "SyncMode"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/mode",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "mode",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/syncresult\/mode"
+}
+}
+}

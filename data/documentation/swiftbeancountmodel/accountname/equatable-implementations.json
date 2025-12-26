@@ -1,1 +1,233 @@
-{"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName"]]},"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountmodel\/accountname\/equatable-implementations"]}],"schemaVersion":{"major":0,"patch":0,"minor":3},"kind":"article","metadata":{"roleHeading":"API Collection","modules":[{"name":"SwiftBeanCountModel"}],"role":"collectionGroup","title":"Equatable Implementations"},"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/Equatable-Implementations"},"sections":[],"topicSections":[{"identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/!=(_:_:)","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/==(_:_:)"],"anchor":"Operators","generated":true,"title":"Operators"}],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName/==(_:_:)":{"role":"symbol","type":"topic","fragments":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"=="},{"kind":"text","text":" "},{"kind":"text","text":"("},{"kind":"typeIdentifier","text":"AccountName","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV"},{"kind":"text","text":", "},{"kind":"typeIdentifier","text":"AccountName","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV"},{"kind":"text","text":") -> "},{"kind":"typeIdentifier","text":"Bool","preciseIdentifier":"s:Sb"}],"kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/accountname\/==(_:_:)","title":"==(_:_:)","abstract":[{"type":"text","text":"Compare the full name of the two Account names."}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/==(_:_:)"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName":{"role":"symbol","kind":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName","title":"AccountName","url":"\/documentation\/swiftbeancountmodel\/accountname","fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"AccountName"}],"type":"topic","abstract":[{"type":"text","text":"Struct with represents just the name of an Account"}],"navigatorTitle":[{"kind":"identifier","text":"AccountName"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName/!=(_:_:)":{"title":"!=(_:_:)","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel\/accountname\/!=(_:_:)","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/!=(_:_:)","kind":"symbol","role":"symbol","fragments":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"!=","kind":"identifier"},{"text":" ","kind":"text"},{"text":"(","kind":"text"},{"text":"Self","kind":"typeIdentifier"},{"text":", ","kind":"text"},{"text":"Self","kind":"typeIdentifier"},{"text":") -> ","kind":"text"},{"text":"Bool","preciseIdentifier":"s:Sb","kind":"typeIdentifier"}]}}}
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/Equatable-Implementations"
+  },
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "collectionGroup",
+    "roleHeading" : "API Collection",
+    "title" : "Equatable Implementations"
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Operators",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/!=(_:_:)",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/==(_:_:)"
+      ],
+      "title" : "Operators"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/accountname\/equatable-implementations"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName": {
+  "abstract" : [
+    {
+      "text" : "Struct with represents just the name of an Account",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AccountName"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "AccountName"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AccountName",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountname"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName/!=(_:_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "!="
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/!=(_:_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "!=(_:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountname\/!=(_:_:)"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName/==(_:_:)": {
+  "abstract" : [
+    {
+      "text" : "Compare the full name of the two Account names.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "=="
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+      "text" : "AccountName"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+      "text" : "AccountName"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/==(_:_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "==(_:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountname\/==(_:_:)"
+}
+}
+}

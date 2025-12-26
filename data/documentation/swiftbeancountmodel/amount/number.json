@@ -1,1 +1,199 @@
-{"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountmodel\/amount\/number"]}],"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount\/number","interfaceLanguage":"swift"},"abstract":[{"type":"text","text":"Mumeric value of the amount"}],"schemaVersion":{"patch":0,"major":0,"minor":3},"sections":[],"kind":"symbol","hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount"]]},"primaryContentSections":[{"kind":"declarations","declarations":[{"languages":["swift"],"platforms":["macOS"],"tokens":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"number"},{"kind":"text","text":": "},{"preciseIdentifier":"c:@SA@NSDecimal","kind":"typeIdentifier","text":"Decimal"}]}]}],"metadata":{"title":"number","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"number","kind":"identifier"},{"text":": ","kind":"text"},{"text":"Decimal","preciseIdentifier":"c:@SA@NSDecimal","kind":"typeIdentifier"}],"roleHeading":"Instance Property","symbolKind":"property","role":"symbol","externalID":"s:19SwiftBeanCountModel6AmountV6numberSo9NSDecimalavp","modules":[{"name":"SwiftBeanCountModel"}]},"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Amount":{"role":"symbol","url":"\/documentation\/swiftbeancountmodel\/amount","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount","navigatorTitle":[{"kind":"identifier","text":"Amount"}],"type":"topic","fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"Amount"}],"abstract":[{"text":"Represents an Amount - a number with a commodity","type":"text"}],"title":"Amount","kind":"symbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Amount/number":{"fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"number","kind":"identifier"},{"text":": ","kind":"text"},{"text":"Decimal","preciseIdentifier":"c:@SA@NSDecimal","kind":"typeIdentifier"}],"kind":"symbol","role":"symbol","title":"number","type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount\/number","abstract":[{"text":"Mumeric value of the amount","type":"text"}],"url":"\/documentation\/swiftbeancountmodel\/amount\/number"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Mumeric value of the amount",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount\/number"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel6AmountV6numberSo9NSDecimalavp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "number"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "c:@SA@NSDecimal",
+        "text" : "Decimal"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "number"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "number"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "c:@SA@NSDecimal",
+              "text" : "Decimal"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/amount\/number"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Amount": {
+  "abstract" : [
+    {
+      "text" : "Represents an Amount - a number with a commodity",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Amount"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Amount"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Amount",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/amount"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Amount/number": {
+  "abstract" : [
+    {
+      "text" : "Mumeric value of the amount",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "number"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:@SA@NSDecimal",
+      "text" : "Decimal"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount\/number",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "number",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/amount\/number"
+}
+}
+}

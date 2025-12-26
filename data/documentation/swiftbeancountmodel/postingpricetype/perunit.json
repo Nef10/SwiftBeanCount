@@ -1,1 +1,172 @@
-{"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/postingpricetype\/perunit"],"traits":[{"interfaceLanguage":"swift"}]}],"kind":"symbol","identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType\/perUnit","interfaceLanguage":"swift"},"sections":[],"metadata":{"role":"symbol","title":"PostingPriceType.perUnit","externalID":"s:19SwiftBeanCountModel16PostingPriceTypeO7perUnityA2CmF","fragments":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"perUnit"}],"roleHeading":"Case","symbolKind":"case","modules":[{"name":"SwiftBeanCountModel"}]},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType"]]},"schemaVersion":{"major":0,"minor":3,"patch":0},"abstract":[{"text":"Price per unit (@)","type":"text"}],"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"perUnit","kind":"identifier"}],"languages":["swift"],"platforms":["macOS"]}]}],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingPriceType/perUnit":{"role":"symbol","kind":"symbol","title":"PostingPriceType.perUnit","abstract":[{"text":"Price per unit (@)","type":"text"}],"type":"topic","url":"\/documentation\/swiftbeancountmodel\/postingpricetype\/perunit","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType\/perUnit","fragments":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"perUnit"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingPriceType":{"title":"PostingPriceType","url":"\/documentation\/swiftbeancountmodel\/postingpricetype","navigatorTitle":[{"kind":"identifier","text":"PostingPriceType"}],"kind":"symbol","type":"topic","fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"PostingPriceType"}],"role":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType","abstract":[{"type":"text","text":"Type of price specification in posting"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Price per unit (@)",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType\/perUnit"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel16PostingPriceTypeO7perUnityA2CmF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "case"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "perUnit"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Case",
+    "symbolKind" : "case",
+    "title" : "PostingPriceType.perUnit"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "case"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "perUnit"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/postingpricetype\/perunit"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingPriceType": {
+  "abstract" : [
+    {
+      "text" : "Type of price specification in posting",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PostingPriceType"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "PostingPriceType"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PostingPriceType",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/postingpricetype"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingPriceType/perUnit": {
+  "abstract" : [
+    {
+      "text" : "Price per unit (@)",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "perUnit"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType\/perUnit",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "PostingPriceType.perUnit",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/postingpricetype\/perunit"
+}
+}
+}

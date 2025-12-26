@@ -1,1 +1,228 @@
-{"schemaVersion":{"major":0,"minor":3,"patch":0},"variants":[{"paths":["\/documentation\/swiftbeancounttax\/sale\/proceeds"],"traits":[{"interfaceLanguage":"swift"}]}],"abstract":[{"type":"text","text":"The proceeds of the sale"}],"sections":[],"identifier":{"url":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/Sale\/proceeds","interfaceLanguage":"swift"},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax","doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/Sale"]]},"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"proceeds","kind":"identifier"},{"text":": ","kind":"text"},{"text":"MultiCurrencyAmount","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount","preciseIdentifier":"s:19SwiftBeanCountModel19MultiCurrencyAmountV","kind":"typeIdentifier"}],"platforms":["macOS"],"languages":["swift"]}]}],"metadata":{"title":"proceeds","modules":[{"name":"SwiftBeanCountTax"}],"externalID":"s:17SwiftBeanCountTax4SaleV8proceeds0abC5Model19MultiCurrencyAmountVvp","symbolKind":"property","role":"symbol","fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"proceeds"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"MultiCurrencyAmount","preciseIdentifier":"s:19SwiftBeanCountModel19MultiCurrencyAmountV"}],"roleHeading":"Instance Property"},"kind":"symbol","references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount","kind":"symbol","fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"MultiCurrencyAmount"}],"url":"\/documentation\/swiftbeancountmodel\/multicurrencyamount","title":"MultiCurrencyAmount","abstract":[{"type":"text","text":"Represents an amout which consists of amouts in multiple currencies"}],"role":"symbol","type":"topic"},"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/Sale/proceeds":{"title":"proceeds","abstract":[{"text":"The proceeds of the sale","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/Sale\/proceeds","role":"symbol","url":"\/documentation\/swiftbeancounttax\/sale\/proceeds","type":"topic","kind":"symbol","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"proceeds","kind":"identifier"},{"text":": ","kind":"text"},{"text":"MultiCurrencyAmount","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel19MultiCurrencyAmountV"}]},"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/Sale":{"abstract":[{"text":"A sale of a security","type":"text"}],"type":"topic","role":"symbol","kind":"symbol","navigatorTitle":[{"kind":"identifier","text":"Sale"}],"url":"\/documentation\/swiftbeancounttax\/sale","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/Sale","title":"Sale","fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"Sale"}]},"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax":{"abstract":[],"title":"SwiftBeanCountTax","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax","kind":"symbol","type":"topic","url":"\/documentation\/swiftbeancounttax","role":"collection"}}}
+{
+  "abstract" : [
+    {
+      "text" : "The proceeds of the sale",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax",
+        "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/Sale"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/Sale\/proceeds"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:17SwiftBeanCountTax4SaleV8proceeds0abC5Model19MultiCurrencyAmountVvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "proceeds"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV",
+        "text" : "MultiCurrencyAmount"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountTax"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "proceeds"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "proceeds"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV",
+              "text" : "MultiCurrencyAmount"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancounttax\/sale\/proceeds"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount": {
+  "abstract" : [
+    {
+      "text" : "Represents an amout which consists of amouts in multiple currencies",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "MultiCurrencyAmount"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "MultiCurrencyAmount",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/multicurrencyamount"
+},
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountTax",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax"
+},
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/Sale": {
+  "abstract" : [
+    {
+      "text" : "A sale of a security",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Sale"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/Sale",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Sale"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Sale",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax\/sale"
+},
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/Sale/proceeds": {
+  "abstract" : [
+    {
+      "text" : "The proceeds of the sale",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "proceeds"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV",
+      "text" : "MultiCurrencyAmount"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/Sale\/proceeds",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "proceeds",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax\/sale\/proceeds"
+}
+}
+}

@@ -1,1 +1,169 @@
-{"schemaVersion":{"major":0,"minor":3,"patch":0},"kind":"article","topicSections":[{"generated":true,"title":"Instance Methods","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Tag\/hash(into:)"],"anchor":"Instance-Methods"}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Tag"]]},"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/tag\/hashable-implementations"],"traits":[{"interfaceLanguage":"swift"}]}],"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Tag\/Hashable-Implementations","interfaceLanguage":"swift"},"metadata":{"role":"collectionGroup","roleHeading":"API Collection","title":"Hashable Implementations","modules":[{"name":"SwiftBeanCountModel"}]},"sections":[],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Tag":{"kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/tag","navigatorTitle":[{"text":"Tag","kind":"identifier"}],"type":"topic","title":"Tag","abstract":[{"text":"A Tag is just a ","type":"text"},{"code":"String","type":"codeVoice"},{"text":" which can be attatched to a ","type":"text"},{"code":"Transaction","type":"codeVoice"}],"role":"symbol","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Tag","kind":"identifier"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Tag"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Tag/hash(into:)":{"fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"hash","kind":"identifier"},{"text":"(","kind":"text"},{"text":"into","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"inout","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Hasher","kind":"typeIdentifier","preciseIdentifier":"s:s6HasherV"},{"text":")","kind":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Tag\/hash(into:)","title":"hash(into:)","kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/tag\/hash(into:)","abstract":[],"type":"topic","role":"symbol"}}}
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Tag"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Tag\/Hashable-Implementations"
+  },
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "collectionGroup",
+    "roleHeading" : "API Collection",
+    "title" : "Hashable Implementations"
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Instance-Methods",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Tag\/hash(into:)"
+      ],
+      "title" : "Instance Methods"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/tag\/hashable-implementations"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Tag": {
+  "abstract" : [
+    {
+      "text" : "A Tag is just a ",
+      "type" : "text"
+    },
+    {
+      "code" : "String",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " which can be attatched to a ",
+      "type" : "text"
+    },
+    {
+      "code" : "Transaction",
+      "type" : "codeVoice"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Tag"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Tag",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Tag"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Tag",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/tag"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Tag/hash(into:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "hash"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "into"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "inout"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s6HasherV",
+      "text" : "Hasher"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Tag\/hash(into:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "hash(into:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/tag\/hash(into:)"
+}
+}
+}

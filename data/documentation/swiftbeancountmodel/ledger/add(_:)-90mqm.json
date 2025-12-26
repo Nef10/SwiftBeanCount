@@ -1,1 +1,305 @@
-{"metadata":{"roleHeading":"Instance Method","role":"symbol","symbolKind":"method","externalID":"s:19SwiftBeanCountModel6LedgerC3addyyAA7BalanceVF","fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"add","kind":"identifier"},{"text":"(","kind":"text"},{"text":"Balance","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel7BalanceV"},{"text":")","kind":"text"}],"modules":[{"name":"SwiftBeanCountModel"}],"title":"add(_:)"},"schemaVersion":{"major":0,"patch":0,"minor":3},"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"add","kind":"identifier"},{"text":"(","kind":"text"},{"text":"_","kind":"externalParam"},{"text":" ","kind":"text"},{"text":"balance","kind":"internalParam"},{"text":": ","kind":"text"},{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Balance","preciseIdentifier":"s:19SwiftBeanCountModel7BalanceV","text":"Balance","kind":"typeIdentifier"},{"text":")","kind":"text"}],"platforms":["macOS"],"languages":["swift"]}]},{"kind":"parameters","parameters":[{"name":"balance","content":[{"inlineContent":[{"type":"text","text":""},{"code":"Balance","type":"codeVoice"},{"type":"text","text":" to add"}],"type":"paragraph"}]}]}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger"]]},"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountmodel\/ledger\/add(_:)-90mqm"]}],"kind":"symbol","abstract":[{"type":"text","text":"Adds a "},{"type":"codeVoice","code":"Balance"},{"type":"text","text":" to the ledger"}],"sections":[],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-90mqm"},"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger":{"navigatorTitle":[{"kind":"identifier","text":"Ledger"}],"abstract":[{"type":"text","text":"A Ledger is the main part of the model, it contains all necessary information."}],"type":"topic","title":"Ledger","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger","url":"\/documentation\/swiftbeancountmodel\/ledger","kind":"symbol","role":"symbol","fragments":[{"kind":"keyword","text":"class"},{"kind":"text","text":" "},{"kind":"identifier","text":"Ledger"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Balance":{"kind":"symbol","title":"Balance","url":"\/documentation\/swiftbeancountmodel\/balance","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Balance","type":"topic","abstract":[{"type":"text","text":"An assert that the balance of a given commodity is correct for the accout at the end of the given day"}],"role":"symbol","fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"Balance"}],"navigatorTitle":[{"kind":"identifier","text":"Balance"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/add(_:)-90mqm":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-90mqm","type":"topic","title":"add(_:)","fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"add","kind":"identifier"},{"text":"(","kind":"text"},{"text":"Balance","preciseIdentifier":"s:19SwiftBeanCountModel7BalanceV","kind":"typeIdentifier"},{"text":")","kind":"text"}],"abstract":[{"text":"Adds a ","type":"text"},{"type":"codeVoice","code":"Balance"},{"text":" to the ledger","type":"text"}],"url":"\/documentation\/swiftbeancountmodel\/ledger\/add(_:)-90mqm","role":"symbol","kind":"symbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Adds a ",
+      "type" : "text"
+    },
+    {
+      "code" : "Balance",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " to the ledger",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-90mqm"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel6LedgerC3addyyAA7BalanceVF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "add"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel7BalanceV",
+        "text" : "Balance"
+      },
+      {
+        "kind" : "text",
+        "text" : ")"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "add(_:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "add"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "_"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "balance"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Balance",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel7BalanceV",
+              "text" : "Balance"
+            },
+            {
+              "kind" : "text",
+              "text" : ")"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "",
+                  "type" : "text"
+                },
+                {
+                  "code" : "Balance",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " to add",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "balance"
+        }
+      ]
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/ledger\/add(_:)-90mqm"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Balance": {
+  "abstract" : [
+    {
+      "text" : "An assert that the balance of a given commodity is correct for the accout at the end of the given day",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Balance"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Balance",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Balance"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Balance",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/balance"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger": {
+  "abstract" : [
+    {
+      "text" : "A Ledger is the main part of the model, it contains all necessary information.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Ledger"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Ledger"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Ledger",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/add(_:)-90mqm": {
+  "abstract" : [
+    {
+      "text" : "Adds a ",
+      "type" : "text"
+    },
+    {
+      "code" : "Balance",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " to the ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "add"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel7BalanceV",
+      "text" : "Balance"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-90mqm",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "add(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/add(_:)-90mqm"
+}
+}
+}

@@ -1,1 +1,217 @@
-{"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax","doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/Sale"]]},"abstract":[{"type":"text","text":"Inherited from "},{"type":"codeVoice","code":"CustomStringConvertible.description"},{"type":"text","text":"."}],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/Sale\/description"},"kind":"symbol","sections":[],"metadata":{"externalID":"s:17SwiftBeanCountTax4SaleV11descriptionSSvp","symbolKind":"property","extendedModule":"SwiftBeanCountTax","roleHeading":"Instance Property","modules":[{"name":"SwiftBeanCountTax"}],"role":"symbol","title":"description","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"description","kind":"identifier"},{"text":": ","kind":"text"},{"preciseIdentifier":"s:SS","text":"String","kind":"typeIdentifier"}]},"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"description","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":" { ","kind":"text"},{"text":"get","kind":"keyword"},{"text":" }","kind":"text"}],"platforms":["macOS"],"languages":["swift"]}]}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancounttax\/sale\/description"]}],"schemaVersion":{"major":0,"minor":3,"patch":0},"references":{"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/Sale/description":{"role":"symbol","type":"topic","abstract":[],"fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"description","kind":"identifier"},{"text":": ","kind":"text"},{"preciseIdentifier":"s:SS","text":"String","kind":"typeIdentifier"}],"title":"description","url":"\/documentation\/swiftbeancounttax\/sale\/description","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/Sale\/description","kind":"symbol"},"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/Sale":{"abstract":[{"text":"A sale of a security","type":"text"}],"type":"topic","role":"symbol","kind":"symbol","navigatorTitle":[{"kind":"identifier","text":"Sale"}],"url":"\/documentation\/swiftbeancounttax\/sale","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/Sale","title":"Sale","fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"Sale"}]},"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax":{"abstract":[],"title":"SwiftBeanCountTax","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax","kind":"symbol","type":"topic","url":"\/documentation\/swiftbeancounttax","role":"collection"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Inherited from ",
+      "type" : "text"
+    },
+    {
+      "code" : "CustomStringConvertible.description",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax",
+        "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/Sale"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/Sale\/description"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "SwiftBeanCountTax",
+    "externalID" : "s:17SwiftBeanCountTax4SaleV11descriptionSSvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "var"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "description"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountTax"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "description"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "var"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "description"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : " { "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "get"
+            },
+            {
+              "kind" : "text",
+              "text" : " }"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancounttax\/sale\/description"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountTax",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax"
+},
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/Sale": {
+  "abstract" : [
+    {
+      "text" : "A sale of a security",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Sale"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/Sale",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Sale"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Sale",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax\/sale"
+},
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/Sale/description": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "description"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/Sale\/description",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "description",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax\/sale\/description"
+}
+}
+}

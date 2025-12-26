@@ -1,1 +1,258 @@
-{"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper","doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError"]]},"sections":[],"schemaVersion":{"minor":3,"patch":0,"major":0},"primaryContentSections":[{"declarations":[{"tokens":[{"kind":"keyword","text":"var"},{"kind":"text","text":" "},{"kind":"identifier","text":"helpAnchor"},{"kind":"text","text":": "},{"preciseIdentifier":"s:SS","kind":"typeIdentifier","text":"String"},{"kind":"text","text":"? { "},{"kind":"keyword","text":"get"},{"kind":"text","text":" }"}],"platforms":["macOS"],"languages":["swift"]}],"kind":"declarations"}],"abstract":[{"text":"Inherited from ","type":"text"},{"type":"codeVoice","code":"LocalizedError.helpAnchor"},{"text":".","type":"text"}],"metadata":{"externalID":"s:10Foundation14LocalizedErrorPAAE10helpAnchorSSSgvp::SYNTHESIZED::s:29SwiftBeanCountTangerineMapper0abcdE5ErrorO","role":"symbol","extendedModule":"Foundation","platforms":[{"introducedAt":"8.0","deprecated":false,"name":"iOS","beta":false,"unavailable":false},{"introducedAt":"10.10","deprecated":false,"name":"macOS","beta":false,"unavailable":false},{"introducedAt":"9.0","deprecated":false,"name":"tvOS","beta":false,"unavailable":false},{"introducedAt":"2.0","deprecated":false,"name":"watchOS","beta":false,"unavailable":false}],"modules":[{"name":"SwiftBeanCountTangerineMapper","relatedModules":["Foundation"]}],"title":"helpAnchor","symbolKind":"property","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"helpAnchor","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":"?","kind":"text"}],"roleHeading":"Instance Property"},"variants":[{"paths":["\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/helpanchor"],"traits":[{"interfaceLanguage":"swift"}]}],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/helpAnchor"},"kind":"symbol","references":{"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapperError":{"title":"SwiftBeanCountTangerineMapperError","abstract":[{"text":"Errors which can happen when using SwiftBeanCountTangerineMapper","type":"text"}],"type":"topic","fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SwiftBeanCountTangerineMapperError","kind":"identifier"}],"navigatorTitle":[{"text":"SwiftBeanCountTangerineMapperError","kind":"identifier"}],"identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError","kind":"symbol","url":"\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror","role":"symbol"},"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapperError/helpAnchor":{"kind":"symbol","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"helpAnchor","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":"?","kind":"text"}],"type":"topic","url":"\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/helpanchor","abstract":[],"role":"symbol","identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/helpAnchor","title":"helpAnchor"},"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper":{"role":"collection","identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper","abstract":[],"type":"topic","title":"SwiftBeanCountTangerineMapper","url":"\/documentation\/swiftbeancounttangerinemapper","kind":"symbol"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Inherited from ",
+      "type" : "text"
+    },
+    {
+      "code" : "LocalizedError.helpAnchor",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper",
+        "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/helpAnchor"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "Foundation",
+    "externalID" : "s:10Foundation14LocalizedErrorPAAE10helpAnchorSSSgvp::SYNTHESIZED::s:29SwiftBeanCountTangerineMapper0abcdE5ErrorO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "var"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "helpAnchor"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : "?"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountTangerineMapper",
+        "relatedModules" : [
+          "Foundation"
+        ]
+      }
+    ],
+    "platforms" : [
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "8.0",
+        "name" : "iOS",
+        "unavailable" : false
+      },
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "10.10",
+        "name" : "macOS",
+        "unavailable" : false
+      },
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "9.0",
+        "name" : "tvOS",
+        "unavailable" : false
+      },
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "2.0",
+        "name" : "watchOS",
+        "unavailable" : false
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "helpAnchor"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "var"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "helpAnchor"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : "? { "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "get"
+            },
+            {
+              "kind" : "text",
+              "text" : " }"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/helpanchor"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountTangerineMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttangerinemapper"
+},
+"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapperError": {
+  "abstract" : [
+    {
+      "text" : "Errors which can happen when using SwiftBeanCountTangerineMapper",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountTangerineMapperError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountTangerineMapperError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SwiftBeanCountTangerineMapperError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror"
+},
+"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapperError/helpAnchor": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "helpAnchor"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/helpAnchor",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "helpAnchor",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/helpanchor"
+}
+}
+}

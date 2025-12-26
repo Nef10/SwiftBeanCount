@@ -1,1 +1,338 @@
-{"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction"]]},"abstract":[{"text":"Arrary of the ","type":"text"},{"code":"Posting","type":"codeVoice"},{"text":"s of the transaction.","type":"text"}],"schemaVersion":{"patch":0,"minor":3,"major":0},"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/postings"},"sections":[],"metadata":{"symbolKind":"property","role":"symbol","roleHeading":"Instance Property","modules":[{"name":"SwiftBeanCountModel"}],"fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"postings","kind":"identifier"},{"text":": [","kind":"text"},{"text":"TransactionPosting","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel18TransactionPostingC"},{"text":"]","kind":"text"}],"externalID":"s:19SwiftBeanCountModel11TransactionC8postingsSayAA0E7PostingCGvp","title":"postings"},"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"postings","kind":"identifier"},{"text":": [","kind":"text"},{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/TransactionPosting","text":"TransactionPosting","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel18TransactionPostingC"},{"text":"] { ","kind":"text"},{"text":"get","kind":"keyword"},{"text":" }","kind":"text"}],"platforms":["macOS"],"languages":["swift"]}]},{"content":[{"anchor":"discussion","level":2,"text":"Discussion","type":"heading"},{"inlineContent":[{"type":"text","text":"Should at least have two elements, otherwise the Transaction is not valid"}],"type":"paragraph"}],"kind":"content"}],"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/transaction\/postings"],"traits":[{"interfaceLanguage":"swift"}]}],"kind":"symbol","references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/TransactionPosting":{"title":"TransactionPosting","type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/TransactionPosting","navigatorTitle":[{"text":"TransactionPosting","kind":"identifier"}],"abstract":[{"text":"A TransactionPosting is part of an ","type":"text"},{"type":"codeVoice","code":"Transaction"},{"text":". It contains an ","type":"text"},{"type":"codeVoice","code":"AccountName"},{"text":" with the corresponding ","type":"text"},{"type":"codeVoice","code":"Amount"},{"text":",","type":"text"},{"text":" ","type":"text"},{"text":"as well as the ","type":"text"},{"type":"codeVoice","code":"price"},{"text":" (if applicable) and a link back to the ","type":"text"},{"type":"codeVoice","code":"Transaction"},{"text":".","type":"text"}],"fragments":[{"text":"class","kind":"keyword"},{"text":" ","kind":"text"},{"text":"TransactionPosting","kind":"identifier"}],"role":"symbol","kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/transactionposting"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/postings":{"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/postings","abstract":[{"text":"Arrary of the ","type":"text"},{"type":"codeVoice","code":"Posting"},{"text":"s of the transaction.","type":"text"}],"type":"topic","url":"\/documentation\/swiftbeancountmodel\/transaction\/postings","title":"postings","role":"symbol","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"postings","kind":"identifier"},{"text":": [","kind":"text"},{"text":"TransactionPosting","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel18TransactionPostingC"},{"text":"]","kind":"text"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction","fragments":[{"text":"class","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Transaction","kind":"identifier"}],"type":"topic","kind":"symbol","abstract":[{"text":"A Transaction has meta data as well as multiple postings","type":"text"}],"title":"Transaction","url":"\/documentation\/swiftbeancountmodel\/transaction","role":"symbol","navigatorTitle":[{"text":"Transaction","kind":"identifier"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Arrary of the ",
+      "type" : "text"
+    },
+    {
+      "code" : "Posting",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "s of the transaction.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/postings"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel11TransactionC8postingsSayAA0E7PostingCGvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "var"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "postings"
+      },
+      {
+        "kind" : "text",
+        "text" : ": ["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel18TransactionPostingC",
+        "text" : "TransactionPosting"
+      },
+      {
+        "kind" : "text",
+        "text" : "]"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "postings"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "var"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "postings"
+            },
+            {
+              "kind" : "text",
+              "text" : ": ["
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/TransactionPosting",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel18TransactionPostingC",
+              "text" : "TransactionPosting"
+            },
+            {
+              "kind" : "text",
+              "text" : "] { "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "get"
+            },
+            {
+              "kind" : "text",
+              "text" : " }"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Should at least have two elements, otherwise the Transaction is not valid",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/transaction\/postings"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction": {
+  "abstract" : [
+    {
+      "text" : "A Transaction has meta data as well as multiple postings",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Transaction"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Transaction"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Transaction",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/postings": {
+  "abstract" : [
+    {
+      "text" : "Arrary of the ",
+      "type" : "text"
+    },
+    {
+      "code" : "Posting",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "s of the transaction.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "postings"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel18TransactionPostingC",
+      "text" : "TransactionPosting"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/postings",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "postings",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction\/postings"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/TransactionPosting": {
+  "abstract" : [
+    {
+      "text" : "A TransactionPosting is part of an ",
+      "type" : "text"
+    },
+    {
+      "code" : "Transaction",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ". It contains an ",
+      "type" : "text"
+    },
+    {
+      "code" : "AccountName",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " with the corresponding ",
+      "type" : "text"
+    },
+    {
+      "code" : "Amount",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ",",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "as well as the ",
+      "type" : "text"
+    },
+    {
+      "code" : "price",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " (if applicable) and a link back to the ",
+      "type" : "text"
+    },
+    {
+      "code" : "Transaction",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "TransactionPosting"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/TransactionPosting",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "TransactionPosting"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "TransactionPosting",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transactionposting"
+}
+}
+}

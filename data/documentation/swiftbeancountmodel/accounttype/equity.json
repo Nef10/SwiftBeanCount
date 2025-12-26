@@ -1,1 +1,208 @@
-{"schemaVersion":{"major":0,"patch":0,"minor":3},"metadata":{"roleHeading":"Case","modules":[{"name":"SwiftBeanCountModel"}],"fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"equity","kind":"identifier"}],"role":"symbol","symbolKind":"case","title":"AccountType.equity","externalID":"s:19SwiftBeanCountModel11AccountTypeO6equityyA2CmF"},"sections":[],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountType\/equity"},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountType"]]},"abstract":[{"type":"text","text":"Equity consits of the net assets of an entity"}],"kind":"symbol","variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountmodel\/accounttype\/equity"]}],"primaryContentSections":[{"declarations":[{"languages":["swift"],"tokens":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"equity"}],"platforms":["macOS"]}],"kind":"declarations"},{"kind":"content","content":[{"type":"heading","level":2,"anchor":"discussion","text":"Discussion"},{"type":"paragraph","inlineContent":[{"type":"codeVoice","code":"equity"},{"type":"text","text":" = "},{"type":"codeVoice","code":"asset"},{"type":"text","text":" - "},{"type":"codeVoice","code":"liability"}]}]}],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountType/equity":{"role":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountType\/equity","url":"\/documentation\/swiftbeancountmodel\/accounttype\/equity","fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"equity","kind":"identifier"}],"kind":"symbol","type":"topic","abstract":[{"text":"Equity consits of the net assets of an entity","type":"text"}],"title":"AccountType.equity"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountType":{"kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/accounttype","type":"topic","title":"AccountType","abstract":[{"text":"AccountType represents the five base account types","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountType","role":"symbol","fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"AccountType"}],"navigatorTitle":[{"kind":"identifier","text":"AccountType"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Equity consits of the net assets of an entity",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountType"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountType\/equity"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel11AccountTypeO6equityyA2CmF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "case"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "equity"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Case",
+    "symbolKind" : "case",
+    "title" : "AccountType.equity"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "case"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "equity"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "code" : "equity",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " = ",
+              "type" : "text"
+            },
+            {
+              "code" : "asset",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " - ",
+              "type" : "text"
+            },
+            {
+              "code" : "liability",
+              "type" : "codeVoice"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/accounttype\/equity"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountType": {
+  "abstract" : [
+    {
+      "text" : "AccountType represents the five base account types",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AccountType"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountType",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "AccountType"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AccountType",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accounttype"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountType/equity": {
+  "abstract" : [
+    {
+      "text" : "Equity consits of the net assets of an entity",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "equity"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountType\/equity",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "AccountType.equity",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accounttype\/equity"
+}
+}
+}

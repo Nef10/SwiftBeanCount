@@ -1,1 +1,737 @@
-{"primaryContentSections":[{"declarations":[{"tokens":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"Settings"}],"platforms":["macOS"],"languages":["swift"]}],"kind":"declarations"}],"identifier":{"url":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings","interfaceLanguage":"swift"},"metadata":{"fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Settings","kind":"identifier"}],"externalID":"s:22SwiftBeanCountImporter8SettingsO","modules":[{"name":"SwiftBeanCountImporter"}],"symbolKind":"enum","role":"symbol","roleHeading":"Enumeration","navigatorTitle":[{"text":"Settings","kind":"identifier"}],"title":"Settings"},"abstract":[{"type":"text","text":"Constants releated to settings of the importer"}],"schemaVersion":{"patch":0,"minor":3,"major":0},"topicSections":[{"anchor":"Type-Properties","identifiers":["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/allAccountMappings","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/allDescriptionMappings","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/allPayeeMappings","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/dateTolerance","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/dateToleranceInDays","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/storage"],"title":"Type Properties","generated":true},{"anchor":"Type-Methods","identifiers":["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/setAccountMapping(key:account:)","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/setDescriptionMapping(key:description:)","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/setPayeeMapping(key:payee:)"],"title":"Type Methods","generated":true}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter"]]},"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountimporter\/settings"]}],"kind":"symbol","sections":[],"references":{"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/allAccountMappings":{"type":"topic","title":"allAccountMappings","kind":"symbol","role":"symbol","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/allAccountMappings","fragments":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"allAccountMappings","kind":"identifier"},{"text":": [","kind":"text"},{"preciseIdentifier":"s:SS","text":"String","kind":"typeIdentifier"},{"text":" : ","kind":"text"},{"preciseIdentifier":"s:SS","text":"String","kind":"typeIdentifier"},{"text":"]","kind":"text"}],"url":"\/documentation\/swiftbeancountimporter\/settings\/allaccountmappings","abstract":[{"text":"Mappings of accounts the user saved when importing previous transactions","type":"text"}]},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/allPayeeMappings":{"fragments":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"allPayeeMappings","kind":"identifier"},{"text":": [","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":" : ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":"]","kind":"text"}],"identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/allPayeeMappings","abstract":[{"text":"Mappings of payees the user saved when importing previous transactions","type":"text"}],"title":"allPayeeMappings","url":"\/documentation\/swiftbeancountimporter\/settings\/allpayeemappings","role":"symbol","kind":"symbol","type":"topic"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings":{"fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Settings","kind":"identifier"}],"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings","url":"\/documentation\/swiftbeancountimporter\/settings","title":"Settings","kind":"symbol","abstract":[{"text":"Constants releated to settings of the importer","type":"text"}],"role":"symbol","navigatorTitle":[{"text":"Settings","kind":"identifier"}]},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/allDescriptionMappings":{"kind":"symbol","url":"\/documentation\/swiftbeancountimporter\/settings\/alldescriptionmappings","fragments":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"allDescriptionMappings","kind":"identifier"},{"text":": [","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":" : ","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":"]","kind":"text"}],"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/allDescriptionMappings","abstract":[{"text":"Mappings of descriptions the user saved when importing previous transactions","type":"text"}],"role":"symbol","title":"allDescriptionMappings"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/dateToleranceInDays":{"url":"\/documentation\/swiftbeancountimporter\/settings\/datetoleranceindays","title":"dateToleranceInDays","type":"topic","fragments":[{"kind":"keyword","text":"static"},{"kind":"text","text":" "},{"kind":"keyword","text":"var"},{"kind":"text","text":" "},{"kind":"identifier","text":"dateToleranceInDays"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"Int","preciseIdentifier":"s:Si"}],"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/dateToleranceInDays","abstract":[{"type":"text","text":"Date tolerance in days to check for duplicate transactions when importing"}],"role":"symbol"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","url":"\/documentation\/swiftbeancountimporter","abstract":[],"role":"collection","title":"SwiftBeanCountImporter","kind":"symbol"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/setPayeeMapping(key:payee:)":{"role":"symbol","kind":"symbol","type":"topic","url":"\/documentation\/swiftbeancountimporter\/settings\/setpayeemapping(key:payee:)","title":"setPayeeMapping(key:payee:)","fragments":[{"kind":"keyword","text":"static"},{"kind":"text","text":" "},{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"setPayeeMapping"},{"kind":"text","text":"("},{"kind":"externalParam","text":"key"},{"kind":"text","text":": "},{"preciseIdentifier":"s:SS","kind":"typeIdentifier","text":"String"},{"kind":"text","text":", "},{"kind":"externalParam","text":"payee"},{"text":": ","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":"?)","kind":"text"}],"identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/setPayeeMapping(key:payee:)","abstract":[{"type":"text","text":"Save a new mapping of a payee the user wants to automatically apply to"},{"type":"text","text":" "},{"type":"text","text":"new transactions with a certain description"}]},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/dateTolerance":{"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/dateTolerance","type":"topic","abstract":[{"type":"text","text":"See also "},{"code":"dateToleranceInDays","type":"codeVoice"},{"type":"text","text":" which offers this value as Int"}],"title":"dateTolerance","role":"symbol","url":"\/documentation\/swiftbeancountimporter\/settings\/datetolerance","fragments":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"dateTolerance","kind":"identifier"},{"text":": ","kind":"text"},{"text":"TimeInterval","preciseIdentifier":"c:@T@NSTimeInterval","kind":"typeIdentifier"}]},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/setAccountMapping(key:account:)":{"role":"symbol","type":"topic","title":"setAccountMapping(key:account:)","kind":"symbol","fragments":[{"kind":"keyword","text":"static"},{"text":" ","kind":"text"},{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"setAccountMapping","kind":"identifier"},{"text":"(","kind":"text"},{"text":"key","kind":"externalParam"},{"text":": ","kind":"text"},{"preciseIdentifier":"s:SS","text":"String","kind":"typeIdentifier"},{"text":", ","kind":"text"},{"text":"account","kind":"externalParam"},{"text":": ","kind":"text"},{"preciseIdentifier":"s:SS","text":"String","kind":"typeIdentifier"},{"text":"?)","kind":"text"}],"identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/setAccountMapping(key:account:)","url":"\/documentation\/swiftbeancountimporter\/settings\/setaccountmapping(key:account:)","abstract":[{"text":"Save a new mapping of an account the user wants to automatically apply to","type":"text"},{"text":" ","type":"text"},{"text":"new transactions from a certain payee","type":"text"}]},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/setDescriptionMapping(key:description:)":{"title":"setDescriptionMapping(key:description:)","type":"topic","abstract":[{"text":"Save a new mapping of a description the user wants to automatically apply to","type":"text"},{"text":" ","type":"text"},{"text":"new transactions","type":"text"}],"kind":"symbol","url":"\/documentation\/swiftbeancountimporter\/settings\/setdescriptionmapping(key:description:)","role":"symbol","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/setDescriptionMapping(key:description:)","fragments":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"setDescriptionMapping","kind":"identifier"},{"text":"(","kind":"text"},{"text":"key","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":", ","kind":"text"},{"text":"description","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":"?)","kind":"text"}]},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/storage":{"role":"symbol","abstract":[{"type":"text","text":"A Storage which saves the settings"}],"fragments":[{"kind":"keyword","text":"static"},{"kind":"text","text":" "},{"kind":"keyword","text":"var"},{"kind":"text","text":" "},{"kind":"identifier","text":"storage"},{"kind":"text","text":": any "},{"kind":"typeIdentifier","preciseIdentifier":"s:22SwiftBeanCountImporter15SettingsStorageP","text":"SettingsStorage"}],"kind":"symbol","type":"topic","title":"storage","url":"\/documentation\/swiftbeancountimporter\/settings\/storage","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/storage"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Constants releated to settings of the importer",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:22SwiftBeanCountImporter8SettingsO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "Settings"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountImporter"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "Settings"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "Settings"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "Settings"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Type-Properties",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/allAccountMappings",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/allDescriptionMappings",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/allPayeeMappings",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/dateTolerance",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/dateToleranceInDays",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/storage"
+      ],
+      "title" : "Type Properties"
+    },
+    {
+      "anchor" : "Type-Methods",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/setAccountMapping(key:account:)",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/setDescriptionMapping(key:description:)",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/setPayeeMapping(key:payee:)"
+      ],
+      "title" : "Type Methods"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountimporter\/settings"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountImporter",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings": {
+  "abstract" : [
+    {
+      "text" : "Constants releated to settings of the importer",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Settings"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Settings"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Settings",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/settings"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/allAccountMappings": {
+  "abstract" : [
+    {
+      "text" : "Mappings of accounts the user saved when importing previous transactions",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "allAccountMappings"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : " : "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/allAccountMappings",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "allAccountMappings",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/settings\/allaccountmappings"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/allDescriptionMappings": {
+  "abstract" : [
+    {
+      "text" : "Mappings of descriptions the user saved when importing previous transactions",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "allDescriptionMappings"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : " : "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/allDescriptionMappings",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "allDescriptionMappings",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/settings\/alldescriptionmappings"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/allPayeeMappings": {
+  "abstract" : [
+    {
+      "text" : "Mappings of payees the user saved when importing previous transactions",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "allPayeeMappings"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : " : "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/allPayeeMappings",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "allPayeeMappings",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/settings\/allpayeemappings"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/dateTolerance": {
+  "abstract" : [
+    {
+      "text" : "See also ",
+      "type" : "text"
+    },
+    {
+      "code" : "dateToleranceInDays",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " which offers this value as Int",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "dateTolerance"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:@T@NSTimeInterval",
+      "text" : "TimeInterval"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/dateTolerance",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "dateTolerance",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/settings\/datetolerance"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/dateToleranceInDays": {
+  "abstract" : [
+    {
+      "text" : "Date tolerance in days to check for duplicate transactions when importing",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "dateToleranceInDays"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/dateToleranceInDays",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "dateToleranceInDays",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/settings\/datetoleranceindays"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/setAccountMapping(key:account:)": {
+  "abstract" : [
+    {
+      "text" : "Save a new mapping of an account the user wants to automatically apply to",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "new transactions from a certain payee",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "setAccountMapping"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "key"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "account"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?)"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/setAccountMapping(key:account:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "setAccountMapping(key:account:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/settings\/setaccountmapping(key:account:)"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/setDescriptionMapping(key:description:)": {
+  "abstract" : [
+    {
+      "text" : "Save a new mapping of a description the user wants to automatically apply to",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "new transactions",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "setDescriptionMapping"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "key"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "description"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?)"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/setDescriptionMapping(key:description:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "setDescriptionMapping(key:description:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/settings\/setdescriptionmapping(key:description:)"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/setPayeeMapping(key:payee:)": {
+  "abstract" : [
+    {
+      "text" : "Save a new mapping of a payee the user wants to automatically apply to",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "new transactions with a certain description",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "setPayeeMapping"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "key"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "payee"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?)"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/setPayeeMapping(key:payee:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "setPayeeMapping(key:payee:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/settings\/setpayeemapping(key:payee:)"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/storage": {
+  "abstract" : [
+    {
+      "text" : "A Storage which saves the settings",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "storage"
+    },
+    {
+      "kind" : "text",
+      "text" : ": any "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:22SwiftBeanCountImporter15SettingsStorageP",
+      "text" : "SettingsStorage"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/storage",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "storage",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/settings\/storage"
+}
+}
+}

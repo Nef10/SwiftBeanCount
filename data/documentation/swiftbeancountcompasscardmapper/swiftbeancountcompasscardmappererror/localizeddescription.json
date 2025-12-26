@@ -1,1 +1,250 @@
-{"identifier":{"url":"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError\/localizedDescription","interfaceLanguage":"swift"},"kind":"symbol","metadata":{"symbolKind":"property","extendedModule":"Swift","role":"symbol","externalID":"s:s5ErrorP10FoundationE20localizedDescriptionSSvp::SYNTHESIZED::s:31SwiftBeanCountCompassCardMapper0abcdeF5ErrorO","modules":[{"name":"SwiftBeanCountCompassCardMapper","relatedModules":["Swift"]}],"title":"localizedDescription","platforms":[{"name":"iOS","unavailable":false,"beta":false,"introducedAt":"8.0","deprecated":false},{"name":"macOS","unavailable":false,"beta":false,"introducedAt":"10.10","deprecated":false},{"name":"tvOS","unavailable":false,"beta":false,"introducedAt":"9.0","deprecated":false},{"name":"watchOS","unavailable":false,"beta":false,"introducedAt":"2.0","deprecated":false}],"fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"localizedDescription","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"}],"roleHeading":"Instance Property"},"schemaVersion":{"patch":0,"major":0,"minor":3},"abstract":[{"text":"Inherited from ","type":"text"},{"code":"Error.localizedDescription","type":"codeVoice"},{"text":".","type":"text"}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper","doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError"]]},"sections":[],"primaryContentSections":[{"kind":"declarations","declarations":[{"languages":["swift"],"tokens":[{"kind":"keyword","text":"var"},{"kind":"text","text":" "},{"kind":"identifier","text":"localizedDescription"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:SS","text":"String"},{"kind":"text","text":" { "},{"kind":"keyword","text":"get"},{"kind":"text","text":" }"}],"platforms":["macOS"]}]}],"variants":[{"paths":["\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/localizeddescription"],"traits":[{"interfaceLanguage":"swift"}]}],"references":{"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapperError/localizedDescription":{"kind":"symbol","title":"localizedDescription","abstract":[],"fragments":[{"kind":"keyword","text":"var"},{"kind":"text","text":" "},{"kind":"identifier","text":"localizedDescription"},{"kind":"text","text":": "},{"preciseIdentifier":"s:SS","kind":"typeIdentifier","text":"String"}],"role":"symbol","identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError\/localizedDescription","type":"topic","url":"\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/localizeddescription"},"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapperError":{"role":"symbol","kind":"symbol","abstract":[{"text":"Errors which can happen when using SwiftBeanCountCompassCardMapper","type":"text"}],"fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"SwiftBeanCountCompassCardMapperError"}],"navigatorTitle":[{"kind":"identifier","text":"SwiftBeanCountCompassCardMapperError"}],"title":"SwiftBeanCountCompassCardMapperError","url":"\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror","type":"topic","identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError"},"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper":{"title":"SwiftBeanCountCompassCardMapper","url":"\/documentation\/swiftbeancountcompasscardmapper","kind":"symbol","abstract":[],"role":"collection","type":"topic","identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Inherited from ",
+      "type" : "text"
+    },
+    {
+      "code" : "Error.localizedDescription",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper",
+        "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError\/localizedDescription"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "Swift",
+    "externalID" : "s:s5ErrorP10FoundationE20localizedDescriptionSSvp::SYNTHESIZED::s:31SwiftBeanCountCompassCardMapper0abcdeF5ErrorO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "var"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "localizedDescription"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountCompassCardMapper",
+        "relatedModules" : [
+          "Swift"
+        ]
+      }
+    ],
+    "platforms" : [
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "8.0",
+        "name" : "iOS",
+        "unavailable" : false
+      },
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "10.10",
+        "name" : "macOS",
+        "unavailable" : false
+      },
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "9.0",
+        "name" : "tvOS",
+        "unavailable" : false
+      },
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "2.0",
+        "name" : "watchOS",
+        "unavailable" : false
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "localizedDescription"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "var"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "localizedDescription"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : " { "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "get"
+            },
+            {
+              "kind" : "text",
+              "text" : " }"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/localizeddescription"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountCompassCardMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountcompasscardmapper"
+},
+"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapperError": {
+  "abstract" : [
+    {
+      "text" : "Errors which can happen when using SwiftBeanCountCompassCardMapper",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountCompassCardMapperError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountCompassCardMapperError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SwiftBeanCountCompassCardMapperError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror"
+},
+"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapperError/localizedDescription": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "localizedDescription"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError\/localizedDescription",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "localizedDescription",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/localizeddescription"
+}
+}
+}

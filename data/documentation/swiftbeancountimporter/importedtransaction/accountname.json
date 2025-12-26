@@ -1,1 +1,268 @@
-{"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction"]]},"sections":[],"abstract":[{"type":"text","text":"AccountName of the account the import is for"}],"primaryContentSections":[{"kind":"declarations","declarations":[{"languages":["swift"],"platforms":["macOS"],"tokens":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"accountName"},{"kind":"text","text":": "},{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV","text":"AccountName"},{"kind":"text","text":"?"}]}]},{"kind":"content","content":[{"text":"Discussion","anchor":"discussion","level":2,"type":"heading"},{"inlineContent":[{"text":"You can use this to detect which posting the user should not edit","type":"text"},{"text":" ","type":"text"},{"text":"Note: Not set on imported transactions which have shouldAllowUserToEdit set to false","type":"text"}],"type":"paragraph"}]}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountimporter\/importedtransaction\/accountname"]}],"identifier":{"url":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction\/accountName","interfaceLanguage":"swift"},"metadata":{"externalID":"s:22SwiftBeanCountImporter19ImportedTransactionV11accountName0abC5Model07AccountH0VSgvp","roleHeading":"Instance Property","fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"accountName"},{"kind":"text","text":": "},{"preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV","kind":"typeIdentifier","text":"AccountName"},{"kind":"text","text":"?"}],"role":"symbol","title":"accountName","modules":[{"name":"SwiftBeanCountImporter"}],"symbolKind":"property"},"kind":"symbol","schemaVersion":{"major":0,"minor":3,"patch":0},"references":{"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","url":"\/documentation\/swiftbeancountimporter","abstract":[],"role":"collection","title":"SwiftBeanCountImporter","kind":"symbol"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImportedTransaction/accountName":{"url":"\/documentation\/swiftbeancountimporter\/importedtransaction\/accountname","role":"symbol","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction\/accountName","abstract":[{"text":"AccountName of the account the import is for","type":"text"}],"kind":"symbol","title":"accountName","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"accountName","kind":"identifier"},{"text":": ","kind":"text"},{"text":"AccountName","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV"},{"text":"?","kind":"text"}],"type":"topic"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImportedTransaction":{"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction","title":"ImportedTransaction","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"ImportedTransaction","kind":"identifier"}],"navigatorTitle":[{"text":"ImportedTransaction","kind":"identifier"}],"url":"\/documentation\/swiftbeancountimporter\/importedtransaction","abstract":[{"text":"Struct describing a transaction which has been imported","type":"text"}],"role":"symbol","type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName":{"role":"symbol","url":"\/documentation\/swiftbeancountmodel\/accountname","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"AccountName","kind":"identifier"}],"type":"topic","kind":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName","title":"AccountName","abstract":[{"text":"Struct with represents just the name of an Account","type":"text"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "AccountName of the account the import is for",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction\/accountName"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:22SwiftBeanCountImporter19ImportedTransactionV11accountName0abC5Model07AccountH0VSgvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "accountName"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+        "text" : "AccountName"
+      },
+      {
+        "kind" : "text",
+        "text" : "?"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountImporter"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "accountName"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "accountName"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+              "text" : "AccountName"
+            },
+            {
+              "kind" : "text",
+              "text" : "?"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "You can use this to detect which posting the user should not edit",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "Note: Not set on imported transactions which have shouldAllowUserToEdit set to false",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountimporter\/importedtransaction\/accountname"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountImporter",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImportedTransaction": {
+  "abstract" : [
+    {
+      "text" : "Struct describing a transaction which has been imported",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ImportedTransaction"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ImportedTransaction"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ImportedTransaction",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importedtransaction"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImportedTransaction/accountName": {
+  "abstract" : [
+    {
+      "text" : "AccountName of the account the import is for",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "accountName"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+      "text" : "AccountName"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction\/accountName",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "accountName",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importedtransaction\/accountname"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName": {
+  "abstract" : [
+    {
+      "text" : "Struct with represents just the name of an Account",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AccountName"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "AccountName",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountname"
+}
+}
+}

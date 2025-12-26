@@ -1,1 +1,246 @@
-{"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/option"},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger"]]},"sections":[],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountmodel\/ledger\/option"]}],"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"option","kind":"identifier"},{"text":": [","kind":"text"},{"text":"Option","kind":"typeIdentifier","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Option","preciseIdentifier":"s:19SwiftBeanCountModel6OptionV"},{"text":"]","kind":"text"}],"platforms":["macOS"],"languages":["swift"]}]}],"abstract":[{"type":"text","text":"Array of all options"}],"metadata":{"modules":[{"name":"SwiftBeanCountModel"}],"roleHeading":"Instance Property","title":"option","symbolKind":"property","externalID":"s:19SwiftBeanCountModel6LedgerC6optionSayAA6OptionVGvp","role":"symbol","fragments":[{"kind":"keyword","text":"var"},{"kind":"text","text":" "},{"kind":"identifier","text":"option"},{"kind":"text","text":": ["},{"kind":"typeIdentifier","text":"Option","preciseIdentifier":"s:19SwiftBeanCountModel6OptionV"},{"kind":"text","text":"]"}]},"kind":"symbol","schemaVersion":{"patch":0,"minor":3,"major":0},"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Option":{"type":"topic","title":"Option","kind":"symbol","role":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Option","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Option","kind":"identifier"}],"url":"\/documentation\/swiftbeancountmodel\/option","abstract":[{"text":"Option to control bahaviour of Beancount","type":"text"}],"navigatorTitle":[{"text":"Option","kind":"identifier"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger":{"navigatorTitle":[{"kind":"identifier","text":"Ledger"}],"abstract":[{"type":"text","text":"A Ledger is the main part of the model, it contains all necessary information."}],"type":"topic","title":"Ledger","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger","url":"\/documentation\/swiftbeancountmodel\/ledger","kind":"symbol","role":"symbol","fragments":[{"kind":"keyword","text":"class"},{"kind":"text","text":" "},{"kind":"identifier","text":"Ledger"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/option":{"kind":"symbol","role":"symbol","title":"option","fragments":[{"kind":"keyword","text":"var"},{"kind":"text","text":" "},{"kind":"identifier","text":"option"},{"kind":"text","text":": ["},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel6OptionV","text":"Option"},{"kind":"text","text":"]"}],"abstract":[{"type":"text","text":"Array of all options"}],"url":"\/documentation\/swiftbeancountmodel\/ledger\/option","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/option","type":"topic"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Array of all options",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/option"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel6LedgerC6optionSayAA6OptionVGvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "var"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "option"
+      },
+      {
+        "kind" : "text",
+        "text" : ": ["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel6OptionV",
+        "text" : "Option"
+      },
+      {
+        "kind" : "text",
+        "text" : "]"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "option"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "var"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "option"
+            },
+            {
+              "kind" : "text",
+              "text" : ": ["
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Option",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel6OptionV",
+              "text" : "Option"
+            },
+            {
+              "kind" : "text",
+              "text" : "]"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/ledger\/option"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger": {
+  "abstract" : [
+    {
+      "text" : "A Ledger is the main part of the model, it contains all necessary information.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Ledger"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Ledger"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Ledger",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/option": {
+  "abstract" : [
+    {
+      "text" : "Array of all options",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "option"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel6OptionV",
+      "text" : "Option"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/option",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "option",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/option"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Option": {
+  "abstract" : [
+    {
+      "text" : "Option to control bahaviour of Beancount",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Option"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Option",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Option"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Option",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/option"
+}
+}
+}

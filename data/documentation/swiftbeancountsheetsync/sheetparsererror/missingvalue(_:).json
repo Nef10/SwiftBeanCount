@@ -1,1 +1,211 @@
-{"abstract":[{"type":"text","text":"The value for the provided column is missing"}],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SheetParserError\/missingValue(_:)"},"sections":[],"kind":"symbol","hierarchy":{"paths":[["doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SheetParserError"]]},"schemaVersion":{"major":0,"patch":0,"minor":3},"primaryContentSections":[{"declarations":[{"platforms":["macOS"],"tokens":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"missingValue"},{"kind":"text","text":"("},{"kind":"typeIdentifier","text":"String","preciseIdentifier":"s:SS"},{"kind":"text","text":")"}],"languages":["swift"]}],"kind":"declarations"}],"metadata":{"symbolKind":"case","roleHeading":"Case","role":"symbol","modules":[{"name":"SwiftBeanCountSheetSync"}],"externalID":"s:23SwiftBeanCountSheetSync0D11ParserErrorO12missingValueyACSScACmF","title":"SheetParserError.missingValue(_:)","fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"missingValue","kind":"identifier"},{"text":"(","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":")","kind":"text"}]},"variants":[{"paths":["\/documentation\/swiftbeancountsheetsync\/sheetparsererror\/missingvalue(_:)"],"traits":[{"interfaceLanguage":"swift"}]}],"references":{"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SheetParserError":{"abstract":[{"text":"Errors while reading the sheet","type":"text"}],"fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SheetParserError","kind":"identifier"}],"navigatorTitle":[{"text":"SheetParserError","kind":"identifier"}],"title":"SheetParserError","url":"\/documentation\/swiftbeancountsheetsync\/sheetparsererror","kind":"symbol","role":"symbol","type":"topic","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SheetParserError"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync":{"abstract":[],"kind":"symbol","title":"SwiftBeanCountSheetSync","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync","role":"collection","url":"\/documentation\/swiftbeancountsheetsync","type":"topic"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SheetParserError/missingValue(_:)":{"kind":"symbol","role":"symbol","fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"missingValue","kind":"identifier"},{"text":"(","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":")","kind":"text"}],"title":"SheetParserError.missingValue(_:)","url":"\/documentation\/swiftbeancountsheetsync\/sheetparsererror\/missingvalue(_:)","type":"topic","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SheetParserError\/missingValue(_:)","abstract":[{"text":"The value for the provided column is missing","type":"text"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "The value for the provided column is missing",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SheetParserError"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SheetParserError\/missingValue(_:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:23SwiftBeanCountSheetSync0D11ParserErrorO12missingValueyACSScACmF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "case"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "missingValue"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : ")"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountSheetSync"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Case",
+    "symbolKind" : "case",
+    "title" : "SheetParserError.missingValue(_:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "case"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "missingValue"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : ")"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountsheetsync\/sheetparsererror\/missingvalue(_:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountSheetSync",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SheetParserError": {
+  "abstract" : [
+    {
+      "text" : "Errors while reading the sheet",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SheetParserError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SheetParserError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SheetParserError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SheetParserError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/sheetparsererror"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SheetParserError/missingValue(_:)": {
+  "abstract" : [
+    {
+      "text" : "The value for the provided column is missing",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "missingValue"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SheetParserError\/missingValue(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "SheetParserError.missingValue(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/sheetparsererror\/missingvalue(_:)"
+}
+}
+}

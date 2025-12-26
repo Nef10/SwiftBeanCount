@@ -1,1 +1,228 @@
-{"kind":"symbol","hierarchy":{"paths":[["doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings"]]},"metadata":{"title":"accountName","roleHeading":"Instance Property","externalID":"s:23SwiftBeanCountSheetSync14LedgerSettingsV11accountName0abC5Model07AccountI0Vvp","fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"accountName"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"AccountName","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV"}],"modules":[{"name":"SwiftBeanCountSheetSync"}],"role":"symbol","symbolKind":"property"},"primaryContentSections":[{"kind":"declarations","declarations":[{"languages":["swift"],"tokens":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"accountName","kind":"identifier"},{"text":": ","kind":"text"},{"text":"AccountName","kind":"typeIdentifier","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV"}],"platforms":["macOS"]}]}],"variants":[{"paths":["\/documentation\/swiftbeancountsheetsync\/ledgersettings\/accountname"],"traits":[{"interfaceLanguage":"swift"}]}],"sections":[],"schemaVersion":{"major":0,"patch":0,"minor":3},"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/accountName"},"abstract":[{"text":"Account which is used to keep track of the balance between the people","type":"text"}],"references":{"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings":{"title":"LedgerSettings","kind":"symbol","role":"symbol","type":"topic","abstract":[{"text":"Settings for SwiftBeanCountSheetSync which were read from the ledger file","type":"text"}],"navigatorTitle":[{"kind":"identifier","text":"LedgerSettings"}],"fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"LedgerSettings"}],"url":"\/documentation\/swiftbeancountsheetsync\/ledgersettings","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync":{"abstract":[],"kind":"symbol","title":"SwiftBeanCountSheetSync","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync","role":"collection","url":"\/documentation\/swiftbeancountsheetsync","type":"topic"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/accountName":{"identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/accountName","type":"topic","abstract":[{"text":"Account which is used to keep track of the balance between the people","type":"text"}],"url":"\/documentation\/swiftbeancountsheetsync\/ledgersettings\/accountname","title":"accountName","role":"symbol","kind":"symbol","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"accountName","kind":"identifier"},{"text":": ","kind":"text"},{"text":"AccountName","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName":{"kind":"symbol","title":"AccountName","abstract":[{"type":"text","text":"Struct with represents just the name of an Account"}],"fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"AccountName","kind":"identifier"}],"role":"symbol","type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName","url":"\/documentation\/swiftbeancountmodel\/accountname"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Account which is used to keep track of the balance between the people",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/accountName"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:23SwiftBeanCountSheetSync14LedgerSettingsV11accountName0abC5Model07AccountI0Vvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "accountName"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+        "text" : "AccountName"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountSheetSync"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "accountName"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "accountName"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+              "text" : "AccountName"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountsheetsync\/ledgersettings\/accountname"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName": {
+  "abstract" : [
+    {
+      "text" : "Struct with represents just the name of an Account",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AccountName"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "AccountName",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountname"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountSheetSync",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings": {
+  "abstract" : [
+    {
+      "text" : "Settings for SwiftBeanCountSheetSync which were read from the ledger file",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "LedgerSettings"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "LedgerSettings"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "LedgerSettings",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/ledgersettings"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/accountName": {
+  "abstract" : [
+    {
+      "text" : "Account which is used to keep track of the balance between the people",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "accountName"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+      "text" : "AccountName"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/accountName",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "accountName",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/ledgersettings\/accountname"
+}
+}
+}

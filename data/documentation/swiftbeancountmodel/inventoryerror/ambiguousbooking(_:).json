@@ -1,1 +1,211 @@
-{"kind":"symbol","schemaVersion":{"major":0,"minor":3,"patch":0},"primaryContentSections":[{"declarations":[{"platforms":["macOS"],"languages":["swift"],"tokens":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"ambiguousBooking"},{"kind":"text","text":"("},{"kind":"typeIdentifier","text":"String","preciseIdentifier":"s:SS"},{"kind":"text","text":")"}]}],"kind":"declarations"}],"metadata":{"modules":[{"name":"SwiftBeanCountModel"}],"title":"InventoryError.ambiguousBooking(_:)","symbolKind":"case","roleHeading":"Case","role":"symbol","fragments":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"ambiguousBooking"},{"kind":"text","text":"("},{"kind":"typeIdentifier","text":"String","preciseIdentifier":"s:SS"},{"kind":"text","text":")"}],"externalID":"s:19SwiftBeanCountModel14InventoryErrorO16ambiguousBookingyACSScACmF"},"sections":[],"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/inventoryerror\/ambiguousbooking(_:)"],"traits":[{"interfaceLanguage":"swift"}]}],"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/ambiguousBooking(_:)","interfaceLanguage":"swift"},"abstract":[{"text":"an ambiguous match when trying to reduce the inventory","type":"text"}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError"]]},"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError":{"abstract":[{"type":"text","text":"Errors an inventory booking can throw"}],"type":"topic","url":"\/documentation\/swiftbeancountmodel\/inventoryerror","kind":"symbol","role":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError","title":"InventoryError","fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"InventoryError","kind":"identifier"}],"navigatorTitle":[{"text":"InventoryError","kind":"identifier"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError/ambiguousBooking(_:)":{"abstract":[{"type":"text","text":"an ambiguous match when trying to reduce the inventory"}],"kind":"symbol","type":"topic","url":"\/documentation\/swiftbeancountmodel\/inventoryerror\/ambiguousbooking(_:)","role":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/ambiguousBooking(_:)","fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"ambiguousBooking","kind":"identifier"},{"text":"(","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":")","kind":"text"}],"title":"InventoryError.ambiguousBooking(_:)"}}}
+{
+  "abstract" : [
+    {
+      "text" : "an ambiguous match when trying to reduce the inventory",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/ambiguousBooking(_:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel14InventoryErrorO16ambiguousBookingyACSScACmF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "case"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "ambiguousBooking"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : ")"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Case",
+    "symbolKind" : "case",
+    "title" : "InventoryError.ambiguousBooking(_:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "case"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "ambiguousBooking"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : ")"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/inventoryerror\/ambiguousbooking(_:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError": {
+  "abstract" : [
+    {
+      "text" : "Errors an inventory booking can throw",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "InventoryError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "InventoryError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "InventoryError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/inventoryerror"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/InventoryError/ambiguousBooking(_:)": {
+  "abstract" : [
+    {
+      "text" : "an ambiguous match when trying to reduce the inventory",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ambiguousBooking"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/InventoryError\/ambiguousBooking(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "InventoryError.ambiguousBooking(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/inventoryerror\/ambiguousbooking(_:)"
+}
+}
+}

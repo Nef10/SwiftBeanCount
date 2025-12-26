@@ -1,1 +1,292 @@
-{"kind":"symbol","identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmountRepresentable","interfaceLanguage":"swift"},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"]]},"abstract":[{"type":"text","text":"protocol to describe objects which can be represented as "},{"type":"codeVoice","code":"MultiCurrencyAmount"}],"topicSections":[{"identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmountRepresentable\/multiCurrencyAmount"],"generated":true,"title":"Instance Properties","anchor":"Instance-Properties"}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountmodel\/multicurrencyamountrepresentable"]}],"schemaVersion":{"major":0,"minor":3,"patch":0},"primaryContentSections":[{"declarations":[{"platforms":["macOS"],"tokens":[{"kind":"keyword","text":"protocol"},{"kind":"text","text":" "},{"kind":"identifier","text":"MultiCurrencyAmountRepresentable"}],"languages":["swift"]}],"kind":"declarations"}],"relationshipsSections":[{"identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount"],"type":"conformingTypes","kind":"relationships","title":"Conforming Types"}],"sections":[],"metadata":{"title":"MultiCurrencyAmountRepresentable","externalID":"s:19SwiftBeanCountModel32MultiCurrencyAmountRepresentableP","symbolKind":"protocol","navigatorTitle":[{"text":"MultiCurrencyAmountRepresentable","kind":"identifier"}],"roleHeading":"Protocol","modules":[{"name":"SwiftBeanCountModel"}],"role":"symbol","fragments":[{"text":"protocol","kind":"keyword"},{"text":" ","kind":"text"},{"text":"MultiCurrencyAmountRepresentable","kind":"identifier"}]},"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmountRepresentable/multiCurrencyAmount":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmountRepresentable\/multiCurrencyAmount","kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/multicurrencyamountrepresentable\/multicurrencyamount","required":true,"role":"symbol","fragments":[{"kind":"keyword","text":"var"},{"kind":"text","text":" "},{"kind":"identifier","text":"multiCurrencyAmount"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel19MultiCurrencyAmountV","text":"MultiCurrencyAmount"}],"type":"topic","title":"multiCurrencyAmount","abstract":[{"type":"text","text":"the "},{"type":"codeVoice","code":"MultiCurrencyAmount"},{"type":"text","text":" representation of the current object"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount":{"url":"\/documentation\/swiftbeancountmodel\/multicurrencyamount","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"MultiCurrencyAmount","kind":"identifier"}],"abstract":[{"text":"Represents an amout which consists of amouts in multiple currencies","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount","navigatorTitle":[{"text":"MultiCurrencyAmount","kind":"identifier"}],"role":"symbol","title":"MultiCurrencyAmount","kind":"symbol","type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmountRepresentable":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmountRepresentable","title":"MultiCurrencyAmountRepresentable","abstract":[{"type":"text","text":"protocol to describe objects which can be represented as "},{"code":"MultiCurrencyAmount","type":"codeVoice"}],"kind":"symbol","type":"topic","fragments":[{"kind":"keyword","text":"protocol"},{"kind":"text","text":" "},{"kind":"identifier","text":"MultiCurrencyAmountRepresentable"}],"url":"\/documentation\/swiftbeancountmodel\/multicurrencyamountrepresentable","role":"symbol","navigatorTitle":[{"kind":"identifier","text":"MultiCurrencyAmountRepresentable"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Amount":{"role":"symbol","url":"\/documentation\/swiftbeancountmodel\/amount","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount","navigatorTitle":[{"kind":"identifier","text":"Amount"}],"type":"topic","fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"Amount"}],"abstract":[{"text":"Represents an Amount - a number with a commodity","type":"text"}],"title":"Amount","kind":"symbol"}}}
+{
+  "abstract" : [
+    {
+      "text" : "protocol to describe objects which can be represented as ",
+      "type" : "text"
+    },
+    {
+      "code" : "MultiCurrencyAmount",
+      "type" : "codeVoice"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmountRepresentable"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel32MultiCurrencyAmountRepresentableP",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "protocol"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "MultiCurrencyAmountRepresentable"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "MultiCurrencyAmountRepresentable"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Protocol",
+    "symbolKind" : "protocol",
+    "title" : "MultiCurrencyAmountRepresentable"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "protocol"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "MultiCurrencyAmountRepresentable"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforming Types",
+      "type" : "conformingTypes"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmountRepresentable\/multiCurrencyAmount"
+      ],
+      "title" : "Instance Properties"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/multicurrencyamountrepresentable"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Amount": {
+  "abstract" : [
+    {
+      "text" : "Represents an Amount - a number with a commodity",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Amount"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Amount"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Amount",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/amount"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount": {
+  "abstract" : [
+    {
+      "text" : "Represents an amout which consists of amouts in multiple currencies",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "MultiCurrencyAmount"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "MultiCurrencyAmount"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "MultiCurrencyAmount",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/multicurrencyamount"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmountRepresentable": {
+  "abstract" : [
+    {
+      "text" : "protocol to describe objects which can be represented as ",
+      "type" : "text"
+    },
+    {
+      "code" : "MultiCurrencyAmount",
+      "type" : "codeVoice"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "MultiCurrencyAmountRepresentable"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmountRepresentable",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "MultiCurrencyAmountRepresentable"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "MultiCurrencyAmountRepresentable",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/multicurrencyamountrepresentable"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmountRepresentable/multiCurrencyAmount": {
+  "abstract" : [
+    {
+      "text" : "the ",
+      "type" : "text"
+    },
+    {
+      "code" : "MultiCurrencyAmount",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " representation of the current object",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "multiCurrencyAmount"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV",
+      "text" : "MultiCurrencyAmount"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmountRepresentable\/multiCurrencyAmount",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "multiCurrencyAmount",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/multicurrencyamountrepresentable\/multicurrencyamount"
+}
+}
+}

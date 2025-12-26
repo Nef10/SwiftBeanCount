@@ -1,1 +1,439 @@
-{"schemaVersion":{"major":0,"minor":3,"patch":0},"abstract":[{"text":"Creates Transactions from the downloaded CSV String","type":"text"}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/createtransactions(cardnumber:transactions:)"]}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper","doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapper"]]},"kind":"symbol","identifier":{"url":"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapper\/createTransactions(cardNumber:transactions:)","interfaceLanguage":"swift"},"primaryContentSections":[{"declarations":[{"tokens":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"createTransactions","kind":"identifier"},{"text":"(","kind":"text"},{"text":"cardNumber","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":", ","kind":"text"},{"text":"transactions","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"kind":"text","text":") "},{"kind":"keyword","text":"throws"},{"kind":"text","text":" -> ["},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11TransactionC","text":"Transaction","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction"},{"kind":"text","text":"]"}],"languages":["swift"],"platforms":["macOS"]}],"kind":"declarations"},{"kind":"parameters","parameters":[{"content":[{"type":"paragraph","inlineContent":[{"type":"text","text":"String with the compass card number"}]}],"name":"cardNumber"},{"content":[{"type":"paragraph","inlineContent":[{"type":"text","text":"String of the transaction CSV"}]}],"name":"transactions"}]},{"kind":"content","content":[{"anchor":"return-value","level":2,"type":"heading","text":"Return Value"},{"type":"paragraph","inlineContent":[{"text":"Array of transactions","type":"text"}]}]},{"kind":"content","content":[{"type":"heading","level":2,"text":"Discussion","anchor":"discussion"},{"type":"paragraph","inlineContent":[{"text":"Note: This method filters out transactions already existing in the ledger","type":"text"}]}]}],"metadata":{"roleHeading":"Instance Method","symbolKind":"method","role":"symbol","title":"createTransactions(cardNumber:transactions:)","externalID":"s:31SwiftBeanCountCompassCardMapperAAV18createTransactions10cardNumber12transactionsSay0abC5Model11TransactionCGSS_SStKF","modules":[{"name":"SwiftBeanCountCompassCardMapper"}],"fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"createTransactions","kind":"identifier"},{"text":"(","kind":"text"},{"text":"cardNumber","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":", ","kind":"text"},{"text":"transactions","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":") ","kind":"text"},{"text":"throws","kind":"keyword"},{"text":" -> [","kind":"text"},{"text":"Transaction","preciseIdentifier":"s:19SwiftBeanCountModel11TransactionC","kind":"typeIdentifier"},{"text":"]","kind":"text"}]},"sections":[],"references":{"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapper/createTransactions(cardNumber:transactions:)":{"role":"symbol","identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapper\/createTransactions(cardNumber:transactions:)","kind":"symbol","fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"createTransactions","kind":"identifier"},{"text":"(","kind":"text"},{"text":"cardNumber","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":", ","kind":"text"},{"text":"transactions","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":") ","kind":"text"},{"text":"throws","kind":"keyword"},{"text":" -> [","kind":"text"},{"text":"Transaction","preciseIdentifier":"s:19SwiftBeanCountModel11TransactionC","kind":"typeIdentifier"},{"text":"]","kind":"text"}],"abstract":[{"text":"Creates Transactions from the downloaded CSV String","type":"text"}],"title":"createTransactions(cardNumber:transactions:)","type":"topic","url":"\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/createtransactions(cardnumber:transactions:)"},"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper":{"title":"SwiftBeanCountCompassCardMapper","url":"\/documentation\/swiftbeancountcompasscardmapper","kind":"symbol","abstract":[],"role":"collection","type":"topic","identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper"},"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapper":{"kind":"symbol","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SwiftBeanCountCompassCardMapper","kind":"identifier"}],"type":"topic","title":"SwiftBeanCountCompassCardMapper","identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapper","role":"symbol","navigatorTitle":[{"text":"SwiftBeanCountCompassCardMapper","kind":"identifier"}],"url":"\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper","abstract":[{"text":"Mapper to map downloaded accounts and transactions to BeanCoutModel objects","type":"text"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction","title":"Transaction","type":"topic","url":"\/documentation\/swiftbeancountmodel\/transaction","fragments":[{"text":"class","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Transaction","kind":"identifier"}],"kind":"symbol","role":"symbol","abstract":[{"type":"text","text":"A Transaction has meta data as well as multiple postings"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Creates Transactions from the downloaded CSV String",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper",
+        "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapper"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapper\/createTransactions(cardNumber:transactions:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:31SwiftBeanCountCompassCardMapperAAV18createTransactions10cardNumber12transactionsSay0abC5Model11TransactionCGSS_SStKF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "createTransactions"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "cardNumber"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "transactions"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : ") "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "throws"
+      },
+      {
+        "kind" : "text",
+        "text" : " -> ["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel11TransactionC",
+        "text" : "Transaction"
+      },
+      {
+        "kind" : "text",
+        "text" : "]"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountCompassCardMapper"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "createTransactions(cardNumber:transactions:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "createTransactions"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "cardNumber"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "transactions"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : ") "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "throws"
+            },
+            {
+              "kind" : "text",
+              "text" : " -> ["
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel11TransactionC",
+              "text" : "Transaction"
+            },
+            {
+              "kind" : "text",
+              "text" : "]"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "String with the compass card number",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "cardNumber"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "String of the transaction CSV",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "transactions"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Array of transactions",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Note: This method filters out transactions already existing in the ledger",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/createtransactions(cardnumber:transactions:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountCompassCardMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountcompasscardmapper"
+},
+"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapper": {
+  "abstract" : [
+    {
+      "text" : "Mapper to map downloaded accounts and transactions to BeanCoutModel objects",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountCompassCardMapper"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapper",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountCompassCardMapper"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SwiftBeanCountCompassCardMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper"
+},
+"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapper/createTransactions(cardNumber:transactions:)": {
+  "abstract" : [
+    {
+      "text" : "Creates Transactions from the downloaded CSV String",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "createTransactions"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "cardNumber"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "transactions"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11TransactionC",
+      "text" : "Transaction"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapper\/createTransactions(cardNumber:transactions:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "createTransactions(cardNumber:transactions:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmapper\/createtransactions(cardnumber:transactions:)"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction": {
+  "abstract" : [
+    {
+      "text" : "A Transaction has meta data as well as multiple postings",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Transaction"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "Transaction",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction"
+}
+}
+}

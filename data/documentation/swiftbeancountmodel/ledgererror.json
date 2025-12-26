@@ -1,1 +1,270 @@
-{"metadata":{"role":"symbol","roleHeading":"Enumeration","fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"LedgerError"}],"navigatorTitle":[{"kind":"identifier","text":"LedgerError"}],"externalID":"s:19SwiftBeanCountModel11LedgerErrorO","modules":[{"name":"SwiftBeanCountModel"}],"title":"LedgerError","symbolKind":"enum"},"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError"},"primaryContentSections":[{"kind":"declarations","declarations":[{"languages":["swift"],"platforms":["macOS"],"tokens":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"LedgerError"}]}]}],"kind":"symbol","topicSections":[{"title":"Enumeration Cases","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError\/alreadyExists(_:)"],"generated":true,"anchor":"Enumeration-Cases"},{"title":"Default Implementations","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError\/Error-Implementations","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError\/LocalizedError-Implementations"],"generated":true,"anchor":"Default-Implementations"}],"relationshipsSections":[{"title":"Conforms To","identifiers":["doc:\/\/SwiftBeanCountModel\/10Foundation14LocalizedErrorP","doc:\/\/SwiftBeanCountModel\/s8CopyableP","doc:\/\/SwiftBeanCountModel\/s5ErrorP","doc:\/\/SwiftBeanCountModel\/s8SendableP","doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP"],"kind":"relationships","type":"conformsTo"}],"abstract":[{"type":"text","text":"Errors which can occur when working with the ledger"}],"schemaVersion":{"major":0,"patch":0,"minor":3},"sections":[],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"]]},"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountmodel\/ledgererror"]}],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/LedgerError":{"title":"LedgerError","fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"LedgerError"}],"navigatorTitle":[{"kind":"identifier","text":"LedgerError"}],"type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError","url":"\/documentation\/swiftbeancountmodel\/ledgererror","role":"symbol","abstract":[{"type":"text","text":"Errors which can occur when working with the ledger"}],"kind":"symbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/LedgerError/alreadyExists(_:)":{"title":"LedgerError.alreadyExists(_:)","kind":"symbol","type":"topic","role":"symbol","fragments":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"alreadyExists"},{"kind":"text","text":"("},{"kind":"typeIdentifier","preciseIdentifier":"s:SS","text":"String"},{"kind":"text","text":")"}],"url":"\/documentation\/swiftbeancountmodel\/ledgererror\/alreadyexists(_:)","abstract":[{"text":"Error if the object your try to add already exists in the ledger","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError\/alreadyExists(_:)"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/LedgerError/Error-Implementations":{"title":"Error Implementations","type":"topic","url":"\/documentation\/swiftbeancountmodel\/ledgererror\/error-implementations","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError\/Error-Implementations","kind":"article","abstract":[],"role":"collectionGroup"},"doc://SwiftBeanCountModel/s16SendableMetatypeP":{"identifier":"doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP","type":"unresolvable","title":"Swift.SendableMetatype"},"doc://SwiftBeanCountModel/s8SendableP":{"title":"Swift.Sendable","type":"unresolvable","identifier":"doc:\/\/SwiftBeanCountModel\/s8SendableP"},"doc://SwiftBeanCountModel/s5ErrorP":{"identifier":"doc:\/\/SwiftBeanCountModel\/s5ErrorP","type":"unresolvable","title":"Swift.Error"},"doc://SwiftBeanCountModel/s8CopyableP":{"title":"Swift.Copyable","type":"unresolvable","identifier":"doc:\/\/SwiftBeanCountModel\/s8CopyableP"},"doc://SwiftBeanCountModel/10Foundation14LocalizedErrorP":{"identifier":"doc:\/\/SwiftBeanCountModel\/10Foundation14LocalizedErrorP","type":"unresolvable","title":"Foundation.LocalizedError"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/LedgerError/LocalizedError-Implementations":{"title":"LocalizedError Implementations","type":"topic","url":"\/documentation\/swiftbeancountmodel\/ledgererror\/localizederror-implementations","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError\/LocalizedError-Implementations","kind":"article","abstract":[],"role":"collectionGroup"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Errors which can occur when working with the ledger",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel11LedgerErrorO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "LedgerError"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "LedgerError"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "LedgerError"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "LedgerError"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/10Foundation14LocalizedErrorP",
+        "doc:\/\/SwiftBeanCountModel\/s8CopyableP",
+        "doc:\/\/SwiftBeanCountModel\/s5ErrorP",
+        "doc:\/\/SwiftBeanCountModel\/s8SendableP",
+        "doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Enumeration-Cases",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError\/alreadyExists(_:)"
+      ],
+      "title" : "Enumeration Cases"
+    },
+    {
+      "anchor" : "Default-Implementations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError\/Error-Implementations",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError\/LocalizedError-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/ledgererror"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/10Foundation14LocalizedErrorP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/10Foundation14LocalizedErrorP",
+  "title" : "Foundation.LocalizedError",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/LedgerError": {
+  "abstract" : [
+    {
+      "text" : "Errors which can occur when working with the ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "LedgerError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "LedgerError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "LedgerError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledgererror"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/LedgerError/Error-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError\/Error-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Error Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledgererror\/error-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/LedgerError/LocalizedError-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError\/LocalizedError-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "LocalizedError Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledgererror\/localizederror-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/LedgerError/alreadyExists(_:)": {
+  "abstract" : [
+    {
+      "text" : "Error if the object your try to add already exists in the ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "alreadyExists"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError\/alreadyExists(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "LedgerError.alreadyExists(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledgererror\/alreadyexists(_:)"
+},
+"doc://SwiftBeanCountModel/s16SendableMetatypeP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP",
+  "title" : "Swift.SendableMetatype",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/s5ErrorP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s5ErrorP",
+  "title" : "Swift.Error",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/s8CopyableP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s8CopyableP",
+  "title" : "Swift.Copyable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/s8SendableP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s8SendableP",
+  "title" : "Swift.Sendable",
+  "type" : "unresolvable"
+}
+}
+}

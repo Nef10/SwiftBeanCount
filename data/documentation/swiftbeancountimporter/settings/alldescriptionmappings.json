@@ -1,1 +1,315 @@
-{"abstract":[{"text":"Mappings of descriptions the user saved when importing previous transactions","type":"text"}],"primaryContentSections":[{"kind":"declarations","declarations":[{"platforms":["macOS"],"tokens":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"allDescriptionMappings","kind":"identifier"},{"text":": [","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":" : ","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":"] { ","kind":"text"},{"text":"get","kind":"keyword"},{"kind":"text","text":" }"}],"languages":["swift"]}]},{"kind":"content","content":[{"text":"Discussion","anchor":"discussion","type":"heading","level":2},{"inlineContent":[{"type":"text","text":"These are automatically applied when importing and are only exported to allow apps"},{"type":"text","text":" "},{"type":"text","text":"to offer a settings screen to view and modify them."}],"type":"paragraph"},{"inlineContent":[{"type":"text","text":"Keys are the original descriptions from the importer and the value are the new descriptions"},{"type":"text","text":" "},{"type":"text","text":"the user mapped them to"}],"type":"paragraph"}]}],"metadata":{"roleHeading":"Type Property","modules":[{"name":"SwiftBeanCountImporter"}],"externalID":"s:22SwiftBeanCountImporter8SettingsO22allDescriptionMappingsSDyS2SGvpZ","role":"symbol","title":"allDescriptionMappings","symbolKind":"property","fragments":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"allDescriptionMappings","kind":"identifier"},{"text":": [","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":" : ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":"]","kind":"text"}]},"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountimporter\/settings\/alldescriptionmappings"]}],"kind":"symbol","schemaVersion":{"patch":0,"minor":3,"major":0},"sections":[],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings"]]},"identifier":{"url":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/allDescriptionMappings","interfaceLanguage":"swift"},"references":{"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","url":"\/documentation\/swiftbeancountimporter","abstract":[],"role":"collection","title":"SwiftBeanCountImporter","kind":"symbol"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/allDescriptionMappings":{"kind":"symbol","url":"\/documentation\/swiftbeancountimporter\/settings\/alldescriptionmappings","fragments":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"allDescriptionMappings","kind":"identifier"},{"text":": [","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":" : ","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":"]","kind":"text"}],"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/allDescriptionMappings","abstract":[{"text":"Mappings of descriptions the user saved when importing previous transactions","type":"text"}],"role":"symbol","title":"allDescriptionMappings"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings":{"fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Settings","kind":"identifier"}],"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings","url":"\/documentation\/swiftbeancountimporter\/settings","title":"Settings","kind":"symbol","abstract":[{"text":"Constants releated to settings of the importer","type":"text"}],"role":"symbol","navigatorTitle":[{"text":"Settings","kind":"identifier"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Mappings of descriptions the user saved when importing previous transactions",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/allDescriptionMappings"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:22SwiftBeanCountImporter8SettingsO22allDescriptionMappingsSDyS2SGvpZ",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "static"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "var"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "allDescriptionMappings"
+      },
+      {
+        "kind" : "text",
+        "text" : ": ["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : " : "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : "]"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountImporter"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Type Property",
+    "symbolKind" : "property",
+    "title" : "allDescriptionMappings"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "static"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "var"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "allDescriptionMappings"
+            },
+            {
+              "kind" : "text",
+              "text" : ": ["
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : "] { "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "get"
+            },
+            {
+              "kind" : "text",
+              "text" : " }"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "These are automatically applied when importing and are only exported to allow apps",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "to offer a settings screen to view and modify them.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Keys are the original descriptions from the importer and the value are the new descriptions",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "the user mapped them to",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountimporter\/settings\/alldescriptionmappings"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountImporter",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings": {
+  "abstract" : [
+    {
+      "text" : "Constants releated to settings of the importer",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Settings"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Settings"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Settings",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/settings"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/allDescriptionMappings": {
+  "abstract" : [
+    {
+      "text" : "Mappings of descriptions the user saved when importing previous transactions",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "allDescriptionMappings"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : " : "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/allDescriptionMappings",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "allDescriptionMappings",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/settings\/alldescriptionmappings"
+}
+}
+}

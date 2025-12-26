@@ -1,1 +1,199 @@
-{"metadata":{"externalID":"s:23SwiftBeanCountSheetSync14LedgerSettingsV13dateToleranceSdvp","fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"dateTolerance"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"c:@T@NSTimeInterval","text":"TimeInterval"}],"modules":[{"name":"SwiftBeanCountSheetSync"}],"roleHeading":"Instance Property","role":"symbol","title":"dateTolerance","symbolKind":"property"},"schemaVersion":{"minor":3,"patch":0,"major":0},"abstract":[{"text":"tolerance used to detect already existing transactions","type":"text"}],"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"dateTolerance","kind":"identifier"},{"text":": ","kind":"text"},{"preciseIdentifier":"c:@T@NSTimeInterval","text":"TimeInterval","kind":"typeIdentifier"}],"platforms":["macOS"],"languages":["swift"]}]}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountsheetsync\/ledgersettings\/datetolerance"]}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings"]]},"kind":"symbol","identifier":{"url":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/dateTolerance","interfaceLanguage":"swift"},"sections":[],"references":{"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings":{"title":"LedgerSettings","kind":"symbol","role":"symbol","type":"topic","abstract":[{"text":"Settings for SwiftBeanCountSheetSync which were read from the ledger file","type":"text"}],"navigatorTitle":[{"kind":"identifier","text":"LedgerSettings"}],"fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"LedgerSettings"}],"url":"\/documentation\/swiftbeancountsheetsync\/ledgersettings","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/dateTolerance":{"type":"topic","abstract":[{"type":"text","text":"tolerance used to detect already existing transactions"}],"fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"dateTolerance","kind":"identifier"},{"text":": ","kind":"text"},{"preciseIdentifier":"c:@T@NSTimeInterval","text":"TimeInterval","kind":"typeIdentifier"}],"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/dateTolerance","title":"dateTolerance","url":"\/documentation\/swiftbeancountsheetsync\/ledgersettings\/datetolerance","role":"symbol"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync":{"abstract":[],"kind":"symbol","title":"SwiftBeanCountSheetSync","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync","role":"collection","url":"\/documentation\/swiftbeancountsheetsync","type":"topic"}}}
+{
+  "abstract" : [
+    {
+      "text" : "tolerance used to detect already existing transactions",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/dateTolerance"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:23SwiftBeanCountSheetSync14LedgerSettingsV13dateToleranceSdvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "dateTolerance"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "c:@T@NSTimeInterval",
+        "text" : "TimeInterval"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountSheetSync"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "dateTolerance"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "dateTolerance"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "c:@T@NSTimeInterval",
+              "text" : "TimeInterval"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountsheetsync\/ledgersettings\/datetolerance"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountSheetSync",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings": {
+  "abstract" : [
+    {
+      "text" : "Settings for SwiftBeanCountSheetSync which were read from the ledger file",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "LedgerSettings"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "LedgerSettings"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "LedgerSettings",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/ledgersettings"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/dateTolerance": {
+  "abstract" : [
+    {
+      "text" : "tolerance used to detect already existing transactions",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "dateTolerance"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:@T@NSTimeInterval",
+      "text" : "TimeInterval"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/dateTolerance",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "dateTolerance",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/ledgersettings\/datetolerance"
+}
+}
+}

@@ -1,1 +1,102 @@
-{"pathHierarchy":{"tutorialOverviewContainer":1,"modules":[4],"articlesContainer":4,"tutorialContainer":5,"nodes":[{"name":"matchingStrings(regex:)","symbolID":{"interfaceLanguage":"swift","precise":"s:SS25SwiftBeanCountParserUtilsE15matchingStrings5regexSaySaySSGGSo19NSRegularExpressionC_tF"}},{"name":"tutorials"},{"name":"String","children":[{"nodeID":6,"kind":"method","hash":"9ruhp","parameterTypes":[],"returnTypes":["Decimal","Int"]},{"nodeID":0,"kind":"method","hash":"2dc1h","parameterTypes":["NSRegularExpression"],"returnTypes":["[[String]]"]}],"symbolID":{"precise":"s:e:s:SS25SwiftBeanCountParserUtilsE15matchingStrings5regexSaySaySSGGSo19NSRegularExpressionC_tF","interfaceLanguage":"swift"}},{"name":"Swift","children":[{"kind":"struct.extension","hash":"699mg","nodeID":2}],"symbolID":{"precise":"s:m:s:e:s:SS25SwiftBeanCountParserUtilsE15matchingStrings5regexSaySaySSGGSo19NSRegularExpressionC_tF","interfaceLanguage":"swift"}},{"name":"SwiftBeanCountParserUtils","children":[{"nodeID":3,"kind":"module.extension","hash":"6i94o"}],"symbolID":{"precise":"SwiftBeanCountParserUtils","interfaceLanguage":"swift"}},{"name":"SwiftBeanCountParserUtils"},{"name":"amountDecimal()","symbolID":{"precise":"s:SS25SwiftBeanCountParserUtilsE13amountDecimalSo9NSDecimala_SityF","interfaceLanguage":"swift"}}]},"version":{"minor":1,"patch":0,"major":0},"nonSymbolPaths":{"1":"\/tutorials","5":"\/tutorials\/SwiftBeanCountParserUtils"},"bundleID":"SwiftBeanCountParserUtils"}
+{
+  "bundleID" : "SwiftBeanCountParserUtils",
+  "nonSymbolPaths" : {
+    "0" : "\/tutorials",
+    "6" : "\/tutorials\/SwiftBeanCountParserUtils"
+  },
+  "pathHierarchy" : {
+    "articlesContainer" : 5,
+    "modules" : [
+      5
+    ],
+    "nodes" : [
+      {
+        "name" : "tutorials"
+      },
+      {
+        "children" : [
+          {
+            "hash" : "2dc1h",
+            "kind" : "method",
+            "nodeID" : 4,
+            "parameterTypes" : [
+              "NSRegularExpression"
+            ],
+            "returnTypes" : [
+              "[[String]]"
+            ]
+          },
+          {
+            "hash" : "9ruhp",
+            "kind" : "method",
+            "nodeID" : 3,
+            "parameterTypes" : [
+
+            ],
+            "returnTypes" : [
+              "Decimal",
+              "Int"
+            ]
+          }
+        ],
+        "name" : "String",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:e:s:SS25SwiftBeanCountParserUtilsE15matchingStrings5regexSaySaySSGGSo19NSRegularExpressionC_tF"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "699mg",
+            "kind" : "struct.extension",
+            "nodeID" : 1
+          }
+        ],
+        "name" : "Swift",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:m:s:e:s:SS25SwiftBeanCountParserUtilsE15matchingStrings5regexSaySaySSGGSo19NSRegularExpressionC_tF"
+        }
+      },
+      {
+        "name" : "amountDecimal()",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SS25SwiftBeanCountParserUtilsE13amountDecimalSo9NSDecimala_SityF"
+        }
+      },
+      {
+        "name" : "matchingStrings(regex:)",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "s:SS25SwiftBeanCountParserUtilsE15matchingStrings5regexSaySaySSGGSo19NSRegularExpressionC_tF"
+        }
+      },
+      {
+        "children" : [
+          {
+            "hash" : "6i94o",
+            "kind" : "module.extension",
+            "nodeID" : 2
+          }
+        ],
+        "name" : "SwiftBeanCountParserUtils",
+        "symbolID" : {
+          "interfaceLanguage" : "swift",
+          "precise" : "SwiftBeanCountParserUtils"
+        }
+      },
+      {
+        "name" : "SwiftBeanCountParserUtils"
+      }
+    ],
+    "tutorialContainer" : 6,
+    "tutorialOverviewContainer" : 0
+  },
+  "version" : {
+    "major" : 0,
+    "minor" : 1,
+    "patch" : 0
+  }
+}

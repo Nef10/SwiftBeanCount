@@ -1,1 +1,215 @@
-{"sections":[],"abstract":[{"text":"Indicates if this a a base group, meaning it directly is one of the 5 ","type":"text"},{"code":"AccountType","type":"codeVoice"},{"text":"s","type":"text"}],"kind":"symbol","primaryContentSections":[{"declarations":[{"languages":["swift"],"platforms":["macOS"],"tokens":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"baseGroup","kind":"identifier"},{"text":": ","kind":"text"},{"preciseIdentifier":"s:Sb","text":"Bool","kind":"typeIdentifier"}]}],"kind":"declarations"}],"schemaVersion":{"minor":3,"patch":0,"major":0},"metadata":{"modules":[{"name":"SwiftBeanCountModel"}],"symbolKind":"property","title":"baseGroup","fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"baseGroup"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:Sb","text":"Bool"}],"externalID":"s:19SwiftBeanCountModel12AccountGroupC04baseF0Sbvp","role":"symbol","roleHeading":"Instance Property"},"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountGroup\/baseGroup","interfaceLanguage":"swift"},"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/accountgroup\/basegroup"],"traits":[{"interfaceLanguage":"swift"}]}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountGroup"]]},"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountGroup":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountGroup","type":"topic","url":"\/documentation\/swiftbeancountmodel\/accountgroup","kind":"symbol","navigatorTitle":[{"kind":"identifier","text":"AccountGroup"}],"role":"symbol","title":"AccountGroup","abstract":[{"type":"text","text":"A group of accounts."}],"fragments":[{"kind":"keyword","text":"class"},{"kind":"text","text":" "},{"kind":"identifier","text":"AccountGroup"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountGroup/baseGroup":{"type":"topic","abstract":[{"type":"text","text":"Indicates if this a a base group, meaning it directly is one of the 5 "},{"code":"AccountType","type":"codeVoice"},{"type":"text","text":"s"}],"title":"baseGroup","url":"\/documentation\/swiftbeancountmodel\/accountgroup\/basegroup","role":"symbol","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"baseGroup","kind":"identifier"},{"text":": ","kind":"text"},{"preciseIdentifier":"s:Sb","text":"Bool","kind":"typeIdentifier"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountGroup\/baseGroup","kind":"symbol"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Indicates if this a a base group, meaning it directly is one of the 5 ",
+      "type" : "text"
+    },
+    {
+      "code" : "AccountType",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "s",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountGroup"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountGroup\/baseGroup"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel12AccountGroupC04baseF0Sbvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "baseGroup"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sb",
+        "text" : "Bool"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "baseGroup"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "baseGroup"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sb",
+              "text" : "Bool"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/accountgroup\/basegroup"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountGroup": {
+  "abstract" : [
+    {
+      "text" : "A group of accounts.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AccountGroup"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountGroup",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "AccountGroup"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AccountGroup",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountgroup"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountGroup/baseGroup": {
+  "abstract" : [
+    {
+      "text" : "Indicates if this a a base group, meaning it directly is one of the 5 ",
+      "type" : "text"
+    },
+    {
+      "code" : "AccountType",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "s",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "baseGroup"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountGroup\/baseGroup",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "baseGroup",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountgroup\/basegroup"
+}
+}
+}

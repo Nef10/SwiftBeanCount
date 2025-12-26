@@ -1,1 +1,186 @@
-{"primaryContentSections":[{"kind":"declarations","declarations":[{"platforms":["macOS"],"languages":["swift"],"tokens":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"removeView"},{"kind":"text","text":"()"}]}]}],"variants":[{"paths":["\/documentation\/swiftbeancountimporter\/importerdelegate\/removeview()"],"traits":[{"interfaceLanguage":"swift"}]}],"metadata":{"required":true,"title":"removeView()","roleHeading":"Instance Method","modules":[{"name":"SwiftBeanCountImporter"}],"role":"symbol","externalID":"s:22SwiftBeanCountImporter0D8DelegateP10removeViewyyF","symbolKind":"method","fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"removeView","kind":"identifier"},{"text":"()","kind":"text"}]},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterDelegate"]]},"schemaVersion":{"patch":0,"minor":3,"major":0},"abstract":[{"type":"text","text":"Request to remove the previously requested view from the screen"}],"kind":"symbol","sections":[],"identifier":{"url":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterDelegate\/removeView()","interfaceLanguage":"swift"},"references":{"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterDelegate/removeView()":{"role":"symbol","url":"\/documentation\/swiftbeancountimporter\/importerdelegate\/removeview()","type":"topic","abstract":[{"type":"text","text":"Request to remove the previously requested view from the screen"}],"required":true,"fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"removeView","kind":"identifier"},{"text":"()","kind":"text"}],"identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterDelegate\/removeView()","title":"removeView()","kind":"symbol"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","url":"\/documentation\/swiftbeancountimporter","abstract":[],"role":"collection","title":"SwiftBeanCountImporter","kind":"symbol"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterDelegate":{"type":"topic","navigatorTitle":[{"kind":"identifier","text":"ImporterDelegate"}],"url":"\/documentation\/swiftbeancountimporter\/importerdelegate","fragments":[{"kind":"keyword","text":"protocol"},{"kind":"text","text":" "},{"kind":"identifier","text":"ImporterDelegate"}],"kind":"symbol","abstract":[{"text":"Protocol of the delegate of an Importer","type":"text"}],"title":"ImporterDelegate","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterDelegate","role":"symbol"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Request to remove the previously requested view from the screen",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterDelegate"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterDelegate\/removeView()"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:22SwiftBeanCountImporter0D8DelegateP10removeViewyyF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "removeView"
+      },
+      {
+        "kind" : "text",
+        "text" : "()"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountImporter"
+      }
+    ],
+    "required" : true,
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "removeView()"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "removeView"
+            },
+            {
+              "kind" : "text",
+              "text" : "()"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountimporter\/importerdelegate\/removeview()"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountImporter",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterDelegate": {
+  "abstract" : [
+    {
+      "text" : "Protocol of the delegate of an Importer",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ImporterDelegate"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterDelegate",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ImporterDelegate"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ImporterDelegate",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importerdelegate"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterDelegate/removeView()": {
+  "abstract" : [
+    {
+      "text" : "Request to remove the previously requested view from the screen",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "removeView"
+    },
+    {
+      "kind" : "text",
+      "text" : "()"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterDelegate\/removeView()",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "removeView()",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importerdelegate\/removeview()"
+}
+}
+}

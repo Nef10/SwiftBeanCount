@@ -1,1 +1,199 @@
-{"sections":[],"kind":"symbol","identifier":{"url":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlip\/year","interfaceLanguage":"swift"},"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancounttax\/taxslip\/year"]}],"abstract":[{"type":"text","text":"Tax year the slip is for"}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax","doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlip"]]},"schemaVersion":{"major":0,"patch":0,"minor":3},"primaryContentSections":[{"declarations":[{"platforms":["macOS"],"languages":["swift"],"tokens":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"year","kind":"identifier"},{"text":": ","kind":"text"},{"text":"Int","preciseIdentifier":"s:Si","kind":"typeIdentifier"}]}],"kind":"declarations"}],"metadata":{"externalID":"s:17SwiftBeanCountTax0D4SlipV4yearSivp","role":"symbol","title":"year","roleHeading":"Instance Property","symbolKind":"property","modules":[{"name":"SwiftBeanCountTax"}],"fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"year"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:Si","text":"Int"}]},"references":{"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/TaxSlip/year":{"abstract":[{"type":"text","text":"Tax year the slip is for"}],"role":"symbol","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"year","kind":"identifier"},{"text":": ","kind":"text"},{"text":"Int","kind":"typeIdentifier","preciseIdentifier":"s:Si"}],"type":"topic","url":"\/documentation\/swiftbeancounttax\/taxslip\/year","kind":"symbol","title":"year","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlip\/year"},"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax":{"abstract":[],"title":"SwiftBeanCountTax","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax","kind":"symbol","type":"topic","url":"\/documentation\/swiftbeancounttax","role":"collection"},"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/TaxSlip":{"title":"TaxSlip","navigatorTitle":[{"kind":"identifier","text":"TaxSlip"}],"url":"\/documentation\/swiftbeancounttax\/taxslip","abstract":[{"text":"A Tax Slip","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlip","role":"symbol","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"TaxSlip","kind":"identifier"}],"type":"topic","kind":"symbol"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Tax year the slip is for",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax",
+        "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlip"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlip\/year"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:17SwiftBeanCountTax0D4SlipV4yearSivp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "year"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Si",
+        "text" : "Int"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountTax"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "year"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "year"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Si",
+              "text" : "Int"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancounttax\/taxslip\/year"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountTax",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax"
+},
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/TaxSlip": {
+  "abstract" : [
+    {
+      "text" : "A Tax Slip",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "TaxSlip"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlip",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "TaxSlip"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "TaxSlip",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax\/taxslip"
+},
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/TaxSlip/year": {
+  "abstract" : [
+    {
+      "text" : "Tax year the slip is for",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "year"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxSlip\/year",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "year",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax\/taxslip\/year"
+}
+}
+}

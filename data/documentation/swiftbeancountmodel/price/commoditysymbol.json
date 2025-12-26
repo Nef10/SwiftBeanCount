@@ -1,1 +1,242 @@
-{"primaryContentSections":[{"kind":"declarations","declarations":[{"platforms":["macOS"],"tokens":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"commoditySymbol","kind":"identifier"},{"text":": ","kind":"text"},{"text":"CommoditySymbol","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel15CommoditySymbola","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CommoditySymbol"}],"languages":["swift"]}]}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountmodel\/price\/commoditysymbol"]}],"sections":[],"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Price\/commoditySymbol","interfaceLanguage":"swift"},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Price"]]},"kind":"symbol","metadata":{"symbolKind":"property","externalID":"s:19SwiftBeanCountModel5PriceV15commoditySymbolSSvp","modules":[{"name":"SwiftBeanCountModel"}],"role":"symbol","title":"commoditySymbol","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"commoditySymbol","kind":"identifier"},{"text":": ","kind":"text"},{"text":"CommoditySymbol","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel15CommoditySymbola"}],"roleHeading":"Instance Property"},"schemaVersion":{"minor":3,"major":0,"patch":0},"abstract":[{"code":"CommoditySymbol","type":"codeVoice"},{"text":" of the Price","type":"text"}],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Price":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Price","kind":"symbol","type":"topic","title":"Price","abstract":[{"type":"text","text":"Price of a commodity in another commodity on a given date"}],"url":"\/documentation\/swiftbeancountmodel\/price","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Price","kind":"identifier"}],"role":"symbol","navigatorTitle":[{"text":"Price","kind":"identifier"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Price/commoditySymbol":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Price\/commoditySymbol","abstract":[{"code":"CommoditySymbol","type":"codeVoice"},{"text":" of the Price","type":"text"}],"role":"symbol","kind":"symbol","fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"commoditySymbol"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"CommoditySymbol","preciseIdentifier":"s:19SwiftBeanCountModel15CommoditySymbola"}],"type":"topic","title":"commoditySymbol","url":"\/documentation\/swiftbeancountmodel\/price\/commoditysymbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/CommoditySymbol":{"url":"\/documentation\/swiftbeancountmodel\/commoditysymbol","fragments":[{"text":"typealias","kind":"keyword"},{"text":" ","kind":"text"},{"text":"CommoditySymbol","kind":"identifier"}],"type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CommoditySymbol","kind":"symbol","role":"symbol","title":"CommoditySymbol","abstract":[{"text":"A CommoditySymbol is just a string","type":"text"}],"navigatorTitle":[{"text":"CommoditySymbol","kind":"identifier"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"}}}
+{
+  "abstract" : [
+    {
+      "code" : "CommoditySymbol",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " of the Price",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Price"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Price\/commoditySymbol"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel5PriceV15commoditySymbolSSvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "commoditySymbol"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel15CommoditySymbola",
+        "text" : "CommoditySymbol"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "commoditySymbol"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "commoditySymbol"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CommoditySymbol",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel15CommoditySymbola",
+              "text" : "CommoditySymbol"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/price\/commoditysymbol"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/CommoditySymbol": {
+  "abstract" : [
+    {
+      "text" : "A CommoditySymbol is just a string",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "typealias"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "CommoditySymbol"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CommoditySymbol",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "CommoditySymbol"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "CommoditySymbol",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/commoditysymbol"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Price": {
+  "abstract" : [
+    {
+      "text" : "Price of a commodity in another commodity on a given date",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Price"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Price",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Price"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Price",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/price"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Price/commoditySymbol": {
+  "abstract" : [
+    {
+      "code" : "CommoditySymbol",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " of the Price",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "commoditySymbol"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel15CommoditySymbola",
+      "text" : "CommoditySymbol"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Price\/commoditySymbol",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "commoditySymbol",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/price\/commoditysymbol"
+}
+}
+}

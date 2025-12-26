@@ -1,1 +1,296 @@
-{"kind":"symbol","identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError"},"abstract":[{"text":"Errors which can happen when using SwiftBeanCountCompassCardMapper","type":"text"}],"relationshipsSections":[{"identifiers":["doc:\/\/SwiftBeanCountCompassCardMapper\/10Foundation14LocalizedErrorP","doc:\/\/SwiftBeanCountCompassCardMapper\/s8CopyableP","doc:\/\/SwiftBeanCountCompassCardMapper\/SQ","doc:\/\/SwiftBeanCountCompassCardMapper\/s5ErrorP","doc:\/\/SwiftBeanCountCompassCardMapper\/s8SendableP","doc:\/\/SwiftBeanCountCompassCardMapper\/s16SendableMetatypeP"],"title":"Conforms To","type":"conformsTo","kind":"relationships"}],"schemaVersion":{"patch":0,"minor":3,"major":0},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper"]]},"topicSections":[{"identifiers":["doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError\/missingAccount(cardNumber:)"],"title":"Enumeration Cases","generated":true,"anchor":"Enumeration-Cases"},{"identifiers":["doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError\/Equatable-Implementations","doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError\/Error-Implementations","doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError\/LocalizedError-Implementations"],"title":"Default Implementations","generated":true,"anchor":"Default-Implementations"}],"sections":[],"metadata":{"role":"symbol","modules":[{"name":"SwiftBeanCountCompassCardMapper"}],"externalID":"s:31SwiftBeanCountCompassCardMapper0abcdeF5ErrorO","navigatorTitle":[{"text":"SwiftBeanCountCompassCardMapperError","kind":"identifier"}],"roleHeading":"Enumeration","fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SwiftBeanCountCompassCardMapperError","kind":"identifier"}],"symbolKind":"enum","title":"SwiftBeanCountCompassCardMapperError"},"primaryContentSections":[{"declarations":[{"tokens":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"SwiftBeanCountCompassCardMapperError"}],"languages":["swift"],"platforms":["macOS"]}],"kind":"declarations"}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror"]}],"references":{"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper":{"title":"SwiftBeanCountCompassCardMapper","url":"\/documentation\/swiftbeancountcompasscardmapper","kind":"symbol","abstract":[],"role":"collection","type":"topic","identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper"},"doc://SwiftBeanCountCompassCardMapper/s8SendableP":{"type":"unresolvable","title":"Swift.Sendable","identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/s8SendableP"},"doc://SwiftBeanCountCompassCardMapper/s8CopyableP":{"identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/s8CopyableP","title":"Swift.Copyable","type":"unresolvable"},"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapperError/LocalizedError-Implementations":{"role":"collectionGroup","url":"\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/localizederror-implementations","identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError\/LocalizedError-Implementations","title":"LocalizedError Implementations","type":"topic","abstract":[],"kind":"article"},"doc://SwiftBeanCountCompassCardMapper/s16SendableMetatypeP":{"identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/s16SendableMetatypeP","title":"Swift.SendableMetatype","type":"unresolvable"},"doc://SwiftBeanCountCompassCardMapper/s5ErrorP":{"type":"unresolvable","title":"Swift.Error","identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/s5ErrorP"},"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapperError/Equatable-Implementations":{"role":"collectionGroup","url":"\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/equatable-implementations","identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError\/Equatable-Implementations","title":"Equatable Implementations","type":"topic","abstract":[],"kind":"article"},"doc://SwiftBeanCountCompassCardMapper/SQ":{"type":"unresolvable","title":"Swift.Equatable","identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/SQ"},"doc://SwiftBeanCountCompassCardMapper/10Foundation14LocalizedErrorP":{"type":"unresolvable","identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/10Foundation14LocalizedErrorP","title":"Foundation.LocalizedError"},"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapperError/Error-Implementations":{"role":"collectionGroup","url":"\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/error-implementations","identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError\/Error-Implementations","title":"Error Implementations","type":"topic","kind":"article","abstract":[]},"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapperError":{"role":"symbol","kind":"symbol","abstract":[{"text":"Errors which can happen when using SwiftBeanCountCompassCardMapper","type":"text"}],"fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"SwiftBeanCountCompassCardMapperError"}],"navigatorTitle":[{"kind":"identifier","text":"SwiftBeanCountCompassCardMapperError"}],"title":"SwiftBeanCountCompassCardMapperError","url":"\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror","type":"topic","identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError"},"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapperError/missingAccount(cardNumber:)":{"role":"symbol","kind":"symbol","abstract":[{"type":"text","text":"Account for the Compass Card not found in ledger"}],"fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"missingAccount","kind":"identifier"},{"text":"(","kind":"text"},{"text":"cardNumber","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":")","kind":"text"}],"title":"SwiftBeanCountCompassCardMapperError.missingAccount(cardNumber:)","url":"\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/missingaccount(cardnumber:)","type":"topic","identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError\/missingAccount(cardNumber:)"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Errors which can happen when using SwiftBeanCountCompassCardMapper",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:31SwiftBeanCountCompassCardMapper0abcdeF5ErrorO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "SwiftBeanCountCompassCardMapperError"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountCompassCardMapper"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "SwiftBeanCountCompassCardMapperError"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "SwiftBeanCountCompassCardMapperError"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "SwiftBeanCountCompassCardMapperError"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountCompassCardMapper\/10Foundation14LocalizedErrorP",
+        "doc:\/\/SwiftBeanCountCompassCardMapper\/s8CopyableP",
+        "doc:\/\/SwiftBeanCountCompassCardMapper\/SQ",
+        "doc:\/\/SwiftBeanCountCompassCardMapper\/s5ErrorP",
+        "doc:\/\/SwiftBeanCountCompassCardMapper\/s8SendableP",
+        "doc:\/\/SwiftBeanCountCompassCardMapper\/s16SendableMetatypeP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Enumeration-Cases",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError\/missingAccount(cardNumber:)"
+      ],
+      "title" : "Enumeration Cases"
+    },
+    {
+      "anchor" : "Default-Implementations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError\/Equatable-Implementations",
+        "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError\/Error-Implementations",
+        "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError\/LocalizedError-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountCompassCardMapper/10Foundation14LocalizedErrorP": {
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/10Foundation14LocalizedErrorP",
+  "title" : "Foundation.LocalizedError",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountCompassCardMapper/SQ": {
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/SQ",
+  "title" : "Swift.Equatable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountCompassCardMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountcompasscardmapper"
+},
+"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapperError": {
+  "abstract" : [
+    {
+      "text" : "Errors which can happen when using SwiftBeanCountCompassCardMapper",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountCompassCardMapperError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountCompassCardMapperError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SwiftBeanCountCompassCardMapperError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror"
+},
+"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapperError/Equatable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError\/Equatable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Equatable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/equatable-implementations"
+},
+"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapperError/Error-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError\/Error-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Error Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/error-implementations"
+},
+"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapperError/LocalizedError-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError\/LocalizedError-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "LocalizedError Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/localizederror-implementations"
+},
+"doc://SwiftBeanCountCompassCardMapper/documentation/SwiftBeanCountCompassCardMapper/SwiftBeanCountCompassCardMapperError/missingAccount(cardNumber:)": {
+  "abstract" : [
+    {
+      "text" : "Account for the Compass Card not found in ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "missingAccount"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "cardNumber"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper\/SwiftBeanCountCompassCardMapperError\/missingAccount(cardNumber:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "SwiftBeanCountCompassCardMapperError.missingAccount(cardNumber:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountcompasscardmapper\/swiftbeancountcompasscardmappererror\/missingaccount(cardnumber:)"
+},
+"doc://SwiftBeanCountCompassCardMapper/s16SendableMetatypeP": {
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/s16SendableMetatypeP",
+  "title" : "Swift.SendableMetatype",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountCompassCardMapper/s5ErrorP": {
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/s5ErrorP",
+  "title" : "Swift.Error",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountCompassCardMapper/s8CopyableP": {
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/s8CopyableP",
+  "title" : "Swift.Copyable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountCompassCardMapper/s8SendableP": {
+  "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/s8SendableP",
+  "title" : "Swift.Sendable",
+  "type" : "unresolvable"
+}
+}
+}

@@ -1,1 +1,272 @@
-{"schemaVersion":{"major":0,"minor":3,"patch":0},"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String\/amountDecimal()"},"sections":[],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountparserutils\/swift\/string\/amountdecimal()"]}],"metadata":{"title":"amountDecimal()","fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"amountDecimal"},{"kind":"text","text":"() -> ("},{"kind":"typeIdentifier","preciseIdentifier":"c:@SA@NSDecimal","text":"Decimal"},{"kind":"text","text":", "},{"kind":"typeIdentifier","preciseIdentifier":"s:Si","text":"Int"},{"kind":"text","text":")"}],"role":"symbol","externalID":"s:SS25SwiftBeanCountParserUtilsE13amountDecimalSo9NSDecimala_SityF","symbolKind":"method","roleHeading":"Instance Method","extendedModule":"Swift","modules":[{"name":"SwiftBeanCountParserUtils","relatedModules":["Swift"]}]},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils","doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift","doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String"]]},"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"amountDecimal","kind":"identifier"},{"text":"() -> (","kind":"text"},{"text":"Decimal","preciseIdentifier":"c:@SA@NSDecimal","kind":"typeIdentifier"},{"text":", ","kind":"text"},{"text":"Int","preciseIdentifier":"s:Si","kind":"typeIdentifier"},{"text":")","kind":"text"}],"platforms":["macOS"],"languages":["swift"]}]},{"kind":"content","content":[{"level":2,"anchor":"return-value","type":"heading","text":"Return Value"},{"type":"paragraph","inlineContent":[{"type":"text","text":"Tuple with the decimal and the number of decimal places the string contained"}]}]}],"kind":"symbol","abstract":[{"type":"text","text":"Parses a string into a Decimal, while determining how many decimal places the string contained"}],"references":{"doc://SwiftBeanCountParserUtils/documentation/SwiftBeanCountParserUtils/Swift/String/amountDecimal()":{"type":"topic","url":"\/documentation\/swiftbeancountparserutils\/swift\/string\/amountdecimal()","kind":"symbol","title":"amountDecimal()","fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"amountDecimal"},{"kind":"text","text":"() -> ("},{"preciseIdentifier":"c:@SA@NSDecimal","kind":"typeIdentifier","text":"Decimal"},{"kind":"text","text":", "},{"preciseIdentifier":"s:Si","kind":"typeIdentifier","text":"Int"},{"kind":"text","text":")"}],"abstract":[{"text":"Parses a string into a Decimal, while determining how many decimal places the string contained","type":"text"}],"role":"symbol","identifier":"doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String\/amountDecimal()"},"doc://SwiftBeanCountParserUtils/documentation/SwiftBeanCountParserUtils/Swift":{"identifier":"doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift","url":"\/documentation\/swiftbeancountparserutils\/swift","abstract":[],"role":"collection","kind":"symbol","title":"Swift","type":"topic"},"doc://SwiftBeanCountParserUtils/documentation/SwiftBeanCountParserUtils/Swift/String":{"title":"String","abstract":[],"role":"symbol","type":"topic","navigatorTitle":[{"text":"String","kind":"identifier"}],"url":"\/documentation\/swiftbeancountparserutils\/swift\/string","kind":"symbol","identifier":"doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String","fragments":[{"kind":"keyword","text":"extension"},{"kind":"text","text":" "},{"kind":"identifier","text":"String","preciseIdentifier":"s:SS"}]},"doc://SwiftBeanCountParserUtils/documentation/SwiftBeanCountParserUtils":{"type":"topic","title":"SwiftBeanCountParserUtils","url":"\/documentation\/swiftbeancountparserutils","identifier":"doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils","kind":"symbol","role":"collection","abstract":[]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Parses a string into a Decimal, while determining how many decimal places the string contained",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils",
+        "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift",
+        "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String\/amountDecimal()"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "Swift",
+    "externalID" : "s:SS25SwiftBeanCountParserUtilsE13amountDecimalSo9NSDecimala_SityF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "amountDecimal"
+      },
+      {
+        "kind" : "text",
+        "text" : "() -> ("
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "c:@SA@NSDecimal",
+        "text" : "Decimal"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Si",
+        "text" : "Int"
+      },
+      {
+        "kind" : "text",
+        "text" : ")"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountParserUtils",
+        "relatedModules" : [
+          "Swift"
+        ]
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "amountDecimal()"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "amountDecimal"
+            },
+            {
+              "kind" : "text",
+              "text" : "() -> ("
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "c:@SA@NSDecimal",
+              "text" : "Decimal"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Si",
+              "text" : "Int"
+            },
+            {
+              "kind" : "text",
+              "text" : ")"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Tuple with the decimal and the number of decimal places the string contained",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountparserutils\/swift\/string\/amountdecimal()"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountParserUtils/documentation/SwiftBeanCountParserUtils": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountParserUtils",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountparserutils"
+},
+"doc://SwiftBeanCountParserUtils/documentation/SwiftBeanCountParserUtils/Swift": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "Swift",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountparserutils\/swift"
+},
+"doc://SwiftBeanCountParserUtils/documentation/SwiftBeanCountParserUtils/Swift/String": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "extension"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "String"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "String",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountparserutils\/swift\/string"
+},
+"doc://SwiftBeanCountParserUtils/documentation/SwiftBeanCountParserUtils/Swift/String/amountDecimal()": {
+  "abstract" : [
+    {
+      "text" : "Parses a string into a Decimal, while determining how many decimal places the string contained",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "amountDecimal"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:@SA@NSDecimal",
+      "text" : "Decimal"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String\/amountDecimal()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "amountDecimal()",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountparserutils\/swift\/string\/amountdecimal()"
+}
+}
+}

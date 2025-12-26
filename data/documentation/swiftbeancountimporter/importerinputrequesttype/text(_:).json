@@ -1,1 +1,211 @@
-{"schemaVersion":{"minor":3,"patch":0,"major":0},"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterInputRequestType\/text(_:)"},"metadata":{"symbolKind":"case","title":"ImporterInputRequestType.text(_:)","modules":[{"name":"SwiftBeanCountImporter"}],"role":"symbol","fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"text","kind":"identifier"},{"text":"([","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":"])","kind":"text"}],"externalID":"s:22SwiftBeanCountImporter0D16InputRequestTypeO4textyACSaySSGcACmF","roleHeading":"Case"},"sections":[],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterInputRequestType"]]},"primaryContentSections":[{"kind":"declarations","declarations":[{"languages":["swift"],"tokens":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"text"},{"kind":"text","text":"(["},{"preciseIdentifier":"s:SS","kind":"typeIdentifier","text":"String"},{"kind":"text","text":"])"}],"platforms":["macOS"]}]}],"variants":[{"paths":["\/documentation\/swiftbeancountimporter\/importerinputrequesttype\/text(_:)"],"traits":[{"interfaceLanguage":"swift"}]}],"abstract":[{"text":"Normal text, with suggestions (optional)","type":"text"}],"kind":"symbol","references":{"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterInputRequestType":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterInputRequestType","title":"ImporterInputRequestType","url":"\/documentation\/swiftbeancountimporter\/importerinputrequesttype","role":"symbol","abstract":[{"type":"text","text":"Type of user input requested by the importer"}],"navigatorTitle":[{"kind":"identifier","text":"ImporterInputRequestType"}],"kind":"symbol","fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"ImporterInputRequestType"}]},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","url":"\/documentation\/swiftbeancountimporter","abstract":[],"role":"collection","title":"SwiftBeanCountImporter","kind":"symbol"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterInputRequestType/text(_:)":{"url":"\/documentation\/swiftbeancountimporter\/importerinputrequesttype\/text(_:)","role":"symbol","fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"text","kind":"identifier"},{"text":"([","kind":"text"},{"preciseIdentifier":"s:SS","text":"String","kind":"typeIdentifier"},{"text":"])","kind":"text"}],"abstract":[{"type":"text","text":"Normal text, with suggestions (optional)"}],"type":"topic","title":"ImporterInputRequestType.text(_:)","kind":"symbol","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterInputRequestType\/text(_:)"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Normal text, with suggestions (optional)",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterInputRequestType"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterInputRequestType\/text(_:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:22SwiftBeanCountImporter0D16InputRequestTypeO4textyACSaySSGcACmF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "case"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "text"
+      },
+      {
+        "kind" : "text",
+        "text" : "(["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : "])"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountImporter"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Case",
+    "symbolKind" : "case",
+    "title" : "ImporterInputRequestType.text(_:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "case"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "text"
+            },
+            {
+              "kind" : "text",
+              "text" : "(["
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : "])"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountimporter\/importerinputrequesttype\/text(_:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountImporter",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterInputRequestType": {
+  "abstract" : [
+    {
+      "text" : "Type of user input requested by the importer",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ImporterInputRequestType"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterInputRequestType",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ImporterInputRequestType"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ImporterInputRequestType",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importerinputrequesttype"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterInputRequestType/text(_:)": {
+  "abstract" : [
+    {
+      "text" : "Normal text, with suggestions (optional)",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "text"
+    },
+    {
+      "kind" : "text",
+      "text" : "(["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "])"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterInputRequestType\/text(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "ImporterInputRequestType.text(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importerinputrequesttype\/text(_:)"
+}
+}
+}

@@ -1,1 +1,230 @@
-{"schemaVersion":{"major":0,"patch":0,"minor":3},"abstract":[{"type":"text","text":"Loads the data to import"}],"metadata":{"symbolKind":"method","externalID":"s:22SwiftBeanCountImporter0D0P4loadyyF","title":"load()","required":true,"role":"symbol","modules":[{"name":"SwiftBeanCountImporter"}],"fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"load"},{"kind":"text","text":"()"}],"roleHeading":"Instance Method"},"kind":"symbol","primaryContentSections":[{"kind":"declarations","declarations":[{"languages":["swift"],"tokens":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"load"},{"kind":"text","text":"()"}],"platforms":["macOS"]}]},{"content":[{"text":"Discussion","level":2,"anchor":"discussion","type":"heading"},{"inlineContent":[{"type":"text","text":"You must call this method before you call "},{"type":"codeVoice","code":"nextTransaction()"},{"type":"text","text":"."},{"type":"text","text":" "},{"type":"text","text":"You might want to show a loading indicator during the loading, as depending"},{"type":"text","text":" "},{"type":"text","text":"on the importer this might take some time."}],"type":"paragraph"}],"kind":"content"}],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer\/load()"},"sections":[],"variants":[{"paths":["\/documentation\/swiftbeancountimporter\/importer\/load()"],"traits":[{"interfaceLanguage":"swift"}]}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer"]]},"references":{"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Importer/load()":{"abstract":[{"type":"text","text":"Loads the data to import"}],"title":"load()","required":true,"role":"symbol","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer\/load()","url":"\/documentation\/swiftbeancountimporter\/importer\/load()","fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"load","kind":"identifier"},{"text":"()","kind":"text"}],"kind":"symbol","type":"topic"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","url":"\/documentation\/swiftbeancountimporter","abstract":[],"role":"collection","title":"SwiftBeanCountImporter","kind":"symbol"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Importer":{"type":"topic","fragments":[{"kind":"keyword","text":"protocol"},{"kind":"text","text":" "},{"kind":"identifier","text":"Importer"}],"role":"symbol","abstract":[{"type":"text","text":"Protocol to represent an Importer, regardless of type"}],"title":"Importer","url":"\/documentation\/swiftbeancountimporter\/importer","navigatorTitle":[{"kind":"identifier","text":"Importer"}],"identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer","kind":"symbol"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Loads the data to import",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer\/load()"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:22SwiftBeanCountImporter0D0P4loadyyF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "load"
+      },
+      {
+        "kind" : "text",
+        "text" : "()"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountImporter"
+      }
+    ],
+    "required" : true,
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "load()"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "load"
+            },
+            {
+              "kind" : "text",
+              "text" : "()"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "You must call this method before you call ",
+              "type" : "text"
+            },
+            {
+              "code" : "nextTransaction()",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ".",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "You might want to show a loading indicator during the loading, as depending",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "on the importer this might take some time.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountimporter\/importer\/load()"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountImporter",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Importer": {
+  "abstract" : [
+    {
+      "text" : "Protocol to represent an Importer, regardless of type",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Importer"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Importer"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Importer",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importer"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Importer/load()": {
+  "abstract" : [
+    {
+      "text" : "Loads the data to import",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "load"
+    },
+    {
+      "kind" : "text",
+      "text" : "()"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer\/load()",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "load()",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importer\/load()"
+}
+}
+}

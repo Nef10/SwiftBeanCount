@@ -1,1 +1,462 @@
-{"schemaVersion":{"major":0,"minor":3,"patch":0},"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountimporter\/importerfactory\/new(ledger:name:)"]}],"abstract":[{"text":"Creates an Inporter which downloads data from the internet","type":"text"}],"metadata":{"externalID":"s:22SwiftBeanCountImporter0D7FactoryO3new6ledger4nameAA0D0_pSg0abC5Model6LedgerCSg_SStFZ","roleHeading":"Type Method","fragments":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"new","kind":"identifier"},{"text":"(","kind":"text"},{"text":"ledger","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"Ledger","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC"},{"text":"?, ","kind":"text"},{"text":"name","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":") -> (any ","kind":"text"},{"text":"Importer","kind":"typeIdentifier","preciseIdentifier":"s:22SwiftBeanCountImporter0D0P"},{"text":")?","kind":"text"}],"title":"new(ledger:name:)","modules":[{"name":"SwiftBeanCountImporter"}],"symbolKind":"method","role":"symbol"},"sections":[],"primaryContentSections":[{"declarations":[{"platforms":["macOS"],"tokens":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"new","kind":"identifier"},{"text":"(","kind":"text"},{"text":"ledger","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"Ledger","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC"},{"text":"?, ","kind":"text"},{"text":"name","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":") -> (any ","kind":"text"},{"text":"Importer","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer","kind":"typeIdentifier","preciseIdentifier":"s:22SwiftBeanCountImporter0D0P"},{"text":")?","kind":"text"}],"languages":["swift"]}],"kind":"declarations"},{"parameters":[{"name":"ledger","content":[{"type":"paragraph","inlineContent":[{"text":"Existing ledger which is used to assist the import,","type":"text"},{"text":" ","type":"text"},{"text":"e.g. to read attributes of accounts","type":"text"}]}]},{"name":"name","content":[{"type":"paragraph","inlineContent":[{"text":"Name of the importer to initialize","type":"text"}]}]}],"kind":"parameters"},{"content":[{"level":2,"text":"Return Value","anchor":"return-value","type":"heading"},{"inlineContent":[{"type":"text","text":"Importer, or nil if an importer with this name cannot be found"}],"type":"paragraph"}],"kind":"content"}],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterFactory\/new(ledger:name:)"},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterFactory"]]},"kind":"symbol","references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger":{"title":"Ledger","kind":"symbol","role":"symbol","abstract":[{"text":"A Ledger is the main part of the model, it contains all necessary information.","type":"text"}],"url":"\/documentation\/swiftbeancountmodel\/ledger","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger","fragments":[{"text":"class","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Ledger","kind":"identifier"}],"type":"topic"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterFactory":{"type":"topic","url":"\/documentation\/swiftbeancountimporter\/importerfactory","title":"ImporterFactory","navigatorTitle":[{"text":"ImporterFactory","kind":"identifier"}],"abstract":[{"type":"text","text":"The ImporterFactory is used to create the different importer types"}],"role":"symbol","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterFactory","fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"ImporterFactory","kind":"identifier"}],"kind":"symbol"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Importer":{"type":"topic","fragments":[{"kind":"keyword","text":"protocol"},{"kind":"text","text":" "},{"kind":"identifier","text":"Importer"}],"role":"symbol","abstract":[{"type":"text","text":"Protocol to represent an Importer, regardless of type"}],"title":"Importer","url":"\/documentation\/swiftbeancountimporter\/importer","navigatorTitle":[{"kind":"identifier","text":"Importer"}],"identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer","kind":"symbol"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterFactory/new(ledger:name:)":{"title":"new(ledger:name:)","fragments":[{"kind":"keyword","text":"static"},{"kind":"text","text":" "},{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"new"},{"kind":"text","text":"("},{"kind":"externalParam","text":"ledger"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC","text":"Ledger"},{"kind":"text","text":"?, "},{"kind":"externalParam","text":"name"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:SS","text":"String"},{"kind":"text","text":") -> (any "},{"kind":"typeIdentifier","preciseIdentifier":"s:22SwiftBeanCountImporter0D0P","text":"Importer"},{"kind":"text","text":")?"}],"url":"\/documentation\/swiftbeancountimporter\/importerfactory\/new(ledger:name:)","type":"topic","role":"symbol","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterFactory\/new(ledger:name:)","kind":"symbol","abstract":[{"text":"Creates an Inporter which downloads data from the internet","type":"text"}]},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","url":"\/documentation\/swiftbeancountimporter","abstract":[],"role":"collection","title":"SwiftBeanCountImporter","kind":"symbol"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Creates an Inporter which downloads data from the internet",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterFactory"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterFactory\/new(ledger:name:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:22SwiftBeanCountImporter0D7FactoryO3new6ledger4nameAA0D0_pSg0abC5Model6LedgerCSg_SStFZ",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "static"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "new"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "ledger"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+        "text" : "Ledger"
+      },
+      {
+        "kind" : "text",
+        "text" : "?, "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "name"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : ") -> (any "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:22SwiftBeanCountImporter0D0P",
+        "text" : "Importer"
+      },
+      {
+        "kind" : "text",
+        "text" : ")?"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountImporter"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Type Method",
+    "symbolKind" : "method",
+    "title" : "new(ledger:name:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "static"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "new"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "ledger"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+              "text" : "Ledger"
+            },
+            {
+              "kind" : "text",
+              "text" : "?, "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "name"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : ") -> (any "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:22SwiftBeanCountImporter0D0P",
+              "text" : "Importer"
+            },
+            {
+              "kind" : "text",
+              "text" : ")?"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Existing ledger which is used to assist the import,",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "e.g. to read attributes of accounts",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "ledger"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Name of the importer to initialize",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "name"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Importer, or nil if an importer with this name cannot be found",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountimporter\/importerfactory\/new(ledger:name:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountImporter",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Importer": {
+  "abstract" : [
+    {
+      "text" : "Protocol to represent an Importer, regardless of type",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Importer"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Importer"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Importer",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importer"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterFactory": {
+  "abstract" : [
+    {
+      "text" : "The ImporterFactory is used to create the different importer types",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ImporterFactory"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterFactory",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ImporterFactory"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ImporterFactory",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importerfactory"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterFactory/new(ledger:name:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an Inporter which downloads data from the internet",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "new"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "ledger"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+      "text" : "Ledger"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "name"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> (any "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:22SwiftBeanCountImporter0D0P",
+      "text" : "Importer"
+    },
+    {
+      "kind" : "text",
+      "text" : ")?"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterFactory\/new(ledger:name:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "new(ledger:name:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importerfactory\/new(ledger:name:)"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger": {
+  "abstract" : [
+    {
+      "text" : "A Ledger is the main part of the model, it contains all necessary information.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Ledger"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "Ledger",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger"
+}
+}
+}

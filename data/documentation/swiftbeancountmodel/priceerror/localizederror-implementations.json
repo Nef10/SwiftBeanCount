@@ -1,1 +1,258 @@
-{"sections":[],"metadata":{"roleHeading":"API Collection","modules":[{"name":"SwiftBeanCountModel"}],"role":"collectionGroup","title":"LocalizedError Implementations"},"schemaVersion":{"patch":0,"minor":3,"major":0},"kind":"article","identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/LocalizedError-Implementations"},"topicSections":[{"generated":true,"identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/errorDescription","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/failureReason","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/helpAnchor","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/recoverySuggestion"],"anchor":"Instance-Properties","title":"Instance Properties"}],"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/priceerror\/localizederror-implementations"],"traits":[{"interfaceLanguage":"swift"}]}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError"]]},"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PriceError":{"kind":"symbol","type":"topic","title":"PriceError","abstract":[{"text":"Errors a price can throw","type":"text"}],"role":"symbol","navigatorTitle":[{"text":"PriceError","kind":"identifier"}],"fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"PriceError","kind":"identifier"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError","url":"\/documentation\/swiftbeancountmodel\/priceerror"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PriceError/recoverySuggestion":{"url":"\/documentation\/swiftbeancountmodel\/priceerror\/recoverysuggestion","abstract":[],"role":"symbol","type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/recoverySuggestion","fragments":[{"kind":"keyword","text":"var"},{"kind":"text","text":" "},{"text":"recoverySuggestion","kind":"identifier"},{"text":": ","kind":"text"},{"preciseIdentifier":"s:SS","text":"String","kind":"typeIdentifier"},{"text":"?","kind":"text"}],"kind":"symbol","title":"recoverySuggestion"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PriceError/errorDescription":{"kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/priceerror\/errordescription","type":"topic","title":"errorDescription","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/errorDescription","abstract":[],"fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"errorDescription","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":"?","kind":"text"}],"role":"symbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PriceError/helpAnchor":{"title":"helpAnchor","kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/priceerror\/helpanchor","abstract":[],"role":"symbol","type":"topic","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"helpAnchor","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":"?","kind":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/helpAnchor"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PriceError/failureReason":{"title":"failureReason","kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/priceerror\/failurereason","abstract":[],"role":"symbol","type":"topic","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"failureReason","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":"?","kind":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/failureReason"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"}}}
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/LocalizedError-Implementations"
+  },
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "collectionGroup",
+    "roleHeading" : "API Collection",
+    "title" : "LocalizedError Implementations"
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/errorDescription",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/failureReason",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/helpAnchor",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/recoverySuggestion"
+      ],
+      "title" : "Instance Properties"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/priceerror\/localizederror-implementations"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PriceError": {
+  "abstract" : [
+    {
+      "text" : "Errors a price can throw",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PriceError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "PriceError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PriceError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/priceerror"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PriceError/errorDescription": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "errorDescription"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/errorDescription",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "errorDescription",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/priceerror\/errordescription"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PriceError/failureReason": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "failureReason"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/failureReason",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "failureReason",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/priceerror\/failurereason"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PriceError/helpAnchor": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "helpAnchor"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/helpAnchor",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "helpAnchor",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/priceerror\/helpanchor"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PriceError/recoverySuggestion": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "recoverySuggestion"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/recoverySuggestion",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "recoverySuggestion",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/priceerror\/recoverysuggestion"
+}
+}
+}

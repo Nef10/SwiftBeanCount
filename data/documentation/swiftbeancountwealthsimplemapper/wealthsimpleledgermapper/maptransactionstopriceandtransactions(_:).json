@@ -1,1 +1,491 @@
-{"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper","doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper"]]},"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"mapTransactionsToPriceAndTransactions","kind":"identifier"},{"text":"(","kind":"text"},{"text":"_","kind":"externalParam"},{"text":" ","kind":"text"},{"text":"wealthsimpleTransactions","kind":"internalParam"},{"text":": [any ","kind":"text"},{"text":"Transaction","kind":"typeIdentifier","preciseIdentifier":"s:12Wealthsimple11TransactionP"},{"text":"]) ","kind":"text"},{"text":"throws","kind":"keyword"},{"text":" -> ([","kind":"text"},{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Price","text":"Price","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel5PriceV"},{"text":"], [","kind":"text"},{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction","text":"Transaction","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11TransactionC"},{"text":"])","kind":"text"}],"platforms":["macOS"],"languages":["swift"]}]},{"kind":"parameters","parameters":[{"content":[{"type":"paragraph","inlineContent":[{"text":"Downloaded transactions from one account","type":"text"}]}],"name":"wealthsimpleTransactions"}]},{"content":[{"level":2,"text":"Return Value","anchor":"return-value","type":"heading"},{"inlineContent":[{"text":"Prices and Transactions","type":"text"}],"type":"paragraph"}],"kind":"content"},{"content":[{"type":"heading","level":2,"text":"Discussion","anchor":"discussion"},{"type":"paragraph","inlineContent":[{"text":"It also removes transactions and prices which are already existing in the ledger","type":"text"}]},{"type":"paragraph","inlineContent":[{"type":"text","text":"Notes:"}]},{"type":"unorderedList","items":[{"content":[{"type":"paragraph","inlineContent":[{"text":"Do not call with transactions from different accounts","type":"text"}]}]},{"content":[{"type":"paragraph","inlineContent":[{"text":"Make sure to set accounts on this class to the Wealthsimple accounts first","type":"text"}]}]},{"content":[{"type":"paragraph","inlineContent":[{"type":"text","text":"Do not assume that the count of input and transaction output is the same, as this function consolidates transactions"}]}]}]},{"type":"aside","content":[{"inlineContent":[{"text":"WealthsimpleConversionError","type":"text"}],"type":"paragraph"}],"name":"Throws","style":"note"}],"kind":"content"}],"kind":"symbol","abstract":[{"text":"Maps downloaded wealthsimple transactions from one account to SwiftBeanCountModel transactions and prices","type":"text"}],"identifier":{"url":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper\/mapTransactionsToPriceAndTransactions(_:)","interfaceLanguage":"swift"},"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/maptransactionstopriceandtransactions(_:)"]}],"metadata":{"role":"symbol","fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"mapTransactionsToPriceAndTransactions"},{"kind":"text","text":"([any "},{"kind":"typeIdentifier","preciseIdentifier":"s:12Wealthsimple11TransactionP","text":"Transaction"},{"kind":"text","text":"]) "},{"kind":"keyword","text":"throws"},{"kind":"text","text":" -> (["},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel5PriceV","text":"Price"},{"kind":"text","text":"], ["},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11TransactionC","text":"Transaction"},{"kind":"text","text":"])"}],"modules":[{"name":"SwiftBeanCountWealthsimpleMapper"}],"title":"mapTransactionsToPriceAndTransactions(_:)","externalID":"s:32SwiftBeanCountWealthsimpleMapper0d6LedgerE0V025mapTransactionsToPriceAndH0ySay0abC5Model0J0VG_SayAE11TransactionCGtSay0D0AI_pGKF","symbolKind":"method","roleHeading":"Instance Method"},"sections":[],"schemaVersion":{"major":0,"minor":3,"patch":0},"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Price":{"fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Price","kind":"identifier"}],"type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Price","kind":"symbol","abstract":[{"type":"text","text":"Price of a commodity in another commodity on a given date"}],"role":"symbol","url":"\/documentation\/swiftbeancountmodel\/price","title":"Price"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction":{"type":"topic","url":"\/documentation\/swiftbeancountmodel\/transaction","kind":"symbol","title":"Transaction","abstract":[{"text":"A Transaction has meta data as well as multiple postings","type":"text"}],"role":"symbol","fragments":[{"kind":"keyword","text":"class"},{"kind":"text","text":" "},{"kind":"identifier","text":"Transaction"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction"},"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleLedgerMapper":{"abstract":[{"type":"text","text":"Functions to transform downloaded Wealthsimple data into SwiftBeanCountModel types"}],"role":"symbol","title":"WealthsimpleLedgerMapper","identifier":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper","fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"WealthsimpleLedgerMapper"}],"navigatorTitle":[{"kind":"identifier","text":"WealthsimpleLedgerMapper"}],"kind":"symbol","type":"topic","url":"\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper"},"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper":{"identifier":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper","url":"\/documentation\/swiftbeancountwealthsimplemapper","abstract":[],"role":"collection","kind":"symbol","title":"SwiftBeanCountWealthsimpleMapper","type":"topic"},"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleLedgerMapper/mapTransactionsToPriceAndTransactions(_:)":{"role":"symbol","identifier":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper\/mapTransactionsToPriceAndTransactions(_:)","title":"mapTransactionsToPriceAndTransactions(_:)","fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"mapTransactionsToPriceAndTransactions","kind":"identifier"},{"text":"([any ","kind":"text"},{"text":"Transaction","kind":"typeIdentifier","preciseIdentifier":"s:12Wealthsimple11TransactionP"},{"text":"]) ","kind":"text"},{"text":"throws","kind":"keyword"},{"text":" -> ([","kind":"text"},{"text":"Price","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel5PriceV"},{"text":"], [","kind":"text"},{"text":"Transaction","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11TransactionC"},{"text":"])","kind":"text"}],"kind":"symbol","abstract":[{"text":"Maps downloaded wealthsimple transactions from one account to SwiftBeanCountModel transactions and prices","type":"text"}],"url":"\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/maptransactionstopriceandtransactions(_:)","type":"topic"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Maps downloaded wealthsimple transactions from one account to SwiftBeanCountModel transactions and prices",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper",
+        "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper\/mapTransactionsToPriceAndTransactions(_:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:32SwiftBeanCountWealthsimpleMapper0d6LedgerE0V025mapTransactionsToPriceAndH0ySay0abC5Model0J0VG_SayAE11TransactionCGtSay0D0AI_pGKF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "mapTransactionsToPriceAndTransactions"
+      },
+      {
+        "kind" : "text",
+        "text" : "([any "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:12Wealthsimple11TransactionP",
+        "text" : "Transaction"
+      },
+      {
+        "kind" : "text",
+        "text" : "]) "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "throws"
+      },
+      {
+        "kind" : "text",
+        "text" : " -> (["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel5PriceV",
+        "text" : "Price"
+      },
+      {
+        "kind" : "text",
+        "text" : "], ["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel11TransactionC",
+        "text" : "Transaction"
+      },
+      {
+        "kind" : "text",
+        "text" : "])"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountWealthsimpleMapper"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "mapTransactionsToPriceAndTransactions(_:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "mapTransactionsToPriceAndTransactions"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "_"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "wealthsimpleTransactions"
+            },
+            {
+              "kind" : "text",
+              "text" : ": [any "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12Wealthsimple11TransactionP",
+              "text" : "Transaction"
+            },
+            {
+              "kind" : "text",
+              "text" : "]) "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "throws"
+            },
+            {
+              "kind" : "text",
+              "text" : " -> (["
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Price",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel5PriceV",
+              "text" : "Price"
+            },
+            {
+              "kind" : "text",
+              "text" : "], ["
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel11TransactionC",
+              "text" : "Transaction"
+            },
+            {
+              "kind" : "text",
+              "text" : "])"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Downloaded transactions from one account",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "wealthsimpleTransactions"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Prices and Transactions",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "It also removes transactions and prices which are already existing in the ledger",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Notes:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Do not call with transactions from different accounts",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Make sure to set accounts on this class to the Wealthsimple accounts first",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Do not assume that the count of input and transaction output is the same, as this function consolidates transactions",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "WealthsimpleConversionError",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Throws",
+          "style" : "note",
+          "type" : "aside"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/maptransactionstopriceandtransactions(_:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Price": {
+  "abstract" : [
+    {
+      "text" : "Price of a commodity in another commodity on a given date",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Price"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Price",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "Price",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/price"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction": {
+  "abstract" : [
+    {
+      "text" : "A Transaction has meta data as well as multiple postings",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Transaction"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "Transaction",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction"
+},
+"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountWealthsimpleMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountwealthsimplemapper"
+},
+"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleLedgerMapper": {
+  "abstract" : [
+    {
+      "text" : "Functions to transform downloaded Wealthsimple data into SwiftBeanCountModel types",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "WealthsimpleLedgerMapper"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "WealthsimpleLedgerMapper"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "WealthsimpleLedgerMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper"
+},
+"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleLedgerMapper/mapTransactionsToPriceAndTransactions(_:)": {
+  "abstract" : [
+    {
+      "text" : "Maps downloaded wealthsimple transactions from one account to SwiftBeanCountModel transactions and prices",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "mapTransactionsToPriceAndTransactions"
+    },
+    {
+      "kind" : "text",
+      "text" : "([any "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12Wealthsimple11TransactionP",
+      "text" : "Transaction"
+    },
+    {
+      "kind" : "text",
+      "text" : "]) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> (["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel5PriceV",
+      "text" : "Price"
+    },
+    {
+      "kind" : "text",
+      "text" : "], ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11TransactionC",
+      "text" : "Transaction"
+    },
+    {
+      "kind" : "text",
+      "text" : "])"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper\/mapTransactionsToPriceAndTransactions(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "mapTransactionsToPriceAndTransactions(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/maptransactionstopriceandtransactions(_:)"
+}
+}
+}

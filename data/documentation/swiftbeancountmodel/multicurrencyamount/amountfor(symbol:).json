@@ -1,1 +1,387 @@
-{"primaryContentSections":[{"kind":"declarations","declarations":[{"platforms":["macOS"],"languages":["swift"],"tokens":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"amountFor"},{"kind":"text","text":"("},{"kind":"externalParam","text":"symbol"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"CommoditySymbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CommoditySymbol","preciseIdentifier":"s:19SwiftBeanCountModel15CommoditySymbola"},{"kind":"text","text":") -> "},{"kind":"typeIdentifier","text":"Amount","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount","preciseIdentifier":"s:19SwiftBeanCountModel6AmountV"}]}]},{"kind":"parameters","parameters":[{"content":[{"type":"paragraph","inlineContent":[{"type":"text","text":"Symbol of the commodity to get"}]}],"name":"symbol"}]},{"content":[{"anchor":"return-value","type":"heading","text":"Return Value","level":2},{"type":"paragraph","inlineContent":[{"text":"Amount","type":"text"}]}],"kind":"content"},{"content":[{"type":"heading","anchor":"discussion","text":"Discussion","level":2},{"type":"paragraph","inlineContent":[{"type":"text","text":"If there is not amount for the given symbol in this MultiCurrencyAmount"},{"type":"text","text":" "},{"type":"text","text":"it returns an amount with zero."}]}],"kind":"content"}],"abstract":[{"type":"text","text":"Returns the amount of one commodity"}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountmodel\/multicurrencyamount\/amountfor(symbol:)"]}],"kind":"symbol","sections":[],"schemaVersion":{"minor":3,"patch":0,"major":0},"metadata":{"roleHeading":"Instance Method","fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"amountFor"},{"kind":"text","text":"("},{"kind":"externalParam","text":"symbol"},{"kind":"text","text":": "},{"preciseIdentifier":"s:19SwiftBeanCountModel15CommoditySymbola","kind":"typeIdentifier","text":"CommoditySymbol"},{"kind":"text","text":") -> "},{"preciseIdentifier":"s:19SwiftBeanCountModel6AmountV","kind":"typeIdentifier","text":"Amount"}],"title":"amountFor(symbol:)","role":"symbol","externalID":"s:19SwiftBeanCountModel19MultiCurrencyAmountV9amountFor6symbolAA0G0VSS_tF","modules":[{"name":"SwiftBeanCountModel"}],"symbolKind":"method"},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount"]]},"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount\/amountFor(symbol:)","interfaceLanguage":"swift"},"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Amount":{"role":"symbol","url":"\/documentation\/swiftbeancountmodel\/amount","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount","navigatorTitle":[{"kind":"identifier","text":"Amount"}],"type":"topic","fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"Amount"}],"abstract":[{"text":"Represents an Amount - a number with a commodity","type":"text"}],"title":"Amount","kind":"symbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount/amountFor(symbol:)":{"title":"amountFor(symbol:)","kind":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount\/amountFor(symbol:)","role":"symbol","url":"\/documentation\/swiftbeancountmodel\/multicurrencyamount\/amountfor(symbol:)","fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"amountFor"},{"kind":"text","text":"("},{"kind":"externalParam","text":"symbol"},{"kind":"text","text":": "},{"preciseIdentifier":"s:19SwiftBeanCountModel15CommoditySymbola","kind":"typeIdentifier","text":"CommoditySymbol"},{"kind":"text","text":") -> "},{"preciseIdentifier":"s:19SwiftBeanCountModel6AmountV","kind":"typeIdentifier","text":"Amount"}],"type":"topic","abstract":[{"type":"text","text":"Returns the amount of one commodity"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/CommoditySymbol":{"url":"\/documentation\/swiftbeancountmodel\/commoditysymbol","fragments":[{"text":"typealias","kind":"keyword"},{"text":" ","kind":"text"},{"text":"CommoditySymbol","kind":"identifier"}],"type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CommoditySymbol","kind":"symbol","role":"symbol","title":"CommoditySymbol","abstract":[{"text":"A CommoditySymbol is just a string","type":"text"}],"navigatorTitle":[{"text":"CommoditySymbol","kind":"identifier"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount":{"url":"\/documentation\/swiftbeancountmodel\/multicurrencyamount","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"MultiCurrencyAmount","kind":"identifier"}],"abstract":[{"text":"Represents an amout which consists of amouts in multiple currencies","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount","navigatorTitle":[{"text":"MultiCurrencyAmount","kind":"identifier"}],"role":"symbol","title":"MultiCurrencyAmount","kind":"symbol","type":"topic"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Returns the amount of one commodity",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount\/amountFor(symbol:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV9amountFor6symbolAA0G0VSS_tF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "amountFor"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "symbol"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel15CommoditySymbola",
+        "text" : "CommoditySymbol"
+      },
+      {
+        "kind" : "text",
+        "text" : ") -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel6AmountV",
+        "text" : "Amount"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "amountFor(symbol:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "amountFor"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "symbol"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CommoditySymbol",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel15CommoditySymbola",
+              "text" : "CommoditySymbol"
+            },
+            {
+              "kind" : "text",
+              "text" : ") -> "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel6AmountV",
+              "text" : "Amount"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Symbol of the commodity to get",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "symbol"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Amount",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "If there is not amount for the given symbol in this MultiCurrencyAmount",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "it returns an amount with zero.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/multicurrencyamount\/amountfor(symbol:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Amount": {
+  "abstract" : [
+    {
+      "text" : "Represents an Amount - a number with a commodity",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Amount"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Amount",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Amount"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Amount",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/amount"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/CommoditySymbol": {
+  "abstract" : [
+    {
+      "text" : "A CommoditySymbol is just a string",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "typealias"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "CommoditySymbol"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CommoditySymbol",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "CommoditySymbol"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "CommoditySymbol",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/commoditysymbol"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount": {
+  "abstract" : [
+    {
+      "text" : "Represents an amout which consists of amouts in multiple currencies",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "MultiCurrencyAmount"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "MultiCurrencyAmount"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "MultiCurrencyAmount",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/multicurrencyamount"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount/amountFor(symbol:)": {
+  "abstract" : [
+    {
+      "text" : "Returns the amount of one commodity",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "amountFor"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "symbol"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel15CommoditySymbola",
+      "text" : "CommoditySymbol"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel6AmountV",
+      "text" : "Amount"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount\/amountFor(symbol:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "amountFor(symbol:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/multicurrencyamount\/amountfor(symbol:)"
+}
+}
+}

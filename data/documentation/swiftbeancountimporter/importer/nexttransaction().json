@@ -1,1 +1,292 @@
-{"abstract":[{"type":"text","text":"Returns the next "},{"type":"codeVoice","code":"ImportedTransaction"}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountimporter\/importer\/nexttransaction()"]}],"metadata":{"externalID":"s:22SwiftBeanCountImporter0D0P15nextTransactionAA08ImportedF0VSgyF","role":"symbol","fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"nextTransaction"},{"kind":"text","text":"() -> "},{"preciseIdentifier":"s:22SwiftBeanCountImporter19ImportedTransactionV","kind":"typeIdentifier","text":"ImportedTransaction"},{"kind":"text","text":"?"}],"roleHeading":"Instance Method","modules":[{"name":"SwiftBeanCountImporter"}],"symbolKind":"method","title":"nextTransaction()","required":true},"primaryContentSections":[{"kind":"declarations","declarations":[{"languages":["swift"],"tokens":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"nextTransaction"},{"kind":"text","text":"() -> "},{"kind":"typeIdentifier","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction","preciseIdentifier":"s:22SwiftBeanCountImporter19ImportedTransactionV","text":"ImportedTransaction"},{"kind":"text","text":"?"}],"platforms":["macOS"]}]},{"kind":"content","content":[{"type":"heading","text":"Discussion","level":2,"anchor":"discussion"},{"type":"paragraph","inlineContent":[{"text":"You must call ","type":"text"},{"code":"load","type":"codeVoice"},{"text":" before you call this function.","type":"text"},{"text":" ","type":"text"},{"text":"Returns nil when there are no more lines left.","type":"text"}]}]}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer"]]},"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer\/nextTransaction()"},"sections":[],"kind":"symbol","schemaVersion":{"major":0,"minor":3,"patch":0},"references":{"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","url":"\/documentation\/swiftbeancountimporter","abstract":[],"role":"collection","title":"SwiftBeanCountImporter","kind":"symbol"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Importer/nextTransaction()":{"identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer\/nextTransaction()","abstract":[{"type":"text","text":"Returns the next "},{"type":"codeVoice","code":"ImportedTransaction"}],"url":"\/documentation\/swiftbeancountimporter\/importer\/nexttransaction()","role":"symbol","fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"nextTransaction","kind":"identifier"},{"text":"() -> ","kind":"text"},{"text":"ImportedTransaction","kind":"typeIdentifier","preciseIdentifier":"s:22SwiftBeanCountImporter19ImportedTransactionV"},{"text":"?","kind":"text"}],"title":"nextTransaction()","kind":"symbol","type":"topic","required":true},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImportedTransaction":{"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction","title":"ImportedTransaction","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"ImportedTransaction","kind":"identifier"}],"navigatorTitle":[{"text":"ImportedTransaction","kind":"identifier"}],"url":"\/documentation\/swiftbeancountimporter\/importedtransaction","abstract":[{"text":"Struct describing a transaction which has been imported","type":"text"}],"role":"symbol","type":"topic"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Importer":{"type":"topic","fragments":[{"kind":"keyword","text":"protocol"},{"kind":"text","text":" "},{"kind":"identifier","text":"Importer"}],"role":"symbol","abstract":[{"type":"text","text":"Protocol to represent an Importer, regardless of type"}],"title":"Importer","url":"\/documentation\/swiftbeancountimporter\/importer","navigatorTitle":[{"kind":"identifier","text":"Importer"}],"identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer","kind":"symbol"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Returns the next ",
+      "type" : "text"
+    },
+    {
+      "code" : "ImportedTransaction",
+      "type" : "codeVoice"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer\/nextTransaction()"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:22SwiftBeanCountImporter0D0P15nextTransactionAA08ImportedF0VSgyF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "nextTransaction"
+      },
+      {
+        "kind" : "text",
+        "text" : "() -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:22SwiftBeanCountImporter19ImportedTransactionV",
+        "text" : "ImportedTransaction"
+      },
+      {
+        "kind" : "text",
+        "text" : "?"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountImporter"
+      }
+    ],
+    "required" : true,
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "nextTransaction()"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "nextTransaction"
+            },
+            {
+              "kind" : "text",
+              "text" : "() -> "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:22SwiftBeanCountImporter19ImportedTransactionV",
+              "text" : "ImportedTransaction"
+            },
+            {
+              "kind" : "text",
+              "text" : "?"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "You must call ",
+              "type" : "text"
+            },
+            {
+              "code" : "load",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " before you call this function.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "Returns nil when there are no more lines left.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountimporter\/importer\/nexttransaction()"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountImporter",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImportedTransaction": {
+  "abstract" : [
+    {
+      "text" : "Struct describing a transaction which has been imported",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ImportedTransaction"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ImportedTransaction"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ImportedTransaction",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importedtransaction"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Importer": {
+  "abstract" : [
+    {
+      "text" : "Protocol to represent an Importer, regardless of type",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Importer"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Importer"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Importer",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importer"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Importer/nextTransaction()": {
+  "abstract" : [
+    {
+      "text" : "Returns the next ",
+      "type" : "text"
+    },
+    {
+      "code" : "ImportedTransaction",
+      "type" : "codeVoice"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "nextTransaction"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:22SwiftBeanCountImporter19ImportedTransactionV",
+      "text" : "ImportedTransaction"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer\/nextTransaction()",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "nextTransaction()",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importer\/nexttransaction()"
+}
+}
+}

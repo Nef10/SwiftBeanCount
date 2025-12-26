@@ -1,1 +1,445 @@
-{"identifier":{"url":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/Syncer\/start(authentication:completion:)","interfaceLanguage":"swift"},"abstract":[{"text":"Start the sync process","type":"text"}],"kind":"symbol","sections":[],"schemaVersion":{"minor":3,"patch":0,"major":0},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/Syncer"]]},"primaryContentSections":[{"kind":"declarations","declarations":[{"platforms":["macOS"],"tokens":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"start"},{"kind":"text","text":"("},{"kind":"externalParam","text":"authentication"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:20GoogleAuthentication0B0C","text":"Authentication"},{"kind":"text","text":", "},{"kind":"externalParam","text":"completion"},{"kind":"text","text":": "},{"kind":"attribute","text":"@escaping "},{"kind":"text","text":"("},{"kind":"typeIdentifier","preciseIdentifier":"s:s6ResultO","text":"Result"},{"kind":"text","text":"<"},{"kind":"typeIdentifier","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult","preciseIdentifier":"s:23SwiftBeanCountSheetSync0E6ResultV","text":"SyncResult"},{"kind":"text","text":", any "},{"kind":"typeIdentifier","preciseIdentifier":"s:s5ErrorP","text":"Error"},{"kind":"text","text":">) -> "},{"kind":"typeIdentifier","preciseIdentifier":"s:s4Voida","text":"Void"},{"kind":"text","text":")"}],"languages":["swift"]}]},{"kind":"parameters","parameters":[{"content":[{"type":"paragraph","inlineContent":[{"text":"Valid authentication for the Google Sheet API","type":"text"}]}],"name":"authentication"},{"content":[{"type":"paragraph","inlineContent":[{"text":"Result of the sync","type":"text"}]}],"name":"completion"}]}],"variants":[{"paths":["\/documentation\/swiftbeancountsheetsync\/syncer\/start(authentication:completion:)"],"traits":[{"interfaceLanguage":"swift"}]}],"metadata":{"required":true,"role":"symbol","modules":[{"name":"SwiftBeanCountSheetSync"}],"externalID":"s:23SwiftBeanCountSheetSync6SyncerP5start14authentication10completiony20GoogleAuthentication0K0C_ys6ResultOyAA0eL0Vs5Error_pGctF","title":"start(authentication:completion:)","symbolKind":"method","roleHeading":"Instance Method","fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"start","kind":"identifier"},{"text":"(","kind":"text"},{"text":"authentication","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"Authentication","kind":"typeIdentifier","preciseIdentifier":"s:20GoogleAuthentication0B0C"},{"text":", ","kind":"text"},{"text":"completion","kind":"externalParam"},{"text":": (","kind":"text"},{"text":"Result","kind":"typeIdentifier","preciseIdentifier":"s:s6ResultO"},{"text":"<","kind":"text"},{"text":"SyncResult","kind":"typeIdentifier","preciseIdentifier":"s:23SwiftBeanCountSheetSync0E6ResultV"},{"text":", any ","kind":"text"},{"text":"Error","kind":"typeIdentifier","preciseIdentifier":"s:s5ErrorP"},{"text":">) -> ","kind":"text"},{"text":"Void","kind":"typeIdentifier","preciseIdentifier":"s:s4Voida"},{"text":")","kind":"text"}]},"references":{"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncResult":{"navigatorTitle":[{"text":"SyncResult","kind":"identifier"}],"fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SyncResult","kind":"identifier"}],"identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult","abstract":[{"type":"text","text":"Result of the syncronization"}],"type":"topic","kind":"symbol","url":"\/documentation\/swiftbeancountsheetsync\/syncresult","title":"SyncResult","role":"symbol"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/Syncer/start(authentication:completion:)":{"identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/Syncer\/start(authentication:completion:)","type":"topic","required":true,"kind":"symbol","fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"start"},{"kind":"text","text":"("},{"kind":"externalParam","text":"authentication"},{"text":": ","kind":"text"},{"text":"Authentication","preciseIdentifier":"s:20GoogleAuthentication0B0C","kind":"typeIdentifier"},{"text":", ","kind":"text"},{"text":"completion","kind":"externalParam"},{"text":": (","kind":"text"},{"text":"Result","preciseIdentifier":"s:s6ResultO","kind":"typeIdentifier"},{"text":"<","kind":"text"},{"text":"SyncResult","preciseIdentifier":"s:23SwiftBeanCountSheetSync0E6ResultV","kind":"typeIdentifier"},{"text":", any ","kind":"text"},{"text":"Error","preciseIdentifier":"s:s5ErrorP","kind":"typeIdentifier"},{"text":">) -> ","kind":"text"},{"text":"Void","preciseIdentifier":"s:s4Voida","kind":"typeIdentifier"},{"text":")","kind":"text"}],"url":"\/documentation\/swiftbeancountsheetsync\/syncer\/start(authentication:completion:)","role":"symbol","abstract":[{"type":"text","text":"Start the sync process"}],"title":"start(authentication:completion:)"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync":{"abstract":[],"kind":"symbol","title":"SwiftBeanCountSheetSync","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync","role":"collection","url":"\/documentation\/swiftbeancountsheetsync","type":"topic"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/Syncer":{"fragments":[{"text":"protocol","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Syncer","kind":"identifier"}],"kind":"symbol","title":"Syncer","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/Syncer","role":"symbol","navigatorTitle":[{"text":"Syncer","kind":"identifier"}],"abstract":[{"type":"text","text":"Syncer which can sync transactions between the sheet and ledger"}],"type":"topic","url":"\/documentation\/swiftbeancountsheetsync\/syncer"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Start the sync process",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/Syncer"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/Syncer\/start(authentication:completion:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:23SwiftBeanCountSheetSync6SyncerP5start14authentication10completiony20GoogleAuthentication0K0C_ys6ResultOyAA0eL0Vs5Error_pGctF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "start"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "authentication"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:20GoogleAuthentication0B0C",
+        "text" : "Authentication"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "completion"
+      },
+      {
+        "kind" : "text",
+        "text" : ": ("
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:s6ResultO",
+        "text" : "Result"
+      },
+      {
+        "kind" : "text",
+        "text" : "<"
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:23SwiftBeanCountSheetSync0E6ResultV",
+        "text" : "SyncResult"
+      },
+      {
+        "kind" : "text",
+        "text" : ", any "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:s5ErrorP",
+        "text" : "Error"
+      },
+      {
+        "kind" : "text",
+        "text" : ">) -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:s4Voida",
+        "text" : "Void"
+      },
+      {
+        "kind" : "text",
+        "text" : ")"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountSheetSync"
+      }
+    ],
+    "required" : true,
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "start(authentication:completion:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "start"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "authentication"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:20GoogleAuthentication0B0C",
+              "text" : "Authentication"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "completion"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "attribute",
+              "text" : "@escaping "
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s6ResultO",
+              "text" : "Result"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:23SwiftBeanCountSheetSync0E6ResultV",
+              "text" : "SyncResult"
+            },
+            {
+              "kind" : "text",
+              "text" : ", any "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s5ErrorP",
+              "text" : "Error"
+            },
+            {
+              "kind" : "text",
+              "text" : ">) -> "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s4Voida",
+              "text" : "Void"
+            },
+            {
+              "kind" : "text",
+              "text" : ")"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Valid authentication for the Google Sheet API",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "authentication"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Result of the sync",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "completion"
+        }
+      ]
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountsheetsync\/syncer\/start(authentication:completion:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountSheetSync",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncResult": {
+  "abstract" : [
+    {
+      "text" : "Result of the syncronization",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SyncResult"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SyncResult"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SyncResult",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/syncresult"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/Syncer": {
+  "abstract" : [
+    {
+      "text" : "Syncer which can sync transactions between the sheet and ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Syncer"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/Syncer",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Syncer"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Syncer",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/syncer"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/Syncer/start(authentication:completion:)": {
+  "abstract" : [
+    {
+      "text" : "Start the sync process",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "start"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "authentication"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:20GoogleAuthentication0B0C",
+      "text" : "Authentication"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "completion"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s6ResultO",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:23SwiftBeanCountSheetSync0E6ResultV",
+      "text" : "SyncResult"
+    },
+    {
+      "kind" : "text",
+      "text" : ", any "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s5ErrorP",
+      "text" : "Error"
+    },
+    {
+      "kind" : "text",
+      "text" : ">) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s4Voida",
+      "text" : "Void"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/Syncer\/start(authentication:completion:)",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "start(authentication:completion:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/syncer\/start(authentication:completion:)"
+}
+}
+}

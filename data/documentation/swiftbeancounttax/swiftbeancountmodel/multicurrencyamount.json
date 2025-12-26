@@ -1,1 +1,273 @@
-{"identifier":{"url":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/SwiftBeanCountModel\/MultiCurrencyAmount","interfaceLanguage":"swift"},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax","doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/SwiftBeanCountModel"]]},"sections":[],"metadata":{"externalID":"s:e:s:19SwiftBeanCountModel19MultiCurrencyAmountV0abC3TaxE10fullStringSSvp","extendedModule":"SwiftBeanCountModel","modules":[{"name":"SwiftBeanCountTax","relatedModules":["SwiftBeanCountModel"]}],"navigatorTitle":[{"kind":"identifier","text":"MultiCurrencyAmount"}],"symbolKind":"extension","role":"symbol","fragments":[{"kind":"keyword","text":"extension"},{"kind":"text","text":" "},{"preciseIdentifier":"s:19SwiftBeanCountModel19MultiCurrencyAmountV","kind":"identifier","text":"MultiCurrencyAmount"}],"roleHeading":"Extended Structure","title":"MultiCurrencyAmount"},"primaryContentSections":[{"kind":"declarations","declarations":[{"languages":["swift"],"tokens":[{"kind":"keyword","text":"extension"},{"kind":"text","text":" "},{"preciseIdentifier":"s:19SwiftBeanCountModel19MultiCurrencyAmountV","kind":"typeIdentifier","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount","text":"MultiCurrencyAmount"}],"platforms":["macOS"]}]}],"kind":"symbol","topicSections":[{"identifiers":["doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/SwiftBeanCountModel\/MultiCurrencyAmount\/fullString","doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/SwiftBeanCountModel\/MultiCurrencyAmount\/string"],"generated":true,"title":"Instance Properties","anchor":"Instance-Properties"}],"schemaVersion":{"minor":3,"major":0,"patch":0},"variants":[{"paths":["\/documentation\/swiftbeancounttax\/swiftbeancountmodel\/multicurrencyamount"],"traits":[{"interfaceLanguage":"swift"}]}],"references":{"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/SwiftBeanCountModel":{"title":"SwiftBeanCountModel","abstract":[],"role":"collection","type":"topic","kind":"symbol","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/SwiftBeanCountModel","url":"\/documentation\/swiftbeancounttax\/swiftbeancountmodel"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount","kind":"symbol","fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"MultiCurrencyAmount"}],"url":"\/documentation\/swiftbeancountmodel\/multicurrencyamount","title":"MultiCurrencyAmount","abstract":[{"type":"text","text":"Represents an amout which consists of amouts in multiple currencies"}],"role":"symbol","type":"topic"},"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/SwiftBeanCountModel/MultiCurrencyAmount/fullString":{"kind":"symbol","type":"topic","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/SwiftBeanCountModel\/MultiCurrencyAmount\/fullString","title":"fullString","fragments":[{"kind":"keyword","text":"var"},{"kind":"text","text":" "},{"kind":"identifier","text":"fullString"},{"kind":"text","text":": "},{"preciseIdentifier":"s:SS","kind":"typeIdentifier","text":"String"}],"role":"symbol","url":"\/documentation\/swiftbeancounttax\/swiftbeancountmodel\/multicurrencyamount\/fullstring","abstract":[{"type":"text","text":"String which lists the absolut value of each amount in the MultiCurrencyAmount, separated by +"}]},"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax":{"abstract":[],"title":"SwiftBeanCountTax","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax","kind":"symbol","type":"topic","url":"\/documentation\/swiftbeancounttax","role":"collection"},"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/SwiftBeanCountModel/MultiCurrencyAmount":{"title":"MultiCurrencyAmount","abstract":[],"role":"symbol","type":"topic","kind":"symbol","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/SwiftBeanCountModel\/MultiCurrencyAmount","url":"\/documentation\/swiftbeancounttax\/swiftbeancountmodel\/multicurrencyamount","navigatorTitle":[{"text":"MultiCurrencyAmount","kind":"identifier"}],"fragments":[{"text":"extension","kind":"keyword"},{"text":" ","kind":"text"},{"preciseIdentifier":"s:19SwiftBeanCountModel19MultiCurrencyAmountV","text":"MultiCurrencyAmount","kind":"identifier"}]},"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/SwiftBeanCountModel/MultiCurrencyAmount/string":{"role":"symbol","fragments":[{"kind":"keyword","text":"var"},{"kind":"text","text":" "},{"kind":"identifier","text":"string"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"String","preciseIdentifier":"s:SS"}],"abstract":[{"text":"String which lists the absolut value of each amount in the MultiCurrencyAmount, separated by +","type":"text"}],"kind":"symbol","url":"\/documentation\/swiftbeancounttax\/swiftbeancountmodel\/multicurrencyamount\/string","type":"topic","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/SwiftBeanCountModel\/MultiCurrencyAmount\/string","title":"string"}}}
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax",
+        "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/SwiftBeanCountModel"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/SwiftBeanCountModel\/MultiCurrencyAmount"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "SwiftBeanCountModel",
+    "externalID" : "s:e:s:19SwiftBeanCountModel19MultiCurrencyAmountV0abC3TaxE10fullStringSSvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "extension"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV",
+        "text" : "MultiCurrencyAmount"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountTax",
+        "relatedModules" : [
+          "SwiftBeanCountModel"
+        ]
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "MultiCurrencyAmount"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Extended Structure",
+    "symbolKind" : "extension",
+    "title" : "MultiCurrencyAmount"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "extension"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV",
+              "text" : "MultiCurrencyAmount"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/SwiftBeanCountModel\/MultiCurrencyAmount\/fullString",
+        "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/SwiftBeanCountModel\/MultiCurrencyAmount\/string"
+      ],
+      "title" : "Instance Properties"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancounttax\/swiftbeancountmodel\/multicurrencyamount"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount": {
+  "abstract" : [
+    {
+      "text" : "Represents an amout which consists of amouts in multiple currencies",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "MultiCurrencyAmount"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "MultiCurrencyAmount",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/multicurrencyamount"
+},
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountTax",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax"
+},
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/SwiftBeanCountModel/MultiCurrencyAmount": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "extension"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV",
+      "text" : "MultiCurrencyAmount"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/SwiftBeanCountModel\/MultiCurrencyAmount",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "MultiCurrencyAmount"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "MultiCurrencyAmount",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax\/swiftbeancountmodel\/multicurrencyamount"
+},
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/SwiftBeanCountModel/MultiCurrencyAmount/fullString": {
+  "abstract" : [
+    {
+      "text" : "String which lists the absolut value of each amount in the MultiCurrencyAmount, separated by +",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "fullString"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/SwiftBeanCountModel\/MultiCurrencyAmount\/fullString",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "fullString",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax\/swiftbeancountmodel\/multicurrencyamount\/fullstring"
+},
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/SwiftBeanCountModel/MultiCurrencyAmount/string": {
+  "abstract" : [
+    {
+      "text" : "String which lists the absolut value of each amount in the MultiCurrencyAmount, separated by +",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "string"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/SwiftBeanCountModel\/MultiCurrencyAmount\/string",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "string",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax\/swiftbeancountmodel\/multicurrencyamount\/string"
+}
+}
+}

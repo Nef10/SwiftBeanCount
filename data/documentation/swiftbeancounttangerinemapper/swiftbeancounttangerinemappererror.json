@@ -1,1 +1,346 @@
-{"schemaVersion":{"minor":3,"major":0,"patch":0},"topicSections":[{"anchor":"Enumeration-Cases","identifiers":["doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/invalidDate(date:)","doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/missingAccount(account:)"],"generated":true,"title":"Enumeration Cases"},{"anchor":"Default-Implementations","identifiers":["doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/Equatable-Implementations","doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/Error-Implementations","doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/LocalizedError-Implementations"],"generated":true,"title":"Default Implementations"}],"sections":[],"abstract":[{"text":"Errors which can happen when using SwiftBeanCountTangerineMapper","type":"text"}],"relationshipsSections":[{"identifiers":["doc:\/\/SwiftBeanCountTangerineMapper\/10Foundation14LocalizedErrorP","doc:\/\/SwiftBeanCountTangerineMapper\/s8CopyableP","doc:\/\/SwiftBeanCountTangerineMapper\/SQ","doc:\/\/SwiftBeanCountTangerineMapper\/s5ErrorP","doc:\/\/SwiftBeanCountTangerineMapper\/s8SendableP","doc:\/\/SwiftBeanCountTangerineMapper\/s16SendableMetatypeP"],"kind":"relationships","type":"conformsTo","title":"Conforms To"}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper"]]},"metadata":{"externalID":"s:29SwiftBeanCountTangerineMapper0abcdE5ErrorO","title":"SwiftBeanCountTangerineMapperError","fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SwiftBeanCountTangerineMapperError","kind":"identifier"}],"navigatorTitle":[{"text":"SwiftBeanCountTangerineMapperError","kind":"identifier"}],"roleHeading":"Enumeration","symbolKind":"enum","modules":[{"name":"SwiftBeanCountTangerineMapper"}],"role":"symbol"},"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SwiftBeanCountTangerineMapperError","kind":"identifier"}],"platforms":["macOS"],"languages":["swift"]}]}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror"]}],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError"},"kind":"symbol","references":{"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapperError/missingAccount(account:)":{"type":"topic","title":"SwiftBeanCountTangerineMapperError.missingAccount(account:)","kind":"symbol","identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/missingAccount(account:)","abstract":[{"type":"text","text":"Account not found in ledger"}],"url":"\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/missingaccount(account:)","role":"symbol","fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"missingAccount","kind":"identifier"},{"text":"(","kind":"text"},{"text":"account","kind":"externalParam"},{"text":": ","kind":"text"},{"preciseIdentifier":"s:SS","text":"String","kind":"typeIdentifier"},{"text":")","kind":"text"}]},"doc://SwiftBeanCountTangerineMapper/s8CopyableP":{"type":"unresolvable","title":"Swift.Copyable","identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/s8CopyableP"},"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapperError/invalidDate(date:)":{"abstract":[{"text":"invalid date in parsed transaction","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/invalidDate(date:)","type":"topic","kind":"symbol","fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"invalidDate","kind":"identifier"},{"text":"(","kind":"text"},{"text":"date","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":")","kind":"text"}],"role":"symbol","title":"SwiftBeanCountTangerineMapperError.invalidDate(date:)","url":"\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/invaliddate(date:)"},"doc://SwiftBeanCountTangerineMapper/s5ErrorP":{"type":"unresolvable","identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/s5ErrorP","title":"Swift.Error"},"doc://SwiftBeanCountTangerineMapper/10Foundation14LocalizedErrorP":{"type":"unresolvable","title":"Foundation.LocalizedError","identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/10Foundation14LocalizedErrorP"},"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper":{"role":"collection","identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper","abstract":[],"type":"topic","title":"SwiftBeanCountTangerineMapper","url":"\/documentation\/swiftbeancounttangerinemapper","kind":"symbol"},"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapperError":{"title":"SwiftBeanCountTangerineMapperError","abstract":[{"text":"Errors which can happen when using SwiftBeanCountTangerineMapper","type":"text"}],"type":"topic","fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SwiftBeanCountTangerineMapperError","kind":"identifier"}],"navigatorTitle":[{"text":"SwiftBeanCountTangerineMapperError","kind":"identifier"}],"identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError","kind":"symbol","url":"\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror","role":"symbol"},"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapperError/Equatable-Implementations":{"identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/Equatable-Implementations","title":"Equatable Implementations","abstract":[],"role":"collectionGroup","kind":"article","url":"\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/equatable-implementations","type":"topic"},"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapperError/Error-Implementations":{"url":"\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/error-implementations","role":"collectionGroup","type":"topic","kind":"article","abstract":[],"identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/Error-Implementations","title":"Error Implementations"},"doc://SwiftBeanCountTangerineMapper/s8SendableP":{"identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/s8SendableP","title":"Swift.Sendable","type":"unresolvable"},"doc://SwiftBeanCountTangerineMapper/s16SendableMetatypeP":{"type":"unresolvable","title":"Swift.SendableMetatype","identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/s16SendableMetatypeP"},"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapperError/LocalizedError-Implementations":{"url":"\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/localizederror-implementations","role":"collectionGroup","abstract":[],"kind":"article","type":"topic","identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/LocalizedError-Implementations","title":"LocalizedError Implementations"},"doc://SwiftBeanCountTangerineMapper/SQ":{"title":"Swift.Equatable","type":"unresolvable","identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/SQ"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Errors which can happen when using SwiftBeanCountTangerineMapper",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:29SwiftBeanCountTangerineMapper0abcdE5ErrorO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "SwiftBeanCountTangerineMapperError"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountTangerineMapper"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "SwiftBeanCountTangerineMapperError"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "SwiftBeanCountTangerineMapperError"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "SwiftBeanCountTangerineMapperError"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountTangerineMapper\/10Foundation14LocalizedErrorP",
+        "doc:\/\/SwiftBeanCountTangerineMapper\/s8CopyableP",
+        "doc:\/\/SwiftBeanCountTangerineMapper\/SQ",
+        "doc:\/\/SwiftBeanCountTangerineMapper\/s5ErrorP",
+        "doc:\/\/SwiftBeanCountTangerineMapper\/s8SendableP",
+        "doc:\/\/SwiftBeanCountTangerineMapper\/s16SendableMetatypeP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Enumeration-Cases",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/invalidDate(date:)",
+        "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/missingAccount(account:)"
+      ],
+      "title" : "Enumeration Cases"
+    },
+    {
+      "anchor" : "Default-Implementations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/Equatable-Implementations",
+        "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/Error-Implementations",
+        "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/LocalizedError-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountTangerineMapper/10Foundation14LocalizedErrorP": {
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/10Foundation14LocalizedErrorP",
+  "title" : "Foundation.LocalizedError",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountTangerineMapper/SQ": {
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/SQ",
+  "title" : "Swift.Equatable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountTangerineMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttangerinemapper"
+},
+"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapperError": {
+  "abstract" : [
+    {
+      "text" : "Errors which can happen when using SwiftBeanCountTangerineMapper",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountTangerineMapperError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountTangerineMapperError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SwiftBeanCountTangerineMapperError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror"
+},
+"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapperError/Equatable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/Equatable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Equatable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/equatable-implementations"
+},
+"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapperError/Error-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/Error-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Error Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/error-implementations"
+},
+"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapperError/LocalizedError-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/LocalizedError-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "LocalizedError Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/localizederror-implementations"
+},
+"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapperError/invalidDate(date:)": {
+  "abstract" : [
+    {
+      "text" : "invalid date in parsed transaction",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "invalidDate"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "date"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/invalidDate(date:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "SwiftBeanCountTangerineMapperError.invalidDate(date:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/invaliddate(date:)"
+},
+"doc://SwiftBeanCountTangerineMapper/documentation/SwiftBeanCountTangerineMapper/SwiftBeanCountTangerineMapperError/missingAccount(account:)": {
+  "abstract" : [
+    {
+      "text" : "Account not found in ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "missingAccount"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "account"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper\/SwiftBeanCountTangerineMapperError\/missingAccount(account:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "SwiftBeanCountTangerineMapperError.missingAccount(account:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttangerinemapper\/swiftbeancounttangerinemappererror\/missingaccount(account:)"
+},
+"doc://SwiftBeanCountTangerineMapper/s16SendableMetatypeP": {
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/s16SendableMetatypeP",
+  "title" : "Swift.SendableMetatype",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountTangerineMapper/s5ErrorP": {
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/s5ErrorP",
+  "title" : "Swift.Error",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountTangerineMapper/s8CopyableP": {
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/s8CopyableP",
+  "title" : "Swift.Copyable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountTangerineMapper/s8SendableP": {
+  "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/s8SendableP",
+  "title" : "Swift.Sendable",
+  "type" : "unresolvable"
+}
+}
+}

@@ -1,1 +1,619 @@
-{"schemaVersion":{"patch":0,"minor":3,"major":0},"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountsheetsync\/ledgersettings"]}],"abstract":[{"text":"Settings for SwiftBeanCountSheetSync which were read from the ledger file","type":"text"}],"sections":[],"identifier":{"url":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings","interfaceLanguage":"swift"},"metadata":{"roleHeading":"Structure","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"LedgerSettings","kind":"identifier"}],"modules":[{"name":"SwiftBeanCountSheetSync"}],"role":"symbol","externalID":"s:23SwiftBeanCountSheetSync14LedgerSettingsV","symbolKind":"struct","navigatorTitle":[{"text":"LedgerSettings","kind":"identifier"}],"title":"LedgerSettings"},"topicSections":[{"identifiers":["doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/init(commoditySymbol:tag:name:accountName:dateTolerance:categoryAccountNames:accountNameCategories:)"],"generated":true,"anchor":"Initializers","title":"Initializers"},{"identifiers":["doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/accountName","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/accountNameCategories","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/categoryAccountNames","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/commoditySymbol","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/dateTolerance","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/name","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/tag"],"generated":true,"anchor":"Instance-Properties","title":"Instance Properties"}],"primaryContentSections":[{"declarations":[{"languages":["swift"],"platforms":["macOS"],"tokens":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"LedgerSettings","kind":"identifier"}]}],"kind":"declarations"}],"kind":"symbol","hierarchy":{"paths":[["doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync"]]},"references":{"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings":{"title":"LedgerSettings","kind":"symbol","role":"symbol","type":"topic","abstract":[{"text":"Settings for SwiftBeanCountSheetSync which were read from the ledger file","type":"text"}],"navigatorTitle":[{"kind":"identifier","text":"LedgerSettings"}],"fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"LedgerSettings"}],"url":"\/documentation\/swiftbeancountsheetsync\/ledgersettings","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/dateTolerance":{"type":"topic","abstract":[{"type":"text","text":"tolerance used to detect already existing transactions"}],"fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"dateTolerance","kind":"identifier"},{"text":": ","kind":"text"},{"preciseIdentifier":"c:@T@NSTimeInterval","text":"TimeInterval","kind":"typeIdentifier"}],"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/dateTolerance","title":"dateTolerance","url":"\/documentation\/swiftbeancountsheetsync\/ledgersettings\/datetolerance","role":"symbol"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/accountName":{"identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/accountName","type":"topic","abstract":[{"text":"Account which is used to keep track of the balance between the people","type":"text"}],"url":"\/documentation\/swiftbeancountsheetsync\/ledgersettings\/accountname","title":"accountName","role":"symbol","kind":"symbol","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"accountName","kind":"identifier"},{"text":": ","kind":"text"},{"text":"AccountName","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV"}]},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/commoditySymbol":{"kind":"symbol","role":"symbol","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"commoditySymbol","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"}],"title":"commoditySymbol","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/commoditySymbol","url":"\/documentation\/swiftbeancountsheetsync\/ledgersettings\/commoditysymbol","type":"topic","abstract":[{"text":"Commodity symbol for all transactions - The syncronization only supports one commodity","type":"text"}]},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/init(commoditySymbol:tag:name:accountName:dateTolerance:categoryAccountNames:accountNameCategories:)":{"url":"\/documentation\/swiftbeancountsheetsync\/ledgersettings\/init(commoditysymbol:tag:name:accountname:datetolerance:categoryaccountnames:accountnamecategories:)","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/init(commoditySymbol:tag:name:accountName:dateTolerance:categoryAccountNames:accountNameCategories:)","kind":"symbol","role":"symbol","type":"topic","title":"init(commoditySymbol:tag:name:accountName:dateTolerance:categoryAccountNames:accountNameCategories:)","fragments":[{"text":"init","kind":"identifier"},{"text":"(","kind":"text"},{"text":"commoditySymbol","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":", ","kind":"text"},{"text":"tag","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"Tag","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel3TagV"},{"text":", ","kind":"text"},{"text":"name","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":", ","kind":"text"},{"text":"accountName","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"AccountName","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV"},{"text":", ","kind":"text"},{"text":"dateTolerance","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"TimeInterval","kind":"typeIdentifier","preciseIdentifier":"c:@T@NSTimeInterval"},{"text":", ","kind":"text"},{"text":"categoryAccountNames","kind":"externalParam"},{"text":": [","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":" : ","kind":"text"},{"text":"AccountName","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV"},{"text":"], ","kind":"text"},{"text":"accountNameCategories","kind":"externalParam"},{"text":": [","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":" : ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":"])","kind":"text"}],"abstract":[{"text":"Create the ledger settings from the data read from the ledger","type":"text"}]},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync":{"abstract":[],"kind":"symbol","title":"SwiftBeanCountSheetSync","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync","role":"collection","url":"\/documentation\/swiftbeancountsheetsync","type":"topic"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/categoryAccountNames":{"url":"\/documentation\/swiftbeancountsheetsync\/ledgersettings\/categoryaccountnames","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/categoryAccountNames","kind":"symbol","role":"symbol","type":"topic","title":"categoryAccountNames","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"categoryAccountNames","kind":"identifier"},{"text":": [","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":" : ","kind":"text"},{"text":"AccountName","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV"},{"text":"]","kind":"text"}],"abstract":[{"text":"Mapping from sheet categories to the corresponding account names in the ledger","type":"text"}]},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/tag":{"title":"tag","role":"symbol","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"tag","kind":"identifier"},{"text":": ","kind":"text"},{"text":"Tag","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel3TagV"}],"identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/tag","kind":"symbol","type":"topic","url":"\/documentation\/swiftbeancountsheetsync\/ledgersettings\/tag","abstract":[{"text":"Tag which is appended to all transactions from the sheet","type":"text"}]},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/name":{"fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"name","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"}],"url":"\/documentation\/swiftbeancountsheetsync\/ledgersettings\/name","type":"topic","abstract":[{"text":"Name of the person of the ledger - used to identify the colunms of the sheet","type":"text"}],"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/name","title":"name","role":"symbol"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/accountNameCategories":{"abstract":[{"text":"Mapping from account names in the ledger to the corresponding categories in the sheet","type":"text"}],"role":"symbol","url":"\/documentation\/swiftbeancountsheetsync\/ledgersettings\/accountnamecategories","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/accountNameCategories","title":"accountNameCategories","type":"topic","kind":"symbol","fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"accountNameCategories"},{"kind":"text","text":": ["},{"kind":"typeIdentifier","preciseIdentifier":"s:SS","text":"String"},{"kind":"text","text":" : "},{"kind":"typeIdentifier","preciseIdentifier":"s:SS","text":"String"},{"kind":"text","text":"]"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Settings for SwiftBeanCountSheetSync which were read from the ledger file",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:23SwiftBeanCountSheetSync14LedgerSettingsV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "LedgerSettings"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountSheetSync"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "LedgerSettings"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "LedgerSettings"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "LedgerSettings"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Initializers",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/init(commoditySymbol:tag:name:accountName:dateTolerance:categoryAccountNames:accountNameCategories:)"
+      ],
+      "title" : "Initializers"
+    },
+    {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/accountName",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/accountNameCategories",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/categoryAccountNames",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/commoditySymbol",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/dateTolerance",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/name",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/tag"
+      ],
+      "title" : "Instance Properties"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountsheetsync\/ledgersettings"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountSheetSync",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings": {
+  "abstract" : [
+    {
+      "text" : "Settings for SwiftBeanCountSheetSync which were read from the ledger file",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "LedgerSettings"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "LedgerSettings"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "LedgerSettings",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/ledgersettings"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/accountName": {
+  "abstract" : [
+    {
+      "text" : "Account which is used to keep track of the balance between the people",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "accountName"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+      "text" : "AccountName"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/accountName",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "accountName",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/ledgersettings\/accountname"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/accountNameCategories": {
+  "abstract" : [
+    {
+      "text" : "Mapping from account names in the ledger to the corresponding categories in the sheet",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "accountNameCategories"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : " : "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/accountNameCategories",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "accountNameCategories",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/ledgersettings\/accountnamecategories"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/categoryAccountNames": {
+  "abstract" : [
+    {
+      "text" : "Mapping from sheet categories to the corresponding account names in the ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "categoryAccountNames"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : " : "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+      "text" : "AccountName"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/categoryAccountNames",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "categoryAccountNames",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/ledgersettings\/categoryaccountnames"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/commoditySymbol": {
+  "abstract" : [
+    {
+      "text" : "Commodity symbol for all transactions - The syncronization only supports one commodity",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "commoditySymbol"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/commoditySymbol",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "commoditySymbol",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/ledgersettings\/commoditysymbol"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/dateTolerance": {
+  "abstract" : [
+    {
+      "text" : "tolerance used to detect already existing transactions",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "dateTolerance"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:@T@NSTimeInterval",
+      "text" : "TimeInterval"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/dateTolerance",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "dateTolerance",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/ledgersettings\/datetolerance"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/init(commoditySymbol:tag:name:accountName:dateTolerance:categoryAccountNames:accountNameCategories:)": {
+  "abstract" : [
+    {
+      "text" : "Create the ledger settings from the data read from the ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "commoditySymbol"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "tag"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel3TagV",
+      "text" : "Tag"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "name"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "accountName"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+      "text" : "AccountName"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "dateTolerance"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:@T@NSTimeInterval",
+      "text" : "TimeInterval"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "categoryAccountNames"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : " : "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+      "text" : "AccountName"
+    },
+    {
+      "kind" : "text",
+      "text" : "], "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "accountNameCategories"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : " : "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "])"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/init(commoditySymbol:tag:name:accountName:dateTolerance:categoryAccountNames:accountNameCategories:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(commoditySymbol:tag:name:accountName:dateTolerance:categoryAccountNames:accountNameCategories:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/ledgersettings\/init(commoditysymbol:tag:name:accountname:datetolerance:categoryaccountnames:accountnamecategories:)"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/name": {
+  "abstract" : [
+    {
+      "text" : "Name of the person of the ledger - used to identify the colunms of the sheet",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "name"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/name",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "name",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/ledgersettings\/name"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/tag": {
+  "abstract" : [
+    {
+      "text" : "Tag which is appended to all transactions from the sheet",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "tag"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel3TagV",
+      "text" : "Tag"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/tag",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "tag",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/ledgersettings\/tag"
+}
+}
+}

@@ -1,1 +1,211 @@
-{"kind":"symbol","hierarchy":{"paths":[["doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper","doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleConversionError"]]},"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleConversionError\/missingCommodity(_:)"},"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/missingcommodity(_:)"]}],"sections":[],"metadata":{"symbolKind":"case","modules":[{"name":"SwiftBeanCountWealthsimpleMapper"}],"role":"symbol","title":"WealthsimpleConversionError.missingCommodity(_:)","roleHeading":"Case","externalID":"s:32SwiftBeanCountWealthsimpleMapper0D15ConversionErrorO16missingCommodityyACSScACmF","fragments":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"missingCommodity"},{"kind":"text","text":"("},{"kind":"typeIdentifier","preciseIdentifier":"s:SS","text":"String"},{"kind":"text","text":")"}]},"abstract":[{"type":"text","text":"a commodity was not found in the ledger"}],"schemaVersion":{"minor":3,"major":0,"patch":0},"primaryContentSections":[{"declarations":[{"tokens":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"missingCommodity","kind":"identifier"},{"text":"(","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":")","kind":"text"}],"languages":["swift"],"platforms":["macOS"]}],"kind":"declarations"}],"references":{"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleConversionError":{"type":"topic","kind":"symbol","title":"WealthsimpleConversionError","identifier":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleConversionError","fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"WealthsimpleConversionError"}],"url":"\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror","abstract":[{"type":"text","text":"Errors which can happen when transforming downloaded wealthsimple data into SwiftBeanCountModel types"}],"role":"symbol","navigatorTitle":[{"kind":"identifier","text":"WealthsimpleConversionError"}]},"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleConversionError/missingCommodity(_:)":{"role":"symbol","kind":"symbol","title":"WealthsimpleConversionError.missingCommodity(_:)","fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"missingCommodity","kind":"identifier"},{"text":"(","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":")","kind":"text"}],"abstract":[{"text":"a commodity was not found in the ledger","type":"text"}],"type":"topic","url":"\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/missingcommodity(_:)","identifier":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleConversionError\/missingCommodity(_:)"},"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper":{"identifier":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper","url":"\/documentation\/swiftbeancountwealthsimplemapper","abstract":[],"role":"collection","kind":"symbol","title":"SwiftBeanCountWealthsimpleMapper","type":"topic"}}}
+{
+  "abstract" : [
+    {
+      "text" : "a commodity was not found in the ledger",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper",
+        "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleConversionError"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleConversionError\/missingCommodity(_:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:32SwiftBeanCountWealthsimpleMapper0D15ConversionErrorO16missingCommodityyACSScACmF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "case"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "missingCommodity"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : ")"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountWealthsimpleMapper"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Case",
+    "symbolKind" : "case",
+    "title" : "WealthsimpleConversionError.missingCommodity(_:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "case"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "missingCommodity"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : ")"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/missingcommodity(_:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountWealthsimpleMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountwealthsimplemapper"
+},
+"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleConversionError": {
+  "abstract" : [
+    {
+      "text" : "Errors which can happen when transforming downloaded wealthsimple data into SwiftBeanCountModel types",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "WealthsimpleConversionError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleConversionError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "WealthsimpleConversionError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "WealthsimpleConversionError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror"
+},
+"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleConversionError/missingCommodity(_:)": {
+  "abstract" : [
+    {
+      "text" : "a commodity was not found in the ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "missingCommodity"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleConversionError\/missingCommodity(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "WealthsimpleConversionError.missingCommodity(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/missingcommodity(_:)"
+}
+}
+}

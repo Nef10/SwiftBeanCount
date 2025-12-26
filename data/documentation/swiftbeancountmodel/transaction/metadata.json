@@ -1,1 +1,242 @@
-{"abstract":[{"text":"Meta data of the Transaction","type":"text"}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction"]]},"metadata":{"externalID":"s:19SwiftBeanCountModel11TransactionC8metaDataAA0e4MetaG0Vvp","title":"metaData","symbolKind":"property","role":"symbol","roleHeading":"Instance Property","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"metaData","kind":"identifier"},{"text":": ","kind":"text"},{"text":"TransactionMetaData","preciseIdentifier":"s:19SwiftBeanCountModel19TransactionMetaDataV","kind":"typeIdentifier"}],"modules":[{"name":"SwiftBeanCountModel"}]},"primaryContentSections":[{"kind":"declarations","declarations":[{"platforms":["macOS"],"languages":["swift"],"tokens":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"metaData","kind":"identifier"},{"text":": ","kind":"text"},{"text":"TransactionMetaData","preciseIdentifier":"s:19SwiftBeanCountModel19TransactionMetaDataV","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/TransactionMetaData","kind":"typeIdentifier"}]}]}],"schemaVersion":{"minor":3,"major":0,"patch":0},"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountmodel\/transaction\/metadata"]}],"sections":[],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/metaData"},"kind":"symbol","references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/TransactionMetaData":{"kind":"symbol","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"TransactionMetaData","kind":"identifier"}],"navigatorTitle":[{"text":"TransactionMetaData","kind":"identifier"}],"abstract":[{"type":"text","text":"TransactionMetaData is data which is or can be attatched to an "},{"type":"codeVoice","code":"Transaction"},{"type":"text","text":"."}],"type":"topic","role":"symbol","title":"TransactionMetaData","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/TransactionMetaData","url":"\/documentation\/swiftbeancountmodel\/transactionmetadata"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/metaData":{"abstract":[{"text":"Meta data of the Transaction","type":"text"}],"title":"metaData","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"metaData","kind":"identifier"},{"text":": ","kind":"text"},{"text":"TransactionMetaData","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel19TransactionMetaDataV"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/metaData","url":"\/documentation\/swiftbeancountmodel\/transaction\/metadata","kind":"symbol","role":"symbol","type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction","fragments":[{"text":"class","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Transaction","kind":"identifier"}],"type":"topic","kind":"symbol","abstract":[{"text":"A Transaction has meta data as well as multiple postings","type":"text"}],"title":"Transaction","url":"\/documentation\/swiftbeancountmodel\/transaction","role":"symbol","navigatorTitle":[{"text":"Transaction","kind":"identifier"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Meta data of the Transaction",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/metaData"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel11TransactionC8metaDataAA0e4MetaG0Vvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "metaData"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel19TransactionMetaDataV",
+        "text" : "TransactionMetaData"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "metaData"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "metaData"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/TransactionMetaData",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel19TransactionMetaDataV",
+              "text" : "TransactionMetaData"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/transaction\/metadata"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction": {
+  "abstract" : [
+    {
+      "text" : "A Transaction has meta data as well as multiple postings",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Transaction"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Transaction"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Transaction",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/metaData": {
+  "abstract" : [
+    {
+      "text" : "Meta data of the Transaction",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "metaData"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel19TransactionMetaDataV",
+      "text" : "TransactionMetaData"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/metaData",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "metaData",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction\/metadata"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/TransactionMetaData": {
+  "abstract" : [
+    {
+      "text" : "TransactionMetaData is data which is or can be attatched to an ",
+      "type" : "text"
+    },
+    {
+      "code" : "Transaction",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "TransactionMetaData"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/TransactionMetaData",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "TransactionMetaData"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "TransactionMetaData",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transactionmetadata"
+}
+}
+}

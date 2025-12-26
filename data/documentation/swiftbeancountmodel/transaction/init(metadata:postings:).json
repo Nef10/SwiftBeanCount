@@ -1,1 +1,421 @@
-{"sections":[],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/init(metaData:postings:)"},"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/transaction\/init(metadata:postings:)"],"traits":[{"interfaceLanguage":"swift"}]}],"primaryContentSections":[{"kind":"declarations","declarations":[{"platforms":["macOS"],"languages":["swift"],"tokens":[{"kind":"keyword","text":"init"},{"kind":"text","text":"("},{"kind":"externalParam","text":"metaData"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"TransactionMetaData","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/TransactionMetaData","preciseIdentifier":"s:19SwiftBeanCountModel19TransactionMetaDataV"},{"kind":"text","text":", "},{"kind":"externalParam","text":"postings"},{"kind":"text","text":": ["},{"kind":"typeIdentifier","text":"Posting","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting","preciseIdentifier":"s:19SwiftBeanCountModel7PostingC"},{"kind":"text","text":"])"}]}]},{"parameters":[{"name":"metaData","content":[{"type":"paragraph","inlineContent":[{"type":"text","text":""},{"code":"TransactionMetaData","type":"codeVoice"}]}]},{"name":"postings","content":[{"type":"paragraph","inlineContent":[{"type":"text","text":""},{"type":"codeVoice","code":"Postings"}]}]}],"kind":"parameters"}],"metadata":{"role":"symbol","externalID":"s:19SwiftBeanCountModel11TransactionC8metaData8postingsAcA0e4MetaG0V_SayAA7PostingCGtcfc","roleHeading":"Initializer","title":"init(metaData:postings:)","modules":[{"name":"SwiftBeanCountModel"}],"symbolKind":"init","fragments":[{"text":"init","kind":"identifier"},{"text":"(","kind":"text"},{"text":"metaData","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"TransactionMetaData","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel19TransactionMetaDataV"},{"text":", ","kind":"text"},{"text":"postings","kind":"externalParam"},{"text":": [","kind":"text"},{"text":"Posting","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel7PostingC"},{"text":"])","kind":"text"}]},"schemaVersion":{"minor":3,"patch":0,"major":0},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction"]]},"abstract":[{"text":"Creates a transaction","type":"text"}],"kind":"symbol","references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/init(metaData:postings:)":{"url":"\/documentation\/swiftbeancountmodel\/transaction\/init(metadata:postings:)","role":"symbol","kind":"symbol","abstract":[{"type":"text","text":"Creates a transaction"}],"type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/init(metaData:postings:)","fragments":[{"kind":"identifier","text":"init"},{"kind":"text","text":"("},{"kind":"externalParam","text":"metaData"},{"kind":"text","text":": "},{"preciseIdentifier":"s:19SwiftBeanCountModel19TransactionMetaDataV","kind":"typeIdentifier","text":"TransactionMetaData"},{"kind":"text","text":", "},{"kind":"externalParam","text":"postings"},{"kind":"text","text":": ["},{"preciseIdentifier":"s:19SwiftBeanCountModel7PostingC","kind":"typeIdentifier","text":"Posting"},{"kind":"text","text":"])"}],"title":"init(metaData:postings:)"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction","fragments":[{"text":"class","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Transaction","kind":"identifier"}],"type":"topic","kind":"symbol","abstract":[{"text":"A Transaction has meta data as well as multiple postings","type":"text"}],"title":"Transaction","url":"\/documentation\/swiftbeancountmodel\/transaction","role":"symbol","navigatorTitle":[{"text":"Transaction","kind":"identifier"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Posting":{"role":"symbol","type":"topic","navigatorTitle":[{"text":"Posting","kind":"identifier"}],"fragments":[{"text":"class","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Posting","kind":"identifier"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting","abstract":[{"type":"text","text":"A Posting contains an "},{"type":"codeVoice","code":"AccountName"},{"type":"text","text":" with the corresponding "},{"type":"codeVoice","code":"Amount"},{"type":"text","text":","},{"type":"text","text":" "},{"type":"text","text":"as well as the "},{"type":"codeVoice","code":"price"},{"type":"text","text":" and "},{"type":"codeVoice","code":"cost"},{"type":"text","text":" (if applicable)."}],"title":"Posting","kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/posting"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/TransactionMetaData":{"kind":"symbol","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"TransactionMetaData","kind":"identifier"}],"navigatorTitle":[{"text":"TransactionMetaData","kind":"identifier"}],"abstract":[{"type":"text","text":"TransactionMetaData is data which is or can be attatched to an "},{"type":"codeVoice","code":"Transaction"},{"type":"text","text":"."}],"type":"topic","role":"symbol","title":"TransactionMetaData","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/TransactionMetaData","url":"\/documentation\/swiftbeancountmodel\/transactionmetadata"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Creates a transaction",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/init(metaData:postings:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel11TransactionC8metaData8postingsAcA0e4MetaG0V_SayAA7PostingCGtcfc",
+    "fragments" : [
+      {
+        "kind" : "identifier",
+        "text" : "init"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "metaData"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel19TransactionMetaDataV",
+        "text" : "TransactionMetaData"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "postings"
+      },
+      {
+        "kind" : "text",
+        "text" : ": ["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel7PostingC",
+        "text" : "Posting"
+      },
+      {
+        "kind" : "text",
+        "text" : "])"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Initializer",
+    "symbolKind" : "init",
+    "title" : "init(metaData:postings:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "init"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "metaData"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/TransactionMetaData",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel19TransactionMetaDataV",
+              "text" : "TransactionMetaData"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "postings"
+            },
+            {
+              "kind" : "text",
+              "text" : ": ["
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel7PostingC",
+              "text" : "Posting"
+            },
+            {
+              "kind" : "text",
+              "text" : "])"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "",
+                  "type" : "text"
+                },
+                {
+                  "code" : "TransactionMetaData",
+                  "type" : "codeVoice"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "metaData"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "",
+                  "type" : "text"
+                },
+                {
+                  "code" : "Postings",
+                  "type" : "codeVoice"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "postings"
+        }
+      ]
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/transaction\/init(metadata:postings:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Posting": {
+  "abstract" : [
+    {
+      "text" : "A Posting contains an ",
+      "type" : "text"
+    },
+    {
+      "code" : "AccountName",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " with the corresponding ",
+      "type" : "text"
+    },
+    {
+      "code" : "Amount",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ",",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "as well as the ",
+      "type" : "text"
+    },
+    {
+      "code" : "price",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " and ",
+      "type" : "text"
+    },
+    {
+      "code" : "cost",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " (if applicable).",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Posting"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Posting",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Posting"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Posting",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/posting"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction": {
+  "abstract" : [
+    {
+      "text" : "A Transaction has meta data as well as multiple postings",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Transaction"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Transaction"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Transaction",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction/init(metaData:postings:)": {
+  "abstract" : [
+    {
+      "text" : "Creates a transaction",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "metaData"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel19TransactionMetaDataV",
+      "text" : "TransactionMetaData"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "postings"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel7PostingC",
+      "text" : "Posting"
+    },
+    {
+      "kind" : "text",
+      "text" : "])"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction\/init(metaData:postings:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(metaData:postings:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction\/init(metadata:postings:)"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/TransactionMetaData": {
+  "abstract" : [
+    {
+      "text" : "TransactionMetaData is data which is or can be attatched to an ",
+      "type" : "text"
+    },
+    {
+      "code" : "Transaction",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "TransactionMetaData"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/TransactionMetaData",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "TransactionMetaData"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "TransactionMetaData",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transactionmetadata"
+}
+}
+}

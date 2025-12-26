@@ -1,1 +1,146 @@
-{"metadata":{"externalID":"SwiftBeanCountWealthsimpleMapper","title":"SwiftBeanCountWealthsimpleMapper","symbolKind":"module","roleHeading":"Framework","modules":[{"name":"SwiftBeanCountWealthsimpleMapper"}],"role":"collection"},"variants":[{"paths":["\/documentation\/swiftbeancountwealthsimplemapper"],"traits":[{"interfaceLanguage":"swift"}]}],"kind":"symbol","sections":[],"hierarchy":{"paths":[[]]},"schemaVersion":{"major":0,"minor":3,"patch":0},"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper"},"topicSections":[{"title":"Structures","identifiers":["doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper"],"anchor":"Structures","generated":true},{"generated":true,"anchor":"Enumerations","identifiers":["doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleConversionError"],"title":"Enumerations"}],"references":{"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleLedgerMapper":{"abstract":[{"type":"text","text":"Functions to transform downloaded Wealthsimple data into SwiftBeanCountModel types"}],"role":"symbol","title":"WealthsimpleLedgerMapper","identifier":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper","fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"WealthsimpleLedgerMapper"}],"navigatorTitle":[{"kind":"identifier","text":"WealthsimpleLedgerMapper"}],"kind":"symbol","type":"topic","url":"\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper"},"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleConversionError":{"kind":"symbol","title":"WealthsimpleConversionError","type":"topic","abstract":[{"text":"Errors which can happen when transforming downloaded wealthsimple data into SwiftBeanCountModel types","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleConversionError","fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"WealthsimpleConversionError","kind":"identifier"}],"url":"\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror","role":"symbol","navigatorTitle":[{"text":"WealthsimpleConversionError","kind":"identifier"}]},"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper":{"identifier":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper","url":"\/documentation\/swiftbeancountwealthsimplemapper","abstract":[],"role":"collection","kind":"symbol","title":"SwiftBeanCountWealthsimpleMapper","type":"topic"}}}
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "SwiftBeanCountWealthsimpleMapper",
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountWealthsimpleMapper"
+      }
+    ],
+    "role" : "collection",
+    "roleHeading" : "Framework",
+    "symbolKind" : "module",
+    "title" : "SwiftBeanCountWealthsimpleMapper"
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Structures",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper"
+      ],
+      "title" : "Structures"
+    },
+    {
+      "anchor" : "Enumerations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleConversionError"
+      ],
+      "title" : "Enumerations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountwealthsimplemapper"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountWealthsimpleMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountwealthsimplemapper"
+},
+"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleConversionError": {
+  "abstract" : [
+    {
+      "text" : "Errors which can happen when transforming downloaded wealthsimple data into SwiftBeanCountModel types",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "WealthsimpleConversionError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleConversionError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "WealthsimpleConversionError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "WealthsimpleConversionError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror"
+},
+"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleLedgerMapper": {
+  "abstract" : [
+    {
+      "text" : "Functions to transform downloaded Wealthsimple data into SwiftBeanCountModel types",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "WealthsimpleLedgerMapper"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "WealthsimpleLedgerMapper"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "WealthsimpleLedgerMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper"
+}
+}
+}

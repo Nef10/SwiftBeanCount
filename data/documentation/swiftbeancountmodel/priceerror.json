@@ -1,1 +1,270 @@
-{"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"PriceError"}],"platforms":["macOS"],"languages":["swift"]}]}],"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/priceerror"],"traits":[{"interfaceLanguage":"swift"}]}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"]]},"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError","interfaceLanguage":"swift"},"metadata":{"fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"PriceError"}],"title":"PriceError","modules":[{"name":"SwiftBeanCountModel"}],"navigatorTitle":[{"kind":"identifier","text":"PriceError"}],"role":"symbol","symbolKind":"enum","externalID":"s:19SwiftBeanCountModel10PriceErrorO","roleHeading":"Enumeration"},"sections":[],"schemaVersion":{"minor":3,"major":0,"patch":0},"abstract":[{"text":"Errors a price can throw","type":"text"}],"topicSections":[{"title":"Enumeration Cases","anchor":"Enumeration-Cases","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/sameCommodity(_:)"],"generated":true},{"title":"Default Implementations","anchor":"Default-Implementations","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/Error-Implementations","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/LocalizedError-Implementations"],"generated":true}],"relationshipsSections":[{"kind":"relationships","title":"Conforms To","type":"conformsTo","identifiers":["doc:\/\/SwiftBeanCountModel\/10Foundation14LocalizedErrorP","doc:\/\/SwiftBeanCountModel\/s8CopyableP","doc:\/\/SwiftBeanCountModel\/s5ErrorP","doc:\/\/SwiftBeanCountModel\/s8SendableP","doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP"]}],"kind":"symbol","references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/s16SendableMetatypeP":{"title":"Swift.SendableMetatype","identifier":"doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP","type":"unresolvable"},"doc://SwiftBeanCountModel/10Foundation14LocalizedErrorP":{"identifier":"doc:\/\/SwiftBeanCountModel\/10Foundation14LocalizedErrorP","type":"unresolvable","title":"Foundation.LocalizedError"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PriceError":{"kind":"symbol","type":"topic","title":"PriceError","abstract":[{"text":"Errors a price can throw","type":"text"}],"role":"symbol","navigatorTitle":[{"text":"PriceError","kind":"identifier"}],"fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"PriceError","kind":"identifier"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError","url":"\/documentation\/swiftbeancountmodel\/priceerror"},"doc://SwiftBeanCountModel/s8CopyableP":{"title":"Swift.Copyable","identifier":"doc:\/\/SwiftBeanCountModel\/s8CopyableP","type":"unresolvable"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PriceError/sameCommodity(_:)":{"kind":"symbol","title":"PriceError.sameCommodity(_:)","fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"sameCommodity","kind":"identifier"},{"text":"(","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":")","kind":"text"}],"role":"symbol","abstract":[{"text":"the price is listed in its own commodity","type":"text"}],"url":"\/documentation\/swiftbeancountmodel\/priceerror\/samecommodity(_:)","type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/sameCommodity(_:)"},"doc://SwiftBeanCountModel/s5ErrorP":{"identifier":"doc:\/\/SwiftBeanCountModel\/s5ErrorP","type":"unresolvable","title":"Swift.Error"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PriceError/LocalizedError-Implementations":{"abstract":[],"kind":"article","type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/LocalizedError-Implementations","role":"collectionGroup","title":"LocalizedError Implementations","url":"\/documentation\/swiftbeancountmodel\/priceerror\/localizederror-implementations"},"doc://SwiftBeanCountModel/s8SendableP":{"identifier":"doc:\/\/SwiftBeanCountModel\/s8SendableP","type":"unresolvable","title":"Swift.Sendable"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PriceError/Error-Implementations":{"abstract":[],"kind":"article","type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/Error-Implementations","role":"collectionGroup","title":"Error Implementations","url":"\/documentation\/swiftbeancountmodel\/priceerror\/error-implementations"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Errors a price can throw",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel10PriceErrorO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "PriceError"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "PriceError"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "PriceError"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "PriceError"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/10Foundation14LocalizedErrorP",
+        "doc:\/\/SwiftBeanCountModel\/s8CopyableP",
+        "doc:\/\/SwiftBeanCountModel\/s5ErrorP",
+        "doc:\/\/SwiftBeanCountModel\/s8SendableP",
+        "doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Enumeration-Cases",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/sameCommodity(_:)"
+      ],
+      "title" : "Enumeration Cases"
+    },
+    {
+      "anchor" : "Default-Implementations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/Error-Implementations",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/LocalizedError-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/priceerror"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/10Foundation14LocalizedErrorP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/10Foundation14LocalizedErrorP",
+  "title" : "Foundation.LocalizedError",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PriceError": {
+  "abstract" : [
+    {
+      "text" : "Errors a price can throw",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PriceError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "PriceError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PriceError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/priceerror"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PriceError/Error-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/Error-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Error Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/priceerror\/error-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PriceError/LocalizedError-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/LocalizedError-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "LocalizedError Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/priceerror\/localizederror-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PriceError/sameCommodity(_:)": {
+  "abstract" : [
+    {
+      "text" : "the price is listed in its own commodity",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "sameCommodity"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PriceError\/sameCommodity(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "PriceError.sameCommodity(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/priceerror\/samecommodity(_:)"
+},
+"doc://SwiftBeanCountModel/s16SendableMetatypeP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP",
+  "title" : "Swift.SendableMetatype",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/s5ErrorP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s5ErrorP",
+  "title" : "Swift.Error",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/s8CopyableP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s8CopyableP",
+  "title" : "Swift.Copyable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/s8SendableP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s8SendableP",
+  "title" : "Swift.Sendable",
+  "type" : "unresolvable"
+}
+}
+}

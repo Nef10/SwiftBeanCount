@@ -1,1 +1,273 @@
-{"abstract":[{"text":"amounts per currency","type":"text"}],"kind":"symbol","metadata":{"symbolKind":"property","title":"amounts","fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"amounts"},{"kind":"text","text":": ["},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel15CommoditySymbola","text":"CommoditySymbol"},{"kind":"text","text":" : "},{"kind":"typeIdentifier","preciseIdentifier":"c:@SA@NSDecimal","text":"Decimal"},{"kind":"text","text":"]"}],"role":"symbol","modules":[{"name":"SwiftBeanCountModel"}],"externalID":"s:19SwiftBeanCountModel19MultiCurrencyAmountV7amountsSDySSSo9NSDecimalaGvp","roleHeading":"Instance Property"},"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/multicurrencyamount\/amounts"],"traits":[{"interfaceLanguage":"swift"}]}],"primaryContentSections":[{"declarations":[{"tokens":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"amounts"},{"kind":"text","text":": ["},{"kind":"typeIdentifier","text":"CommoditySymbol","preciseIdentifier":"s:19SwiftBeanCountModel15CommoditySymbola","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CommoditySymbol"},{"kind":"text","text":" : "},{"kind":"typeIdentifier","text":"Decimal","preciseIdentifier":"c:@SA@NSDecimal"},{"kind":"text","text":"]"}],"platforms":["macOS"],"languages":["swift"]}],"kind":"declarations"}],"schemaVersion":{"patch":0,"minor":3,"major":0},"sections":[],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount"]]},"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount\/amounts","interfaceLanguage":"swift"},"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"url":"\/documentation\/swiftbeancountmodel","kind":"symbol","title":"SwiftBeanCountModel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","abstract":[],"type":"topic","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount/amounts":{"type":"topic","abstract":[{"text":"amounts per currency","type":"text"}],"url":"\/documentation\/swiftbeancountmodel\/multicurrencyamount\/amounts","kind":"symbol","role":"symbol","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"amounts","kind":"identifier"},{"text":": [","kind":"text"},{"preciseIdentifier":"s:19SwiftBeanCountModel15CommoditySymbola","text":"CommoditySymbol","kind":"typeIdentifier"},{"text":" : ","kind":"text"},{"preciseIdentifier":"c:@SA@NSDecimal","text":"Decimal","kind":"typeIdentifier"},{"text":"]","kind":"text"}],"title":"amounts","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount\/amounts"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount":{"url":"\/documentation\/swiftbeancountmodel\/multicurrencyamount","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"MultiCurrencyAmount","kind":"identifier"}],"abstract":[{"text":"Represents an amout which consists of amouts in multiple currencies","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount","navigatorTitle":[{"text":"MultiCurrencyAmount","kind":"identifier"}],"role":"symbol","title":"MultiCurrencyAmount","kind":"symbol","type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/CommoditySymbol":{"url":"\/documentation\/swiftbeancountmodel\/commoditysymbol","fragments":[{"text":"typealias","kind":"keyword"},{"text":" ","kind":"text"},{"text":"CommoditySymbol","kind":"identifier"}],"type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CommoditySymbol","kind":"symbol","role":"symbol","title":"CommoditySymbol","abstract":[{"text":"A CommoditySymbol is just a string","type":"text"}],"navigatorTitle":[{"text":"CommoditySymbol","kind":"identifier"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "amounts per currency",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount\/amounts"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel19MultiCurrencyAmountV7amountsSDySSSo9NSDecimalaGvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "amounts"
+      },
+      {
+        "kind" : "text",
+        "text" : ": ["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel15CommoditySymbola",
+        "text" : "CommoditySymbol"
+      },
+      {
+        "kind" : "text",
+        "text" : " : "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "c:@SA@NSDecimal",
+        "text" : "Decimal"
+      },
+      {
+        "kind" : "text",
+        "text" : "]"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "amounts"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "amounts"
+            },
+            {
+              "kind" : "text",
+              "text" : ": ["
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CommoditySymbol",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel15CommoditySymbola",
+              "text" : "CommoditySymbol"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "c:@SA@NSDecimal",
+              "text" : "Decimal"
+            },
+            {
+              "kind" : "text",
+              "text" : "]"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/multicurrencyamount\/amounts"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/CommoditySymbol": {
+  "abstract" : [
+    {
+      "text" : "A CommoditySymbol is just a string",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "typealias"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "CommoditySymbol"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CommoditySymbol",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "CommoditySymbol"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "CommoditySymbol",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/commoditysymbol"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount": {
+  "abstract" : [
+    {
+      "text" : "Represents an amout which consists of amouts in multiple currencies",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "MultiCurrencyAmount"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "MultiCurrencyAmount"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "MultiCurrencyAmount",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/multicurrencyamount"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/MultiCurrencyAmount/amounts": {
+  "abstract" : [
+    {
+      "text" : "amounts per currency",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "amounts"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel15CommoditySymbola",
+      "text" : "CommoditySymbol"
+    },
+    {
+      "kind" : "text",
+      "text" : " : "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:@SA@NSDecimal",
+      "text" : "Decimal"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/MultiCurrencyAmount\/amounts",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "amounts",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/multicurrencyamount\/amounts"
+}
+}
+}

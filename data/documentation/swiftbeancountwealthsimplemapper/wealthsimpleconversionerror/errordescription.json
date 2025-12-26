@@ -1,1 +1,225 @@
-{"sections":[],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper","doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleConversionError"]]},"abstract":[{"type":"text","text":"Inherited from "},{"type":"codeVoice","code":"LocalizedError.errorDescription"},{"type":"text","text":"."}],"primaryContentSections":[{"declarations":[{"languages":["swift"],"tokens":[{"kind":"keyword","text":"var"},{"kind":"text","text":" "},{"kind":"identifier","text":"errorDescription"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"String","preciseIdentifier":"s:SS"},{"kind":"text","text":"? { "},{"kind":"keyword","text":"get"},{"kind":"text","text":" }"}],"platforms":["macOS"]}],"kind":"declarations"}],"kind":"symbol","metadata":{"role":"symbol","modules":[{"name":"SwiftBeanCountWealthsimpleMapper"}],"symbolKind":"property","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"errorDescription","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":"?","kind":"text"}],"externalID":"s:32SwiftBeanCountWealthsimpleMapper0D15ConversionErrorO16errorDescriptionSSSgvp","roleHeading":"Instance Property","title":"errorDescription","extendedModule":"SwiftBeanCountWealthsimpleMapper"},"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/errordescription"]}],"identifier":{"url":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleConversionError\/errorDescription","interfaceLanguage":"swift"},"schemaVersion":{"major":0,"patch":0,"minor":3},"references":{"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleConversionError":{"kind":"symbol","title":"WealthsimpleConversionError","type":"topic","abstract":[{"text":"Errors which can happen when transforming downloaded wealthsimple data into SwiftBeanCountModel types","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleConversionError","fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"WealthsimpleConversionError","kind":"identifier"}],"url":"\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror","role":"symbol","navigatorTitle":[{"text":"WealthsimpleConversionError","kind":"identifier"}]},"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleConversionError/errorDescription":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleConversionError\/errorDescription","kind":"symbol","title":"errorDescription","abstract":[],"url":"\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/errordescription","fragments":[{"kind":"keyword","text":"var"},{"kind":"text","text":" "},{"kind":"identifier","text":"errorDescription"},{"kind":"text","text":": "},{"preciseIdentifier":"s:SS","kind":"typeIdentifier","text":"String"},{"kind":"text","text":"?"}],"role":"symbol"},"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper":{"identifier":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper","url":"\/documentation\/swiftbeancountwealthsimplemapper","abstract":[],"role":"collection","kind":"symbol","title":"SwiftBeanCountWealthsimpleMapper","type":"topic"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Inherited from ",
+      "type" : "text"
+    },
+    {
+      "code" : "LocalizedError.errorDescription",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper",
+        "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleConversionError"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleConversionError\/errorDescription"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "SwiftBeanCountWealthsimpleMapper",
+    "externalID" : "s:32SwiftBeanCountWealthsimpleMapper0D15ConversionErrorO16errorDescriptionSSSgvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "var"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "errorDescription"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : "?"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountWealthsimpleMapper"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "errorDescription"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "var"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "errorDescription"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : "? { "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "get"
+            },
+            {
+              "kind" : "text",
+              "text" : " }"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/errordescription"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountWealthsimpleMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountwealthsimplemapper"
+},
+"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleConversionError": {
+  "abstract" : [
+    {
+      "text" : "Errors which can happen when transforming downloaded wealthsimple data into SwiftBeanCountModel types",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "WealthsimpleConversionError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleConversionError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "WealthsimpleConversionError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "WealthsimpleConversionError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror"
+},
+"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleConversionError/errorDescription": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "errorDescription"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleConversionError\/errorDescription",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "errorDescription",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleconversionerror\/errordescription"
+}
+}
+}

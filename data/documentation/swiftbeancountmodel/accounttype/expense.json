@@ -1,1 +1,172 @@
-{"kind":"symbol","identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountType\/expense"},"abstract":[{"type":"text","text":"Expenses is everything an entity loses"}],"sections":[],"primaryContentSections":[{"kind":"declarations","declarations":[{"platforms":["macOS"],"tokens":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"expense","kind":"identifier"}],"languages":["swift"]}]}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountmodel\/accounttype\/expense"]}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountType"]]},"metadata":{"externalID":"s:19SwiftBeanCountModel11AccountTypeO7expenseyA2CmF","title":"AccountType.expense","symbolKind":"case","modules":[{"name":"SwiftBeanCountModel"}],"roleHeading":"Case","fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"expense","kind":"identifier"}],"role":"symbol"},"schemaVersion":{"minor":3,"major":0,"patch":0},"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountType/expense":{"kind":"symbol","abstract":[{"type":"text","text":"Expenses is everything an entity loses"}],"title":"AccountType.expense","type":"topic","fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"expense","kind":"identifier"}],"url":"\/documentation\/swiftbeancountmodel\/accounttype\/expense","role":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountType\/expense"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountType":{"kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/accounttype","type":"topic","title":"AccountType","abstract":[{"text":"AccountType represents the five base account types","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountType","role":"symbol","fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"AccountType"}],"navigatorTitle":[{"kind":"identifier","text":"AccountType"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Expenses is everything an entity loses",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountType"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountType\/expense"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel11AccountTypeO7expenseyA2CmF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "case"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "expense"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Case",
+    "symbolKind" : "case",
+    "title" : "AccountType.expense"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "case"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "expense"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/accounttype\/expense"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountType": {
+  "abstract" : [
+    {
+      "text" : "AccountType represents the five base account types",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AccountType"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountType",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "AccountType"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AccountType",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accounttype"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountType/expense": {
+  "abstract" : [
+    {
+      "text" : "Expenses is everything an entity loses",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "expense"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountType\/expense",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "AccountType.expense",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accounttype\/expense"
+}
+}
+}

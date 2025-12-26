@@ -1,1 +1,449 @@
-{"schemaVersion":{"patch":0,"minor":3,"major":0},"metadata":{"externalID":"s:19SwiftBeanCountModel6LedgerC2eeoiySbAC_ACtFZ","title":"==(_:_:)","modules":[{"name":"SwiftBeanCountModel"}],"extendedModule":"SwiftBeanCountModel","symbolKind":"op","fragments":[{"kind":"keyword","text":"static"},{"kind":"text","text":" "},{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"=="},{"kind":"text","text":" "},{"kind":"text","text":"("},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC","text":"Ledger"},{"kind":"text","text":", "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC","text":"Ledger"},{"kind":"text","text":") -> "},{"kind":"typeIdentifier","preciseIdentifier":"s:Sb","text":"Bool"}],"roleHeading":"Operator","role":"symbol"},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger"]]},"kind":"symbol","abstract":[{"type":"text","text":"Compares two Ledgers"}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountmodel\/ledger\/==(_:_:)"]}],"sections":[],"primaryContentSections":[{"declarations":[{"platforms":["macOS"],"languages":["swift"],"tokens":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"==","kind":"identifier"},{"text":" ","kind":"text"},{"text":"(","kind":"text"},{"text":"lhs","kind":"internalParam"},{"text":": ","kind":"text"},{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger","text":"Ledger","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC"},{"text":", ","kind":"text"},{"text":"rhs","kind":"internalParam"},{"text":": ","kind":"text"},{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC","text":"Ledger","kind":"typeIdentifier"},{"text":") -> ","kind":"text"},{"preciseIdentifier":"s:Sb","text":"Bool","kind":"typeIdentifier"}]}],"kind":"declarations"},{"kind":"parameters","parameters":[{"name":"lhs","content":[{"type":"paragraph","inlineContent":[{"type":"text","text":"Ledger one"}]}]},{"name":"rhs","content":[{"inlineContent":[{"text":"Ledger two","type":"text"}],"type":"paragraph"}]}]},{"kind":"content","content":[{"anchor":"return-value","type":"heading","text":"Return Value","level":2},{"type":"paragraph","inlineContent":[{"type":"text","text":"True if they hold the same information, otherwise false"}]}]},{"kind":"content","content":[{"type":"heading","level":2,"text":"Discussion","anchor":"discussion"},{"type":"paragraph","inlineContent":[{"type":"text","text":"Compared are the "},{"type":"codeVoice","code":"Account"},{"type":"text","text":"s, "},{"type":"codeVoice","code":"Transaction"},{"type":"text","text":"s, "},{"type":"codeVoice","code":"Commodity"},{"type":"text","text":"s, "},{"type":"codeVoice","code":"Tag"},{"type":"text","text":"s, "},{"type":"codeVoice","code":"Event"},{"type":"text","text":"s, "},{"type":"codeVoice","code":"Custom"},{"type":"text","text":"s, as well "},{"type":"codeVoice","code":"option"},{"type":"text","text":"s and "},{"type":"codeVoice","code":"plugins"},{"type":"text","text":", but not the "},{"type":"codeVoice","code":"errors"}]}]}],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/==(_:_:)"},"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/==(_:_:)":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/==(_:_:)","abstract":[{"type":"text","text":"Compares two Ledgers"}],"fragments":[{"kind":"keyword","text":"static"},{"kind":"text","text":" "},{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"=="},{"kind":"text","text":" "},{"kind":"text","text":"("},{"kind":"typeIdentifier","text":"Ledger","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC"},{"kind":"text","text":", "},{"kind":"typeIdentifier","text":"Ledger","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC"},{"kind":"text","text":") -> "},{"kind":"typeIdentifier","text":"Bool","preciseIdentifier":"s:Sb"}],"url":"\/documentation\/swiftbeancountmodel\/ledger\/==(_:_:)","role":"symbol","kind":"symbol","title":"==(_:_:)"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger":{"navigatorTitle":[{"kind":"identifier","text":"Ledger"}],"abstract":[{"type":"text","text":"A Ledger is the main part of the model, it contains all necessary information."}],"type":"topic","title":"Ledger","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger","url":"\/documentation\/swiftbeancountmodel\/ledger","kind":"symbol","role":"symbol","fragments":[{"kind":"keyword","text":"class"},{"kind":"text","text":" "},{"kind":"identifier","text":"Ledger"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Compares two Ledgers",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/==(_:_:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "SwiftBeanCountModel",
+    "externalID" : "s:19SwiftBeanCountModel6LedgerC2eeoiySbAC_ACtFZ",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "static"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "=="
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+        "text" : "Ledger"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+        "text" : "Ledger"
+      },
+      {
+        "kind" : "text",
+        "text" : ") -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sb",
+        "text" : "Bool"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Operator",
+    "symbolKind" : "op",
+    "title" : "==(_:_:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "static"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "=="
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "lhs"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+              "text" : "Ledger"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "rhs"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+              "text" : "Ledger"
+            },
+            {
+              "kind" : "text",
+              "text" : ") -> "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sb",
+              "text" : "Bool"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Ledger one",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "lhs"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Ledger two",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "rhs"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "True if they hold the same information, otherwise false",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Compared are the ",
+              "type" : "text"
+            },
+            {
+              "code" : "Account",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : "s, ",
+              "type" : "text"
+            },
+            {
+              "code" : "Transaction",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : "s, ",
+              "type" : "text"
+            },
+            {
+              "code" : "Commodity",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : "s, ",
+              "type" : "text"
+            },
+            {
+              "code" : "Tag",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : "s, ",
+              "type" : "text"
+            },
+            {
+              "code" : "Event",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : "s, ",
+              "type" : "text"
+            },
+            {
+              "code" : "Custom",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : "s, as well ",
+              "type" : "text"
+            },
+            {
+              "code" : "option",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : "s and ",
+              "type" : "text"
+            },
+            {
+              "code" : "plugins",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ", but not the ",
+              "type" : "text"
+            },
+            {
+              "code" : "errors",
+              "type" : "codeVoice"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/ledger\/==(_:_:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger": {
+  "abstract" : [
+    {
+      "text" : "A Ledger is the main part of the model, it contains all necessary information.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Ledger"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Ledger"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Ledger",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/==(_:_:)": {
+  "abstract" : [
+    {
+      "text" : "Compares two Ledgers",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "=="
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+      "text" : "Ledger"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+      "text" : "Ledger"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/==(_:_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "==(_:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/==(_:_:)"
+}
+}
+}

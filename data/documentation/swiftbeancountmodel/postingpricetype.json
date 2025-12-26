@@ -1,1 +1,256 @@
-{"relationshipsSections":[{"type":"conformsTo","kind":"relationships","title":"Conforms To","identifiers":["doc:\/\/SwiftBeanCountModel\/SQ","doc:\/\/SwiftBeanCountModel\/SH"]}],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType"},"schemaVersion":{"major":0,"patch":0,"minor":3},"sections":[],"abstract":[{"text":"Type of price specification in posting","type":"text"}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"]]},"metadata":{"navigatorTitle":[{"kind":"identifier","text":"PostingPriceType"}],"externalID":"s:19SwiftBeanCountModel16PostingPriceTypeO","modules":[{"name":"SwiftBeanCountModel"}],"role":"symbol","fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"PostingPriceType"}],"roleHeading":"Enumeration","symbolKind":"enum","title":"PostingPriceType"},"kind":"symbol","topicSections":[{"generated":true,"title":"Enumeration Cases","anchor":"Enumeration-Cases","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType\/perUnit","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType\/total"]},{"generated":true,"title":"Default Implementations","anchor":"Default-Implementations","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType\/Equatable-Implementations"]}],"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"PostingPriceType","kind":"identifier"}],"platforms":["macOS"],"languages":["swift"]}]}],"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/postingpricetype"],"traits":[{"interfaceLanguage":"swift"}]}],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingPriceType/perUnit":{"role":"symbol","kind":"symbol","title":"PostingPriceType.perUnit","abstract":[{"text":"Price per unit (@)","type":"text"}],"type":"topic","url":"\/documentation\/swiftbeancountmodel\/postingpricetype\/perunit","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType\/perUnit","fragments":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"perUnit"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingPriceType":{"title":"PostingPriceType","url":"\/documentation\/swiftbeancountmodel\/postingpricetype","navigatorTitle":[{"kind":"identifier","text":"PostingPriceType"}],"kind":"symbol","type":"topic","fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"PostingPriceType"}],"role":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType","abstract":[{"type":"text","text":"Type of price specification in posting"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingPriceType/total":{"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType\/total","url":"\/documentation\/swiftbeancountmodel\/postingpricetype\/total","fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"total","kind":"identifier"}],"title":"PostingPriceType.total","type":"topic","role":"symbol","abstract":[{"text":"Total price (@@)","type":"text"}]},"doc://SwiftBeanCountModel/SQ":{"title":"Swift.Equatable","identifier":"doc:\/\/SwiftBeanCountModel\/SQ","type":"unresolvable"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingPriceType/Equatable-Implementations":{"abstract":[],"title":"Equatable Implementations","role":"collectionGroup","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType\/Equatable-Implementations","url":"\/documentation\/swiftbeancountmodel\/postingpricetype\/equatable-implementations","kind":"article","type":"topic"},"doc://SwiftBeanCountModel/SH":{"title":"Swift.Hashable","identifier":"doc:\/\/SwiftBeanCountModel\/SH","type":"unresolvable"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Type of price specification in posting",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel16PostingPriceTypeO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "PostingPriceType"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "PostingPriceType"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "PostingPriceType"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "PostingPriceType"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/SQ",
+        "doc:\/\/SwiftBeanCountModel\/SH"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Enumeration-Cases",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType\/perUnit",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType\/total"
+      ],
+      "title" : "Enumeration Cases"
+    },
+    {
+      "anchor" : "Default-Implementations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType\/Equatable-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/postingpricetype"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/SH": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/SH",
+  "title" : "Swift.Hashable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/SQ": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/SQ",
+  "title" : "Swift.Equatable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingPriceType": {
+  "abstract" : [
+    {
+      "text" : "Type of price specification in posting",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PostingPriceType"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "PostingPriceType"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PostingPriceType",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/postingpricetype"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingPriceType/Equatable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType\/Equatable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Equatable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/postingpricetype\/equatable-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingPriceType/perUnit": {
+  "abstract" : [
+    {
+      "text" : "Price per unit (@)",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "perUnit"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType\/perUnit",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "PostingPriceType.perUnit",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/postingpricetype\/perunit"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingPriceType/total": {
+  "abstract" : [
+    {
+      "text" : "Total price (@@)",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "total"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingPriceType\/total",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "PostingPriceType.total",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/postingpricetype\/total"
+}
+}
+}

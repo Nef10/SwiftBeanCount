@@ -1,1 +1,172 @@
-{"metadata":{"modules":[{"name":"SwiftBeanCountImporter"}],"roleHeading":"Case","externalID":"s:22SwiftBeanCountImporter0D16InputRequestTypeO3otpyA2CmF","symbolKind":"case","fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"otp","kind":"identifier"}],"title":"ImporterInputRequestType.otp","role":"symbol"},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterInputRequestType"]]},"sections":[],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterInputRequestType\/otp"},"abstract":[{"type":"text","text":"one time passcase, can offer the use auto fill from text or similr"}],"schemaVersion":{"minor":3,"patch":0,"major":0},"primaryContentSections":[{"kind":"declarations","declarations":[{"platforms":["macOS"],"tokens":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"otp","kind":"identifier"}],"languages":["swift"]}]}],"kind":"symbol","variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountimporter\/importerinputrequesttype\/otp"]}],"references":{"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterInputRequestType":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterInputRequestType","title":"ImporterInputRequestType","url":"\/documentation\/swiftbeancountimporter\/importerinputrequesttype","role":"symbol","abstract":[{"type":"text","text":"Type of user input requested by the importer"}],"navigatorTitle":[{"kind":"identifier","text":"ImporterInputRequestType"}],"kind":"symbol","fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"ImporterInputRequestType"}]},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","url":"\/documentation\/swiftbeancountimporter","abstract":[],"role":"collection","title":"SwiftBeanCountImporter","kind":"symbol"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterInputRequestType/otp":{"fragments":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"otp"}],"url":"\/documentation\/swiftbeancountimporter\/importerinputrequesttype\/otp","abstract":[{"text":"one time passcase, can offer the use auto fill from text or similr","type":"text"}],"title":"ImporterInputRequestType.otp","kind":"symbol","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterInputRequestType\/otp","role":"symbol","type":"topic"}}}
+{
+  "abstract" : [
+    {
+      "text" : "one time passcase, can offer the use auto fill from text or similr",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterInputRequestType"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterInputRequestType\/otp"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:22SwiftBeanCountImporter0D16InputRequestTypeO3otpyA2CmF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "case"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "otp"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountImporter"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Case",
+    "symbolKind" : "case",
+    "title" : "ImporterInputRequestType.otp"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "case"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "otp"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountimporter\/importerinputrequesttype\/otp"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountImporter",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterInputRequestType": {
+  "abstract" : [
+    {
+      "text" : "Type of user input requested by the importer",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ImporterInputRequestType"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterInputRequestType",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ImporterInputRequestType"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ImporterInputRequestType",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importerinputrequesttype"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterInputRequestType/otp": {
+  "abstract" : [
+    {
+      "text" : "one time passcase, can offer the use auto fill from text or similr",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "otp"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterInputRequestType\/otp",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "ImporterInputRequestType.otp",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importerinputrequesttype\/otp"
+}
+}
+}

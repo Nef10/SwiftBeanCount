@@ -1,1 +1,211 @@
-{"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError"]]},"metadata":{"roleHeading":"Case","externalID":"s:19SwiftBeanCountModel11LedgerErrorO13alreadyExistsyACSScACmF","title":"LedgerError.alreadyExists(_:)","role":"symbol","symbolKind":"case","modules":[{"name":"SwiftBeanCountModel"}],"fragments":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"alreadyExists"},{"kind":"text","text":"("},{"preciseIdentifier":"s:SS","kind":"typeIdentifier","text":"String"},{"kind":"text","text":")"}]},"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/ledgererror\/alreadyexists(_:)"],"traits":[{"interfaceLanguage":"swift"}]}],"primaryContentSections":[{"declarations":[{"platforms":["macOS"],"languages":["swift"],"tokens":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"alreadyExists","kind":"identifier"},{"text":"(","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":")","kind":"text"}]}],"kind":"declarations"}],"schemaVersion":{"minor":3,"patch":0,"major":0},"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError\/alreadyExists(_:)","interfaceLanguage":"swift"},"sections":[],"kind":"symbol","abstract":[{"type":"text","text":"Error if the object your try to add already exists in the ledger"}],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/LedgerError/alreadyExists(_:)":{"title":"LedgerError.alreadyExists(_:)","kind":"symbol","type":"topic","role":"symbol","fragments":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"alreadyExists"},{"kind":"text","text":"("},{"kind":"typeIdentifier","preciseIdentifier":"s:SS","text":"String"},{"kind":"text","text":")"}],"url":"\/documentation\/swiftbeancountmodel\/ledgererror\/alreadyexists(_:)","abstract":[{"text":"Error if the object your try to add already exists in the ledger","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError\/alreadyExists(_:)"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/LedgerError":{"title":"LedgerError","fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"LedgerError"}],"navigatorTitle":[{"kind":"identifier","text":"LedgerError"}],"type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError","url":"\/documentation\/swiftbeancountmodel\/ledgererror","role":"symbol","abstract":[{"type":"text","text":"Errors which can occur when working with the ledger"}],"kind":"symbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Error if the object your try to add already exists in the ledger",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError\/alreadyExists(_:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel11LedgerErrorO13alreadyExistsyACSScACmF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "case"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "alreadyExists"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : ")"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Case",
+    "symbolKind" : "case",
+    "title" : "LedgerError.alreadyExists(_:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "case"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "alreadyExists"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : ")"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/ledgererror\/alreadyexists(_:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/LedgerError": {
+  "abstract" : [
+    {
+      "text" : "Errors which can occur when working with the ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "LedgerError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "LedgerError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "LedgerError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledgererror"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/LedgerError/alreadyExists(_:)": {
+  "abstract" : [
+    {
+      "text" : "Error if the object your try to add already exists in the ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "alreadyExists"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/LedgerError\/alreadyExists(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "LedgerError.alreadyExists(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledgererror\/alreadyexists(_:)"
+}
+}
+}

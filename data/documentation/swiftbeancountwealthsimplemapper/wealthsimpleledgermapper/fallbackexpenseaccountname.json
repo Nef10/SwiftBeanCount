@@ -1,1 +1,272 @@
-{"kind":"symbol","hierarchy":{"paths":[["doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper","doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper"]]},"metadata":{"roleHeading":"Type Property","modules":[{"name":"SwiftBeanCountWealthsimpleMapper"}],"role":"symbol","externalID":"s:32SwiftBeanCountWealthsimpleMapper0d6LedgerE0V26fallbackExpenseAccountName0abC5Model0iJ0VvpZ","fragments":[{"kind":"keyword","text":"static"},{"kind":"text","text":" "},{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"fallbackExpenseAccountName"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"AccountName","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV"}],"title":"fallbackExpenseAccountName","symbolKind":"property"},"sections":[],"abstract":[{"text":"Fallback account for payments if not account with the correct meta data could be found","type":"text"}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/fallbackexpenseaccountname"]}],"schemaVersion":{"patch":0,"major":0,"minor":3},"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"kind":"keyword","text":"static"},{"kind":"text","text":" "},{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"fallbackExpenseAccountName"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV","text":"AccountName","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName"}],"languages":["swift"],"platforms":["macOS"]}]},{"content":[{"anchor":"discussion","type":"heading","level":2,"text":"Discussion"},{"type":"paragraph","inlineContent":[{"text":"Only used for certain transaction types","type":"text"}]}],"kind":"content"}],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper\/fallbackExpenseAccountName"},"references":{"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper":{"identifier":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper","url":"\/documentation\/swiftbeancountwealthsimplemapper","abstract":[],"role":"collection","kind":"symbol","title":"SwiftBeanCountWealthsimpleMapper","type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName":{"abstract":[{"text":"Struct with represents just the name of an Account","type":"text"}],"kind":"symbol","type":"topic","role":"symbol","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"AccountName","kind":"identifier"}],"title":"AccountName","url":"\/documentation\/swiftbeancountmodel\/accountname","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName"},"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleLedgerMapper/fallbackExpenseAccountName":{"title":"fallbackExpenseAccountName","url":"\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/fallbackexpenseaccountname","abstract":[{"text":"Fallback account for payments if not account with the correct meta data could be found","type":"text"}],"role":"symbol","fragments":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"fallbackExpenseAccountName","kind":"identifier"},{"text":": ","kind":"text"},{"text":"AccountName","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV"}],"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper\/fallbackExpenseAccountName","type":"topic"},"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleLedgerMapper":{"abstract":[{"type":"text","text":"Functions to transform downloaded Wealthsimple data into SwiftBeanCountModel types"}],"role":"symbol","title":"WealthsimpleLedgerMapper","identifier":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper","fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"WealthsimpleLedgerMapper"}],"navigatorTitle":[{"kind":"identifier","text":"WealthsimpleLedgerMapper"}],"kind":"symbol","type":"topic","url":"\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Fallback account for payments if not account with the correct meta data could be found",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper",
+        "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper\/fallbackExpenseAccountName"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:32SwiftBeanCountWealthsimpleMapper0d6LedgerE0V26fallbackExpenseAccountName0abC5Model0iJ0VvpZ",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "static"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "fallbackExpenseAccountName"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+        "text" : "AccountName"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountWealthsimpleMapper"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Type Property",
+    "symbolKind" : "property",
+    "title" : "fallbackExpenseAccountName"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "static"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "fallbackExpenseAccountName"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+              "text" : "AccountName"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Only used for certain transaction types",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/fallbackexpenseaccountname"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName": {
+  "abstract" : [
+    {
+      "text" : "Struct with represents just the name of an Account",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AccountName"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "AccountName",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountname"
+},
+"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountWealthsimpleMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountwealthsimplemapper"
+},
+"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleLedgerMapper": {
+  "abstract" : [
+    {
+      "text" : "Functions to transform downloaded Wealthsimple data into SwiftBeanCountModel types",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "WealthsimpleLedgerMapper"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "WealthsimpleLedgerMapper"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "WealthsimpleLedgerMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper"
+},
+"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleLedgerMapper/fallbackExpenseAccountName": {
+  "abstract" : [
+    {
+      "text" : "Fallback account for payments if not account with the correct meta data could be found",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "fallbackExpenseAccountName"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+      "text" : "AccountName"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper\/fallbackExpenseAccountName",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "fallbackExpenseAccountName",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/fallbackexpenseaccountname"
+}
+}
+}

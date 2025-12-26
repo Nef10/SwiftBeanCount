@@ -1,1 +1,228 @@
-{"sections":[],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountimporter\/importedtransaction\/transaction"]}],"identifier":{"url":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction\/transaction","interfaceLanguage":"swift"},"kind":"symbol","abstract":[{"type":"text","text":"Transaction which has been imported"}],"schemaVersion":{"major":0,"minor":3,"patch":0},"metadata":{"externalID":"s:22SwiftBeanCountImporter19ImportedTransactionV11transaction0abC5Model0F0Cvp","roleHeading":"Instance Property","role":"symbol","modules":[{"name":"SwiftBeanCountImporter"}],"symbolKind":"property","title":"transaction","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"transaction","kind":"identifier"},{"text":": ","kind":"text"},{"text":"Transaction","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11TransactionC"}]},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction"]]},"primaryContentSections":[{"declarations":[{"tokens":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"transaction"},{"kind":"text","text":": "},{"preciseIdentifier":"s:19SwiftBeanCountModel11TransactionC","kind":"typeIdentifier","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction","text":"Transaction"}],"languages":["swift"],"platforms":["macOS"]}],"kind":"declarations"}],"references":{"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","url":"\/documentation\/swiftbeancountimporter","abstract":[],"role":"collection","title":"SwiftBeanCountImporter","kind":"symbol"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImportedTransaction/transaction":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction\/transaction","abstract":[{"text":"Transaction which has been imported","type":"text"}],"kind":"symbol","url":"\/documentation\/swiftbeancountimporter\/importedtransaction\/transaction","title":"transaction","role":"symbol","fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"transaction"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11TransactionC","text":"Transaction"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction":{"kind":"symbol","title":"Transaction","url":"\/documentation\/swiftbeancountmodel\/transaction","abstract":[{"text":"A Transaction has meta data as well as multiple postings","type":"text"}],"role":"symbol","fragments":[{"kind":"keyword","text":"class"},{"kind":"text","text":" "},{"kind":"identifier","text":"Transaction"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction","type":"topic"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImportedTransaction":{"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction","title":"ImportedTransaction","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"ImportedTransaction","kind":"identifier"}],"navigatorTitle":[{"text":"ImportedTransaction","kind":"identifier"}],"url":"\/documentation\/swiftbeancountimporter\/importedtransaction","abstract":[{"text":"Struct describing a transaction which has been imported","type":"text"}],"role":"symbol","type":"topic"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Transaction which has been imported",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction\/transaction"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:22SwiftBeanCountImporter19ImportedTransactionV11transaction0abC5Model0F0Cvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "transaction"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel11TransactionC",
+        "text" : "Transaction"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountImporter"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "transaction"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "transaction"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel11TransactionC",
+              "text" : "Transaction"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountimporter\/importedtransaction\/transaction"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountImporter",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImportedTransaction": {
+  "abstract" : [
+    {
+      "text" : "Struct describing a transaction which has been imported",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ImportedTransaction"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ImportedTransaction"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ImportedTransaction",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importedtransaction"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImportedTransaction/transaction": {
+  "abstract" : [
+    {
+      "text" : "Transaction which has been imported",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "transaction"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11TransactionC",
+      "text" : "Transaction"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction\/transaction",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "transaction",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importedtransaction\/transaction"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Transaction": {
+  "abstract" : [
+    {
+      "text" : "A Transaction has meta data as well as multiple postings",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Transaction"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Transaction",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "Transaction",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transaction"
+}
+}
+}

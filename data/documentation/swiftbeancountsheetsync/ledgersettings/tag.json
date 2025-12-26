@@ -1,1 +1,240 @@
-{"schemaVersion":{"major":0,"minor":3,"patch":0},"metadata":{"title":"tag","modules":[{"name":"SwiftBeanCountSheetSync"}],"externalID":"s:23SwiftBeanCountSheetSync14LedgerSettingsV3tag0abC5Model3TagVvp","fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"tag"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel3TagV","text":"Tag"}],"role":"symbol","roleHeading":"Instance Property","symbolKind":"property"},"abstract":[{"type":"text","text":"Tag which is appended to all transactions from the sheet"}],"identifier":{"url":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/tag","interfaceLanguage":"swift"},"sections":[],"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"tag","kind":"identifier"},{"text":": ","kind":"text"},{"preciseIdentifier":"s:19SwiftBeanCountModel3TagV","text":"Tag","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Tag","kind":"typeIdentifier"}],"platforms":["macOS"],"languages":["swift"]}]}],"variants":[{"paths":["\/documentation\/swiftbeancountsheetsync\/ledgersettings\/tag"],"traits":[{"interfaceLanguage":"swift"}]}],"kind":"symbol","hierarchy":{"paths":[["doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings"]]},"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Tag":{"abstract":[{"type":"text","text":"A Tag is just a "},{"type":"codeVoice","code":"String"},{"type":"text","text":" which can be attatched to a "},{"type":"codeVoice","code":"Transaction"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Tag","url":"\/documentation\/swiftbeancountmodel\/tag","role":"symbol","kind":"symbol","title":"Tag","type":"topic","fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"Tag"}]},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/tag":{"title":"tag","role":"symbol","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"tag","kind":"identifier"},{"text":": ","kind":"text"},{"text":"Tag","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel3TagV"}],"identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/tag","kind":"symbol","type":"topic","url":"\/documentation\/swiftbeancountsheetsync\/ledgersettings\/tag","abstract":[{"text":"Tag which is appended to all transactions from the sheet","type":"text"}]},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings":{"title":"LedgerSettings","kind":"symbol","role":"symbol","type":"topic","abstract":[{"text":"Settings for SwiftBeanCountSheetSync which were read from the ledger file","type":"text"}],"navigatorTitle":[{"kind":"identifier","text":"LedgerSettings"}],"fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"LedgerSettings"}],"url":"\/documentation\/swiftbeancountsheetsync\/ledgersettings","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync":{"abstract":[],"kind":"symbol","title":"SwiftBeanCountSheetSync","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync","role":"collection","url":"\/documentation\/swiftbeancountsheetsync","type":"topic"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Tag which is appended to all transactions from the sheet",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/tag"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:23SwiftBeanCountSheetSync14LedgerSettingsV3tag0abC5Model3TagVvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "tag"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel3TagV",
+        "text" : "Tag"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountSheetSync"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "tag"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "tag"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Tag",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel3TagV",
+              "text" : "Tag"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountsheetsync\/ledgersettings\/tag"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Tag": {
+  "abstract" : [
+    {
+      "text" : "A Tag is just a ",
+      "type" : "text"
+    },
+    {
+      "code" : "String",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " which can be attatched to a ",
+      "type" : "text"
+    },
+    {
+      "code" : "Transaction",
+      "type" : "codeVoice"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Tag"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Tag",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "Tag",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/tag"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountSheetSync",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings": {
+  "abstract" : [
+    {
+      "text" : "Settings for SwiftBeanCountSheetSync which were read from the ledger file",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "LedgerSettings"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "LedgerSettings"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "LedgerSettings",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/ledgersettings"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings/tag": {
+  "abstract" : [
+    {
+      "text" : "Tag which is appended to all transactions from the sheet",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "tag"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel3TagV",
+      "text" : "Tag"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings\/tag",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "tag",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/ledgersettings\/tag"
+}
+}
+}

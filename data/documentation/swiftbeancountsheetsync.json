@@ -1,1 +1,370 @@
-{"schemaVersion":{"patch":0,"major":0,"minor":3},"kind":"symbol","identifier":{"url":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync","interfaceLanguage":"swift"},"metadata":{"roleHeading":"Framework","modules":[{"name":"SwiftBeanCountSheetSync"}],"symbolKind":"module","role":"collection","title":"SwiftBeanCountSheetSync","externalID":"SwiftBeanCountSheetSync"},"sections":[],"hierarchy":{"paths":[[]]},"topicSections":[{"generated":true,"anchor":"Classes","identifiers":["doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/Downloader","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/GenericSyncer","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/Uploader"],"title":"Classes"},{"generated":true,"anchor":"Protocols","identifiers":["doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/Syncer"],"title":"Protocols"},{"generated":true,"anchor":"Structures","identifiers":["doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult"],"title":"Structures"},{"generated":true,"anchor":"Enumerations","identifiers":["doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SheetParserError","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode"],"title":"Enumerations"}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountsheetsync"]}],"references":{"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/Syncer":{"fragments":[{"text":"protocol","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Syncer","kind":"identifier"}],"kind":"symbol","title":"Syncer","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/Syncer","role":"symbol","navigatorTitle":[{"text":"Syncer","kind":"identifier"}],"abstract":[{"type":"text","text":"Syncer which can sync transactions between the sheet and ledger"}],"type":"topic","url":"\/documentation\/swiftbeancountsheetsync\/syncer"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/GenericSyncer":{"kind":"symbol","navigatorTitle":[{"text":"GenericSyncer","kind":"identifier"}],"fragments":[{"text":"class","kind":"keyword"},{"text":" ","kind":"text"},{"text":"GenericSyncer","kind":"identifier"}],"identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/GenericSyncer","url":"\/documentation\/swiftbeancountsheetsync\/genericsyncer","type":"topic","role":"symbol","abstract":[{"text":"Base class with helpers for specific syncers","type":"text"}],"title":"GenericSyncer"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings":{"title":"LedgerSettings","kind":"symbol","role":"symbol","type":"topic","abstract":[{"text":"Settings for SwiftBeanCountSheetSync which were read from the ledger file","type":"text"}],"navigatorTitle":[{"kind":"identifier","text":"LedgerSettings"}],"fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"LedgerSettings"}],"url":"\/documentation\/swiftbeancountsheetsync\/ledgersettings","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync":{"abstract":[],"kind":"symbol","title":"SwiftBeanCountSheetSync","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync","role":"collection","url":"\/documentation\/swiftbeancountsheetsync","type":"topic"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/Uploader":{"role":"symbol","type":"topic","kind":"symbol","navigatorTitle":[{"text":"Uploader","kind":"identifier"}],"identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/Uploader","abstract":[{"text":"Uploads transactions from the ledger to the sheet","type":"text"}],"title":"Uploader","url":"\/documentation\/swiftbeancountsheetsync\/uploader","fragments":[{"text":"class","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Uploader","kind":"identifier"}]},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncMode":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode","url":"\/documentation\/swiftbeancountsheetsync\/syncmode","navigatorTitle":[{"text":"SyncMode","kind":"identifier"}],"fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SyncMode","kind":"identifier"}],"title":"SyncMode","role":"symbol","abstract":[{"type":"text","text":"Which way the sync is done"}],"kind":"symbol"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/Downloader":{"navigatorTitle":[{"kind":"identifier","text":"Downloader"}],"role":"symbol","abstract":[{"text":"Downloads transactions from the Sheet and merges them into transactions in the ledgers","type":"text"}],"kind":"symbol","title":"Downloader","url":"\/documentation\/swiftbeancountsheetsync\/downloader","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/Downloader","fragments":[{"kind":"keyword","text":"class"},{"kind":"text","text":" "},{"kind":"identifier","text":"Downloader"}],"type":"topic"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SheetParserError":{"abstract":[{"text":"Errors while reading the sheet","type":"text"}],"fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SheetParserError","kind":"identifier"}],"navigatorTitle":[{"text":"SheetParserError","kind":"identifier"}],"title":"SheetParserError","url":"\/documentation\/swiftbeancountsheetsync\/sheetparsererror","kind":"symbol","role":"symbol","type":"topic","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SheetParserError"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncResult":{"navigatorTitle":[{"text":"SyncResult","kind":"identifier"}],"fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SyncResult","kind":"identifier"}],"identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult","abstract":[{"type":"text","text":"Result of the syncronization"}],"type":"topic","kind":"symbol","url":"\/documentation\/swiftbeancountsheetsync\/syncresult","title":"SyncResult","role":"symbol"}}}
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "SwiftBeanCountSheetSync",
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountSheetSync"
+      }
+    ],
+    "role" : "collection",
+    "roleHeading" : "Framework",
+    "symbolKind" : "module",
+    "title" : "SwiftBeanCountSheetSync"
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Classes",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/Downloader",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/GenericSyncer",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/Uploader"
+      ],
+      "title" : "Classes"
+    },
+    {
+      "anchor" : "Protocols",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/Syncer"
+      ],
+      "title" : "Protocols"
+    },
+    {
+      "anchor" : "Structures",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult"
+      ],
+      "title" : "Structures"
+    },
+    {
+      "anchor" : "Enumerations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SheetParserError",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode"
+      ],
+      "title" : "Enumerations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountsheetsync"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountSheetSync",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/Downloader": {
+  "abstract" : [
+    {
+      "text" : "Downloads transactions from the Sheet and merges them into transactions in the ledgers",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Downloader"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/Downloader",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Downloader"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Downloader",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/downloader"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/GenericSyncer": {
+  "abstract" : [
+    {
+      "text" : "Base class with helpers for specific syncers",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "GenericSyncer"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/GenericSyncer",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "GenericSyncer"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "GenericSyncer",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/genericsyncer"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/LedgerSettings": {
+  "abstract" : [
+    {
+      "text" : "Settings for SwiftBeanCountSheetSync which were read from the ledger file",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "LedgerSettings"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/LedgerSettings",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "LedgerSettings"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "LedgerSettings",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/ledgersettings"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SheetParserError": {
+  "abstract" : [
+    {
+      "text" : "Errors while reading the sheet",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SheetParserError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SheetParserError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SheetParserError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SheetParserError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/sheetparsererror"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncMode": {
+  "abstract" : [
+    {
+      "text" : "Which way the sync is done",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SyncMode"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SyncMode"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SyncMode",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/syncmode"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncResult": {
+  "abstract" : [
+    {
+      "text" : "Result of the syncronization",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SyncResult"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SyncResult"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SyncResult",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/syncresult"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/Syncer": {
+  "abstract" : [
+    {
+      "text" : "Syncer which can sync transactions between the sheet and ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Syncer"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/Syncer",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Syncer"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Syncer",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/syncer"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/Uploader": {
+  "abstract" : [
+    {
+      "text" : "Uploads transactions from the ledger to the sheet",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Uploader"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/Uploader",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Uploader"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Uploader",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/uploader"
+}
+}
+}

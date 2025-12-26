@@ -1,1 +1,172 @@
-{"abstract":[{"text":"last in first out","type":"text"}],"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/BookingMethod\/lifo","interfaceLanguage":"swift"},"kind":"symbol","schemaVersion":{"minor":3,"patch":0,"major":0},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/BookingMethod"]]},"primaryContentSections":[{"declarations":[{"tokens":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"lifo","kind":"identifier"}],"platforms":["macOS"],"languages":["swift"]}],"kind":"declarations"}],"metadata":{"symbolKind":"case","roleHeading":"Case","externalID":"s:19SwiftBeanCountModel13BookingMethodO4lifoyA2CmF","modules":[{"name":"SwiftBeanCountModel"}],"fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"lifo","kind":"identifier"}],"title":"BookingMethod.lifo","role":"symbol"},"sections":[],"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/bookingmethod\/lifo"],"traits":[{"interfaceLanguage":"swift"}]}],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/BookingMethod/lifo":{"title":"BookingMethod.lifo","url":"\/documentation\/swiftbeancountmodel\/bookingmethod\/lifo","kind":"symbol","fragments":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"lifo"}],"abstract":[{"type":"text","text":"last in first out"}],"role":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/BookingMethod\/lifo","type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/BookingMethod":{"role":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/BookingMethod","kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/bookingmethod","fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"BookingMethod","kind":"identifier"}],"title":"BookingMethod","navigatorTitle":[{"text":"BookingMethod","kind":"identifier"}],"abstract":[{"type":"text","text":"The Booking Method for an Inventory defines how ambiguous lot matches are handled"}],"type":"topic"}}}
+{
+  "abstract" : [
+    {
+      "text" : "last in first out",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/BookingMethod"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/BookingMethod\/lifo"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel13BookingMethodO4lifoyA2CmF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "case"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "lifo"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Case",
+    "symbolKind" : "case",
+    "title" : "BookingMethod.lifo"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "case"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "lifo"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/bookingmethod\/lifo"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/BookingMethod": {
+  "abstract" : [
+    {
+      "text" : "The Booking Method for an Inventory defines how ambiguous lot matches are handled",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "BookingMethod"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/BookingMethod",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "BookingMethod"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "BookingMethod",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/bookingmethod"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/BookingMethod/lifo": {
+  "abstract" : [
+    {
+      "text" : "last in first out",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "lifo"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/BookingMethod\/lifo",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "BookingMethod.lifo",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/bookingmethod\/lifo"
+}
+}
+}

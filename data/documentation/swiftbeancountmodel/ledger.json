@@ -1,1 +1,1127 @@
-{"schemaVersion":{"minor":3,"major":0,"patch":0},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"]]},"topicSections":[{"identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/init()"],"generated":true,"anchor":"Initializers","title":"Initializers"},{"identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/accountGroups","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/accounts","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/commodities","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/custom","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/errors","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/events","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/ledgerErrors","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/option","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/parsingErrors","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/plugins","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/prices","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/tags","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/transactions"],"generated":true,"anchor":"Instance-Properties","title":"Instance Properties"},{"identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-2eg4m","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-5sgli","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-6tzr1","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-90mqm","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-9vfqm"],"generated":true,"anchor":"Instance-Methods","title":"Instance Methods"},{"identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/CustomStringConvertible-Implementations","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/Equatable-Implementations"],"generated":true,"anchor":"Default-Implementations","title":"Default Implementations"}],"abstract":[{"type":"text","text":"A Ledger is the main part of the model, it contains all necessary information."}],"primaryContentSections":[{"kind":"declarations","declarations":[{"platforms":["macOS"],"tokens":[{"kind":"keyword","text":"class"},{"kind":"text","text":" "},{"kind":"identifier","text":"Ledger"}],"languages":["swift"]}]}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountmodel\/ledger"]}],"sections":[],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger"},"metadata":{"role":"symbol","symbolKind":"class","roleHeading":"Class","modules":[{"name":"SwiftBeanCountModel"}],"externalID":"s:19SwiftBeanCountModel6LedgerC","title":"Ledger","navigatorTitle":[{"kind":"identifier","text":"Ledger"}],"fragments":[{"kind":"keyword","text":"class"},{"kind":"text","text":" "},{"kind":"identifier","text":"Ledger"}]},"kind":"symbol","relationshipsSections":[{"identifiers":["doc:\/\/SwiftBeanCountModel\/s8CopyableP","doc:\/\/SwiftBeanCountModel\/s23CustomStringConvertibleP","doc:\/\/SwiftBeanCountModel\/SQ"],"kind":"relationships","type":"conformsTo","title":"Conforms To"}],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/add(_:)-2eg4m":{"role":"symbol","url":"\/documentation\/swiftbeancountmodel\/ledger\/add(_:)-2eg4m","fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"add","kind":"identifier"},{"text":"(","kind":"text"},{"text":"Account","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel7AccountC"},{"text":") ","kind":"text"},{"text":"throws","kind":"keyword"}],"type":"topic","title":"add(_:)","kind":"symbol","abstract":[{"text":"Adds an ","type":"text"},{"type":"codeVoice","code":"Account"},{"text":" to the ledger","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-2eg4m"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/commodities":{"role":"symbol","kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/ledger\/commodities","abstract":[{"type":"text","text":"Array of all "},{"type":"codeVoice","code":"Commodity"},{"type":"text","text":"s in this ledger"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/commodities","title":"commodities","type":"topic","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"commodities","kind":"identifier"},{"text":": [","kind":"text"},{"text":"Commodity","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel9CommodityC"},{"text":"]","kind":"text"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/transactions":{"fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"transactions","kind":"identifier"},{"text":": [","kind":"text"},{"preciseIdentifier":"s:19SwiftBeanCountModel11TransactionC","text":"Transaction","kind":"typeIdentifier"},{"text":"]","kind":"text"}],"kind":"symbol","title":"transactions","abstract":[{"text":"Array of all ","type":"text"},{"type":"codeVoice","code":"Transaction"},{"text":"s in this ledger","type":"text"}],"type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/transactions","role":"symbol","url":"\/documentation\/swiftbeancountmodel\/ledger\/transactions"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/option":{"kind":"symbol","role":"symbol","title":"option","fragments":[{"kind":"keyword","text":"var"},{"kind":"text","text":" "},{"kind":"identifier","text":"option"},{"kind":"text","text":": ["},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel6OptionV","text":"Option"},{"kind":"text","text":"]"}],"abstract":[{"type":"text","text":"Array of all options"}],"url":"\/documentation\/swiftbeancountmodel\/ledger\/option","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/option","type":"topic"},"doc://SwiftBeanCountModel/s8CopyableP":{"type":"unresolvable","identifier":"doc:\/\/SwiftBeanCountModel\/s8CopyableP","title":"Swift.Copyable"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/add(_:)-5sgli":{"kind":"symbol","title":"add(_:)","url":"\/documentation\/swiftbeancountmodel\/ledger\/add(_:)-5sgli","fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"add"},{"kind":"text","text":"("},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11TransactionC","text":"Transaction"},{"kind":"text","text":")"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-5sgli","role":"symbol","abstract":[{"type":"text","text":"Adds a "},{"type":"codeVoice","code":"Transcaction"},{"type":"text","text":" to the ledger"}],"type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/ledgerErrors":{"role":"symbol","url":"\/documentation\/swiftbeancountmodel\/ledger\/ledgererrors","title":"ledgerErrors","abstract":[{"text":"Errors which this ledger contains","type":"text"}],"fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"ledgerErrors","kind":"identifier"},{"text":": [","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":"]","kind":"text"}],"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/ledgerErrors","type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/parsingErrors":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/parsingErrors","type":"topic","fragments":[{"text":"var","kind":"keyword"},{"kind":"text","text":" "},{"kind":"identifier","text":"parsingErrors"},{"kind":"text","text":": ["},{"kind":"typeIdentifier","text":"String","preciseIdentifier":"s:SS"},{"kind":"text","text":"]"}],"abstract":[{"text":"Errors while reading the ledger","type":"text"}],"kind":"symbol","title":"parsingErrors","role":"symbol","url":"\/documentation\/swiftbeancountmodel\/ledger\/parsingerrors"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/custom":{"title":"custom","type":"topic","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"custom","kind":"identifier"},{"text":": [","kind":"text"},{"preciseIdentifier":"s:19SwiftBeanCountModel6CustomV","text":"Custom","kind":"typeIdentifier"},{"text":"]","kind":"text"}],"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/custom","role":"symbol","url":"\/documentation\/swiftbeancountmodel\/ledger\/custom","abstract":[{"type":"text","text":"Array of all Custom directives"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/accounts":{"url":"\/documentation\/swiftbeancountmodel\/ledger\/accounts","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/accounts","role":"symbol","title":"accounts","abstract":[{"text":"Array of all ","type":"text"},{"type":"codeVoice","code":"Account"},{"text":"s in this ledger","type":"text"}],"type":"topic","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"accounts","kind":"identifier"},{"text":": [","kind":"text"},{"text":"Account","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel7AccountC"},{"text":"]","kind":"text"}],"kind":"symbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/prices":{"role":"symbol","abstract":[{"text":"Array of all ","type":"text"},{"code":"Price","type":"codeVoice"},{"text":"s in this ledger","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/prices","url":"\/documentation\/swiftbeancountmodel\/ledger\/prices","title":"prices","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"prices","kind":"identifier"},{"text":": [","kind":"text"},{"preciseIdentifier":"s:19SwiftBeanCountModel5PriceV","text":"Price","kind":"typeIdentifier"},{"text":"]","kind":"text"}],"type":"topic","kind":"symbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/accountGroups":{"title":"accountGroups","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"accountGroups","kind":"identifier"},{"text":": [","kind":"text"},{"text":"AccountGroup","preciseIdentifier":"s:19SwiftBeanCountModel12AccountGroupC","kind":"typeIdentifier"},{"text":"]","kind":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/accountGroups","role":"symbol","type":"topic","url":"\/documentation\/swiftbeancountmodel\/ledger\/accountgroups","abstract":[{"text":"Array of the main ","type":"text"},{"code":"AccountGroup","type":"codeVoice"},{"text":"s (all five ","type":"text"},{"code":"AccountType","type":"codeVoice"},{"text":"s) in this ledger","type":"text"}],"kind":"symbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/Equatable-Implementations":{"type":"topic","kind":"article","url":"\/documentation\/swiftbeancountmodel\/ledger\/equatable-implementations","role":"collectionGroup","abstract":[],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/Equatable-Implementations","title":"Equatable Implementations"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/add(_:)-9vfqm":{"kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/ledger\/add(_:)-9vfqm","role":"symbol","title":"add(_:)","type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-9vfqm","fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"add"},{"kind":"text","text":"("},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel5PriceV","text":"Price"},{"kind":"text","text":") "},{"kind":"keyword","text":"throws"}],"abstract":[{"type":"text","text":"Adds a "},{"type":"codeVoice","code":"Price"},{"type":"text","text":" to the ledger"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/init()":{"abstract":[{"type":"text","text":"Creates an empty ledger with the "},{"code":"accountGroups","type":"codeVoice"},{"type":"text","text":" set up"}],"fragments":[{"kind":"identifier","text":"init"},{"kind":"text","text":"()"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/init()","title":"init()","role":"symbol","type":"topic","url":"\/documentation\/swiftbeancountmodel\/ledger\/init()","kind":"symbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/plugins":{"abstract":[{"text":"Array of all plugins","type":"text"}],"title":"plugins","role":"symbol","url":"\/documentation\/swiftbeancountmodel\/ledger\/plugins","kind":"symbol","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"plugins","kind":"identifier"},{"text":": [","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":"]","kind":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/plugins","type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/events":{"abstract":[{"text":"Array of all events","type":"text"}],"kind":"symbol","type":"topic","url":"\/documentation\/swiftbeancountmodel\/ledger\/events","role":"symbol","title":"events","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"events","kind":"identifier"},{"text":": [","kind":"text"},{"text":"Event","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel5EventV"},{"text":"]","kind":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/events"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/add(_:)-90mqm":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-90mqm","type":"topic","title":"add(_:)","fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"add","kind":"identifier"},{"text":"(","kind":"text"},{"text":"Balance","preciseIdentifier":"s:19SwiftBeanCountModel7BalanceV","kind":"typeIdentifier"},{"text":")","kind":"text"}],"abstract":[{"text":"Adds a ","type":"text"},{"type":"codeVoice","code":"Balance"},{"text":" to the ledger","type":"text"}],"url":"\/documentation\/swiftbeancountmodel\/ledger\/add(_:)-90mqm","role":"symbol","kind":"symbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/CustomStringConvertible-Implementations":{"role":"collectionGroup","type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/CustomStringConvertible-Implementations","url":"\/documentation\/swiftbeancountmodel\/ledger\/customstringconvertible-implementations","abstract":[],"title":"CustomStringConvertible Implementations","kind":"article"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger":{"navigatorTitle":[{"kind":"identifier","text":"Ledger"}],"abstract":[{"type":"text","text":"A Ledger is the main part of the model, it contains all necessary information."}],"type":"topic","title":"Ledger","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger","url":"\/documentation\/swiftbeancountmodel\/ledger","kind":"symbol","role":"symbol","fragments":[{"kind":"keyword","text":"class"},{"kind":"text","text":" "},{"kind":"identifier","text":"Ledger"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/errors":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/errors","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"errors","kind":"identifier"},{"text":": [","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":"]","kind":"text"}],"type":"topic","title":"errors","abstract":[{"type":"text","text":"Errors from the ledger and the parsing"}],"url":"\/documentation\/swiftbeancountmodel\/ledger\/errors","kind":"symbol","role":"symbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/add(_:)-6tzr1":{"abstract":[{"type":"text","text":"Adds a "},{"type":"codeVoice","code":"Commodity"},{"type":"text","text":" to the ledger"}],"fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"add","kind":"identifier"},{"text":"(","kind":"text"},{"preciseIdentifier":"s:19SwiftBeanCountModel9CommodityC","text":"Commodity","kind":"typeIdentifier"},{"text":") ","kind":"text"},{"text":"throws","kind":"keyword"}],"kind":"symbol","title":"add(_:)","type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-6tzr1","url":"\/documentation\/swiftbeancountmodel\/ledger\/add(_:)-6tzr1","role":"symbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/tags":{"fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"tags","kind":"identifier"},{"text":": [","kind":"text"},{"preciseIdentifier":"s:19SwiftBeanCountModel3TagV","text":"Tag","kind":"typeIdentifier"},{"text":"]","kind":"text"}],"title":"tags","type":"topic","abstract":[{"type":"text","text":"Array of all "},{"type":"codeVoice","code":"Tag"},{"type":"text","text":"s in this ledger"}],"role":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/tags","url":"\/documentation\/swiftbeancountmodel\/ledger\/tags","kind":"symbol"},"doc://SwiftBeanCountModel/s23CustomStringConvertibleP":{"type":"unresolvable","identifier":"doc:\/\/SwiftBeanCountModel\/s23CustomStringConvertibleP","title":"Swift.CustomStringConvertible"},"doc://SwiftBeanCountModel/SQ":{"identifier":"doc:\/\/SwiftBeanCountModel\/SQ","type":"unresolvable","title":"Swift.Equatable"}}}
+{
+  "abstract" : [
+    {
+      "text" : "A Ledger is the main part of the model, it contains all necessary information.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel6LedgerC",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "class"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "Ledger"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "Ledger"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Class",
+    "symbolKind" : "class",
+    "title" : "Ledger"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "class"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "Ledger"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/s8CopyableP",
+        "doc:\/\/SwiftBeanCountModel\/s23CustomStringConvertibleP",
+        "doc:\/\/SwiftBeanCountModel\/SQ"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Initializers",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/init()"
+      ],
+      "title" : "Initializers"
+    },
+    {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/accountGroups",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/accounts",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/commodities",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/custom",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/errors",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/events",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/ledgerErrors",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/option",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/parsingErrors",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/plugins",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/prices",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/tags",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/transactions"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "anchor" : "Instance-Methods",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-2eg4m",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-5sgli",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-6tzr1",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-90mqm",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-9vfqm"
+      ],
+      "title" : "Instance Methods"
+    },
+    {
+      "anchor" : "Default-Implementations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/CustomStringConvertible-Implementations",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/Equatable-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/ledger"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/SQ": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/SQ",
+  "title" : "Swift.Equatable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger": {
+  "abstract" : [
+    {
+      "text" : "A Ledger is the main part of the model, it contains all necessary information.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Ledger"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Ledger"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Ledger",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/CustomStringConvertible-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/CustomStringConvertible-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "CustomStringConvertible Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/customstringconvertible-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/Equatable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/Equatable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Equatable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/equatable-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/accountGroups": {
+  "abstract" : [
+    {
+      "text" : "Array of the main ",
+      "type" : "text"
+    },
+    {
+      "code" : "AccountGroup",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "s (all five ",
+      "type" : "text"
+    },
+    {
+      "code" : "AccountType",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "s) in this ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "accountGroups"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel12AccountGroupC",
+      "text" : "AccountGroup"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/accountGroups",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "accountGroups",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/accountgroups"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/accounts": {
+  "abstract" : [
+    {
+      "text" : "Array of all ",
+      "type" : "text"
+    },
+    {
+      "code" : "Account",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "s in this ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "accounts"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel7AccountC",
+      "text" : "Account"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/accounts",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "accounts",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/accounts"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/add(_:)-2eg4m": {
+  "abstract" : [
+    {
+      "text" : "Adds an ",
+      "type" : "text"
+    },
+    {
+      "code" : "Account",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " to the ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "add"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel7AccountC",
+      "text" : "Account"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-2eg4m",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "add(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/add(_:)-2eg4m"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/add(_:)-5sgli": {
+  "abstract" : [
+    {
+      "text" : "Adds a ",
+      "type" : "text"
+    },
+    {
+      "code" : "Transcaction",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " to the ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "add"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11TransactionC",
+      "text" : "Transaction"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-5sgli",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "add(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/add(_:)-5sgli"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/add(_:)-6tzr1": {
+  "abstract" : [
+    {
+      "text" : "Adds a ",
+      "type" : "text"
+    },
+    {
+      "code" : "Commodity",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " to the ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "add"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel9CommodityC",
+      "text" : "Commodity"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-6tzr1",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "add(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/add(_:)-6tzr1"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/add(_:)-90mqm": {
+  "abstract" : [
+    {
+      "text" : "Adds a ",
+      "type" : "text"
+    },
+    {
+      "code" : "Balance",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " to the ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "add"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel7BalanceV",
+      "text" : "Balance"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-90mqm",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "add(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/add(_:)-90mqm"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/add(_:)-9vfqm": {
+  "abstract" : [
+    {
+      "text" : "Adds a ",
+      "type" : "text"
+    },
+    {
+      "code" : "Price",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " to the ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "add"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel5PriceV",
+      "text" : "Price"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/add(_:)-9vfqm",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "add(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/add(_:)-9vfqm"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/commodities": {
+  "abstract" : [
+    {
+      "text" : "Array of all ",
+      "type" : "text"
+    },
+    {
+      "code" : "Commodity",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "s in this ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "commodities"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel9CommodityC",
+      "text" : "Commodity"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/commodities",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "commodities",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/commodities"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/custom": {
+  "abstract" : [
+    {
+      "text" : "Array of all Custom directives",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "custom"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel6CustomV",
+      "text" : "Custom"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/custom",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "custom",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/custom"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/errors": {
+  "abstract" : [
+    {
+      "text" : "Errors from the ledger and the parsing",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "errors"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/errors",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "errors",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/errors"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/events": {
+  "abstract" : [
+    {
+      "text" : "Array of all events",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "events"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel5EventV",
+      "text" : "Event"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/events",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "events",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/events"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/init()": {
+  "abstract" : [
+    {
+      "text" : "Creates an empty ledger with the ",
+      "type" : "text"
+    },
+    {
+      "code" : "accountGroups",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " set up",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "()"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/init()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init()",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/init()"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/ledgerErrors": {
+  "abstract" : [
+    {
+      "text" : "Errors which this ledger contains",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ledgerErrors"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/ledgerErrors",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "ledgerErrors",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/ledgererrors"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/option": {
+  "abstract" : [
+    {
+      "text" : "Array of all options",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "option"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel6OptionV",
+      "text" : "Option"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/option",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "option",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/option"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/parsingErrors": {
+  "abstract" : [
+    {
+      "text" : "Errors while reading the ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "parsingErrors"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/parsingErrors",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "parsingErrors",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/parsingerrors"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/plugins": {
+  "abstract" : [
+    {
+      "text" : "Array of all plugins",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "plugins"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/plugins",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "plugins",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/plugins"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/prices": {
+  "abstract" : [
+    {
+      "text" : "Array of all ",
+      "type" : "text"
+    },
+    {
+      "code" : "Price",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "s in this ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "prices"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel5PriceV",
+      "text" : "Price"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/prices",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "prices",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/prices"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/tags": {
+  "abstract" : [
+    {
+      "text" : "Array of all ",
+      "type" : "text"
+    },
+    {
+      "code" : "Tag",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "s in this ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "tags"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel3TagV",
+      "text" : "Tag"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/tags",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "tags",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/tags"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Ledger/transactions": {
+  "abstract" : [
+    {
+      "text" : "Array of all ",
+      "type" : "text"
+    },
+    {
+      "code" : "Transaction",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "s in this ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "transactions"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11TransactionC",
+      "text" : "Transaction"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Ledger\/transactions",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "transactions",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/ledger\/transactions"
+},
+"doc://SwiftBeanCountModel/s23CustomStringConvertibleP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s23CustomStringConvertibleP",
+  "title" : "Swift.CustomStringConvertible",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/s8CopyableP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s8CopyableP",
+  "title" : "Swift.Copyable",
+  "type" : "unresolvable"
+}
+}
+}

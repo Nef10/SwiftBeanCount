@@ -1,1 +1,360 @@
-{"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter"]]},"relationshipsSections":[{"type":"conformingTypes","kind":"relationships","identifiers":["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Foundation\/UserDefaults"],"title":"Conforming Types"}],"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"protocol","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SettingsStorage","kind":"identifier"}],"platforms":["macOS"],"languages":["swift"]}]}],"metadata":{"fragments":[{"kind":"keyword","text":"protocol"},{"kind":"text","text":" "},{"kind":"identifier","text":"SettingsStorage"}],"modules":[{"name":"SwiftBeanCountImporter"}],"navigatorTitle":[{"kind":"identifier","text":"SettingsStorage"}],"roleHeading":"Protocol","symbolKind":"protocol","title":"SettingsStorage","role":"symbol","externalID":"s:22SwiftBeanCountImporter15SettingsStorageP"},"abstract":[{"text":"Protocol to define a storage for the settings","type":"text"}],"variants":[{"paths":["\/documentation\/swiftbeancountimporter\/settingsstorage"],"traits":[{"interfaceLanguage":"swift"}]}],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/SettingsStorage"},"sections":[],"kind":"symbol","topicSections":[{"identifiers":["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/SettingsStorage\/dictionary(forKey:)","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/SettingsStorage\/set(_:forKey:)","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/SettingsStorage\/string(forKey:)"],"anchor":"Instance-Methods","title":"Instance Methods","generated":true}],"schemaVersion":{"major":0,"minor":3,"patch":0},"references":{"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/SettingsStorage/dictionary(forKey:)":{"title":"dictionary(forKey:)","url":"\/documentation\/swiftbeancountimporter\/settingsstorage\/dictionary(forkey:)","required":true,"role":"symbol","abstract":[{"text":"Gets a saved dictionary for a given key","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/SettingsStorage\/dictionary(forKey:)","kind":"symbol","fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"dictionary","kind":"identifier"},{"text":"(","kind":"text"},{"text":"forKey","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":") -> [","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":" : ","kind":"text"},{"text":"Any","kind":"keyword"},{"text":"]?","kind":"text"}],"type":"topic"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/SettingsStorage/string(forKey:)":{"abstract":[{"type":"text","text":"Gets a saved string for a given key"}],"required":true,"identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/SettingsStorage\/string(forKey:)","url":"\/documentation\/swiftbeancountimporter\/settingsstorage\/string(forkey:)","title":"string(forKey:)","type":"topic","role":"symbol","fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"string"},{"kind":"text","text":"("},{"kind":"externalParam","text":"forKey"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"String","preciseIdentifier":"s:SS"},{"kind":"text","text":") -> "},{"kind":"typeIdentifier","text":"String","preciseIdentifier":"s:SS"},{"kind":"text","text":"?"}],"kind":"symbol"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Foundation/UserDefaults":{"identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Foundation\/UserDefaults","type":"unresolvable","title":"UserDefaults"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/SettingsStorage":{"type":"topic","kind":"symbol","role":"symbol","fragments":[{"text":"protocol","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SettingsStorage","kind":"identifier"}],"navigatorTitle":[{"text":"SettingsStorage","kind":"identifier"}],"url":"\/documentation\/swiftbeancountimporter\/settingsstorage","title":"SettingsStorage","abstract":[{"text":"Protocol to define a storage for the settings","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/SettingsStorage"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/SettingsStorage/set(_:forKey:)":{"abstract":[{"text":"Saves a value for a key","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/SettingsStorage\/set(_:forKey:)","required":true,"fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"set"},{"kind":"text","text":"("},{"kind":"keyword","text":"Any"},{"kind":"text","text":"?, "},{"kind":"externalParam","text":"forKey"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:SS","text":"String"},{"kind":"text","text":")"}],"url":"\/documentation\/swiftbeancountimporter\/settingsstorage\/set(_:forkey:)","title":"set(_:forKey:)","kind":"symbol","role":"symbol","type":"topic"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","url":"\/documentation\/swiftbeancountimporter","abstract":[],"role":"collection","title":"SwiftBeanCountImporter","kind":"symbol"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Protocol to define a storage for the settings",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/SettingsStorage"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:22SwiftBeanCountImporter15SettingsStorageP",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "protocol"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "SettingsStorage"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountImporter"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "SettingsStorage"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Protocol",
+    "symbolKind" : "protocol",
+    "title" : "SettingsStorage"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "protocol"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "SettingsStorage"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Foundation\/UserDefaults"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforming Types",
+      "type" : "conformingTypes"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Instance-Methods",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/SettingsStorage\/dictionary(forKey:)",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/SettingsStorage\/set(_:forKey:)",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/SettingsStorage\/string(forKey:)"
+      ],
+      "title" : "Instance Methods"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountimporter\/settingsstorage"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountImporter",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Foundation/UserDefaults": {
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Foundation\/UserDefaults",
+  "title" : "UserDefaults",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/SettingsStorage": {
+  "abstract" : [
+    {
+      "text" : "Protocol to define a storage for the settings",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SettingsStorage"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/SettingsStorage",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SettingsStorage"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SettingsStorage",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/settingsstorage"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/SettingsStorage/dictionary(forKey:)": {
+  "abstract" : [
+    {
+      "text" : "Gets a saved dictionary for a given key",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "dictionary"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "forKey"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : " : "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "Any"
+    },
+    {
+      "kind" : "text",
+      "text" : "]?"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/SettingsStorage\/dictionary(forKey:)",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "dictionary(forKey:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/settingsstorage\/dictionary(forkey:)"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/SettingsStorage/set(_:forKey:)": {
+  "abstract" : [
+    {
+      "text" : "Saves a value for a key",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "set"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "keyword",
+      "text" : "Any"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "forKey"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/SettingsStorage\/set(_:forKey:)",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "set(_:forKey:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/settingsstorage\/set(_:forkey:)"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/SettingsStorage/string(forKey:)": {
+  "abstract" : [
+    {
+      "text" : "Gets a saved string for a given key",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "string"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "forKey"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/SettingsStorage\/string(forKey:)",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "string(forKey:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/settingsstorage\/string(forkey:)"
+}
+}
+}

@@ -1,1 +1,403 @@
-{"primaryContentSections":[{"kind":"declarations","declarations":[{"languages":["swift"],"tokens":[{"kind":"keyword","text":"static"},{"kind":"text","text":" "},{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"setPayeeMapping"},{"kind":"text","text":"("},{"kind":"externalParam","text":"key"},{"kind":"text","text":": "},{"preciseIdentifier":"s:SS","kind":"typeIdentifier","text":"String"},{"kind":"text","text":", "},{"kind":"externalParam","text":"payee"},{"kind":"text","text":": "},{"preciseIdentifier":"s:SS","kind":"typeIdentifier","text":"String"},{"kind":"text","text":"?)"}],"platforms":["macOS"]}]},{"kind":"parameters","parameters":[{"name":"key","content":[{"inlineContent":[{"type":"text","text":"Original description of an imported transaction"}],"type":"paragraph"}]},{"name":"payee","content":[{"inlineContent":[{"text":"Payee to map transactions with this description to. Use nil to delete a mapping.","type":"text"}],"type":"paragraph"}]}]},{"kind":"content","content":[{"text":"Discussion","type":"heading","level":2,"anchor":"discussion"},{"type":"paragraph","inlineContent":[{"text":"Note: Do not use this function to save the mapping for an imported transaction","type":"text"},{"text":" ","type":"text"},{"text":"(use the functions on ","type":"text"},{"type":"codeVoice","code":"ImportedTransaction"},{"text":" instead), but only for adjustments","type":"text"},{"text":" ","type":"text"},{"text":"made on a settings screen.","type":"text"}]}]}],"variants":[{"paths":["\/documentation\/swiftbeancountimporter\/settings\/setpayeemapping(key:payee:)"],"traits":[{"interfaceLanguage":"swift"}]}],"identifier":{"url":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/setPayeeMapping(key:payee:)","interfaceLanguage":"swift"},"sections":[],"schemaVersion":{"patch":0,"minor":3,"major":0},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings"]]},"kind":"symbol","abstract":[{"text":"Save a new mapping of a payee the user wants to automatically apply to","type":"text"},{"text":" ","type":"text"},{"text":"new transactions with a certain description","type":"text"}],"metadata":{"externalID":"s:22SwiftBeanCountImporter8SettingsO15setPayeeMapping3key5payeeySS_SSSgtFZ","roleHeading":"Type Method","role":"symbol","title":"setPayeeMapping(key:payee:)","modules":[{"name":"SwiftBeanCountImporter"}],"fragments":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"setPayeeMapping","kind":"identifier"},{"text":"(","kind":"text"},{"text":"key","kind":"externalParam"},{"text":": ","kind":"text"},{"preciseIdentifier":"s:SS","text":"String","kind":"typeIdentifier"},{"text":", ","kind":"text"},{"text":"payee","kind":"externalParam"},{"text":": ","kind":"text"},{"preciseIdentifier":"s:SS","text":"String","kind":"typeIdentifier"},{"text":"?)","kind":"text"}],"symbolKind":"method"},"references":{"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings":{"fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Settings","kind":"identifier"}],"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings","url":"\/documentation\/swiftbeancountimporter\/settings","title":"Settings","kind":"symbol","abstract":[{"text":"Constants releated to settings of the importer","type":"text"}],"role":"symbol","navigatorTitle":[{"text":"Settings","kind":"identifier"}]},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","url":"\/documentation\/swiftbeancountimporter","abstract":[],"role":"collection","title":"SwiftBeanCountImporter","kind":"symbol"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/setPayeeMapping(key:payee:)":{"role":"symbol","kind":"symbol","type":"topic","url":"\/documentation\/swiftbeancountimporter\/settings\/setpayeemapping(key:payee:)","title":"setPayeeMapping(key:payee:)","fragments":[{"kind":"keyword","text":"static"},{"kind":"text","text":" "},{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"setPayeeMapping"},{"kind":"text","text":"("},{"kind":"externalParam","text":"key"},{"kind":"text","text":": "},{"preciseIdentifier":"s:SS","kind":"typeIdentifier","text":"String"},{"kind":"text","text":", "},{"kind":"externalParam","text":"payee"},{"text":": ","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":"?)","kind":"text"}],"identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/setPayeeMapping(key:payee:)","abstract":[{"type":"text","text":"Save a new mapping of a payee the user wants to automatically apply to"},{"type":"text","text":" "},{"type":"text","text":"new transactions with a certain description"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Save a new mapping of a payee the user wants to automatically apply to",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "new transactions with a certain description",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/setPayeeMapping(key:payee:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:22SwiftBeanCountImporter8SettingsO15setPayeeMapping3key5payeeySS_SSSgtFZ",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "static"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "setPayeeMapping"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "key"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "payee"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : "?)"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountImporter"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Type Method",
+    "symbolKind" : "method",
+    "title" : "setPayeeMapping(key:payee:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "static"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "setPayeeMapping"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "key"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "payee"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : "?)"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Original description of an imported transaction",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "key"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Payee to map transactions with this description to. Use nil to delete a mapping.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "payee"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Note: Do not use this function to save the mapping for an imported transaction",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "(use the functions on ",
+              "type" : "text"
+            },
+            {
+              "code" : "ImportedTransaction",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " instead), but only for adjustments",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "made on a settings screen.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountimporter\/settings\/setpayeemapping(key:payee:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountImporter",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings": {
+  "abstract" : [
+    {
+      "text" : "Constants releated to settings of the importer",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Settings"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Settings"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Settings",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/settings"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings/setPayeeMapping(key:payee:)": {
+  "abstract" : [
+    {
+      "text" : "Save a new mapping of a payee the user wants to automatically apply to",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "new transactions with a certain description",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "setPayeeMapping"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "key"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "payee"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?)"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings\/setPayeeMapping(key:payee:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "setPayeeMapping(key:payee:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/settings\/setpayeemapping(key:payee:)"
+}
+}
+}

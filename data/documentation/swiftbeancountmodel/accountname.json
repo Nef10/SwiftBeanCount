@@ -1,1 +1,516 @@
-{"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"]]},"relationshipsSections":[{"type":"conformsTo","kind":"relationships","title":"Conforms To","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountItem","doc:\/\/SwiftBeanCountModel\/s8CopyableP","doc:\/\/SwiftBeanCountModel\/s23CustomStringConvertibleP","doc:\/\/SwiftBeanCountModel\/SQ","doc:\/\/SwiftBeanCountModel\/SH"]}],"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/accountname"],"traits":[{"interfaceLanguage":"swift"}]}],"schemaVersion":{"minor":3,"patch":0,"major":0},"sections":[],"metadata":{"modules":[{"name":"SwiftBeanCountModel"}],"fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"AccountName","kind":"identifier"}],"navigatorTitle":[{"text":"AccountName","kind":"identifier"}],"roleHeading":"Structure","externalID":"s:19SwiftBeanCountModel11AccountNameV","role":"symbol","symbolKind":"struct","title":"AccountName"},"kind":"symbol","identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName","interfaceLanguage":"swift"},"primaryContentSections":[{"declarations":[{"tokens":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"AccountName"}],"languages":["swift"],"platforms":["macOS"]}],"kind":"declarations"}],"abstract":[{"type":"text","text":"Struct with represents just the name of an Account"}],"topicSections":[{"generated":true,"title":"Initializers","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/init(_:)"],"anchor":"Initializers"},{"generated":true,"title":"Instance Properties","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/accountType","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/fullName","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/nameItem"],"anchor":"Instance-Properties"},{"generated":true,"title":"Type Methods","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/isNameValid(_:)"],"anchor":"Type-Methods"},{"generated":true,"title":"Default Implementations","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/CustomStringConvertible-Implementations","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/Equatable-Implementations","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/Hashable-Implementations"],"anchor":"Default-Implementations"}],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountItem":{"fragments":[{"kind":"keyword","text":"protocol"},{"kind":"text","text":" "},{"kind":"identifier","text":"AccountItem"}],"url":"\/documentation\/swiftbeancountmodel\/accountitem","type":"topic","abstract":[{"type":"text","text":"AccountItems have a name item, which is the last part of the name"}],"role":"symbol","title":"AccountItem","kind":"symbol","navigatorTitle":[{"kind":"identifier","text":"AccountItem"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountItem"},"doc://SwiftBeanCountModel/s23CustomStringConvertibleP":{"title":"Swift.CustomStringConvertible","identifier":"doc:\/\/SwiftBeanCountModel\/s23CustomStringConvertibleP","type":"unresolvable"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName/Hashable-Implementations":{"abstract":[],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/Hashable-Implementations","url":"\/documentation\/swiftbeancountmodel\/accountname\/hashable-implementations","type":"topic","kind":"article","role":"collectionGroup","title":"Hashable Implementations"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName/isNameValid(_:)":{"fragments":[{"text":"static","kind":"keyword"},{"text":" ","kind":"text"},{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"isNameValid","kind":"identifier"},{"text":"(","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":") -> ","kind":"text"},{"text":"Bool","kind":"typeIdentifier","preciseIdentifier":"s:Sb"}],"abstract":[{"text":"Checks if a given name for an account is valid","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/isNameValid(_:)","url":"\/documentation\/swiftbeancountmodel\/accountname\/isnamevalid(_:)","type":"topic","kind":"symbol","role":"symbol","title":"isNameValid(_:)"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName/nameItem":{"url":"\/documentation\/swiftbeancountmodel\/accountname\/nameitem","type":"topic","abstract":[{"type":"text","text":"Last part of the name, for "},{"inlineContent":[{"type":"text","text":"Assets:Cash:CAD"}],"type":"strong"},{"type":"text","text":" this would be "},{"inlineContent":[{"type":"text","text":"CAD"}],"type":"strong"}],"title":"nameItem","fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"nameItem","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/nameItem","role":"symbol","kind":"symbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName/fullName":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/fullName","abstract":[{"text":"Full quilified name of the account, e.g. Assets:Cash:CAD","type":"text"}],"role":"symbol","url":"\/documentation\/swiftbeancountmodel\/accountname\/fullname","type":"topic","kind":"symbol","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"fullName","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"}],"title":"fullName"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName/init(_:)":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/init(_:)","title":"init(_:)","abstract":[{"text":"Creates an Account Name","type":"text"}],"role":"symbol","fragments":[{"text":"init","kind":"identifier"},{"text":"(","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":") ","kind":"text"},{"text":"throws","kind":"keyword"}],"url":"\/documentation\/swiftbeancountmodel\/accountname\/init(_:)","type":"topic","kind":"symbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName/Equatable-Implementations":{"type":"topic","title":"Equatable Implementations","abstract":[],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/Equatable-Implementations","url":"\/documentation\/swiftbeancountmodel\/accountname\/equatable-implementations","role":"collectionGroup","kind":"article"},"doc://SwiftBeanCountModel/SH":{"title":"Swift.Hashable","type":"unresolvable","identifier":"doc:\/\/SwiftBeanCountModel\/SH"},"doc://SwiftBeanCountModel/s8CopyableP":{"title":"Swift.Copyable","identifier":"doc:\/\/SwiftBeanCountModel\/s8CopyableP","type":"unresolvable"},"doc://SwiftBeanCountModel/SQ":{"title":"Swift.Equatable","type":"unresolvable","identifier":"doc:\/\/SwiftBeanCountModel\/SQ"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName/accountType":{"url":"\/documentation\/swiftbeancountmodel\/accountname\/accounttype","type":"topic","fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"accountType"},{"kind":"text","text":": "},{"preciseIdentifier":"s:19SwiftBeanCountModel11AccountTypeO","kind":"typeIdentifier","text":"AccountType"}],"abstract":[{"type":"text","text":"Type, see "},{"type":"codeVoice","code":"AccountType"}],"role":"symbol","title":"accountType","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/accountType","kind":"symbol"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName/CustomStringConvertible-Implementations":{"kind":"article","type":"topic","abstract":[],"url":"\/documentation\/swiftbeancountmodel\/accountname\/customstringconvertible-implementations","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/CustomStringConvertible-Implementations","role":"collectionGroup","title":"CustomStringConvertible Implementations"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName":{"role":"symbol","kind":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName","title":"AccountName","url":"\/documentation\/swiftbeancountmodel\/accountname","fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"AccountName"}],"type":"topic","abstract":[{"type":"text","text":"Struct with represents just the name of an Account"}],"navigatorTitle":[{"kind":"identifier","text":"AccountName"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Struct with represents just the name of an Account",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel11AccountNameV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "AccountName"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "AccountName"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "AccountName"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "AccountName"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountItem",
+        "doc:\/\/SwiftBeanCountModel\/s8CopyableP",
+        "doc:\/\/SwiftBeanCountModel\/s23CustomStringConvertibleP",
+        "doc:\/\/SwiftBeanCountModel\/SQ",
+        "doc:\/\/SwiftBeanCountModel\/SH"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Initializers",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/init(_:)"
+      ],
+      "title" : "Initializers"
+    },
+    {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/accountType",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/fullName",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/nameItem"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "anchor" : "Type-Methods",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/isNameValid(_:)"
+      ],
+      "title" : "Type Methods"
+    },
+    {
+      "anchor" : "Default-Implementations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/CustomStringConvertible-Implementations",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/Equatable-Implementations",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/Hashable-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/accountname"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/SH": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/SH",
+  "title" : "Swift.Hashable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/SQ": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/SQ",
+  "title" : "Swift.Equatable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountItem": {
+  "abstract" : [
+    {
+      "text" : "AccountItems have a name item, which is the last part of the name",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AccountItem"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountItem",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "AccountItem"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AccountItem",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountitem"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName": {
+  "abstract" : [
+    {
+      "text" : "Struct with represents just the name of an Account",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AccountName"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "AccountName"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AccountName",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountname"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName/CustomStringConvertible-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/CustomStringConvertible-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "CustomStringConvertible Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountname\/customstringconvertible-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName/Equatable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/Equatable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Equatable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountname\/equatable-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName/Hashable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/Hashable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Hashable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountname\/hashable-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName/accountType": {
+  "abstract" : [
+    {
+      "text" : "Type, see ",
+      "type" : "text"
+    },
+    {
+      "code" : "AccountType",
+      "type" : "codeVoice"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "accountType"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountTypeO",
+      "text" : "AccountType"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/accountType",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "accountType",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountname\/accounttype"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName/fullName": {
+  "abstract" : [
+    {
+      "text" : "Full quilified name of the account, e.g. Assets:Cash:CAD",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "fullName"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/fullName",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "fullName",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountname\/fullname"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName/init(_:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an Account Name",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/init(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountname\/init(_:)"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName/isNameValid(_:)": {
+  "abstract" : [
+    {
+      "text" : "Checks if a given name for an account is valid",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "isNameValid"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/isNameValid(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "isNameValid(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountname\/isnamevalid(_:)"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/AccountName/nameItem": {
+  "abstract" : [
+    {
+      "text" : "Last part of the name, for ",
+      "type" : "text"
+    },
+    {
+      "inlineContent" : [
+        {
+          "text" : "Assets:Cash:CAD",
+          "type" : "text"
+        }
+      ],
+      "type" : "strong"
+    },
+    {
+      "text" : " this would be ",
+      "type" : "text"
+    },
+    {
+      "inlineContent" : [
+        {
+          "text" : "CAD",
+          "type" : "text"
+        }
+      ],
+      "type" : "strong"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "nameItem"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/AccountName\/nameItem",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "nameItem",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/accountname\/nameitem"
+},
+"doc://SwiftBeanCountModel/s23CustomStringConvertibleP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s23CustomStringConvertibleP",
+  "title" : "Swift.CustomStringConvertible",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/s8CopyableP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s8CopyableP",
+  "title" : "Swift.Copyable",
+  "type" : "unresolvable"
+}
+}
+}

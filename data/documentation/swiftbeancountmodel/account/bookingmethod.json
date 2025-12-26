@@ -1,1 +1,242 @@
-{"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountmodel\/account\/bookingmethod"]}],"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Account\/bookingMethod","interfaceLanguage":"swift"},"abstract":[{"type":"codeVoice","code":"BookingMethod"},{"type":"text","text":" of the account"}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Account"]]},"kind":"symbol","schemaVersion":{"patch":0,"major":0,"minor":3},"metadata":{"fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"bookingMethod"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel13BookingMethodO","text":"BookingMethod"}],"modules":[{"name":"SwiftBeanCountModel"}],"externalID":"s:19SwiftBeanCountModel7AccountC13bookingMethodAA07BookingG0Ovp","title":"bookingMethod","roleHeading":"Instance Property","role":"symbol","symbolKind":"property"},"sections":[],"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"bookingMethod","kind":"identifier"},{"text":": ","kind":"text"},{"preciseIdentifier":"s:19SwiftBeanCountModel13BookingMethodO","text":"BookingMethod","kind":"typeIdentifier","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/BookingMethod"}],"platforms":["macOS"],"languages":["swift"]}]}],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/BookingMethod":{"role":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/BookingMethod","kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/bookingmethod","fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"BookingMethod","kind":"identifier"}],"title":"BookingMethod","navigatorTitle":[{"text":"BookingMethod","kind":"identifier"}],"abstract":[{"type":"text","text":"The Booking Method for an Inventory defines how ambiguous lot matches are handled"}],"type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Account/bookingMethod":{"fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"bookingMethod"},{"kind":"text","text":": "},{"preciseIdentifier":"s:19SwiftBeanCountModel13BookingMethodO","kind":"typeIdentifier","text":"BookingMethod"}],"role":"symbol","url":"\/documentation\/swiftbeancountmodel\/account\/bookingmethod","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Account\/bookingMethod","abstract":[{"code":"BookingMethod","type":"codeVoice"},{"type":"text","text":" of the account"}],"kind":"symbol","title":"bookingMethod","type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Account":{"kind":"symbol","title":"Account","url":"\/documentation\/swiftbeancountmodel\/account","navigatorTitle":[{"kind":"identifier","text":"Account"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Account","type":"topic","role":"symbol","fragments":[{"kind":"keyword","text":"class"},{"kind":"text","text":" "},{"kind":"identifier","text":"Account"}],"abstract":[{"text":"Class with represents an Account with a name, CommoditySymbol, opening and closing date","type":"text"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"}}}
+{
+  "abstract" : [
+    {
+      "code" : "BookingMethod",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " of the account",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Account"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Account\/bookingMethod"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel7AccountC13bookingMethodAA07BookingG0Ovp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "bookingMethod"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel13BookingMethodO",
+        "text" : "BookingMethod"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "bookingMethod"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "bookingMethod"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/BookingMethod",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel13BookingMethodO",
+              "text" : "BookingMethod"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/account\/bookingmethod"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Account": {
+  "abstract" : [
+    {
+      "text" : "Class with represents an Account with a name, CommoditySymbol, opening and closing date",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Account"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Account",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Account"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Account",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/account"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Account/bookingMethod": {
+  "abstract" : [
+    {
+      "code" : "BookingMethod",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " of the account",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "bookingMethod"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel13BookingMethodO",
+      "text" : "BookingMethod"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Account\/bookingMethod",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "bookingMethod",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/account\/bookingmethod"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/BookingMethod": {
+  "abstract" : [
+    {
+      "text" : "The Booking Method for an Inventory defines how ambiguous lot matches are handled",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "BookingMethod"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/BookingMethod",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "BookingMethod"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "BookingMethod",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/bookingmethod"
+}
+}
+}

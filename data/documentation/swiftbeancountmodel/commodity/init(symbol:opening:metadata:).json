@@ -1,1 +1,408 @@
-{"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Commodity\/init(symbol:opening:metaData:)","interfaceLanguage":"swift"},"metadata":{"role":"symbol","externalID":"s:19SwiftBeanCountModel9CommodityC6symbol7opening8metaDataACSS_10Foundation4DateVSgSDyS2SGtcfc","title":"init(symbol:opening:metaData:)","symbolKind":"init","modules":[{"name":"SwiftBeanCountModel"}],"roleHeading":"Initializer","fragments":[{"text":"init","kind":"identifier"},{"text":"(","kind":"text"},{"text":"symbol","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"CommoditySymbol","preciseIdentifier":"s:19SwiftBeanCountModel15CommoditySymbola","kind":"typeIdentifier"},{"text":", ","kind":"text"},{"text":"opening","kind":"externalParam"},{"text":": ","kind":"text"},{"text":"Date","preciseIdentifier":"s:10Foundation4DateV","kind":"typeIdentifier"},{"text":"?, ","kind":"text"},{"text":"metaData","kind":"externalParam"},{"text":": [","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":" : ","kind":"text"},{"text":"String","preciseIdentifier":"s:SS","kind":"typeIdentifier"},{"text":"])","kind":"text"}]},"kind":"symbol","primaryContentSections":[{"declarations":[{"languages":["swift"],"tokens":[{"text":"init","kind":"keyword"},{"text":"(","kind":"text"},{"text":"symbol","kind":"externalParam"},{"text":": ","kind":"text"},{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CommoditySymbol","preciseIdentifier":"s:19SwiftBeanCountModel15CommoditySymbola","text":"CommoditySymbol","kind":"typeIdentifier"},{"text":", ","kind":"text"},{"text":"opening","kind":"externalParam"},{"text":": ","kind":"text"},{"preciseIdentifier":"s:10Foundation4DateV","text":"Date","kind":"typeIdentifier"},{"text":"? = nil, ","kind":"text"},{"text":"metaData","kind":"externalParam"},{"text":": [","kind":"text"},{"preciseIdentifier":"s:SS","text":"String","kind":"typeIdentifier"},{"text":" : ","kind":"text"},{"preciseIdentifier":"s:SS","text":"String","kind":"typeIdentifier"},{"text":"] = [:])","kind":"text"}],"platforms":["macOS"]}],"kind":"declarations"},{"kind":"parameters","parameters":[{"name":"symbol","content":[{"inlineContent":[{"text":"Symbol of the commodity","type":"text"}],"type":"paragraph"}]},{"name":"opening","content":[{"inlineContent":[{"type":"text","text":"Date the commodity was opened"}],"type":"paragraph"}]}]}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Commodity"]]},"schemaVersion":{"major":0,"minor":3,"patch":0},"abstract":[{"text":"Creates an commodity with the given symbol, and an optinal opening date","type":"text"}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountmodel\/commodity\/init(symbol:opening:metadata:)"]}],"sections":[],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/CommoditySymbol":{"url":"\/documentation\/swiftbeancountmodel\/commoditysymbol","fragments":[{"text":"typealias","kind":"keyword"},{"text":" ","kind":"text"},{"text":"CommoditySymbol","kind":"identifier"}],"type":"topic","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CommoditySymbol","kind":"symbol","role":"symbol","title":"CommoditySymbol","abstract":[{"text":"A CommoditySymbol is just a string","type":"text"}],"navigatorTitle":[{"text":"CommoditySymbol","kind":"identifier"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Commodity":{"kind":"symbol","role":"symbol","navigatorTitle":[{"kind":"identifier","text":"Commodity"}],"title":"Commodity","fragments":[{"kind":"keyword","text":"class"},{"kind":"text","text":" "},{"kind":"identifier","text":"Commodity"}],"abstract":[{"text":"A commodity just consists of a symbol","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Commodity","type":"topic","url":"\/documentation\/swiftbeancountmodel\/commodity"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Commodity/init(symbol:opening:metaData:)":{"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Commodity\/init(symbol:opening:metaData:)","url":"\/documentation\/swiftbeancountmodel\/commodity\/init(symbol:opening:metadata:)","type":"topic","fragments":[{"kind":"identifier","text":"init"},{"kind":"text","text":"("},{"kind":"externalParam","text":"symbol"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"CommoditySymbol","preciseIdentifier":"s:19SwiftBeanCountModel15CommoditySymbola"},{"kind":"text","text":", "},{"kind":"externalParam","text":"opening"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"Date","preciseIdentifier":"s:10Foundation4DateV"},{"kind":"text","text":"?, "},{"kind":"externalParam","text":"metaData"},{"kind":"text","text":": ["},{"kind":"typeIdentifier","text":"String","preciseIdentifier":"s:SS"},{"kind":"text","text":" : "},{"kind":"typeIdentifier","text":"String","preciseIdentifier":"s:SS"},{"kind":"text","text":"])"}],"role":"symbol","title":"init(symbol:opening:metaData:)","abstract":[{"type":"text","text":"Creates an commodity with the given symbol, and an optinal opening date"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Creates an commodity with the given symbol, and an optinal opening date",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Commodity"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Commodity\/init(symbol:opening:metaData:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel9CommodityC6symbol7opening8metaDataACSS_10Foundation4DateVSgSDyS2SGtcfc",
+    "fragments" : [
+      {
+        "kind" : "identifier",
+        "text" : "init"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "symbol"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel15CommoditySymbola",
+        "text" : "CommoditySymbol"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "opening"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:10Foundation4DateV",
+        "text" : "Date"
+      },
+      {
+        "kind" : "text",
+        "text" : "?, "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "metaData"
+      },
+      {
+        "kind" : "text",
+        "text" : ": ["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : " : "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : "])"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Initializer",
+    "symbolKind" : "init",
+    "title" : "init(symbol:opening:metaData:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "init"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "symbol"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CommoditySymbol",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel15CommoditySymbola",
+              "text" : "CommoditySymbol"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "opening"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:10Foundation4DateV",
+              "text" : "Date"
+            },
+            {
+              "kind" : "text",
+              "text" : "? = nil, "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "metaData"
+            },
+            {
+              "kind" : "text",
+              "text" : ": ["
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : "] = [:])"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Symbol of the commodity",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "symbol"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Date the commodity was opened",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "opening"
+        }
+      ]
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/commodity\/init(symbol:opening:metadata:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Commodity": {
+  "abstract" : [
+    {
+      "text" : "A commodity just consists of a symbol",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Commodity"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Commodity",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Commodity"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Commodity",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/commodity"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Commodity/init(symbol:opening:metaData:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an commodity with the given symbol, and an optinal opening date",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "symbol"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel15CommoditySymbola",
+      "text" : "CommoditySymbol"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "opening"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4DateV",
+      "text" : "Date"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "metaData"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : " : "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "])"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Commodity\/init(symbol:opening:metaData:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(symbol:opening:metaData:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/commodity\/init(symbol:opening:metadata:)"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/CommoditySymbol": {
+  "abstract" : [
+    {
+      "text" : "A CommoditySymbol is just a string",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "typealias"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "CommoditySymbol"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CommoditySymbol",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "CommoditySymbol"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "CommoditySymbol",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/commoditysymbol"
+}
+}
+}

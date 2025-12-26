@@ -1,1 +1,345 @@
-{"relationshipsSections":[{"kind":"relationships","type":"conformsTo","title":"Conforms To","identifiers":["doc:\/\/SwiftBeanCountRogersBankMapper\/10Foundation14LocalizedErrorP","doc:\/\/SwiftBeanCountRogersBankMapper\/s8CopyableP","doc:\/\/SwiftBeanCountRogersBankMapper\/s5ErrorP","doc:\/\/SwiftBeanCountRogersBankMapper\/s8SendableP","doc:\/\/SwiftBeanCountRogersBankMapper\/s16SendableMetatypeP"]}],"variants":[{"paths":["\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror"],"traits":[{"interfaceLanguage":"swift"}]}],"topicSections":[{"title":"Enumeration Cases","generated":true,"identifiers":["doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError\/missingAccount(lastFour:)","doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError\/missingActivityData(activity:key:)"],"anchor":"Enumeration-Cases"},{"title":"Default Implementations","generated":true,"identifiers":["doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError\/Error-Implementations","doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError\/LocalizedError-Implementations"],"anchor":"Default-Implementations"}],"kind":"symbol","metadata":{"externalID":"s:30SwiftBeanCountRogersBankMapper0dE12MappingErrorO","role":"symbol","fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"RogersBankMappingError","kind":"identifier"}],"roleHeading":"Enumeration","navigatorTitle":[{"kind":"identifier","text":"RogersBankMappingError"}],"title":"RogersBankMappingError","symbolKind":"enum","modules":[{"name":"SwiftBeanCountRogersBankMapper"}]},"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError"},"sections":[],"schemaVersion":{"major":0,"patch":0,"minor":3},"abstract":[{"type":"text","text":"Error while mapping the downloaded data into BeanCount format"}],"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"RogersBankMappingError"}],"platforms":["macOS"],"languages":["swift"]}]}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper"]]},"references":{"doc://SwiftBeanCountRogersBankMapper/s16SendableMetatypeP":{"type":"unresolvable","title":"Swift.SendableMetatype","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/s16SendableMetatypeP"},"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/RogersBankMappingError":{"title":"RogersBankMappingError","role":"symbol","type":"topic","kind":"symbol","abstract":[{"type":"text","text":"Error while mapping the downloaded data into BeanCount format"}],"fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"RogersBankMappingError","kind":"identifier"}],"identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError","url":"\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror","navigatorTitle":[{"text":"RogersBankMappingError","kind":"identifier"}]},"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/RogersBankMappingError/Error-Implementations":{"url":"\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/error-implementations","kind":"article","abstract":[],"title":"Error Implementations","type":"topic","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError\/Error-Implementations","role":"collectionGroup"},"doc://SwiftBeanCountRogersBankMapper/s8SendableP":{"type":"unresolvable","title":"Swift.Sendable","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/s8SendableP"},"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper":{"title":"SwiftBeanCountRogersBankMapper","role":"collection","type":"topic","url":"\/documentation\/swiftbeancountrogersbankmapper","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper","abstract":[],"kind":"symbol"},"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/RogersBankMappingError/LocalizedError-Implementations":{"abstract":[],"kind":"article","title":"LocalizedError Implementations","url":"\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/localizederror-implementations","role":"collectionGroup","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError\/LocalizedError-Implementations","type":"topic"},"doc://SwiftBeanCountRogersBankMapper/s5ErrorP":{"type":"unresolvable","title":"Swift.Error","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/s5ErrorP"},"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/RogersBankMappingError/missingAccount(lastFour:)":{"fragments":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"missingAccount"},{"kind":"text","text":"("},{"kind":"externalParam","text":"lastFour"},{"kind":"text","text":": "},{"kind":"typeIdentifier","text":"String","preciseIdentifier":"s:SS"},{"kind":"text","text":")"}],"title":"RogersBankMappingError.missingAccount(lastFour:)","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError\/missingAccount(lastFour:)","role":"symbol","type":"topic","kind":"symbol","url":"\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/missingaccount(lastfour:)","abstract":[{"type":"text","text":"An account with the given last 4 digits was not found"}]},"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/RogersBankMappingError/missingActivityData(activity:key:)":{"title":"RogersBankMappingError.missingActivityData(activity:key:)","abstract":[{"type":"text","text":"Missing data on a downloaded transaction"}],"kind":"symbol","fragments":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"missingActivityData"},{"kind":"text","text":"("},{"kind":"externalParam","text":"activity"},{"kind":"text","text":": any "},{"preciseIdentifier":"s:20RogersBankDownloader8ActivityP","kind":"typeIdentifier","text":"Activity"},{"kind":"text","text":", "},{"kind":"externalParam","text":"key"},{"kind":"text","text":": "},{"preciseIdentifier":"s:SS","kind":"typeIdentifier","text":"String"},{"kind":"text","text":")"}],"url":"\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/missingactivitydata(activity:key:)","type":"topic","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError\/missingActivityData(activity:key:)","role":"symbol"},"doc://SwiftBeanCountRogersBankMapper/s8CopyableP":{"type":"unresolvable","title":"Swift.Copyable","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/s8CopyableP"},"doc://SwiftBeanCountRogersBankMapper/10Foundation14LocalizedErrorP":{"type":"unresolvable","title":"Foundation.LocalizedError","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/10Foundation14LocalizedErrorP"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Error while mapping the downloaded data into BeanCount format",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:30SwiftBeanCountRogersBankMapper0dE12MappingErrorO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "RogersBankMappingError"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountRogersBankMapper"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "RogersBankMappingError"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "RogersBankMappingError"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "RogersBankMappingError"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountRogersBankMapper\/10Foundation14LocalizedErrorP",
+        "doc:\/\/SwiftBeanCountRogersBankMapper\/s8CopyableP",
+        "doc:\/\/SwiftBeanCountRogersBankMapper\/s5ErrorP",
+        "doc:\/\/SwiftBeanCountRogersBankMapper\/s8SendableP",
+        "doc:\/\/SwiftBeanCountRogersBankMapper\/s16SendableMetatypeP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Enumeration-Cases",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError\/missingAccount(lastFour:)",
+        "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError\/missingActivityData(activity:key:)"
+      ],
+      "title" : "Enumeration Cases"
+    },
+    {
+      "anchor" : "Default-Implementations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError\/Error-Implementations",
+        "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError\/LocalizedError-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountRogersBankMapper/10Foundation14LocalizedErrorP": {
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/10Foundation14LocalizedErrorP",
+  "title" : "Foundation.LocalizedError",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountRogersBankMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountrogersbankmapper"
+},
+"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/RogersBankMappingError": {
+  "abstract" : [
+    {
+      "text" : "Error while mapping the downloaded data into BeanCount format",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "RogersBankMappingError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "RogersBankMappingError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "RogersBankMappingError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror"
+},
+"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/RogersBankMappingError/Error-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError\/Error-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Error Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/error-implementations"
+},
+"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/RogersBankMappingError/LocalizedError-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError\/LocalizedError-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "LocalizedError Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/localizederror-implementations"
+},
+"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/RogersBankMappingError/missingAccount(lastFour:)": {
+  "abstract" : [
+    {
+      "text" : "An account with the given last 4 digits was not found",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "missingAccount"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "lastFour"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError\/missingAccount(lastFour:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "RogersBankMappingError.missingAccount(lastFour:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/missingaccount(lastfour:)"
+},
+"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/RogersBankMappingError/missingActivityData(activity:key:)": {
+  "abstract" : [
+    {
+      "text" : "Missing data on a downloaded transaction",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "missingActivityData"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "activity"
+    },
+    {
+      "kind" : "text",
+      "text" : ": any "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:20RogersBankDownloader8ActivityP",
+      "text" : "Activity"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "key"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/RogersBankMappingError\/missingActivityData(activity:key:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "RogersBankMappingError.missingActivityData(activity:key:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountrogersbankmapper\/rogersbankmappingerror\/missingactivitydata(activity:key:)"
+},
+"doc://SwiftBeanCountRogersBankMapper/s16SendableMetatypeP": {
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/s16SendableMetatypeP",
+  "title" : "Swift.SendableMetatype",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountRogersBankMapper/s5ErrorP": {
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/s5ErrorP",
+  "title" : "Swift.Error",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountRogersBankMapper/s8CopyableP": {
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/s8CopyableP",
+  "title" : "Swift.Copyable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountRogersBankMapper/s8SendableP": {
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/s8SendableP",
+  "title" : "Swift.Sendable",
+  "type" : "unresolvable"
+}
+}
+}

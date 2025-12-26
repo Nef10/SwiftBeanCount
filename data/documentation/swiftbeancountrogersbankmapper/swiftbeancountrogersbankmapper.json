@@ -1,1 +1,382 @@
-{"identifier":{"url":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper","interfaceLanguage":"swift"},"metadata":{"modules":[{"name":"SwiftBeanCountRogersBankMapper"}],"roleHeading":"Structure","role":"symbol","navigatorTitle":[{"text":"SwiftBeanCountRogersBankMapper","kind":"identifier"}],"fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"SwiftBeanCountRogersBankMapper"}],"title":"SwiftBeanCountRogersBankMapper","externalID":"s:30SwiftBeanCountRogersBankMapperAAV","symbolKind":"struct"},"abstract":[{"text":"Mapper to map downloaded accounts and activities to BeanCoutModel objects","type":"text"}],"topicSections":[{"generated":true,"title":"Initializers","identifiers":["doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper\/init(ledger:)"],"anchor":"Initializers"},{"generated":true,"title":"Instance Properties","identifiers":["doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper\/expenseAccountName"],"anchor":"Instance-Properties"},{"generated":true,"title":"Instance Methods","identifiers":["doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper\/mapAccountToBalance(account:)","doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper\/mapActivitiesToTransactions(activities:)"],"anchor":"Instance-Methods"}],"primaryContentSections":[{"declarations":[{"languages":["swift"],"tokens":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SwiftBeanCountRogersBankMapper","kind":"identifier"}],"platforms":["macOS"]}],"kind":"declarations"}],"kind":"symbol","sections":[],"variants":[{"paths":["\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper"],"traits":[{"interfaceLanguage":"swift"}]}],"schemaVersion":{"major":0,"minor":3,"patch":0},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper"]]},"references":{"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/SwiftBeanCountRogersBankMapper":{"type":"topic","role":"symbol","url":"\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SwiftBeanCountRogersBankMapper","kind":"identifier"}],"navigatorTitle":[{"text":"SwiftBeanCountRogersBankMapper","kind":"identifier"}],"kind":"symbol","title":"SwiftBeanCountRogersBankMapper","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper","abstract":[{"type":"text","text":"Mapper to map downloaded accounts and activities to BeanCoutModel objects"}]},"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/SwiftBeanCountRogersBankMapper/init(ledger:)":{"type":"topic","kind":"symbol","fragments":[{"kind":"identifier","text":"init"},{"kind":"text","text":"("},{"kind":"externalParam","text":"ledger"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC","text":"Ledger"},{"kind":"text","text":")"}],"abstract":[{"type":"text","text":"Creates a mapper"}],"title":"init(ledger:)","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper\/init(ledger:)","url":"\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper\/init(ledger:)","role":"symbol"},"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/SwiftBeanCountRogersBankMapper/expenseAccountName":{"kind":"symbol","abstract":[{"type":"text","text":"Account name to which the expenses are posted"}],"fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"expenseAccountName","kind":"identifier"},{"text":": ","kind":"text"},{"text":"AccountName","kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel11AccountNameV"}],"role":"symbol","title":"expenseAccountName","type":"topic","url":"\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper\/expenseaccountname","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper\/expenseAccountName"},"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/SwiftBeanCountRogersBankMapper/mapActivitiesToTransactions(activities:)":{"kind":"symbol","abstract":[{"type":"text","text":"Maps activities to transactions"}],"fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"mapActivitiesToTransactions"},{"kind":"text","text":"("},{"kind":"externalParam","text":"activities"},{"kind":"text","text":": [any "},{"preciseIdentifier":"s:20RogersBankDownloader8ActivityP","kind":"typeIdentifier","text":"Activity"},{"kind":"text","text":"]) "},{"kind":"keyword","text":"throws"},{"kind":"text","text":" -> ["},{"preciseIdentifier":"s:19SwiftBeanCountModel11TransactionC","kind":"typeIdentifier","text":"Transaction"},{"kind":"text","text":"]"}],"role":"symbol","title":"mapActivitiesToTransactions(activities:)","type":"topic","url":"\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper\/mapactivitiestotransactions(activities:)","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper\/mapActivitiesToTransactions(activities:)"},"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/SwiftBeanCountRogersBankMapper/mapAccountToBalance(account:)":{"kind":"symbol","abstract":[{"type":"text","text":"Maps an account to a balance assertion"}],"fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"mapAccountToBalance"},{"kind":"text","text":"("},{"kind":"externalParam","text":"account"},{"kind":"text","text":": any "},{"preciseIdentifier":"s:20RogersBankDownloader7AccountP","kind":"typeIdentifier","text":"Account"},{"kind":"text","text":") "},{"kind":"keyword","text":"throws"},{"kind":"text","text":" -> "},{"preciseIdentifier":"s:19SwiftBeanCountModel7BalanceV","kind":"typeIdentifier","text":"Balance"}],"role":"symbol","title":"mapAccountToBalance(account:)","type":"topic","url":"\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper\/mapaccounttobalance(account:)","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper\/mapAccountToBalance(account:)"},"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper":{"title":"SwiftBeanCountRogersBankMapper","role":"collection","type":"topic","url":"\/documentation\/swiftbeancountrogersbankmapper","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper","abstract":[],"kind":"symbol"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Mapper to map downloaded accounts and activities to BeanCoutModel objects",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:30SwiftBeanCountRogersBankMapperAAV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "SwiftBeanCountRogersBankMapper"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountRogersBankMapper"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "SwiftBeanCountRogersBankMapper"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "SwiftBeanCountRogersBankMapper"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "SwiftBeanCountRogersBankMapper"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Initializers",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper\/init(ledger:)"
+      ],
+      "title" : "Initializers"
+    },
+    {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper\/expenseAccountName"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "anchor" : "Instance-Methods",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper\/mapAccountToBalance(account:)",
+        "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper\/mapActivitiesToTransactions(activities:)"
+      ],
+      "title" : "Instance Methods"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountRogersBankMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountrogersbankmapper"
+},
+"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/SwiftBeanCountRogersBankMapper": {
+  "abstract" : [
+    {
+      "text" : "Mapper to map downloaded accounts and activities to BeanCoutModel objects",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountRogersBankMapper"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountRogersBankMapper"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SwiftBeanCountRogersBankMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper"
+},
+"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/SwiftBeanCountRogersBankMapper/expenseAccountName": {
+  "abstract" : [
+    {
+      "text" : "Account name to which the expenses are posted",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "expenseAccountName"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11AccountNameV",
+      "text" : "AccountName"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper\/expenseAccountName",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "expenseAccountName",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper\/expenseaccountname"
+},
+"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/SwiftBeanCountRogersBankMapper/init(ledger:)": {
+  "abstract" : [
+    {
+      "text" : "Creates a mapper",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "ledger"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+      "text" : "Ledger"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper\/init(ledger:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(ledger:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper\/init(ledger:)"
+},
+"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/SwiftBeanCountRogersBankMapper/mapAccountToBalance(account:)": {
+  "abstract" : [
+    {
+      "text" : "Maps an account to a balance assertion",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "mapAccountToBalance"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "account"
+    },
+    {
+      "kind" : "text",
+      "text" : ": any "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:20RogersBankDownloader7AccountP",
+      "text" : "Account"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel7BalanceV",
+      "text" : "Balance"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper\/mapAccountToBalance(account:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "mapAccountToBalance(account:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper\/mapaccounttobalance(account:)"
+},
+"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/SwiftBeanCountRogersBankMapper/mapActivitiesToTransactions(activities:)": {
+  "abstract" : [
+    {
+      "text" : "Maps activities to transactions",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "mapActivitiesToTransactions"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "activities"
+    },
+    {
+      "kind" : "text",
+      "text" : ": [any "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:20RogersBankDownloader8ActivityP",
+      "text" : "Activity"
+    },
+    {
+      "kind" : "text",
+      "text" : "]) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11TransactionC",
+      "text" : "Transaction"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper\/mapActivitiesToTransactions(activities:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "mapActivitiesToTransactions(activities:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper\/mapactivitiestotransactions(activities:)"
+}
+}
+}

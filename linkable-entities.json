@@ -1,1 +1,164 @@
-[{"kind":"org.swift.docc.kind.module","title":"SwiftBeanCountParserUtils","availableLanguages":["swift"],"referenceURL":"doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils","language":"swift","path":"\/documentation\/swiftbeancountparserutils","usr":"SwiftBeanCountParserUtils"},{"availableLanguages":["swift"],"language":"swift","kind":"org.swift.docc.kind.instanceMethod","path":"\/documentation\/swiftbeancountparserutils\/swift\/string\/matchingstrings(regex:)","usr":"s:SS25SwiftBeanCountParserUtilsE15matchingStrings5regexSaySaySSGGSo19NSRegularExpressionC_tF","fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"matchingStrings"},{"kind":"text","text":"("},{"kind":"externalParam","text":"regex"},{"kind":"text","text":": "},{"preciseIdentifier":"c:objc(cs)NSRegularExpression","kind":"typeIdentifier","text":"NSRegularExpression"},{"kind":"text","text":") -> [["},{"preciseIdentifier":"s:SS","kind":"typeIdentifier","text":"String"},{"kind":"text","text":"]]"}],"abstract":[{"type":"text","text":"Returns the matches of a NSRegularExpression on a string"}],"referenceURL":"doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String\/matchingStrings(regex:)","title":"matchingStrings(regex:)"},{"title":"Swift","language":"swift","kind":"org.swift.docc.kind.extendedModule","path":"\/documentation\/swiftbeancountparserutils\/swift","usr":"s:m:s:e:s:SS25SwiftBeanCountParserUtilsE15matchingStrings5regexSaySaySSGGSo19NSRegularExpressionC_tF","referenceURL":"doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift","availableLanguages":["swift"]},{"title":"String","language":"swift","kind":"org.swift.docc.kind.extendedStructure","path":"\/documentation\/swiftbeancountparserutils\/swift\/string","usr":"s:e:s:SS25SwiftBeanCountParserUtilsE15matchingStrings5regexSaySaySSGGSo19NSRegularExpressionC_tF","fragments":[{"kind":"keyword","text":"extension"},{"kind":"text","text":" "},{"kind":"typeIdentifier","text":"String","preciseIdentifier":"s:SS"}],"referenceURL":"doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String","availableLanguages":["swift"]},{"availableLanguages":["swift"],"language":"swift","kind":"org.swift.docc.kind.instanceMethod","path":"\/documentation\/swiftbeancountparserutils\/swift\/string\/amountdecimal()","usr":"s:SS25SwiftBeanCountParserUtilsE13amountDecimalSo9NSDecimala_SityF","fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"amountDecimal"},{"kind":"text","text":"() -> ("},{"kind":"typeIdentifier","text":"Decimal","preciseIdentifier":"c:@SA@NSDecimal"},{"kind":"text","text":", "},{"kind":"typeIdentifier","text":"Int","preciseIdentifier":"s:Si"},{"kind":"text","text":")"}],"abstract":[{"text":"Parses a string into a Decimal, while determining how many decimal places the string contained","type":"text"}],"referenceURL":"doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String\/amountDecimal()","title":"amountDecimal()"}]
+[
+  {
+    "abstract" : [
+      {
+        "text" : "Returns the matches of a NSRegularExpression on a string",
+        "type" : "text"
+      }
+    ],
+    "availableLanguages" : [
+      "swift"
+    ],
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "matchingStrings"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "regex"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "c:objc(cs)NSRegularExpression",
+        "text" : "NSRegularExpression"
+      },
+      {
+        "kind" : "text",
+        "text" : ") -> [["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : "]]"
+      }
+    ],
+    "kind" : "org.swift.docc.kind.instanceMethod",
+    "language" : "swift",
+    "path" : "\/documentation\/swiftbeancountparserutils\/swift\/string\/matchingstrings(regex:)",
+    "referenceURL" : "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String\/matchingStrings(regex:)",
+    "title" : "matchingStrings(regex:)",
+    "usr" : "s:SS25SwiftBeanCountParserUtilsE15matchingStrings5regexSaySaySSGGSo19NSRegularExpressionC_tF"
+  },
+  {
+    "availableLanguages" : [
+      "swift"
+    ],
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "extension"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      }
+    ],
+    "kind" : "org.swift.docc.kind.extendedStructure",
+    "language" : "swift",
+    "path" : "\/documentation\/swiftbeancountparserutils\/swift\/string",
+    "referenceURL" : "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String",
+    "title" : "String",
+    "usr" : "s:e:s:SS25SwiftBeanCountParserUtilsE15matchingStrings5regexSaySaySSGGSo19NSRegularExpressionC_tF"
+  },
+  {
+    "availableLanguages" : [
+      "swift"
+    ],
+    "kind" : "org.swift.docc.kind.module",
+    "language" : "swift",
+    "path" : "\/documentation\/swiftbeancountparserutils",
+    "referenceURL" : "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils",
+    "title" : "SwiftBeanCountParserUtils",
+    "usr" : "SwiftBeanCountParserUtils"
+  },
+  {
+    "availableLanguages" : [
+      "swift"
+    ],
+    "kind" : "org.swift.docc.kind.extendedModule",
+    "language" : "swift",
+    "path" : "\/documentation\/swiftbeancountparserutils\/swift",
+    "referenceURL" : "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift",
+    "title" : "Swift",
+    "usr" : "s:m:s:e:s:SS25SwiftBeanCountParserUtilsE15matchingStrings5regexSaySaySSGGSo19NSRegularExpressionC_tF"
+  },
+  {
+    "abstract" : [
+      {
+        "text" : "Parses a string into a Decimal, while determining how many decimal places the string contained",
+        "type" : "text"
+      }
+    ],
+    "availableLanguages" : [
+      "swift"
+    ],
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "amountDecimal"
+      },
+      {
+        "kind" : "text",
+        "text" : "() -> ("
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "c:@SA@NSDecimal",
+        "text" : "Decimal"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Si",
+        "text" : "Int"
+      },
+      {
+        "kind" : "text",
+        "text" : ")"
+      }
+    ],
+    "kind" : "org.swift.docc.kind.instanceMethod",
+    "language" : "swift",
+    "path" : "\/documentation\/swiftbeancountparserutils\/swift\/string\/amountdecimal()",
+    "referenceURL" : "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift\/String\/amountDecimal()",
+    "title" : "amountDecimal()",
+    "usr" : "s:SS25SwiftBeanCountParserUtilsE13amountDecimalSo9NSDecimala_SityF"
+  }
+]

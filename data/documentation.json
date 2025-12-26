@@ -1,1 +1,149 @@
-{"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCount\/documentation"},"schemaVersion":{"major":0,"patch":0,"minor":3},"topicSectionsStyle":"detailedGrid","topicSections":[{"identifiers":["doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser","doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils","doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync","doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper","doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax","doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper"]}],"kind":"article","metadata":{"roleHeading":"Package","title":"SwiftBeanCount","role":"collection"},"sections":[],"references":{"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax":{"role":"collection","type":"topic","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax","title":"SwiftBeanCountTax","kind":"symbol","url":"\/documentation\/swiftbeancounttax","abstract":[]},"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper":{"identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper","type":"topic","title":"SwiftBeanCountRogersBankMapper","abstract":[],"kind":"symbol","url":"\/documentation\/swiftbeancountrogersbankmapper","role":"collection"},"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","type":"topic","title":"SwiftBeanCountModel","abstract":[],"kind":"symbol","url":"\/documentation\/swiftbeancountmodel","role":"collection"},"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper":{"identifier":"doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper","type":"topic","title":"SwiftBeanCountTangerineMapper","abstract":[],"kind":"symbol","url":"\/documentation\/swiftbeancounttangerinemapper","role":"collection"},"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper":{"identifier":"doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper","type":"topic","title":"SwiftBeanCountCompassCardMapper","abstract":[],"kind":"symbol","url":"\/documentation\/swiftbeancountcompasscardmapper","role":"collection"},"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter":{"identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","type":"topic","title":"SwiftBeanCountImporter","abstract":[],"kind":"symbol","url":"\/documentation\/swiftbeancountimporter","role":"collection"},"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper":{"identifier":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper","type":"topic","title":"SwiftBeanCountWealthsimpleMapper","abstract":[],"kind":"symbol","url":"\/documentation\/swiftbeancountwealthsimplemapper","role":"collection"},"doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser":{"identifier":"doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser","type":"topic","title":"SwiftBeanCountParser","abstract":[],"kind":"symbol","url":"\/documentation\/swiftbeancountparser","role":"collection"},"doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils":{"identifier":"doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils","type":"topic","title":"SwiftBeanCountParserUtils","abstract":[],"kind":"symbol","url":"\/documentation\/swiftbeancountparserutils","role":"collection"},"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync":{"identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync","type":"topic","title":"SwiftBeanCountSheetSync","abstract":[],"kind":"symbol","url":"\/documentation\/swiftbeancountsheetsync","role":"collection"}}}
+{
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCount\/documentation"
+  },
+  "kind" : "article",
+  "metadata" : {
+    "role" : "collection",
+    "roleHeading" : "Package",
+    "title" : "SwiftBeanCount"
+  },
+  "references" : {
+    "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "SwiftBeanCountCompassCardMapper",
+      "type" : "topic",
+      "url" : "\/documentation\/swiftbeancountcompasscardmapper"
+    },
+    "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "SwiftBeanCountImporter",
+      "type" : "topic",
+      "url" : "\/documentation\/swiftbeancountimporter"
+    },
+    "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "SwiftBeanCountModel",
+      "type" : "topic",
+      "url" : "\/documentation\/swiftbeancountmodel"
+    },
+    "doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "SwiftBeanCountParser",
+      "type" : "topic",
+      "url" : "\/documentation\/swiftbeancountparser"
+    },
+    "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "SwiftBeanCountParserUtils",
+      "type" : "topic",
+      "url" : "\/documentation\/swiftbeancountparserutils"
+    },
+    "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "SwiftBeanCountRogersBankMapper",
+      "type" : "topic",
+      "url" : "\/documentation\/swiftbeancountrogersbankmapper"
+    },
+    "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "SwiftBeanCountSheetSync",
+      "type" : "topic",
+      "url" : "\/documentation\/swiftbeancountsheetsync"
+    },
+    "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "SwiftBeanCountTangerineMapper",
+      "type" : "topic",
+      "url" : "\/documentation\/swiftbeancounttangerinemapper"
+    },
+    "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "SwiftBeanCountTax",
+      "type" : "topic",
+      "url" : "\/documentation\/swiftbeancounttax"
+    },
+    "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "SwiftBeanCountWealthsimpleMapper",
+      "type" : "topic",
+      "url" : "\/documentation\/swiftbeancountwealthsimplemapper"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountCompassCardMapper\/documentation\/SwiftBeanCountCompassCardMapper",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountParser\/documentation\/SwiftBeanCountParser",
+        "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils",
+        "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync",
+        "doc:\/\/SwiftBeanCountTangerineMapper\/documentation\/SwiftBeanCountTangerineMapper",
+        "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax",
+        "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper"
+      ]
+    }
+  ],
+  "topicSectionsStyle" : "detailedGrid"
+}

@@ -1,1 +1,270 @@
-{"topicSections":[{"title":"Enumeration Cases","generated":true,"identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CostError\/negativeAmount(_:)"],"anchor":"Enumeration-Cases"},{"title":"Default Implementations","generated":true,"identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CostError\/Error-Implementations","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CostError\/LocalizedError-Implementations"],"anchor":"Default-Implementations"}],"relationshipsSections":[{"kind":"relationships","title":"Conforms To","identifiers":["doc:\/\/SwiftBeanCountModel\/10Foundation14LocalizedErrorP","doc:\/\/SwiftBeanCountModel\/s8CopyableP","doc:\/\/SwiftBeanCountModel\/s5ErrorP","doc:\/\/SwiftBeanCountModel\/s8SendableP","doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP"],"type":"conformsTo"}],"schemaVersion":{"minor":3,"major":0,"patch":0},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"]]},"abstract":[{"type":"text","text":"Errors Cost can throw"}],"primaryContentSections":[{"kind":"declarations","declarations":[{"platforms":["macOS"],"tokens":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"CostError","kind":"identifier"}],"languages":["swift"]}]}],"kind":"symbol","variants":[{"paths":["\/documentation\/swiftbeancountmodel\/costerror"],"traits":[{"interfaceLanguage":"swift"}]}],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CostError"},"sections":[],"metadata":{"symbolKind":"enum","fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"CostError","kind":"identifier"}],"navigatorTitle":[{"kind":"identifier","text":"CostError"}],"title":"CostError","role":"symbol","modules":[{"name":"SwiftBeanCountModel"}],"externalID":"s:19SwiftBeanCountModel9CostErrorO","roleHeading":"Enumeration"},"references":{"doc://SwiftBeanCountModel/s8CopyableP":{"identifier":"doc:\/\/SwiftBeanCountModel\/s8CopyableP","title":"Swift.Copyable","type":"unresolvable"},"doc://SwiftBeanCountModel/10Foundation14LocalizedErrorP":{"identifier":"doc:\/\/SwiftBeanCountModel\/10Foundation14LocalizedErrorP","title":"Foundation.LocalizedError","type":"unresolvable"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/s5ErrorP":{"identifier":"doc:\/\/SwiftBeanCountModel\/s5ErrorP","title":"Swift.Error","type":"unresolvable"},"doc://SwiftBeanCountModel/s8SendableP":{"identifier":"doc:\/\/SwiftBeanCountModel\/s8SendableP","title":"Swift.Sendable","type":"unresolvable"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/CostError/negativeAmount(_:)":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CostError\/negativeAmount(_:)","type":"topic","title":"CostError.negativeAmount(_:)","url":"\/documentation\/swiftbeancountmodel\/costerror\/negativeamount(_:)","kind":"symbol","role":"symbol","fragments":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"negativeAmount"},{"kind":"text","text":"("},{"preciseIdentifier":"s:SS","kind":"typeIdentifier","text":"String"},{"kind":"text","text":")"}],"abstract":[{"text":"a negative amount","type":"text"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/CostError":{"title":"CostError","abstract":[{"text":"Errors Cost can throw","type":"text"}],"navigatorTitle":[{"kind":"identifier","text":"CostError"}],"fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"CostError"}],"url":"\/documentation\/swiftbeancountmodel\/costerror","kind":"symbol","role":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CostError","type":"topic"},"doc://SwiftBeanCountModel/s16SendableMetatypeP":{"identifier":"doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP","title":"Swift.SendableMetatype","type":"unresolvable"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/CostError/LocalizedError-Implementations":{"title":"LocalizedError Implementations","role":"collectionGroup","url":"\/documentation\/swiftbeancountmodel\/costerror\/localizederror-implementations","abstract":[],"kind":"article","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CostError\/LocalizedError-Implementations","type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/CostError/Error-Implementations":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CostError\/Error-Implementations","url":"\/documentation\/swiftbeancountmodel\/costerror\/error-implementations","kind":"article","title":"Error Implementations","type":"topic","abstract":[],"role":"collectionGroup"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Errors Cost can throw",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CostError"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel9CostErrorO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "CostError"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "CostError"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "CostError"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "CostError"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/10Foundation14LocalizedErrorP",
+        "doc:\/\/SwiftBeanCountModel\/s8CopyableP",
+        "doc:\/\/SwiftBeanCountModel\/s5ErrorP",
+        "doc:\/\/SwiftBeanCountModel\/s8SendableP",
+        "doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Enumeration-Cases",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CostError\/negativeAmount(_:)"
+      ],
+      "title" : "Enumeration Cases"
+    },
+    {
+      "anchor" : "Default-Implementations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CostError\/Error-Implementations",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CostError\/LocalizedError-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/costerror"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/10Foundation14LocalizedErrorP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/10Foundation14LocalizedErrorP",
+  "title" : "Foundation.LocalizedError",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/CostError": {
+  "abstract" : [
+    {
+      "text" : "Errors Cost can throw",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "CostError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CostError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "CostError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "CostError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/costerror"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/CostError/Error-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CostError\/Error-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Error Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/costerror\/error-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/CostError/LocalizedError-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CostError\/LocalizedError-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "LocalizedError Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/costerror\/localizederror-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/CostError/negativeAmount(_:)": {
+  "abstract" : [
+    {
+      "text" : "a negative amount",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "negativeAmount"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/CostError\/negativeAmount(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "CostError.negativeAmount(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/costerror\/negativeamount(_:)"
+},
+"doc://SwiftBeanCountModel/s16SendableMetatypeP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP",
+  "title" : "Swift.SendableMetatype",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/s5ErrorP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s5ErrorP",
+  "title" : "Swift.Error",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/s8CopyableP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s8CopyableP",
+  "title" : "Swift.Copyable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/s8SendableP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s8SendableP",
+  "title" : "Swift.Sendable",
+  "type" : "unresolvable"
+}
+}
+}

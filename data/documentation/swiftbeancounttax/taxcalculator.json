@@ -1,1 +1,370 @@
-{"sections":[],"abstract":[{"text":"Utility to generate tax relevant data from a ","type":"text"},{"code":"Ledger","type":"codeVoice"}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax"]]},"topicSections":[{"identifiers":["doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxCalculator\/generateTaxSlips(from:for:)","doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxCalculator\/getTaxableSales(from:for:)"],"title":"Type Methods","generated":true,"anchor":"Type-Methods"}],"schemaVersion":{"major":0,"patch":0,"minor":3},"kind":"symbol","variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancounttax\/taxcalculator"]}],"identifier":{"url":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxCalculator","interfaceLanguage":"swift"},"metadata":{"title":"TaxCalculator","symbolKind":"enum","role":"symbol","fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"TaxCalculator","kind":"identifier"}],"externalID":"s:17SwiftBeanCountTax0D10CalculatorO","navigatorTitle":[{"text":"TaxCalculator","kind":"identifier"}],"roleHeading":"Enumeration","modules":[{"name":"SwiftBeanCountTax"}]},"primaryContentSections":[{"kind":"declarations","declarations":[{"languages":["swift"],"platforms":["macOS"],"tokens":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"TaxCalculator","kind":"identifier"}]}]},{"kind":"content","content":[{"anchor":"overview","text":"Overview","type":"heading","level":2},{"inlineContent":[{"type":"text","text":"It relies heavily on meta data in the ledger."}],"type":"paragraph"}]}],"references":{"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/TaxCalculator/getTaxableSales(from:for:)":{"role":"symbol","type":"topic","url":"\/documentation\/swiftbeancounttax\/taxcalculator\/gettaxablesales(from:for:)","fragments":[{"kind":"keyword","text":"static"},{"kind":"text","text":" "},{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"getTaxableSales"},{"kind":"text","text":"("},{"kind":"externalParam","text":"from"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC","text":"Ledger"},{"kind":"text","text":", "},{"kind":"externalParam","text":"for"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:Si","text":"Int"},{"kind":"text","text":") "},{"kind":"keyword","text":"throws"},{"kind":"text","text":" -> ["},{"kind":"typeIdentifier","preciseIdentifier":"s:17SwiftBeanCountTax4SaleV","text":"Sale"},{"kind":"text","text":"]"}],"kind":"symbol","abstract":[{"text":"Gets all taxable sales from the ledger for a specific year","type":"text"}],"title":"getTaxableSales(from:for:)","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxCalculator\/getTaxableSales(from:for:)"},"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/TaxCalculator":{"fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"TaxCalculator"}],"title":"TaxCalculator","navigatorTitle":[{"kind":"identifier","text":"TaxCalculator"}],"role":"symbol","kind":"symbol","abstract":[{"text":"Utility to generate tax relevant data from a ","type":"text"},{"type":"codeVoice","code":"Ledger"}],"url":"\/documentation\/swiftbeancounttax\/taxcalculator","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxCalculator","type":"topic"},"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax":{"abstract":[],"title":"SwiftBeanCountTax","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax","kind":"symbol","type":"topic","url":"\/documentation\/swiftbeancounttax","role":"collection"},"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/TaxCalculator/generateTaxSlips(from:for:)":{"url":"\/documentation\/swiftbeancounttax\/taxcalculator\/generatetaxslips(from:for:)","type":"topic","role":"symbol","identifier":"doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxCalculator\/generateTaxSlips(from:for:)","abstract":[{"type":"text","text":"Generates all tax slips based on the meta data in the ledger for a specifc tax year"}],"title":"generateTaxSlips(from:for:)","kind":"symbol","fragments":[{"kind":"keyword","text":"static"},{"kind":"text","text":" "},{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"generateTaxSlips"},{"kind":"text","text":"("},{"kind":"externalParam","text":"from"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:19SwiftBeanCountModel6LedgerC","text":"Ledger"},{"kind":"text","text":", "},{"kind":"externalParam","text":"for"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:Si","text":"Int"},{"kind":"text","text":") "},{"kind":"keyword","text":"throws"},{"kind":"text","text":" -> ["},{"kind":"typeIdentifier","preciseIdentifier":"s:17SwiftBeanCountTax0D4SlipV","text":"TaxSlip"},{"kind":"text","text":"]"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Utility to generate tax relevant data from a ",
+      "type" : "text"
+    },
+    {
+      "code" : "Ledger",
+      "type" : "codeVoice"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxCalculator"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:17SwiftBeanCountTax0D10CalculatorO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "TaxCalculator"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountTax"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "TaxCalculator"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "TaxCalculator"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "TaxCalculator"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "It relies heavily on meta data in the ledger.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Type-Methods",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxCalculator\/generateTaxSlips(from:for:)",
+        "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxCalculator\/getTaxableSales(from:for:)"
+      ],
+      "title" : "Type Methods"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancounttax\/taxcalculator"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountTax",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax"
+},
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/TaxCalculator": {
+  "abstract" : [
+    {
+      "text" : "Utility to generate tax relevant data from a ",
+      "type" : "text"
+    },
+    {
+      "code" : "Ledger",
+      "type" : "codeVoice"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "TaxCalculator"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxCalculator",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "TaxCalculator"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "TaxCalculator",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax\/taxcalculator"
+},
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/TaxCalculator/generateTaxSlips(from:for:)": {
+  "abstract" : [
+    {
+      "text" : "Generates all tax slips based on the meta data in the ledger for a specifc tax year",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "generateTaxSlips"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "from"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+      "text" : "Ledger"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "for"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:17SwiftBeanCountTax0D4SlipV",
+      "text" : "TaxSlip"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxCalculator\/generateTaxSlips(from:for:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "generateTaxSlips(from:for:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax\/taxcalculator\/generatetaxslips(from:for:)"
+},
+"doc://SwiftBeanCountTax/documentation/SwiftBeanCountTax/TaxCalculator/getTaxableSales(from:for:)": {
+  "abstract" : [
+    {
+      "text" : "Gets all taxable sales from the ledger for a specific year",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "getTaxableSales"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "from"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel6LedgerC",
+      "text" : "Ledger"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "for"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:17SwiftBeanCountTax4SaleV",
+      "text" : "Sale"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountTax\/documentation\/SwiftBeanCountTax\/TaxCalculator\/getTaxableSales(from:for:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "getTaxableSales(from:for:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancounttax\/taxcalculator\/gettaxablesales(from:for:)"
+}
+}
+}

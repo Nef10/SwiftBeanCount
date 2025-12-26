@@ -1,1 +1,81 @@
-{"kind":"symbol","sections":[],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils"},"hierarchy":{"paths":[[]]},"topicSections":[{"anchor":"Extended-Modules","generated":true,"identifiers":["doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift"],"title":"Extended Modules"}],"schemaVersion":{"patch":0,"minor":3,"major":0},"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountparserutils"]}],"metadata":{"externalID":"SwiftBeanCountParserUtils","symbolKind":"module","modules":[{"name":"SwiftBeanCountParserUtils"}],"roleHeading":"Framework","role":"collection","title":"SwiftBeanCountParserUtils"},"references":{"doc://SwiftBeanCountParserUtils/documentation/SwiftBeanCountParserUtils":{"type":"topic","title":"SwiftBeanCountParserUtils","url":"\/documentation\/swiftbeancountparserutils","identifier":"doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils","kind":"symbol","role":"collection","abstract":[]},"doc://SwiftBeanCountParserUtils/documentation/SwiftBeanCountParserUtils/Swift":{"identifier":"doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift","url":"\/documentation\/swiftbeancountparserutils\/swift","abstract":[],"role":"collection","kind":"symbol","title":"Swift","type":"topic"}}}
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "SwiftBeanCountParserUtils",
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountParserUtils"
+      }
+    ],
+    "role" : "collection",
+    "roleHeading" : "Framework",
+    "symbolKind" : "module",
+    "title" : "SwiftBeanCountParserUtils"
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Extended-Modules",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift"
+      ],
+      "title" : "Extended Modules"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountparserutils"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountParserUtils/documentation/SwiftBeanCountParserUtils": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountParserUtils",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountparserutils"
+},
+"doc://SwiftBeanCountParserUtils/documentation/SwiftBeanCountParserUtils/Swift": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountParserUtils\/documentation\/SwiftBeanCountParserUtils\/Swift",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "Swift",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountparserutils\/swift"
+}
+}
+}

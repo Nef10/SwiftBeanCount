@@ -1,1 +1,418 @@
-{"abstract":[{"text":"Result of the syncronization","type":"text"}],"identifier":{"url":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult","interfaceLanguage":"swift"},"sections":[],"kind":"symbol","schemaVersion":{"major":0,"minor":3,"patch":0},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync"]]},"topicSections":[{"title":"Initializers","generated":true,"identifiers":["doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/init(mode:transactions:parserErrors:ledgerSettings:)"],"anchor":"Initializers"},{"title":"Instance Properties","generated":true,"identifiers":["doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/ledgerSettings","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/mode","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/parserErrors","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/transactions"],"anchor":"Instance-Properties"}],"primaryContentSections":[{"kind":"declarations","declarations":[{"platforms":["macOS"],"languages":["swift"],"tokens":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"SyncResult"}]}]}],"metadata":{"navigatorTitle":[{"text":"SyncResult","kind":"identifier"}],"modules":[{"name":"SwiftBeanCountSheetSync"}],"title":"SyncResult","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SyncResult","kind":"identifier"}],"symbolKind":"struct","role":"symbol","externalID":"s:23SwiftBeanCountSheetSync0E6ResultV","roleHeading":"Structure"},"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountsheetsync\/syncresult"]}],"references":{"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync":{"abstract":[],"kind":"symbol","title":"SwiftBeanCountSheetSync","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync","role":"collection","url":"\/documentation\/swiftbeancountsheetsync","type":"topic"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncResult":{"navigatorTitle":[{"text":"SyncResult","kind":"identifier"}],"fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SyncResult","kind":"identifier"}],"identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult","abstract":[{"type":"text","text":"Result of the syncronization"}],"type":"topic","kind":"symbol","url":"\/documentation\/swiftbeancountsheetsync\/syncresult","title":"SyncResult","role":"symbol"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncResult/init(mode:transactions:parserErrors:ledgerSettings:)":{"role":"symbol","url":"\/documentation\/swiftbeancountsheetsync\/syncresult\/init(mode:transactions:parsererrors:ledgersettings:)","type":"topic","title":"init(mode:transactions:parserErrors:ledgerSettings:)","fragments":[{"kind":"identifier","text":"init"},{"kind":"text","text":"("},{"kind":"externalParam","text":"mode"},{"kind":"text","text":": "},{"preciseIdentifier":"s:23SwiftBeanCountSheetSync0E4ModeO","kind":"typeIdentifier","text":"SyncMode"},{"kind":"text","text":", "},{"kind":"externalParam","text":"transactions"},{"kind":"text","text":": ["},{"preciseIdentifier":"s:19SwiftBeanCountModel11TransactionC","kind":"typeIdentifier","text":"Transaction"},{"kind":"text","text":"], "},{"kind":"externalParam","text":"parserErrors"},{"kind":"text","text":": ["},{"preciseIdentifier":"s:23SwiftBeanCountSheetSync0D11ParserErrorO","kind":"typeIdentifier","text":"SheetParserError"},{"kind":"text","text":"], "},{"kind":"externalParam","text":"ledgerSettings"},{"kind":"text","text":": "},{"preciseIdentifier":"s:23SwiftBeanCountSheetSync14LedgerSettingsV","kind":"typeIdentifier","text":"LedgerSettings"},{"kind":"text","text":")"}],"identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/init(mode:transactions:parserErrors:ledgerSettings:)","abstract":[{"type":"text","text":"Creates the syncroization result"}],"kind":"symbol"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncResult/parserErrors":{"type":"topic","url":"\/documentation\/swiftbeancountsheetsync\/syncresult\/parsererrors","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/parserErrors","title":"parserErrors","abstract":[{"text":"Errors of lines in the Sheet which could not be read","type":"text"}],"fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"parserErrors","kind":"identifier"},{"text":": [","kind":"text"},{"preciseIdentifier":"s:23SwiftBeanCountSheetSync0D11ParserErrorO","text":"SheetParserError","kind":"typeIdentifier"},{"text":"]","kind":"text"}],"role":"symbol","kind":"symbol"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncResult/mode":{"identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/mode","title":"mode","fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"mode"},{"kind":"text","text":": "},{"kind":"typeIdentifier","preciseIdentifier":"s:23SwiftBeanCountSheetSync0E4ModeO","text":"SyncMode"}],"type":"topic","kind":"symbol","role":"symbol","url":"\/documentation\/swiftbeancountsheetsync\/syncresult\/mode","abstract":[{"type":"text","text":"Mode in which the syncronization was performed"}]},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncResult/transactions":{"url":"\/documentation\/swiftbeancountsheetsync\/syncresult\/transactions","title":"transactions","type":"topic","role":"symbol","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"transactions","kind":"identifier"},{"text":": [","kind":"text"},{"text":"Transaction","preciseIdentifier":"s:19SwiftBeanCountModel11TransactionC","kind":"typeIdentifier"},{"text":"]","kind":"text"}],"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/transactions","abstract":[{"type":"text","text":"Transactions which need to be added"}]},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncResult/ledgerSettings":{"kind":"symbol","title":"ledgerSettings","fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"ledgerSettings","kind":"identifier"},{"text":": ","kind":"text"},{"preciseIdentifier":"s:23SwiftBeanCountSheetSync14LedgerSettingsV","text":"LedgerSettings","kind":"typeIdentifier"}],"type":"topic","url":"\/documentation\/swiftbeancountsheetsync\/syncresult\/ledgersettings","role":"symbol","abstract":[{"text":"Settings for the syncronization read from the ledger","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/ledgerSettings"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Result of the syncronization",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:23SwiftBeanCountSheetSync0E6ResultV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "SyncResult"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountSheetSync"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "SyncResult"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "SyncResult"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "SyncResult"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Initializers",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/init(mode:transactions:parserErrors:ledgerSettings:)"
+      ],
+      "title" : "Initializers"
+    },
+    {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/ledgerSettings",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/mode",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/parserErrors",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/transactions"
+      ],
+      "title" : "Instance Properties"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountsheetsync\/syncresult"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountSheetSync",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncResult": {
+  "abstract" : [
+    {
+      "text" : "Result of the syncronization",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SyncResult"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SyncResult"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SyncResult",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/syncresult"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncResult/init(mode:transactions:parserErrors:ledgerSettings:)": {
+  "abstract" : [
+    {
+      "text" : "Creates the syncroization result",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "mode"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:23SwiftBeanCountSheetSync0E4ModeO",
+      "text" : "SyncMode"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "transactions"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11TransactionC",
+      "text" : "Transaction"
+    },
+    {
+      "kind" : "text",
+      "text" : "], "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "parserErrors"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:23SwiftBeanCountSheetSync0D11ParserErrorO",
+      "text" : "SheetParserError"
+    },
+    {
+      "kind" : "text",
+      "text" : "], "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "ledgerSettings"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:23SwiftBeanCountSheetSync14LedgerSettingsV",
+      "text" : "LedgerSettings"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/init(mode:transactions:parserErrors:ledgerSettings:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(mode:transactions:parserErrors:ledgerSettings:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/syncresult\/init(mode:transactions:parsererrors:ledgersettings:)"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncResult/ledgerSettings": {
+  "abstract" : [
+    {
+      "text" : "Settings for the syncronization read from the ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ledgerSettings"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:23SwiftBeanCountSheetSync14LedgerSettingsV",
+      "text" : "LedgerSettings"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/ledgerSettings",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "ledgerSettings",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/syncresult\/ledgersettings"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncResult/mode": {
+  "abstract" : [
+    {
+      "text" : "Mode in which the syncronization was performed",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "mode"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:23SwiftBeanCountSheetSync0E4ModeO",
+      "text" : "SyncMode"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/mode",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "mode",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/syncresult\/mode"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncResult/parserErrors": {
+  "abstract" : [
+    {
+      "text" : "Errors of lines in the Sheet which could not be read",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "parserErrors"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:23SwiftBeanCountSheetSync0D11ParserErrorO",
+      "text" : "SheetParserError"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/parserErrors",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "parserErrors",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/syncresult\/parsererrors"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncResult/transactions": {
+  "abstract" : [
+    {
+      "text" : "Transactions which need to be added",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "transactions"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel11TransactionC",
+      "text" : "Transaction"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncResult\/transactions",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "transactions",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/syncresult\/transactions"
+}
+}
+}

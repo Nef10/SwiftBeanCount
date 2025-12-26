@@ -1,1 +1,256 @@
-{"primaryContentSections":[{"kind":"declarations","declarations":[{"platforms":["macOS"],"languages":["swift"],"tokens":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"SyncMode"}]}]}],"sections":[],"relationshipsSections":[{"title":"Conforms To","type":"conformsTo","identifiers":["doc:\/\/SwiftBeanCountSheetSync\/SQ","doc:\/\/SwiftBeanCountSheetSync\/SH"],"kind":"relationships"}],"kind":"symbol","hierarchy":{"paths":[["doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync"]]},"abstract":[{"type":"text","text":"Which way the sync is done"}],"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountsheetsync\/syncmode"]}],"metadata":{"fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SyncMode","kind":"identifier"}],"role":"symbol","roleHeading":"Enumeration","title":"SyncMode","navigatorTitle":[{"text":"SyncMode","kind":"identifier"}],"symbolKind":"enum","externalID":"s:23SwiftBeanCountSheetSync0E4ModeO","modules":[{"name":"SwiftBeanCountSheetSync"}]},"schemaVersion":{"minor":3,"patch":0,"major":0},"identifier":{"url":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode","interfaceLanguage":"swift"},"topicSections":[{"title":"Enumeration Cases","anchor":"Enumeration-Cases","identifiers":["doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode\/download","doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode\/upload"],"generated":true},{"title":"Default Implementations","anchor":"Default-Implementations","identifiers":["doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode\/Equatable-Implementations"],"generated":true}],"references":{"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncMode/download":{"url":"\/documentation\/swiftbeancountsheetsync\/syncmode\/download","fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"kind":"identifier","text":"download"}],"identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode\/download","title":"SyncMode.download","abstract":[{"type":"text","text":"Sync entries from the sheet into the ledger"}],"kind":"symbol","type":"topic","role":"symbol"},"doc://SwiftBeanCountSheetSync/SH":{"type":"unresolvable","identifier":"doc:\/\/SwiftBeanCountSheetSync\/SH","title":"Swift.Hashable"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncMode":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode","url":"\/documentation\/swiftbeancountsheetsync\/syncmode","navigatorTitle":[{"text":"SyncMode","kind":"identifier"}],"fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SyncMode","kind":"identifier"}],"title":"SyncMode","role":"symbol","abstract":[{"type":"text","text":"Which way the sync is done"}],"kind":"symbol"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncMode/Equatable-Implementations":{"title":"Equatable Implementations","kind":"article","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode\/Equatable-Implementations","url":"\/documentation\/swiftbeancountsheetsync\/syncmode\/equatable-implementations","type":"topic","abstract":[],"role":"collectionGroup"},"doc://SwiftBeanCountSheetSync/SQ":{"type":"unresolvable","identifier":"doc:\/\/SwiftBeanCountSheetSync\/SQ","title":"Swift.Equatable"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncMode/upload":{"role":"symbol","kind":"symbol","title":"SyncMode.upload","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode\/upload","type":"topic","abstract":[{"type":"text","text":"Sync new entries from the ledger to the sheet"}],"fragments":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"upload"}],"url":"\/documentation\/swiftbeancountsheetsync\/syncmode\/upload"},"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync":{"abstract":[],"kind":"symbol","title":"SwiftBeanCountSheetSync","identifier":"doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync","role":"collection","url":"\/documentation\/swiftbeancountsheetsync","type":"topic"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Which way the sync is done",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:23SwiftBeanCountSheetSync0E4ModeO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "SyncMode"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountSheetSync"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "SyncMode"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "SyncMode"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "SyncMode"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountSheetSync\/SQ",
+        "doc:\/\/SwiftBeanCountSheetSync\/SH"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Enumeration-Cases",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode\/download",
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode\/upload"
+      ],
+      "title" : "Enumeration Cases"
+    },
+    {
+      "anchor" : "Default-Implementations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode\/Equatable-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountsheetsync\/syncmode"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountSheetSync/SH": {
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/SH",
+  "title" : "Swift.Hashable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountSheetSync/SQ": {
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/SQ",
+  "title" : "Swift.Equatable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountSheetSync",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncMode": {
+  "abstract" : [
+    {
+      "text" : "Which way the sync is done",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SyncMode"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SyncMode"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SyncMode",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/syncmode"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncMode/Equatable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode\/Equatable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Equatable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/syncmode\/equatable-implementations"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncMode/download": {
+  "abstract" : [
+    {
+      "text" : "Sync entries from the sheet into the ledger",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "download"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode\/download",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "SyncMode.download",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/syncmode\/download"
+},
+"doc://SwiftBeanCountSheetSync/documentation/SwiftBeanCountSheetSync/SyncMode/upload": {
+  "abstract" : [
+    {
+      "text" : "Sync new entries from the ledger to the sheet",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "upload"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountSheetSync\/documentation\/SwiftBeanCountSheetSync\/SyncMode\/upload",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "SyncMode.upload",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountsheetsync\/syncmode\/upload"
+}
+}
+}

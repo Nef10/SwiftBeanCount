@@ -1,1 +1,215 @@
-{"primaryContentSections":[{"declarations":[{"platforms":["macOS"],"tokens":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"payee","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"}],"languages":["swift"]}],"kind":"declarations"}],"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/transactionmetadata\/payee"],"traits":[{"interfaceLanguage":"swift"}]}],"identifier":{"interfaceLanguage":"swift","url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/TransactionMetaData\/payee"},"abstract":[{"type":"codeVoice","code":"String"},{"type":"text","text":" describing the payee"}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/TransactionMetaData"]]},"sections":[],"kind":"symbol","metadata":{"fragments":[{"kind":"keyword","text":"let"},{"kind":"text","text":" "},{"kind":"identifier","text":"payee"},{"kind":"text","text":": "},{"preciseIdentifier":"s:SS","kind":"typeIdentifier","text":"String"}],"role":"symbol","externalID":"s:19SwiftBeanCountModel19TransactionMetaDataV5payeeSSvp","symbolKind":"property","roleHeading":"Instance Property","modules":[{"name":"SwiftBeanCountModel"}],"title":"payee"},"schemaVersion":{"minor":3,"patch":0,"major":0},"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/TransactionMetaData/payee":{"fragments":[{"text":"let","kind":"keyword"},{"text":" ","kind":"text"},{"text":"payee","kind":"identifier"},{"text":": ","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/TransactionMetaData\/payee","role":"symbol","kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/transactionmetadata\/payee","title":"payee","abstract":[{"type":"codeVoice","code":"String"},{"text":" describing the payee","type":"text"}],"type":"topic"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/TransactionMetaData":{"kind":"symbol","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"TransactionMetaData","kind":"identifier"}],"navigatorTitle":[{"text":"TransactionMetaData","kind":"identifier"}],"abstract":[{"type":"text","text":"TransactionMetaData is data which is or can be attatched to an "},{"type":"codeVoice","code":"Transaction"},{"type":"text","text":"."}],"type":"topic","role":"symbol","title":"TransactionMetaData","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/TransactionMetaData","url":"\/documentation\/swiftbeancountmodel\/transactionmetadata"}}}
+{
+  "abstract" : [
+    {
+      "code" : "String",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " describing the payee",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/TransactionMetaData"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/TransactionMetaData\/payee"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel19TransactionMetaDataV5payeeSSvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "payee"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "payee"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "payee"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/transactionmetadata\/payee"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/TransactionMetaData": {
+  "abstract" : [
+    {
+      "text" : "TransactionMetaData is data which is or can be attatched to an ",
+      "type" : "text"
+    },
+    {
+      "code" : "Transaction",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "TransactionMetaData"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/TransactionMetaData",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "TransactionMetaData"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "TransactionMetaData",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transactionmetadata"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/TransactionMetaData/payee": {
+  "abstract" : [
+    {
+      "code" : "String",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " describing the payee",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "payee"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/TransactionMetaData\/payee",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "payee",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/transactionmetadata\/payee"
+}
+}
+}

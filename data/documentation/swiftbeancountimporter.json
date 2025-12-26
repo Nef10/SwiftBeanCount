@@ -1,1 +1,328 @@
-{"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountimporter"]}],"hierarchy":{"paths":[[]]},"metadata":{"modules":[{"name":"SwiftBeanCountImporter"}],"roleHeading":"Framework","externalID":"SwiftBeanCountImporter","symbolKind":"module","title":"SwiftBeanCountImporter","role":"collection"},"sections":[],"schemaVersion":{"major":0,"patch":0,"minor":3},"identifier":{"url":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","interfaceLanguage":"swift"},"kind":"symbol","topicSections":[{"title":"Protocols","generated":true,"anchor":"Protocols","identifiers":["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterDelegate","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/SettingsStorage"]},{"title":"Structures","generated":true,"anchor":"Structures","identifiers":["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction"]},{"title":"Enumerations","generated":true,"anchor":"Enumerations","identifiers":["doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterFactory","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterInputRequestType","doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings"]}],"references":{"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImportedTransaction":{"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction","title":"ImportedTransaction","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"ImportedTransaction","kind":"identifier"}],"navigatorTitle":[{"text":"ImportedTransaction","kind":"identifier"}],"url":"\/documentation\/swiftbeancountimporter\/importedtransaction","abstract":[{"text":"Struct describing a transaction which has been imported","type":"text"}],"role":"symbol","type":"topic"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Importer":{"type":"topic","fragments":[{"kind":"keyword","text":"protocol"},{"kind":"text","text":" "},{"kind":"identifier","text":"Importer"}],"role":"symbol","abstract":[{"type":"text","text":"Protocol to represent an Importer, regardless of type"}],"title":"Importer","url":"\/documentation\/swiftbeancountimporter\/importer","navigatorTitle":[{"kind":"identifier","text":"Importer"}],"identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer","kind":"symbol"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterDelegate":{"type":"topic","navigatorTitle":[{"kind":"identifier","text":"ImporterDelegate"}],"url":"\/documentation\/swiftbeancountimporter\/importerdelegate","fragments":[{"kind":"keyword","text":"protocol"},{"kind":"text","text":" "},{"kind":"identifier","text":"ImporterDelegate"}],"kind":"symbol","abstract":[{"text":"Protocol of the delegate of an Importer","type":"text"}],"title":"ImporterDelegate","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterDelegate","role":"symbol"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/SettingsStorage":{"type":"topic","kind":"symbol","role":"symbol","fragments":[{"text":"protocol","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SettingsStorage","kind":"identifier"}],"navigatorTitle":[{"text":"SettingsStorage","kind":"identifier"}],"url":"\/documentation\/swiftbeancountimporter\/settingsstorage","title":"SettingsStorage","abstract":[{"text":"Protocol to define a storage for the settings","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/SettingsStorage"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings":{"fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Settings","kind":"identifier"}],"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings","url":"\/documentation\/swiftbeancountimporter\/settings","title":"Settings","kind":"symbol","abstract":[{"text":"Constants releated to settings of the importer","type":"text"}],"role":"symbol","navigatorTitle":[{"text":"Settings","kind":"identifier"}]},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterInputRequestType":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterInputRequestType","title":"ImporterInputRequestType","url":"\/documentation\/swiftbeancountimporter\/importerinputrequesttype","role":"symbol","abstract":[{"type":"text","text":"Type of user input requested by the importer"}],"navigatorTitle":[{"kind":"identifier","text":"ImporterInputRequestType"}],"kind":"symbol","fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"ImporterInputRequestType"}]},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterFactory":{"type":"topic","url":"\/documentation\/swiftbeancountimporter\/importerfactory","title":"ImporterFactory","navigatorTitle":[{"text":"ImporterFactory","kind":"identifier"}],"abstract":[{"type":"text","text":"The ImporterFactory is used to create the different importer types"}],"role":"symbol","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterFactory","fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"ImporterFactory","kind":"identifier"}],"kind":"symbol"},"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter":{"type":"topic","identifier":"doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter","url":"\/documentation\/swiftbeancountimporter","abstract":[],"role":"collection","title":"SwiftBeanCountImporter","kind":"symbol"}}}
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "SwiftBeanCountImporter",
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountImporter"
+      }
+    ],
+    "role" : "collection",
+    "roleHeading" : "Framework",
+    "symbolKind" : "module",
+    "title" : "SwiftBeanCountImporter"
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Protocols",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterDelegate",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/SettingsStorage"
+      ],
+      "title" : "Protocols"
+    },
+    {
+      "anchor" : "Structures",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction"
+      ],
+      "title" : "Structures"
+    },
+    {
+      "anchor" : "Enumerations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterFactory",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterInputRequestType",
+        "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings"
+      ],
+      "title" : "Enumerations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountimporter"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountImporter",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImportedTransaction": {
+  "abstract" : [
+    {
+      "text" : "Struct describing a transaction which has been imported",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ImportedTransaction"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImportedTransaction",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ImportedTransaction"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ImportedTransaction",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importedtransaction"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Importer": {
+  "abstract" : [
+    {
+      "text" : "Protocol to represent an Importer, regardless of type",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Importer"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Importer",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Importer"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Importer",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importer"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterDelegate": {
+  "abstract" : [
+    {
+      "text" : "Protocol of the delegate of an Importer",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ImporterDelegate"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterDelegate",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ImporterDelegate"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ImporterDelegate",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importerdelegate"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterFactory": {
+  "abstract" : [
+    {
+      "text" : "The ImporterFactory is used to create the different importer types",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ImporterFactory"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterFactory",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ImporterFactory"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ImporterFactory",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importerfactory"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/ImporterInputRequestType": {
+  "abstract" : [
+    {
+      "text" : "Type of user input requested by the importer",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ImporterInputRequestType"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/ImporterInputRequestType",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ImporterInputRequestType"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ImporterInputRequestType",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/importerinputrequesttype"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/Settings": {
+  "abstract" : [
+    {
+      "text" : "Constants releated to settings of the importer",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Settings"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/Settings",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Settings"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Settings",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/settings"
+},
+"doc://SwiftBeanCountImporter/documentation/SwiftBeanCountImporter/SettingsStorage": {
+  "abstract" : [
+    {
+      "text" : "Protocol to define a storage for the settings",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SettingsStorage"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountImporter\/documentation\/SwiftBeanCountImporter\/SettingsStorage",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SettingsStorage"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SettingsStorage",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountimporter\/settingsstorage"
+}
+}
+}

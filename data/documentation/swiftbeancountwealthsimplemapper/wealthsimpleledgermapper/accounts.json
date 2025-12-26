@@ -1,1 +1,231 @@
-{"kind":"symbol","sections":[],"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"accounts","kind":"identifier"},{"text":": [any ","kind":"text"},{"text":"Account","preciseIdentifier":"s:12Wealthsimple7AccountP","kind":"typeIdentifier"},{"text":"]","kind":"text"}],"languages":["swift"],"platforms":["macOS"]}]},{"kind":"content","content":[{"level":2,"anchor":"discussion","type":"heading","text":"Discussion"},{"type":"paragraph","inlineContent":[{"type":"text","text":"Need to be set before attempting to map positions or transactions"}]}]}],"identifier":{"url":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper\/accounts","interfaceLanguage":"swift"},"schemaVersion":{"patch":0,"minor":3,"major":0},"abstract":[{"type":"text","text":"Downloaded Wealthsimple accounts"}],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper","doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper"]]},"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/accounts"]}],"metadata":{"fragments":[{"text":"var","kind":"keyword"},{"text":" ","kind":"text"},{"text":"accounts","kind":"identifier"},{"text":": [any ","kind":"text"},{"preciseIdentifier":"s:12Wealthsimple7AccountP","text":"Account","kind":"typeIdentifier"},{"text":"]","kind":"text"}],"role":"symbol","roleHeading":"Instance Property","modules":[{"name":"SwiftBeanCountWealthsimpleMapper"}],"title":"accounts","externalID":"s:32SwiftBeanCountWealthsimpleMapper0d6LedgerE0V8accountsSay0D07Account_pGvp","symbolKind":"property"},"references":{"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleLedgerMapper":{"abstract":[{"type":"text","text":"Functions to transform downloaded Wealthsimple data into SwiftBeanCountModel types"}],"role":"symbol","title":"WealthsimpleLedgerMapper","identifier":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper","fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"WealthsimpleLedgerMapper"}],"navigatorTitle":[{"kind":"identifier","text":"WealthsimpleLedgerMapper"}],"kind":"symbol","type":"topic","url":"\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper"},"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleLedgerMapper/accounts":{"abstract":[{"text":"Downloaded Wealthsimple accounts","type":"text"}],"identifier":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper\/accounts","title":"accounts","kind":"symbol","role":"symbol","fragments":[{"kind":"keyword","text":"var"},{"kind":"text","text":" "},{"kind":"identifier","text":"accounts"},{"kind":"text","text":": [any "},{"preciseIdentifier":"s:12Wealthsimple7AccountP","kind":"typeIdentifier","text":"Account"},{"kind":"text","text":"]"}],"type":"topic","url":"\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/accounts"},"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper":{"identifier":"doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper","url":"\/documentation\/swiftbeancountwealthsimplemapper","abstract":[],"role":"collection","kind":"symbol","title":"SwiftBeanCountWealthsimpleMapper","type":"topic"}}}
+{
+  "abstract" : [
+    {
+      "text" : "Downloaded Wealthsimple accounts",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper",
+        "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper\/accounts"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:32SwiftBeanCountWealthsimpleMapper0d6LedgerE0V8accountsSay0D07Account_pGvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "var"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "accounts"
+      },
+      {
+        "kind" : "text",
+        "text" : ": [any "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:12Wealthsimple7AccountP",
+        "text" : "Account"
+      },
+      {
+        "kind" : "text",
+        "text" : "]"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountWealthsimpleMapper"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "accounts"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "var"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "accounts"
+            },
+            {
+              "kind" : "text",
+              "text" : ": [any "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12Wealthsimple7AccountP",
+              "text" : "Account"
+            },
+            {
+              "kind" : "text",
+              "text" : "]"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Need to be set before attempting to map positions or transactions",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/accounts"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountWealthsimpleMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountwealthsimplemapper"
+},
+"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleLedgerMapper": {
+  "abstract" : [
+    {
+      "text" : "Functions to transform downloaded Wealthsimple data into SwiftBeanCountModel types",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "WealthsimpleLedgerMapper"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "WealthsimpleLedgerMapper"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "WealthsimpleLedgerMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper"
+},
+"doc://SwiftBeanCountWealthsimpleMapper/documentation/SwiftBeanCountWealthsimpleMapper/WealthsimpleLedgerMapper/accounts": {
+  "abstract" : [
+    {
+      "text" : "Downloaded Wealthsimple accounts",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "accounts"
+    },
+    {
+      "kind" : "text",
+      "text" : ": [any "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12Wealthsimple7AccountP",
+      "text" : "Account"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountWealthsimpleMapper\/documentation\/SwiftBeanCountWealthsimpleMapper\/WealthsimpleLedgerMapper\/accounts",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "accounts",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountwealthsimplemapper\/wealthsimpleledgermapper\/accounts"
+}
+}
+}

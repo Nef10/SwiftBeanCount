@@ -1,1 +1,369 @@
-{"sections":[],"schemaVersion":{"minor":3,"patch":0,"major":0},"metadata":{"roleHeading":"Instance Method","title":"mapAccountToBalance(account:)","symbolKind":"method","modules":[{"name":"SwiftBeanCountRogersBankMapper"}],"role":"symbol","externalID":"s:30SwiftBeanCountRogersBankMapperAAV19mapAccountToBalance7account0abC5Model0J0V0dE10Downloader0H0_p_tKF","fragments":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"mapAccountToBalance","kind":"identifier"},{"text":"(","kind":"text"},{"text":"account","kind":"externalParam"},{"text":": any ","kind":"text"},{"text":"Account","preciseIdentifier":"s:20RogersBankDownloader7AccountP","kind":"typeIdentifier"},{"text":") ","kind":"text"},{"text":"throws","kind":"keyword"},{"text":" -> ","kind":"text"},{"text":"Balance","preciseIdentifier":"s:19SwiftBeanCountModel7BalanceV","kind":"typeIdentifier"}]},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper","doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper"]]},"abstract":[{"type":"text","text":"Maps an account to a balance assertion"}],"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"func","kind":"keyword"},{"text":" ","kind":"text"},{"text":"mapAccountToBalance","kind":"identifier"},{"text":"(","kind":"text"},{"text":"account","kind":"externalParam"},{"text":": any ","kind":"text"},{"text":"Account","kind":"typeIdentifier","preciseIdentifier":"s:20RogersBankDownloader7AccountP"},{"text":") ","kind":"text"},{"text":"throws","kind":"keyword"},{"text":" -> ","kind":"text"},{"text":"Balance","kind":"typeIdentifier","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Balance","preciseIdentifier":"s:19SwiftBeanCountModel7BalanceV"}],"languages":["swift"],"platforms":["macOS"]}]},{"kind":"parameters","parameters":[{"name":"account","content":[{"inlineContent":[{"text":"Account to map","type":"text"}],"type":"paragraph"}]}]},{"kind":"content","content":[{"text":"Return Value","type":"heading","level":2,"anchor":"return-value"},{"inlineContent":[{"type":"text","text":"Balance assertion with the current balance form the credit card account"}],"type":"paragraph"}]},{"kind":"content","content":[{"level":2,"type":"heading","text":"Discussion","anchor":"discussion"},{"name":"Throws","type":"aside","style":"note","content":[{"type":"paragraph","inlineContent":[{"type":"text","text":"RogersBankMappingError if no matching account was found"}]}]}]}],"variants":[{"paths":["\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper\/mapaccounttobalance(account:)"],"traits":[{"interfaceLanguage":"swift"}]}],"kind":"symbol","identifier":{"url":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper\/mapAccountToBalance(account:)","interfaceLanguage":"swift"},"references":{"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/SwiftBeanCountRogersBankMapper/mapAccountToBalance(account:)":{"kind":"symbol","abstract":[{"type":"text","text":"Maps an account to a balance assertion"}],"fragments":[{"kind":"keyword","text":"func"},{"kind":"text","text":" "},{"kind":"identifier","text":"mapAccountToBalance"},{"kind":"text","text":"("},{"kind":"externalParam","text":"account"},{"kind":"text","text":": any "},{"preciseIdentifier":"s:20RogersBankDownloader7AccountP","kind":"typeIdentifier","text":"Account"},{"kind":"text","text":") "},{"kind":"keyword","text":"throws"},{"kind":"text","text":" -> "},{"preciseIdentifier":"s:19SwiftBeanCountModel7BalanceV","kind":"typeIdentifier","text":"Balance"}],"role":"symbol","title":"mapAccountToBalance(account:)","type":"topic","url":"\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper\/mapaccounttobalance(account:)","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper\/mapAccountToBalance(account:)"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Balance":{"type":"topic","role":"symbol","url":"\/documentation\/swiftbeancountmodel\/balance","kind":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Balance","abstract":[{"type":"text","text":"An assert that the balance of a given commodity is correct for the accout at the end of the given day"}],"title":"Balance","fragments":[{"kind":"keyword","text":"struct"},{"kind":"text","text":" "},{"kind":"identifier","text":"Balance"}]},"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper":{"title":"SwiftBeanCountRogersBankMapper","role":"collection","type":"topic","url":"\/documentation\/swiftbeancountrogersbankmapper","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper","abstract":[],"kind":"symbol"},"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/SwiftBeanCountRogersBankMapper":{"type":"topic","role":"symbol","url":"\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper","fragments":[{"text":"struct","kind":"keyword"},{"text":" ","kind":"text"},{"text":"SwiftBeanCountRogersBankMapper","kind":"identifier"}],"navigatorTitle":[{"text":"SwiftBeanCountRogersBankMapper","kind":"identifier"}],"kind":"symbol","title":"SwiftBeanCountRogersBankMapper","identifier":"doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper","abstract":[{"type":"text","text":"Mapper to map downloaded accounts and activities to BeanCoutModel objects"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Maps an account to a balance assertion",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper",
+        "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper\/mapAccountToBalance(account:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:30SwiftBeanCountRogersBankMapperAAV19mapAccountToBalance7account0abC5Model0J0V0dE10Downloader0H0_p_tKF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "mapAccountToBalance"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "account"
+      },
+      {
+        "kind" : "text",
+        "text" : ": any "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:20RogersBankDownloader7AccountP",
+        "text" : "Account"
+      },
+      {
+        "kind" : "text",
+        "text" : ") "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "throws"
+      },
+      {
+        "kind" : "text",
+        "text" : " -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:19SwiftBeanCountModel7BalanceV",
+        "text" : "Balance"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountRogersBankMapper"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "mapAccountToBalance(account:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "mapAccountToBalance"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "account"
+            },
+            {
+              "kind" : "text",
+              "text" : ": any "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:20RogersBankDownloader7AccountP",
+              "text" : "Account"
+            },
+            {
+              "kind" : "text",
+              "text" : ") "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "throws"
+            },
+            {
+              "kind" : "text",
+              "text" : " -> "
+            },
+            {
+              "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Balance",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:19SwiftBeanCountModel7BalanceV",
+              "text" : "Balance"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Account to map",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "account"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Balance assertion with the current balance form the credit card account",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "RogersBankMappingError if no matching account was found",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Throws",
+          "style" : "note",
+          "type" : "aside"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper\/mapaccounttobalance(account:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Balance": {
+  "abstract" : [
+    {
+      "text" : "An assert that the balance of a given commodity is correct for the accout at the end of the given day",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Balance"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Balance",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "Balance",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/balance"
+},
+"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountRogersBankMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountrogersbankmapper"
+},
+"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/SwiftBeanCountRogersBankMapper": {
+  "abstract" : [
+    {
+      "text" : "Mapper to map downloaded accounts and activities to BeanCoutModel objects",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountRogersBankMapper"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SwiftBeanCountRogersBankMapper"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SwiftBeanCountRogersBankMapper",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper"
+},
+"doc://SwiftBeanCountRogersBankMapper/documentation/SwiftBeanCountRogersBankMapper/SwiftBeanCountRogersBankMapper/mapAccountToBalance(account:)": {
+  "abstract" : [
+    {
+      "text" : "Maps an account to a balance assertion",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "mapAccountToBalance"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "account"
+    },
+    {
+      "kind" : "text",
+      "text" : ": any "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:20RogersBankDownloader7AccountP",
+      "text" : "Account"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:19SwiftBeanCountModel7BalanceV",
+      "text" : "Balance"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountRogersBankMapper\/documentation\/SwiftBeanCountRogersBankMapper\/SwiftBeanCountRogersBankMapper\/mapAccountToBalance(account:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "mapAccountToBalance(account:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountrogersbankmapper\/swiftbeancountrogersbankmapper\/mapaccounttobalance(account:)"
+}
+}
+}

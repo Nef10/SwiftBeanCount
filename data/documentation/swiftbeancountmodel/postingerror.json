@@ -1,1 +1,322 @@
-{"kind":"symbol","metadata":{"fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"PostingError","kind":"identifier"}],"modules":[{"name":"SwiftBeanCountModel"}],"externalID":"s:19SwiftBeanCountModel12PostingErrorO","symbolKind":"enum","role":"symbol","roleHeading":"Enumeration","navigatorTitle":[{"text":"PostingError","kind":"identifier"}],"title":"PostingError"},"relationshipsSections":[{"kind":"relationships","type":"conformsTo","title":"Conforms To","identifiers":["doc:\/\/SwiftBeanCountModel\/SQ","doc:\/\/SwiftBeanCountModel\/s5ErrorP","doc:\/\/SwiftBeanCountModel\/s8SendableP","doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP"]}],"sections":[],"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"]]},"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError","interfaceLanguage":"swift"},"primaryContentSections":[{"kind":"declarations","declarations":[{"languages":["swift"],"tokens":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"PostingError"}],"platforms":["macOS"]}]}],"abstract":[{"type":"text","text":"Errors an Posting can throw"}],"schemaVersion":{"patch":0,"minor":3,"major":0},"topicSections":[{"generated":true,"anchor":"Enumeration-Cases","title":"Enumeration Cases","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/noCost(_:)","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/priceTypeWithoutPrice","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/priceWithoutType"]},{"generated":true,"anchor":"Default-Implementations","title":"Default Implementations","identifiers":["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/Equatable-Implementations","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/Error-Implementations"]}],"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/postingerror"],"traits":[{"interfaceLanguage":"swift"}]}],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingError/priceTypeWithoutPrice":{"role":"symbol","type":"topic","kind":"symbol","title":"PostingError.priceTypeWithoutPrice","abstract":[{"type":"text","text":"if a price type is provided without a price"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/priceTypeWithoutPrice","url":"\/documentation\/swiftbeancountmodel\/postingerror\/pricetypewithoutprice","fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"priceTypeWithoutPrice","kind":"identifier"}]},"doc://SwiftBeanCountModel/s5ErrorP":{"identifier":"doc:\/\/SwiftBeanCountModel\/s5ErrorP","title":"Swift.Error","type":"unresolvable"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingError/noCost(_:)":{"title":"PostingError.noCost(_:)","abstract":[{"type":"text","text":"if a posting adds to the an inventory without specifying an amount"}],"kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/postingerror\/nocost(_:)","type":"topic","fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"noCost","kind":"identifier"},{"text":"(","kind":"text"},{"text":"String","kind":"typeIdentifier","preciseIdentifier":"s:SS"},{"text":")","kind":"text"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/noCost(_:)","role":"symbol"},"doc://SwiftBeanCountModel/SQ":{"identifier":"doc:\/\/SwiftBeanCountModel\/SQ","title":"Swift.Equatable","type":"unresolvable"},"doc://SwiftBeanCountModel/s8SendableP":{"type":"unresolvable","identifier":"doc:\/\/SwiftBeanCountModel\/s8SendableP","title":"Swift.Sendable"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingError":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError","type":"topic","title":"PostingError","kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/postingerror","role":"symbol","abstract":[{"type":"text","text":"Errors an Posting can throw"}],"navigatorTitle":[{"kind":"identifier","text":"PostingError"}],"fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"PostingError"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingError/Error-Implementations":{"role":"collectionGroup","type":"topic","kind":"article","title":"Error Implementations","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/Error-Implementations","abstract":[],"url":"\/documentation\/swiftbeancountmodel\/postingerror\/error-implementations"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingError/Equatable-Implementations":{"kind":"article","type":"topic","abstract":[],"title":"Equatable Implementations","url":"\/documentation\/swiftbeancountmodel\/postingerror\/equatable-implementations","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/Equatable-Implementations","role":"collectionGroup"},"doc://SwiftBeanCountModel/s16SendableMetatypeP":{"identifier":"doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP","type":"unresolvable","title":"Swift.SendableMetatype"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingError/priceWithoutType":{"kind":"symbol","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/priceWithoutType","abstract":[{"type":"text","text":"if a price is provided without a price type"}],"url":"\/documentation\/swiftbeancountmodel\/postingerror\/pricewithouttype","role":"symbol","title":"PostingError.priceWithoutType","type":"topic","fragments":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"priceWithoutType"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "Errors an Posting can throw",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel12PostingErrorO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "PostingError"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "PostingError"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "PostingError"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "PostingError"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/SQ",
+        "doc:\/\/SwiftBeanCountModel\/s5ErrorP",
+        "doc:\/\/SwiftBeanCountModel\/s8SendableP",
+        "doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Enumeration-Cases",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/noCost(_:)",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/priceTypeWithoutPrice",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/priceWithoutType"
+      ],
+      "title" : "Enumeration Cases"
+    },
+    {
+      "anchor" : "Default-Implementations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/Equatable-Implementations",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/Error-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/postingerror"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/SQ": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/SQ",
+  "title" : "Swift.Equatable",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingError": {
+  "abstract" : [
+    {
+      "text" : "Errors an Posting can throw",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PostingError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "PostingError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PostingError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/postingerror"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingError/Equatable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/Equatable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Equatable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/postingerror\/equatable-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingError/Error-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/Error-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Error Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/postingerror\/error-implementations"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingError/noCost(_:)": {
+  "abstract" : [
+    {
+      "text" : "if a posting adds to the an inventory without specifying an amount",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "noCost"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/noCost(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "PostingError.noCost(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/postingerror\/nocost(_:)"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingError/priceTypeWithoutPrice": {
+  "abstract" : [
+    {
+      "text" : "if a price type is provided without a price",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "priceTypeWithoutPrice"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/priceTypeWithoutPrice",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "PostingError.priceTypeWithoutPrice",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/postingerror\/pricetypewithoutprice"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingError/priceWithoutType": {
+  "abstract" : [
+    {
+      "text" : "if a price is provided without a price type",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "priceWithoutType"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/priceWithoutType",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "PostingError.priceWithoutType",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/postingerror\/pricewithouttype"
+},
+"doc://SwiftBeanCountModel/s16SendableMetatypeP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s16SendableMetatypeP",
+  "title" : "Swift.SendableMetatype",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/s5ErrorP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s5ErrorP",
+  "title" : "Swift.Error",
+  "type" : "unresolvable"
+},
+"doc://SwiftBeanCountModel/s8SendableP": {
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/s8SendableP",
+  "title" : "Swift.Sendable",
+  "type" : "unresolvable"
+}
+}
+}

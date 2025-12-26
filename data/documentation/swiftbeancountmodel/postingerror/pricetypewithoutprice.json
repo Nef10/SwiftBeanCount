@@ -1,1 +1,172 @@
-{"variants":[{"traits":[{"interfaceLanguage":"swift"}],"paths":["\/documentation\/swiftbeancountmodel\/postingerror\/pricetypewithoutprice"]}],"kind":"symbol","schemaVersion":{"patch":0,"major":0,"minor":3},"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/priceTypeWithoutPrice","interfaceLanguage":"swift"},"metadata":{"role":"symbol","modules":[{"name":"SwiftBeanCountModel"}],"fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"priceTypeWithoutPrice","kind":"identifier"}],"roleHeading":"Case","title":"PostingError.priceTypeWithoutPrice","symbolKind":"case","externalID":"s:19SwiftBeanCountModel12PostingErrorO21priceTypeWithoutPriceyA2CmF"},"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError"]]},"sections":[],"abstract":[{"type":"text","text":"if a price type is provided without a price"}],"primaryContentSections":[{"declarations":[{"languages":["swift"],"tokens":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"priceTypeWithoutPrice","kind":"identifier"}],"platforms":["macOS"]}],"kind":"declarations"}],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingError/priceTypeWithoutPrice":{"role":"symbol","type":"topic","kind":"symbol","title":"PostingError.priceTypeWithoutPrice","abstract":[{"type":"text","text":"if a price type is provided without a price"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/priceTypeWithoutPrice","url":"\/documentation\/swiftbeancountmodel\/postingerror\/pricetypewithoutprice","fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"priceTypeWithoutPrice","kind":"identifier"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingError":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError","type":"topic","title":"PostingError","kind":"symbol","url":"\/documentation\/swiftbeancountmodel\/postingerror","role":"symbol","abstract":[{"type":"text","text":"Errors an Posting can throw"}],"navigatorTitle":[{"kind":"identifier","text":"PostingError"}],"fragments":[{"kind":"keyword","text":"enum"},{"kind":"text","text":" "},{"kind":"identifier","text":"PostingError"}]}}}
+{
+  "abstract" : [
+    {
+      "text" : "if a price type is provided without a price",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/priceTypeWithoutPrice"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel12PostingErrorO21priceTypeWithoutPriceyA2CmF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "case"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "priceTypeWithoutPrice"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Case",
+    "symbolKind" : "case",
+    "title" : "PostingError.priceTypeWithoutPrice"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "case"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "priceTypeWithoutPrice"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/postingerror\/pricetypewithoutprice"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingError": {
+  "abstract" : [
+    {
+      "text" : "Errors an Posting can throw",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PostingError"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "PostingError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PostingError",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/postingerror"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/PostingError/priceTypeWithoutPrice": {
+  "abstract" : [
+    {
+      "text" : "if a price type is provided without a price",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "priceTypeWithoutPrice"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/PostingError\/priceTypeWithoutPrice",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "PostingError.priceTypeWithoutPrice",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/postingerror\/pricetypewithoutprice"
+}
+}
+}

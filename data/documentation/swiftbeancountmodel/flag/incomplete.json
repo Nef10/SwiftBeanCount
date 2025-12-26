@@ -1,1 +1,176 @@
-{"hierarchy":{"paths":[["doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Flag"]]},"variants":[{"paths":["\/documentation\/swiftbeancountmodel\/flag\/incomplete"],"traits":[{"interfaceLanguage":"swift"}]}],"sections":[],"schemaVersion":{"patch":0,"minor":3,"major":0},"primaryContentSections":[{"kind":"declarations","declarations":[{"tokens":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"incomplete","kind":"identifier"}],"languages":["swift"],"platforms":["macOS"]}]}],"identifier":{"url":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Flag\/incomplete","interfaceLanguage":"swift"},"metadata":{"externalID":"s:19SwiftBeanCountModel4FlagO10incompleteyA2CmF","title":"Flag.incomplete","roleHeading":"Case","role":"symbol","modules":[{"name":"SwiftBeanCountModel"}],"fragments":[{"kind":"keyword","text":"case"},{"kind":"text","text":" "},{"kind":"identifier","text":"incomplete"}],"symbolKind":"case"},"kind":"symbol","abstract":[{"type":"text","text":"incomplete to mark that the transaction requires further attantion"}],"references":{"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel":{"kind":"symbol","abstract":[],"type":"topic","url":"\/documentation\/swiftbeancountmodel","identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel","title":"SwiftBeanCountModel","role":"collection"},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Flag/incomplete":{"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Flag\/incomplete","role":"symbol","type":"topic","title":"Flag.incomplete","url":"\/documentation\/swiftbeancountmodel\/flag\/incomplete","kind":"symbol","abstract":[{"text":"incomplete to mark that the transaction requires further attantion","type":"text"}],"fragments":[{"text":"case","kind":"keyword"},{"text":" ","kind":"text"},{"text":"incomplete","kind":"identifier"}]},"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Flag":{"fragments":[{"text":"enum","kind":"keyword"},{"text":" ","kind":"text"},{"text":"Flag","kind":"identifier"}],"identifier":"doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Flag","type":"topic","abstract":[{"type":"text","text":"A Flag represents the state of a "},{"type":"codeVoice","code":"Transaction"}],"title":"Flag","navigatorTitle":[{"text":"Flag","kind":"identifier"}],"role":"symbol","url":"\/documentation\/swiftbeancountmodel\/flag","kind":"symbol"}}}
+{
+  "abstract" : [
+    {
+      "text" : "incomplete to mark that the transaction requires further attantion",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+        "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Flag"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Flag\/incomplete"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:19SwiftBeanCountModel4FlagO10incompleteyA2CmF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "case"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "incomplete"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "SwiftBeanCountModel"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Case",
+    "symbolKind" : "case",
+    "title" : "Flag.incomplete"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "case"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "incomplete"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/swiftbeancountmodel\/flag\/incomplete"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "SwiftBeanCountModel",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Flag": {
+  "abstract" : [
+    {
+      "text" : "A Flag represents the state of a ",
+      "type" : "text"
+    },
+    {
+      "code" : "Transaction",
+      "type" : "codeVoice"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Flag"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Flag",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Flag"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Flag",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/flag"
+},
+"doc://SwiftBeanCountModel/documentation/SwiftBeanCountModel/Flag/incomplete": {
+  "abstract" : [
+    {
+      "text" : "incomplete to mark that the transaction requires further attantion",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "incomplete"
+    }
+  ],
+  "identifier" : "doc:\/\/SwiftBeanCountModel\/documentation\/SwiftBeanCountModel\/Flag\/incomplete",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "Flag.incomplete",
+  "type" : "topic",
+  "url" : "\/documentation\/swiftbeancountmodel\/flag\/incomplete"
+}
+}
+}
