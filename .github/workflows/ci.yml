@@ -77,7 +77,7 @@ jobs:
 
         echo "LLVM_COV_CMD=${LLVM_COV_CMD}" >> ${GITHUB_ENV}
         echo "PATH=${PATH}" >> ${GITHUB_ENV}
-        echo "LLVM_COV_ARGS=--skip-functions --skip-branches --ignore-filename-regex='.build|Tests|SourcePackages' --format=lcov" >> ${GITHUB_ENV}
+        echo "LLVM_COV_ARGS=--skip-functions --skip-branches --ignore-filename-regex=.build|Tests|SourcePackages --format=lcov" >> ${GITHUB_ENV}
     - name: Generate test coverage report
       if: ${{ matrix.platform != 'iOS' }}
       run: |
