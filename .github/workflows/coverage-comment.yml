@@ -50,9 +50,9 @@ jobs:
         run: 'sed -i "1iMinimum coverage required: <b>$(cat ./.github/minimum_coverage.txt)%</b>\n<br />\n" comment.html'
       - name: Prepand failure info if needed
         run: |
-          files=($(compgen -G "*-min-coverage-failed"))
+          files=($(find . -maxdepth 1 -type f -name '*-min-coverage-failed'))
           if (( ${#files[@]} )); then
-            list=$(echo ${files} | sed 's/-min-coverage-failed$//' | paste -sd', ' -)
+            list=$(printf "%s\n" "${files[@]}" | sed 's|^\./||; s|-min-coverage-failed$||' | awk '{a[NR]=$0} END{for(i=1;i<=NR;i++){printf "%s%s", a[i], (i<NR?", ":"\n")}}')
             sed -i "1i❌ <b>Minimum coverage check failed on: ${list}!</b>\n<br />\n" comment.html
           fi
       - name: Post code coverage report
