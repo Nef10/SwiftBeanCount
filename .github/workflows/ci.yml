@@ -58,7 +58,7 @@ jobs:
     - name: Create coverage directory
       run: |
         mkdir -p ./${{matrix.platform}}-coverage
-        echo "${{ github.event.number }}" > "./${{matrix.platform}}-coverage/PR_NUMBER"
+        echo "${{ github.event.number }}" > "./${{matrix.platform}}-coverage/PR_NUMBER-${{matrix.platform}}"
     - name: Determine llvm command
       run: |
         LLVM_COV_CMD="llvm-cov"
@@ -78,6 +78,7 @@ jobs:
         echo "LLVM_COV_CMD=${LLVM_COV_CMD}" >> ${GITHUB_ENV}
         echo "PATH=${PATH}" >> ${GITHUB_ENV}
         echo "LLVM_COV_ARGS=--skip-functions --skip-branches --ignore-filename-regex=.build|Tests|SourcePackages --format=lcov" >> ${GITHUB_ENV}
+        echo "OUTPUT_FILE=${{matrix.platform}}-coverage/${{matrix.platform}}.info" >> ${GITHUB_ENV}
     - name: Generate test coverage report
       if: ${{ matrix.platform != 'iOS' }}
       run: |
@@ -90,7 +91,7 @@ jobs:
           COV_BIN="${XCTEST_PATH}"
         fi
 
-        ${LLVM_COV_CMD} export "${COV_BIN}" ${LLVM_COV_ARGS} --instr-profile="${INSTR_PROFILE_PATH}" > "${{matrix.platform}}-coverage/lcov.info"
+        ${LLVM_COV_CMD} export "${COV_BIN}" ${LLVM_COV_ARGS} --instr-profile="${INSTR_PROFILE_PATH}" > "${OUTPUT_FILE}"
     - name: Generate iOS test coverage report
       if: ${{ matrix.platform == 'iOS' }}
       run: |
@@ -104,16 +105,22 @@ jobs:
         done
 
         # Combine all .lcov files into a single lcov.info
-        find . -maxdepth 1 -name "*.lcov" -exec echo -a {} \; | xargs lcov -o "${{matrix.platform}}-coverage/lcov.info"
-    - name: Upload Coverage Information
-      uses: actions/upload-artifact@v6
-      with:
-        name: ${{matrix.platform}}-coverage
-        path: ${{matrix.platform}}-coverage/
+        find . -maxdepth 1 -name "*.lcov" -exec echo -a {} \; | xargs lcov -o "${OUTPUT_FILE}"
     - name: Read minimum test coverage threshhold
+      id: read-minimum-coverage
       run: echo "minimum_coverage=$(cat ./.github/minimum_coverage.txt)" >> $GITHUB_ENV
     - name: Enforce minimum test coverage threshhold
+      id: enforce-minimum-coverage
       uses: VeryGoodOpenSource/very_good_coverage@v3.0.0
       with:
         path: ./${{matrix.platform}}-coverage/lcov.info
         min_coverage: ${{ env.minimum_coverage }}
+    - name: Save failed minimum coverage info
+      if: ${{ failure() && steps.enforce-minimum-coverage.outcome == 'failure' && steps.read-minimum-coverage.outcome == 'success' }}
+      run: echo "failed" > "./${{matrix.platform}}-coverage/${{matrix.platform}}-min-coverage-failed"
+    - name: Upload Coverage Information
+      uses: actions/upload-artifact@v6
+      if: ${{ !cancelled() && steps.read-minimum-coverage.outcome == 'success' }}
+      with:
+        name: ${{matrix.platform}}-coverage
+        path: ${{matrix.platform}}-coverage/
