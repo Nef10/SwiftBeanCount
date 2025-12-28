@@ -96,53 +96,62 @@ jobs:
     - name: Install lcov
       if: ${{ matrix.platform == 'iOS' }}
       run: brew install lcov
-    - name: Generate test coverage report
+    - name: Create coverage directory
+      run: mkdir -p ./${{matrix.platform}}-coverage
+    - name: Determine llvm command
       run: |
-        mkdir -p "${{matrix.platform}}-coverage"
-
-        CMD="llvm-cov"
+        LLVM_COV_CMD="llvm-cov"
 
         if [[ "$OSTYPE" == "darwin"* ]]; then
-          PATH="/usr/local/opt/llvm/bin:$PATH"
+          PATH="/usr/local/opt/llvm/bin:${PATH}"
         else
           # Workaround for GitHub Actions ubuntu image missing llvm-cov in PATH, if swift is pre-installed
           # If it is installed via swift-actions/setup-swift, llvm-cov is in PATH
-          PATH="/usr/share/swift/usr/bin:$PATH"
+          PATH="/usr/share/swift/usr/bin:${PATH}"
         fi
 
-        if ! command -v "$CMD" &> /dev/null; then
-          CMD="xcrun llvm-cov"
+        if ! command -v "${LLVM_COV_CMD}" &> /dev/null; then
+          LLVM_COV_CMD="xcrun llvm-cov"
         fi
 
-        if [[ "${{matrix.platform}}" == "iOS" ]]; then
-          INSTR_PROFILE_PATH=$(find $DERIVED_DATA_PATH -name "*.profdata")
+        echo "LLVM_COV_CMD=${LLVM_COV_CMD}" >> ${GITHUB_ENV}
+        echo "PATH=${PATH}" >> ${GITHUB_ENV}
+        echo "LLVM_COV_ARGS=--skip-functions --skip-branches -ignore-filename-regex=\".build|Tests|SourcePackages\" -format=\"lcov\"" >> ${GITHUB_ENV}
+    - name: Generate test coverage report
+      if: ${{ matrix.platform != 'iOS' }}
+      run: |
+        INSTR_PROFILE_PATH=".build/debug/codecov/default.profdata"
+        XCTEST_PATH="$(find $(swift build --show-bin-path) -name '*.xctest')"
 
-          find $DERIVED_DATA_PATH -name '*.xctest' -print0 | while IFS= read -r -d '' file; do
-            FILE_NAME=$(basename "$file" .xctest)
-            $CMD export "$file/$FILE_NAME" --skip-functions --skip-branches -instr-profile="$INSTR_PROFILE_PATH" -ignore-filename-regex=".build|Tests|SourcePackages" -format="lcov" > $FILE_NAME.lcov
-          done
-
-          find . -maxdepth 1 -name "*.lcov" -exec echo -a {} \; | xargs lcov -o ${{matrix.platform}}-coverage/lcov.info
-        else
-          INSTR_PROFILE_PATH=".build/debug/codecov/default.profdata"
-          XCTEST_PATH="$(find $(swift build --show-bin-path) -name '*.xctest')"
-
-          if [[ "${{matrix.platform}}" == "macOS" ]]; then
-            COV_BIN="${XCTEST_PATH}/Contents/MacOS/$(basename $XCTEST_PATH .xctest)"
-          elif [[ "${{matrix.platform}}" == "ubuntu" ]]; then
-            COV_BIN=$XCTEST_PATH
-          fi
-
-          $CMD export "${COV_BIN}" --skip-functions --skip-branches -instr-profile="$INSTR_PROFILE_PATH" -ignore-filename-regex=".build|Tests|SourcePackages" -format="lcov" > ${{matrix.platform}}-coverage/lcov.info
+        if [[ "${{matrix.platform}}" == "macOS" ]]; then
+          COV_BIN="${XCTEST_PATH}/Contents/MacOS/$(basename ${XCTEST_PATH} .xctest)"
+        elif [[ "${{matrix.platform}}" == "ubuntu" ]]; then
+          COV_BIN="${XCTEST_PATH}"
         fi
-    - name: Upload Coverage Information for Comment
+
+        ${LLVM_COV_CMD} export "${COV_BIN}" ${LLVM_COV_ARGS} -instr-profile="${INSTR_PROFILE_PATH}" > "${{matrix.platform}}-coverage/lcov.info"
+    - name: Generate iOS test coverage report
+      if: ${{ matrix.platform == 'iOS' }}
+      run: |
+        INSTR_PROFILE_PATH="$(find "${DERIVED_DATA_PATH}" -name "*.profdata")"
+
+        # Run llvm-cov for each .xctest bundle found in DerivedData, one per test target
+        find "${DERIVED_DATA_PATH}" -name '*.xctest' -print0 | while IFS= read -r -d '' file; do
+          FILE_NAME="$(basename "${file}" .xctest)"
+          COV_BIN="${file}/${FILE_NAME}"
+          ${LLVM_COV_CMD} export "${COV_BIN}" ${LLVM_COV_ARGS} -instr-profile="${INSTR_PROFILE_PATH}" > "${FILE_NAME}.lcov"
+        done
+
+        # Combine all .lcov files into a single lcov.info
+        find . -maxdepth 1 -name "*.lcov" -exec echo -a {} \; | xargs lcov -o "${{matrix.platform}}-coverage/lcov.info"
+    - name: Upload Coverage Information
       uses: actions/upload-artifact@v6
       with:
         name: ${{matrix.platform}}-coverage
         path: ${{matrix.platform}}-coverage/
-    - name: 'Read minimum coverage'
+    - name: Read minimum test coverage threshhold
       run: echo "minimum_coverage=$(cat ./.github/minimum_coverage.txt)" >> $GITHUB_ENV
-    - name: Enforce test coverage threshhold
+    - name: Enforce minimum test coverage threshhold
       uses: VeryGoodOpenSource/very_good_coverage@v3.0.0
       with:
         path: ./${{matrix.platform}}-coverage/lcov.info
