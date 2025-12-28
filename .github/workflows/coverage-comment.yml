@@ -37,14 +37,13 @@ jobs:
       - name: unzip Artifacts
         run: unzip '*.zip'
       - name: Get PR number
-        run: | # Use the most recent PR_NUMBER file
-          echo "pr_number=$(cat '$(ls -t PR_NUMBER* | head -n 1)')" >> $GITHUB_ENV
+        run: echo "PR_NUMBER=$(cat $(find . -maxdepth 1 -type f -name 'PR_NUMBER*' | head -n 1))" >> $GITHUB_ENV
       - name: Generate code coverage report
         uses: Nef10/lcov-reporter-action@v0.5.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           lcov-file: macOS.info
-          pr-number: ${{ env.pr_number }}
+          pr-number: ${{ env.PR_NUMBER }}
           hide-branch-coverage: true
           output-file: comment.html
       - name: Prepend minimum coverage required
@@ -60,4 +59,4 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v2.9.4
         with:
           path: comment.html
-          number: ${{ env.pr_number }}
+          number: ${{ env.PR_NUMBER }}
