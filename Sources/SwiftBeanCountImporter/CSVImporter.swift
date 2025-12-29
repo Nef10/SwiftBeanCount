@@ -50,6 +50,8 @@ enum CSVImporterFactory {
         let inputStream = InputStream(url: url)
         guard let input = inputStream else {
             return nil
+
+
         }
         do {
             return try CSVReader(stream: input, hasHeaderRow: true, trimFields: true)
