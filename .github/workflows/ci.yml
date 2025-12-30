@@ -40,6 +40,8 @@ jobs:
       uses: maxim-lobanov/setup-xcode@v1.6.0
       with:
         xcode-version: ${{ matrix.xcode-version }}
+    - name: Configure SwiftLint Reporter
+      run: 'echo "reporter: \"github-actions-logging\"" >> .swiftlint.yml'
     - name: Run tests
       if : ${{ matrix.platform != 'iOS' }}
       run: swift test --enable-code-coverage
