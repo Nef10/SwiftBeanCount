@@ -11,7 +11,7 @@ let swiftSettings: [SwiftSetting] = [
 let package = Package(
     name: "SwiftBeanCount",
     platforms: [
-        .macOS(.v12),
+        .macOS(.v13),
         .iOS(.v16),
     ],
     products: [
@@ -76,6 +76,13 @@ let package = Package(
         ),
         .target(
             name: "SwiftBeanCountTax",
+            dependencies: ["SwiftBeanCountModel"],
+            exclude: ["README.md"],
+            swiftSettings: swiftSettings,
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .target(
+            name: "SwiftBeanCountStatements",
             dependencies: ["SwiftBeanCountModel"],
             exclude: ["README.md"],
             swiftSettings: swiftSettings,
@@ -183,6 +190,12 @@ let package = Package(
         .testTarget(
             name: "SwiftBeanCountTaxTests",
             dependencies: ["SwiftBeanCountTax"],
+            swiftSettings: swiftSettings,
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountStatementsTests",
+            dependencies: ["SwiftBeanCountStatements"],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
