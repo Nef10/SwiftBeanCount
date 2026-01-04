@@ -22,7 +22,7 @@ enum TransactionMetaDataParser {
     /// - Parameter line: String of one line
     /// - Returns: TransactionMetaData or nil if the line does not contain valid TransactionMetaData
     static func parseFrom(line: String, metaData: [String: String] = [:]) -> TransactionMetaData? {
-        let transactionMatches = line.matchingStrings(regex: self.regex)
+        let transactionMatches = line.matchingStrings(regex: regex)
         if let match = transactionMatches[safe: 0] {
             let tagStrings = match[6].components(separatedBy: .whitespaces)
             let tags = tagStrings.filter { !$0.isEmpty }.map { tag -> Tag in

@@ -38,6 +38,14 @@ public struct Amount {
 
 extension Amount: CustomStringConvertible {
 
+#if !canImport(Darwin)
+    private static let numberFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter
+    }()
+#endif
+
     /// Returns a `String` for the ledger which contains the number with the correct number of decimal digits as well as the `commodity`
     public var description: String { "\(amountString) \(commoditySymbol)" }
 
@@ -45,8 +53,7 @@ extension Amount: CustomStringConvertible {
 #if canImport(Darwin)
         return Self.numberFormatter(fractionDigits: decimalDigits).string(for: number)!
 #else // Ugly workaround for https://github.com/swiftlang/swift-corelibs-foundation/issues/4221
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
+        let formatter = Self.numberFormatter
         let separator = Character(formatter.decimalSeparator)
 
         formatter.minimumFractionDigits = 0 // Set to 0 first to respect maximumFractionDigits
@@ -67,8 +74,7 @@ extension Amount: CustomStringConvertible {
             return min
         }
 
-        fatalError("Unable to format amountString for number: \(number) with decimalDigits: \(decimalDigits). " +
-            "Min decimal digits: \(minDecimalDigits), Max decimal digits: \(maxDecimalDigits)")
+        fatalError("Unable to format amountString for number: \(number) with decimalDigits: \(decimalDigits)")
 #endif
     }
 

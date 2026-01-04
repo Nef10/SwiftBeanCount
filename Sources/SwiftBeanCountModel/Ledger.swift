@@ -267,7 +267,7 @@ public class Ledger {
     /// - Returns: Account from the ledger
     private func getAccount(by name: AccountName) -> Account {
         addAccountIfNeccessary(name: name)
-        return self.account[name.fullName]!
+        return account[name.fullName]!
     }
 
     /// Adds an `Account` to the structure if it does not exist yet
@@ -275,7 +275,7 @@ public class Ledger {
     /// - Parameters:
     ///   - name: accountName of the account to add
     private func addAccountIfNeccessary(name: AccountName) {
-        if self.account[name.fullName] == nil {
+        if account[name.fullName] == nil {
             let account = Account(name: name)
             addAccountToStructure(account)
         }
@@ -296,8 +296,8 @@ public class Ledger {
     /// - Parameters:
     ///   - symbol: Symbol of Commodity to add
     private func addCommodityIfNeccessary(symbol: CommoditySymbol) {
-        if self.commodity[symbol] == nil {
-            self.commodity[symbol] = Commodity(symbol: symbol)
+        if commodity[symbol] == nil {
+            commodity[symbol] = Commodity(symbol: symbol)
         }
     }
 
@@ -319,35 +319,35 @@ extension Ledger: CustomStringConvertible {
     /// It consists of all `Account` and `Transaction` statements, but does not include `errors`
     public var description: String {
         var string = ""
-        string.append(self.option.map { String(describing: $0) }.joined(separator: "\n"))
-        if !string.isEmpty && !self.plugins.isEmpty {
+        string.append(option.map { String(describing: $0) }.joined(separator: "\n"))
+        if !string.isEmpty && !plugins.isEmpty {
             string.append("\n")
         }
-        string.append(self.plugins.map { "plugin \"\($0)\"" }.joined(separator: "\n"))
-        if !string.isEmpty && !self.custom.isEmpty {
+        string.append(plugins.map { "plugin \"\($0)\"" }.joined(separator: "\n"))
+        if !string.isEmpty && !custom.isEmpty {
             string.append("\n")
         }
-        string.append(self.custom.map { String(describing: $0) }.joined(separator: "\n"))
-        if !string.isEmpty && !self.events.isEmpty {
+        string.append(custom.map { String(describing: $0) }.joined(separator: "\n"))
+        if !string.isEmpty && !events.isEmpty {
             string.append("\n")
         }
-        string.append(self.events.map { String(describing: $0) }.joined(separator: "\n"))
-        if !string.isEmpty && !self.commodities.isEmpty {
+        string.append(events.map { String(describing: $0) }.joined(separator: "\n"))
+        if !string.isEmpty && !commodities.isEmpty {
             string.append("\n")
         }
-        string.append(self.commodities.map { String(describing: $0) }.joined(separator: "\n"))
-        if !string.isEmpty && !self.accounts.isEmpty {
+        string.append(commodities.map { String(describing: $0) }.joined(separator: "\n"))
+        if !string.isEmpty && !accounts.isEmpty {
             string.append("\n")
         }
-        string.append(self.accounts.map { String(describing: $0) }.joined(separator: "\n"))
-        if !string.isEmpty && !self.transactions.isEmpty {
+        string.append(accounts.map { String(describing: $0) }.joined(separator: "\n"))
+        if !string.isEmpty && !transactions.isEmpty {
             string.append("\n")
         }
-        string.append(self.transactions.map { String(describing: $0) }.joined(separator: "\n"))
-        if !string.isEmpty && !self.prices.isEmpty {
+        string.append(transactions.map { String(describing: $0) }.joined(separator: "\n"))
+        if !string.isEmpty && !prices.isEmpty {
             string.append("\n")
         }
-        string.append(self.prices.sorted { $0.date < $1.date }.map { String(describing: $0) }.joined(separator: "\n"))
+        string.append(prices.sorted { $0.date < $1.date }.map { String(describing: $0) }.joined(separator: "\n"))
         return string
     }
 

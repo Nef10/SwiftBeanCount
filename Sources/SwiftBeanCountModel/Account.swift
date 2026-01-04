@@ -147,12 +147,12 @@ public class Account: AccountItem {
     /// - Parameter posting: posting to check
     /// - Returns: `ValidationResult`
     func validate(_ posting: TransactionPosting) -> ValidationResult {
-        assert(posting.accountName == self.name, "Checking Posting \(posting) on wrong Account \(self)")
-        guard self.allowsPosting(in: posting.amount.commoditySymbol) else {
-            return .invalid("\(posting.transaction) uses a wrong commodiy for account \(self.name) - Only \(self.commoditySymbol!) is allowed")
+        assert(posting.accountName == name, "Checking Posting \(posting) on wrong Account \(self)")
+        guard allowsPosting(in: posting.amount.commoditySymbol) else {
+            return .invalid("\(posting.transaction) uses a wrong commodiy for account \(name) - Only \(commoditySymbol!) is allowed")
         }
-        guard self.wasOpen(at: posting.transaction.metaData.date) else {
-            return .invalid("\(posting.transaction) was posted while the accout \(self.name) was closed")
+        guard wasOpen(at: posting.transaction.metaData.date) else {
+            return .invalid("\(posting.transaction) was posted while the accout \(name) was closed")
         }
         return .valid
     }
@@ -165,12 +165,12 @@ public class Account: AccountItem {
     func validate() -> ValidationResult {
         if let closing {
             guard let opening else {
-                return .invalid("Account \(self.name) has a closing date but no opening")
+                return .invalid("Account \(name) has a closing date but no opening")
             }
             guard opening <= closing else {
                 let closingString = Self.dateFormatter.string(from: closing)
                 let openingString = Self.dateFormatter.string(from: opening)
-                return .invalid("Account \(self.name) was closed on \(closingString) before it was opened on \(openingString)")
+                return .invalid("Account \(name) was closed on \(closingString) before it was opened on \(openingString)")
             }
         }
         return .valid
@@ -248,8 +248,8 @@ public class Account: AccountItem {
     }
 
     private func wasOpen(at date: Date) -> Bool {
-        if let opening = self.opening, opening <= date {
-            if let closing = self.closing {
+        if let opening, opening <= date {
+            if let closing {
                 return closing >= date
             }
             return true
@@ -258,7 +258,7 @@ public class Account: AccountItem {
     }
 
     private func allowsPosting(in commodity: CommoditySymbol) -> Bool {
-        if let ownCommoditySymbol = self.commoditySymbol {
+        if let ownCommoditySymbol = commoditySymbol {
             return ownCommoditySymbol == commodity
         }
         return true
@@ -279,9 +279,9 @@ extension Account: CustomStringConvertible {
     /// If no open date is set it returns an empty string, if only the opening is set the closing line is ommitted
     public var description: String {
         var string = ""
-        if let opening = self.opening {
+        if let opening {
             string += "\(Self.dateFormatter.string(from: opening)) open \(name)"
-            if let commoditySymbol = self.commoditySymbol {
+            if let commoditySymbol {
                 string += " \(commoditySymbol)"
             }
             if bookingMethod != .strict {
@@ -290,7 +290,7 @@ extension Account: CustomStringConvertible {
             if !metaData.isEmpty {
                 string += "\n\(metaData.map { "  \($0): \"\($1)\"" }.joined(separator: "\n"))"
             }
-            if let closing = self.closing {
+            if let closing {
                 string += "\n\(Self.dateFormatter.string(from: closing)) close \(name)"
             }
         }

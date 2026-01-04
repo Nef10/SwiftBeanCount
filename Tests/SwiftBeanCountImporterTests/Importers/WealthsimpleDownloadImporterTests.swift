@@ -65,22 +65,22 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
             downloader = self
         }
 
-        func authenticate(completion: @escaping (Error?) -> Void) {
+        func authenticate(completion: (Error?) -> Void) {
             completion(WealthsimpleDownloadImporterTests.authenticate?())
         }
 
-        func getAccounts(completion: @escaping (Result<[Wealthsimple.Account], Wealthsimple.AccountError>) -> Void) {
+        func getAccounts(completion: (Result<[Wealthsimple.Account], Wealthsimple.AccountError>) -> Void) {
             completion(WealthsimpleDownloadImporterTests.getAccounts?() ?? .success([]))
         }
 
-        func getPositions(in account: Wealthsimple.Account, date: Date?, completion: @escaping (Result<[Position], PositionError>) -> Void) {
+        func getPositions(in account: Wealthsimple.Account, date: Date?, completion: (Result<[Position], PositionError>) -> Void) {
             completion(WealthsimpleDownloadImporterTests.getPositions?(account, date) ?? .success([]))
         }
 
         func getTransactions(
             in account: Wealthsimple.Account,
             startDate: Date,
-            completion: @escaping (Result<[Wealthsimple.Transaction], Wealthsimple.TransactionError>) -> Void
+            completion: (Result<[Wealthsimple.Transaction], Wealthsimple.TransactionError>) -> Void
         ) {
             completion(WealthsimpleDownloadImporterTests.getTransactions?(account, startDate) ?? .success([]))
         }

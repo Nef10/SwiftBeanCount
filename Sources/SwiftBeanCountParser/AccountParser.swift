@@ -25,7 +25,7 @@ enum AccountParser {
     /// - Parameter line: String of one line
     /// - Returns: Account if the line could be parsed, otherwise nil
     static func parseFrom(line: String, metaData: [String: String] = [:]) -> Account? {
-        let accountMatches = line.matchingStrings(regex: self.regex)
+        let accountMatches = line.matchingStrings(regex: regex)
         guard let match = accountMatches[safe: 0], let date = DateParser.parseFrom(string: match[1]), let accountName = try? AccountName(match[3]) else {
             return nil
         }

@@ -15,7 +15,7 @@ extension String {
     /// - Returns: [[String]], the outer array contains an entry for each match and the inner arrays contain an entry for each capturing group
     public func matchingStrings(regex: NSRegularExpression) -> [[String]] {
         // https://stackoverflow.com/q/27880650/3386893
-        regex.matches(in: self, options: [], range: NSRange(self.startIndex..., in: self)).map { result in
+        regex.matches(in: self, options: [], range: NSRange(startIndex..., in: self)).map { result in
             (0..<result.numberOfRanges).map {
                 result.range(at: $0).location != NSNotFound ? String(self[Range(result.range(at: $0), in: self)!]) : ""
             }

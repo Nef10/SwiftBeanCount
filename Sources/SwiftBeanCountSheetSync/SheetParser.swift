@@ -53,7 +53,7 @@ enum SheetParser {
         return dateFormatter
     }()
 
-    static func parseSheet(_ data: ([[String]]), name: String, completion: @escaping ([TransactionData], [SheetParserError]) -> Void) {
+    static func parseSheet(_ data: ([[String]]), name: String, completion: ([TransactionData], [SheetParserError]) -> Void) {
         var lines = removeEmptyRows(data)
         let headings = lines.removeFirst().map {
             $0.trimmingCharacters(in: .whitespacesAndNewlines)

@@ -203,7 +203,7 @@ struct LedgerReaderTests {
     }
 
     @Test
-    func readLedgerFiltersByTag() throws {
+    func readLedgerFiltersByTag() {
         let ledger = Ledger()
 
         // Add custom settings

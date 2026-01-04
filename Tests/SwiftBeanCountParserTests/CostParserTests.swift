@@ -210,7 +210,7 @@ struct CostParserTests {
     }
 
     @Test
-    func costParsingErrorDescription() throws {
+    func costParsingErrorDescription() {
         // Test the errorDescription property of CostParsingError
         do {
             _ = try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\", unexpected}")

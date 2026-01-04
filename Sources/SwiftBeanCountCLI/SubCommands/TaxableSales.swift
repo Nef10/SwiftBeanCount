@@ -30,7 +30,7 @@ struct TaxableSales: FormattableLedgerCommand {
         }
     }
 
-    func getResult(from ledger: Ledger, parsingDuration _: Double) throws -> [FormattableResult] {
+    func getResult(from ledger: Ledger, parsingDuration _: Double) -> [FormattableResult] {
         let sales = TaxCalculator.getTaxableSales(from: ledger, for: year)
         guard !sales.isEmpty else {
             return [

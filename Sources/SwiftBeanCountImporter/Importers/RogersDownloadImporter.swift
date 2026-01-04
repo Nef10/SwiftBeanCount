@@ -135,9 +135,9 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
     private func mapActivities(_ activities: [Activity], _ completion: @escaping () -> Void) {
         var transactions = [SwiftBeanCountModel.Transaction]()
         do {
-            transactions.append(contentsOf: try self.mapper.mapActivitiesToTransactions(activities: activities))
+            transactions.append(contentsOf: try mapper.mapActivitiesToTransactions(activities: activities))
         } catch {
-            self.delegate?.error(error) {
+            delegate?.error(error) {
                 completion()
             }
             return
@@ -185,7 +185,7 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
         let group = DispatchGroup()
         group.enter()
         var result: String!
-        self.delegate?.requestInput(name: "prefered One Time Password option", type: .choice(preferences.map(\.value))) {
+        delegate?.requestInput(name: "prefered One Time Password option", type: .choice(preferences.map(\.value))) {
             guard preferences.map(\.value).contains($0) else {
                 return false
             }
@@ -211,13 +211,13 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
     }
 
     func saveDeviceId(_ deviceId: String) {
-        self.delegate?.saveCredential(deviceId, for: "\(Self.importerType)-\(CredentialKey.deviceId.rawValue)")
+        delegate?.saveCredential(deviceId, for: "\(Self.importerType)-\(CredentialKey.deviceId.rawValue)")
     }
 
     private func showError(_ error: Error) {
         let group = DispatchGroup()
         group.enter()
-        self.delegate?.error(error) {
+        delegate?.error(error) {
             group.leave()
         }
         group.wait()
@@ -230,15 +230,15 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
         return statements ?? 3
     }
 
-    private func getCredentials(callback: @escaping ((String, String, String) -> Void)) {
+    private func getCredentials(callback: ((String, String, String) -> Void)) {
         let username = getCredential(key: .username, name: "Username", type: .text([]))
         let password = getCredential(key: .password, name: "Password", type: .secret)
-        let deviceId = self.delegate?.readCredential("\(Self.importerType)-\(CredentialKey.deviceId.rawValue)") ?? ""
+        let deviceId = delegate?.readCredential("\(Self.importerType)-\(CredentialKey.deviceId.rawValue)") ?? ""
         callback(username, password, deviceId)
     }
 
     private func removeSavedCredentials(_ completion: @escaping () -> Void) {
-        self.delegate?.requestInput(name: "The login failed. Do you want to remove the saved credentials", type: .bool) {
+        delegate?.requestInput(name: "The login failed. Do you want to remove the saved credentials", type: .bool) {
             guard let delete = Bool($0) else {
                 return false
             }
@@ -254,7 +254,7 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
 
     private func getCredential(key: CredentialKey, name: String, type: ImporterInputRequestType) -> String {
         var value: String!
-        if let savedValue = self.delegate?.readCredential("\(Self.importerType)-\(key.rawValue)"), !savedValue.isEmpty {
+        if let savedValue = delegate?.readCredential("\(Self.importerType)-\(key.rawValue)"), !savedValue.isEmpty {
             value = savedValue
         } else {
             let group = DispatchGroup()
@@ -265,7 +265,7 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
                 return true
             }
             group.wait()
-            self.delegate?.saveCredential(value, for: "\(Self.importerType)-\(key.rawValue)")
+            delegate?.saveCredential(value, for: "\(Self.importerType)-\(key.rawValue)")
         }
         return value
     }
