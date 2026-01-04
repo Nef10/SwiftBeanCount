@@ -188,7 +188,7 @@ final class CostParserTests: XCTestCase {
         XCTAssertNoThrow(try cost(from: "{}"))
     }
 
-    func testCostParsingErrorDescription() throws {
+    func testCostParsingErrorDescription() {
         // Test the errorDescription property of CostParsingError
         do {
             _ = try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\", unexpected}")

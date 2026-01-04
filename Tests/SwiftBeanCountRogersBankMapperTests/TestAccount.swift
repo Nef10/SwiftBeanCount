@@ -73,15 +73,15 @@ struct TestAccount: RogersBankDownloader.Account {
     var cashLimit: RogersBankDownloader.Amount = TestAmount()
     var multiCard = false
 
-    func downloadStatement(statement _: Statement, completion _: @escaping (Result<URL, DownloadError>) -> Void) {
+    func downloadStatement(statement _: Statement, completion _: (Result<URL, DownloadError>) -> Void) {
         // Empty
     }
 
-    func searchStatements(completion _: @escaping (Result<[Statement], DownloadError>) -> Void) {
+    func searchStatements(completion _: (Result<[Statement], DownloadError>) -> Void) {
         // Empty
     }
 
-    func downloadActivities(statementNumber _: Int, completion _: @escaping (Result<[Activity], DownloadError>) -> Void) {
+    func downloadActivities(statementNumber _: Int, completion _: (Result<[Activity], DownloadError>) -> Void) {
         // Empty
     }
 }

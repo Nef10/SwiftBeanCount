@@ -59,7 +59,7 @@ final class CustomsParserTests: XCTestCase {
     }
 
     func testPerformance() {
-        self.measure {
+        measure {
             for _ in 0...1_000 {
                 _ = CustomsParser.parseFrom(line: basicString)
                 _ = CustomsParser.parseFrom(line: multipleValuesString)

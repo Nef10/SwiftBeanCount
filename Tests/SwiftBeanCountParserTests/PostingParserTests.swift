@@ -133,7 +133,7 @@ final class PostingParserTests: XCTestCase {
     }
 
     func testPerformance() {
-        self.measure {
+        measure {
             for _ in 0...1_000 {
                 // swiftlint:disable force_try
                 _ = try! PostingParser.parseFrom(line: basicPostingString)!

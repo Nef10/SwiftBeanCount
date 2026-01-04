@@ -138,7 +138,7 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlin
 
     private func dateToLoadFrom() -> Date {
         guard let days = Int(existingLedger.custom.filter({ $0.name == customsKey && $0.values.first == daysSettings }).max(by: { $0.date < $1.date })?.values[1] ?? "") else {
-            return Date(timeIntervalSinceNow: self.sixtyTwoDays )
+            return Date(timeIntervalSinceNow: sixtyTwoDays )
         }
         return Date(timeIntervalSinceNow: -60 * 60 * 24 * Double(days) )
     }
@@ -201,7 +201,7 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlin
 
         group.wait()
         if !errorOccurred {
-            self.downloadTransactions(completion)
+            downloadTransactions(completion)
         } else {
             completion()
         }
@@ -237,13 +237,13 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlin
 
         group.wait()
         if !errorOccurred {
-            self.mapTransactions(downloadedTransactions, completion)
+            mapTransactions(downloadedTransactions, completion)
         } else {
             completion()
         }
     }
 
-    private func mapTransactions(_ transactions: [SwiftBeanCountModel.Transaction], _ completion: @escaping () -> Void) {
+    private func mapTransactions(_ transactions: [SwiftBeanCountModel.Transaction], _ completion: () -> Void) {
         self.transactions = transactions.map {
             if $0.postings.contains(where: { $0.accountName == WealthsimpleLedgerMapper.fallbackExpenseAccountName }) {
                 var expenseAccounts = [WealthsimpleLedgerMapper.fallbackExpenseAccountName]
@@ -293,13 +293,13 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlin
     private func showError(_ error: Error) {
         let group = DispatchGroup()
         group.enter()
-        self.delegate?.error(error) {
+        delegate?.error(error) {
             group.leave()
         }
         group.wait()
     }
 
-    private func authenticationCallback(callback: @escaping ((String, String, String) -> Void)) {
+    private func authenticationCallback(callback: ((String, String, String) -> Void)) {
         var username, password, otp: String!
 
         let group = DispatchGroup()
@@ -333,11 +333,11 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlin
 extension WealthsimpleDownloadImporter: CredentialStorage {
 
     func save(_ value: String, for key: String) {
-        self.delegate?.saveCredential(value, for: "\(Self.importerType)-\(key)")
+        delegate?.saveCredential(value, for: "\(Self.importerType)-\(key)")
     }
 
     func read(_ key: String) -> String? {
-        self.delegate?.readCredential("\(Self.importerType)-\(key)")
+        delegate?.readCredential("\(Self.importerType)-\(key)")
     }
 
 }

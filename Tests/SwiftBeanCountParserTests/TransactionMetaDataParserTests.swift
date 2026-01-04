@@ -73,7 +73,7 @@ final class TransactionMetaDataParserTests: XCTestCase {
     }
 
     func testPerformance() {
-        self.measure {
+        measure {
             for _ in 0...1_000 {
                 _ = TransactionMetaDataParser.parseFrom(line: basicTransactionMetaDataString)!
                 _ = TransactionMetaDataParser.parseFrom(line: whitespaceTransactionMetaDataString)!

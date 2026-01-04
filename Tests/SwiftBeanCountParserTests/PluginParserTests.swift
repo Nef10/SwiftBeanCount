@@ -38,7 +38,7 @@ final class PluginParserTests: XCTestCase {
     }
 
     func testPerformance() {
-        self.measure {
+        measure {
             for _ in 0...1_000 {
                 _ = PluginParser.parseFrom(line: basicString)
                 _ = PluginParser.parseFrom(line: whitespaceString)

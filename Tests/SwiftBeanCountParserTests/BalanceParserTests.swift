@@ -53,7 +53,7 @@ final class BalanceParserTests: XCTestCase {
     }
 
     func testPerformance() {
-        self.measure {
+        measure {
             for _ in 0...1_000 {
                 _ = BalanceParser.parseFrom(line: basicString)
                 _ = BalanceParser.parseFrom(line: whitespaceString)

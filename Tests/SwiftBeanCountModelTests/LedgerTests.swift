@@ -309,7 +309,7 @@ final class LedgerTests: XCTestCase {
         XCTAssertTrue(ledgerWithPlugin.errors.contains("Commodity EUR does not have an opening date"), "Should contain specific error message for EUR commodity")
     }
 
-    func testCommodityValidationWithAutoCreatedCommodities() throws {
+    func testCommodityValidationWithAutoCreatedCommodities() {
         // Test auto-created commodities without plugin
         let ledgerWithoutPlugin = Ledger()
         let posting = Posting(accountName: TestUtils.cash, amount: Amount(number: Decimal(100), commoditySymbol: "USD"))

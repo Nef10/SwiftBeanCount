@@ -135,7 +135,7 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
         if !balanceInputString.isEmpty {
             let group = DispatchGroup()
             group.enter()
-            self.delegate?.error(EquatePlusImporterError.balanceImportNotSupported(balanceInputString)) {
+            delegate?.error(EquatePlusImporterError.balanceImportNotSupported(balanceInputString)) {
                 group.leave()
             }
             group.wait()
@@ -148,7 +148,7 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
             } catch {
                 let group = DispatchGroup()
                 group.enter()
-                self.delegate?.error(error) {
+                delegate?.error(error) {
                     group.leave()
                 }
                 group.wait()

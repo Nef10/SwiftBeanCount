@@ -53,17 +53,17 @@ public class Cost {
     /// - Parameter cost: cost which should be matched
     /// - Returns: true if the cost matches, false otherwise
     func matches(cost: Cost) -> Bool {
-        if let amount = self.amount {
+        if let amount {
             if amount != cost.amount {
                 return false
             }
         }
-        if let date = self.date {
+        if let date {
             if date != cost.date {
                 return false
             }
         }
-        if let label = self.label {
+        if let label {
             if label != cost.label {
                 return false
             }

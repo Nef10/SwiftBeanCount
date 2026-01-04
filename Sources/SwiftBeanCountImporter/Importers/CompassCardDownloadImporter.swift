@@ -122,7 +122,7 @@ class CompassCardDownloadImporter: BaseImporter, DownloadImporter {
                 case .success(let transactions):
                     do {
                         let transactions = try self.mapper.createTransactions(cardNumber: cardNumber, transactions: transactions)
-                        try self.mapTransactions(transactions, cardNumber: cardNumber)
+                        self.mapTransactions(transactions, cardNumber: cardNumber)
                     } catch {
                         self.importFinished(error: error, completion: completion)
                         return
@@ -162,7 +162,7 @@ class CompassCardDownloadImporter: BaseImporter, DownloadImporter {
         }
     }
 
-    private func mapTransactions(_ importedTransactions: [Transaction], cardNumber: String) throws {
+    private func mapTransactions(_ importedTransactions: [Transaction], cardNumber: String) {
         transactions = importedTransactions.map {
             let defaultAccounts = [mapper.defaultExpenseAccountName, mapper.defaultAssetAccountName]
             let description = $0.metaData.narration
@@ -197,13 +197,13 @@ class CompassCardDownloadImporter: BaseImporter, DownloadImporter {
     private func dateToLoadFrom() -> Date {
         let customOptions = existingLedger.custom.filter { $0.name == MetaDataKey.customsKey && $0.values.first == MetaDataKey.daysSettings }
         guard let days = Int(customOptions.max(by: { $0.date < $1.date })?.values[1] ?? "") else {
-            return Date(timeIntervalSinceNow: self.sixtyTwoDays )
+            return Date(timeIntervalSinceNow: sixtyTwoDays)
         }
         return Date(timeIntervalSinceNow: -60 * 60 * 24 * Double(days) )
     }
 
     private func removeSavedCredentials(_ completion: @escaping () -> Void) {
-        self.delegate?.requestInput(name: "The login failed. Do you want to remove the saved credentials", type: .bool) {
+        delegate?.requestInput(name: "The login failed. Do you want to remove the saved credentials", type: .bool) {
             guard let bool = Bool($0) else {
                 return false
             }
@@ -219,7 +219,7 @@ class CompassCardDownloadImporter: BaseImporter, DownloadImporter {
 
     private func getCredential(key: CredentialKey, name: String, type: ImporterInputRequestType, save: Bool = true) -> String {
         var value: String!
-        if save, let savedValue = self.delegate?.readCredential("\(Self.importerType)-\(key.rawValue)"), !savedValue.isEmpty {
+        if save, let savedValue = delegate?.readCredential("\(Self.importerType)-\(key.rawValue)"), !savedValue.isEmpty {
             value = savedValue
         } else {
             let group = DispatchGroup()
@@ -232,7 +232,7 @@ class CompassCardDownloadImporter: BaseImporter, DownloadImporter {
             group.wait()
         }
         if save {
-            self.delegate?.saveCredential(value, for: "\(Self.importerType)-\(key.rawValue)")
+            delegate?.saveCredential(value, for: "\(Self.importerType)-\(key.rawValue)")
         }
         return value
     }
@@ -245,13 +245,13 @@ extension CompassCardDownloadImporter: CompassCardDownloaderDelegate {
     #if canImport(UIKit)
 
     public func view() -> UIView? {
-        self.delegate?.view()
+        delegate?.view()
     }
 
     #else
 
     public func view() -> NSView? {
-        self.delegate?.view()
+        delegate?.view()
     }
 
     #endif

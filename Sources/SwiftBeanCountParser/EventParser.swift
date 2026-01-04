@@ -18,7 +18,7 @@ enum EventParser {
     }()
 
     static func parseFrom(line: String, metaData: [String: String] = [:]) -> Event? {
-        let matches = line.matchingStrings(regex: self.regex)
+        let matches = line.matchingStrings(regex: regex)
         guard let match = matches[safe: 0], let date = DateParser.parseFrom(string: match[1]) else {
             return nil
         }

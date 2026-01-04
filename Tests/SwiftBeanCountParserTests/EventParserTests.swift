@@ -51,7 +51,7 @@ final class EventParserTests: XCTestCase {
     }
 
     func testPerformance() {
-        self.measure {
+        measure {
             for _ in 0...1_000 {
                 _ = EventParser.parseFrom(line: basicString)
                 _ = EventParser.parseFrom(line: whitespaceString)
