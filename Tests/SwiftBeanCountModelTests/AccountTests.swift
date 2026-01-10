@@ -7,50 +7,52 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
-@testable import SwiftBeanCountModel
-import XCTest
-
 // swiftlint:disable:next type_body_length
-final class AccountTests: XCTestCase {
+import Foundation
+@testable import SwiftBeanCountModel
+import Testing
+
+@Suite
+struct AccountTests {
 
     func testBookingMethod() {
         let defaultAccount = Account(name: TestUtils.cash)
-        XCTAssertEqual(defaultAccount.bookingMethod, .strict)
+        #expect(defaultAccount.bookingMethod == .strict)
 
         let fifoAccount = Account(name: TestUtils.cash, bookingMethod: .fifo)
-        XCTAssertEqual(fifoAccount.bookingMethod, .fifo)
+        #expect(fifoAccount.bookingMethod == .fifo)
 
         let lifoAccount = Account(name: TestUtils.cash, bookingMethod: .lifo)
-        XCTAssertEqual(lifoAccount.bookingMethod, .lifo)
+        #expect(lifoAccount.bookingMethod == .lifo)
     }
 
     func testDescription() {
         var accout = Account(name: TestUtils.cash)
-        XCTAssertEqual(String(describing: accout), "")
+        #expect(String(describing: accout) == "")
         accout = Account(name: TestUtils.cash, opening: TestUtils.date20170608)
-        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(TestUtils.cash)")
+        #expect(String(describing: accout) == "2017-06-08 open \(TestUtils.cash)")
         accout = Account(name: TestUtils.cash, commoditySymbol: TestUtils.eur, opening: TestUtils.date20170608)
-        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(TestUtils.cash) \(TestUtils.eur)")
+        #expect(String(describing: accout) == "2017-06-08 open \(TestUtils.cash) \(TestUtils.eur)")
         accout = Account(name: TestUtils.cash, commoditySymbol: TestUtils.eur, opening: TestUtils.date20170608, closing: TestUtils.date20170609)
-        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(TestUtils.cash) \(TestUtils.eur)\n2017-06-09 close \(TestUtils.cash)")
+        #expect(String(describing: accout) == "2017-06-08 open \(TestUtils.cash) \(TestUtils.eur)\n2017-06-09 close \(TestUtils.cash)")
         accout = Account(name: TestUtils.cash, commoditySymbol: TestUtils.eur, opening: TestUtils.date20170608, closing: TestUtils.date20170609, metaData: ["A": "B"])
-        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(TestUtils.cash) \(TestUtils.eur)\n  A: \"B\"\n2017-06-09 close \(TestUtils.cash)")
+        #expect(String(describing: accout) == "2017-06-08 open \(TestUtils.cash) \(TestUtils.eur)\n  A: \"B\"\n2017-06-09 close \(TestUtils.cash)")
     }
 
     func testDescriptionBookingMethod() {
         for bookingMethod in [BookingMethod.fifo, BookingMethod.lifo] {
             var accout = Account(name: TestUtils.cash, bookingMethod: bookingMethod)
-            XCTAssertEqual(String(describing: accout), "")
+            #expect(String(describing: accout) == "")
             accout = Account(name: TestUtils.cash, bookingMethod: bookingMethod, opening: TestUtils.date20170608)
-            XCTAssertEqual(String(describing: accout), "2017-06-08 open \(TestUtils.cash) \"\(bookingMethod)\"")
+            #expect(String(describing: accout) == "2017-06-08 open \(TestUtils.cash) \"\(bookingMethod)\"")
             accout = Account(name: TestUtils.cash, bookingMethod: bookingMethod, commoditySymbol: TestUtils.eur, opening: TestUtils.date20170608)
-            XCTAssertEqual(String(describing: accout), "2017-06-08 open \(TestUtils.cash) \(TestUtils.eur) \"\(bookingMethod)\"")
+            #expect(String(describing: accout) == "2017-06-08 open \(TestUtils.cash) \(TestUtils.eur) \"\(bookingMethod)\"")
             accout = Account(name: TestUtils.cash,
                              bookingMethod: bookingMethod,
                              commoditySymbol: TestUtils.eur,
                              opening: TestUtils.date20170608,
                              closing: TestUtils.date20170609)
-            XCTAssertEqual(String(describing: accout), "2017-06-08 open \(TestUtils.cash) \(TestUtils.eur) \"\(bookingMethod)\"\n2017-06-09 close \(TestUtils.cash)")
+            #expect(String(describing: accout) == "2017-06-08 open \(TestUtils.cash) \(TestUtils.eur) \"\(bookingMethod)\"\n2017-06-09 close \(TestUtils.cash)")
         }
     }
 
@@ -58,14 +60,14 @@ final class AccountTests: XCTestCase {
         let accountNameSpecial = try AccountName("Assets:💰")
 
         var accout = Account(name: accountNameSpecial)
-        XCTAssertEqual(String(describing: accout), "")
+        #expect(String(describing: accout) == "")
         accout = Account(name: accountNameSpecial, opening: TestUtils.date20170608)
-        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountNameSpecial)")
+        #expect(String(describing: accout) == "2017-06-08 open \(accountNameSpecial)")
         let symbol = "💵"
         accout = Account(name: accountNameSpecial, commoditySymbol: symbol, opening: TestUtils.date20170608)
-        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountNameSpecial) \(symbol)")
+        #expect(String(describing: accout) == "2017-06-08 open \(accountNameSpecial) \(symbol)")
         accout = Account(name: accountNameSpecial, commoditySymbol: symbol, opening: TestUtils.date20170608, closing: TestUtils.date20170609)
-        XCTAssertEqual(String(describing: accout), "2017-06-08 open \(accountNameSpecial) \(symbol)\n2017-06-09 close \(accountNameSpecial)")
+        #expect(String(describing: accout) == "2017-06-08 open \(accountNameSpecial) \(symbol)\n2017-06-09 close \(accountNameSpecial)")
     }
 
     func testIsPostingValid_NotOpenPast() {
@@ -109,12 +111,12 @@ final class AccountTests: XCTestCase {
         let posting1 = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
         let transaction1 = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                        postings: [posting1])
-        XCTAssertEqual(account.validate(transaction1.postings[0]), .valid)
+        #expect(account.validate(transaction1.postings[0]) == .valid)
 
         let posting2 = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
         let transaction2 = Transaction(metaData: TransactionMetaData(date: Date(), payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                        postings: [posting2])
-        XCTAssertEqual(account.validate(transaction2.postings[0]), .valid)
+        #expect(account.validate(transaction2.postings[0]) == .valid)
     }
 
     func testIsPostingValid_BeforeClosing() {
@@ -122,7 +124,7 @@ final class AccountTests: XCTestCase {
         let posting = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                       postings: [posting])
-        XCTAssertEqual(account.validate(transaction.postings[0]), .valid)
+        #expect(account.validate(transaction.postings[0]) == .valid)
     }
 
     func testIsPostingValid_AfterClosing() {
@@ -142,12 +144,12 @@ final class AccountTests: XCTestCase {
         let posting1 = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
         let transaction1 = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                        postings: [posting1])
-        XCTAssertEqual(account.validate(transaction1.postings[0]), .valid)
+        #expect(account.validate(transaction1.postings[0]) == .valid)
 
         let posting2 = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
         let transaction2 = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                        postings: [posting2])
-        XCTAssertEqual(account.validate(transaction2.postings[0]), .valid)
+        #expect(account.validate(transaction2.postings[0]) == .valid)
     }
 
     func testIsPostingValid_CorrectCommodity() {
@@ -155,7 +157,7 @@ final class AccountTests: XCTestCase {
         let posting = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                       postings: [posting])
-        XCTAssertEqual(account.validate(transaction.postings[0]), .valid)
+        #expect(account.validate(transaction.postings[0]) == .valid)
     }
 
     func testIsPostingValid_WrongCommodity() {
@@ -174,27 +176,27 @@ final class AccountTests: XCTestCase {
         var account = Account(name: TestUtils.cash)
 
         // neither closing nor opening
-        XCTAssertEqual(account.validate(), .valid)
+        #expect(account.validate() == .valid)
 
         // only opening
         account = Account(name: TestUtils.cash, opening: TestUtils.date20170608)
-        XCTAssertEqual(account.validate(), .valid)
+        #expect(account.validate() == .valid)
 
         // Closing == opening
         account = Account(name: TestUtils.cash, opening: TestUtils.date20170608, closing: TestUtils.date20170608)
-        XCTAssertEqual(account.validate(), .valid)
+        #expect(account.validate() == .valid)
 
         // Closing > opening
         account = Account(name: TestUtils.cash, opening: TestUtils.date20170608, closing: TestUtils.date20170609)
-        XCTAssertEqual(account.validate(), .valid)
+        #expect(account.validate() == .valid)
 
         // Closing < opening
         account = Account(name: TestUtils.cash, opening: TestUtils.date20170609, closing: TestUtils.date20170608)
-        XCTAssertEqual(account.validate(), .invalid("Account Assets:Cash was closed on 2017-06-08 before it was opened on 2017-06-09"))
+        #expect(account.validate() == .invalid("Account Assets:Cash was closed on 2017-06-08 before it was opened on 2017-06-09"))
 
         // only closing
         account = Account(name: TestUtils.cash, closing: TestUtils.date20170608)
-        XCTAssertEqual(account.validate(), .invalid("Account Assets:Cash has a closing date but no opening"))
+        #expect(account.validate() == .invalid("Account Assets:Cash has a closing date but no opening"))
     }
 
     func testValidateBalance() throws {
@@ -203,21 +205,21 @@ final class AccountTests: XCTestCase {
         try ledger.add(account)
 
         account.balances.append(Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: Amount(number: 0, commoditySymbol: TestUtils.cad)))
-        XCTAssertEqual(account.validateBalance(in: ledger), .valid)
+        #expect(account.validateBalance(in: ledger) == .valid)
 
         account.balances.append(Balance(date: TestUtils.date20170609, accountName: TestUtils.cash, amount: Amount(number: 1, commoditySymbol: TestUtils.cad)))
-        XCTAssertEqual(account.validateBalance(in: ledger), .invalid("Balance failed for 2017-06-09 balance Assets:Cash 1 CAD - 1 CAD too much (0 tolerance)"))
+        #expect(account.validateBalance(in: ledger) == .invalid("Balance failed for 2017-06-09 balance Assets:Cash 1 CAD - 1 CAD too much (0 tolerance)"))
 
         var posting = Posting(accountName: TestUtils.cash, amount: Amount(number: 1, commoditySymbol: TestUtils.cad))
         var transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         ledger.add(transaction)
-        XCTAssertEqual(account.validateBalance(in: ledger), .valid)
+        #expect(account.validateBalance(in: ledger) == .valid)
 
         posting = Posting(accountName: TestUtils.cash, amount: Amount(number: 10, commoditySymbol: TestUtils.cad))
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         ledger.add(transaction)
         account.balances.append(Balance(date: TestUtils.date20170610, accountName: TestUtils.cash, amount: Amount(number: 11, commoditySymbol: TestUtils.cad)))
-        XCTAssertEqual(account.validateBalance(in: ledger), .valid)
+        #expect(account.validateBalance(in: ledger) == .valid)
     }
 
     func testValidateBalanceEmpty() throws {
@@ -225,12 +227,12 @@ final class AccountTests: XCTestCase {
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
         try ledger.add(account)
 
-        XCTAssertEqual(account.validateBalance(in: ledger), .valid)
+        #expect(account.validateBalance(in: ledger) == .valid)
 
         let posting = Posting(accountName: TestUtils.cash, amount: Amount(number: 1, commoditySymbol: TestUtils.cad))
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         ledger.add(transaction)
-        XCTAssertEqual(account.validateBalance(in: ledger), .valid)
+        #expect(account.validateBalance(in: ledger) == .valid)
     }
 
     func testValidateBalanceDifferentCommodity() throws {
@@ -241,24 +243,24 @@ final class AccountTests: XCTestCase {
         account.balances.append(Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: Amount(number: 0, commoditySymbol: TestUtils.eur)))
 
         account.balances.append(Balance(date: TestUtils.date20170609, accountName: TestUtils.cash, amount: Amount(number: 1, commoditySymbol: TestUtils.cad)))
-        XCTAssertEqual(account.validateBalance(in: ledger), .invalid("Balance failed for 2017-06-09 balance Assets:Cash 1 CAD - 1 CAD too much (0 tolerance)"))
+        #expect(account.validateBalance(in: ledger) == .invalid("Balance failed for 2017-06-09 balance Assets:Cash 1 CAD - 1 CAD too much (0 tolerance)"))
 
         var posting = Posting(accountName: TestUtils.cash, amount: Amount(number: 1, commoditySymbol: TestUtils.cad))
         var transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         ledger.add(transaction)
-        XCTAssertEqual(account.validateBalance(in: ledger), .valid)
+        #expect(account.validateBalance(in: ledger) == .valid)
 
         // Ignores other commodity without currency
         posting = Posting(accountName: TestUtils.cash, amount: Amount(number: 1, commoditySymbol: TestUtils.usd))
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         ledger.add(transaction)
-        XCTAssertEqual(account.validateBalance(in: ledger), .valid)
+        #expect(account.validateBalance(in: ledger) == .valid)
 
         account.balances.append(Balance(date: TestUtils.date20170609, accountName: TestUtils.cash, amount: Amount(number: 1, commoditySymbol: TestUtils.eur)))
         posting = Posting(accountName: TestUtils.cash, amount: Amount(number: 1, commoditySymbol: TestUtils.eur))
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         ledger.add(transaction)
-        XCTAssertEqual(account.validateBalance(in: ledger), .valid)
+        #expect(account.validateBalance(in: ledger) == .valid)
     }
 
     func testValidateBalanceTolerance() throws {
@@ -271,22 +273,22 @@ final class AccountTests: XCTestCase {
         ledger.add(transaction)
 
         account.balances = [Balance(date: TestUtils.date20170609, accountName: TestUtils.cash, amount: Amount(number: 1.15, commoditySymbol: TestUtils.cad, decimalDigits: 2))]
-        XCTAssertEqual(account.validateBalance(in: ledger), .invalid("Balance failed for 2017-06-09 balance Assets:Cash 1.15 CAD - 0.05 CAD too much (0.005 tolerance)"))
+        #expect(account.validateBalance(in: ledger) == .invalid("Balance failed for 2017-06-09 balance Assets:Cash 1.15 CAD - 0.05 CAD too much (0.005 tolerance)"))
 
         account.balances = [Balance(date: TestUtils.date20170609, accountName: TestUtils.cash, amount: Amount(number: 1.15, commoditySymbol: TestUtils.cad, decimalDigits: 1))]
-        XCTAssertEqual(account.validateBalance(in: ledger), .valid)
+        #expect(account.validateBalance(in: ledger) == .valid)
 
         posting = Posting(accountName: TestUtils.cash, amount: Amount(number: 0.055, commoditySymbol: TestUtils.cad, decimalDigits: 3))
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         ledger.add(transaction)
 
         account.balances = [Balance(date: TestUtils.date20170609, accountName: TestUtils.cash, amount: Amount(number: 1.16, commoditySymbol: TestUtils.cad, decimalDigits: 2))]
-        XCTAssertEqual(account.validateBalance(in: ledger), .invalid("Balance failed for 2017-06-09 balance Assets:Cash 1.16 CAD - 0.005 CAD too much (0.0005 tolerance)"))
+        #expect(account.validateBalance(in: ledger) == .invalid("Balance failed for 2017-06-09 balance Assets:Cash 1.16 CAD - 0.005 CAD too much (0.0005 tolerance)"))
 
         account.balances = [
             Balance(date: TestUtils.date20170609, accountName: TestUtils.cash, amount: Amount(number: 1.155_5, commoditySymbol: TestUtils.cad, decimalDigits: 3))
         ]
-        XCTAssertEqual(account.validateBalance(in: ledger), .valid)
+        #expect(account.validateBalance(in: ledger) == .valid)
     }
 
     func testValidateInventoryEmpty() throws {
@@ -294,7 +296,7 @@ final class AccountTests: XCTestCase {
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
         try ledger.add(account)
 
-        XCTAssertEqual(account.validateInventory(in: ledger), .valid)
+        #expect(account.validateInventory(in: ledger) == .valid)
     }
 
     func testValidateInventory() throws {
@@ -323,7 +325,7 @@ final class AccountTests: XCTestCase {
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         ledger.add(transaction)
 
-        XCTAssertEqual(account.validateInventory(in: ledger), .valid)
+        #expect(account.validateInventory(in: ledger) == .valid)
     }
 
     func testValidateInvalidInventory() throws {
@@ -359,7 +361,7 @@ final class AccountTests: XCTestCase {
     func testEqualName() {
         let account1 = Account(name: TestUtils.cash)
         let account2 = Account(name: TestUtils.chequing)
-        XCTAssertNotEqual(account1, account2)
+        #expect(account1 != account2)
     }
 
     func testEqualProperties() {
@@ -370,38 +372,38 @@ final class AccountTests: XCTestCase {
         var account2 = Account(name: TestUtils.cash)
 
         // equal
-        XCTAssertEqual(account1, account2)
+        #expect(account1 == account2)
 
         account1 = Account(name: TestUtils.cash, commoditySymbol: TestUtils.eur, opening: date1, closing: date1)
         account2 = Account(name: TestUtils.cash, commoditySymbol: TestUtils.eur, opening: date1, closing: date1)
 
         // equal
-        XCTAssertEqual(account1, account2)
+        #expect(account1 == account2)
         // different meta data
         account1 = Account(name: TestUtils.cash, commoditySymbol: TestUtils.eur, opening: date1, metaData: ["A": "B"])
         account2 = Account(name: TestUtils.cash, commoditySymbol: TestUtils.eur, opening: date1, metaData: ["A": "C"])
-        XCTAssertNotEqual(account1, account2)
+        #expect(account1 != account2)
         // same meta data
         account2 = Account(name: TestUtils.cash, commoditySymbol: TestUtils.eur, opening: date1, metaData: ["A": "B"])
-        XCTAssertEqual(account1, account2)
+        #expect(account1 == account2)
         // different commodity
         account1 = Account(name: TestUtils.cash, commoditySymbol: TestUtils.eur)
         account2 = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
-        XCTAssertNotEqual(account1, account2)
+        #expect(account1 != account2)
         // different opening
         account1 = Account(name: TestUtils.cash, commoditySymbol: TestUtils.eur, opening: date1)
         account2 = Account(name: TestUtils.cash, commoditySymbol: TestUtils.eur, opening: date2)
-        XCTAssertNotEqual(account1, account2)
+        #expect(account1 != account2)
         // different closing
         account2 = Account(name: TestUtils.cash, commoditySymbol: TestUtils.eur, opening: date2, closing: date2)
-        XCTAssertNotEqual(account1, account2)
+        #expect(account1 != account2)
         account1 = Account(name: TestUtils.cash, commoditySymbol: TestUtils.eur, opening: date1, closing: date1)
-        XCTAssertNotEqual(account1, account2)
+        #expect(account1 != account2)
     }
 
     func testNameSeperatorIsPublic() {
         // Test that the nameSeperator property is publicly accessible
-        XCTAssertEqual(Account.nameSeperator, Character(":"))
+        #expect(Account.nameSeperator == Character(":"))
     }
 
 }

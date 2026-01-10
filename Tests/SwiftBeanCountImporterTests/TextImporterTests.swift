@@ -5,24 +5,27 @@
 //  Created by Steffen Kötte on 2020-06-06.
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class TextImporterTests: XCTestCase {
+@Suite
+
+struct TextImporterTests {
 
     func testNew() {
         var result = TextImporterFactory.new(ledger: nil, transaction: "", balance: "")
-        XCTAssertNotNil(result)
-        XCTAssertTrue(result is ManuLifeImporter)
+        #expect(result != nil)
+        #expect(result is ManuLifeImporter)
         result = TextImporterFactory.new(ledger: nil, transaction: "flatexDEGIRO", balance: "")
-        XCTAssertNotNil(result)
-        XCTAssertTrue(result is EquatePlusImporter)
+        #expect(result != nil)
+        #expect(result is EquatePlusImporter)
     }
 
     func testImporters() {
-        XCTAssertEqual(TextImporterFactory.importers.count, 2)
+        #expect(TextImporterFactory.importers.count == 2)
     }
 
 }

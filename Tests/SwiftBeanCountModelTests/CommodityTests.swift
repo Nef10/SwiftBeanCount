@@ -6,28 +6,31 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 @testable import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class CommodityTests: XCTestCase {
+@Suite
+
+struct CommodityTests {
 
     func testDescription() {
         let commodity = Commodity(symbol: TestUtils.cad)
-        XCTAssertEqual(String(describing: commodity), "")
+        #expect(String(describing: commodity) == "")
     }
 
     func testDescriptionSpecialCharactersOpening() {
         let symbol = "💵"
         let string = "2017-06-08 commodity \(symbol)"
         let commodity = Commodity(symbol: symbol, opening: TestUtils.date20170608)
-        XCTAssertEqual(String(describing: commodity), string)
+        #expect(String(describing: commodity) == string)
     }
 
     func testDescriptionMetaData() {
         let symbol = "CAD"
         let string = "2017-06-08 commodity \(symbol)\n  A: \"B\""
         let commodity = Commodity(symbol: symbol, opening: TestUtils.date20170608, metaData: ["A": "B"])
-        XCTAssertEqual(String(describing: commodity), string)
+        #expect(String(describing: commodity) == string)
     }
 
     func testValidate() {
@@ -54,7 +57,7 @@ final class CommodityTests: XCTestCase {
         let ledgerWithPlugin = Ledger()
         ledgerWithPlugin.plugins.append("beancount.plugins.check_commodity")
         if case .invalid(let error) = commodity.validate(in: ledgerWithPlugin) {
-            XCTAssertEqual(error, "Commodity EUR does not have an opening date")
+            #expect(error == "Commodity EUR does not have an opening date")
         } else {
             XCTFail("\(commodity) should be invalid when check_commodity plugin is enabled")
         }
@@ -64,24 +67,24 @@ final class CommodityTests: XCTestCase {
         var eur = Commodity(symbol: "EUR")
         var eur2 = Commodity(symbol: "EUR")
         let cad = Commodity(symbol: "CAD")
-        XCTAssertEqual(eur, eur2)
-        XCTAssertNotEqual(eur, cad)
+        #expect(eur == eur2)
+        #expect(eur != cad)
 
         // meta data
         eur2 = Commodity(symbol: "EUR", metaData: ["A": "B"])
-        XCTAssertNotEqual(eur, eur2)
+        #expect(eur != eur2)
         eur = Commodity(symbol: "EUR", metaData: ["A": "B"])
-        XCTAssertEqual(eur, eur2)
+        #expect(eur == eur2)
     }
 
     func testGreater() {
         let eur = TestUtils.eur
         let cad = TestUtils.cad
 
-        XCTAssert(eur > cad)
-        XCTAssertFalse(eur < cad)
-        XCTAssertFalse(eur > eur) // swiftlint:disable:this identical_operands
-        XCTAssertFalse(cad < cad) // swiftlint:disable:this identical_operands
+        #expect(eur > cad)
+        #expect(!(eur < cad))
+        #expect(!(eur > eur)) // swiftlint:disable:this identical_operands
+        #expect(!(cad < cad)) // swiftlint:disable:this identical_operands
     }
 
     func testValidateUsageDate() {
@@ -109,7 +112,7 @@ final class CommodityTests: XCTestCase {
         ledgerWithPlugin.plugins.append("beancount.plugins.check_commodity")
 
         if case .invalid(let error) = commodity.validateUsageDate(TestUtils.date20170608, in: ledgerWithPlugin) {
-            XCTAssertTrue(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
+            #expect(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
         } else {
             XCTFail("Using commodity before opening date should be invalid")
         }

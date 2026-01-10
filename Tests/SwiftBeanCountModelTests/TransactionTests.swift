@@ -6,10 +6,13 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 @testable import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class TransactionTests: XCTestCase {
+@Suite
+
+struct TransactionTests {
 
     private var transaction1WithoutPosting: Transaction!
     private var transaction2WithoutPosting: Transaction!
@@ -61,38 +64,37 @@ final class TransactionTests: XCTestCase {
     }
 
     func testDescriptionWithoutPosting() {
-        XCTAssertEqual(String(describing: transaction1WithoutPosting!), String(describing: transaction1WithoutPosting!.metaData))
+        #expect(String(describing: transaction1WithoutPosting!) == String(describing: transaction1WithoutPosting!.metaData))
     }
 
     func testDescriptionWithPostings() {
-        XCTAssertEqual(String(describing: transaction1WithPosting1And2!),
-                       String(describing: transaction1WithPosting1And2!.metaData) + "\n"
+        #expect(String(describing: transaction1WithPosting1And2!) == String(describing: transaction1WithPosting1And2!.metaData) + "\n"
                          + String(describing: transaction1WithPosting1And2!.postings[0]) + "\n"
                          + String(describing: transaction1WithPosting1And2!.postings[1]))
     }
 
     func testEqual() {
-        XCTAssertEqual(transaction1WithoutPosting, transaction2WithoutPosting)
-        XCTAssertFalse(transaction1WithoutPosting < transaction2WithoutPosting)
-        XCTAssertFalse(transaction2WithoutPosting < transaction1WithoutPosting)
+        #expect(transaction1WithoutPosting == transaction2WithoutPosting)
+        #expect(!(transaction1WithoutPosting < transaction2WithoutPosting))
+        #expect(!(transaction2WithoutPosting < transaction1WithoutPosting))
     }
 
     func testEqualWithPostings() {
-        XCTAssertEqual(transaction1WithPosting1And2, transaction2WithPosting1And2)
-        XCTAssertFalse(transaction1WithPosting1And2 < transaction2WithPosting1And2)
-        XCTAssertFalse(transaction2WithPosting1And2 < transaction1WithPosting1And2)
+        #expect(transaction1WithPosting1And2 == transaction2WithPosting1And2)
+        #expect(!(transaction1WithPosting1And2 < transaction2WithPosting1And2))
+        #expect(!(transaction2WithPosting1And2 < transaction1WithPosting1And2))
     }
 
     func testEqualRespectsPostings() {
-        XCTAssertNotEqual(transaction1WithPosting1, transaction1WithPosting1And2)
-        XCTAssert(transaction1WithPosting1 < transaction1WithPosting1And2)
-        XCTAssertFalse(transaction1WithPosting1And2 < transaction1WithPosting1)
+        #expect(transaction1WithPosting1 != transaction1WithPosting1And2)
+        #expect(transaction1WithPosting1 < transaction1WithPosting1And2)
+        #expect(!(transaction1WithPosting1And2 < transaction1WithPosting1))
     }
 
     func testEqualRespectsTransactionMetaData() {
-        XCTAssertNotEqual(transaction1WithPosting1, transaction3WithPosting1)
-        XCTAssertFalse(transaction1WithPosting1 < transaction3WithPosting1)
-        XCTAssert(transaction3WithPosting1 < transaction1WithPosting1)
+        #expect(transaction1WithPosting1 != transaction3WithPosting1)
+        #expect(!(transaction1WithPosting1 < transaction3WithPosting1))
+        #expect(transaction3WithPosting1 < transaction1WithPosting1)
     }
 
     func testIsValid() {
@@ -112,7 +114,7 @@ final class TransactionTests: XCTestCase {
 
     func testIsValidWithoutPosting() {
         if case .invalid(let error) = transaction1WithoutPosting!.validate(in: ledger) {
-            XCTAssertEqual(error, "2017-06-08 * \"Payee\" \"Narration\" has no postings")
+            #expect(error == "2017-06-08 * \"Payee\" \"Narration\" has no postings")
         } else {
             XCTFail("\(transaction1WithoutPosting!) is valid")
         }
@@ -344,7 +346,7 @@ final class TransactionTests: XCTestCase {
         ledger.add(transaction)
 
         let effect = try transaction.effect(in: ledger)
-        XCTAssertEqual(effect.amounts.count, 1)
+        #expect(effect.amounts.count == 1)
         guard case .valid = effect.validateOneAmountWithTolerance(amount: amount1) else {
             XCTFail("\(transaction) effect is not the expected value")
             return

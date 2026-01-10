@@ -6,11 +6,14 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
-import SwiftBeanCountModel
+import Foundation
 @testable import SwiftBeanCountParser
-import XCTest
+import SwiftBeanCountModel
+import Testing
 
-final class AccountParserTests: XCTestCase {
+@Suite
+
+struct AccountParserTests {
 
     private let basicOpeningString = "2017-06-09 open Assets:Cash"
     private let basicClosingString = "2017-06-09 close Assets:Cash"
@@ -44,7 +47,7 @@ final class AccountParserTests: XCTestCase {
 
     func testInvalidName() {
         let account = AccountParser.parseFrom(line: invalidNameOpeningString)
-        XCTAssertNil(account)
+        #expect(account == nil)
     }
 
     func testWhitespace() {
@@ -60,11 +63,11 @@ final class AccountParserTests: XCTestCase {
     }
 
     func testInvalidCloseWithCommodity() {
-        XCTAssertNil(AccountParser.parseFrom(line: invalidCloseWithCommodityString))
+        #expect(AccountParser.parseFrom(line: invalidCloseWithCommodityString == nil))
     }
 
     func testInvalidCloseDate() {
-        XCTAssertNil(AccountParser.parseFrom(line: invalidCloseDateString))
+        #expect(AccountParser.parseFrom(line: invalidCloseDateString == nil))
     }
 
     func testCommodityWithSemicolon() {
@@ -85,7 +88,7 @@ final class AccountParserTests: XCTestCase {
 
     func testBookingMethodInClosingString() {
         let account = AccountParser.parseFrom(line: bookingMethodInClosingString)
-        XCTAssertNil(account)
+        #expect(account == nil)
     }
 
     func testPerformance() {
@@ -110,19 +113,19 @@ final class AccountParserTests: XCTestCase {
     private func testWith(openingString: String, closingString: String, commoditySymbol: CommoditySymbol?, bookingMethod: BookingMethod? = nil) {
         let account1 = AccountParser.parseFrom(line: openingString)
 
-        XCTAssertNotNil(account1)
-        XCTAssertEqual(account1!.opening!, TestUtils.date20170609)
-        XCTAssertNil(account1!.closing)
-        XCTAssertEqual(account1!.commoditySymbol, commoditySymbol)
+        #expect(account1 != nil)
+        #expect(account1!.opening! == TestUtils.date20170609)
+        #expect(account1!.closing == nil)
+        #expect(account1!.commoditySymbol == commoditySymbol)
 
         if let bookingMethod {
-            XCTAssertEqual(account1!.bookingMethod, bookingMethod)
+            #expect(account1!.bookingMethod == bookingMethod)
         }
 
         let account2 = AccountParser.parseFrom(line: closingString)
-        XCTAssertNotNil(account2)
-        XCTAssertNil(account2!.opening)
-        XCTAssertEqual(account2!.closing!, TestUtils.date20170609)
+        #expect(account2 != nil)
+        #expect(account2!.opening == nil)
+        #expect(account2!.closing! == TestUtils.date20170609)
     }
 
 }

@@ -6,11 +6,14 @@
 //  Copyright © 2019 Steffen Kötte. All rights reserved.
 //
 
-import SwiftBeanCountModel
+import Foundation
 @testable import SwiftBeanCountParser
-import XCTest
+import SwiftBeanCountModel
+import Testing
 
-final class CostParserTests: XCTestCase {
+@Suite
+
+struct CostParserTests {
 
     private static let regex: NSRegularExpression = {
         // swiftlint:disable:next force_try
@@ -37,26 +40,26 @@ final class CostParserTests: XCTestCase {
     func testInvalid() {
         let postingMatches = "{2017-06-09, -1.003 EUR, \"TEST\"}".matchingStrings(regex: Self.regex)
         guard let match = postingMatches[safe: 0] else {
-            XCTFail("Invalid string")
+            Issue.record("Invalid string")
             return
         }
-        XCTAssertThrowsError(try CostParser.parseFrom(match: match, startIndex: 1))
+        do { _ = try CostParser.parseFrom(match: match, startIndex: 1; Issue.record("Expected error") } catch { })
     }
 
     func testNegativeAmount() {
-        XCTAssertNil(try cost(from: "2017-06-09, 1.003 EUR, \"TEST\"}"))
-        XCTAssertNil(try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\""))
-        XCTAssertNil(try cost(from: "2017-06-09, 1.003 EUR, \"TEST\""))
+        #expect(try cost(from: "2017-06-09, 1.003 EUR, \"TEST\"}" == nil))
+        #expect(try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\"" == nil))
+        #expect(try cost(from: "2017-06-09, 1.003 EUR, \"TEST\"" == nil))
     }
 
     func testEmpty() throws {
-        XCTAssertEqual(try Cost(amount: nil, date: nil, label: nil), try cost(from: "{}"))
+        #expect(try Cost(amount: nil == date: nil, label: nil), try cost(from: "{}"))
     }
 
     func testEmptyStringLabel() throws {
         let parsedCost = try cost(from: "{\"\"}")
-        XCTAssertEqual(try Cost(amount: nil, date: nil, label: ""), parsedCost)
-        XCTAssertNotEqual(try Cost(amount: nil, date: nil, label: nil), parsedCost)
+        #expect(try Cost(amount: nil == date: nil, label: ""), parsedCost)
+        #expect(try Cost(amount: nil != date: nil, label: nil), parsedCost)
     }
 
     func testWithoutDate() throws {
@@ -113,12 +116,12 @@ final class CostParserTests: XCTestCase {
                                              decimalDigits: 3),
                                date: TestUtils.date20170609,
                                label: "TEST")
-        XCTAssertEqual(result, try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\"}"))
-        XCTAssertEqual(result, try cost(from: "{2017-06-09, \"TEST\", 1.003 EUR}"))
-        XCTAssertEqual(result, try cost(from: "{1.003 EUR, 2017-06-09, \"TEST\"}"))
-        XCTAssertEqual(result, try cost(from: "{1.003 EUR, \"TEST\", 2017-06-09}"))
-        XCTAssertEqual(result, try cost(from: "{\"TEST\", 2017-06-09, 1.003 EUR}"))
-        XCTAssertEqual(result, try cost(from: "{\"TEST\", 1.003 EUR, 2017-06-09}"))
+        #expect(result == try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\"}"))
+        #expect(result == try cost(from: "{2017-06-09, \"TEST\", 1.003 EUR}"))
+        #expect(result == try cost(from: "{1.003 EUR, 2017-06-09, \"TEST\"}"))
+        #expect(result == try cost(from: "{1.003 EUR, \"TEST\", 2017-06-09}"))
+        #expect(result == try cost(from: "{\"TEST\", 2017-06-09, 1.003 EUR}"))
+        #expect(result == try cost(from: "{\"TEST\", 1.003 EUR, 2017-06-09}"))
     }
 
     func testWhitespace() throws {
@@ -128,17 +131,17 @@ final class CostParserTests: XCTestCase {
                                date: TestUtils.date20170609,
                                label: "TEST")
         // Note: Because a commodity may contain commas there must be a space a either before or after the comma which follows the commodity
-        XCTAssertEqual(result, try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\"}"))
-        XCTAssertEqual(result, try cost(from: "{2017-06-09,1.003 EUR, \"TEST\"}"))
-        XCTAssertEqual(result, try cost(from: "{2017-06-09,    1.003 EUR,     \"TEST\"}"))
-        XCTAssertEqual(result, try cost(from: "{   2017-06-09, 1.003 EUR, \"TEST\"    }"))
-        XCTAssertEqual(result, try cost(from: "{ 2017-06-09,1.003 EUR, \"TEST\" }"))
-        XCTAssertEqual(result, try cost(from: "{2017-06-09 , 1.003 EUR , \"TEST\"}"))
-        XCTAssertEqual(result, try cost(from: "{2017-06-09 ,1.003 EUR , \"TEST\"}"))
-        XCTAssertEqual(result, try cost(from: "{2017-06-09    ,    1.003 EUR ,     \"TEST\"}"))
-        XCTAssertEqual(result, try cost(from: "{   2017-06-09    ,    1.003 EUR   ,  \"TEST\"    }"))
-        XCTAssertEqual(result, try cost(from: "{2017-06-09, 1.003 EUR ,\"TEST\" }"))
-        XCTAssertEqual(result, try cost(from: "{2017-06-09,1.003 EUR ,\"TEST\"}"))
+        #expect(result == try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\"}"))
+        #expect(result == try cost(from: "{2017-06-09,1.003 EUR, \"TEST\"}"))
+        #expect(result == try cost(from: "{2017-06-09,    1.003 EUR,     \"TEST\"}"))
+        #expect(result == try cost(from: "{   2017-06-09, 1.003 EUR, \"TEST\"    }"))
+        #expect(result == try cost(from: "{ 2017-06-09,1.003 EUR, \"TEST\" }"))
+        #expect(result == try cost(from: "{2017-06-09 , 1.003 EUR , \"TEST\"}"))
+        #expect(result == try cost(from: "{2017-06-09 ,1.003 EUR , \"TEST\"}"))
+        #expect(result == try cost(from: "{2017-06-09    ,    1.003 EUR ,     \"TEST\"}"))
+        #expect(result == try cost(from: "{   2017-06-09    ,    1.003 EUR   ,  \"TEST\"    }"))
+        #expect(result == try cost(from: "{2017-06-09, 1.003 EUR ,\"TEST\" }"))
+        #expect(result == try cost(from: "{2017-06-09,1.003 EUR ,\"TEST\"}"))
     }
 
     func testCommaCommodity() throws {
@@ -147,9 +150,9 @@ final class CostParserTests: XCTestCase {
                                              decimalDigits: 3),
                                date: TestUtils.date20170609,
                                label: "TEST")
-        XCTAssertEqual(result, try cost(from: "{2017-06-09, 1.003 EUR,AB, \"TEST\"}"))
-        XCTAssertEqual(result, try cost(from: "{2017-06-09, 1.003 EUR,AB , \"TEST\"}"))
-        XCTAssertEqual(result, try cost(from: "{2017-06-09, 1.003 EUR,AB ,\"TEST\"}"))
+        #expect(result == try cost(from: "{2017-06-09, 1.003 EUR,AB, \"TEST\"}"))
+        #expect(result == try cost(from: "{2017-06-09, 1.003 EUR,AB , \"TEST\"}"))
+        #expect(result == try cost(from: "{2017-06-09, 1.003 EUR,AB ,\"TEST\"}"))
     }
 
     func testSpecialCharacters() throws {
@@ -165,20 +168,20 @@ final class CostParserTests: XCTestCase {
         // These should throw errors because they contain unexpected elements
 
         // Test with unexpected text after valid elements
-        XCTAssertThrowsError(try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\", unexpected}"))
+        do { _ = try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\", unexpected}"; Issue.record("Expected error") } catch { })
 
         // Test with unexpected numbers
-        XCTAssertThrowsError(try cost(from: "{2017-06-09, 1.003 EUR, 123}"))
+        do { _ = try cost(from: "{2017-06-09, 1.003 EUR, 123}"; Issue.record("Expected error") } catch { })
 
         // Test with unexpected symbols
-        XCTAssertThrowsError(try cost(from: "{2017-06-09, 1.003 EUR, @invalid}"))
+        do { _ = try cost(from: "{2017-06-09, 1.003 EUR, @invalid}"; Issue.record("Expected error") } catch { })
 
         // Test with multiple unexpected elements
-        XCTAssertThrowsError(try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\", extra, stuff}"))
+        do { _ = try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\", extra, stuff}"; Issue.record("Expected error") } catch { })
 
         // Test with unexpected text in different positions
-        XCTAssertThrowsError(try cost(from: "{unexpected, 2017-06-09, 1.003 EUR}"))
-        XCTAssertThrowsError(try cost(from: "{2017-06-09, unexpected, 1.003 EUR}"))
+        do { _ = try cost(from: "{unexpected, 2017-06-09, 1.003 EUR}"; Issue.record("Expected error") } catch { })
+        do { _ = try cost(from: "{2017-06-09, unexpected, 1.003 EUR}"; Issue.record("Expected error") } catch { })
 
         // Test that valid costs still work (should not throw)
         XCTAssertNoThrow(try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\"}"))
@@ -192,11 +195,11 @@ final class CostParserTests: XCTestCase {
         // Test the errorDescription property of CostParsingError
         do {
             _ = try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\", unexpected}")
-            XCTFail("Expected CostParsingError to be thrown")
+            Issue.record("Expected CostParsingError to be thrown")
         } catch let error as CostParsingError {
-            XCTAssertEqual(error.errorDescription, "Unexpected elements in cost: unexpected")
+            #expect(error.errorDescription == "Unexpected elements in cost: unexpected")
         } catch {
-            XCTFail("Expected CostParsingError, but got: \(error)")
+            Issue.record("Expected CostParsingError, but got: \(error)")
         }
     }
 

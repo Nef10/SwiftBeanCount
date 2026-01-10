@@ -1,19 +1,22 @@
+import Foundation
+@testable import SwiftBeanCountCLI
+import Testing
+
 #if os(macOS)
 
-@testable import SwiftBeanCountCLI
-import XCTest
+@Suite
 
-final class CheckTests: XCTestCase {
+struct CheckTests {
 
     func testFileDoesNotExist() {
         let url = temporaryFileURL()
         let result = outputFromExecutionWith(arguments: ["check", url.path])
-        XCTAssertEqual(result.exitCode, 1)
-        XCTAssert(result.errorOutput.isEmpty)
+        #expect(result.exitCode == 1)
+        #expect(result.errorOutput.isEmpty)
         #if os(Linux)
-        XCTAssertEqual(result.output, "The operation could not be completed. The file doesn’t exist.")
+        #expect(result.output == "The operation could not be completed. The file doesn’t exist.")
         #else
-        XCTAssertEqual(result.output, "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
+        #expect(result.output == "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
         #endif
     }
 
@@ -39,8 +42,8 @@ final class CheckTests: XCTestCase {
         let url = temporaryFileURL()
         createFile(at: url, content: "plugin \"beancount.plugins.check_commodity\"\n\n2020-06-13 * \"\" \"\"\n  Assets:CAD 10.00 CAD\n  Income:Job -15.00 CAD")
         let result = outputFromExecutionWith(arguments: ["check", url.path])
-        XCTAssertEqual(result.exitCode, 65)
-        XCTAssert(result.errorOutput.isEmpty)
+        #expect(result.exitCode == 65)
+        #expect(result.errorOutput.isEmpty)
         XCTAssertEqual(result.output, """
                                         Found 2 errors:
 
@@ -62,13 +65,13 @@ final class CheckTests: XCTestCase {
         let url = temporaryFileURL()
         createFile(at: url, content: "2020-06-13 * \"\" \"\"\n  Assets:CAD 10.00 CAD\n  Income:Job -15.00 CAD")
         var result = outputFromExecutionWith(arguments: ["check", url.path, "-q"])
-        XCTAssertEqual(result.exitCode, 65)
-        XCTAssert(result.errorOutput.isEmpty)
-        XCTAssert(result.output.isEmpty)
+        #expect(result.exitCode == 65)
+        #expect(result.errorOutput.isEmpty)
+        #expect(result.output.isEmpty)
         result = outputFromExecutionWith(arguments: ["check", url.path, "--quiet"])
-        XCTAssertEqual(result.exitCode, 65)
-        XCTAssert(result.errorOutput.isEmpty)
-        XCTAssert(result.output.isEmpty)
+        #expect(result.exitCode == 65)
+        #expect(result.errorOutput.isEmpty)
+        #expect(result.output.isEmpty)
     }
 
 }

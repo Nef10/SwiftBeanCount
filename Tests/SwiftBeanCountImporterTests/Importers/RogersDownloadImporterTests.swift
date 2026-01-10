@@ -6,11 +6,12 @@
 //  Copyright © 2021 Steffen Kötte. All rights reserved.
 //
 
-import RogersBankDownloader
+import Foundation
 @testable import SwiftBeanCountImporter
+import RogersBankDownloader
 import SwiftBeanCountModel
 import SwiftBeanCountRogersBankMapper
-import XCTest
+import Testing
 
 private typealias STransaction = SwiftBeanCountModel.Transaction
 private typealias RAmount = RogersBankDownloader.Amount
@@ -151,31 +152,31 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 
     func testImporterName() {
-        XCTAssertEqual(RogersDownloadImporter.importerName, "Rogers Bank Download")
+        #expect(RogersDownloadImporter.importerName == "Rogers Bank Download")
     }
 
     func testImporterType() {
-        XCTAssertEqual(RogersDownloadImporter.importerType, "rogers")
+        #expect(RogersDownloadImporter.importerType == "rogers")
     }
 
     func testHelpText() {
-        XCTAssert(RogersDownloadImporter.helpText.hasPrefix("Downloads transactions and the current balance from the Rogers Bank website."))
+        #expect(RogersDownloadImporter.helpText.hasPrefix("Downloads transactions and the current balance from the Rogers Bank website."))
     }
 
     func testImportName() {
-        XCTAssertEqual(RogersDownloadImporter(ledger: nil).importName, "Rogers Bank Download")
+        #expect(RogersDownloadImporter(ledger: nil).importName == "Rogers Bank Download")
     }
 
     func testNoAccounts() {
         Self.load = {
-            XCTAssertEqual($0, "name")
-            XCTAssertEqual($1, "password123")
-            XCTAssertEqual($2, "")
+            #expect($0 == "name")
+            #expect($1 == "password123")
+            #expect($2 == "")
             return .success(TestUser())
         }
         let importer = loadedImporter()
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssert(importer.balancesToImport().isEmpty)
+        #expect(importer.nextTransaction( == nil))
+        #expect(importer.balancesToImport().isEmpty)
     }
 
     func testLoadAuthenticationError() {
@@ -194,7 +195,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     func testDownloadActivitiesError() throws {
         var receivedStatementNumbers = [false, false, false]
         var account = TestAccount {
-            XCTAssert($0 < 3)
+            #expect($0 < 3)
             receivedStatementNumbers[$0] = true
             return .failure(DownloadError.invalidParameters(parameters: ["b": "cd"]))
         }
@@ -205,26 +206,26 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         setErrorDelegate(error: DownloadError.invalidParameters(parameters: ["b": "cd"]))
         let importer = loadedImporter(ledger: ledger)
         let balances = importer.balancesToImport()
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssertEqual(balances.count, 1)
-        XCTAssertEqual(Calendar.current.compare(balances[0].date, to: Date(), toGranularity: .minute), .orderedSame)
-        XCTAssertEqual(balances[0].accountName, accountName)
-        XCTAssertEqual(balances[0].amount, Amount(number: Decimal(string: "-10.52")!, commoditySymbol: "CAD", decimalDigits: 2))
-        XCTAssertEqual(receivedStatementNumbers, [true, true, true])
+        #expect(importer.nextTransaction( == nil))
+        #expect(balances.count == 1)
+        #expect(Calendar.current.compare(balances[0].date == to: Date(), toGranularity: .minute), .orderedSame)
+        #expect(balances[0].accountName == accountName)
+        #expect(balances[0].amount == Amount(number: Decimal(string: "-10.52")!, commoditySymbol: "CAD", decimalDigits: 2))
+        #expect(receivedStatementNumbers == [true, true, true])
     }
 
     func testNoLedgerAccount() {
         user.accounts = [TestAccount()]
         setErrorDelegate(error: RogersBankMappingError.missingAccount(lastFour: "8520"))
         let importer = loadedImporter()
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssert(importer.balancesToImport().isEmpty)
+        #expect(importer.nextTransaction( == nil))
+        #expect(importer.balancesToImport().isEmpty)
     }
 
     func testNoActivities() throws {
         var receivedStatementNumbers = [false, false, false]
         var account = TestAccount {
-            XCTAssert($0 < 3)
+            #expect($0 < 3)
             receivedStatementNumbers[$0] = true
             return .success([])
         }
@@ -234,12 +235,12 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         user.accounts = [account]
         let importer = loadedImporter(ledger: ledger)
         let balances = importer.balancesToImport()
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssertEqual(balances.count, 1)
-        XCTAssertEqual(Calendar.current.compare(balances[0].date, to: Date(), toGranularity: .minute), .orderedSame)
-        XCTAssertEqual(balances[0].accountName, accountName)
-        XCTAssertEqual(balances[0].amount, Amount(number: Decimal(string: "-10.52")!, commoditySymbol: "CAD", decimalDigits: 2))
-        XCTAssertEqual(receivedStatementNumbers, [true, true, true])
+        #expect(importer.nextTransaction( == nil))
+        #expect(balances.count == 1)
+        #expect(Calendar.current.compare(balances[0].date == to: Date(), toGranularity: .minute), .orderedSame)
+        #expect(balances[0].accountName == accountName)
+        #expect(balances[0].amount == Amount(number: Decimal(string: "-10.52")!, commoditySymbol: "CAD", decimalDigits: 2))
+        #expect(receivedStatementNumbers == [true, true, true])
     }
 
     func testStatementsToLoad() throws {
@@ -247,44 +248,44 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         ledger.custom.append(Custom(date: Date(timeIntervalSinceNow: -999_999), name: "rogers-download-importer", values: ["statementsToLoad", "200"]))
         var validated = false
         let account = TestAccount {
-            XCTAssertEqual($0, 0)
+            #expect($0 == 0)
             validated = true
             return .success([])
         }
         user.accounts = [account]
         let importer = loadedImporter(ledger: ledger)
         let balances = importer.balancesToImport()
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssertEqual(balances.count, 1)
-        XCTAssert(validated)
+        #expect(importer.nextTransaction( == nil))
+        #expect(balances.count == 1)
+        #expect(validated)
     }
 
     func testMultiAccount() throws {
         var receivedStatementNumbers1 = [false, false, false]
         var receivedStatementNumbers2 = [false, false, false]
         let account1 = TestAccount {
-            XCTAssert($0 < 3)
+            #expect($0 < 3)
             receivedStatementNumbers1[$0] = true
             return .success([])
         }
         let account2 = TestAccount {
-            XCTAssert($0 < 3)
+            #expect($0 < 3)
             receivedStatementNumbers2[$0] = true
             return .success([])
         }
         user.accounts = [account1, account2]
         let importer = loadedImporter(ledger: ledger)
         let balances = importer.balancesToImport()
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssertEqual(balances.count, 2)
-        XCTAssertEqual(Calendar.current.compare(balances[0].date, to: Date(), toGranularity: .minute), .orderedSame)
-        XCTAssertEqual(balances[0].accountName, accountName)
-        XCTAssertEqual(balances[0].amount, Amount(number: Decimal(string: "0.00")!, commoditySymbol: "CAD", decimalDigits: 2))
-        XCTAssertEqual(Calendar.current.compare(balances[1].date, to: Date(), toGranularity: .minute), .orderedSame)
-        XCTAssertEqual(balances[1].accountName, accountName)
-        XCTAssertEqual(balances[1].amount, Amount(number: Decimal(string: "-0.00")!, commoditySymbol: "CAD", decimalDigits: 2))
-        XCTAssertEqual(receivedStatementNumbers1, [true, true, true])
-        XCTAssertEqual(receivedStatementNumbers2, [true, true, true])
+        #expect(importer.nextTransaction( == nil))
+        #expect(balances.count == 2)
+        #expect(Calendar.current.compare(balances[0].date == to: Date(), toGranularity: .minute), .orderedSame)
+        #expect(balances[0].accountName == accountName)
+        #expect(balances[0].amount == Amount(number: Decimal(string: "0.00")!, commoditySymbol: "CAD", decimalDigits: 2))
+        #expect(Calendar.current.compare(balances[1].date == to: Date(), toGranularity: .minute), .orderedSame)
+        #expect(balances[1].accountName == accountName)
+        #expect(balances[1].amount == Amount(number: Decimal(string: "-0.00")!, commoditySymbol: "CAD", decimalDigits: 2))
+        #expect(receivedStatementNumbers1 == [true, true, true])
+        #expect(receivedStatementNumbers2 == [true, true, true])
     }
 
     func testActivityMappingError() throws {
@@ -292,8 +293,8 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         user.accounts = [TestAccount { _ in .success([activity]) }]
         setErrorDelegate(error: RogersBankMappingError.missingActivityData(activity: activity, key: "referenceNumber"))
         let importer = loadedImporter(ledger: ledger)
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssertEqual(importer.balancesToImport().count, 1)
+        #expect(importer.nextTransaction( == nil))
+        #expect(importer.balancesToImport().count == 1)
     }
 
     func testActivities() throws {
@@ -315,13 +316,13 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
             Posting(accountName: try AccountName("Expenses:TODO"), amount: Amount(number: Decimal(string: amount.value)!, commoditySymbol: "CAD", decimalDigits: 2))
         ])
         var iTransaction = ImportedTransaction(transaction, originalDescription: activity1.merchant.name, shouldAllowUserToEdit: true, accountName: accountName)
-        XCTAssertEqual(iTransaction, importer.nextTransaction())
+        #expect(iTransaction == importer.nextTransaction())
         metaData = TransactionMetaData(date: activity2.postedDate!, narration: activity2.merchant.name, metaData: ["rogers-bank-id": activity2.referenceNumber!])
         transaction = Transaction(metaData: metaData, postings: [transaction.postings[0], transaction.postings[1]])
         iTransaction = ImportedTransaction(transaction, originalDescription: activity2.merchant.name, shouldAllowUserToEdit: true, accountName: accountName)
-        XCTAssertEqual(iTransaction, importer.nextTransaction())
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssertEqual(importer.balancesToImport().count, 1)
+        #expect(iTransaction == importer.nextTransaction())
+        #expect(importer.nextTransaction( == nil))
+        #expect(importer.balancesToImport().count == 1)
     }
 
     func testActivitySavedMapping() {
@@ -346,16 +347,16 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
             Posting(accountName: TestUtils.chequing, amount: Amount(number: Decimal(string: amount.value)!, commoditySymbol: "CAD", decimalDigits: 2))
         ])
         let iTransaction = ImportedTransaction(transaction, originalDescription: activity.merchant.name, shouldAllowUserToEdit: true, accountName: accountName)
-        XCTAssertEqual(iTransaction, importer.nextTransaction())
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssertEqual(importer.balancesToImport().count, 1)
+        #expect(iTransaction == importer.nextTransaction())
+        #expect(importer.nextTransaction( == nil))
+        #expect(importer.balancesToImport().count == 1)
     }
 
     func testLoadSavedCredentials() {
         Self.load = {
-            XCTAssertEqual($0, "name")
-            XCTAssertEqual($1, "password123")
-            XCTAssertEqual($2, "device-id")
+            #expect($0 == "name")
+            #expect($1 == "password123")
+            #expect($2 == "device-id")
             return .success(TestUser())
         }
         // All saved
@@ -390,8 +391,8 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         let importer = RogersDownloadImporter(ledger: ledger)
         importer.authenticatorClass = TestAuthenticator.self
         importer.delegate = delegate
-        XCTAssertEqual(importer.getTwoFactorCode(), "123456")
-        XCTAssert(delegate.verified, delegate.verificationInfo)
+        #expect(importer.getTwoFactorCode() == "123456")
+        #expect(delegate.verified, delegate.verificationInfo)
     }
 
     func testSelectTwoFactorPreferenceOneOption() throws {
@@ -406,8 +407,8 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         importer.authenticatorClass = TestAuthenticator.self
         importer.delegate = delegate
         let pref = try JSONDecoder().decode(TwoFactorPreference.self, from: Data("{\"type\":\"SMS\",\"value\":\"123456789\"}".utf8))
-        XCTAssertEqual(importer.selectTwoFactorPreference([pref]).type, pref.type)
-        XCTAssert(delegate.verified, delegate.verificationInfo)
+        #expect(importer.selectTwoFactorPreference([pref]).type == pref.type)
+        #expect(delegate.verified, delegate.verificationInfo)
     }
 
     func testSelectTwoFactorPreferenceTwoOptions() throws {
@@ -423,8 +424,8 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         importer.delegate = delegate
         let pref1 = try JSONDecoder().decode(TwoFactorPreference.self, from: Data("{\"type\":\"SMS\",\"value\":\"123456789\"}".utf8))
         let pref2 = try JSONDecoder().decode(TwoFactorPreference.self, from: Data("{\"type\":\"Email\",\"value\":\"abc@def.ge\"}".utf8))
-        XCTAssertEqual(importer.selectTwoFactorPreference([pref1, pref2]).type, pref2.type)
-        XCTAssert(delegate.verified, delegate.verificationInfo)
+        #expect(importer.selectTwoFactorPreference([pref1 == pref2]).type, pref2.type)
+        #expect(delegate.verified, delegate.verificationInfo)
     }
 
     func testSaveDeviceId() {
@@ -439,7 +440,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         importer.authenticatorClass = TestAuthenticator.self
         importer.delegate = delegate
         importer.saveDeviceId("qwerty1223654")
-        XCTAssert(delegate.verified, delegate.verificationInfo)
+        #expect(delegate.verified, delegate.verificationInfo)
     }
 
     @discardableResult
@@ -448,8 +449,8 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         importer.authenticatorClass = TestAuthenticator.self
         importer.delegate = delegate
         importer.load()
-        XCTAssert(importer.pricesToImport().isEmpty)
-        XCTAssert(delegate.verified, delegate.verificationInfo)
+        #expect(importer.pricesToImport().isEmpty)
+        #expect(delegate.verified, delegate.verificationInfo)
         return importer
     }
 

@@ -9,25 +9,27 @@
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class CSVImporterTests: XCTestCase {
+@Suite
+
+struct CSVImporterTests {
 
     func testImporters() {
-        XCTAssertEqual(CSVImporterFactory.importers.count, 8)
+        #expect(CSVImporterFactory.importers.count == 8)
     }
 
     func testNew() {
         // no url
-        XCTAssertNil(CSVImporterFactory.new(ledger: nil, url: nil))
+        #expect(CSVImporterFactory.new(ledger: nil, url: nil == nil))
 
         // invalid URL
-        XCTAssertNil(CSVImporterFactory.new(ledger: nil, url: URL(fileURLWithPath: "DOES_NOT_EXIST")))
+        #expect(CSVImporterFactory.new(ledger: nil, url: URL(fileURLWithPath: "DOES_NOT_EXIST" == nil)))
 
         // valid URL without matching headers
         let url = temporaryFileURL()
         createFile(at: url, content: "Header, no, matching, anything\n")
-        XCTAssertNil(CSVImporterFactory.new(ledger: nil, url: url))
+        #expect(CSVImporterFactory.new(ledger: nil, url: url == nil))
 
         // matching header
         let importers = CSVImporterFactory.importers
@@ -35,7 +37,7 @@ final class CSVImporterTests: XCTestCase {
             for header in importer.headers {
                 let url = temporaryFileURL()
                 createFile(at: url, content: "\(header.joined(separator: ", "))\n")
-                XCTAssertTrue(type(of: CSVImporterFactory.new(ledger: nil, url: url)!) == importer) // swiftlint:disable:this xct_specific_matcher
+                #expect(type(of: CSVImporterFactory.new(ledger: nil, url: url)!) == importer) // swiftlint:disable:this xct_specific_matcher
             }
         }
     }

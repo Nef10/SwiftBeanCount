@@ -6,11 +6,14 @@
 //  Copyright © 2019 Steffen Kötte. All rights reserved.
 //
 
-import SwiftBeanCountModel
+import Foundation
 @testable import SwiftBeanCountParser
-import XCTest
+import SwiftBeanCountModel
+import Testing
 
-final class BalanceParserTests: XCTestCase {
+@Suite
+
+struct BalanceParserTests {
 
     private let basicString = "2017-06-09 balance Assets:Cash 10.00 CAD"
     private let whitespaceString = "2017-06-09    balance    Assets:Cash     10.00      CAD"
@@ -49,7 +52,7 @@ final class BalanceParserTests: XCTestCase {
 
     func testInvalidCloseDate() {
         let balance = BalanceParser.parseFrom(line: invalidDateString)
-        XCTAssertNil(balance)
+        #expect(balance == nil)
     }
 
     func testPerformance() {

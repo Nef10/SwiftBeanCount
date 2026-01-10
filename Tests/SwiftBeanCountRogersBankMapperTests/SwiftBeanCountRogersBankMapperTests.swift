@@ -1,10 +1,12 @@
+
 import Foundation
-import RogersBankDownloader
 @testable import SwiftBeanCountRogersBankMapper
+import RogersBankDownloader
 import SwiftBeanCountModel
 import Testing
 
 @Suite
+
 struct SwiftBeanCountRogersBankMapperTests {
 
     private static let dateFormatter: DateFormatter = {
@@ -13,9 +15,16 @@ struct SwiftBeanCountRogersBankMapperTests {
         return dateFormatter
     }()
 
-    @Test
-    func MapAccount() throws {
-        let ledger = Ledger()
+    private var ledger = Ledger()
+    private var mapper: SwiftBeanCountRogersBankMapper!
+
+    override func setUpWithError() throws {
+        ledger = Ledger()
+        mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        try super.setUpWithError()
+    }
+
+    func testMapAccount() throws {
         let accountName = try AccountName("Liabilities:CC:Rogers")
         try ledger.add(Account(name: accountName, metaData: ["last-four": "4862", "importer-type": "rogers"]))
         let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
@@ -32,71 +41,57 @@ struct SwiftBeanCountRogersBankMapperTests {
         #expect(result.amount.decimalDigits == 2)
     }
 
-    @Test
-
-    func MapAccountMissingAccount() throws {
-        #expect(throws: RogersBankMappingError.missingAccount(lastFour: "4862")) { try try mapper.mapAccountToBalance(account: TestAccount()) }
+    func testMapAccountMissingAccount() throws {
+        assert(try mapper.mapAccountToBalance(account: TestAccount()), throws: RogersBankMappingError.missingAccount(lastFour: "4862"))
     }
 
-    @Test
-
-    func MapActivitiesEmpty() throws {
+    func testMapActivitiesEmpty() throws {
         #expect(try mapper.mapActivitiesToTransactions(activities: []).isEmpty)
     }
 
-    @Test
-
-    func MapActivitiesNotPosted() throws {
+    func testMapActivitiesNotPosted() throws {
         var activity = TestActivity()
         activity.activityStatus = .approved
         activity.activityType = .authorization
         #expect(try mapper.mapActivitiesToTransactions(activities: [TestActivity(), activity]).isEmpty)
     }
 
-    @Test
-
-    func MapActivitiesMissingPostingDate() throws {
+    func testMapActivitiesMissingPostingDate() throws {
         var activity = TestActivity()
         activity.activityStatus = .approved
-        #expect(throws: RogersBankMappingError.missingActivityData(activity: activity, key: "postedDate")) { try try mapper.mapActivitiesToTransactions(activities: [activity]) }
+        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingActivityData(activity: activity, key: "postedDate"))
     }
 
-    @Test
-
-    func MapActivitiesMissingReferenceNumber() throws {
+    func testMapActivitiesMissingReferenceNumber() throws {
         var activity = TestActivity()
         activity.activityStatus = .approved
         activity.postedDate = Date()
         activity.activityCategory = .purchase
         let mapper = SwiftBeanCountRogersBankMapper(ledger: Ledger())
-        #expect(throws: RogersBankMappingError.missingActivityData(activity: activity, key: "referenceNumber")) { try try mapper.mapActivitiesToTransactions(activities: [activity]) }
+        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingActivityData(activity: activity, key: "referenceNumber"))
     }
 
-    @Test
-
-    func MapActivitiesMissingAccount() throws {
+    func testMapActivitiesMissingAccount() throws {
         var activity = TestActivity()
         activity.activityStatus = .approved
         activity.postedDate = Date()
         let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
-        #expect(throws: RogersBankMappingError.missingAccount(lastFour: "1234")) { try try mapper.mapActivitiesToTransactions(activities: [activity]) }
+        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingAccount(lastFour: "1234"))
         // different number
         try ledger.add(Account(name: try AccountName("Liabilities:CC:Rogers"), metaData: ["last-four": "4862", "importer-type": "rogers"]))
-        #expect(throws: RogersBankMappingError.missingAccount(lastFour: "1234")) { try try mapper.mapActivitiesToTransactions(activities: [activity]) }
+        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingAccount(lastFour: "1234"))
         // wrong type
         try ledger.add(Account(name: try AccountName("Liabilities:CC:Rogers1"), metaData: ["last-four": "1234", "importer-type": "rogers1"]))
-        #expect(throws: RogersBankMappingError.missingAccount(lastFour: "1234")) { try try mapper.mapActivitiesToTransactions(activities: [activity]) }
+        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingAccount(lastFour: "1234"))
         // no type
         try ledger.add(Account(name: try AccountName("Liabilities:CC:Rogers2"), metaData: ["last-four": "1234"]))
-        #expect(throws: RogersBankMappingError.missingAccount(lastFour: "1234")) { try try mapper.mapActivitiesToTransactions(activities: [activity]) }
+        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingAccount(lastFour: "1234"))
         // no number
         try ledger.add(Account(name: try AccountName("Liabilities:CC:Rogers3"), metaData: ["importer-type": "rogers1"]))
-        #expect(throws: RogersBankMappingError.missingAccount(lastFour: "1234")) { try try mapper.mapActivitiesToTransactions(activities: [activity]) }
+        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingAccount(lastFour: "1234"))
     }
 
-    @Test
-
-    func MapActivities() throws {
+    func testMapActivities() throws {
         let accountName = try AccountName("Liabilities:CC:Rogers")
         try ledger.add(Account(name: accountName, metaData: ["last-four": "1234", "importer-type": "rogers"]))
         var activity = TestActivity()
@@ -121,9 +116,7 @@ struct SwiftBeanCountRogersBankMapperTests {
         #expect(result[0] == Transaction(metaData: transactionMetaData, postings: postings))
     }
 
-    @Test
-
-    func MapActivitiesPayment() throws {
+    func testMapActivitiesPayment() throws {
         let accountName = try AccountName("Liabilities:CC:Rogers")
         try ledger.add(Account(name: accountName, metaData: ["last-four": "1234", "importer-type": "rogers"]))
         var activity = TestActivity()
@@ -137,13 +130,10 @@ struct SwiftBeanCountRogersBankMapperTests {
             Posting(accountName: mapper.expenseAccountName, amount: SwiftBeanCountModel.Amount(number: Decimal(string: "1.13")!, commoditySymbol: "CAD", decimalDigits: 2))
         ]
         let metaData = [MetaDataKeys.activityId: "payment-\(Self.dateFormatter.string(from: activity.postedDate!))"]
-        XCTAssertEqual(result[0],
-                       Transaction(metaData: TransactionMetaData(date: activity.postedDate!, narration: "Test Merchant Name", metaData: metaData), postings: postings))
+        #expect(result[0] == Transaction(metaData: TransactionMetaData(date: activity.postedDate!, narration: "Test Merchant Name", metaData: metaData), postings: postings))
     }
 
-    @Test
-
-    func MapActivitiesOverLimitFee() throws {
+    func testMapActivitiesOverLimitFee() throws {
         let accountName = try AccountName("Liabilities:CC:Rogers")
         try ledger.add(Account(name: accountName, metaData: ["last-four": "1234", "importer-type": "rogers"]))
         var activity = TestActivity()
@@ -158,13 +148,10 @@ struct SwiftBeanCountRogersBankMapperTests {
             Posting(accountName: mapper.expenseAccountName, amount: SwiftBeanCountModel.Amount(number: Decimal(string: "1.13")!, commoditySymbol: "CAD", decimalDigits: 2))
         ]
         let metaData: [String: String] = [MetaDataKeys.activityId: "overlimit-fee-\(Self.dateFormatter.string(from: activity.postedDate!))"]
-        XCTAssertEqual(result[0],
-                       Transaction(metaData: TransactionMetaData(date: activity.postedDate!, narration: "Test Merchant Name", metaData: metaData), postings: postings))
+        #expect(result[0] == Transaction(metaData: TransactionMetaData(date: activity.postedDate!, narration: "Test Merchant Name", metaData: metaData), postings: postings))
     }
 
-    @Test
-
-    func MapActivityDuplicate() throws {
+    func testMapActivityDuplicate() throws {
         let accountName = try AccountName("Liabilities:CC:Rogers")
         try ledger.add(Account(name: accountName, metaData: ["last-four": "1234", "importer-type": "rogers"]))
         var activity = TestActivity()

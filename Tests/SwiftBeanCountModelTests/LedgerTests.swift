@@ -7,64 +7,66 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
-@testable import SwiftBeanCountModel
-import XCTest
-
 // swiftlint:disable:next type_body_length
-final class LedgerTests: XCTestCase {
+import Foundation
+@testable import SwiftBeanCountModel
+import Testing
+
+@Suite
+struct LedgerTests {
 
     func testCommodities() throws {
         let ledger = Ledger()
-        XCTAssertEqual(ledger.commodities.count, 0)
+        #expect(ledger.commodities.count == 0)
 
         let commodity1 = Commodity(symbol: "EUR", metaData: ["A": "B"])
         try ledger.add(commodity1)
-        XCTAssertEqual(ledger.commodities.count, 1)
+        #expect(ledger.commodities.count == 1)
         XCTAssertThrowsError(try ledger.add(commodity1)) {
-            XCTAssertEqual($0.localizedDescription, "Entry already exists in Ledger: \(commodity1)")
+            #expect($0.localizedDescription == "Entry already exists in Ledger: \(commodity1)")
         }
-        XCTAssertEqual(ledger.commodities.count, 1)
-        XCTAssertEqual(ledger.commodities.first, commodity1)
+        #expect(ledger.commodities.count == 1)
+        #expect(ledger.commodities.first == commodity1)
 
         let commodity2 = Commodity(symbol: "💵")
         try ledger.add(commodity2)
-        XCTAssertEqual(ledger.commodities.count, 2)
+        #expect(ledger.commodities.count == 2)
         XCTAssertThrowsError(try ledger.add(commodity2))
-        XCTAssertEqual(ledger.commodities.count, 2)
-        XCTAssert(ledger.commodities.contains(commodity2))
+        #expect(ledger.commodities.count == 2)
+        #expect(ledger.commodities.contains(commodity2))
     }
 
     func testAccounts() throws {
         let ledger = Ledger()
-        XCTAssertEqual(ledger.accounts.count, 0)
+        #expect(ledger.accounts.count == 0)
 
         let account1 = Account(name: TestUtils.chequing, metaData: ["A": "B"])
         try ledger.add(account1)
-        XCTAssertEqual(ledger.accounts.count, 1)
+        #expect(ledger.accounts.count == 1)
         XCTAssertThrowsError(try ledger.add(account1))
-        XCTAssertEqual(ledger.accounts.count, 1)
-        XCTAssertEqual(ledger.accounts.first, account1)
+        #expect(ledger.accounts.count == 1)
+        #expect(ledger.accounts.first == account1)
 
         let account2 = Account(name: TestUtils.cash)
         try ledger.add(account2)
-        XCTAssertEqual(ledger.accounts.count, 2)
+        #expect(ledger.accounts.count == 2)
         XCTAssertThrowsError(try ledger.add(account2))
-        XCTAssertEqual(ledger.accounts.count, 2)
-        XCTAssert(ledger.accounts.contains(account2))
+        #expect(ledger.accounts.count == 2)
+        #expect(ledger.accounts.contains(account2))
 
         XCTAssertThrowsError(try ledger.add(Account(name: AccountName("Invalid"))))
-        XCTAssertEqual(ledger.accounts.count, 2)
+        #expect(ledger.accounts.count == 2)
         XCTAssertThrowsError(try ledger.add(Account(name: AccountName("Assets:Invalid:"))))
-        XCTAssertEqual(ledger.accounts.count, 2)
+        #expect(ledger.accounts.count == 2)
         XCTAssertThrowsError(try ledger.add(Account(name: AccountName("Assets::Invalid"))))
-        XCTAssertEqual(ledger.accounts.count, 2)
+        #expect(ledger.accounts.count == 2)
     }
 
     func testAccountGroups() {
         let ledger = Ledger()
-        XCTAssertEqual(ledger.accountGroups.count, AccountType.allValues().count)
+        #expect(ledger.accountGroups.count == AccountType.allValues().count)
         for accountGroup in ledger.accountGroups {
-            XCTAssert(AccountType.allValues().map(\.rawValue).contains(accountGroup.nameItem))
+            #expect(AccountType.allValues().map(\.rawValue).contains(accountGroup.nameItem))
         }
     }
 
@@ -75,14 +77,14 @@ final class LedgerTests: XCTestCase {
         let account2 = Account(name: TestUtils.cash)
         try ledger.add(account2)
         let accountGroup = ledger.accountGroups.first { $0.nameItem == "Assets" }!
-        XCTAssertEqual(accountGroup.accountGroups.count, 1)
-        XCTAssertEqual(accountGroup.accounts.count, 1)
+        #expect(accountGroup.accountGroups.count == 1)
+        #expect(accountGroup.accounts.count == 1)
         let accountSubGroup = accountGroup.accountGroups.values.first!
-        XCTAssertEqual(accountGroup.accounts.values.first!, account2)
-        XCTAssertEqual(accountGroup.children().count, 2)
-        XCTAssertNotNil(accountGroup.children().contains { $0.nameItem == "Cash" })
-        XCTAssertNotNil(accountGroup.children().contains { $0.nameItem == "Checking" })
-        XCTAssertEqual(accountSubGroup.accounts.values.first!, account1)
+        #expect(accountGroup.accounts.values.first! == account2)
+        #expect(accountGroup.children().count == 2)
+        #expect(accountGroup.children( != nil).contains { $0.nameItem == "Cash" })
+        #expect(accountGroup.children( != nil).contains { $0.nameItem == "Checking" })
+        #expect(accountSubGroup.accounts.values.first! == account1)
     }
 
     func testTransactions() throws {
@@ -103,17 +105,17 @@ final class LedgerTests: XCTestCase {
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting])
 
         ledger.add(transaction)
-        XCTAssert(ledger.transactions.contains(transaction))
-        XCTAssertEqual(ledger.commodities.count, 3)
-        XCTAssertEqual(ledger.accounts.count, 1)
-        XCTAssertEqual(ledger.tags.count, 1)
+        #expect(ledger.transactions.contains(transaction))
+        #expect(ledger.commodities.count == 3)
+        #expect(ledger.accounts.count == 1)
+        #expect(ledger.tags.count == 1)
 
         // Test that properties on accounts are not overridden
         let ledger2 = Ledger()
         let account2 = Account(name: TestUtils.cash, opening: TestUtils.date20170610)
         try ledger2.add(account2)
         ledger2.add(transaction)
-        XCTAssertEqual(ledger2.accounts.first!.opening, TestUtils.date20170610)
+        #expect(ledger2.accounts.first!.opening == TestUtils.date20170610)
     }
 
     func testPrices() throws {
@@ -146,12 +148,12 @@ final class LedgerTests: XCTestCase {
         let price5 = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount3)
         XCTAssertThrowsError(try ledger.add(price5))
 
-        XCTAssertEqual(ledger.prices.count, 4)
+        #expect(ledger.prices.count == 4)
 
-        XCTAssertTrue(ledger.prices.contains(price))
-        XCTAssertTrue(ledger.prices.contains(price2))
-        XCTAssertTrue(ledger.prices.contains(price3))
-        XCTAssertTrue(ledger.prices.contains(price4))
+        #expect(ledger.prices.contains(price))
+        #expect(ledger.prices.contains(price2))
+        #expect(ledger.prices.contains(price3))
+        #expect(ledger.prices.contains(price4))
 
     }
 
@@ -162,26 +164,26 @@ final class LedgerTests: XCTestCase {
         let balance = Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: amount, metaData: ["A": "B"])
 
         try ledger.add(account)
-        XCTAssertTrue(ledger.accounts.first!.balances.isEmpty)
+        #expect(ledger.accounts.first!.balances.isEmpty)
 
         ledger.add(balance)
-        XCTAssertEqual(ledger.accounts.first!.balances.first!, balance)
+        #expect(ledger.accounts.first!.balances.first! == balance)
     }
 
     func testParsingErrors() {
         let error = "TEST"
         let ledger = Ledger()
         ledger.parsingErrors.append(error)
-        XCTAssertEqual(ledger.errors.count, 1)
-        XCTAssertEqual(ledger.parsingErrors.count, 1)
-        XCTAssertEqual(ledger.errors[0], error)
-        XCTAssertEqual(ledger.parsingErrors[0], error)
-        XCTAssertEqual(String(describing: ledger), "")
+        #expect(ledger.errors.count == 1)
+        #expect(ledger.parsingErrors.count == 1)
+        #expect(ledger.errors[0] == error)
+        #expect(ledger.parsingErrors[0] == error)
+        #expect(String(describing: ledger) == "")
     }
 
     func testValidateTransactions() {
         let ledger = Ledger()
-        XCTAssertTrue(ledger.errors.isEmpty)
+        #expect(ledger.errors.isEmpty)
 
         // add invalid transaction without postings
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170609,
@@ -191,7 +193,7 @@ final class LedgerTests: XCTestCase {
                                                       tags: [Tag(name: "test")])
         let transaction = Transaction(metaData: transactionMetaData, postings: [])
         ledger.add(transaction)
-        XCTAssertFalse(ledger.errors.isEmpty)
+        #expect(!(ledger.errors.isEmpty))
     }
 
     func testValidateTransactionsAtCost() throws {
@@ -216,7 +218,7 @@ final class LedgerTests: XCTestCase {
                                        postings: [posting1, posting2])
 
         ledger.add(transaction1)
-        XCTAssertTrue(ledger.errors.isEmpty)
+        #expect(ledger.errors.isEmpty)
 
         let amount3 = Amount(number: -2.0, commoditySymbol: commodity1.symbol, decimalDigits: 1)
         let amount4 = Amount(number: 6.0, commoditySymbol: commodity2.symbol, decimalDigits: 1)
@@ -226,7 +228,7 @@ final class LedgerTests: XCTestCase {
                                        postings: [posting3, posting4])
 
         ledger.add(transaction2)
-        XCTAssertTrue(ledger.errors.isEmpty)
+        #expect(ledger.errors.isEmpty)
     }
 
     func testValidateAccounts() throws {
@@ -235,13 +237,13 @@ final class LedgerTests: XCTestCase {
         // valid account
         let validLedger = Ledger()
         try validLedger.add(account)
-        XCTAssertTrue(validLedger.errors.isEmpty)
+        #expect(validLedger.errors.isEmpty)
 
         // invalid account with only a closing date
         let invalidLedger = Ledger()
         account = Account(name: TestUtils.cash, closing: TestUtils.date20170609)
         try invalidLedger.add(account)
-        XCTAssertFalse(invalidLedger.errors.isEmpty)
+        #expect(!(invalidLedger.errors.isEmpty))
     }
 
     func testValidateAccountBalance() throws {
@@ -249,7 +251,7 @@ final class LedgerTests: XCTestCase {
 
         let validLedger = Ledger()
         try validLedger.add(account)
-        XCTAssertTrue(validLedger.errors.isEmpty)
+        #expect(validLedger.errors.isEmpty)
 
         let invalidLedger = Ledger()
         account.balances = [
@@ -258,7 +260,7 @@ final class LedgerTests: XCTestCase {
                     amount: Amount(number: 1, commoditySymbol: TestUtils.cad))
         ]
         try invalidLedger.add(account)
-        XCTAssertFalse(invalidLedger.errors.isEmpty)
+        #expect(!(invalidLedger.errors.isEmpty))
     }
 
     func testValidateAccountInventory() throws {
@@ -285,7 +287,7 @@ final class LedgerTests: XCTestCase {
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170610, payee: "", narration: "", flag: .complete, tags: []),
                                   postings: [posting])
         ledger.add(transaction)
-        XCTAssertFalse(ledger.errors.isEmpty)
+        #expect(!(ledger.errors.isEmpty))
     }
 
     func testValidateCommodities() throws {
@@ -293,20 +295,20 @@ final class LedgerTests: XCTestCase {
         let validCommodity = Commodity(symbol: "EUR", opening: TestUtils.date20170608)
         let validLedger = Ledger()
         try validLedger.add(validCommodity)
-        XCTAssertTrue(validLedger.errors.isEmpty)
+        #expect(validLedger.errors.isEmpty)
 
         // Test without check_commodity plugin - should be valid even without opening date
         let invalidCommodity = TestUtils.eurCommodity
         let ledgerWithoutPlugin = Ledger()
         try ledgerWithoutPlugin.add(invalidCommodity)
-        XCTAssertTrue(ledgerWithoutPlugin.errors.isEmpty, "Commodity without opening date should be valid when check_commodity plugin is not enabled")
+        #expect(ledgerWithoutPlugin.errors.isEmpty, "Commodity without opening date should be valid when check_commodity plugin is not enabled")
 
         // Test with check_commodity plugin enabled - should be invalid without opening date
         let ledgerWithPlugin = Ledger()
         ledgerWithPlugin.plugins.append("beancount.plugins.check_commodity")
         try ledgerWithPlugin.add(TestUtils.eurCommodity)
-        XCTAssertFalse(ledgerWithPlugin.errors.isEmpty, "Commodity without opening date should be invalid when check_commodity plugin is enabled")
-        XCTAssertTrue(ledgerWithPlugin.errors.contains("Commodity EUR does not have an opening date"), "Should contain specific error message for EUR commodity")
+        #expect(!(ledgerWithPlugin.errors.isEmpty, "Commodity without opening date should be invalid when check_commodity plugin is enabled"))
+        #expect(ledgerWithPlugin.errors.contains("Commodity EUR does not have an opening date"), "Should contain specific error message for EUR commodity")
     }
 
     func testCommodityValidationWithAutoCreatedCommodities() throws {
@@ -321,7 +323,7 @@ final class LedgerTests: XCTestCase {
 
         // Should have transaction validation error (unbalanced) but no commodity errors
         let commodityErrors = ledgerWithoutPlugin.errors.filter { $0.contains("does not have an opening date") }
-        XCTAssertTrue(commodityErrors.isEmpty, "Auto-created commodities should not generate errors when plugin is not enabled")
+        #expect(commodityErrors.isEmpty, "Auto-created commodities should not generate errors when plugin is not enabled")
 
         // Test auto-created commodities with plugin
         let ledgerWithPlugin = Ledger()
@@ -330,7 +332,7 @@ final class LedgerTests: XCTestCase {
 
         // Should have both transaction validation error and commodity error
         let expectedError = "Commodity USD does not have an opening date"
-        XCTAssertTrue(ledgerWithPlugin.errors.contains(expectedError), "Auto-created commodities should generate errors when plugin is enabled")
+        #expect(ledgerWithPlugin.errors.contains(expectedError), "Auto-created commodities should generate errors when plugin is enabled")
     }
 
     func testDescriptionTransactionsAccountsCommodities() throws {
@@ -343,20 +345,19 @@ final class LedgerTests: XCTestCase {
         var ledger = Ledger()
 
         // Empty ledger
-        XCTAssertEqual(String(describing: ledger), "")
+        #expect(String(describing: ledger) == "")
 
         // Ledger with commodity only
         try ledger.add(commodity)
-        XCTAssertEqual(String(describing: ledger), String(describing: commodity))
+        #expect(String(describing: ledger) == String(describing: commodity))
 
         // Ledger with account opening and commodity
         try ledger.add(account)
-        XCTAssertEqual(String(describing: ledger), "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))")
+        #expect(String(describing: ledger) == "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))")
 
         // Ledger with transactions, account opening and commodity
         ledger.add(transaction)
-        XCTAssertEqual(String(describing: ledger),
-                       "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
+        #expect(String(describing: ledger) == "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
 
         // Ledger with transaction, account opening as well as closing and commodity
         ledger = Ledger()
@@ -364,19 +365,18 @@ final class LedgerTests: XCTestCase {
         account = Account(name: accountName, opening: TestUtils.date20170609, closing: TestUtils.date20170610)
         try ledger.add(account)
         ledger.add(transaction)
-        XCTAssertEqual(String(describing: ledger),
-                       "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
+        #expect(String(describing: ledger) == "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
 
         // ledger with only account opening
         ledger = Ledger()
         let account2 = Account(name: accountName, opening: TestUtils.date20170609)
         try ledger.add(account2)
-        XCTAssertEqual(String(describing: ledger), String(describing: ledger.accounts.first!))
+        #expect(String(describing: ledger) == String(describing: ledger.accounts.first!))
 
         // Test new line after account
         let price = try Price(date: TestUtils.date20170609, commoditySymbol: TestUtils.eur, amount: Amount(number: 10, commoditySymbol: TestUtils.cad, decimalDigits: 2))
         try ledger.add(price)
-        XCTAssertEqual(String(describing: ledger), "\(String(describing: ledger.accounts.first!))\n\(String(describing: price))")
+        #expect(String(describing: ledger) == "\(String(describing: ledger.accounts.first!))\n\(String(describing: price))")
     }
 
     func testDescriptionPrice() throws {
@@ -384,32 +384,32 @@ final class LedgerTests: XCTestCase {
         let price1 = try Price(date: TestUtils.date20170609, commoditySymbol: TestUtils.eur, amount: Amount(number: 10, commoditySymbol: TestUtils.cad, decimalDigits: 2))
         let price2 = try Price(date: TestUtils.date20170610, commoditySymbol: TestUtils.eur, amount: Amount(number: 10, commoditySymbol: TestUtils.cad, decimalDigits: 2))
         try ledger.add(price1)
-        XCTAssertEqual(String(describing: ledger), String(describing: price1))
+        #expect(String(describing: ledger) == String(describing: price1))
         try ledger.add(price2)
-        XCTAssertEqual(String(describing: ledger), "\(String(describing: price1))\n\(String(describing: price2))")
+        #expect(String(describing: ledger) == "\(String(describing: price1))\n\(String(describing: price2))")
     }
 
     func testDescriptionOptions() {
         let ledger = Ledger()
         let option1 = Option(name: "a", value: "b")
         ledger.option.append(option1)
-        XCTAssertEqual(String(describing: ledger), String(describing: option1))
+        #expect(String(describing: ledger) == String(describing: option1))
         let option2 = Option(name: "z", value: "y")
         ledger.option.append(option2)
-        XCTAssertEqual(String(describing: ledger), "\(String(describing: option1))\n\(String(describing: option2))")
+        #expect(String(describing: ledger) == "\(String(describing: option1))\n\(String(describing: option2))")
         ledger.plugins.append("p") // Test new line after options
-        XCTAssertEqual(String(describing: ledger), "\(String(describing: option1))\n\(String(describing: option2))\nplugin \"p\"")
+        #expect(String(describing: ledger) == "\(String(describing: option1))\n\(String(describing: option2))\nplugin \"p\"")
     }
 
     func testDescriptionPlugins() {
         let ledger = Ledger()
         ledger.plugins.append("p")
-        XCTAssertEqual(String(describing: ledger), "plugin \"p\"")
+        #expect(String(describing: ledger) == "plugin \"p\"")
         ledger.plugins.append("p1")
-        XCTAssertEqual(String(describing: ledger), "plugin \"p\"\nplugin \"p1\"")
+        #expect(String(describing: ledger) == "plugin \"p\"\nplugin \"p1\"")
         let custom = Custom(date: TestUtils.date20170610, name: "a", values: ["b"])
         ledger.custom.append(custom) // Test new line after plugins
-        XCTAssertEqual(String(describing: ledger), "plugin \"p\"\nplugin \"p1\"\n\(String(describing: custom))")
+        #expect(String(describing: ledger) == "plugin \"p\"\nplugin \"p1\"\n\(String(describing: custom))")
     }
 
     func testDescriptionCustoms() {
@@ -417,12 +417,12 @@ final class LedgerTests: XCTestCase {
         let custom1 = Custom(date: TestUtils.date20170610, name: "a", values: ["b"])
         let custom2 = Custom(date: TestUtils.date20170609, name: "c", values: ["d", "e"])
         ledger.custom.append(custom1)
-        XCTAssertEqual(String(describing: ledger), String(describing: custom1))
+        #expect(String(describing: ledger) == String(describing: custom1))
         ledger.custom.append(custom2)
-        XCTAssertEqual(String(describing: ledger), "\(String(describing: custom1))\n\(String(describing: custom2))")
+        #expect(String(describing: ledger) == "\(String(describing: custom1))\n\(String(describing: custom2))")
         let event = Event(date: TestUtils.date20170610, name: "e", value: "e1")
         ledger.events.append(event) // Test new line after customs
-        XCTAssertEqual(String(describing: ledger), "\(String(describing: custom1))\n\(String(describing: custom2))\n\(String(describing: event))")
+        #expect(String(describing: ledger) == "\(String(describing: custom1))\n\(String(describing: custom2))\n\(String(describing: event))")
     }
 
     func testDescriptionEvents() throws {
@@ -430,19 +430,19 @@ final class LedgerTests: XCTestCase {
         let event1 = Event(date: TestUtils.date20170610, name: "e", value: "e1")
         let event2 = Event(date: TestUtils.date20170609, name: "c", value: "d")
         ledger.events.append(event1)
-        XCTAssertEqual(String(describing: ledger), String(describing: event1))
+        #expect(String(describing: ledger) == String(describing: event1))
         ledger.events.append(event2)
-        XCTAssertEqual(String(describing: ledger), "\(String(describing: event1))\n\(String(describing: event2))")
+        #expect(String(describing: ledger) == "\(String(describing: event1))\n\(String(describing: event2))")
         let commodity = Commodity(symbol: "EUR", opening: TestUtils.date20170609)
         try ledger.add(commodity) // Test new line after events
-        XCTAssertEqual(String(describing: ledger), "\(String(describing: event1))\n\(String(describing: event2))\n\(String(describing: commodity))")
+        #expect(String(describing: ledger) == "\(String(describing: event1))\n\(String(describing: event2))\n\(String(describing: commodity))")
     }
 
     func testEqualEmpty() {
         let ledger1 = Ledger()
         let ledger2 = Ledger()
 
-        XCTAssertEqual(ledger1, ledger2)
+        #expect(ledger1 == ledger2)
     }
 
     func testEqualErrors() {
@@ -451,7 +451,7 @@ final class LedgerTests: XCTestCase {
 
         // test errors are ignored
         ledger1.parsingErrors.append("String")
-        XCTAssertEqual(ledger1, ledger2)
+        #expect(ledger1 == ledger2)
     }
 
     func testEqualTransactions() {
@@ -470,13 +470,13 @@ final class LedgerTests: XCTestCase {
         let transaction2 = Transaction(metaData: transactionMetaData, postings: [posting2])
 
         ledger1.add(transaction1)
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         ledger2.add(transaction2)
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         ledger1.add(transaction2)
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         ledger2.add(transaction1)
-        XCTAssertEqual(ledger1, ledger2)
+        #expect(ledger1 == ledger2)
     }
 
     func testEqualCommodities() throws {
@@ -484,13 +484,13 @@ final class LedgerTests: XCTestCase {
         let ledger2 = Ledger()
 
         try ledger1.add(TestUtils.cadCommodity)
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         try ledger2.add(TestUtils.eurCommodity)
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         try ledger1.add(TestUtils.eurCommodity)
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         try ledger2.add(TestUtils.cadCommodity)
-        XCTAssertEqual(ledger1, ledger2)
+        #expect(ledger1 == ledger2)
     }
 
     func testEqualAccounts() throws {
@@ -501,13 +501,13 @@ final class LedgerTests: XCTestCase {
         let account2 = Account(name: TestUtils.chequing)
 
         try ledger1.add(account1)
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         try ledger2.add(account2)
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         try ledger1.add(account2)
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         try ledger2.add(account1)
-        XCTAssertEqual(ledger1, ledger2)
+        #expect(ledger1 == ledger2)
     }
 
     func testEqualPrices() throws {
@@ -520,13 +520,13 @@ final class LedgerTests: XCTestCase {
         let price2 = try Price(date: Date() + 1, commoditySymbol: TestUtils.eur, amount: amount2)
 
         try ledger1.add(price1)
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         try ledger2.add(price2)
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         try ledger1.add(price2)
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         try ledger2.add(price1)
-        XCTAssertEqual(ledger1, ledger2)
+        #expect(ledger1 == ledger2)
     }
 
     func testEqualCustom() {
@@ -537,13 +537,13 @@ final class LedgerTests: XCTestCase {
         let custom2 = Custom(date: Date(), name: "test", values: ["test1", "test2"])
 
         ledger1.custom.append(custom1)
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         ledger2.custom.append(custom2)
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         ledger1.custom.append(custom2)
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         ledger2.custom.append(custom1)
-        XCTAssertEqual(ledger1, ledger2)
+        #expect(ledger1 == ledger2)
     }
 
     func testEqualOptions() {
@@ -554,12 +554,12 @@ final class LedgerTests: XCTestCase {
         let option2 = Option(name: "a", value: "c")
 
         ledger1.option.append(option1)
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         ledger2.option.append(option2)
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         ledger2.option.append(option1)
         ledger1.option.append(option2)
-        XCTAssertEqual(ledger1, ledger2)
+        #expect(ledger1 == ledger2)
     }
 
     func testEqualEvents() {
@@ -570,13 +570,13 @@ final class LedgerTests: XCTestCase {
         let event2 = Event(date: Date(), name: "event", value: "event_value2")
 
         ledger1.events.append(event1)
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         ledger2.events.append(event2)
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         ledger1.events.append(event2)
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         ledger2.events.append(event1)
-        XCTAssertEqual(ledger1, ledger2)
+        #expect(ledger1 == ledger2)
     }
 
     func testEqualPlugins() {
@@ -584,13 +584,13 @@ final class LedgerTests: XCTestCase {
         let ledger2 = Ledger()
 
         ledger1.plugins.append("New Plugin")
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         ledger2.plugins.append("New Plugin1")
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         ledger1.plugins.append("New Plugin1")
-        XCTAssertNotEqual(ledger1, ledger2)
+        #expect(ledger1 != ledger2)
         ledger2.plugins.append("New Plugin")
-        XCTAssertEqual(ledger1, ledger2)
+        #expect(ledger1 == ledger2)
     }
 
     func testValidateUnusedAccountsWithoutPlugin() throws {
@@ -599,7 +599,7 @@ final class LedgerTests: XCTestCase {
         try ledger.add(account)
 
         // Without the nounused plugin, no errors should be generated for unused accounts
-        XCTAssertTrue(ledger.errors.isEmpty)
+        #expect(ledger.errors.isEmpty)
     }
 
     func testValidateUnusedAccountsWithPlugin() throws {
@@ -609,9 +609,9 @@ final class LedgerTests: XCTestCase {
         try ledger.add(account)
 
         // With the nounused plugin, unused accounts should generate errors
-        XCTAssertFalse(ledger.errors.isEmpty)
-        XCTAssertEqual(ledger.errors.count, 1)
-        XCTAssertEqual(ledger.errors[0], "Account Assets:Cash has no postings")
+        #expect(!(ledger.errors.isEmpty))
+        #expect(ledger.errors.count == 1)
+        #expect(ledger.errors[0] == "Account Assets:Cash has no postings")
     }
 
     func testValidateUsedAccountsWithPlugin() throws {
@@ -635,7 +635,7 @@ final class LedgerTests: XCTestCase {
         ledger.add(transaction)
 
         // With the nounused plugin, used accounts should not generate errors
-        XCTAssertTrue(ledger.errors.isEmpty)
+        #expect(ledger.errors.isEmpty)
     }
 
     func testValidateMultipleUnusedAccountsWithPlugin() throws {
@@ -648,10 +648,10 @@ final class LedgerTests: XCTestCase {
         try ledger.add(account2)
 
         // Both accounts should generate errors
-        XCTAssertFalse(ledger.errors.isEmpty)
-        XCTAssertEqual(ledger.errors.count, 2)
-        XCTAssert(ledger.errors.contains("Account Assets:Cash has no postings"))
-        XCTAssert(ledger.errors.contains("Account Assets:Chequing has no postings"))
+        #expect(!(ledger.errors.isEmpty))
+        #expect(ledger.errors.count == 2)
+        #expect(ledger.errors.contains("Account Assets:Cash has no postings"))
+        #expect(ledger.errors.contains("Account Assets:Chequing has no postings"))
     }
 
     func testValidateMixedAccountsWithPlugin() throws {
@@ -676,9 +676,9 @@ final class LedgerTests: XCTestCase {
         ledger.add(transaction)
 
         // Only the unused account should generate an error
-        XCTAssertFalse(ledger.errors.isEmpty)
-        XCTAssertEqual(ledger.errors.count, 1)
-        XCTAssertEqual(ledger.errors[0], "Account Assets:Cash has no postings")
+        #expect(!(ledger.errors.isEmpty))
+        #expect(ledger.errors.count == 1)
+        #expect(ledger.errors[0] == "Account Assets:Cash has no postings")
     }
 
     func testValidateCommodityUsageDatesIntegration() throws {
@@ -711,7 +711,7 @@ final class LedgerTests: XCTestCase {
         let commodityUsageErrors = errors.filter { $0.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09") }
 
         // Should have commodity usage errors showing that the validation is working
-        XCTAssertTrue(commodityUsageErrors.count >= 1, "Should have commodity usage errors showing validation is working")
+        #expect(commodityUsageErrors.count >= 1, "Should have commodity usage errors showing validation is working")
     }
 
     func testValidateCommodityUsageDatesIntegrationValid() throws {
@@ -745,7 +745,7 @@ final class LedgerTests: XCTestCase {
         let commodityUsageErrors = errors.filter { $0.contains("used on") && $0.contains("before its opening date") }
 
         // Should have no commodity usage errors (balance error is expected due to transaction not being balanced)
-        XCTAssertTrue(commodityUsageErrors.isEmpty, "Should have no commodity usage date errors when all commodities are used on or after opening dates")
+        #expect(commodityUsageErrors.isEmpty, "Should have no commodity usage date errors when all commodities are used on or after opening dates")
     }
 
 }

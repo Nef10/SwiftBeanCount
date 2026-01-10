@@ -6,10 +6,13 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 @testable import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class CommodityUsageValidationTests: XCTestCase {
+@Suite
+
+struct CommodityUsageValidationTests {
 
     func testValidateCommodityUsageDatesWithoutPlugin() throws {
         // Test that commodity usage dates are not validated when plugin is not enabled
@@ -65,7 +68,7 @@ final class CommodityUsageValidationTests: XCTestCase {
 
         // Should be invalid since commodity is used before opening
         if case .invalid(let error) = transaction.validate(in: ledger) {
-            XCTAssertTrue(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
+            #expect(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
         } else {
             XCTFail("Transaction should be invalid when commodity is used before opening date")
         }
@@ -97,7 +100,7 @@ final class CommodityUsageValidationTests: XCTestCase {
 
         // Should be invalid since EUR (price commodity) is used before opening
         if case .invalid(let error) = transaction.validate(in: ledger) {
-            XCTAssertTrue(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
+            #expect(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
         } else {
             XCTFail("Transaction should be invalid when price commodity is used before opening date")
         }
@@ -130,7 +133,7 @@ final class CommodityUsageValidationTests: XCTestCase {
 
         // Should be invalid since EUR (cost commodity) is used before opening
         if case .invalid(let error) = transaction.validate(in: ledger) {
-            XCTAssertTrue(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
+            #expect(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
         } else {
             XCTFail("Transaction should be invalid when cost commodity is used before opening date")
         }

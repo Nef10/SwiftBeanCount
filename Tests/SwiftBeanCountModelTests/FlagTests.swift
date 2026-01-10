@@ -6,16 +6,19 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 @testable import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class FlagTests: XCTestCase {
+@Suite
+
+struct FlagTests {
 
     func testDescription() {
         let complete = Flag.complete
-        XCTAssertEqual(String(describing: complete), "*")
+        #expect(String(describing: complete) == "*")
         let incomplete = Flag.incomplete
-        XCTAssertEqual(String(describing: incomplete), "!")
+        #expect(String(describing: incomplete) == "!")
     }
 
 }

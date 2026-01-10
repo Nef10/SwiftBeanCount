@@ -6,11 +6,11 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
-import CSV
 import Foundation
 @testable import SwiftBeanCountImporter
+import CSV
 import SwiftBeanCountModel
-import XCTest
+import Testing
 
 class TestStorage: SettingsStorage {
 
@@ -206,7 +206,7 @@ extension XCTestCase {
                     XCTFail("Error deleting temporary file: \(error)")
                 }
             }
-            XCTAssertFalse(fileManager.fileExists(atPath: url.path))
+            #expect(!(fileManager.fileExists(atPath: url.path)))
         }
 
         return url

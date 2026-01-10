@@ -6,10 +6,13 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 @testable import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class AccountNameTests: XCTestCase {
+@Suite
+
+struct AccountNameTests {
 
     private let invalidNames = [
         "Assets", "Liabilities", "Income", "Expenses", "Equity", "Assets:", "Assets:Test:", "Assets:Test:", "Assets:Test::Test", "💰", "",
@@ -23,40 +26,40 @@ final class AccountNameTests: XCTestCase {
         }
         for name in invalidNames {
             XCTAssertThrowsError(try AccountName(name)) {
-                XCTAssertEqual($0.localizedDescription, "Invalid Account name: \(name)")
+                #expect($0.localizedDescription == "Invalid Account name: \(name)")
             }
         }
     }
 
     func testIsAccountNameVaild() {
         for name in validNames {
-            XCTAssert(AccountName.isNameValid(name))
+            #expect(AccountName.isNameValid(name))
         }
         for name in invalidNames {
-            XCTAssertFalse(AccountName.isNameValid(name))
+            #expect(!(AccountName.isNameValid(name)))
         }
     }
 
     func testNameItem() throws {
-        XCTAssertEqual(TestUtils.cash.nameItem, "Cash")
-        XCTAssertEqual(try AccountName("Assets:A:B:C:D:E:Cash").nameItem, "Cash")
-        XCTAssertEqual(try AccountName("Assets:💰").nameItem, "💰")
+        #expect(TestUtils.cash.nameItem == "Cash")
+        #expect(try AccountName("Assets:A:B:C:D:E:Cash").nameItem == "Cash")
+        #expect(try AccountName("Assets:💰").nameItem == "💰")
     }
 
     func testAccountType() throws {
-        XCTAssertEqual(try AccountName("Assets:Test").accountType, AccountType.asset)
-        XCTAssertEqual(try AccountName("Liabilities:Test").accountType, AccountType.liability)
-        XCTAssertEqual(try AccountName("Income:Test").accountType, AccountType.income)
-        XCTAssertEqual(try AccountName("Expenses:Test").accountType, AccountType.expense)
-        XCTAssertEqual(try AccountName("Equity:Test").accountType, AccountType.equity)
+        #expect(try AccountName("Assets:Test").accountType == AccountType.asset)
+        #expect(try AccountName("Liabilities:Test").accountType == AccountType.liability)
+        #expect(try AccountName("Income:Test").accountType == AccountType.income)
+        #expect(try AccountName("Expenses:Test").accountType == AccountType.expense)
+        #expect(try AccountName("Equity:Test").accountType == AccountType.equity)
     }
 
     func testAccountNameEqual() throws {
         let name1 = try AccountName("Assets:Test")
         let name2 = try AccountName("Assets:Test")
         let name3 = try AccountName("Assets:Test:Test")
-        XCTAssertEqual(name1, name2)
-        XCTAssertNotEqual(name1, name3)
+        #expect(name1 == name2)
+        #expect(name1 != name3)
     }
 
 }

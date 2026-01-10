@@ -5,15 +5,18 @@
 //  Created by Steffen Kötte on 2020-06-06.
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class ImporterTests: XCTestCase {
+@Suite
+
+struct ImporterTests {
 
     func testAllImporters() {
-        XCTAssertEqual(ImporterFactory.allImporters.count, (FileImporterFactory.importers + TextImporterFactory.importers + DownloadImporterFactory.importers).count)
+        #expect(ImporterFactory.allImporters.count == (FileImporterFactory.importers + TextImporterFactory.importers + DownloadImporterFactory.importers).count)
     }
 
     func testNoEqualImporterNames() {
@@ -30,15 +33,15 @@ final class ImporterTests: XCTestCase {
 
     func testFileImporter() {
         // no url
-        XCTAssertNil(ImporterFactory.new(ledger: nil, url: nil))
+        #expect(ImporterFactory.new(ledger: nil, url: nil == nil))
 
         // invalid URL
-        XCTAssertNil(ImporterFactory.new(ledger: nil, url: URL(fileURLWithPath: "DOES_NOT_EXIST")))
+        #expect(ImporterFactory.new(ledger: nil, url: URL(fileURLWithPath: "DOES_NOT_EXIST" == nil)))
 
         // valid URL without matching headers
         let url = temporaryFileURL()
         createFile(at: url, content: "Header, no, matching, anything\n")
-        XCTAssertNil(ImporterFactory.new(ledger: nil, url: url))
+        #expect(ImporterFactory.new(ledger: nil, url: url == nil))
 
         // matching header
         let importers = CSVImporterFactory.importers
@@ -46,28 +49,28 @@ final class ImporterTests: XCTestCase {
             for header in importer.headers {
                 let url = temporaryFileURL()
                 createFile(at: url, content: "\(header.joined(separator: ", "))\n")
-                XCTAssertTrue(type(of: ImporterFactory.new(ledger: nil, url: url)!) == importer) // swiftlint:disable:this xct_specific_matcher
+                #expect(type(of: ImporterFactory.new(ledger: nil, url: url)!) == importer) // swiftlint:disable:this xct_specific_matcher
             }
         }
     }
 
     func testTextImporter() {
         let result = ImporterFactory.new(ledger: nil, transaction: "", balance: "")
-        XCTAssertNotNil(result)
-        XCTAssertTrue(result is ManuLifeImporter)
+        #expect(result != nil)
+        #expect(result is ManuLifeImporter)
     }
 
     func testDownloadImporter() {
         let importers = DownloadImporterFactory.importers
         for importer in importers {
-            XCTAssertTrue(type(of: ImporterFactory.new(ledger: nil, name: importer.importerName)!) == importer) // swiftlint:disable:this xct_specific_matcher
+            #expect(type(of: ImporterFactory.new(ledger: nil, name: importer.importerName)!) == importer) // swiftlint:disable:this xct_specific_matcher
         }
     }
 
     func testDownloadImporterNames() {
         // see https://github.com/realm/SwiftLint/issues/5831
         // swiftlint:disable:next prefer_key_path
-        XCTAssertEqual(ImporterFactory.downloadImporterNames, DownloadImporterFactory.importers.map { $0.importerName })
+        #expect(ImporterFactory.downloadImporterNames == DownloadImporterFactory.importers.map { $0.importerName })
     }
 
     func testImportedTransactionSaveMapped() {
@@ -81,17 +84,17 @@ final class ImporterTests: XCTestCase {
         var importedTransaction = ImportedTransaction(TestUtils.transaction, originalDescription: "", shouldAllowUserToEdit: true)
         importedTransaction.saveMapped(description: description, payee: payee, accountName: accountName)
 
-        XCTAssert(Settings.allDescriptionMappings.isEmpty)
-        XCTAssert(Settings.allPayeeMappings.isEmpty)
-        XCTAssert(Settings.allAccountMappings.isEmpty)
+        #expect(Settings.allDescriptionMappings.isEmpty)
+        #expect(Settings.allPayeeMappings.isEmpty)
+        #expect(Settings.allAccountMappings.isEmpty)
 
         // Saves otherwise
         importedTransaction = ImportedTransaction(TestUtils.transaction, originalDescription: originalDescription, shouldAllowUserToEdit: true)
         importedTransaction.saveMapped(description: description, payee: payee, accountName: accountName)
 
-        XCTAssertEqual(Settings.allDescriptionMappings, [originalDescription: description])
-        XCTAssertEqual(Settings.allPayeeMappings, [originalDescription: payee])
-        XCTAssertEqual(Settings.allAccountMappings, [payee: accountName.fullName])
+        #expect(Settings.allDescriptionMappings == [originalDescription: description])
+        #expect(Settings.allPayeeMappings == [originalDescription: payee])
+        #expect(Settings.allAccountMappings == [payee: accountName.fullName])
 
     }
 

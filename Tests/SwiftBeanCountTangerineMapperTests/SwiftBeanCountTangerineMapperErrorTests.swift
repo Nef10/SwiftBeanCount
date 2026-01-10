@@ -1,17 +1,19 @@
+
+import Foundation
 @testable import SwiftBeanCountTangerineMapper
 import Testing
 
 @Suite
+
 struct SwiftBeanCountTangerineMapperErrorTests {
 
-    @Test
-    func DownloadErrorString() {
-         #expect(
-            "\(SwiftBeanCountTangerineMapperError.missingAccount(account: "abc").localizedDescription)" ==
+    func testDownloadErrorString() {
+         XCTAssertEqual(
+            "\(SwiftBeanCountTangerineMapperError.missingAccount(account: "abc").localizedDescription)",
             "Missing account in ledger: abc"
         )
-         #expect(
-            "\(SwiftBeanCountTangerineMapperError.invalidDate(date: "abcd").localizedDescription)" ==
+         XCTAssertEqual(
+            "\(SwiftBeanCountTangerineMapperError.invalidDate(date: "abcd").localizedDescription)",
             "Found invalid date in parsed transaction: abcd"
         )
     }

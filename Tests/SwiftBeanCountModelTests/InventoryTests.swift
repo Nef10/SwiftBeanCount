@@ -7,10 +7,14 @@
 //
 
 // swiftlint:disable file_length
-@testable import SwiftBeanCountModel
-import XCTest
 
-final class InventoryTests: XCTestCase {
+import Foundation
+@testable import SwiftBeanCountModel
+import Testing
+
+@Suite
+
+struct InventoryTests {
 
     private let bookingMethods = [BookingMethod.strict, BookingMethod.lifo, BookingMethod.fifo]
 
@@ -19,7 +23,7 @@ final class InventoryTests: XCTestCase {
 
     func testInit() {
         for bookingMethod in bookingMethods {
-            XCTAssertNotNil(Inventory(bookingMethod: bookingMethod))
+            #expect(Inventory(bookingMethod: bookingMethod != nil))
         }
     }
 
@@ -38,8 +42,8 @@ final class InventoryTests: XCTestCase {
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
             } catch {
                 XCTFail("Error thrown")
             }
@@ -64,14 +68,14 @@ extension InventoryTests { // Test Adding
 
             do {
                 let result = try inventory.book(posting: transactionPosting(posting))
-                XCTAssertNil(result)
+                #expect(result == nil)
             } catch {
                 XCTFail("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 1)
-            XCTAssertEqual(inventory.inventory.first?.units, amount)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost)
+            #expect(inventory.inventory.count == 1)
+            #expect(inventory.inventory.first?.units == amount)
+            #expect(inventory.inventory.first?.cost == cost)
         }
     }
 
@@ -84,12 +88,12 @@ extension InventoryTests { // Test Adding
 
             do {
                 let result = try inventory.book(posting: transactionPosting(posting))
-                XCTAssertNil(result)
+                #expect(result == nil)
             } catch {
                 XCTFail("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.first?.cost.date, date)
+            #expect(inventory.inventory.first?.cost.date == date)
         }
     }
 
@@ -108,17 +112,17 @@ extension InventoryTests { // Test Adding
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
             } catch {
                 XCTFail("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 2)
-            XCTAssertEqual(inventory.inventory.first?.units, amount1)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost1)
-            XCTAssertEqual(inventory.inventory.last?.units, amount2)
-            XCTAssertEqual(inventory.inventory.last?.cost, cost2)
+            #expect(inventory.inventory.count == 2)
+            #expect(inventory.inventory.first?.units == amount1)
+            #expect(inventory.inventory.first?.cost == cost1)
+            #expect(inventory.inventory.last?.units == amount2)
+            #expect(inventory.inventory.last?.cost == cost2)
         }
     }
 
@@ -136,17 +140,17 @@ extension InventoryTests { // Test Adding
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
             } catch {
                 XCTFail("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 1)
-            XCTAssertEqual(inventory.inventory.first?.units.commoditySymbol, TestUtils.eur)
-            XCTAssertEqual(inventory.inventory.first?.units.decimalDigits, 2)
-            XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number + amount2.number)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost)
+            #expect(inventory.inventory.count == 1)
+            #expect(inventory.inventory.first?.units.commoditySymbol == TestUtils.eur)
+            #expect(inventory.inventory.first?.units.decimalDigits == 2)
+            #expect(inventory.inventory.first?.units.number == amount1.number + amount2.number)
+            #expect(inventory.inventory.first?.cost == cost)
         }
     }
 
@@ -164,17 +168,17 @@ extension InventoryTests { // Test Adding
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
             } catch {
                 XCTFail("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 2)
-            XCTAssertEqual(inventory.inventory.first?.units, amount1)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost)
-            XCTAssertEqual(inventory.inventory.last?.units, amount2)
-            XCTAssertEqual(inventory.inventory.last?.cost, cost)
+            #expect(inventory.inventory.count == 2)
+            #expect(inventory.inventory.first?.units == amount1)
+            #expect(inventory.inventory.first?.cost == cost)
+            #expect(inventory.inventory.last?.units == amount2)
+            #expect(inventory.inventory.last?.cost == cost)
         }
     }
 
@@ -187,14 +191,14 @@ extension InventoryTests { // Test Adding
 
             do {
                 let result = try inventory.book(posting: transactionPosting(posting))
-                XCTAssertNil(result)
+                #expect(result == nil)
             } catch {
                 XCTFail("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 1)
-            XCTAssertEqual(inventory.inventory.first?.units, amount)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost)
+            #expect(inventory.inventory.count == 1)
+            #expect(inventory.inventory.first?.units == amount)
+            #expect(inventory.inventory.first?.cost == cost)
         }
     }
 
@@ -213,17 +217,17 @@ extension InventoryTests { // Test Adding
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
             } catch {
                 XCTFail("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 2)
-            XCTAssertEqual(inventory.inventory.first?.units, amount1)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost1)
-            XCTAssertEqual(inventory.inventory.last?.units, amount2)
-            XCTAssertEqual(inventory.inventory.last?.cost, cost2)
+            #expect(inventory.inventory.count == 2)
+            #expect(inventory.inventory.first?.units == amount1)
+            #expect(inventory.inventory.first?.cost == cost1)
+            #expect(inventory.inventory.last?.units == amount2)
+            #expect(inventory.inventory.last?.cost == cost2)
         }
     }
 
@@ -241,17 +245,17 @@ extension InventoryTests { // Test Adding
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
             } catch {
                 XCTFail("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 1)
-            XCTAssertEqual(inventory.inventory.first?.units.commoditySymbol, TestUtils.eur)
-            XCTAssertEqual(inventory.inventory.first?.units.decimalDigits, 2)
-            XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number + amount2.number)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost)
+            #expect(inventory.inventory.count == 1)
+            #expect(inventory.inventory.first?.units.commoditySymbol == TestUtils.eur)
+            #expect(inventory.inventory.first?.units.decimalDigits == 2)
+            #expect(inventory.inventory.first?.units.number == amount1.number + amount2.number)
+            #expect(inventory.inventory.first?.cost == cost)
         }
     }
 
@@ -274,7 +278,7 @@ extension InventoryTests { // Test Reduce
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
-                XCTAssertNil(result1)
+                #expect(result1 == nil)
                 XCTAssertEqual(result2, Amount(number: -cost1.amount!.number,
                                                commoditySymbol: cost1.amount!.commoditySymbol,
                                                decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
@@ -282,10 +286,10 @@ extension InventoryTests { // Test Reduce
                 XCTFail("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 1)
-            XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number + amount2.number)
-            XCTAssertEqual(inventory.inventory.first?.units.decimalDigits, 2)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost1)
+            #expect(inventory.inventory.count == 1)
+            #expect(inventory.inventory.first?.units.number == amount1.number + amount2.number)
+            #expect(inventory.inventory.first?.units.decimalDigits == 2)
+            #expect(inventory.inventory.first?.cost == cost1)
         }
     }
 
@@ -304,13 +308,13 @@ extension InventoryTests { // Test Reduce
             var errorMessage = ""
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
-                XCTAssertNil(result1)
+                #expect(result1 == nil)
                 _ = try inventory.book(posting: transactionPosting(posting2))
             } catch {
                 errorMessage = error.localizedDescription
             }
 
-            XCTAssertEqual(errorMessage, "Lot not big enough: Trying to reduce 2.0 EUR {2017-06-08, 3.0 CAD} by -3.00 EUR {}")
+            #expect(errorMessage == "Lot not big enough: Trying to reduce 2.0 EUR {2017-06-08, 3.0 CAD} by -3.00 EUR {}")
         }
     }
 
@@ -329,13 +333,13 @@ extension InventoryTests { // Test Reduce
             var errorMessage = ""
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
-                XCTAssertNil(result1)
+                #expect(result1 == nil)
                 _ = try inventory.book(posting: transactionPosting(posting2))
             } catch {
                 errorMessage = error.localizedDescription
             }
 
-            XCTAssertEqual(errorMessage, "No Lot matching -1.00 EUR {4.0 CAD} found, inventory: 2.0 EUR {2017-06-08, 3.0 CAD}")
+            #expect(errorMessage == "No Lot matching -1.00 EUR {4.0 CAD} found, inventory: 2.0 EUR {2017-06-08, 3.0 CAD}")
         }
     }
 
@@ -354,16 +358,16 @@ extension InventoryTests { // Test Reduce
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
-                XCTAssertNil(result1)
-                XCTAssertEqual(result2, cost1.amount?.multiCurrencyAmount)
+                #expect(result1 == nil)
+                #expect(result2 == cost1.amount?.multiCurrencyAmount)
             } catch {
                 XCTFail("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 1)
-            XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number + amount2.number)
-            XCTAssertEqual(inventory.inventory.first?.units.decimalDigits, 2)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost1)
+            #expect(inventory.inventory.count == 1)
+            #expect(inventory.inventory.first?.units.number == amount1.number + amount2.number)
+            #expect(inventory.inventory.first?.units.decimalDigits == 2)
+            #expect(inventory.inventory.first?.cost == cost1)
         }
     }
 
@@ -387,8 +391,8 @@ extension InventoryTests { // Test Reduce
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
                 let result3 = try inventory.book(posting: transactionPosting(posting3))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
                 XCTAssertEqual(result3, Amount(number: -cost1.amount!.number,
                                                commoditySymbol: cost1.amount!.commoditySymbol,
                                                decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
@@ -396,12 +400,12 @@ extension InventoryTests { // Test Reduce
                 XCTFail("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 2)
-            XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number + amount3.number)
-            XCTAssertEqual(inventory.inventory.first?.units.decimalDigits, 2)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost1)
-            XCTAssertEqual(inventory.inventory.last?.units, amount2)
-            XCTAssertEqual(inventory.inventory.last?.cost, cost2)
+            #expect(inventory.inventory.count == 2)
+            #expect(inventory.inventory.first?.units.number == amount1.number + amount3.number)
+            #expect(inventory.inventory.first?.units.decimalDigits == 2)
+            #expect(inventory.inventory.first?.cost == cost1)
+            #expect(inventory.inventory.last?.units == amount2)
+            #expect(inventory.inventory.last?.cost == cost2)
         }
     }
 
@@ -424,8 +428,8 @@ extension InventoryTests { // Test Reduce
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
                 let result3 = try inventory.book(posting: transactionPosting(posting3))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
                 XCTAssertEqual(result3, Amount(number: -cost1.amount!.number,
                                                commoditySymbol: cost1.amount!.commoditySymbol,
                                                decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
@@ -433,12 +437,12 @@ extension InventoryTests { // Test Reduce
                 XCTFail("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 2)
-            XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number + amount3.number)
-            XCTAssertEqual(inventory.inventory.first?.units.decimalDigits, 2)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost1)
-            XCTAssertEqual(inventory.inventory.last?.units, amount2)
-            XCTAssertEqual(inventory.inventory.last?.cost, cost2)
+            #expect(inventory.inventory.count == 2)
+            #expect(inventory.inventory.first?.units.number == amount1.number + amount3.number)
+            #expect(inventory.inventory.first?.units.decimalDigits == 2)
+            #expect(inventory.inventory.first?.cost == cost1)
+            #expect(inventory.inventory.last?.units == amount2)
+            #expect(inventory.inventory.last?.cost == cost2)
         }
     }
 
@@ -459,8 +463,8 @@ extension InventoryTests { // Test Reduce
         do {
             let result1 = try inventory.book(posting: transactionPosting(posting1))
             let result2 = try inventory.book(posting: transactionPosting(posting2))
-            XCTAssertNil(result1)
-            XCTAssertNil(result2)
+            #expect(result1 == nil)
+            #expect(result2 == nil)
         } catch {
             XCTFail("Error thrown")
         }
@@ -473,11 +477,11 @@ extension InventoryTests { // Test Reduce
             """)
         }
 
-        XCTAssertEqual(inventory.inventory.count, 2)
-        XCTAssertEqual(inventory.inventory.first?.units, amount1)
-        XCTAssertEqual(inventory.inventory.first?.cost, cost1)
-        XCTAssertEqual(inventory.inventory.last?.units, amount2)
-        XCTAssertEqual(inventory.inventory.last?.cost, cost2)
+        #expect(inventory.inventory.count == 2)
+        #expect(inventory.inventory.first?.units == amount1)
+        #expect(inventory.inventory.first?.cost == cost1)
+        #expect(inventory.inventory.last?.units == amount2)
+        #expect(inventory.inventory.last?.cost == cost2)
     }
 
     func testReduceAmbigiousNotEnoughUnits() throws {
@@ -499,14 +503,14 @@ extension InventoryTests { // Test Reduce
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
             } catch {
                 XCTFail("Error thrown")
             }
 
             XCTAssertThrowsError(try inventory.book(posting: transactionPosting(posting3))) {
-                XCTAssertEqual($0.localizedDescription, "Not enough units: Trying to reduce by \(amount3) \(cost3)")
+                #expect($0.localizedDescription == "Not enough units: Trying to reduce by \(amount3) \(cost3)")
             }
         }
     }
@@ -528,24 +532,24 @@ extension InventoryTests { // Test Reduce
         do {
             let result1 = try inventory.book(posting: transactionPosting(posting1))
             let result2 = try inventory.book(posting: transactionPosting(posting2))
-            XCTAssertNil(result1)
-            XCTAssertNil(result2)
+            #expect(result1 == nil)
+            #expect(result2 == nil)
         } catch {
             XCTFail("Error thrown")
         }
 
         do {
             let result = try inventory.book(posting: transactionPosting(posting3))
-            XCTAssertEqual(result, Amount(number: -2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
+            #expect(result == Amount(number: -2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
         } catch {
             XCTFail("Error thrown")
         }
 
-        XCTAssertEqual(inventory.inventory.count, 2)
-        XCTAssertEqual(inventory.inventory.first?.units, amount1)
-        XCTAssertEqual(inventory.inventory.first?.cost, cost1)
-        XCTAssertEqual(inventory.inventory.last?.units, Amount(number: 1.0, commoditySymbol: TestUtils.eur, decimalDigits: 1))
-        XCTAssertEqual(inventory.inventory.last?.cost, cost2)
+        #expect(inventory.inventory.count == 2)
+        #expect(inventory.inventory.first?.units == amount1)
+        #expect(inventory.inventory.first?.cost == cost1)
+        #expect(inventory.inventory.last?.units == Amount(number: 1.0, commoditySymbol: TestUtils.eur, decimalDigits: 1))
+        #expect(inventory.inventory.last?.cost == cost2)
     }
 
     func testReduceAmbigiousLIFOExactLot() throws {
@@ -564,15 +568,15 @@ extension InventoryTests { // Test Reduce
 
         let result1 = try inventory.book(posting: transactionPosting(posting1))
         let result2 = try inventory.book(posting: transactionPosting(posting2))
-        XCTAssertNil(result1)
-        XCTAssertNil(result2)
+        #expect(result1 == nil)
+        #expect(result2 == nil)
 
         let result = try inventory.book(posting: transactionPosting(posting3))
-        XCTAssertEqual(result, Amount(number: -4.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
+        #expect(result == Amount(number: -4.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
 
-        XCTAssertEqual(inventory.inventory.count, 1)
-        XCTAssertEqual(inventory.inventory.last?.units, amount1)
-        XCTAssertEqual(inventory.inventory.last?.cost, cost1)
+        #expect(inventory.inventory.count == 1)
+        #expect(inventory.inventory.last?.units == amount1)
+        #expect(inventory.inventory.last?.cost == cost1)
     }
 
     func testReduceAmbigiousLIFOMultipleLots() throws {
@@ -596,16 +600,16 @@ extension InventoryTests { // Test Reduce
         let result1 = try inventory.book(posting: transactionPosting(posting1))
         let result2 = try inventory.book(posting: transactionPosting(posting2))
         let result3 = try inventory.book(posting: transactionPosting(posting3))
-        XCTAssertNil(result1)
-        XCTAssertNil(result2)
-        XCTAssertNil(result3)
+        #expect(result1 == nil)
+        #expect(result2 == nil)
+        #expect(result3 == nil)
 
         let result = try inventory.book(posting: transactionPosting(posting4))
-        XCTAssertEqual(result, Amount(number: -15.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
+        #expect(result == Amount(number: -15.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
 
-        XCTAssertEqual(inventory.inventory.count, 1)
-        XCTAssertEqual(inventory.inventory.last?.units, Amount(number: 1.0, commoditySymbol: TestUtils.eur, decimalDigits: 1))
-        XCTAssertEqual(inventory.inventory.last?.cost, cost1)
+        #expect(inventory.inventory.count == 1)
+        #expect(inventory.inventory.last?.units == Amount(number: 1.0, commoditySymbol: TestUtils.eur, decimalDigits: 1))
+        #expect(inventory.inventory.last?.cost == cost1)
     }
 
     func testReduceAmbigiousFIFO() throws {
@@ -625,24 +629,24 @@ extension InventoryTests { // Test Reduce
         do {
             let result1 = try inventory.book(posting: transactionPosting(posting1))
             let result2 = try inventory.book(posting: transactionPosting(posting2))
-            XCTAssertNil(result1)
-            XCTAssertNil(result2)
+            #expect(result1 == nil)
+            #expect(result2 == nil)
         } catch {
             XCTFail("Error thrown")
         }
 
         do {
             let result = try inventory.book(posting: transactionPosting(posting3))
-            XCTAssertEqual(result, Amount(number: -3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
+            #expect(result == Amount(number: -3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
         } catch {
             XCTFail("Error thrown")
         }
 
-        XCTAssertEqual(inventory.inventory.count, 2)
-        XCTAssertEqual(inventory.inventory.first?.units, Amount(number: 1.0, commoditySymbol: TestUtils.eur, decimalDigits: 1))
-        XCTAssertEqual(inventory.inventory.first?.cost, cost1)
-        XCTAssertEqual(inventory.inventory.last?.units, amount2)
-        XCTAssertEqual(inventory.inventory.last?.cost, cost2)
+        #expect(inventory.inventory.count == 2)
+        #expect(inventory.inventory.first?.units == Amount(number: 1.0, commoditySymbol: TestUtils.eur, decimalDigits: 1))
+        #expect(inventory.inventory.first?.cost == cost1)
+        #expect(inventory.inventory.last?.units == amount2)
+        #expect(inventory.inventory.last?.cost == cost2)
     }
 
     func testReduceAmbigiousFIFOExactLot() throws {
@@ -662,22 +666,22 @@ extension InventoryTests { // Test Reduce
         do {
             let result1 = try inventory.book(posting: transactionPosting(posting1))
             let result2 = try inventory.book(posting: transactionPosting(posting2))
-            XCTAssertNil(result1)
-            XCTAssertNil(result2)
+            #expect(result1 == nil)
+            #expect(result2 == nil)
         } catch {
             XCTFail("Error thrown")
         }
 
         do {
             let result = try inventory.book(posting: transactionPosting(posting3))
-            XCTAssertEqual(result, Amount(number: -6.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
+            #expect(result == Amount(number: -6.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
         } catch {
             XCTFail("Error thrown")
         }
 
-        XCTAssertEqual(inventory.inventory.count, 1)
-        XCTAssertEqual(inventory.inventory.last?.units, amount2)
-        XCTAssertEqual(inventory.inventory.last?.cost, cost2)
+        #expect(inventory.inventory.count == 1)
+        #expect(inventory.inventory.last?.units == amount2)
+        #expect(inventory.inventory.last?.cost == cost2)
     }
 
     func testReduceAmbigiousFIFOMultipleLots() throws {
@@ -701,16 +705,16 @@ extension InventoryTests { // Test Reduce
         let result1 = try inventory.book(posting: transactionPosting(posting1))
         let result2 = try inventory.book(posting: transactionPosting(posting2))
         let result3 = try inventory.book(posting: transactionPosting(posting3))
-        XCTAssertNil(result1)
-        XCTAssertNil(result2)
-        XCTAssertNil(result3)
+        #expect(result1 == nil)
+        #expect(result2 == nil)
+        #expect(result3 == nil)
 
         let result = try inventory.book(posting: transactionPosting(posting4))
-        XCTAssertEqual(result, Amount(number: -14.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
+        #expect(result == Amount(number: -14.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
 
-        XCTAssertEqual(inventory.inventory.count, 1)
-        XCTAssertEqual(inventory.inventory.last?.units, Amount(number: 1.0, commoditySymbol: TestUtils.eur, decimalDigits: 1))
-        XCTAssertEqual(inventory.inventory.last?.cost, cost3)
+        #expect(inventory.inventory.count == 1)
+        #expect(inventory.inventory.last?.units == Amount(number: 1.0, commoditySymbol: TestUtils.eur, decimalDigits: 1))
+        #expect(inventory.inventory.last?.cost == cost3)
     }
 
     func testTotalReduce() throws {
@@ -728,7 +732,7 @@ extension InventoryTests { // Test Reduce
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
-                XCTAssertNil(result1)
+                #expect(result1 == nil)
                 XCTAssertEqual(result2, Amount(number: amount2.number * cost1.amount!.number,
                                                commoditySymbol: cost1.amount!.commoditySymbol,
                                                decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
@@ -736,7 +740,7 @@ extension InventoryTests { // Test Reduce
                 XCTFail("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 0)
+            #expect(inventory.inventory.count == 0)
         }
     }
 
@@ -760,14 +764,14 @@ extension InventoryTests { // Test Reduce
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
                 let result3 = try inventory.book(posting: transactionPosting(posting3))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
-                XCTAssertEqual(result3, MultiCurrencyAmount(amounts: [TestUtils.cad: -11.1], decimalDigits: [TestUtils.cad: 2]))
+                #expect(result1 == nil)
+                #expect(result2 == nil)
+                #expect(result3 == MultiCurrencyAmount(amounts: [TestUtils.cad: -11.1], decimalDigits: [TestUtils.cad: 2]))
             } catch {
                 XCTFail("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 0)
+            #expect(inventory.inventory.count == 0)
         }
     }
 
@@ -791,8 +795,8 @@ extension InventoryTests { // Test Reduce
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
                 let result3 = try inventory.book(posting: transactionPosting(posting3))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
                 XCTAssertEqual(result3, Amount(number: amount3.number * cost1.amount!.number,
                                                commoditySymbol: cost1.amount!.commoditySymbol,
                                                decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
@@ -800,9 +804,9 @@ extension InventoryTests { // Test Reduce
                 XCTFail("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 1)
-            XCTAssertEqual(inventory.inventory.first?.units, amount2)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost2)
+            #expect(inventory.inventory.count == 1)
+            #expect(inventory.inventory.first?.units == amount2)
+            #expect(inventory.inventory.first?.cost == cost2)
         }
     }
 
@@ -825,8 +829,8 @@ extension InventoryTests { // Test Reduce
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
                 let result3 = try inventory.book(posting: transactionPosting(posting3))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
                 XCTAssertEqual(result3, Amount(number: amount3.number * cost1.amount!.number,
                                                commoditySymbol: cost1.amount!.commoditySymbol,
                                                decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
@@ -834,9 +838,9 @@ extension InventoryTests { // Test Reduce
                 XCTFail("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 1)
-            XCTAssertEqual(inventory.inventory.first?.units, amount2)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost2)
+            #expect(inventory.inventory.count == 1)
+            #expect(inventory.inventory.first?.units == amount2)
+            #expect(inventory.inventory.first?.cost == cost2)
         }
     }
 
@@ -860,14 +864,14 @@ extension InventoryTests { // Test Reduce
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
                 let result3 = try inventory.book(posting: transactionPosting(posting3))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
-                XCTAssertEqual(result3, MultiCurrencyAmount(amounts: [TestUtils.eur: -6.10, TestUtils.cad: -5.0], decimalDigits: [TestUtils.eur: 2, TestUtils.cad: 1]))
+                #expect(result1 == nil)
+                #expect(result2 == nil)
+                #expect(result3 == MultiCurrencyAmount(amounts: [TestUtils.eur: -6.10, TestUtils.cad: -5.0], decimalDigits: [TestUtils.eur: 2, TestUtils.cad: 1]))
             } catch {
                 XCTFail("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 0)
+            #expect(inventory.inventory.count == 0)
         }
     }
 
@@ -891,7 +895,7 @@ extension InventoryTests { // Inventory.Lot Tests
         let amount = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
         let cost = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
         let lot = Inventory.Lot(units: amount, cost: cost)
-        XCTAssertEqual(String(describing: lot), "\(amount) \(cost)")
+        #expect(String(describing: lot) == "\(amount) \(cost)")
     }
 
     func testLotEqual() throws {
@@ -899,7 +903,7 @@ extension InventoryTests { // Inventory.Lot Tests
         let cost = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
         let lot1 = Inventory.Lot(units: amount, cost: cost)
         let lot2 = Inventory.Lot(units: amount, cost: cost)
-        XCTAssertEqual(lot1, lot2)
+        #expect(lot1 == lot2)
     }
 
     func testLotEqualRespectsAmount() throws {
@@ -908,7 +912,7 @@ extension InventoryTests { // Inventory.Lot Tests
         let cost = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
         let lot1 = Inventory.Lot(units: amount1, cost: cost)
         let lot2 = Inventory.Lot(units: amount2, cost: cost)
-        XCTAssertNotEqual(lot1, lot2)
+        #expect(lot1 != lot2)
     }
 
     func testLotEqualRespectsCost() throws {
@@ -917,7 +921,7 @@ extension InventoryTests { // Inventory.Lot Tests
         let cost2 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
         let lot1 = Inventory.Lot(units: amount, cost: cost1)
         let lot2 = Inventory.Lot(units: amount, cost: cost2)
-        XCTAssertNotEqual(lot1, lot2)
+        #expect(lot1 != lot2)
     }
 
 }
@@ -925,9 +929,9 @@ extension InventoryTests { // Inventory.Lot Tests
 extension InventoryTests { // BookingMethod tests
 
     func testBookingMethodDescription() {
-        XCTAssertEqual(String(describing: BookingMethod.fifo), "FIFO")
-        XCTAssertEqual(String(describing: BookingMethod.lifo), "LIFO")
-        XCTAssertEqual(String(describing: BookingMethod.strict), "STRICT")
+        #expect(String(describing: BookingMethod.fifo) == "FIFO")
+        #expect(String(describing: BookingMethod.lifo) == "LIFO")
+        #expect(String(describing: BookingMethod.strict) == "STRICT")
     }
 
 }

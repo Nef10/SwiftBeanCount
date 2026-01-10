@@ -1,7 +1,11 @@
-@testable import SwiftBeanCountWealthsimpleMapper
-import XCTest
 
-final class WealthsimpleConversionErrorTests: XCTestCase {
+import Foundation
+@testable import SwiftBeanCountWealthsimpleMapper
+import Testing
+
+@Suite
+
+struct WealthsimpleConversionErrorTests {
 
     func testWealthsimpleConversionErrorString() { // swiftlint:disable:this function_body_length
         XCTAssertEqual(

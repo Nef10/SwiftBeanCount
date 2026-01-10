@@ -9,36 +9,38 @@
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class DownloadImporterTests: XCTestCase {
+@Suite
+
+struct DownloadImporterTests {
 
     func testImporters() {
         #if canImport(UIKit) || canImport(AppKit)
             if #available(iOS 14.5, macOS 11.3, *) {
                 #if os(macOS)
-                    XCTAssertEqual(DownloadImporterFactory.importers.count, 5)
+                    #expect(DownloadImporterFactory.importers.count == 5)
                 #else
-                   XCTAssertEqual(DownloadImporterFactory.importers.count, 4)
+                   #expect(DownloadImporterFactory.importers.count == 4)
                 #endif
             } else {
                 #if os(macOS)
-                    XCTAssertEqual(DownloadImporterFactory.importers.count, 4)
+                    #expect(DownloadImporterFactory.importers.count == 4)
                 #else
-                    XCTAssertEqual(DownloadImporterFactory.importers.count, 3)
+                    #expect(DownloadImporterFactory.importers.count == 3)
                 #endif
             }
         #else
-            XCTAssertEqual(DownloadImporterFactory.importers.count, 2)
+            #expect(DownloadImporterFactory.importers.count == 2)
         #endif
     }
 
     func testNew() {
-        XCTAssertNil(DownloadImporterFactory.new(ledger: Ledger(), name: "This is not a valid name"))
+        #expect(DownloadImporterFactory.new(ledger: Ledger( == nil), name: "This is not a valid name"))
 
         let importers = DownloadImporterFactory.importers
         for importer in importers {
-            XCTAssertTrue(type(of: DownloadImporterFactory.new(ledger: nil, name: importer.importerName)!) == importer) // swiftlint:disable:this xct_specific_matcher
+            #expect(type(of: DownloadImporterFactory.new(ledger: nil, name: importer.importerName)!) == importer) // swiftlint:disable:this xct_specific_matcher
         }
     }
 

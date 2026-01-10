@@ -1,19 +1,22 @@
+import Foundation
+@testable import SwiftBeanCountCLI
+import Testing
+
 #if os(macOS)
 
-@testable import SwiftBeanCountCLI
-import XCTest
+@Suite
 
-final class StatsTests: XCTestCase {
+struct StatsTests {
 
     func testFileDoesNotExist() {
         let url = temporaryFileURL()
         let result = outputFromExecutionWith(arguments: ["stats", url.path])
-        XCTAssertEqual(result.exitCode, 1)
-        XCTAssert(result.errorOutput.isEmpty)
+        #expect(result.exitCode == 1)
+        #expect(result.errorOutput.isEmpty)
         #if os(Linux)
-        XCTAssertEqual(result.output, "The operation could not be completed. The file doesn’t exist.")
+        #expect(result.output == "The operation could not be completed. The file doesn’t exist.")
         #else
-        XCTAssertEqual(result.output, "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
+        #expect(result.output == "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
         #endif
     }
 

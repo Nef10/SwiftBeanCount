@@ -6,30 +6,33 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class LunchOnUsImporterTests: XCTestCase {
+@Suite
+
+struct LunchOnUsImporterTests {
 
     func testHeaders() {
-        XCTAssertEqual(LunchOnUsImporter.headers, [["date", "type", "amount", "invoice", "remaining", "location"]])
+        #expect(LunchOnUsImporter.headers == [["date", "type", "amount", "invoice", "remaining", "location"]])
     }
 
     func testImporterName() {
-        XCTAssertEqual(LunchOnUsImporter.importerName, "Lunch On Us")
+        #expect(LunchOnUsImporter.importerName == "Lunch On Us")
     }
 
     func testImporterType() {
-        XCTAssertEqual(LunchOnUsImporter.importerType, "lunch-on-us")
+        #expect(LunchOnUsImporter.importerType == "lunch-on-us")
     }
 
     func testHelpText() { // swiftlint:disable:next line_length
-        XCTAssertEqual(LunchOnUsImporter.helpText, "Enables importing of CSV files downloaded from https://lunchmapper.appspot.com/csv. Does not support importing balances.\n\nTo use add importer-type: \"lunch-on-us\" to your account.")
+        #expect(LunchOnUsImporter.helpText == "Enables importing of CSV files downloaded from https://lunchmapper.appspot.com/csv. Does not support importing balances.\n\nTo use add importer-type: \"lunch-on-us\" to your account.")
     }
 
     func testImportName() throws {
-        XCTAssertEqual(LunchOnUsImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "LunchOnUs File TestName")
+        #expect(LunchOnUsImporter(ledger: nil == csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "LunchOnUs File TestName")
     }
 
     func testParseLineNormalPurchase() throws {
@@ -43,11 +46,11 @@ date,type,amount,invoice,remaining,location
 
         importer.csvReader.next()
         let line = importer.parseLine()
-        XCTAssert(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
-        XCTAssertEqual(line.description, "Bubble Tea")
-        XCTAssertEqual(line.amount, Decimal(string: "-6.83", locale: Locale(identifier: "en_CA"))!)
-        XCTAssertEqual(line.payee, "")
-        XCTAssertNil(line.price)
+        #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
+        #expect(line.description == "Bubble Tea")
+        #expect(line.amount == Decimal(string: "-6.83", locale: Locale(identifier: "en_CA"))!)
+        #expect(line.payee == "")
+        #expect(line.price == nil)
     }
 
     func testParseLineRedeemUnlock() throws {
@@ -61,11 +64,11 @@ date,type,amount,invoice,remaining,location
 
         importer.csvReader.next()
         let line = importer.parseLine()
-        XCTAssert(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20200605))
-        XCTAssertEqual(line.description, "Test Restaurant")
-        XCTAssertEqual(line.amount, Decimal(string: "-75.00", locale: Locale(identifier: "en_CA"))!)
-        XCTAssertEqual(line.payee, "")
-        XCTAssertNil(line.price)
+        #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20200605))
+        #expect(line.description == "Test Restaurant")
+        #expect(line.amount == Decimal(string: "-75.00", locale: Locale(identifier: "en_CA"))!)
+        #expect(line.payee == "")
+        #expect(line.price == nil)
     }
 
     func testParseLineBalanceInquiryWithPartLock() throws { // #7
@@ -79,10 +82,10 @@ date,type,amount,invoice,remaining,location
 
         importer.csvReader.next()
         let line = importer.parseLine()
-        XCTAssertEqual(line.description, "Shop SAP")
-        XCTAssertEqual(line.amount, Decimal(string: "-65.21", locale: Locale(identifier: "en_CA"))!)
-        XCTAssertEqual(line.payee, "")
-        XCTAssertNil(line.price)
+        #expect(line.description == "Shop SAP")
+        #expect(line.amount == Decimal(string: "-65.21", locale: Locale(identifier: "en_CA"))!)
+        #expect(line.payee == "")
+        #expect(line.price == nil)
     }
 
     func testParseLineActivateCard() throws {
@@ -96,10 +99,10 @@ date,type,amount,invoice,remaining,location
 
         importer.csvReader.next()
         let line = importer.parseLine()
-        XCTAssertEqual(line.description, "")
-        XCTAssertEqual(line.amount, Decimal(string: "528.00", locale: Locale(identifier: "en_CA"))!)
-        XCTAssertEqual(line.payee, "SAP Canada Inc.")
-        XCTAssertNil(line.price)
+        #expect(line.description == "")
+        #expect(line.amount == Decimal(string: "528.00", locale: Locale(identifier: "en_CA"))!)
+        #expect(line.payee == "SAP Canada Inc.")
+        #expect(line.price == nil)
     }
 
     func testParseLineCashOut() throws {
@@ -113,10 +116,10 @@ date,type,amount,invoice,remaining,location
 
         importer.csvReader.next()
         let line = importer.parseLine()
-        XCTAssertEqual(line.description, "Cash Out")
-        XCTAssertEqual(line.amount, Decimal(string: "-0.60", locale: Locale(identifier: "en_CA"))!)
-        XCTAssertEqual(line.payee, "")
-        XCTAssertNil(line.price)
+        #expect(line.description == "Cash Out")
+        #expect(line.amount == Decimal(string: "-0.60", locale: Locale(identifier: "en_CA"))!)
+        #expect(line.payee == "")
+        #expect(line.price == nil)
     }
 
 }

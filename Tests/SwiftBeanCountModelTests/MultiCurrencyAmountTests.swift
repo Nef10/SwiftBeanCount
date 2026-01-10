@@ -6,55 +6,58 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 @testable import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class MultiCurrencyAmountTests: XCTestCase {
+@Suite
+
+struct MultiCurrencyAmountTests {
 
     func testInit() {
         let multiCurrencyAmount = MultiCurrencyAmount()
-        XCTAssertEqual(multiCurrencyAmount.amounts, [:])
+        #expect(multiCurrencyAmount.amounts == [:])
     }
 
     func testMultiCurrencyAmount() {
         let multiCurrencyAmount = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(10)], decimalDigits: [TestUtils.eur: 0])
-        XCTAssertEqual(multiCurrencyAmount.multiCurrencyAmount, multiCurrencyAmount)
+        #expect(multiCurrencyAmount.multiCurrencyAmount == multiCurrencyAmount)
     }
 
     func testAmountFor() {
         var multiCurrencyAmount = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(10)], decimalDigits: [TestUtils.eur: 3])
         var result = multiCurrencyAmount.amountFor(symbol: TestUtils.eur)
-        XCTAssertEqual(result.commoditySymbol, TestUtils.eur)
-        XCTAssertEqual(result.number, Decimal(10))
-        XCTAssertEqual(result.decimalDigits, 3)
+        #expect(result.commoditySymbol == TestUtils.eur)
+        #expect(result.number == Decimal(10))
+        #expect(result.decimalDigits == 3)
         result = multiCurrencyAmount.amountFor(symbol: TestUtils.usd)
-        XCTAssertEqual(result.commoditySymbol, TestUtils.usd)
-        XCTAssertEqual(result.number, Decimal(0))
-        XCTAssertEqual(result.decimalDigits, 0)
+        #expect(result.commoditySymbol == TestUtils.usd)
+        #expect(result.number == Decimal(0))
+        #expect(result.decimalDigits == 0)
 
         multiCurrencyAmount = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(10), TestUtils.usd: Decimal(4)], decimalDigits: [TestUtils.eur: 3, TestUtils.usd: 0])
         result = multiCurrencyAmount.amountFor(symbol: TestUtils.eur)
-        XCTAssertEqual(result.commoditySymbol, TestUtils.eur)
-        XCTAssertEqual(result.number, Decimal(10))
-        XCTAssertEqual(result.decimalDigits, 3)
+        #expect(result.commoditySymbol == TestUtils.eur)
+        #expect(result.number == Decimal(10))
+        #expect(result.decimalDigits == 3)
 
         multiCurrencyAmount = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(10), TestUtils.usd: Decimal(4)], decimalDigits: [TestUtils.eur: 3])
         result = multiCurrencyAmount.amountFor(symbol: TestUtils.usd)
-        XCTAssertEqual(result.commoditySymbol, TestUtils.usd)
-        XCTAssertEqual(result.number, Decimal(4))
-        XCTAssertEqual(result.decimalDigits, 0)
+        #expect(result.commoditySymbol == TestUtils.usd)
+        #expect(result.number == Decimal(4))
+        #expect(result.decimalDigits == 0)
     }
 
     func testPlusSameCurrency() {
         let fifteenEuro = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(15)], decimalDigits: [TestUtils.eur: 0])
         let tenEuro = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(10)], decimalDigits: [TestUtils.eur: 0])
         let fiveEuro = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(5)], decimalDigits: [TestUtils.eur: 0])
-        XCTAssertEqual(fiveEuro + fiveEuro, tenEuro)
-        XCTAssertEqual(fiveEuro + tenEuro, fifteenEuro)
-        XCTAssertEqual(tenEuro + fiveEuro, fifteenEuro)
+        #expect(fiveEuro + fiveEuro == tenEuro)
+        #expect(fiveEuro + tenEuro == fifteenEuro)
+        #expect(tenEuro + fiveEuro == fifteenEuro)
         var result = tenEuro
         result += fiveEuro
-        XCTAssertEqual(result, fifteenEuro)
+        #expect(result == fifteenEuro)
     }
 
     func testPlusDifferentCurrency() {
@@ -62,22 +65,22 @@ final class MultiCurrencyAmountTests: XCTestCase {
                                                                decimalDigits: [TestUtils.eur: 0, TestUtils.cad: 0])
         let tenCanadianDollar = MultiCurrencyAmount(amounts: [TestUtils.cad: Decimal(10)], decimalDigits: [TestUtils.cad: 0])
         let fiveEuro = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(5)], decimalDigits: [TestUtils.eur: 0])
-        XCTAssertEqual(fiveEuro + tenCanadianDollar, fiveEuroAndTenCanadianDollar)
-        XCTAssertEqual(tenCanadianDollar + fiveEuro, fiveEuroAndTenCanadianDollar)
+        #expect(fiveEuro + tenCanadianDollar == fiveEuroAndTenCanadianDollar)
+        #expect(tenCanadianDollar + fiveEuro == fiveEuroAndTenCanadianDollar)
         var result = tenCanadianDollar
         result += fiveEuro
-        XCTAssertEqual(result, fiveEuroAndTenCanadianDollar)
+        #expect(result == fiveEuroAndTenCanadianDollar)
     }
 
     func testPlusEmpty() {
         let nothing = MultiCurrencyAmount()
         let fiveEuro = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(5)], decimalDigits: [TestUtils.eur: 0])
-        XCTAssertEqual(nothing + nothing, nothing)
-        XCTAssertEqual(fiveEuro + nothing, fiveEuro)
-        XCTAssertEqual(nothing + fiveEuro, fiveEuro)
+        #expect(nothing + nothing == nothing)
+        #expect(fiveEuro + nothing == fiveEuro)
+        #expect(nothing + fiveEuro == fiveEuro)
         var result = nothing
         result += fiveEuro
-        XCTAssertEqual(result, fiveEuro)
+        #expect(result == fiveEuro)
     }
 
     func testPlusDecimalDigits() {
@@ -87,28 +90,28 @@ final class MultiCurrencyAmountTests: XCTestCase {
         let fiveCanadianDollar = MultiCurrencyAmount(amounts: [TestUtils.cad: Decimal(5)], decimalDigits: [TestUtils.cad: 0])
 
         var result = fiveEuro + fiveEuroZeroZero
-        XCTAssertEqual(result.amounts[TestUtils.eur]!, 10)
-        XCTAssertEqual(result.decimalDigits[TestUtils.eur]!, 0)
+        #expect(result.amounts[TestUtils.eur]! == 10)
+        #expect(result.decimalDigits[TestUtils.eur]! == 0)
         result = fiveEuro
         result += fiveEuroZeroZero
-        XCTAssertEqual(result.amounts[TestUtils.eur]!, 10)
-        XCTAssertEqual(result.decimalDigits[TestUtils.eur]!, 0)
+        #expect(result.amounts[TestUtils.eur]! == 10)
+        #expect(result.decimalDigits[TestUtils.eur]! == 0)
 
         result = fiveEuroZero + fiveEuroZeroZero
-        XCTAssertEqual(result.amounts[TestUtils.eur]!, 10)
-        XCTAssertEqual(result.decimalDigits[TestUtils.eur]!, 2)
+        #expect(result.amounts[TestUtils.eur]! == 10)
+        #expect(result.decimalDigits[TestUtils.eur]! == 2)
         result = fiveEuroZero
         result += fiveEuroZeroZero
-        XCTAssertEqual(result.amounts[TestUtils.eur]!, 10)
-        XCTAssertEqual(result.decimalDigits[TestUtils.eur]!, 2)
+        #expect(result.amounts[TestUtils.eur]! == 10)
+        #expect(result.decimalDigits[TestUtils.eur]! == 2)
 
         result = fiveCanadianDollar + fiveEuroZeroZero
-        XCTAssertEqual(result.decimalDigits[TestUtils.eur]!, 2)
-        XCTAssertEqual(result.decimalDigits[TestUtils.cad]!, 0)
+        #expect(result.decimalDigits[TestUtils.eur]! == 2)
+        #expect(result.decimalDigits[TestUtils.cad]! == 0)
         result = fiveCanadianDollar
         result += fiveEuroZeroZero
-        XCTAssertEqual(result.decimalDigits[TestUtils.eur]!, 2)
-        XCTAssertEqual(result.decimalDigits[TestUtils.cad]!, 0)
+        #expect(result.decimalDigits[TestUtils.eur]! == 2)
+        #expect(result.decimalDigits[TestUtils.cad]! == 0)
     }
 
     func testPlusKeepsDecimalDigits() {
@@ -122,68 +125,68 @@ final class MultiCurrencyAmountTests: XCTestCase {
 
         let empty = MultiCurrencyAmount()
         let test = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(8.525_0)], decimalDigits: [TestUtils.cad: 5])
-        XCTAssertEqual((empty + test).decimalDigits[TestUtils.cad]!, 5)
+        #expect((empty + test).decimalDigits[TestUtils.cad]! == 5)
 
         var result = empty
         result += test
 
-        XCTAssertEqual(result.decimalDigits[TestUtils.cad]!, 5)
+        #expect(result.decimalDigits[TestUtils.cad]! == 5)
     }
 
     func testEqual() {
         let nothing = MultiCurrencyAmount()
-        XCTAssertEqual(nothing, nothing)
+        #expect(nothing == nothing)
 
         let fiveEuro = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(5)], decimalDigits: [TestUtils.eur: 0])
-        XCTAssertEqual(fiveEuro, fiveEuro)
-        XCTAssertNotEqual(nothing, fiveEuro)
+        #expect(fiveEuro == fiveEuro)
+        #expect(nothing != fiveEuro)
 
         let fiveCanadianDollar1 = MultiCurrencyAmount(amounts: [TestUtils.cad: Decimal(5)], decimalDigits: [TestUtils.cad: 0])
         let fiveCanadianDollar2 = MultiCurrencyAmount(amounts: [TestUtils.cad: Decimal(5)], decimalDigits: [TestUtils.cad: 0])
-        XCTAssertEqual(fiveCanadianDollar1, fiveCanadianDollar2)
-        XCTAssertNotEqual(fiveCanadianDollar1, fiveEuro)
-        XCTAssertNotEqual(fiveCanadianDollar1, nothing)
+        #expect(fiveCanadianDollar1 == fiveCanadianDollar2)
+        #expect(fiveCanadianDollar1 != fiveEuro)
+        #expect(fiveCanadianDollar1 != nothing)
 
         let fiveEuroAndFiveCanadianDollar1 = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(5), TestUtils.cad: Decimal(10)],
                                                                  decimalDigits: [TestUtils.eur: 0, TestUtils.cad: 0])
         let fiveEuroAndFiveCanadianDollar2 = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(5), TestUtils.cad: Decimal(10)],
                                                                  decimalDigits: [TestUtils.eur: 0, TestUtils.cad: 0])
-        XCTAssertEqual(fiveEuroAndFiveCanadianDollar1, fiveEuroAndFiveCanadianDollar2)
-        XCTAssertNotEqual(fiveEuroAndFiveCanadianDollar1, fiveEuro)
-        XCTAssertNotEqual(fiveEuroAndFiveCanadianDollar1, fiveCanadianDollar1)
-        XCTAssertNotEqual(fiveEuroAndFiveCanadianDollar1, nothing)
+        #expect(fiveEuroAndFiveCanadianDollar1 == fiveEuroAndFiveCanadianDollar2)
+        #expect(fiveEuroAndFiveCanadianDollar1 != fiveEuro)
+        #expect(fiveEuroAndFiveCanadianDollar1 != fiveCanadianDollar1)
+        #expect(fiveEuroAndFiveCanadianDollar1 != nothing)
     }
 
     func testEqualDecimalDigits() {
         let fiveTwentyFife1 = MultiCurrencyAmount(amounts: [TestUtils.cad: Decimal(5.25)], decimalDigits: [TestUtils.cad: 2])
         let fiveTwentyFife2 = MultiCurrencyAmount(amounts: [TestUtils.cad: Decimal(5.25)], decimalDigits: [TestUtils.cad: 2])
-        XCTAssertEqual(fiveTwentyFife1, fiveTwentyFife2)
+        #expect(fiveTwentyFife1 == fiveTwentyFife2)
 
         let fiveTwentyFifeZero = MultiCurrencyAmount(amounts: [TestUtils.cad: Decimal(5.250)], decimalDigits: [TestUtils.cad: 3])
-        XCTAssertNotEqual(fiveTwentyFife1, fiveTwentyFifeZero)
+        #expect(fiveTwentyFife1 != fiveTwentyFifeZero)
     }
 
     func testValidateZeroWithTolerance() {
         let commodity = TestUtils.cad
         var amount = MultiCurrencyAmount(amounts: [:], decimalDigits: [:])
-        XCTAssertEqual(amount.validateZeroWithTolerance(), .valid)
-        XCTAssertTrue(amount.isZeroWithTolerance())
+        #expect(amount.validateZeroWithTolerance() == .valid)
+        #expect(amount.isZeroWithTolerance())
 
         amount = MultiCurrencyAmount(amounts: [commodity: 0], decimalDigits: [:])
-        XCTAssertEqual(amount.validateZeroWithTolerance(), .valid)
-        XCTAssertTrue(amount.isZeroWithTolerance())
+        #expect(amount.validateZeroWithTolerance() == .valid)
+        #expect(amount.isZeroWithTolerance())
 
         amount = MultiCurrencyAmount(amounts: [commodity: 0.000_05], decimalDigits: [:])
-        XCTAssertEqual(amount.validateZeroWithTolerance(), .invalid("0.00005 CAD too much (0 tolerance)"))
-        XCTAssertFalse(amount.isZeroWithTolerance())
+        #expect(amount.validateZeroWithTolerance() == .invalid("0.00005 CAD too much (0 tolerance)"))
+        #expect(!(amount.isZeroWithTolerance()))
 
         amount = MultiCurrencyAmount(amounts: [commodity: 0.000_05], decimalDigits: [commodity: 5])
-        XCTAssertEqual(amount.validateZeroWithTolerance(), .invalid("0.00005 CAD too much (0.000005 tolerance)"))
-        XCTAssertFalse(amount.isZeroWithTolerance())
+        #expect(amount.validateZeroWithTolerance() == .invalid("0.00005 CAD too much (0.000005 tolerance)"))
+        #expect(!(amount.isZeroWithTolerance()))
 
         amount = MultiCurrencyAmount(amounts: [commodity: 0.000_05], decimalDigits: [commodity: 4])
-        XCTAssertEqual(amount.validateZeroWithTolerance(), .valid)
-        XCTAssertTrue(amount.isZeroWithTolerance())
+        #expect(amount.validateZeroWithTolerance() == .valid)
+        #expect(amount.isZeroWithTolerance())
     }
 
     func testValidateOneAmountWithTolerance() {
@@ -191,22 +194,22 @@ final class MultiCurrencyAmountTests: XCTestCase {
         var multiCurrencyAmount = MultiCurrencyAmount(amounts: [:], decimalDigits: [:])
 
         var amount = Amount(number: 0, commoditySymbol: commoditySymbol, decimalDigits: 0)
-        XCTAssertEqual(multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount), .valid)
+        #expect(multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount) == .valid)
 
         multiCurrencyAmount = MultiCurrencyAmount(amounts: [commoditySymbol: 0], decimalDigits: [:])
-        XCTAssertEqual(multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount), .valid)
+        #expect(multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount) == .valid)
 
         multiCurrencyAmount = MultiCurrencyAmount(amounts: [commoditySymbol: 0.000_05], decimalDigits: [commoditySymbol: 5])
-        XCTAssertEqual(multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount), .invalid("-0.00005 CAD too much (0 tolerance)"))
+        #expect(multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount) == .invalid("-0.00005 CAD too much (0 tolerance)"))
 
         amount = Amount(number: 0, commoditySymbol: commoditySymbol, decimalDigits: 1)
-        XCTAssertEqual(multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount), .invalid("-0.00005 CAD too much (0.000005 tolerance)"))
+        #expect(multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount) == .invalid("-0.00005 CAD too much (0.000005 tolerance)"))
 
         amount = Amount(number: 0.000_05, commoditySymbol: commoditySymbol, decimalDigits: 5)
-        XCTAssertEqual(multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount), .valid)
+        #expect(multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount) == .valid)
 
         multiCurrencyAmount = MultiCurrencyAmount(amounts: [commoditySymbol: 0.000_055], decimalDigits: [commoditySymbol: 5])
-        XCTAssertEqual(multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount), .valid)
+        #expect(multiCurrencyAmount.validateOneAmountWithTolerance(amount: amount) == .valid)
     }
 
 }

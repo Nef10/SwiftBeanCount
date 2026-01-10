@@ -6,29 +6,33 @@
 //  Copyright © 2023 Steffen Kötte. All rights reserved.
 //
 
+
+import Foundation
+@testable import SwiftBeanCountImporter
 import CSV
 import SwiftBeanCountCompassCardMapper
-@testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class CompassCardImporterTests: XCTestCase {
+@Suite
+
+struct CompassCardImporterTests {
 
     func testHeaders() {
         // swiftlint:disable:next line_length
-        XCTAssertEqual(CompassCardImporter.headers, [["DateTime", "Transaction", "Product", "LineItem", "Amount", "BalanceDetails", "JourneyId", "LocationDisplay", "TransactonTime", "OrderDate", "Payment", "OrderNumber", "AuthCode", "Total"]])
+        #expect(CompassCardImporter.headers == [["DateTime", "Transaction", "Product", "LineItem", "Amount", "BalanceDetails", "JourneyId", "LocationDisplay", "TransactonTime", "OrderDate", "Payment", "OrderNumber", "AuthCode", "Total"]])
     }
 
     func testImporterName() {
-        XCTAssertEqual(CompassCardImporter.importerName, "Compass Card")
+        #expect(CompassCardImporter.importerName == "Compass Card")
     }
 
     func testImporterType() {
-        XCTAssertEqual(CompassCardImporter.importerType, "compass-card")
+        #expect(CompassCardImporter.importerType == "compass-card")
     }
 
     func testHelpText() {
-        XCTAssert(CompassCardImporter.helpText.starts(with: "Imports Compass Card transactions from CSV files downloaded from the Compass Card website."))
+        #expect(CompassCardImporter.helpText.starts(with: "Imports Compass Card transactions from CSV files downloaded from the Compass Card website."))
     }
 
     func testImportName() throws {
@@ -60,11 +64,11 @@ final class CompassCardImporterTests: XCTestCase {
 
         let result = importer.nextTransaction()
 
-        XCTAssertEqual(result!.transaction, transaction)
-        XCTAssertEqual(result?.accountName, accountName)
-        XCTAssert(importer.balancesToImport().isEmpty)
-        XCTAssert(importer.pricesToImport().isEmpty)
-        XCTAssertNil(importer.nextTransaction())
+        #expect(result!.transaction == transaction)
+        #expect(result?.accountName == accountName)
+        #expect(importer.balancesToImport().isEmpty)
+        #expect(importer.pricesToImport().isEmpty)
+        #expect(importer.nextTransaction( == nil))
     }
 
     func testError() throws {
@@ -78,8 +82,8 @@ final class CompassCardImporterTests: XCTestCase {
         let importer = CompassCardImporter(ledger: Ledger(), csvReader: reader, fileName: "")
         importer.delegate = delegate
         importer.load()
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssertTrue(delegate.verified)
+        #expect(importer.nextTransaction( == nil))
+        #expect(delegate.verified)
     }
 
 }

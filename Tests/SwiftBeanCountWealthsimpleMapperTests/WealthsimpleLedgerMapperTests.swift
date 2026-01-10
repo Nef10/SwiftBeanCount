@@ -1,10 +1,13 @@
-import SwiftBeanCountModel
-@testable import SwiftBeanCountWealthsimpleMapper
-import Wealthsimple
-import XCTest
 
 // swiftlint:disable:next type_body_length
-final class WealthsimpleLedgerMapperTests: XCTestCase {
+import Foundation
+@testable import SwiftBeanCountWealthsimpleMapper
+import SwiftBeanCountModel
+import Wealthsimple
+import Testing
+
+@Suite
+struct WealthsimpleLedgerMapperTests {
 
     private typealias SAccount = SwiftBeanCountModel.Account
 
@@ -41,15 +44,6 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
                         processDate: Date(timeIntervalSinceReferenceDate: 5_645_145_697))
     }
 
-    override func setUpWithError() throws {
-        ledger = Ledger()
-        try? ledger.add(SAccount(name: cashAccountName, metaData: [MetaDataKeys.importerType: MetaData.importerType, MetaDataKeys.number: accountNumber]))
-        try? ledger.add(Commodity(symbol: "ETF"))
-        try? ledger.add(Commodity(symbol: "CAD"))
-        testAccounts = [TestAccount(number: accountNumber, id: accountId, currency: "CAD")]
-        try super.setUpWithError()
-    }
-
     func testMapPositionsErrors() throws {
         // empty the data setup by default
         ledger = Ledger()
@@ -57,8 +51,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
 
         // empty
         let (prices, balances) = try mapper.mapPositionsToPriceAndBalance([])
-        XCTAssert(prices.isEmpty)
-        XCTAssert(balances.isEmpty)
+        #expect(prices.isEmpty)
+        #expect(balances.isEmpty)
 
         // no account set on mapper
         var position = TestPositon(accountId: accountId)
@@ -83,8 +77,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
 
         // currency
         var (prices, balances) = try mapper.mapPositionsToPriceAndBalance([position])
-        XCTAssert(prices.isEmpty)
-        XCTAssertEqual(balances, [Balance(date: position.positionDate, accountName: cashAccountName, amount: priceAmount(number: "9.871", decimals: 3))])
+        #expect(prices.isEmpty)
+        #expect(balances == [Balance(date: position.positionDate, accountName: cashAccountName, amount: priceAmount(number: "9.871", decimals: 3))])
 
         // non currency
         position.assetType = .exchangeTradedFund
@@ -92,15 +86,15 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         let price = try Price(date: position.positionDate, commoditySymbol: "ETF", amount: Amount(number: Decimal(1_234), commoditySymbol: "EUR", decimalDigits: 2))
         let balance = Balance(date: position.positionDate, accountName: try AccountName("Assets:W:ETF"), amount: priceAmount(number: "9.871", commodity: "ETF", decimals: 3))
         (prices, balances) = try mapper.mapPositionsToPriceAndBalance([position])
-        XCTAssertEqual(prices, [price])
-        XCTAssertEqual(balances, [balance])
+        #expect(prices == [price])
+        #expect(balances == [balance])
 
         // already exists
         try ledger.add(price)
         ledger.add(balance)
         (prices, balances) = try mapper.mapPositionsToPriceAndBalance([position])
-        XCTAssert(prices.isEmpty)
-        XCTAssert(balances.isEmpty)
+        #expect(prices.isEmpty)
+        #expect(balances.isEmpty)
     }
 
     func testMapTransactionsErrors() throws {
@@ -110,8 +104,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
 
         // empty
         let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([])
-        XCTAssert(prices.isEmpty)
-        XCTAssert(transactions.isEmpty)
+        #expect(prices.isEmpty)
+        #expect(transactions.isEmpty)
 
         // no account set on mapper
         var transaction = TestTransaction(accountId: accountId)
@@ -164,8 +158,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
                                    cost: try Cost(amount: testTransactionPrice.amount, date: nil, label: nil))
         var postings = [try posting(), assetPosting]
         var resultTransaction = Transaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transactionId]), postings: postings)
-        XCTAssertEqual(prices, [testTransactionPrice])
-        XCTAssertEqual(transactions, [resultTransaction])
+        #expect(prices == [testTransactionPrice])
+        #expect(transactions == [resultTransaction])
 
         // buy fx
         transaction.netCashCurrency = "EUR"
@@ -174,8 +168,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction])
         postings = [try posting(number: transaction.netCashAmount, commodity: "EUR", price: priceAmount()), postings[1]]
         resultTransaction = Transaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transactionId]), postings: postings)
-        XCTAssertEqual(prices, [testTransactionPrice])
-        XCTAssertEqual(transactions, [resultTransaction])
+        #expect(prices == [testTransactionPrice])
+        #expect(transactions == [resultTransaction])
 
     }
 
@@ -194,8 +188,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
                                    cost: try Cost(amount: nil, date: nil, label: nil))
         var postings = [try posting(number: "11.76"), assetPosting]
         var resultTransaction = Transaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transactionId]), postings: postings)
-        XCTAssertEqual(prices, [testTransactionPrice])
-        XCTAssertEqual(transactions, [resultTransaction])
+        #expect(prices == [testTransactionPrice])
+        #expect(transactions == [resultTransaction])
 
         // sell fx
         transaction.netCashCurrency = "EUR"
@@ -204,8 +198,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction])
         postings = [try posting(number: transaction.netCashAmount, commodity: "EUR", price: priceAmount()), postings[1]]
         resultTransaction = Transaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transactionId]), postings: postings)
-        XCTAssertEqual(prices, [testTransactionPrice])
-        XCTAssertEqual(transactions, [resultTransaction])
+        #expect(prices == [testTransactionPrice])
+        #expect(transactions == [resultTransaction])
     }
 
     func testMapTransactionsAlreadyExisting() throws {
@@ -213,14 +207,14 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
 
         // transaction exists
         var (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([testTransaction])
-        XCTAssertEqual(prices, [testTransactionPrice])
-        XCTAssert(transactions.isEmpty)
+        #expect(prices == [testTransactionPrice])
+        #expect(transactions.isEmpty)
 
         // price exists as well
         try ledger.add(testTransactionPrice)
         (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([testTransaction])
-        XCTAssert(prices.isEmpty)
-        XCTAssert(transactions.isEmpty)
+        #expect(prices.isEmpty)
+        #expect(transactions.isEmpty)
 
         // non merged nrwt transaction already exists
         var nrwt = testTransaction
@@ -231,8 +225,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         ledger.add(Transaction(metaData: TransactionMetaData(date: Date(), metaData: [MetaDataKeys.nrwtId: "tid2"]), postings: []))
         try ledger.add(SAccount(name: try AccountName("Expenses:t"), metaData: ["\(MetaDataKeys.prefix)\("\(nrwt.transactionType)".camelCaseToKebabCase())": accountNumber]))
         (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([nrwt])
-        XCTAssert(prices.isEmpty)
-        XCTAssert(transactions.isEmpty)
+        #expect(prices.isEmpty)
+        #expect(transactions.isEmpty)
     }
 
     func testMapTransactionsNRWT() throws {
@@ -248,8 +242,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         var transaction = Transaction(metaData: TransactionMetaData(date: nrwt.processDate, metaData: [MetaDataKeys.id: transactionId]), postings: [
             try posting(number: nrwt.netCashAmount, price: priceAmount(commodity: "USD")), try posting(account: "Expenses:t", number: "2.43", commodity: "USD")
         ])
-        XCTAssert(prices.isEmpty)
-        XCTAssertEqual(transactions, [transaction])
+        #expect(prices.isEmpty)
+        #expect(transactions == [transaction])
 
         // nrwt merged
         try ledger.add(SAccount(name: try AccountName("Income:t"), metaData: ["\(MetaDataKeys.dividendPrefix)ETF": accountNumber]))
@@ -264,8 +258,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
             try posting(account: "Income:t", number: "-16.21", commodity: "USD"),
             transaction.postings[1], try posting(number: "27.56", price: priceAmount(commodity: "USD"))
         ])
-        XCTAssert(prices.isEmpty)
-        XCTAssertEqual(transactions, [transaction])
+        #expect(prices.isEmpty)
+        #expect(transactions == [transaction])
     }
 
     func testMapTransactionsDividend() throws {
@@ -282,8 +276,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         var transaction = Transaction(metaData: TransactionMetaData(date: dividend.processDate, metaData: meta), postings: [
             try posting(number: dividend.netCashAmount, price: priceAmount(commodity: "USD")), try posting(account: "Income:t", number: "-16.21", commodity: "USD")
         ])
-        XCTAssertEqual(transactions, [transaction])
-        XCTAssert(prices.isEmpty)
+        #expect(transactions == [transaction])
+        #expect(prices.isEmpty)
 
         // dividend without fx
         dividend.description = "ZFL-BMO Long Federal Bond ETF: 25-JUN-21 (record date) 24.0020 shares"
@@ -291,8 +285,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         transaction = Transaction(metaData: TransactionMetaData(date: dividend.processDate, metaData: meta), postings: [
             try posting(number: dividend.netCashAmount), try posting(account: "Income:t", number: "-32.42")
         ])
-        XCTAssertEqual(transactions, [transaction])
-        XCTAssert(prices.isEmpty)
+        #expect(transactions == [transaction])
+        #expect(prices.isEmpty)
 
         // dividend simple description
         dividend.description = "Dividend 123.10 CAD WSE100"
@@ -302,8 +296,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         transaction = Transaction(metaData: TransactionMetaData(date: dividend.processDate, metaData: meta), postings: [
             try posting(number: dividend.netCashAmount), try posting(account: "Income:t", number: "-32.42")
         ])
-        XCTAssertEqual(transactions, [transaction])
-        XCTAssert(prices.isEmpty)
+        #expect(transactions == [transaction])
+        #expect(prices.isEmpty)
     }
 
     func testMapTransactionsStockDividend() throws {
@@ -321,8 +315,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
                     cost: try Cost(amount: testTransactionPrice.amount, date: nil, label: nil))
         ]
         let resultTransaction = Transaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transactionId]), postings: postings)
-        XCTAssertEqual(prices, [testTransactionPrice])
-        XCTAssertEqual(transactions, [resultTransaction])
+        #expect(prices == [testTransactionPrice])
+        #expect(transactions == [resultTransaction])
     }
 
     func testMapTransactionsTransfers() throws {
@@ -347,8 +341,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
                 let payee = [.fee, .reimbursement, .interest].contains(transactionType) ? "Wealthsimple" : ""
                 let resultTransaction = Transaction(metaData: TransactionMetaData(date: transaction.processDate, payee: payee, metaData: [MetaDataKeys.id: transactionId]),
                                                     postings: [try posting(number: transaction.netCashAmount), assetPosting])
-                XCTAssert(prices.isEmpty)
-                XCTAssertEqual(transactions, [resultTransaction])
+                #expect(prices.isEmpty)
+                #expect(transactions == [resultTransaction])
 
                 count += 1
             }
@@ -378,8 +372,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
                                    priceType: .total)
         let result = Transaction(metaData: TransactionMetaData(date: transaction.processDate, narration: transaction.description, metaData: [MetaDataKeys.id: transactionId]),
                                  postings: [posting1, posting2])
-        XCTAssert(prices.isEmpty)
-        XCTAssertEqual(transactions, [result])
+        #expect(prices.isEmpty)
+        #expect(transactions == [result])
     }
 
     func testMapTransferAllowFXFalseButFXPresent() throws {
@@ -398,8 +392,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
                                amount: Amount(number: Decimal(string: "11.76")!, commoditySymbol: "USD", decimalDigits: 2))
         let result = Transaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transactionId]),
                                  postings: [posting1, posting2])
-        XCTAssert(prices.isEmpty)
-        XCTAssertEqual(transactions, [result])
+        #expect(prices.isEmpty)
+        #expect(transactions == [result])
     }
 
     func testMapTransactionsContributionRoom() throws {
@@ -424,8 +418,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
                                                 Posting(accountName: assetAccountName, amount: priceAmount(number: "-\(transaction.quantity)", commodity: roomCommodity)),
                                                 Posting(accountName: expenseAccountName, amount: priceAmount(number: transaction.quantity, commodity: roomCommodity)),
                                             ])
-        XCTAssert(prices.isEmpty)
-        XCTAssertEqual(transactions, [resultTransaction])
+        #expect(prices.isEmpty)
+        #expect(transactions == [resultTransaction])
     }
 
     func testMapTransactionsStockLoanTypesAreIgnored() throws {
@@ -434,14 +428,14 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
         // Test .stockLoanBorrow
         transaction.transactionType = .stockLoanBorrow
         var (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction])
-        XCTAssert(prices.isEmpty)
-        XCTAssert(transactions.isEmpty)
+        #expect(prices.isEmpty)
+        #expect(transactions.isEmpty)
 
         // Test .stockLoanReturn
         transaction.transactionType = .stockLoanReturn
         (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction])
-        XCTAssert(prices.isEmpty)
-        XCTAssert(transactions.isEmpty)
+        #expect(prices.isEmpty)
+        #expect(transactions.isEmpty)
     }
 
     func testSplitTransactions() throws {
@@ -460,8 +454,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
                                             ])
 
         let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction1, transaction2])
-        XCTAssert(prices.isEmpty)
-        XCTAssertEqual(transactions, [resultTransaction])
+        #expect(prices.isEmpty)
+        #expect(transactions == [resultTransaction])
     }
 
     func testSplitTransactionsDifferentCommodities() throws {
@@ -484,8 +478,8 @@ final class WealthsimpleLedgerMapperTests: XCTestCase {
                                             ])
 
         let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction1, transaction2])
-        XCTAssert(prices.isEmpty)
-        XCTAssertEqual(transactions, [resultTransaction])
+        #expect(prices.isEmpty)
+        #expect(transactions == [resultTransaction])
     }
 
     // swiftlint:disable line_length

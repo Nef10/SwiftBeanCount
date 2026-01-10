@@ -6,11 +6,14 @@
 //  Copyright © 2019 Steffen Kötte. All rights reserved.
 //
 
-import SwiftBeanCountModel
+import Foundation
 @testable import SwiftBeanCountParser
-import XCTest
+import SwiftBeanCountModel
+import Testing
 
-final class PluginParserTests: XCTestCase {
+@Suite
+
+struct PluginParserTests {
 
     private let basicString = "plugin \"ABC\""
     private let whitespaceString = "plugin    \"  A B C  \"        "
@@ -19,22 +22,22 @@ final class PluginParserTests: XCTestCase {
 
     func testBasic() {
         let plugin = PluginParser.parseFrom(line: basicString)
-        XCTAssertEqual(plugin, "ABC")
+        #expect(plugin == "ABC")
     }
 
     func testWhitespace() {
         let plugin = PluginParser.parseFrom(line: whitespaceString)
-        XCTAssertEqual(plugin, "  A B C  ")
+        #expect(plugin == "  A B C  ")
     }
 
     func testEndOfLineComment() {
         let plugin = PluginParser.parseFrom(line: endOfLineCommentString)
-        XCTAssertEqual(plugin, "ABC")
+        #expect(plugin == "ABC")
     }
 
     func testSpecialCharacter() {
         let plugin = PluginParser.parseFrom(line: specialCharacterString)
-        XCTAssertEqual(plugin, "ABC💵")
+        #expect(plugin == "ABC💵")
     }
 
     func testPerformance() {

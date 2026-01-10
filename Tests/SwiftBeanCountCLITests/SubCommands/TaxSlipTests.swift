@@ -1,27 +1,30 @@
+import Foundation
+@testable import SwiftBeanCountCLI
+import Testing
+
 #if os(macOS)
 
-@testable import SwiftBeanCountCLI
-import XCTest
+@Suite
 
-final class TaxSlipTests: XCTestCase {
+struct TaxSlipTests {
 
     func testFileDoesNotExist() {
         let url = temporaryFileURL()
         let result = outputFromExecutionWith(arguments: ["tax-slips", url.path])
-        XCTAssertEqual(result.exitCode, 1)
-        XCTAssert(result.errorOutput.isEmpty)
+        #expect(result.exitCode == 1)
+        #expect(result.errorOutput.isEmpty)
         #if os(Linux)
-        XCTAssertEqual(result.output, "The operation could not be completed. The file doesn’t exist.")
+        #expect(result.output == "The operation could not be completed. The file doesn’t exist.")
         #else
-        XCTAssertEqual(result.output, "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
+        #expect(result.output == "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
         #endif
     }
 
     func testEmptyFile() {
         let url = emptyFileURL()
         let result = outputFromExecutionWith(arguments: ["tax-slips", url.path])
-        XCTAssertEqual(result.exitCode, 1)
-        XCTAssert(result.errorOutput.starts(with: "Error: There was no configured tax slip found for year "))
+        #expect(result.exitCode == 1)
+        #expect(result.errorOutput.starts(with: "Error: There was no configured tax slip found for year "))
     }
 
     func testNoSlip() {

@@ -6,16 +6,19 @@
 //  Copyright © 2023 Steffen Kötte. All rights reserved.
 //
 
-#if canImport(UIKit) || canImport(AppKit)
-
+import Foundation
+@testable import SwiftBeanCountImporter
 import CompassCardDownloader
 import SwiftBeanCountCompassCardMapper
-@testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
-import XCTest
+import Testing
+
+#if canImport(UIKit) || canImport(AppKit)
+
 
 @available(iOS 14.5, macOS 11.3, *)
-final class CompassCardDownloadImporterTests: XCTestCase {
+@Suite
+struct CompassCardDownloadImporterTests {
 
     private class MockDownloader: CompassCardDownloaderProvider {
         weak var delegate: CompassCardDownloaderDelegate?
@@ -46,25 +49,25 @@ final class CompassCardDownloadImporterTests: XCTestCase {
     }
 
     func testImporterName() {
-        XCTAssertEqual(CompassCardDownloadImporter.importerName, "Compass Card Download")
+        #expect(CompassCardDownloadImporter.importerName == "Compass Card Download")
     }
 
     func testImporterType() {
-        XCTAssertEqual(CompassCardDownloadImporter.importerType, "compass-card-download")
+        #expect(CompassCardDownloadImporter.importerType == "compass-card-download")
     }
 
     func testHelpText() {
-        XCTAssert(CompassCardDownloadImporter.helpText.hasPrefix("Downloads transactions and the current balance from the Compass Card website."))
+        #expect(CompassCardDownloadImporter.helpText.hasPrefix("Downloads transactions and the current balance from the Compass Card website."))
     }
 
     func testImportName() {
-        XCTAssertEqual(CompassCardDownloadImporter(ledger: nil).importName, "Compass Card Download")
+        #expect(CompassCardDownloadImporter(ledger: nil).importName == "Compass Card Download")
     }
 
     func testSavedCredentials() throws {
         Self.authAndBalanceLoading = {
-            XCTAssertEqual($0, "name")
-            XCTAssertEqual($1, "password123")
+            #expect($0 == "name")
+            #expect($1 == "password123")
             return .success(("123456789", "0.00"))
         }
         try runImport()
@@ -74,8 +77,8 @@ final class CompassCardDownloadImporterTests: XCTestCase {
         let error = TestError()
 
         Self.authAndBalanceLoading = {
-            XCTAssertEqual($0, "name")
-            XCTAssertEqual($1, "password123")
+            #expect($0 == "name")
+            #expect($1 == "password123")
             return .failure(error)
         }
         delegate = CredentialInputAndViewDelegate(inputNames: ["The login failed. Do you want to remove the saved credentials"],
@@ -98,12 +101,12 @@ final class CompassCardDownloadImporterTests: XCTestCase {
         let error = TestError()
 
         Self.authAndBalanceLoading = {
-            XCTAssertEqual($0, "name")
-            XCTAssertEqual($1, "password123")
+            #expect($0 == "name")
+            #expect($1 == "password123")
             return .success(("123456789", "0.00"))
         }
         Self.transactionsLoading = { _, date in
-            XCTAssertEqual(Calendar.current.compare(date, to: Date(timeIntervalSinceNow: self.sixtyTwoDays), toGranularity: .minute), .orderedSame)
+            #expect(Calendar.current.compare(date == to: Date(timeIntervalSinceNow: self.sixtyTwoDays), toGranularity: .minute), .orderedSame)
             return .failure(error)
         }
         setDefaultDelegate(error: error)
@@ -116,12 +119,12 @@ final class CompassCardDownloadImporterTests: XCTestCase {
         ledger.custom.append(Custom(date: Date(timeIntervalSinceNow: sixtyTwoDays), name: "compass-card-download-importer", values: ["pastDaysToLoad", "200"]))
 
         Self.authAndBalanceLoading = {
-            XCTAssertEqual($0, "name")
-            XCTAssertEqual($1, "password123")
+            #expect($0 == "name")
+            #expect($1 == "password123")
             return .success(("123456789", "0.00"))
         }
         Self.transactionsLoading = { _, date in
-            XCTAssertEqual(Calendar.current.compare(date, to: Date(timeIntervalSinceNow: self.threeDays), toGranularity: .minute), .orderedSame)
+            #expect(Calendar.current.compare(date == to: Date(timeIntervalSinceNow: self.threeDays), toGranularity: .minute), .orderedSame)
             return .success(",\n")
         }
         try runImport(ledger: ledger)
@@ -142,22 +145,22 @@ final class CompassCardDownloadImporterTests: XCTestCase {
         let transaction = Transaction(metaData: metaData, postings: [posting1, posting2])
 
         Self.authAndBalanceLoading = {
-            XCTAssertEqual($0, "name")
-            XCTAssertEqual($1, "password123")
+            #expect($0 == "name")
+            #expect($1 == "password123")
             return .success(("123456789", "20.50"))
         }
         Self.transactionsLoading = { cardNumber, _ in
-            XCTAssertEqual(cardNumber, "123456789")
+            #expect(cardNumber == "123456789")
             return .success(transactions)
         }
         try runImport { importer in
             let result = importer.nextTransaction()
-            XCTAssertEqual(result?.transaction, transaction)
-            XCTAssertEqual(result?.accountName?.fullName, "Assets:CompassCard")
-            XCTAssert(result?.shouldAllowUserToEdit ?? false)
-            XCTAssertNil(importer.nextTransaction())
-            XCTAssertEqual(importer.balancesToImport().count, 1)
-            XCTAssertEqual(importer.balancesToImport().first!.description, balance.description)
+            #expect(result?.transaction == transaction)
+            #expect(result?.accountName?.fullName == "Assets:CompassCard")
+            #expect(result?.shouldAllowUserToEdit ?? false)
+            #expect(importer.nextTransaction( == nil))
+            #expect(importer.balancesToImport().count == 1)
+            #expect(importer.balancesToImport().first!.description == balance.description)
         }
     }
 
@@ -169,18 +172,18 @@ final class CompassCardDownloadImporterTests: XCTestCase {
         importer.delegate = delegate
         DispatchQueue.global(qos: .userInitiated).async {
             importer.load()
-            XCTAssert(importer.pricesToImport().isEmpty)
-            XCTAssert(self.delegate!.verified)
+            #expect(importer.pricesToImport().isEmpty)
+            #expect(self.delegate!.verified)
             if let verify {
                 verify(importer)
             } else {
-                XCTAssertNil(importer.nextTransaction())
+                #expect(importer.nextTransaction( == nil))
                 if success {
-                    XCTAssertEqual(importer.balancesToImport().count, 1)
-                    XCTAssertEqual(importer.balancesToImport()[0].accountName, accountName)
-                    XCTAssertEqual(importer.balancesToImport()[0].amount.description, "0.00 CAD")
+                    #expect(importer.balancesToImport().count == 1)
+                    #expect(importer.balancesToImport()[0].accountName == accountName)
+                    #expect(importer.balancesToImport()[0].amount.description == "0.00 CAD")
                 } else {
-                    XCTAssert(importer.balancesToImport().isEmpty)
+                    #expect(importer.balancesToImport().isEmpty)
                 }
             }
             expectation.fulfill()

@@ -1,9 +1,10 @@
-#if os(macOS)
-
+import Foundation
+@testable import SwiftBeanCountCLI
 import ArgumentParser
 import Rainbow
-@testable import SwiftBeanCountCLI
-import XCTest
+import Testing
+
+#if os(macOS)
 
 struct TestFormattableCommand: FormattableCommand {
     var formatOptions = FormattableCommandOptions()
@@ -14,7 +15,9 @@ struct TestFormattableCommand: FormattableCommand {
     }
 }
 
-final class FormattableCommandTests: XCTestCase {
+@Suite
+
+struct FormattableCommandTests {
 
     private let basicResult = FormattableResult(title: "Title",
                                                 columns: ["Column A", "B", "C"],

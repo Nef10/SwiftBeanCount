@@ -1,27 +1,30 @@
+import Foundation
+@testable import SwiftBeanCountCLI
+import Testing
+
 #if os(macOS)
 
-@testable import SwiftBeanCountCLI
-import XCTest
+@Suite
 
-final class AccountsTests: XCTestCase {
+struct AccountsTests {
 
     func testInvalidArguments() {
         let url = emptyFileURL()
         let result = outputFromExecutionWith(arguments: ["accounts", url.path, "-c", "-f", "csv"])
-        XCTAssertEqual(result.exitCode, 64)
-        XCTAssertEqual(result.output, "")
-        XCTAssert(result.errorOutput.hasPrefix("Error: Cannot print count in csv format. Please remove count flag or specify another format."))
+        #expect(result.exitCode == 64)
+        #expect(result.output == "")
+        #expect(result.errorOutput.hasPrefix("Error: Cannot print count in csv format. Please remove count flag or specify another format."))
     }
 
     func testFileDoesNotExist() {
         let url = temporaryFileURL()
         let result = outputFromExecutionWith(arguments: ["accounts", url.path])
-        XCTAssertEqual(result.exitCode, 1)
-        XCTAssert(result.errorOutput.isEmpty)
+        #expect(result.exitCode == 1)
+        #expect(result.errorOutput.isEmpty)
         #if os(Linux)
-        XCTAssertEqual(result.output, "The operation could not be completed. The file doesn’t exist.")
+        #expect(result.output == "The operation could not be completed. The file doesn’t exist.")
         #else
-        XCTAssertEqual(result.output, "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
+        #expect(result.output == "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
         #endif
     }
 

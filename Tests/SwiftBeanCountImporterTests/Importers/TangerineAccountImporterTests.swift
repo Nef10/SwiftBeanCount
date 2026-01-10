@@ -6,32 +6,33 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class TangerineAccountImporterTests: XCTestCase {
+@Suite
+
+struct TangerineAccountImporterTests {
 
     func testHeaders() {
-        XCTAssertEqual(TangerineAccountImporter.headers,
-                       [["Date", "Transaction", "Name", "Memo", "Amount"]])
+        #expect(TangerineAccountImporter.headers == [["Date", "Transaction", "Name", "Memo", "Amount"]])
     }
 
     func testImporterName() {
-        XCTAssertEqual(TangerineAccountImporter.importerName, "Tangerine Accounts")
+        #expect(TangerineAccountImporter.importerName == "Tangerine Accounts")
     }
 
     func testImporterType() {
-        XCTAssertEqual(TangerineAccountImporter.importerType, "tangerine-account")
+        #expect(TangerineAccountImporter.importerType == "tangerine-account")
     }
 
     func testHelpText() {
-        XCTAssertEqual(TangerineAccountImporter.helpText,
-                       "Enables importing of downloaded CSV files from Tangerine Accounts.\n\nTo use add importer-type: \"tangerine-account\" to your account.")
+        #expect(TangerineAccountImporter.helpText == "Enables importing of downloaded CSV files from Tangerine Accounts.\n\nTo use add importer-type: \"tangerine-account\" to your account.")
     }
 
     func testImportName() throws {
-        XCTAssertEqual(TangerineAccountImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName,
+        #expect(TangerineAccountImporter(ledger: nil == csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName,
                        "Tangerine Account File TestName")
     }
 
@@ -40,19 +41,19 @@ final class TangerineAccountImporterTests: XCTestCase {
                                                 csvReader: TestUtils.basicCSVReader,
                                                 fileName: "Export \(TestUtils.accountNumberChequing).csv")
         var possibleAccountNames = importer.accountsFromLedger()
-        XCTAssertEqual(possibleAccountNames.count, 1)
-        XCTAssertEqual(possibleAccountNames[0], TestUtils.chequing)
+        #expect(possibleAccountNames.count == 1)
+        #expect(possibleAccountNames[0] == TestUtils.chequing)
 
         importer = TangerineAccountImporter(ledger: TestUtils.lederAccountNumers, csvReader: TestUtils.basicCSVReader, fileName: "Export \(TestUtils.accountNumberCash).csv")
         possibleAccountNames = importer.accountsFromLedger()
-        XCTAssertEqual(possibleAccountNames.count, 1)
-        XCTAssertEqual(possibleAccountNames[0], TestUtils.cash)
+        #expect(possibleAccountNames.count == 1)
+        #expect(possibleAccountNames[0] == TestUtils.cash)
 
         importer = TangerineAccountImporter(ledger: TestUtils.lederAccountNumers, csvReader: TestUtils.basicCSVReader, fileName: "Export 000000.csv")
         possibleAccountNames = importer.accountsFromLedger()
-        XCTAssertEqual(possibleAccountNames.count, 2)
-        XCTAssertTrue(possibleAccountNames.contains(TestUtils.cash))
-        XCTAssertTrue(possibleAccountNames.contains(TestUtils.chequing))
+        #expect(possibleAccountNames.count == 2)
+        #expect(possibleAccountNames.contains(TestUtils.cash))
+        #expect(possibleAccountNames.contains(TestUtils.chequing))
     }
 
     func testAccountSuggestions() {
@@ -60,17 +61,17 @@ final class TangerineAccountImporterTests: XCTestCase {
                                                 csvReader: TestUtils.basicCSVReader,
                                                 fileName: "Export \(TestUtils.accountNumberChequing).csv")
         importer.delegate = TestUtils.noInputDelegate
-        XCTAssertEqual(importer.configuredAccountName, TestUtils.chequing)
+        #expect(importer.configuredAccountName == TestUtils.chequing)
 
         importer = TangerineAccountImporter(ledger: TestUtils.lederAccountNumers, csvReader: TestUtils.basicCSVReader, fileName: "Export \(TestUtils.accountNumberCash).csv")
         importer.delegate = TestUtils.noInputDelegate
-        XCTAssertEqual(importer.configuredAccountName, TestUtils.cash)
+        #expect(importer.configuredAccountName == TestUtils.cash)
 
         importer = TangerineAccountImporter(ledger: TestUtils.lederAccountNumers, csvReader: TestUtils.basicCSVReader, fileName: "Export 000000.csv")
         let delegate = AccountNameSuggestionVerifier(expectedValues: [TestUtils.cash, TestUtils.chequing])
         importer.delegate = delegate
         _ = importer.configuredAccountName
-        XCTAssert(delegate.verified)
+        #expect(delegate.verified)
     }
 
     func testParseLine() throws {
@@ -84,11 +85,11 @@ Date,Transaction,Name,Memo,Amount
 
         importer.csvReader.next()
         let line = importer.parseLine()
-        XCTAssert(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20200605))
-        XCTAssertEqual(line.description.trimmingCharacters(in: .whitespaces), "To BANK")
-        XCTAssertEqual(line.amount, Decimal(string: "-765.43", locale: Locale(identifier: "en_CA"))!)
-        XCTAssertEqual(line.payee, "")
-        XCTAssertNil(line.price)
+        #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20200605))
+        #expect(line.description.trimmingCharacters(in: .whitespaces) == "To BANK")
+        #expect(line.amount == Decimal(string: "-765.43", locale: Locale(identifier: "en_CA"))!)
+        #expect(line.payee == "")
+        #expect(line.price == nil)
     }
 
     func testParseLineEmptyMemo() throws {
@@ -102,11 +103,11 @@ Date,Transaction,Name,Memo,Amount
 
         importer.csvReader.next()
         let line = importer.parseLine()
-        XCTAssert(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
-        XCTAssertEqual(line.description.trimmingCharacters(in: .whitespaces), "Cheque Withdrawal - 002")
-        XCTAssertEqual(line.amount, Decimal(string: "-95.00", locale: Locale(identifier: "en_CA"))!)
-        XCTAssertEqual(line.payee, "")
-        XCTAssertNil(line.price)
+        #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
+        #expect(line.description.trimmingCharacters(in: .whitespaces) == "Cheque Withdrawal - 002")
+        #expect(line.amount == Decimal(string: "-95.00", locale: Locale(identifier: "en_CA"))!)
+        #expect(line.payee == "")
+        #expect(line.price == nil)
     }
 
     func testParseLineInterest() throws {
@@ -120,10 +121,10 @@ Date,Transaction,Name,Memo,Amount
 
         importer.csvReader.next()
         let line = importer.parseLine()
-        XCTAssertEqual(line.description.trimmingCharacters(in: .whitespaces), "Interest Paid")
-        XCTAssertEqual(line.amount, Decimal(string: "0.50", locale: Locale(identifier: "en_CA"))!)
-        XCTAssertEqual(line.payee, "Tangerine")
-        XCTAssertNil(line.price)
+        #expect(line.description.trimmingCharacters(in: .whitespaces) == "Interest Paid")
+        #expect(line.amount == Decimal(string: "0.50", locale: Locale(identifier: "en_CA"))!)
+        #expect(line.payee == "Tangerine")
+        #expect(line.price == nil)
     }
 
     func testParseLineInterac() throws {
@@ -137,10 +138,10 @@ Date,Transaction,Name,Memo,Amount
 
         importer.csvReader.next()
         let line = importer.parseLine()
-        XCTAssertEqual(line.description.trimmingCharacters(in: .whitespaces), "NAME - Transferred")
-        XCTAssertEqual(line.amount, Decimal(string: "40.25", locale: Locale(identifier: "en_CA"))!)
-        XCTAssertEqual(line.payee, "")
-        XCTAssertNil(line.price)
+        #expect(line.description.trimmingCharacters(in: .whitespaces) == "NAME - Transferred")
+        #expect(line.amount == Decimal(string: "40.25", locale: Locale(identifier: "en_CA"))!)
+        #expect(line.payee == "")
+        #expect(line.price == nil)
     }
 
 }

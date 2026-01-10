@@ -10,7 +10,7 @@
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
-import XCTest
+import Testing
 
 class BaseTestImporterDelegate: ImporterDelegate {
 
@@ -67,8 +67,8 @@ class AccountNameSuggestionVerifier: BaseTestImporterDelegate {
     }
 
     override func requestInput(name: String, type: ImporterInputRequestType, completion: (String) -> Bool) {
-        XCTAssertEqual(name, "Account")
-        XCTAssertEqual(type, .text(expectedValues))
+        #expect(name == "Account")
+        #expect(type == .text(expectedValues))
         verified = true
         _ = completion(TestUtils.cash.fullName)
     }
@@ -111,9 +111,9 @@ class InputProviderDelegate: BaseTestImporterDelegate {
             XCTFail("Called requestInput too often")
             return
         }
-        XCTAssertEqual(name, names[index])
-        XCTAssertEqual(types[index], type)
-        XCTAssert(completion(returnValues[index]))
+        #expect(name == names[index])
+        #expect(types[index] == type)
+        #expect(completion(returnValues[index]))
         index += 1
         if index == names.count {
             verifiedInput = true
@@ -178,8 +178,8 @@ class CredentialInputDelegate: InputProviderDelegate { // swiftlint:disable:this
             XCTFail("Called saveCredential too often")
             return
         }
-        XCTAssertEqual(value, saveValues[saveIndex])
-        XCTAssertEqual(key, saveKeys[saveIndex])
+        #expect(value == saveValues[saveIndex])
+        #expect(key == saveKeys[saveIndex])
         saveIndex += 1
         if saveIndex == saveKeys.count {
             verifiedSave = true
@@ -191,7 +191,7 @@ class CredentialInputDelegate: InputProviderDelegate { // swiftlint:disable:this
             XCTFail("Called readCredential too often")
             return nil
         }
-        XCTAssertEqual(key, readKeys[readIndex])
+        #expect(key == readKeys[readIndex])
         readIndex += 1
         if readIndex == readKeys.count {
             verifiedRead = true
@@ -235,7 +235,7 @@ class ErrorDelegate<T: EquatableError>: CredentialInputDelegate {
         if self.error == nil {
             XCTFail("Received unexpected error: \(error)")
         }
-        XCTAssertEqual(error as? T, self.error)
+        #expect(error as? T == self.error)
         errorVerified = true
         completion()
     }
@@ -273,7 +273,7 @@ class ErrorCheckDelegate: CredentialInputDelegate {
             XCTFail("Received unexpected error: \(error)")
             return
         }
-        XCTAssert(check(error))
+        #expect(check(error))
         errorVerified = true
         completion()
     }
@@ -296,7 +296,7 @@ class CredentialInputAndViewDelegate: ErrorDelegate<TestError> {
     #if canImport(UIKit)
 
     override func view() -> UIView? {
-        XCTAssertFalse(getViewCalled, "view called too often")
+        #expect(!(getViewCalled, "view called too often"))
         getViewCalled = true
         return nil
     }
@@ -304,7 +304,7 @@ class CredentialInputAndViewDelegate: ErrorDelegate<TestError> {
     #elseif canImport(AppKit)
 
     override func view() -> NSView? {
-        XCTAssertFalse(getViewCalled, "view called too often")
+        #expect(!(getViewCalled, "view called too often"))
         getViewCalled = true
         return nil
     }
@@ -314,7 +314,7 @@ class CredentialInputAndViewDelegate: ErrorDelegate<TestError> {
     #if canImport(UIKit) || canImport(AppKit)
 
     override func removeView() {
-        XCTAssertFalse(removeViewCalled, "removeView called too often")
+        #expect(!(removeViewCalled, "removeView called too often"))
         removeViewCalled = true
     }
 

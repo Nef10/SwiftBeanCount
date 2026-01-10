@@ -6,11 +6,14 @@
 //  Copyright © 2019 Steffen Kötte. All rights reserved.
 //
 
-import SwiftBeanCountModel
+import Foundation
 @testable import SwiftBeanCountParser
-import XCTest
+import SwiftBeanCountModel
+import Testing
 
-final class CustomsParserTests: XCTestCase {
+@Suite
+
+struct CustomsParserTests {
 
     private let basicString = "2017-06-09 custom \"ABC\" \"DEF\""
     private let multipleValuesString = "2017-06-09 custom \"ABC\" \"DEF\" \"GHI\" \"JKL\" \"MNO\""
@@ -21,41 +24,41 @@ final class CustomsParserTests: XCTestCase {
 
     func testBasic() {
         let event = CustomsParser.parseFrom(line: basicString)!
-        XCTAssertEqual(event.date, TestUtils.date20170609)
-        XCTAssertEqual(event.name, "ABC")
-        XCTAssertEqual(event.values, ["DEF"])
+        #expect(event.date == TestUtils.date20170609)
+        #expect(event.name == "ABC")
+        #expect(event.values == ["DEF"])
     }
 
     func testMultipleValues() {
         let event = CustomsParser.parseFrom(line: multipleValuesString)!
-        XCTAssertEqual(event.date, TestUtils.date20170609)
-        XCTAssertEqual(event.name, "ABC")
-        XCTAssertEqual(event.values, ["DEF", "GHI", "JKL", "MNO"])
+        #expect(event.date == TestUtils.date20170609)
+        #expect(event.name == "ABC")
+        #expect(event.values == ["DEF", "GHI", "JKL", "MNO"])
     }
 
     func testWhitespace() {
         let event = CustomsParser.parseFrom(line: whitespaceString)!
-        XCTAssertEqual(event.date, TestUtils.date20170609)
-        XCTAssertEqual(event.name, "  A B C  ")
-        XCTAssertEqual(event.values, ["  D E F  ", "G H I"])
+        #expect(event.date == TestUtils.date20170609)
+        #expect(event.name == "  A B C  ")
+        #expect(event.values == ["  D E F  ", "G H I"])
     }
 
     func testEndOfLineComment() {
         let event = CustomsParser.parseFrom(line: endOfLineCommentString)!
-        XCTAssertEqual(event.date, TestUtils.date20170609)
-        XCTAssertEqual(event.name, "ABC")
-        XCTAssertEqual(event.values, ["DEF", "GHI"])
+        #expect(event.date == TestUtils.date20170609)
+        #expect(event.name == "ABC")
+        #expect(event.values == ["DEF", "GHI"])
     }
 
     func testSpecialCharacter() {
         let event = CustomsParser.parseFrom(line: specialCharacterString)!
-        XCTAssertEqual(event.date, TestUtils.date20170609)
-        XCTAssertEqual(event.name, "ABC💵")
-        XCTAssertEqual(event.values, ["DEF💵", "GHI💵"])
+        #expect(event.date == TestUtils.date20170609)
+        #expect(event.name == "ABC💵")
+        #expect(event.values == ["DEF💵", "GHI💵"])
     }
 
     func testInvalidDate() {
-        XCTAssertNil(CustomsParser.parseFrom(line: invalidDateString))
+        #expect(CustomsParser.parseFrom(line: invalidDateString == nil))
     }
 
     func testPerformance() {
