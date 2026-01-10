@@ -10,6 +10,13 @@ import Foundation
 import SwiftBeanCountModel
 import SwiftBeanCountParserUtils
 
+/// Errors which can happen when importing
+public enum ManuLifeImporterError: Error, Equatable {
+    case failedToParseTransaction(String)
+    case failedToParseBalance(String)
+}
+
+// swiftlint:disable:next type_body_length
 class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
 
     private struct ManuLifeBalance {
@@ -111,9 +118,27 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
             let (buys, date) = parsePurchase(string: transactionInputString, commodities: commodities)
             parsedManuLifeBuys = buys
             parsedTransactionDate = date
+            // Check if we failed to parse anything meaningful from non-empty input
+            if buys.isEmpty || date == nil {
+                let group = DispatchGroup()
+                group.enter()
+                self.delegate?.error(ManuLifeImporterError.failedToParseTransaction(transactionInputString)) {
+                    group.leave()
+                }
+                group.wait()
+            }
         }
         if !balanceInputString.isEmpty {
             parsedManuLifeBalances = parseBalances(string: balanceInputString, commodities: commodities)
+            // Check if we failed to parse anything meaningful from non-empty input
+            if parsedManuLifeBalances.isEmpty {
+                let group = DispatchGroup()
+                group.enter()
+                self.delegate?.error(ManuLifeImporterError.failedToParseBalance(balanceInputString)) {
+                    group.leave()
+                }
+                group.wait()
+            }
         }
     }
 
@@ -331,4 +356,15 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         return Amount(number: number, commoditySymbol: commoditySymbol, decimalDigits: decimalDigits)
     }
 
+}
+
+extension ManuLifeImporterError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case let .failedToParseTransaction(string):
+            return "Failed to parse transaction from the provided text: \(string)"
+        case let .failedToParseBalance(string):
+            return "Failed to parse balance from the provided text: \(string)"
+        }
+    }
 }
