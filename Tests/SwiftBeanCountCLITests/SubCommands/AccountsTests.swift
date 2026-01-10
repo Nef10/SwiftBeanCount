@@ -12,7 +12,7 @@ struct AccountsTests {
         let url = emptyFileURL()
         let result = outputFromExecutionWith(arguments: ["accounts", url.path, "-c", "-f", "csv"])
         #expect(result.exitCode == 64)
-        #expect(result.output == "")
+        #expect(result.output.isEmpty)
         #expect(result.errorOutput.hasPrefix("Error: Cannot print count in csv format. Please remove count flag or specify another format."))
     }
 
