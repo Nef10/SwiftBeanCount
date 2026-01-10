@@ -35,7 +35,7 @@ struct ImporterTests {
    @Test
    func testFileImporter() {
         // no url
-        #expect(ImporterFactory.new(ledger: nil, url: nil == nil))
+        #expect(ImporterFactory.new(ledger: nil, url: nil) == nil)
 
         // invalid URL
         #expect(ImporterFactory.new(ledger: nil, url: URL(fileURLWithPath: "DOES_NOT_EXIST" == nil)))

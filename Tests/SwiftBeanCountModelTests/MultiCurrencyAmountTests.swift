@@ -16,7 +16,7 @@ struct MultiCurrencyAmountTests {
    @Test
    func testInit() {
         let multiCurrencyAmount = MultiCurrencyAmount()
-        #expect(multiCurrencyAmount.amounts == [:])
+        #expect(multiCurrencyAmount.amounts.isEmpty)
     }
 
    @Test
@@ -143,10 +143,10 @@ struct MultiCurrencyAmountTests {
    @Test
    func testEqual() {
         let nothing = MultiCurrencyAmount()
-        #expect(nothing == nothing)
+        #expect(nothing == nothing) // swiftlint:disable:this identical_operands
 
         let fiveEuro = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(5)], decimalDigits: [TestUtils.eur: 0])
-        #expect(fiveEuro == fiveEuro)
+        #expect(fiveEuro == fiveEuro) // swiftlint:disable:this identical_operands
         #expect(nothing != fiveEuro)
 
         let fiveCanadianDollar1 = MultiCurrencyAmount(amounts: [TestUtils.cad: Decimal(5)], decimalDigits: [TestUtils.cad: 0])

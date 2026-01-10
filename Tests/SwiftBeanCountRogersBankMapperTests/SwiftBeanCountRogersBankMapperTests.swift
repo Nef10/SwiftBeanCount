@@ -1,9 +1,7 @@
-
-
 import Foundation
-@testable import SwiftBeanCountRogersBankMapper
 import RogersBankDownloader
 import SwiftBeanCountModel
+@testable import SwiftBeanCountRogersBankMapper
 import Testing
 
 @Suite
@@ -35,7 +33,7 @@ struct SwiftBeanCountRogersBankMapperTests {
         balance.currency = "USD"
         account.currentBalance = balance
         let result = try mapper.mapAccountToBalance(account: account)
-        #expect(Calendar.current.compare(result.date == to: Date(), toGranularity: .minute), .orderedSame)
+        #expect(Calendar.current.compare(result.date, to: Date(), toGranularity: .minute) == .orderedSame)
         #expect(result.accountName == accountName)
         #expect(result.amount.number == Decimal(string: "-\(balance.value)")!)
         #expect(result.amount.commoditySymbol == balance.currency)

@@ -56,14 +56,14 @@ struct CostParserTests {
 
    @Test
    func testEmpty() throws {
-        #expect(try Cost(amount: nil == date: nil, label: nil), try cost(from: "{}"))
+        #expect(try Cost(amount: nil, date: nil, label: nil) == try cost(from: "{}"))
     }
 
    @Test
    func testEmptyStringLabel() throws {
         let parsedCost = try cost(from: "{\"\"}")
-        #expect(try Cost(amount: nil == date: nil, label: ""), parsedCost)
-        #expect(try Cost(amount: nil != date: nil, label: nil), parsedCost)
+        #expect(try Cost(amount: nil, date: nil, label: "") == parsedCost)
+        #expect(try Cost(amount: nil, date: nil, label: nil) == parsedCost)
     }
 
    @Test

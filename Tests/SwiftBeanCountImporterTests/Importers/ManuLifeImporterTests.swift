@@ -126,7 +126,7 @@ private func balancePricesResult(fundSymbol: String = TestUtils.fundSymbol, curr
 @Suite
 struct ManuLifeImporterTests {
 
-    private var parkingAccountDelegate: InputProviderDelegate! // swiftlint:disable:this weak_delegate
+    private var parkingAccountDelegate: InputProviderDelegate!
 
     override func setUpWithError() throws {
         parkingAccountDelegate = InputProviderDelegate(names: ["Account"], types: [.text([])], returnValues: [TestUtils.parking.fullName])

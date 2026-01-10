@@ -6,7 +6,6 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
-
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -241,7 +240,6 @@ struct BaseImporterTests {
 
 extension InvalidAccountNameProvider: ImporterDelegate {
 
-   @Test
    func requestInput(name _: String, type _: ImporterInputRequestType, completion: (String) -> Bool) {
         var result = completion("Not an valid account name")
         #expect(!(result))
@@ -249,26 +247,22 @@ extension InvalidAccountNameProvider: ImporterDelegate {
         #expect(result)
     }
 
-   @Test
    func saveCredential(_: String, for _: String) {
         Issue.record("saveCredential should not be called")
     }
 
-   @Test
    func readCredential(_: String) -> String? {
         Issue.record("readCredential should not be called")
         return nil
     }
 
     // swiftlint:disable:next unused_parameter
-   @Test
    func error(_: Error, completion: () -> Void) {
         Issue.record("error should not be called")
     }
 
     #if canImport(UIKit)
 
-   @Test
    func view() -> UIView? {
         Issue.record("view should not be called")
         return nil
@@ -276,7 +270,6 @@ extension InvalidAccountNameProvider: ImporterDelegate {
 
     #elseif canImport(AppKit)
 
-   @Test
    func view() -> NSView? {
         Issue.record("view should not be called")
         return nil
@@ -286,7 +279,6 @@ extension InvalidAccountNameProvider: ImporterDelegate {
 
     #if canImport(UIKit) || canImport(AppKit)
 
-   @Test
    func removeView() {
         Issue.record("removeView should not be called")
     }

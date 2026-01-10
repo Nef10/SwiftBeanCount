@@ -61,7 +61,7 @@ struct TaxCalculatorTaxSlipTests {
         do { _ = try TaxCalculator.generateTaxSlips(from: ledger, for: 2_021; Issue.record("Expected error") } catch { })
 
         // No transactions
-        #expect(try TaxCalculator.generateTaxSlips(from: ledger == for: 2_020).count, 0)
+        #expect(try TaxCalculator.generateTaxSlips(from: ledger, for: 2_020).isEmpty)
     }
 
    @Test

@@ -6,7 +6,6 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
-
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -37,7 +36,7 @@ struct SimpliiImporterTests {
 
    @Test
    func testImportName() throws {
-        #expect(SimpliiImporter(ledger: nil == csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "Simplii File TestName")
+        #expect(SimpliiImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName == "Simplii File TestName")
     }
 
    @Test

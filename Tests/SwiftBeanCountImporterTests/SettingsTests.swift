@@ -17,7 +17,7 @@ struct SettingsTests {
    func testDescriptionMappings() {
         Settings.storage = TestStorage()
 
-        #expect(Settings.allDescriptionMappings == [:])
+        #expect(Settings.allDescriptionMappings.isEmpty)
 
         // set
         Settings.setDescriptionMapping(key: "originalDescription", description: "new one")
@@ -40,7 +40,7 @@ struct SettingsTests {
    func testPayeeMappings() {
         Settings.storage = TestStorage()
 
-        #expect(Settings.allPayeeMappings == [:])
+        #expect(Settings.allPayeeMappings.isEmpty)
 
         // set
         Settings.setPayeeMapping(key: "originalDescription", payee: "new one")
@@ -63,7 +63,7 @@ struct SettingsTests {
    func testAccountMappings() {
         Settings.storage = TestStorage()
 
-        #expect(Settings.allAccountMappings == [:])
+        #expect(Settings.allAccountMappings.isEmpty)
 
         // set
         Settings.setAccountMapping(key: "originalDescription", account: "new one")

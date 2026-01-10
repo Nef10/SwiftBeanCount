@@ -6,7 +6,6 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
-
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -36,7 +35,7 @@ private class TestCSVBaseImporter: CSVBaseImporter {
 @Suite
 struct CSVBaseImporterTests {
 
-    private var cashAccountDelegate: InputProviderDelegate! // swiftlint:disable:this weak_delegate
+    private var cashAccountDelegate: InputProviderDelegate!
 
     override func setUpWithError() throws {
         cashAccountDelegate = InputProviderDelegate(names: ["Account"], types: [.text([])], returnValues: [TestUtils.cash.fullName])

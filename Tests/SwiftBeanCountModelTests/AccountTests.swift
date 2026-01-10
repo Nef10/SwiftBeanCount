@@ -7,8 +7,6 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
-// swiftlint:disable:next type_body_length
-
 import Foundation
 @testable import SwiftBeanCountModel
 import Testing

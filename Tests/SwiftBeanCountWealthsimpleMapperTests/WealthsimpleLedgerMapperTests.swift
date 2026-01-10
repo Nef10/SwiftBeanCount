@@ -1,5 +1,3 @@
-// swiftlint:disable:next type_body_length
-
 import Foundation
 import SwiftBeanCountModel
 @testable import SwiftBeanCountWealthsimpleMapper

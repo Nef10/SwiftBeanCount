@@ -6,7 +6,6 @@
 //  Copyright © 2024 Steffen Kötte. All rights reserved.
 //
 
-
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -26,7 +25,7 @@ struct EquatePlusImporterTests {
     private let invalidEmployerContributionMapping = "Powered by EquatePlusPlans & TradingTransactions & RecordsInformation & SupportHelpThe displayed total may differ from the sum of the parts, as values have been rounded off to 2 or 3 decimal places, depending on the currency.Last purchased5.278414 SharesPurchase price€ 69.15763Purchase dateMar. 18, 2029Collecting fundsShares purchasedShares allocatedHide purchase historyContribution datePlan cycleContribution typeStatusContribution amountAmount available to purchasePurchase datePurchased sharesDec. 31, 2023Own contributionYour contributionAllocated$ 532.20€ 363.48Jan. 1, 20242.638316Dec. 31, 2023Own contributionMatching contributionAllocated$ 223.10€ 152.37Jan. 1, 20241.105984Dec. 31, 2023Own contributionMatching contributionAllocated$ 223.10€ 152.37Jan. 1, 20241.105984Nov. 30, 2023Own contributionYour contributionAllocated$ 608.22€ 409.02Dec. 2, 20232.755402Nov. 30, 2023Own contributionMatching contributionAllocated$ 254.97€ 171.46Dec. 2, 20231.155072Oct. 31, 2023Own contributionYour contributionAllocated$ 7,602.80€ 1,033.56Nov. 7, 20237.928071€ 70,588.45123.654321Market price€ 67.45 as of April 25, 2028 (XETRA)€ 67.45 as of April 25, 2028 at 08:37 AM (XETRA)flatexDEGIRO Bank AGHelpYour assets are held by flatexDEGIRO Bank AGSee lessDateActivityVehicle DescriptionPurchase/Sell priceQuantityMar. 10, 2029Sell–€ 80.10105-1.000000Jan. 1, 2024MatchOwn€ 48.218711.105984Jan. 1, 2024PurchaseOwn€ 48.218712.638316Dec. 2, 2023MatchOwn€ 59.377741.155072Dec. 2, 2023PurchaseOwn€ 59.377742.7554020.001234Profile"
     // swiftlint:enable line_length
 
-    private var parkingAccountDelegate: InputProviderDelegate! // swiftlint:disable:this weak_delegate
+    private var parkingAccountDelegate: InputProviderDelegate!
 
     override func setUpWithError() throws {
         parkingAccountDelegate = InputProviderDelegate(names: ["Account"], types: [.text([])], returnValues: [TestUtils.parking.fullName])
@@ -65,7 +64,7 @@ struct EquatePlusImporterTests {
    @Test
    func testParseEmpty() {
         let importer = loadedImporter()
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         #expect(importer.balancesToImport().isEmpty)
         #expect(importer.pricesToImport().isEmpty)
     }
@@ -182,7 +181,7 @@ struct EquatePlusImporterTests {
             $0.accountName.fullName == "Assets:Cash:UNKNOWN" && $0.amount.description == "3.744300 UNKNOWN" && $0.cost!.amount!.description == "48.21871 UNKNOWN"
         })
 
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         #expect(importer.balancesToImport().isEmpty)
         #expect(importer.pricesToImport().isEmpty)
     }
@@ -217,7 +216,7 @@ struct EquatePlusImporterTests {
             $0.accountName.fullName == "Assets:EP:STOCK" && $0.amount.description == "3.744300 STOCK" && $0.cost!.amount!.description == "48.21871 USD"
         })
 
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
     }
 
    @Test

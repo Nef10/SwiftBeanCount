@@ -6,15 +6,14 @@
 //  Copyright © 2023 Steffen Kötte. All rights reserved.
 //
 
-import Foundation
-@testable import SwiftBeanCountImporter
 import CompassCardDownloader
+import Foundation
 import SwiftBeanCountCompassCardMapper
+@testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
 import Testing
 
 #if canImport(UIKit) || canImport(AppKit)
-
 
 @available(iOS 14.5, macOS 11.3, *)
 @Suite
@@ -36,7 +35,7 @@ struct CompassCardDownloadImporterTests {
     private static var authAndBalanceLoading: ((String, String) -> Result<(String, String), Error>)?
     private static var transactionsLoading: ((String, Date) -> Result<String, Error>)?
 
-    private var delegate: CredentialInputAndViewDelegate? // swiftlint:disable:this weak_delegate
+    private var delegate: CredentialInputAndViewDelegate?
 
     private let sixtyTwoDays = -60 * 60 * 24 * 62.0
     private let threeDays = -60 * 60 * 24 * 3.0
@@ -106,7 +105,7 @@ struct CompassCardDownloadImporterTests {
             return .success(("123456789", "0.00"))
         }
         Self.transactionsLoading = { _, date in
-            #expect(Calendar.current.compare(date == to: Date(timeIntervalSinceNow: self.sixtyTwoDays), toGranularity: .minute), .orderedSame)
+            #expect(Calendar.current.compare(date, to: Date(timeIntervalSinceNow: sixtyTwoDays), toGranularity: .minute) == .orderedSame)
             return .failure(error)
         }
         setDefaultDelegate(error: error)
@@ -124,7 +123,7 @@ struct CompassCardDownloadImporterTests {
             return .success(("123456789", "0.00"))
         }
         Self.transactionsLoading = { _, date in
-            #expect(Calendar.current.compare(date == to: Date(timeIntervalSinceNow: self.threeDays), toGranularity: .minute), .orderedSame)
+            #expect(Calendar.current.compare(date, to: Date(timeIntervalSinceNow: threeDays), toGranularity: .minute) == .orderedSame)
             return .success(",\n")
         }
         try runImport(ledger: ledger)
@@ -158,7 +157,7 @@ struct CompassCardDownloadImporterTests {
             #expect(result?.transaction == transaction)
             #expect(result?.accountName?.fullName == "Assets:CompassCard")
             #expect(result?.shouldAllowUserToEdit ?? false)
-            #expect(importer.nextTransaction( == nil))
+            #expect(importer.nextTransaction() == nil)
             #expect(importer.balancesToImport().count == 1)
             #expect(importer.balancesToImport().first!.description == balance.description)
         }
@@ -173,11 +172,11 @@ struct CompassCardDownloadImporterTests {
         DispatchQueue.global(qos: .userInitiated).async {
             importer.load()
             #expect(importer.pricesToImport().isEmpty)
-            #expect(self.delegate!.verified)
+            #expect(delegate!.verified)
             if let verify {
                 verify(importer)
             } else {
-                #expect(importer.nextTransaction( == nil))
+                #expect(importer.nextTransaction() == nil)
                 if success {
                     #expect(importer.balancesToImport().count == 1)
                     #expect(importer.balancesToImport()[0].accountName == accountName)

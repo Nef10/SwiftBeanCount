@@ -117,9 +117,12 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
             // Empty
         }
 
-        // swiftlint:disable:next line_length
-       @Test
-       func login(username: String, password: String, deviceId: String?, completion: @escaping (Result<any RogersBankDownloader.User, RogersBankDownloader.DownloadError>) -> Void) {
+       func login(
+            username: String,
+            password: String,
+            deviceId: String?,
+            completion: @escaping (Result<any RogersBankDownloader.User, RogersBankDownloader.DownloadError>) -> Void
+        ) {
             completion(RogersDownloadImporterTests.load?(username, password, deviceId) ?? .success(TestUser()))
         }
 
@@ -184,7 +187,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
             return .success(TestUser())
         }
         let importer = loadedImporter()
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         #expect(importer.balancesToImport().isEmpty)
     }
 
@@ -217,9 +220,9 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         setErrorDelegate(error: DownloadError.invalidParameters(parameters: ["b": "cd"]))
         let importer = loadedImporter(ledger: ledger)
         let balances = importer.balancesToImport()
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         #expect(balances.count == 1)
-        #expect(Calendar.current.compare(balances[0].date == to: Date(), toGranularity: .minute), .orderedSame)
+        #expect(Calendar.current.compare(balances[0].date, to: Date(), toGranularity: .minute) == .orderedSame)
         #expect(balances[0].accountName == accountName)
         #expect(balances[0].amount == Amount(number: Decimal(string: "-10.52")!, commoditySymbol: "CAD", decimalDigits: 2))
         #expect(receivedStatementNumbers == [true, true, true])
@@ -230,7 +233,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         user.accounts = [TestAccount()]
         setErrorDelegate(error: RogersBankMappingError.missingAccount(lastFour: "8520"))
         let importer = loadedImporter()
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         #expect(importer.balancesToImport().isEmpty)
     }
 
@@ -248,9 +251,9 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         user.accounts = [account]
         let importer = loadedImporter(ledger: ledger)
         let balances = importer.balancesToImport()
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         #expect(balances.count == 1)
-        #expect(Calendar.current.compare(balances[0].date == to: Date(), toGranularity: .minute), .orderedSame)
+        #expect(Calendar.current.compare(balances[0].date, to: Date(), toGranularity: .minute) == .orderedSame)
         #expect(balances[0].accountName == accountName)
         #expect(balances[0].amount == Amount(number: Decimal(string: "-10.52")!, commoditySymbol: "CAD", decimalDigits: 2))
         #expect(receivedStatementNumbers == [true, true, true])
@@ -269,7 +272,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         user.accounts = [account]
         let importer = loadedImporter(ledger: ledger)
         let balances = importer.balancesToImport()
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         #expect(balances.count == 1)
         #expect(validated)
     }
@@ -291,12 +294,12 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         user.accounts = [account1, account2]
         let importer = loadedImporter(ledger: ledger)
         let balances = importer.balancesToImport()
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         #expect(balances.count == 2)
-        #expect(Calendar.current.compare(balances[0].date == to: Date(), toGranularity: .minute), .orderedSame)
+        #expect(Calendar.current.compare(balances[0].date, to: Date(), toGranularity: .minute) == .orderedSame)
         #expect(balances[0].accountName == accountName)
         #expect(balances[0].amount == Amount(number: Decimal(string: "0.00")!, commoditySymbol: "CAD", decimalDigits: 2))
-        #expect(Calendar.current.compare(balances[1].date == to: Date(), toGranularity: .minute), .orderedSame)
+        #expect(Calendar.current.compare(balances[1].date, to: Date(), toGranularity: .minute) == .orderedSame)
         #expect(balances[1].accountName == accountName)
         #expect(balances[1].amount == Amount(number: Decimal(string: "-0.00")!, commoditySymbol: "CAD", decimalDigits: 2))
         #expect(receivedStatementNumbers1 == [true, true, true])
@@ -309,7 +312,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         user.accounts = [TestAccount { _ in .success([activity]) }]
         setErrorDelegate(error: RogersBankMappingError.missingActivityData(activity: activity, key: "referenceNumber"))
         let importer = loadedImporter(ledger: ledger)
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         #expect(importer.balancesToImport().count == 1)
     }
 
@@ -338,7 +341,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         transaction = Transaction(metaData: metaData, postings: [transaction.postings[0], transaction.postings[1]])
         iTransaction = ImportedTransaction(transaction, originalDescription: activity2.merchant.name, shouldAllowUserToEdit: true, accountName: accountName)
         #expect(iTransaction == importer.nextTransaction())
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         #expect(importer.balancesToImport().count == 1)
     }
 
@@ -366,7 +369,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         ])
         let iTransaction = ImportedTransaction(transaction, originalDescription: activity.merchant.name, shouldAllowUserToEdit: true, accountName: accountName)
         #expect(iTransaction == importer.nextTransaction())
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         #expect(importer.balancesToImport().count == 1)
     }
 

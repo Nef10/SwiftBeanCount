@@ -23,10 +23,10 @@ struct FileImporterTests {
    @Test
    func testNew() {
         // no url
-        #expect(FileImporterFactory.new(ledger: nil, url: nil == nil))
+        #expect(FileImporterFactory.new(ledger: nil, url: nil) == nil)
 
         // invalid URL
-        #expect(FileImporterFactory.new(ledger: nil, url: URL(fileURLWithPath: "DOES_NOT_EXIST" == nil)))
+        #expect(FileImporterFactory.new(ledger: nil, url: URL(fileURLWithPath: "DOES_NOT_EXIST") == nil))
 
         // valid URL without matching headers
         let url = temporaryFileURL()
@@ -39,7 +39,7 @@ struct FileImporterTests {
             for header in importer.headers {
                 let url = temporaryFileURL()
                 createFile(at: url, content: "\(header.joined(separator: ", "))\n")
-                #expect(type(of: FileImporterFactory.new(ledger: nil, url: url)!) == importer) // swiftlint:disable:this xct_specific_matcher
+                #expect(type(of: FileImporterFactory.new(ledger: nil, url: url)!) == importer)
             }
         }
     }

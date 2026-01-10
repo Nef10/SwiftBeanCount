@@ -6,11 +6,10 @@
 //  Copyright © 2023 Steffen Kötte. All rights reserved.
 //
 
-
-import Foundation
-@testable import SwiftBeanCountImporter
 import CSV
+import Foundation
 import SwiftBeanCountCompassCardMapper
+@testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
 import Testing
 

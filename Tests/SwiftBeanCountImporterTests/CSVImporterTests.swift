@@ -22,10 +22,10 @@ struct CSVImporterTests {
    @Test
    func testNew() {
         // no url
-        #expect(CSVImporterFactory.new(ledger: nil, url: nil == nil))
+        #expect(CSVImporterFactory.new(ledger: nil, url: nil) == nil)
 
         // invalid URL
-        #expect(CSVImporterFactory.new(ledger: nil, url: URL(fileURLWithPath: "DOES_NOT_EXIST" == nil)))
+        #expect(CSVImporterFactory.new(ledger: nil, url: URL(fileURLWithPath: "DOES_NOT_EXIST") == nil))
 
         // valid URL without matching headers
         let url = temporaryFileURL()
@@ -38,7 +38,7 @@ struct CSVImporterTests {
             for header in importer.headers {
                 let url = temporaryFileURL()
                 createFile(at: url, content: "\(header.joined(separator: ", "))\n")
-                #expect(type(of: CSVImporterFactory.new(ledger: nil, url: url)!) == importer) // swiftlint:disable:this xct_specific_matcher
+                #expect(type(of: CSVImporterFactory.new(ledger: nil, url: url)!) == importer)
             }
         }
     }

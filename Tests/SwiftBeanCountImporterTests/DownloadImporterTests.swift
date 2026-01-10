@@ -6,7 +6,6 @@
 //  Copyright © 2021 Steffen Kötte. All rights reserved.
 //
 
-
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -38,11 +37,11 @@ struct DownloadImporterTests {
 
    @Test
    func testNew() {
-        #expect(DownloadImporterFactory.new(ledger: Ledger( == nil), name: "This is not a valid name"))
+        #expect(DownloadImporterFactory.new(ledger: Ledger(), name: "This is not a valid name") == nil)
 
         let importers = DownloadImporterFactory.importers
         for importer in importers {
-            #expect(type(of: DownloadImporterFactory.new(ledger: nil, name: importer.importerName)!) == importer) // swiftlint:disable:this xct_specific_matcher
+            #expect(type(of: DownloadImporterFactory.new(ledger: nil, name: importer.importerName)!) == importer)
         }
     }
 

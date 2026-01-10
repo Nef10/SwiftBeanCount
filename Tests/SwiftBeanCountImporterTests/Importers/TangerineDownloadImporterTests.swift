@@ -6,7 +6,6 @@
 //  Copyright © 2022 Steffen Kötte. All rights reserved.
 //
 
-
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -71,7 +70,7 @@ struct TangerineDownloadImporterTests {
     private let sixtyTwoDays = -60 * 60 * 24 * 62.0
     private let threeDays = -60 * 60 * 24 * 3.0
 
-    private var delegate: CredentialInputAndViewDelegate? // swiftlint:disable:this weak_delegate
+    private var delegate: CredentialInputAndViewDelegate?
 
     override func setUp() {
         Self.accountsLoading = nil
@@ -166,7 +165,7 @@ struct TangerineDownloadImporterTests {
             return .success([])
         }
         Self.transactionsLoading = { _, date in
-            #expect(Calendar.current.compare(date == to: Date(timeIntervalSinceNow: self.sixtyTwoDays), toGranularity: .minute), .orderedSame)
+            #expect(Calendar.current.compare(date, to: Date(timeIntervalSinceNow: sixtyTwoDays), toGranularity: .minute) == .orderedSame)
             return .failure(error)
         }
         setDefaultDelegate(error: error)
@@ -185,7 +184,7 @@ struct TangerineDownloadImporterTests {
             return .success([])
         }
         Self.transactionsLoading = { _, date in
-            #expect(Calendar.current.compare(date == to: Date(timeIntervalSinceNow: self.threeDays), toGranularity: .minute), .orderedSame)
+            #expect(Calendar.current.compare(date, to: Date(timeIntervalSinceNow: threeDays), toGranularity: .minute) == .orderedSame)
             return .success([:])
         }
         runImport(ledger: ledger)
@@ -246,7 +245,7 @@ struct TangerineDownloadImporterTests {
         Self.balancesMapping = { receivedAccounts, date in
             #expect(receivedAccounts.count == 1)
             #expect(receivedAccounts[0]["display_name"] as? String == "1564894")
-            #expect(Calendar.current.compare(date == to: Date(), toGranularity: .minute), .orderedSame)
+            #expect(Calendar.current.compare(date, to: Date(), toGranularity: .minute) == .orderedSame)
             return [balance]
         }
         Self.ledgerAccountNameMapping = { account in
@@ -262,7 +261,7 @@ struct TangerineDownloadImporterTests {
             #expect(result?.transaction == transaction)
             #expect(result?.accountName?.fullName == "Assets:Testing")
             #expect(result?.shouldAllowUserToEdit ?? false)
-            #expect(importer.nextTransaction( == nil))
+            #expect(importer.nextTransaction() == nil)
             #expect(importer.balancesToImport() == [balance])
         }
         savedMappingTest()
@@ -278,7 +277,7 @@ struct TangerineDownloadImporterTests {
             let result = importer.nextTransaction()
             #expect(result?.accountName?.fullName == "Assets:Testing")
             #expect(result?.shouldAllowUserToEdit ?? false)
-            #expect(importer.nextTransaction( == nil))
+            #expect(importer.nextTransaction() == nil)
         }
     }
 
@@ -289,11 +288,11 @@ struct TangerineDownloadImporterTests {
         DispatchQueue.global(qos: .userInitiated).async {
             importer.load()
             #expect(importer.pricesToImport().isEmpty)
-            #expect(self.delegate!.verified)
+            #expect(delegate!.verified)
             if let verify {
                 verify(importer)
             } else {
-                #expect(importer.nextTransaction( == nil))
+                #expect(importer.nextTransaction() == nil)
                 #expect(importer.balancesToImport().isEmpty)
             }
             expectation.fulfill()
