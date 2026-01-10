@@ -12,7 +12,6 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct ParserTests {
 
     private enum TestFile: String {

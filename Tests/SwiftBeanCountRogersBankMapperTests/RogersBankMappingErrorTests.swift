@@ -4,7 +4,6 @@ import RogersBankDownloader
 import Testing
 
 @Suite
-
 struct RogersBankMappingErrorTests {
 
    @Test

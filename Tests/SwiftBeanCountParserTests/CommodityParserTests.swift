@@ -12,7 +12,6 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct CommodityParserTests {
 
     private let basicString = "2017-06-09 commodity CAD"

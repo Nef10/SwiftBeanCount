@@ -34,7 +34,6 @@ private class TestCSVBaseImporter: CSVBaseImporter {
 }
 
 @Suite
-
 struct CSVBaseImporterTests {
 
     private var cashAccountDelegate: InputProviderDelegate! // swiftlint:disable:this weak_delegate

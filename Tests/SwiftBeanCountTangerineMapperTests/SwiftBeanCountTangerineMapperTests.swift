@@ -1,5 +1,3 @@
-// swiftlint:disable:next type_body_length
-
 import Foundation
 import SwiftBeanCountModel
 @testable import SwiftBeanCountTangerineMapper
@@ -69,7 +67,7 @@ struct SwiftBeanCountTangerineMapperTests {
             if case let AccountNameError.invaildName(name) = $0 {
                 #expect(name == "InvalidName")
             } else {
-                XCTFail("Wrong error type")
+                Issue.record("Wrong error type")
             }
         }
     }
@@ -372,7 +370,7 @@ struct SwiftBeanCountTangerineMapperTests {
 
     private func assertAccountNotFound(thrownError: Error, account: [String: Any]) {
         guard let error = thrownError as? SwiftBeanCountTangerineMapperError else {
-            XCTFail("Unexpected error type, got \(type(of: thrownError)) instead of \(SwiftBeanCountTangerineMapperError.self)")
+            Issue.record("Unexpected error type, got \(type(of: thrownError)) instead of \(SwiftBeanCountTangerineMapperError.self)")
             return
         }
         switch error {
@@ -385,7 +383,7 @@ struct SwiftBeanCountTangerineMapperTests {
                 }
             }
         default:
-            XCTFail("Wrong error type")
+            Issue.record("Wrong error type")
         }
     }
 

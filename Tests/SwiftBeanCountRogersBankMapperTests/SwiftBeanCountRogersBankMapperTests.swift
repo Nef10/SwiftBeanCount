@@ -7,7 +7,6 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct SwiftBeanCountRogersBankMapperTests {
 
     private static let dateFormatter: DateFormatter = {
@@ -179,7 +178,7 @@ struct SwiftBeanCountRogersBankMapperTests {
                                postings: []))
         mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
         result = try mapper.mapActivitiesToTransactions(activities: [activity])
-        #expect(result.count == 0)
+        #expect(result.isEmpty)
     }
 
 }

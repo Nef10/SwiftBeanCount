@@ -11,7 +11,6 @@ import Foundation
 import Testing
 
 @Suite
-
 struct AmountTests {
 
    @Test

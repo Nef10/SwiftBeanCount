@@ -13,7 +13,6 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct SimpliiImporterTests {
 
    @Test
@@ -56,7 +55,7 @@ Date, Transaction Details, Funds Out, Funds In
         #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "PAYROLL DEPOSIT COMPANY INC.")
         #expect(line.amount == Decimal(string: "123.45", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 
@@ -74,7 +73,7 @@ Date, Transaction Details, Funds Out, Funds In
         let line = importer.parseLine()
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "BANK TO BANK TSF EXT TSF")
         #expect(line.amount == Decimal(string: "-1234.56", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 

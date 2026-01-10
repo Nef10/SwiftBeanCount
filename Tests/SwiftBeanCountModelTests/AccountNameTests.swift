@@ -11,7 +11,6 @@ import Foundation
 import Testing
 
 @Suite
-
 struct AccountNameTests {
 
     private let invalidNames = [

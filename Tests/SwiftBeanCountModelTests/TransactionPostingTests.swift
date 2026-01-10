@@ -11,7 +11,6 @@ import Foundation
 import Testing
 
 @Suite
-
 struct TransactionPostingTests {
 
     private var posting1 = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)

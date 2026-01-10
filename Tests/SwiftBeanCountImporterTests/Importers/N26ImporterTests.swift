@@ -6,14 +6,12 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
-
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct N26ImporterTests {
 
    @Test
@@ -80,7 +78,7 @@ struct N26ImporterTests {
         #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "Online Shop")
         #expect(line.amount == Decimal(string: "-79.33", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 
@@ -98,7 +96,7 @@ struct N26ImporterTests {
         let line = importer.parseLine()
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "Online Shop")
         #expect(line.amount == Decimal(string: "-79.33", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 
@@ -117,7 +115,7 @@ struct N26ImporterTests {
         #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20200605))
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "Recipient Comment")
         #expect(line.amount == Decimal(string: "-32.20", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 
@@ -135,7 +133,7 @@ struct N26ImporterTests {
         let line = importer.parseLine()
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "Sender Comment")
         #expect(line.amount == Decimal(string: "499.90", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 
@@ -153,7 +151,7 @@ struct N26ImporterTests {
         let line = importer.parseLine()
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "Company")
         #expect(line.amount == Decimal(string: "-20.24", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == Amount(number: Decimal(string: "22.39", locale: Locale(identifier: "en_CA"))!, commoditySymbol: TestUtils.usd, decimalDigits: 2))
     }
 

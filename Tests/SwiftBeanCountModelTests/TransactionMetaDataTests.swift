@@ -11,7 +11,6 @@ import Foundation
 import Testing
 
 @Suite
-
 struct TransactionMetaDataTests {
 
     private let payee = "Payee"

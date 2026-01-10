@@ -15,7 +15,6 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct CompassCardImporterTests {
 
     func testHeaders() {

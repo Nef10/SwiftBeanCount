@@ -1,10 +1,8 @@
-
-
 import Foundation
-@testable import SwiftBeanCountWealthsimpleMapper
 import SwiftBeanCountModel
-import Wealthsimple
+@testable import SwiftBeanCountWealthsimpleMapper
 import Testing
+import Wealthsimple
 
 struct TestAccount: Wealthsimple.Account {
     var accountType = Wealthsimple.AccountType.nonRegistered
@@ -14,7 +12,6 @@ struct TestAccount: Wealthsimple.Account {
 }
 
 @Suite
-
 struct LedgerLookupTests {
 
     private let accountName = try! AccountName("Assets:Test") // swiftlint:disable:this force_try

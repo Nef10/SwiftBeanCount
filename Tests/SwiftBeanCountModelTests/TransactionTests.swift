@@ -11,7 +11,6 @@ import Foundation
 import Testing
 
 @Suite
-
 struct TransactionTests {
 
     private var transaction1WithoutPosting: Transaction!
@@ -106,7 +105,7 @@ struct TransactionTests {
    @Test
    func testIsValid() {
         guard case .valid = transaction2WithPosting1And2!.validate(in: ledger) else {
-            XCTFail("\(transaction2WithPosting1And2!) is not valid")
+            Issue.record("\(transaction2WithPosting1And2!) is not valid")
             return
         }
     }
@@ -115,7 +114,7 @@ struct TransactionTests {
    func testIsValidFromOutsideLedger() {
         let ledger = Ledger()
         guard case .invalid = transaction2WithPosting1And2!.validate(in: ledger) else {
-            XCTFail("\(transaction2WithPosting1And2!) is valid")
+            Issue.record("\(transaction2WithPosting1And2!) is valid")
             return
         }
     }
@@ -125,7 +124,7 @@ struct TransactionTests {
         if case .invalid(let error) = transaction1WithoutPosting!.validate(in: ledger) {
             #expect(error == "2017-06-08 * \"Payee\" \"Narration\" has no postings")
         } else {
-            XCTFail("\(transaction1WithoutPosting!) is valid")
+            Issue.record("\(transaction1WithoutPosting!) is valid")
         }
     }
 
@@ -143,7 +142,7 @@ struct TransactionTests {
                   Assets:Chequing -10 EUR was posted while the accout Assets:Cash was closed
                 """)
         } else {
-            XCTFail("\(transaction1WithPosting1And2!) is valid")
+            Issue.record("\(transaction1WithPosting1And2!) is valid")
         }
     }
 
@@ -155,7 +154,7 @@ struct TransactionTests {
                   Assets:Cash 10 EUR is not balanced - 10 EUR too much (0 tolerance)
                 """)
         } else {
-            XCTFail("\(transaction1WithPosting1!) is valid")
+            Issue.record("\(transaction1WithPosting1!) is valid")
         }
     }
 
@@ -184,7 +183,7 @@ struct TransactionTests {
                   Assets:Chequing 10.00000 CAD @ 0.101 EUR is not balanced - 0.01 EUR too much (0 tolerance)
                 """)
         } else {
-            XCTFail("\(transaction) is valid")
+            Issue.record("\(transaction) is valid")
         }
     }
 
@@ -215,7 +214,7 @@ struct TransactionTests {
                   Assets:Chequing 10.00000 CAD @ 0.85251 EUR is not balanced - 0.0051 EUR too much (0.005 tolerance)
                 """)
         } else {
-            XCTFail("\(transaction) is valid")
+            Issue.record("\(transaction) is valid")
         }
     }
 
@@ -236,7 +235,7 @@ struct TransactionTests {
                   Assets:Cash 10.00000 CAD @ 0.85251 EUR is not balanced - 8.5251 EUR too much (0 tolerance)
                 """)
         } else {
-            XCTFail("\(transaction) is valid")
+            Issue.record("\(transaction) is valid")
         }
     }
 
@@ -260,7 +259,7 @@ struct TransactionTests {
         // (Percision of price is irrelevant, percision of CAD is not used because no posting in CAD)
         // 0.005 <= 0.005 -> is valid
         guard case .valid = transaction.validate(in: ledger) else {
-            XCTFail("\(transaction) is not valid")
+            Issue.record("\(transaction) is not valid")
             return
         }
     }
@@ -288,7 +287,7 @@ struct TransactionTests {
         // (Percision of price is irrelevant, percision of CAD is not used because no posting in CAD)
         // 0.005 <= 0.005 -> is valid
         guard case .valid = transaction.validate(in: ledger) else {
-            XCTFail("\(transaction) is not valid")
+            Issue.record("\(transaction) is not valid")
             return
         }
     }
@@ -323,7 +322,7 @@ struct TransactionTests {
                   Assets:Chequing 10.00000 CAD {0.85251 EUR} is not balanced - 0.0051 EUR too much (0.005 tolerance)
                 """)
         } else {
-            XCTFail("\(transaction) is valid")
+            Issue.record("\(transaction) is valid")
         }
     }
 
@@ -342,7 +341,7 @@ struct TransactionTests {
         ledger.add(transaction)
 
         guard case .valid = try transaction.effect(in: ledger).validateZeroWithTolerance() else {
-            XCTFail("\(transaction) effect is not zero")
+            Issue.record("\(transaction) effect is not zero")
             return
         }
     }
@@ -367,7 +366,7 @@ struct TransactionTests {
         let effect = try transaction.effect(in: ledger)
         #expect(effect.amounts.count == 1)
         guard case .valid = effect.validateOneAmountWithTolerance(amount: amount1) else {
-            XCTFail("\(transaction) effect is not the expected value")
+            Issue.record("\(transaction) effect is not the expected value")
             return
         }
     }

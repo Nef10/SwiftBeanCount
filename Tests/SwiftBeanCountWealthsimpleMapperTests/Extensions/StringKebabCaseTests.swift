@@ -3,7 +3,6 @@ import Foundation
 import Testing
 
 @Suite
-
 struct StringKebabCaseTests {
 
    @Test
@@ -16,7 +15,7 @@ struct StringKebabCaseTests {
         #expect("test123".camelCaseToKebabCase() == "test-123")
         #expect("test".camelCaseToKebabCase() == "test")
         #expect("123".camelCaseToKebabCase() == "123")
-        #expect("".camelCaseToKebabCase() == "")
+        #expect("".camelCaseToKebabCase().isEmpty)
     }
 
 }

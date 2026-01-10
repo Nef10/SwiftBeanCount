@@ -12,7 +12,6 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct CSVImporterTests {
 
    @Test
@@ -51,7 +50,7 @@ struct CSVImporterTests {
         for importer in importers {
             for header in importer.headers {
                 guard !headers.contains(header) else {
-                    XCTFail("Importers cannot use the same headers")
+                    Issue.record("Importers cannot use the same headers")
                     return
                 }
                 headers.append(header)

@@ -6,14 +6,12 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
-
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct LunchOnUsImporterTests {
 
    @Test
@@ -56,7 +54,7 @@ date,type,amount,invoice,remaining,location
         #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
         #expect(line.description == "Bubble Tea")
         #expect(line.amount == Decimal(string: "-6.83", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 
@@ -75,7 +73,7 @@ date,type,amount,invoice,remaining,location
         #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20200605))
         #expect(line.description == "Test Restaurant")
         #expect(line.amount == Decimal(string: "-75.00", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 
@@ -93,7 +91,7 @@ date,type,amount,invoice,remaining,location
         let line = importer.parseLine()
         #expect(line.description == "Shop SAP")
         #expect(line.amount == Decimal(string: "-65.21", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 
@@ -109,7 +107,7 @@ date,type,amount,invoice,remaining,location
 
         importer.csvReader.next()
         let line = importer.parseLine()
-        #expect(line.description == "")
+        #expect(line.description.isEmpty)
         #expect(line.amount == Decimal(string: "528.00", locale: Locale(identifier: "en_CA"))!)
         #expect(line.payee == "SAP Canada Inc.")
         #expect(line.price == nil)
@@ -129,7 +127,7 @@ date,type,amount,invoice,remaining,location
         let line = importer.parseLine()
         #expect(line.description == "Cash Out")
         #expect(line.amount == Decimal(string: "-0.60", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 

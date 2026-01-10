@@ -1,9 +1,6 @@
-
-// swiftlint:disable:next type_body_length
-
 import Foundation
-@testable import SwiftBeanCountTax
 import SwiftBeanCountModel
+@testable import SwiftBeanCountTax
 import Testing
 
 @Suite
@@ -324,7 +321,7 @@ struct TaxSlipTests {
    @Test
    func testRowDescription_emptyRow() {
         let row = TaxSlipRow(symbol: nil, name: nil, values: [])
-        #expect(row.description == "")
+        #expect(row.description.isEmpty)
     }
 
    @Test

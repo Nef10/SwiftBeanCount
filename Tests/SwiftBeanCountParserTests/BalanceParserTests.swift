@@ -12,7 +12,6 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct BalanceParserTests {
 
     private let basicString = "2017-06-09 balance Assets:Cash 10.00 CAD"

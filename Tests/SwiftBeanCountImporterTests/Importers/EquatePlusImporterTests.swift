@@ -13,7 +13,6 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct EquatePlusImporterTests {
 
     // swiftlint:disable line_length
@@ -67,8 +66,8 @@ struct EquatePlusImporterTests {
    func testParseEmpty() {
         let importer = loadedImporter()
         #expect(importer.nextTransaction( == nil))
-        #expect(importer.balancesToImport() == [])
-        #expect(importer.pricesToImport() == [])
+        #expect(importer.balancesToImport().isEmpty)
+        #expect(importer.pricesToImport().isEmpty)
     }
 
    @Test
@@ -150,20 +149,20 @@ struct EquatePlusImporterTests {
         #expect(!(transaction1!.shouldAllowUserToEdit))
         #expect(transaction1!.accountName == nil)
         #expect(transaction1!.possibleDuplicate == nil)
-        #expect(transaction1!.originalDescription == "")
+        #expect(transaction1!.originalDescription.isEmpty)
         let transaction2 = importer.nextTransaction()
         #expect(transaction2 != nil)
         #expect(!(transaction2!.shouldAllowUserToEdit))
         #expect(transaction2!.accountName == nil)
         #expect(transaction2!.possibleDuplicate == nil)
-        #expect(transaction2!.originalDescription == "")
+        #expect(transaction2!.originalDescription.isEmpty)
 
         let beancountTransaction1 = [transaction1!.transaction, transaction2!.transaction].first { $0.metaData.date == TestUtils.date20231202 }
         let beancountTransaction2 = [transaction1!.transaction, transaction2!.transaction].first { $0.metaData.date == TestUtils.date20240101 }
         #expect(beancountTransaction1 != nil)
         #expect(beancountTransaction2 != nil)
-        #expect(beancountTransaction1!.metaData.narration == "")
-        #expect(beancountTransaction1!.metaData.payee == "")
+        #expect(beancountTransaction1!.metaData.narration.isEmpty)
+        #expect(beancountTransaction1!.metaData.payee.isEmpty)
         #expect(beancountTransaction1!.metaData.flag == .complete)
         #expect(beancountTransaction1!.metaData.date == TestUtils.date20231202)
         XCTAssert(beancountTransaction1!.postings.contains {
@@ -172,8 +171,8 @@ struct EquatePlusImporterTests {
         XCTAssert(beancountTransaction1!.postings.contains {
             $0.accountName.fullName == "Assets:Cash:UNKNOWN" && $0.amount.description == "3.910474 UNKNOWN" && $0.cost!.amount!.description == "59.37774 UNKNOWN"
         })
-        #expect(beancountTransaction2!.metaData.narration == "")
-        #expect(beancountTransaction2!.metaData.payee == "")
+        #expect(beancountTransaction2!.metaData.narration.isEmpty)
+        #expect(beancountTransaction2!.metaData.payee.isEmpty)
         #expect(beancountTransaction2!.metaData.flag == .complete)
         #expect(beancountTransaction2!.metaData.date == TestUtils.date20240101)
         XCTAssert(beancountTransaction2!.postings.contains {
@@ -184,8 +183,8 @@ struct EquatePlusImporterTests {
         })
 
         #expect(importer.nextTransaction( == nil))
-        #expect(importer.balancesToImport() == [])
-        #expect(importer.pricesToImport() == [])
+        #expect(importer.balancesToImport().isEmpty)
+        #expect(importer.pricesToImport().isEmpty)
     }
 
    @Test

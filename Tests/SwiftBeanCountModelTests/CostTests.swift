@@ -11,7 +11,6 @@ import Foundation
 import Testing
 
 @Suite
-
 struct CostTests {
 
     private let label1 = "1"

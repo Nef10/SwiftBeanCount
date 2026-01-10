@@ -17,7 +17,6 @@ import Testing
 #if canImport(UIKit) || canImport(AppKit)
 
 @Suite
-
 struct TangerineDownloadImporterTests {
 
     private class MockDownloader: TangerineDownloaderProvider {

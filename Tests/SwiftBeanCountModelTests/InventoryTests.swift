@@ -13,7 +13,6 @@ import Foundation
 import Testing
 
 @Suite
-
 struct InventoryTests {
 
     private let bookingMethods = [BookingMethod.strict, BookingMethod.lifo, BookingMethod.fifo]
@@ -47,7 +46,7 @@ struct InventoryTests {
                 #expect(result1 == nil)
                 #expect(result2 == nil)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
             XCTAssertEqual(String(describing: inventory), """
@@ -73,7 +72,7 @@ extension InventoryTests { // Test Adding
                 let result = try inventory.book(posting: transactionPosting(posting))
                 #expect(result == nil)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
             #expect(inventory.inventory.count == 1)
@@ -94,7 +93,7 @@ extension InventoryTests { // Test Adding
                 let result = try inventory.book(posting: transactionPosting(posting))
                 #expect(result == nil)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
             #expect(inventory.inventory.first?.cost.date == date)
@@ -120,7 +119,7 @@ extension InventoryTests { // Test Adding
                 #expect(result1 == nil)
                 #expect(result2 == nil)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
             #expect(inventory.inventory.count == 2)
@@ -149,7 +148,7 @@ extension InventoryTests { // Test Adding
                 #expect(result1 == nil)
                 #expect(result2 == nil)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
             #expect(inventory.inventory.count == 1)
@@ -178,7 +177,7 @@ extension InventoryTests { // Test Adding
                 #expect(result1 == nil)
                 #expect(result2 == nil)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
             #expect(inventory.inventory.count == 2)
@@ -201,7 +200,7 @@ extension InventoryTests { // Test Adding
                 let result = try inventory.book(posting: transactionPosting(posting))
                 #expect(result == nil)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
             #expect(inventory.inventory.count == 1)
@@ -229,7 +228,7 @@ extension InventoryTests { // Test Adding
                 #expect(result1 == nil)
                 #expect(result2 == nil)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
             #expect(inventory.inventory.count == 2)
@@ -258,7 +257,7 @@ extension InventoryTests { // Test Adding
                 #expect(result1 == nil)
                 #expect(result2 == nil)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
             #expect(inventory.inventory.count == 1)
@@ -294,7 +293,7 @@ extension InventoryTests { // Test Reduce
                                                commoditySymbol: cost1.amount!.commoditySymbol,
                                                decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
             #expect(inventory.inventory.count == 1)
@@ -375,7 +374,7 @@ extension InventoryTests { // Test Reduce
                 #expect(result1 == nil)
                 #expect(result2 == cost1.amount?.multiCurrencyAmount)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
             #expect(inventory.inventory.count == 1)
@@ -412,7 +411,7 @@ extension InventoryTests { // Test Reduce
                                                commoditySymbol: cost1.amount!.commoditySymbol,
                                                decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
             #expect(inventory.inventory.count == 2)
@@ -450,7 +449,7 @@ extension InventoryTests { // Test Reduce
                                                commoditySymbol: cost1.amount!.commoditySymbol,
                                                decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
             #expect(inventory.inventory.count == 2)
@@ -483,7 +482,7 @@ extension InventoryTests { // Test Reduce
             #expect(result1 == nil)
             #expect(result2 == nil)
         } catch {
-            XCTFail("Error thrown")
+            Issue.record("Error thrown")
         }
 
         XCTAssertThrowsError(try inventory.book(posting: transactionPosting(posting3))) {
@@ -524,7 +523,7 @@ extension InventoryTests { // Test Reduce
                 #expect(result1 == nil)
                 #expect(result2 == nil)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
             XCTAssertThrowsError(try inventory.book(posting: transactionPosting(posting3))) {
@@ -554,14 +553,14 @@ extension InventoryTests { // Test Reduce
             #expect(result1 == nil)
             #expect(result2 == nil)
         } catch {
-            XCTFail("Error thrown")
+            Issue.record("Error thrown")
         }
 
         do {
             let result = try inventory.book(posting: transactionPosting(posting3))
             #expect(result == Amount(number: -2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
         } catch {
-            XCTFail("Error thrown")
+            Issue.record("Error thrown")
         }
 
         #expect(inventory.inventory.count == 2)
@@ -654,14 +653,14 @@ extension InventoryTests { // Test Reduce
             #expect(result1 == nil)
             #expect(result2 == nil)
         } catch {
-            XCTFail("Error thrown")
+            Issue.record("Error thrown")
         }
 
         do {
             let result = try inventory.book(posting: transactionPosting(posting3))
             #expect(result == Amount(number: -3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
         } catch {
-            XCTFail("Error thrown")
+            Issue.record("Error thrown")
         }
 
         #expect(inventory.inventory.count == 2)
@@ -692,14 +691,14 @@ extension InventoryTests { // Test Reduce
             #expect(result1 == nil)
             #expect(result2 == nil)
         } catch {
-            XCTFail("Error thrown")
+            Issue.record("Error thrown")
         }
 
         do {
             let result = try inventory.book(posting: transactionPosting(posting3))
             #expect(result == Amount(number: -6.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
         } catch {
-            XCTFail("Error thrown")
+            Issue.record("Error thrown")
         }
 
         #expect(inventory.inventory.count == 1)
@@ -762,7 +761,7 @@ extension InventoryTests { // Test Reduce
                                                commoditySymbol: cost1.amount!.commoditySymbol,
                                                decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
             #expect(inventory.inventory.isEmpty)
@@ -794,7 +793,7 @@ extension InventoryTests { // Test Reduce
                 #expect(result2 == nil)
                 #expect(result3 == MultiCurrencyAmount(amounts: [TestUtils.cad: -11.1], decimalDigits: [TestUtils.cad: 2]))
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
             #expect(inventory.inventory.isEmpty)
@@ -828,7 +827,7 @@ extension InventoryTests { // Test Reduce
                                                commoditySymbol: cost1.amount!.commoditySymbol,
                                                decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
             #expect(inventory.inventory.count == 1)
@@ -863,7 +862,7 @@ extension InventoryTests { // Test Reduce
                                                commoditySymbol: cost1.amount!.commoditySymbol,
                                                decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
             #expect(inventory.inventory.count == 1)
@@ -897,7 +896,7 @@ extension InventoryTests { // Test Reduce
                 #expect(result2 == nil)
                 #expect(result3 == MultiCurrencyAmount(amounts: [TestUtils.eur: -6.10, TestUtils.cad: -5.0], decimalDigits: [TestUtils.eur: 2, TestUtils.cad: 1]))
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
             #expect(inventory.inventory.isEmpty)

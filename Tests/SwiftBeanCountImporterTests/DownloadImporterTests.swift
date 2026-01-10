@@ -13,7 +13,6 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct DownloadImporterTests {
 
    @Test
@@ -53,7 +52,7 @@ struct DownloadImporterTests {
         let importers = DownloadImporterFactory.importers as! [BaseImporter.Type] // swiftlint:disable:this force_cast
         for importer in importers {
             guard !types.contains(importer.importerType) else {
-                XCTFail("Importers cannot use the same type")
+                Issue.record("Importers cannot use the same type")
                 return
             }
             types.append(importer.importerType)
@@ -66,7 +65,7 @@ struct DownloadImporterTests {
         let importers = DownloadImporterFactory.importers
         for importer in importers {
             guard !names.contains(importer.importerName) else {
-                XCTFail("Importers cannot use the same name")
+                Issue.record("Importers cannot use the same name")
                 return
             }
             names.append(importer.importerName)

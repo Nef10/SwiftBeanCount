@@ -5,7 +5,6 @@ import Testing
 import Wealthsimple
 
 @Suite
-
 struct TransactionHelperTests {
 
    @Test

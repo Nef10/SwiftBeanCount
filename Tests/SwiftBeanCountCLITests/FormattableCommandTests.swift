@@ -17,7 +17,6 @@ struct TestFormattableCommand: FormattableCommand {
 }
 
 @Suite
-
 struct FormattableCommandTests {
 
     private let basicResult = FormattableResult(title: "Title",

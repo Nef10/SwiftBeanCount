@@ -12,7 +12,6 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct TransactionMetaDataParserTests {
 
     private let basicTransactionMetaDataString = "2017-06-09 * \"Payee\" \"Narration\""

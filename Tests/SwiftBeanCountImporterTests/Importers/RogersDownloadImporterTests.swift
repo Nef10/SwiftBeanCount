@@ -6,10 +6,9 @@
 //  Copyright © 2021 Steffen Kötte. All rights reserved.
 //
 
-
 import Foundation
-@testable import SwiftBeanCountImporter
 import RogersBankDownloader
+@testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
 import SwiftBeanCountRogersBankMapper
 import Testing
@@ -181,7 +180,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         Self.load = {
             #expect($0 == "name")
             #expect($1 == "password123")
-            #expect($2 == "")
+            #expect($2.isEmpty)
             return .success(TestUser())
         }
         let importer = loadedImporter()

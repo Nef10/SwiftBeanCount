@@ -6,13 +6,12 @@
 //  Copyright © 2021 Steffen Kötte. All rights reserved.
 //
 
-
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
 import SwiftBeanCountWealthsimpleMapper
-import Wealthsimple
 import Testing
+import Wealthsimple
 
 private struct TestAccount: Wealthsimple.Account {
     var accountType = Wealthsimple.AccountType.nonRegistered
@@ -152,15 +151,15 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
         let delegate = ErrorDelegate(error: error)
         Self.authenticate = { error }
         Self.getAccounts = {
-            XCTFail("Accounts should not be requested if authentication fail")
+            Issue.record("Accounts should not be requested if authentication fail")
             return .success([])
         }
         Self.getPositions = { _, _ in
-            XCTFail("Positions should not be requested if authentication fail")
+            Issue.record("Positions should not be requested if authentication fail")
             return .success([])
         }
         Self.getTransactions = { _, _ in
-            XCTFail("Transactions should not be requested if authentication fail")
+            Issue.record("Transactions should not be requested if authentication fail")
             return .success([])
         }
         importer.delegate = delegate
@@ -176,11 +175,11 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
         let delegate = ErrorDelegate(error: error)
         Self.getAccounts = { .failure(error) }
         Self.getPositions = { _, _ in
-            XCTFail("Positions should not be requested if accounts fail")
+            Issue.record("Positions should not be requested if accounts fail")
             return .success([])
         }
         Self.getTransactions = { _, _ in
-            XCTFail("Transactions should not be requested if accounts fail")
+            Issue.record("Transactions should not be requested if accounts fail")
             return .success([])
         }
         importer.delegate = delegate
@@ -330,7 +329,7 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
         Self.getAccounts = { .success([account]) }
         Self.getPositions = { _, _ in .success([position]) }
         Self.getTransactions = { _, _ in
-            XCTFail("Transactions should not be requested if accounts fail")
+            Issue.record("Transactions should not be requested if accounts fail")
             return .success([])
         }
         importer.downloaderClass = TestDownloader.self
@@ -355,7 +354,7 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
                 #expect(!(verifiedPositionsTwo))
                 verifiedPositionsTwo = true
             } else {
-                XCTFail("Called with wrong account")
+                Issue.record("Called with wrong account")
             }
             return .success([])
         }
@@ -367,7 +366,7 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
                 #expect(!(verifiedTransactionsTwo))
                 verifiedTransactionsTwo = true
             } else {
-                XCTFail("Called with wrong account")
+                Issue.record("Called with wrong account")
             }
             return .success([])
         }
@@ -389,7 +388,7 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
         Self.getAccounts = { .success([account]) }
         Self.getPositions = { _, _ in .failure(error) }
         Self.getTransactions = { _, _ in
-            XCTFail("Transactions should not be requested if positions fail")
+            Issue.record("Transactions should not be requested if positions fail")
             return .success([])
         }
         importer.downloaderClass = TestDownloader.self

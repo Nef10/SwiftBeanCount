@@ -12,7 +12,6 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct CustomsParserTests {
 
     private let basicString = "2017-06-09 custom \"ABC\" \"DEF\""

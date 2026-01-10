@@ -11,7 +11,6 @@ import Foundation
 import Testing
 
 @Suite
-
 struct TagTests {
 
    @Test
@@ -37,13 +36,13 @@ struct TagTests {
         let tag3 = Tag(name: string2)
 
         #expect(tag1 == tag2)
-        #expect(tag1 == tag2) // swiftlint:disable:this xct_specific_matcher
+        #expect(tag1 == tag2)
 
         #expect(tag1 != tag3)
-        #expect(tag1 != tag3) // swiftlint:disable:this xct_specific_matcher
+        #expect(tag1 != tag3)
 
         #expect(tag2 != tag3)
-        #expect(tag2 != tag3) // swiftlint:disable:this xct_specific_matcher
+        #expect(tag2 != tag3)
     }
 
    @Test

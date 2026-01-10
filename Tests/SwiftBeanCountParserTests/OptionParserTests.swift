@@ -12,7 +12,6 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct OptionParserTests {
 
     private let basicString = "option \"ABC\" \"DEF\""

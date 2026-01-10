@@ -207,7 +207,7 @@ extension XCTestCase {
                 do {
                     try fileManager.removeItem(at: url)
                 } catch {
-                    XCTFail("Error deleting temporary file: \(error)")
+                    Issue.record("Error deleting temporary file: \(error)")
                 }
             }
             #expect(!(fileManager.fileExists(atPath: url.path)))
@@ -222,7 +222,7 @@ extension XCTestCase {
             try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
             try content.write(to: url, atomically: true, encoding: .utf8)
         } catch {
-            XCTFail("Error writing temporary file: \(error)")
+            Issue.record("Error writing temporary file: \(error)")
         }
     }
 

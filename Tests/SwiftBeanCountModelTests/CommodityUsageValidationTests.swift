@@ -11,7 +11,6 @@ import Foundation
 import Testing
 
 @Suite
-
 struct CommodityUsageValidationTests {
 
    @Test
@@ -39,7 +38,7 @@ struct CommodityUsageValidationTests {
 
         // Should be valid since plugin is not enabled
         guard case .valid = transaction.validate(in: ledger) else {
-            XCTFail("Transaction should be valid when check_commodity plugin is not enabled")
+            Issue.record("Transaction should be valid when check_commodity plugin is not enabled")
             return
         }
     }
@@ -72,7 +71,7 @@ struct CommodityUsageValidationTests {
         if case .invalid(let error) = transaction.validate(in: ledger) {
             #expect(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
         } else {
-            XCTFail("Transaction should be invalid when commodity is used before opening date")
+            Issue.record("Transaction should be invalid when commodity is used before opening date")
         }
     }
 
@@ -105,7 +104,7 @@ struct CommodityUsageValidationTests {
         if case .invalid(let error) = transaction.validate(in: ledger) {
             #expect(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
         } else {
-            XCTFail("Transaction should be invalid when price commodity is used before opening date")
+            Issue.record("Transaction should be invalid when price commodity is used before opening date")
         }
     }
 
@@ -139,7 +138,7 @@ struct CommodityUsageValidationTests {
         if case .invalid(let error) = transaction.validate(in: ledger) {
             #expect(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
         } else {
-            XCTFail("Transaction should be invalid when cost commodity is used before opening date")
+            Issue.record("Transaction should be invalid when cost commodity is used before opening date")
         }
     }
 
@@ -169,7 +168,7 @@ struct CommodityUsageValidationTests {
 
         // Should be valid since commodities are used on or after opening dates
         guard case .valid = transaction.validate(in: ledger) else {
-            XCTFail("Transaction should be valid when commodities are used on or after opening dates")
+            Issue.record("Transaction should be valid when commodities are used on or after opening dates")
             return
         }
     }

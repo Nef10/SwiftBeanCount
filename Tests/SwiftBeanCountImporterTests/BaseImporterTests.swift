@@ -16,7 +16,6 @@ class InvalidAccountNameProvider {
 }
 
 @Suite
-
 struct BaseImporterTests {
 
    @Test
@@ -27,17 +26,17 @@ struct BaseImporterTests {
 
    @Test
    func testImporterName() {
-        #expect(BaseImporter.importerName == "")
+        #expect(BaseImporter.importerName.isEmpty)
     }
 
    @Test
    func testImporterType() {
-        #expect(BaseImporter.importerType == "")
+        #expect(BaseImporter.importerType.isEmpty)
     }
 
    @Test
    func testHelpText() {
-        #expect(BaseImporter.helpText == "")
+        #expect(BaseImporter.helpText.isEmpty)
     }
 
    @Test
@@ -49,7 +48,7 @@ struct BaseImporterTests {
    @Test
    func testImportName() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
-        #expect(importer.importName == "")
+        #expect(importer.importName.isEmpty)
     }
 
    @Test
@@ -252,26 +251,26 @@ extension InvalidAccountNameProvider: ImporterDelegate {
 
    @Test
    func saveCredential(_: String, for _: String) {
-        XCTFail("saveCredential should not be called")
+        Issue.record("saveCredential should not be called")
     }
 
    @Test
    func readCredential(_: String) -> String? {
-        XCTFail("readCredential should not be called")
+        Issue.record("readCredential should not be called")
         return nil
     }
 
     // swiftlint:disable:next unused_parameter
    @Test
    func error(_: Error, completion: () -> Void) {
-        XCTFail("error should not be called")
+        Issue.record("error should not be called")
     }
 
     #if canImport(UIKit)
 
    @Test
    func view() -> UIView? {
-        XCTFail("view should not be called")
+        Issue.record("view should not be called")
         return nil
     }
 
@@ -279,7 +278,7 @@ extension InvalidAccountNameProvider: ImporterDelegate {
 
    @Test
    func view() -> NSView? {
-        XCTFail("view should not be called")
+        Issue.record("view should not be called")
         return nil
     }
 
@@ -289,7 +288,7 @@ extension InvalidAccountNameProvider: ImporterDelegate {
 
    @Test
    func removeView() {
-        XCTFail("removeView should not be called")
+        Issue.record("removeView should not be called")
     }
 
     #endif

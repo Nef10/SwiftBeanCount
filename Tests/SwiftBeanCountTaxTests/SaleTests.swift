@@ -4,7 +4,6 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct SaleTests {
 
    @Test

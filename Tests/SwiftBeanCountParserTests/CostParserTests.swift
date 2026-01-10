@@ -6,14 +6,12 @@
 //  Copyright © 2019 Steffen Kötte. All rights reserved.
 //
 
-
 import Foundation
-@testable import SwiftBeanCountParser
 import SwiftBeanCountModel
+@testable import SwiftBeanCountParser
 import Testing
 
 @Suite
-
 struct CostParserTests {
 
     private static let regex: NSRegularExpression = {

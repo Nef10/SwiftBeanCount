@@ -12,7 +12,6 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct AccountParserTests {
 
     private let basicOpeningString = "2017-06-09 open Assets:Cash"

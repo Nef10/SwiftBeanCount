@@ -3,7 +3,6 @@ import Foundation
 import Testing
 
 @Suite
-
 struct SwiftBeanCountTangerineMapperErrorTests {
 
    @Test

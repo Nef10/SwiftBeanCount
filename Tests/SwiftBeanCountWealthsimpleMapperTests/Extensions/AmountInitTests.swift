@@ -1,12 +1,9 @@
-
-
 import Foundation
-@testable import SwiftBeanCountWealthsimpleMapper
 import SwiftBeanCountModel
+@testable import SwiftBeanCountWealthsimpleMapper
 import Testing
 
 @Suite
-
 struct AmountInitTests {
 
    @Test

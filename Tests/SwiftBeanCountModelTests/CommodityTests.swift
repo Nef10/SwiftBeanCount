@@ -11,13 +11,12 @@ import Foundation
 import Testing
 
 @Suite
-
 struct CommodityTests {
 
    @Test
    func testDescription() {
         let commodity = Commodity(symbol: TestUtils.cad)
-        #expect(String(describing: commodity) == "")
+        #expect(String(describing: commodity).isEmpty)
     }
 
    @Test
@@ -42,7 +41,7 @@ struct CommodityTests {
         let ledgerWithPlugin = Ledger()
         ledgerWithPlugin.plugins.append("beancount.plugins.check_commodity")
         guard case .valid = commodity.validate(in: ledgerWithPlugin) else {
-            XCTFail("\(commodity) is not valid")
+            Issue.record("\(commodity) is not valid")
             return
         }
     }
@@ -54,7 +53,7 @@ struct CommodityTests {
         // Test without plugin - should be valid
         let ledgerWithoutPlugin = Ledger()
         guard case .valid = commodity.validate(in: ledgerWithoutPlugin) else {
-            XCTFail("\(commodity) should be valid when check_commodity plugin is not enabled")
+            Issue.record("\(commodity) should be valid when check_commodity plugin is not enabled")
             return
         }
 
@@ -64,7 +63,7 @@ struct CommodityTests {
         if case .invalid(let error) = commodity.validate(in: ledgerWithPlugin) {
             #expect(error == "Commodity EUR does not have an opening date")
         } else {
-            XCTFail("\(commodity) should be invalid when check_commodity plugin is enabled")
+            Issue.record("\(commodity) should be invalid when check_commodity plugin is enabled")
         }
     }
 
@@ -102,13 +101,13 @@ struct CommodityTests {
         ledgerWithPlugin.plugins.append("beancount.plugins.check_commodity")
 
         guard case .valid = commodity.validateUsageDate(TestUtils.date20170608, in: ledgerWithPlugin) else {
-            XCTFail("Using commodity on opening date should be valid")
+            Issue.record("Using commodity on opening date should be valid")
             return
         }
 
         // Test usage after opening date should be valid
         guard case .valid = commodity.validateUsageDate(TestUtils.date20170609, in: ledgerWithPlugin) else {
-            XCTFail("Using commodity after opening date should be valid")
+            Issue.record("Using commodity after opening date should be valid")
             return
         }
     }
@@ -123,7 +122,7 @@ struct CommodityTests {
         if case .invalid(let error) = commodity.validateUsageDate(TestUtils.date20170608, in: ledgerWithPlugin) {
             #expect(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
         } else {
-            XCTFail("Using commodity before opening date should be invalid")
+            Issue.record("Using commodity before opening date should be invalid")
         }
     }
 
@@ -134,7 +133,7 @@ struct CommodityTests {
         let ledgerWithoutPlugin = Ledger()
 
         guard case .valid = commodity.validateUsageDate(TestUtils.date20170608, in: ledgerWithoutPlugin) else {
-            XCTFail("Usage date validation should be skipped when plugin is not enabled")
+            Issue.record("Usage date validation should be skipped when plugin is not enabled")
             return
         }
     }
@@ -147,7 +146,7 @@ struct CommodityTests {
         ledgerWithPlugin.plugins.append("beancount.plugins.check_commodity")
 
         guard case .valid = commodity.validateUsageDate(TestUtils.date20170608, in: ledgerWithPlugin) else {
-            XCTFail("Using commodity without opening date should be ignored in the validateUsageDate, as it is tested in the valdiate function")
+            Issue.record("Using commodity without opening date should be ignored in the validateUsageDate, as it is tested in the valdiate function")
             return
         }
 

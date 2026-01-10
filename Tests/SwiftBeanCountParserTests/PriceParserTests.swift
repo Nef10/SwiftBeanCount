@@ -12,7 +12,6 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct PriceParserTests {
 
     // swiftlint:disable:next force_try

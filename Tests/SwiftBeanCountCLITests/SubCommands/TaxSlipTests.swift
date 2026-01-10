@@ -5,7 +5,6 @@ import Testing
 #if os(macOS)
 
 @Suite
-
 struct TaxSlipTests {
 
     func testFileDoesNotExist() {

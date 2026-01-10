@@ -7,8 +7,6 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
-// swiftlint:disable:next type_body_length
-
 import Foundation
 @testable import SwiftBeanCountModel
 import Testing
@@ -19,7 +17,7 @@ struct LedgerTests {
    @Test
    func testCommodities() throws {
         let ledger = Ledger()
-        #expect(ledger.commodities.count == 0)
+        #expect(ledger.commodities.isEmpty)
 
         let commodity1 = Commodity(symbol: "EUR", metaData: ["A": "B"])
         try ledger.add(commodity1)
@@ -41,7 +39,7 @@ struct LedgerTests {
    @Test
    func testAccounts() throws {
         let ledger = Ledger()
-        #expect(ledger.accounts.count == 0)
+        #expect(ledger.accounts.isEmpty)
 
         let account1 = Account(name: TestUtils.chequing, metaData: ["A": "B"])
         try ledger.add(account1)
@@ -187,7 +185,7 @@ struct LedgerTests {
         #expect(ledger.parsingErrors.count == 1)
         #expect(ledger.errors[0] == error)
         #expect(ledger.parsingErrors[0] == error)
-        #expect(String(describing: ledger) == "")
+        #expect(String(describing: ledger).isEmpty)
     }
 
    @Test
@@ -362,7 +360,7 @@ struct LedgerTests {
         var ledger = Ledger()
 
         // Empty ledger
-        #expect(String(describing: ledger) == "")
+        #expect(String(describing: ledger).isEmpty)
 
         // Ledger with commodity only
         try ledger.add(commodity)

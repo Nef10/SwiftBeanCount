@@ -11,7 +11,6 @@ import Foundation
 import Testing
 
 @Suite
-
 struct PriceTests {
 
    @Test
@@ -84,7 +83,7 @@ struct PriceTests {
 
         // Should be valid since plugin is not enabled
         guard case .valid = price.validate(in: ledger) else {
-            XCTFail("Price should be valid when check_commodity plugin is not enabled")
+            Issue.record("Price should be valid when check_commodity plugin is not enabled")
             return
         }
     }
@@ -109,7 +108,7 @@ struct PriceTests {
         if case .invalid(let error) = price.validate(in: ledger) {
             #expect(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
         } else {
-            XCTFail("Price should be invalid when commodity is used before opening date")
+            Issue.record("Price should be invalid when commodity is used before opening date")
         }
     }
 
@@ -133,7 +132,7 @@ struct PriceTests {
         if case .invalid(let error) = price.validate(in: ledger) {
             #expect(error.contains("CAD used on 2017-06-08 before its opening date of 2017-06-09"))
         } else {
-            XCTFail("Price should be invalid when amount commodity is used before opening date")
+            Issue.record("Price should be invalid when amount commodity is used before opening date")
         }
     }
 
@@ -155,7 +154,7 @@ struct PriceTests {
 
         // Should be valid since commodities are used on or after opening dates
         guard case .valid = price.validate(in: ledger) else {
-            XCTFail("Price should be valid when commodities are used on or after opening dates")
+            Issue.record("Price should be valid when commodities are used on or after opening dates")
             return
         }
     }
@@ -173,7 +172,7 @@ struct PriceTests {
 
         // Should be valid since auto-created commodities are not in the ledger commodities collection
         guard case .valid = price.validate(in: ledger) else {
-            XCTFail("Price should be valid when commodities are auto-created")
+            Issue.record("Price should be valid when commodities are auto-created")
             return
         }
     }

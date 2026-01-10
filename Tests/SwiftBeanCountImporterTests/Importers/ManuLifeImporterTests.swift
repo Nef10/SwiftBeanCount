@@ -6,7 +6,6 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
-
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -125,7 +124,6 @@ private func balancePricesResult(fundSymbol: String = TestUtils.fundSymbol, curr
 }
 
 @Suite
-
 struct ManuLifeImporterTests {
 
     private var parkingAccountDelegate: InputProviderDelegate! // swiftlint:disable:this weak_delegate
@@ -159,8 +157,8 @@ struct ManuLifeImporterTests {
    func testParseEmpty() {
         let importer = loadedImporter()
         #expect(importer.nextTransaction( == nil))
-        #expect(importer.balancesToImport() == [])
-        #expect(importer.pricesToImport() == [])
+        #expect(importer.balancesToImport().isEmpty)
+        #expect(importer.pricesToImport().isEmpty)
     }
 
    @Test
@@ -184,7 +182,7 @@ struct ManuLifeImporterTests {
         let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), transaction: transaction)
         let transaction = importer.nextTransaction()
         #expect(transaction != nil)
-        #expect(transaction!.originalDescription == "")
+        #expect(transaction!.originalDescription.isEmpty)
         #expect(!(transaction!.shouldAllowUserToEdit))
         #expect(transaction!.accountName == nil)
         #expect(importer.nextTransaction( == nil))
@@ -222,7 +220,7 @@ struct ManuLifeImporterTests {
         #expect(transaction != nil)
         let balances = importer.balancesToImport()
         let prices = importer.pricesToImport()
-        #expect(balances.count == 0)
+        #expect(balances.isEmpty)
         #expect(prices.count == 4)
         XCTAssertEqual(
             "\(transaction!.transaction)\n\n\(balances.map { "\($0)" }.joined(separator: "\n"))\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))",
@@ -325,8 +323,8 @@ struct ManuLifeImporterTests {
         for string in strings {
             let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), transaction: string)
             #expect(importer.nextTransaction( == nil))
-            #expect(importer.balancesToImport() == [])
-            #expect(importer.pricesToImport() == [])
+            #expect(importer.balancesToImport().isEmpty)
+            #expect(importer.pricesToImport().isEmpty)
         }
     }
 

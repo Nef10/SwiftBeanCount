@@ -11,7 +11,6 @@ import Foundation
 import Testing
 
 @Suite
-
 struct BalanceTests {
 
    @Test
@@ -74,7 +73,7 @@ struct BalanceTests {
 
         // Should be valid since plugin is not enabled
         guard case .valid = balance.validate(in: ledger) else {
-            XCTFail("Balance should be valid when check_commodity plugin is not enabled")
+            Issue.record("Balance should be valid when check_commodity plugin is not enabled")
             return
         }
     }
@@ -97,7 +96,7 @@ struct BalanceTests {
         if case .invalid(let error) = balance.validate(in: ledger) {
             #expect(error.contains("CAD used on 2017-06-08 before its opening date of 2017-06-09"))
         } else {
-            XCTFail("Balance should be invalid when commodity is used before opening date")
+            Issue.record("Balance should be invalid when commodity is used before opening date")
         }
     }
 
@@ -117,7 +116,7 @@ struct BalanceTests {
 
         // Should be valid since commodity is used on or after opening date
         guard case .valid = balance.validate(in: ledger) else {
-            XCTFail("Balance should be valid when commodity is used on or after opening date")
+            Issue.record("Balance should be valid when commodity is used on or after opening date")
             return
         }
     }
@@ -135,7 +134,7 @@ struct BalanceTests {
 
         // Should be valid since auto-created commodity is not in the ledger commodities collection
         guard case .valid = balance.validate(in: ledger) else {
-            XCTFail("Balance should be valid when commodity is auto-created")
+            Issue.record("Balance should be valid when commodity is auto-created")
             return
         }
     }

@@ -12,7 +12,6 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct TangerineCardImporterTests {
 
    @Test
@@ -58,7 +57,7 @@ Transaction date,Transaction,Name,Memo,Amount
         #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "Merchant VANCOUVER BC")
         #expect(line.amount == Decimal(string: "-39.20", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 

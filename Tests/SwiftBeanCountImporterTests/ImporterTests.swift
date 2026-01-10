@@ -12,7 +12,6 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct ImporterTests {
 
    @Test
@@ -26,7 +25,7 @@ struct ImporterTests {
         let importers = ImporterFactory.allImporters
         for importer in importers {
             guard !names.contains(importer.importerName) else {
-                XCTFail("Importers cannot use the same name")
+                Issue.record("Importers cannot use the same name")
                 return
             }
             names.append(importer.importerName)
@@ -52,7 +51,7 @@ struct ImporterTests {
             for header in importer.headers {
                 let url = temporaryFileURL()
                 createFile(at: url, content: "\(header.joined(separator: ", "))\n")
-                #expect(type(of: ImporterFactory.new(ledger: nil, url: url)!) == importer) // swiftlint:disable:this xct_specific_matcher
+                #expect(type(of: ImporterFactory.new(ledger: nil, url: url)!) == importer)
             }
         }
     }
@@ -68,7 +67,7 @@ struct ImporterTests {
    func testDownloadImporter() {
         let importers = DownloadImporterFactory.importers
         for importer in importers {
-            #expect(type(of: ImporterFactory.new(ledger: nil, name: importer.importerName)!) == importer) // swiftlint:disable:this xct_specific_matcher
+            #expect(type(of: ImporterFactory.new(ledger: nil, name: importer.importerName)!) == importer)
         }
     }
 

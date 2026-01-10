@@ -12,7 +12,6 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct PluginParserTests {
 
     private let basicString = "plugin \"ABC\""

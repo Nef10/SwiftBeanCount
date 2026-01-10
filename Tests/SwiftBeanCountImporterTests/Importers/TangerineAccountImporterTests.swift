@@ -6,14 +6,12 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
-
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct TangerineAccountImporterTests {
 
    @Test
@@ -97,7 +95,7 @@ Date,Transaction,Name,Memo,Amount
         #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20200605))
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "To BANK")
         #expect(line.amount == Decimal(string: "-765.43", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 
@@ -116,7 +114,7 @@ Date,Transaction,Name,Memo,Amount
         #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "Cheque Withdrawal - 002")
         #expect(line.amount == Decimal(string: "-95.00", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 
@@ -152,7 +150,7 @@ Date,Transaction,Name,Memo,Amount
         let line = importer.parseLine()
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "NAME - Transferred")
         #expect(line.amount == Decimal(string: "40.25", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 

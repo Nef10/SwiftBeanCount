@@ -13,7 +13,6 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct RogersImporterTests {
 
    @Test
@@ -65,7 +64,7 @@ struct RogersImporterTests {
         #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "Merchant")
         #expect(line.amount == Decimal(string: "-4004.44", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 
@@ -84,7 +83,7 @@ struct RogersImporterTests {
         #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "Merchant")
         #expect(line.amount == Decimal(string: "-4004.44", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 
@@ -103,7 +102,7 @@ struct RogersImporterTests {
         #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "Merchant")
         #expect(line.amount == Decimal(string: "-4004.44", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 
@@ -122,7 +121,7 @@ struct RogersImporterTests {
         #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "Merchant")
         #expect(line.amount == Decimal(string: "-4004.44", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 
@@ -141,7 +140,7 @@ struct RogersImporterTests {
         #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "Merchant")
         #expect(line.amount == Decimal(string: "-4004.44", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 
@@ -160,7 +159,7 @@ struct RogersImporterTests {
         #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "Merchant")
         #expect(line.amount == Decimal(string: "-4004.44", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 
@@ -179,7 +178,7 @@ struct RogersImporterTests {
         #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "Merchant")
         #expect(line.amount == Decimal(string: "-4004.44", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 
@@ -198,7 +197,7 @@ struct RogersImporterTests {
         #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "Merchant")
         #expect(line.amount == Decimal(string: "-4004.44", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 

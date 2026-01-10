@@ -6,14 +6,12 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
-
 import Foundation
-@testable import SwiftBeanCountParser
 import SwiftBeanCountModel
+@testable import SwiftBeanCountParser
 import Testing
 
 @Suite
-
 struct PostingParserTests {
 
     private let transaction = Transaction(metaData: TransactionMetaData(date: Date(), payee: "Payee", narration: "Narration"), postings: [])

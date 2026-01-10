@@ -6,14 +6,12 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
-
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
 import Testing
 
 @Suite
-
 struct RBCImporterTests {
 
    @Test
@@ -56,7 +54,7 @@ Chequing,01234-1234567,6/10/2017,,"Merchant",,-4.00,,\n
         #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "Merchant")
         #expect(line.amount == Decimal(string: "-4.00", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 
@@ -75,7 +73,7 @@ MasterCard,1234123412341234,6/5/2020,,"Test Store",,-4.47,,\n
         #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20200605))
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "Test Store")
         #expect(line.amount == Decimal(string: "-4.47", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 
@@ -93,7 +91,7 @@ Chequing,01234-1234567,4/1/2020,,"INTER-FI FUND TR DR","Sender",-400.00,,\n
         let line = importer.parseLine()
         #expect(line.description.trimmingCharacters(in: .whitespaces) == "INTER-FI FUND TR DR Sender")
         #expect(line.amount == Decimal(string: "-400.00", locale: Locale(identifier: "en_CA"))!)
-        #expect(line.payee == "")
+        #expect(line.payee.isEmpty)
         #expect(line.price == nil)
     }
 

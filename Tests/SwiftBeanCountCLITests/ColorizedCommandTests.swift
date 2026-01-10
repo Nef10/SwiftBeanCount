@@ -10,7 +10,6 @@ struct TestColorizedCommand: ColorizedCommand {
 }
 
 @Suite
-
 struct ColorizedCommandTests {
 
    @Test

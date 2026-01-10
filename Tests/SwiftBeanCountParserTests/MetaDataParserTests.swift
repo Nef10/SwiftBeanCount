@@ -11,7 +11,6 @@ import Foundation
 import Testing
 
 @Suite
-
 struct MetaDataParserTests {
 
     private let basicString = "  test:\"ABC\""

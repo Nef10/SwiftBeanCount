@@ -31,7 +31,7 @@ struct AccountTests {
    @Test
    func testDescription() {
         var accout = Account(name: TestUtils.cash)
-        #expect(String(describing: accout) == "")
+        #expect(String(describing: accout).isEmpty)
         accout = Account(name: TestUtils.cash, opening: TestUtils.date20170608)
         #expect(String(describing: accout) == "2017-06-08 open \(TestUtils.cash)")
         accout = Account(name: TestUtils.cash, commoditySymbol: TestUtils.eur, opening: TestUtils.date20170608)
@@ -46,7 +46,7 @@ struct AccountTests {
    func testDescriptionBookingMethod() {
         for bookingMethod in [BookingMethod.fifo, BookingMethod.lifo] {
             var accout = Account(name: TestUtils.cash, bookingMethod: bookingMethod)
-            #expect(String(describing: accout) == "")
+            #expect(String(describing: accout).isEmpty)
             accout = Account(name: TestUtils.cash, bookingMethod: bookingMethod, opening: TestUtils.date20170608)
             #expect(String(describing: accout) == "2017-06-08 open \(TestUtils.cash) \"\(bookingMethod)\"")
             accout = Account(name: TestUtils.cash, bookingMethod: bookingMethod, commoditySymbol: TestUtils.eur, opening: TestUtils.date20170608)
@@ -65,7 +65,7 @@ struct AccountTests {
         let accountNameSpecial = try AccountName("Assets:💰")
 
         var accout = Account(name: accountNameSpecial)
-        #expect(String(describing: accout) == "")
+        #expect(String(describing: accout).isEmpty)
         accout = Account(name: accountNameSpecial, opening: TestUtils.date20170608)
         #expect(String(describing: accout) == "2017-06-08 open \(accountNameSpecial)")
         let symbol = "💵"
