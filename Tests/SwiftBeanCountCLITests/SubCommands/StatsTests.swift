@@ -11,8 +11,11 @@ struct StatsTests {
 
    @Test
 
+  @Test
 
-   func testFileDoesNotExist() {
+@Test
+
+func testFileDoesNotExist() {
         let url = temporaryFileURL()
         let result = outputFromExecutionWith(arguments: ["stats", url.path])
         #expect(result.exitCode == 1)
@@ -26,8 +29,11 @@ struct StatsTests {
 
    @Test
 
+  @Test
 
-   func testEmptyFileTable() {
+@Test
+
+func testEmptyFileTable() {
         let table = """
             +---------------------------+
             | Statistics                |
@@ -56,8 +62,11 @@ struct StatsTests {
 
    @Test
 
+  @Test
 
-   func testEmptyFileCSV() {
+@Test
+
+func testEmptyFileCSV() {
         let csv = """
             "Type", "Number"
             "Transactions", "0"
@@ -80,8 +89,11 @@ struct StatsTests {
 
    @Test
 
+  @Test
 
-   func testEmptyFileText() {
+@Test
+
+func testEmptyFileText() {
         let text = """
             Statistics
 
@@ -106,8 +118,11 @@ struct StatsTests {
 
    @Test
 
+  @Test
 
-   func testTestTable() {
+@Test
+
+func testTestTable() {
         let table = """
             +---------------------------+
             | Statistics                |
@@ -136,8 +151,11 @@ struct StatsTests {
 
    @Test
 
+  @Test
 
-   func testCSV() {
+@Test
+
+func testCSV() {
         let csv = """
             "Type", "Number"
             "Transactions", "1"
@@ -160,8 +178,11 @@ struct StatsTests {
 
    @Test
 
+  @Test
 
-   func testText() {
+@Test
+
+func testText() {
         let text = """
             Statistics
 

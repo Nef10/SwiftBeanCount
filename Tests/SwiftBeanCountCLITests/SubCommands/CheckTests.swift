@@ -11,8 +11,11 @@ struct CheckTests {
 
    @Test
 
+  @Test
 
-   func testFileDoesNotExist() {
+@Test
+
+func testFileDoesNotExist() {
         let url = temporaryFileURL()
         let result = outputFromExecutionWith(arguments: ["check", url.path])
         #expect(result.exitCode == 1)
@@ -26,16 +29,22 @@ struct CheckTests {
 
    @Test
 
+  @Test
 
-   func testEmptyFile() {
+@Test
+
+func testEmptyFile() {
         let url = emptyFileURL()
         assertSuccessfulExecutionResult(arguments: ["check", url.path], output: "No errors found.")
     }
 
    @Test
 
+  @Test
 
-   func testSuccessful() {
+@Test
+
+func testSuccessful() {
         let url = temporaryFileURL()
         createFile(at: url, content: """
                                      2020-06-13 commodity CAD
@@ -50,8 +59,11 @@ struct CheckTests {
 
    @Test
 
+  @Test
 
-   func testError() {
+@Test
+
+func testError() {
         let url = temporaryFileURL()
         createFile(at: url, content: "plugin \"beancount.plugins.check_commodity\"\n\n2020-06-13 * \"\" \"\"\n  Assets:CAD 10.00 CAD\n  Income:Job -15.00 CAD")
         let result = outputFromExecutionWith(arguments: ["check", url.path])
@@ -69,8 +81,11 @@ struct CheckTests {
 
    @Test
 
+  @Test
 
-   func testQuietSuccessful() {
+@Test
+
+func testQuietSuccessful() {
         let url = temporaryFileURL()
         createFile(at: url, content: "\n")
         assertSuccessfulExecutionResult(arguments: ["check", url.path, "-q"], output: "")
@@ -79,8 +94,11 @@ struct CheckTests {
 
    @Test
 
+  @Test
 
-   func testQuietError() {
+@Test
+
+func testQuietError() {
         let url = temporaryFileURL()
         createFile(at: url, content: "2020-06-13 * \"\" \"\"\n  Assets:CAD 10.00 CAD\n  Income:Job -15.00 CAD")
         var result = outputFromExecutionWith(arguments: ["check", url.path, "-q"])

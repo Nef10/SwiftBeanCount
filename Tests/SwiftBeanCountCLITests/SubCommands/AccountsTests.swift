@@ -11,8 +11,11 @@ struct AccountsTests {
 
    @Test
 
+  @Test
 
-   func testInvalidArguments() {
+@Test
+
+func testInvalidArguments() {
         let url = emptyFileURL()
         let result = outputFromExecutionWith(arguments: ["accounts", url.path, "-c", "-f", "csv"])
         #expect(result.exitCode == 64)
@@ -22,8 +25,11 @@ struct AccountsTests {
 
    @Test
 
+  @Test
 
-   func testFileDoesNotExist() {
+@Test
+
+func testFileDoesNotExist() {
         let url = temporaryFileURL()
         let result = outputFromExecutionWith(arguments: ["accounts", url.path])
         #expect(result.exitCode == 1)
@@ -37,8 +43,11 @@ struct AccountsTests {
 
    @Test
 
+  @Test
 
-   func testTestTable() {
+@Test
+
+func testTestTable() {
         let table = """
             +---------------------------------------+
             | Accounts                              |
@@ -61,8 +70,11 @@ struct AccountsTests {
 
    @Test
 
+  @Test
 
-   func testCSV() {
+@Test
+
+func testCSV() {
         let csv = """
             "Name", "Opening", "Closing"
             "Assets:CAD", "2020-06-11", "2020-06-13"
@@ -79,8 +91,11 @@ struct AccountsTests {
 
    @Test
 
+  @Test
 
-   func testText() {
+@Test
+
+func testText() {
         let text = """
             Accounts
 
@@ -99,8 +114,11 @@ struct AccountsTests {
 
    @Test
 
+  @Test
 
-   func testEmptyFileCSV() {
+@Test
+
+func testEmptyFileCSV() {
         let csv = #""Name", "Opening", "Closing""#
         let url = emptyFileURL()
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--dates"], output: csv)
@@ -109,8 +127,11 @@ struct AccountsTests {
 
    @Test
 
+  @Test
 
-   func testNoDates() {
+@Test
+
+func testNoDates() {
         let csv = """
             "Name"
             "Assets:CAD"
@@ -127,8 +148,11 @@ struct AccountsTests {
 
    @Test
 
+  @Test
 
-   func testNoOpen() {
+@Test
+
+func testNoOpen() {
         let csv = """
             "Name", "Opening", "Closing"
             "Assets:CAD", "2020-06-11", "2020-06-13"
@@ -141,8 +165,11 @@ struct AccountsTests {
 
    @Test
 
+  @Test
 
-   func testNoClosed() {
+@Test
+
+func testNoClosed() {
         let csv = """
             "Name", "Opening"
             "Income:Job", "2020-06-13"
@@ -157,8 +184,11 @@ struct AccountsTests {
 
    @Test
 
+  @Test
 
-   func testNoOpenNoClosed() {
+@Test
+
+func testNoOpenNoClosed() {
         let csv = """
             "Name", "Opening"
             """
@@ -169,8 +199,11 @@ struct AccountsTests {
 
    @Test
 
+  @Test
 
-   func testFilter() {
+@Test
+
+func testFilter() {
         let csv = """
             "Name", "Opening", "Closing"
             "Income:Job", "2020-06-13", ""
@@ -184,8 +217,11 @@ struct AccountsTests {
 
    @Test
 
+  @Test
 
-   func testFilterNoResult() {
+@Test
+
+func testFilterNoResult() {
         let csv = """
             "Name", "Opening", "Closing"
             """
@@ -196,8 +232,11 @@ struct AccountsTests {
 
    @Test
 
+  @Test
 
-   func testPostings() {
+@Test
+
+func testPostings() {
         let csv = """
             "Name", "# Postings", "Opening", "Closing"
             "Assets:CAD", "2", "2020-06-11", "2020-06-13"
@@ -214,8 +253,11 @@ struct AccountsTests {
 
    @Test
 
+  @Test
 
-   func testActivity() {
+@Test
+
+func testActivity() {
         let csv = """
             "Name", "# Postings", "Last Activity", "Opening", "Closing"
             "Assets:CAD", "2", "2020-06-13", "2020-06-11", "2020-06-13"
@@ -232,8 +274,11 @@ struct AccountsTests {
 
    @Test
 
+  @Test
 
-   func testTestTableCount() {
+@Test
+
+func testTestTableCount() {
         let table = """
             +--------------------------------------+
             | Accounts                             |
@@ -254,8 +299,11 @@ struct AccountsTests {
 
    @Test
 
+  @Test
 
-   func testTextCount() {
+@Test
+
+func testTextCount() {
         let text = """
             Accounts
 
