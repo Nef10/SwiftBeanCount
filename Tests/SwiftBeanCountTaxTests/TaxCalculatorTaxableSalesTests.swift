@@ -1,16 +1,20 @@
+import Foundation
 import SwiftBeanCountModel
 @testable import SwiftBeanCountTax
-import XCTest
+import Testing
 
-final class TaxCalculatorTaxableSalesTests: XCTestCase {
+@Suite
+struct TaxCalculatorTaxableSalesTests {
 
-    func testGetTaxableSaleEmpty() throws {
+   @Test
+   func getTaxableSaleEmpty() throws {
         let ledger = try basicLedger()
         let sales = TaxCalculator.getTaxableSales(from: ledger, for: 2_022)
-        XCTAssert(sales.isEmpty)
+        #expect(sales.isEmpty)
     }
 
-    func testGetTaxableSales() throws {
+   @Test
+   func getTaxableSales() throws {
         let ledger = try basicLedger()
         let date = Date(timeIntervalSince1970: 1_650_013_015)
 
@@ -33,18 +37,19 @@ final class TaxCalculatorTaxableSalesTests: XCTestCase {
         ledger.add(transaction)
 
         let sales = TaxCalculator.getTaxableSales(from: ledger, for: 2_022)
-        XCTAssertEqual(sales.count, 1)
+        #expect(sales.count == 1)
 
-        XCTAssertEqual(sales[0].date, date)
-        XCTAssertEqual(sales[0].symbol, "STOCK")
-        XCTAssertNil(sales[0].name)
-        XCTAssertEqual(sales[0].quantity, Decimal(1.1))
-        XCTAssertEqual(sales[0].proceeds.fullString, "7.70 CAD")
-        XCTAssertEqual(sales[0].gain.fullString, "2.20 CAD")
-        XCTAssertEqual(sales[0].provider, "Broker")
+        #expect(sales[0].date == date)
+        #expect(sales[0].symbol == "STOCK")
+        #expect(sales[0].name == nil)
+        #expect(sales[0].quantity == Decimal(1.1))
+        #expect(sales[0].proceeds.fullString == "7.70 CAD")
+        #expect(sales[0].gain.fullString == "2.20 CAD")
+        #expect(sales[0].provider == "Broker")
     }
 
-    func testGetTaxableSalesIgnoreSplit() throws {
+   @Test
+   func getTaxableSalesIgnoreSplit() throws {
         let ledger = try basicLedger()
         let date = Date(timeIntervalSince1970: 1_650_013_015)
 
@@ -63,6 +68,6 @@ final class TaxCalculatorTaxableSalesTests: XCTestCase {
         ledger.add(transaction)
 
         let sales = TaxCalculator.getTaxableSales(from: ledger, for: 2_022)
-        XCTAssertEqual(sales.count, 0)
+        #expect(sales.isEmpty)
     }
 }

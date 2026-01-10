@@ -63,9 +63,19 @@ public struct AccountName: AccountItem {
     /// - Returns: if the name is valid
     public static func isNameValid(_ name: String) -> Bool {
         struct Cache { // https://stackoverflow.com/a/25354915/3386893 // swiftlint:disable:this convenience_type
-            static var validNames = Set<String>()
+            private static var validNames = Set<String>()
+            private static let serialQueue = DispatchQueue(label: "cacheQueue")
+
+            static func isCachedValid(_ name: String) -> Bool {
+                var result = false
+                serialQueue.sync { result = validNames.contains(name) }
+                return result
+            }
+            static func cacheValid(_ name: String) {
+                _ = serialQueue.sync { validNames.insert(name) }
+            }
         }
-        if Cache.validNames.contains(name) {
+        if Cache.isCachedValid(name) {
             return true
         }
         guard !name.isEmpty else {
@@ -76,7 +86,7 @@ public struct AccountName: AccountItem {
                 && name.last != Account.nameSeperator //  is not allowed to end in a seperator
                 && !name.contains("\(Account.nameSeperator)\(Account.nameSeperator)") // no account item is allowed to be empty
                 && !name.contains(" ") { // account names are not allowed to contain spaces
-                Cache.validNames.insert(name)
+                Cache.cacheValid(name)
                 return true
             }
         }
