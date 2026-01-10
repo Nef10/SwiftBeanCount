@@ -4,7 +4,7 @@ Import transactions from various financial institutions into Beancount format.
 
 ## Overview
 
-This is the importer of SwiftBeanCount. It reads files to create transactions. This library does not include any UI, so consumers need to provide a UI for selecting accounts, settings, as well as editing of transactions.
+This is the importer for SwiftBeanCount. It reads files or downloads data to create transactions. This library does not include any UI, so consumers need to provide a UI for selecting accounts, settings, as well as editing of transactions.
 
 ## How to Use
 
@@ -24,9 +24,3 @@ There are settings for the date tolerance when detecting duplicate transactions,
 ### Help
 
 Each Importer provides a help text. You can access all importers via `ImporterFactory.allImporters`. They each expose an `importerName` and `helpText` on the class.
-
-For more details, please have a look at the [SwiftBeanCountImporterApp](https://github.com/Nef10/SwiftBeanCountImporterApp/) which uses this library.
-
-## Topics
-
-### Importing

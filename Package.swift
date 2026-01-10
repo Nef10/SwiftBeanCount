@@ -51,6 +51,7 @@ let package = Package(
                 "SwiftyTextTable",
                 "Rainbow",
             ],
+            exclude: ["README.md"],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),

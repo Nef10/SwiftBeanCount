@@ -4,7 +4,7 @@ Convert Tangerine account data to Beancount format.
 
 ## Overview
 
-This is a small library to convert downloaded data from Tangerine (via [TangerineDownloader](https://github.com/Nef10/TangerineDownloader)) to the Beancount format (via [SwiftBeanCountModel](https://github.com/Nef10/SwiftBeanCountModel)).
+This is a small library to convert downloaded data from Tangerine (via [TangerineDownloader](https://github.com/Nef10/TangerineDownloader)) to the Beancount format (via [SwiftBeanCountModel](/SwiftBeanCount/documentation/swiftbeancountmodel)).
 
 ## Beancount Meta Data
 
@@ -14,15 +14,7 @@ Optionally, you can add `tangerine-interest` with the number of an account (or m
 
 ## How to Use
 
-1) Load your ledger, e.g. via  [SwiftBeanCountParser](https://github.com/Nef10/SwiftBeanCountParser)
+1) Load your ledger, e.g. via  [SwiftBeanCountParser](/SwiftBeanCount/documentation/swiftbeancountparser)
 2) Create an instance of `SwiftBeanCountTangerineMapper` using the ledger
 3) Download the accounts and activities you want to convert via the [TangerineDownloader](https://github.com/Nef10/TangerineDownloader)
 4) Use `createBalances` and `createTransactions` on the mapper to convert the downloaded data
-
-## Copyright
-
-While my code is licensed under the [MIT License](https://github.com/Nef10/SwiftBeanCountTangerineMapper/blob/main/LICENSE), the source repository may include names or other trademarks of Tangerine, Scotiabank or other entities; potential usage restrictions for these elements still apply and are not touched by the software license. Same applies for the API design. I am in no way affiliated with Tangerine other than being customer.
-
-## Topics
-
-### Mapping

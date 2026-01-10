@@ -30,13 +30,9 @@ If you want to have a `folder` meta data set on the account for other purposes b
 
 ## How to Use
 
-1) Load your ledger, e.g. via  [SwiftBeanCountParser](https://github.com/Nef10/SwiftBeanCountParser)
+1) Load your ledger, e.g. via  [SwiftBeanCountParser](/SwiftBeanCount/documentation/swiftbeancountparser)
 2) Call `StatementValidator.getRootFolder`
 3) Obtain a security scoped URL for this folder
 4) Call `StatementValidator.validate`
 
 The library exposes some of its helper functions used in this validate workflow as well. You can use them directly if you only want to do partial or other custom checks.
-
-## Topics
-
-### Validation

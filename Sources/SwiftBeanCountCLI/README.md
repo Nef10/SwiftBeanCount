@@ -15,12 +15,14 @@ As this is currently an alpha version, it only supports this very limited list o
 * `accounts` - Print all accounts
 * `tax-slips` - Outputs expected tax slips
 
+Run `swiftbeancount help <subcommand>` for detailed information on the different commands.
+
 ## Installation
 
-This executable is built using the Swift Package Manager, so it can be installed via [Mint](https://github.com/yonaskolb/Mint):
+This executable is built using the Swift Package Manager, so it can be installed via [Mint](https://github.com/yonaskolb/Mint). Optionally, you can specific a version to use with @version, or use the latest dev with `@main`. By default the latest tagged version is used.
 
 ```bash
-mint install Nef10/SwiftBeanCountCLI
+mint install Nef10/SwiftBeanCount
 ```
 
 ### Completion
@@ -30,7 +32,3 @@ Thanks to the [swift-argument-parser](https://github.com/apple/swift-argument-pa
 ```bash
 swiftbeancount --generate-completion-script zsh > ~/.zfunctions/_swiftbeancount
 ```
-
-## Topics
-
-### Commands

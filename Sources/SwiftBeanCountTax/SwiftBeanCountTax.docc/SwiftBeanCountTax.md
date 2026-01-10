@@ -98,11 +98,7 @@ Sometimes income is earned in one year, but only paid in another; or a sale is p
 
 ## How to Use
 
-1) Load your ledger, e.g. via  [SwiftBeanCountParser](https://github.com/Nef10/SwiftBeanCountParser)
+1) Load your ledger, e.g. via  [SwiftBeanCountParser](/SwiftBeanCount/documentation/swiftbeancountparser)
 2) Call one of the public functions on `TaxCalculator`, for example:
     1) `TaxCalculator.generateTaxSlips(from ledger: Ledger, for year: Int)`
     2) `TaxCalculator.getTaxableSales(from ledger: Ledger, for year: Int)`
-
-## Topics
-
-### Tax Calculations

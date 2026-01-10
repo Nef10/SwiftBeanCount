@@ -16,8 +16,6 @@ This library synchronizes transactions from Beancount files to a Google Sheets w
     - parsing errors occurred while reading the sheet
     - configuration which was used for syncing
 
-For more details, please have a look at the [SwiftBeanCountSheetSyncApp](https://github.com/Nef10/SwiftBeanCountSheetSyncApp) which uses this library.
-
 ## Beancount Meta Data
 
 The synchronization relies on meta data in your beancount file for configuration. Please add these to your beancount file.
@@ -59,7 +57,3 @@ The following columns are required to be within columns A-I, other columns are i
 - `Part Name1` and `Part Name2`. `Name1` and `Name2` should be the name of the people (e.g. replace them). One of them must be the same as configured as name in the ledger (see above). Each column must contain a number which represents the amount this party is paying for the purchase. Same formatting rules as for amount apply.
 - `Who paid` One of the two names
 - `Comment` While the column is required, it can be an empty string
-
-## Topics
-
-### Synchronization
