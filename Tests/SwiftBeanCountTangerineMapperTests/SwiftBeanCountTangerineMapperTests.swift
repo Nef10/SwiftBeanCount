@@ -1,9 +1,11 @@
-import SwiftBeanCountModel
+import Foundation
 @testable import SwiftBeanCountTangerineMapper
-import XCTest
+import SwiftBeanCountModel
+import Testing
 
 // swiftlint:disable:next type_body_length
-final class SwiftBeanCountTangerineMapperTests: XCTestCase {
+@Suite
+struct SwiftBeanCountTangerineMapperTests {
 
     private let creditCard: [String: Any] = ["type": "CREDIT_CARD", "account_balance": 10.50, "currency_type": "CAD", "display_name": "1234 XXXX YYYY 1583"]
     private let chequing: [String: Any] = ["type": "CHEQUING", "display_name": "123456", "account_balance": 150.30]
@@ -12,11 +14,15 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
 
     private let mapper = SwiftBeanCountTangerineMapper(ledger: Ledger())
 
-    func testDefaultAccountName() throws {
-        XCTAssertEqual(mapper.defaultAccountName, try AccountName("Expenses:TODO"))
+    @Test
+    func DefaultAccountName() throws {
+        let expected = try AccountName("Expenses:TODO")
+        #expect(mapper.defaultAccountName == expected)
     }
 
-    func testCreateBalances() throws {
+    @Test
+
+    func CreateBalances() throws {
         let accounts = [creditCard, chequing, loan, savings, ["type": "SAVINGS", "display_name": "1001"]]
         let ledger = Ledger()
         let date = Date()
@@ -32,43 +38,47 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
         try ledger.add(Account(name: emptyAccountName, metaData: ["number": "1001", "importer-type": "tangerine-account"]))
         let mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
         let result = try mapper.createBalances(accounts: accounts, date: date)
-        XCTAssertEqual(result.count, 5)
+        #expect(result.count == 5)
         var amount = Amount(number: Decimal(-10.50), commoditySymbol: "CAD", decimalDigits: 2)
-        XCTAssertEqual(result[0], Balance(date: date, accountName: creditCardAccountName, amount: amount))
+        #expect(result[0] == Balance(date: date, accountName: creditCardAccountName, amount: amount))
         amount = Amount(number: Decimal(150.30), commoditySymbol: "CAD", decimalDigits: 2) // fallback currency
-        XCTAssertEqual(result[1], Balance(date: date, accountName: checkingAccountName, amount: amount))
+        #expect(result[1] == Balance(date: date, accountName: checkingAccountName, amount: amount))
         amount = Amount(number: Decimal(-15.25), commoditySymbol: "EUR", decimalDigits: 2)
-        XCTAssertEqual(result[2], Balance(date: date, accountName: loanAccountName, amount: amount))
+        #expect(result[2] == Balance(date: date, accountName: loanAccountName, amount: amount))
         amount = Amount(number: Decimal(19.10), commoditySymbol: "USD", decimalDigits: 2) // account currency
-        XCTAssertEqual(result[3], Balance(date: date, accountName: savingsAccountName, amount: amount))
+        #expect(result[3] == Balance(date: date, accountName: savingsAccountName, amount: amount))
         amount = Amount(number: Decimal(0.00), commoditySymbol: "CAD", decimalDigits: 2) // no amount in JSON
-        XCTAssertEqual(result[4], Balance(date: date, accountName: emptyAccountName, amount: amount))
+        #expect(result[4] == Balance(date: date, accountName: emptyAccountName, amount: amount))
     }
 
-    func testCreateBalancesExceptions() {
+    @Test
+
+    func CreateBalancesExceptions() {
         // No account
         XCTAssertThrowsError(try mapper.createBalances(accounts: [creditCard])) {
              assertAccountNotFound(thrownError: $0, account: creditCard)
         }
         // Invalid Date
         XCTAssertThrowsError(try mapper.createTransactions(["Assets:Checking": [["posted_date": "2022-10-99T10:10:10"]]])) {
-            XCTAssertEqual($0 as? SwiftBeanCountTangerineMapperError, .invalidDate(date: "2022-10-99T10:10:10"))
+            #expect($0 as? SwiftBeanCountTangerineMapperError == .invalidDate(date: "2022-10-99T10:10:10"))
         }
         // No Date
         XCTAssertThrowsError(try mapper.createTransactions(["Assets:Checking": [["a": "b"]]])) {
-            XCTAssertEqual($0 as? SwiftBeanCountTangerineMapperError, .invalidDate(date: ""))
+            #expect($0 as? SwiftBeanCountTangerineMapperError == .invalidDate(date: ""))
         }
         // Invalid Account Name
         XCTAssertThrowsError(try mapper.createTransactions( ["InvalidName": [["posted_date": "2022-10-10T10:10:10"]]])) {
             if case let AccountNameError.invaildName(name) = $0 {
-                XCTAssertEqual(name, "InvalidName")
+                #expect(name == "InvalidName")
             } else {
                 XCTFail("Wrong error type")
             }
         }
     }
 
-    func testCreateTransactionsAlreadyExists() throws {
+    @Test
+
+    func CreateTransactionsAlreadyExists() throws {
         let transactions = [ "account": [["id": 12_345]]]
         let ledger = Ledger()
         let posting = Posting(accountName: try AccountName("Assets:Checking"), amount: Amount(number: Decimal(1), commoditySymbol: "CAD", decimalDigits: 2))
@@ -80,13 +90,15 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
         ledger.add(transaction2)
         ledger.add(transaction)
         let mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
-        XCTAssert(try mapper.createTransactions(transactions).isEmpty)
+        #expect(try mapper.createTransactions(transactions).isEmpty)
     }
 
-    func testCreateTransactions() throws {
+    @Test
+
+    func CreateTransactions() throws {
         let transactions = ["Assets:Checking": [["posted_date": "2022-10-10T10:10:10", "description": "ABC", "amount": 10.50] as [String: Any]]]
         let result = try mapper.createTransactions(transactions)
-        XCTAssertEqual(result.count, 1)
+        #expect(result.count == 1)
         XCTAssertEqual(result[0].description, """
         2022-10-10 * "" "ABC"
           tangerine-id: "0"
@@ -95,11 +107,13 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
         """)
     }
 
-    func testCreateTransactionCreditCardRewardNotSetup() throws {
+    @Test
+
+    func CreateTransactionCreditCardRewardNotSetup() throws {
         let transactions: [String: [[String: Any]]] =
             ["Assets:Savings:Tangerine": [["id": 852_254, "posted_date": "2022-10-10T10:10:10", "description": "ABC", "amount": 10.50, "type": "CC_RE"] as [String: Any]]]
         let result = try mapper.createTransactions(transactions)
-        XCTAssertEqual(result.count, 1)
+        #expect(result.count == 1)
         XCTAssertEqual(result[0].description, """
         2022-10-10 * "Tangerine" ""
           tangerine-id: "852254"
@@ -108,7 +122,9 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
         """)
     }
 
-    func testCreateTransactionCreditCardReward() throws {
+    @Test
+
+    func CreateTransactionCreditCardReward() throws {
         let ledger = Ledger()
         let accountName1 = try AccountName("Assets:Savings:Tangerine")
         try ledger.add(Account(name: accountName1, metaData: ["number": "1001"]))
@@ -121,7 +137,7 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
         let transactions: [String: [[String: Any]]] =
             ["Assets:Savings:Tangerine": [["id": 852_254, "posted_date": "2022-10-10T10:10:10", "description": "ABC", "amount": 10.50, "type": "CC_RE"] as [String: Any]]]
         let result = try mapper.createTransactions(transactions)
-        XCTAssertEqual(result.count, 1)
+        #expect(result.count == 1)
         XCTAssertEqual(result[0].description, """
         2022-10-10 * "Tangerine" ""
           tangerine-id: "852254"
@@ -130,7 +146,9 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
         """)
     }
 
-    func testCreateInterestTransactionNotSetup() throws {
+    @Test
+
+    func CreateInterestTransactionNotSetup() throws {
         let ledger = Ledger()
         let accountName1 = try AccountName("Assets:Savings:Tangerine")
         try ledger.add(Account(name: accountName1, metaData: ["number": "1001"]))
@@ -139,7 +157,7 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
         let transactions: [String: [[String: Any]]] =
             ["Assets:Savings:Tangerine": [["posted_date": "2022-10-10T10:10:10", "description": "Interest Paid", "amount": 10.50, "type": "INTEREST"] as [String: Any]]]
         let result = try mapper.createTransactions(transactions)
-        XCTAssertEqual(result.count, 1)
+        #expect(result.count == 1)
         XCTAssertEqual(result[0].description, """
         2022-10-10 * "Tangerine" ""
           tangerine-id: "0"
@@ -148,7 +166,9 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
         """)
     }
 
-    func testCreateInterestTransaction() throws {
+    @Test
+
+    func CreateInterestTransaction() throws {
         let ledger = Ledger()
         let accountName1 = try AccountName("Assets:Savings:Tangerine")
         try ledger.add(Account(name: accountName1, metaData: ["number": "1001"]))
@@ -164,7 +184,7 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
                 [["id": 786, "posted_date": "2022-10-10T10:10:10", "description": "Promotional Bonus Interest", "amount": 10.50, "type": "INTEREST"] as [String: Any]]
             ]
         let result = try mapper.createTransactions(transactions)
-        XCTAssertEqual(result.count, 1)
+        #expect(result.count == 1)
         XCTAssertEqual(result[0].description, """
         2022-10-10 * "Tangerine" "Promotional Bonus Interest"
           tangerine-id: "786"
@@ -173,13 +193,15 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
         """)
     }
 
-    func testCreateTransactionsCommoditySymbol() throws {
+    @Test
+
+    func CreateTransactionsCommoditySymbol() throws {
         let transactions = [ "Assets:Checking": [["posted_date": "2022-10-10T10:10:10", "description": "ABC", "amount": 10.50] as [String: Any]]]
         let ledger = Ledger()
         try ledger.add(Account(name: try AccountName("Assets:Checking"), commoditySymbol: "USD"))
         let mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
         let result = try mapper.createTransactions(transactions)
-        XCTAssertEqual(result.count, 1)
+        #expect(result.count == 1)
         XCTAssertEqual(result[0].description, """
         2022-10-10 * "" "ABC"
           tangerine-id: "0"
@@ -188,7 +210,9 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
         """)
     }
 
-    func testCreateTransactionsEmpty() throws {
+    @Test
+
+    func CreateTransactionsEmpty() throws {
         let transactions = [ "Assets:Checking": [["posted_date": "2022-10-10T10:10:10"]]]
         let ledger = Ledger()
         let posting = Posting(accountName: try AccountName("Assets:Checking"), amount: Amount(number: Decimal(1), commoditySymbol: "CAD", decimalDigits: 2))
@@ -199,7 +223,7 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
 
         let mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
         let result = try mapper.createTransactions(transactions)
-        XCTAssertEqual(result.count, 1)
+        #expect(result.count == 1)
         XCTAssertEqual(result[0].description, """
         2022-10-10 * "" ""
           tangerine-id: "0"
@@ -208,13 +232,17 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
         """)
     }
 
-    func testLedgerAccountNameEmptyDict() {
+    @Test
+
+    func LedgerAccountNameEmptyDict() {
         XCTAssertThrowsError(try mapper.ledgerAccountName(account: [:])) {
              assertAccountNotFound(thrownError: $0, account: [:])
         }
     }
 
-    func testLedgerAccountNameCreditCard() throws {
+    @Test
+
+    func LedgerAccountNameCreditCard() throws {
         // No Account
         var mapper = SwiftBeanCountTangerineMapper(ledger: Ledger())
         XCTAssertThrowsError(try mapper.ledgerAccountName(account: creditCard)) {
@@ -246,10 +274,12 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
         let accountName = try AccountName("Liabilities:CreditCard:Tangerine")
         try ledger.add(Account(name: accountName, metaData: ["last-four": "1583", "importer-type": "tangerine-card"]))
         mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
-        XCTAssertEqual(try mapper.ledgerAccountName(account: creditCard), accountName)
+        #expect(try mapper.ledgerAccountName(account: creditCard) == accountName)
     }
 
-    func testLedgerAccountNameLoan() throws {
+    @Test
+
+    func LedgerAccountNameLoan() throws {
         // No Account
         XCTAssertThrowsError(try mapper.ledgerAccountName(account: loan)) {
              assertAccountNotFound(thrownError: $0, account: loan)
@@ -280,10 +310,12 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
         let accountName = try AccountName("Liabilities:LOC:Tangerine")
         try ledger.add(Account(name: accountName, metaData: ["number": "654321", "importer-type": "tangerine-account"]))
         mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
-        XCTAssertEqual(try mapper.ledgerAccountName(account: loan), accountName)
+        #expect(try mapper.ledgerAccountName(account: loan) == accountName)
     }
 
-    func testLedgerAccountNameChequing() throws {
+    @Test
+
+    func LedgerAccountNameChequing() throws {
         // No Account
         XCTAssertThrowsError(try mapper.ledgerAccountName(account: chequing)) {
              assertAccountNotFound(thrownError: $0, account: chequing)
@@ -314,10 +346,12 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
         let accountName = try AccountName("Assets:Checking:Tangerine")
         try ledger.add(Account(name: accountName, metaData: ["number": "123456", "importer-type": "tangerine-account"]))
         mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
-        XCTAssertEqual(try mapper.ledgerAccountName(account: chequing), accountName)
+        #expect(try mapper.ledgerAccountName(account: chequing) == accountName)
     }
 
-    func testLedgerAccountNameSavings() throws {
+    @Test
+
+    func LedgerAccountNameSavings() throws {
         // No Account
         XCTAssertThrowsError(try mapper.ledgerAccountName(account: savings)) {
              assertAccountNotFound(thrownError: $0, account: savings)
@@ -348,7 +382,7 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
         let accountName = try AccountName("Assets:Savings:Tangerine")
         try ledger.add(Account(name: accountName, metaData: ["number": "9876543", "importer-type": "tangerine-account"]))
         mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
-        XCTAssertEqual(try mapper.ledgerAccountName(account: savings), accountName)
+        #expect(try mapper.ledgerAccountName(account: savings) == accountName)
     }
 
     private func assertAccountNotFound(thrownError: Error, account: [String: Any]) {
@@ -360,9 +394,9 @@ final class SwiftBeanCountTangerineMapperTests: XCTestCase {
         case let .missingAccount(missingAccount):
             for (key, value) in account {
                 if let value = value as? String {
-                    XCTAssert(missingAccount.contains("\"\(key)\": \"\(value)\""))
+                    #expect(missingAccount.contains("\"\(key)\": \"\(value)\""))
                 } else {
-                    XCTAssert(missingAccount.contains("\"\(key)\": \(value)"))
+                    #expect(missingAccount.contains("\"\(key)\": \(value)"))
                 }
             }
         default:

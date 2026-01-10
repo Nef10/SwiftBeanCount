@@ -1,12 +1,9 @@
 import CSV
-import Foundation
-import SwiftBeanCountModel
-import Testing
 @testable import SwiftBeanCountCompassCardMapper
+import SwiftBeanCountModel
+import XCTest
 
-@Suite
-
-struct SwiftBeanCountCompassCardMapperTests {
+final class SwiftBeanCountCompassCardMapperTests: XCTestCase {
 
     // swiftlint:disable line_length
     private enum CSV {
@@ -24,135 +21,114 @@ struct SwiftBeanCountCompassCardMapperTests {
     private let accountName = "Assets:CompassCard"
     private let cardNumber = "987654321"
 
-    private var mapper: SwiftBeanCountCompassCardMapper {
+    private lazy var mapper: SwiftBeanCountCompassCardMapper = {
         let ledger = Ledger()
          // swiftlint:disable:next force_try
         try! ledger.add(Account(name: try! AccountName(accountName), metaData: ["card-number": cardNumber, "importer-type": "compass-card"]))
         return SwiftBeanCountCompassCardMapper(ledger: ledger)
+    }()
+
+    func testDefaultExpenseAccountName() throws {
+        XCTAssertEqual(emptyMapper.defaultExpenseAccountName, try AccountName("Expenses:TODO"))
     }
 
-    @Test
-    func DefaultExpenseAccountName() throws {
-        let expected = try AccountName("Expenses:TODO")
-        #expect(emptyMapper.defaultExpenseAccountName == expected)
+    func testDefaultAssetAccountName() throws {
+        XCTAssertEqual(emptyMapper.defaultAssetAccountName, try AccountName("Assets:TODO"))
     }
 
-    @Test
-    func DefaultAssetAccountName() throws {
-        let expected = try AccountName("Assets:TODO")
-        #expect(emptyMapper.defaultAssetAccountName == expected)
-    }
-
-    @Test
-    func CreateBalanceNoAccount() {
-        #expect(throws: SwiftBeanCountCompassCardMapperError.missingAccount(cardNumber: cardNumber)) {
-            try emptyMapper.createBalance(cardNumber: cardNumber, balance: " $ 14.55 ")
+    func testCreateBalanceNoAccount() {
+        XCTAssertThrowsError(try emptyMapper.createBalance(cardNumber: cardNumber, balance: " $ 14.55 ")) {
+            XCTAssertEqual($0 as? SwiftBeanCountCompassCardMapperError, .missingAccount(cardNumber: cardNumber))
         }
     }
 
-    @Test
-
-    func CreateBalance() throws {
+    func testCreateBalance() throws {
         let date = Date()
         let result = try mapper.createBalance(cardNumber: "987654321", balance: " $ 14.55 ", date: date)
         let (decimal, _) = "14.55".amountDecimal()
-        #expect(result.accountName.fullName == accountName)
-        #expect(result.amount == Amount(number: decimal, commoditySymbol: "CAD", decimalDigits: 2))
-        #expect(result.date == date)
+        XCTAssertEqual(result.accountName.fullName, accountName)
+        XCTAssertEqual(result.amount, Amount(number: decimal, commoditySymbol: "CAD", decimalDigits: 2))
+        XCTAssertEqual(result.date, date)
     }
 
-    @Test
-
-    func CreateTransactionsEmpty() throws {
+    func testCreateTransactionsEmpty() throws {
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: CSV.header)
-        #expect(result == [])
+        XCTAssertEqual(result, [])
     }
 
-    @Test
-
-    func AutoLoadTransaction() throws {
+    func testAutoLoadTransaction() throws {
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.autoLoad)")
-        #expect(result.count == 1)
-        #expect(result.first!.metaData.narration == "")
-        #expect(result.first!.metaData.metaData["journey-id"] == "compass-card-load-2022-12-01-09-26")
-        #expect(result.first!.metaData.date == Date(timeIntervalSince1970: 1_669_915_560))
-        #expect(result.first!.postings.contains {
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result.first!.metaData.narration, "")
+        XCTAssertEqual(result.first!.metaData.metaData["journey-id"], "compass-card-load-2022-12-01-09-26")
+        XCTAssertEqual(result.first!.metaData.date, Date(timeIntervalSince1970: 1_669_915_560))
+        XCTAssert(result.first!.postings.contains {
             $0.accountName.fullName == accountName && $0.amount.description == "20.00 CAD"
         })
-        #expect(result.first!.postings.contains {
+        XCTAssert(result.first!.postings.contains {
             $0.accountName == mapper.defaultAssetAccountName && $0.amount.description == "-20.00 CAD"
         })
     }
 
-    @Test
-
-    func WebLoadTransaction() throws {
+    func testWebLoadTransaction() throws {
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.webLoad)")
-        #expect(result.count == 1)
-        #expect(result.first!.metaData.narration == "")
-        #expect(result.first!.metaData.metaData["journey-id"] == "compass-card-load-43926965")
-        #expect(result.first!.metaData.date == Date(timeIntervalSince1970: 1_669_915_560))
-        #expect(result.first!.postings.contains {
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result.first!.metaData.narration, "")
+        XCTAssertEqual(result.first!.metaData.metaData["journey-id"], "compass-card-load-43926965")
+        XCTAssertEqual(result.first!.metaData.date, Date(timeIntervalSince1970: 1_669_915_560))
+        XCTAssert(result.first!.postings.contains {
             $0.accountName.fullName == accountName && $0.amount.description == "20.00 CAD"
         })
-        #expect(result.first!.postings.contains {
+        XCTAssert(result.first!.postings.contains {
             $0.accountName == mapper.defaultAssetAccountName && $0.amount.description == "-20.00 CAD"
         })
     }
 
-    @Test
-
-    func WebLoadAndLoadTransaction() throws {
+    func testWebLoadAndLoadTransaction() throws {
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.load)\(CSV.webLoad)")
-        #expect(result.count == 1)
-        #expect(result.first!.metaData.narration == "")
-        #expect(result.first!.metaData.metaData["journey-id"] == "compass-card-load-43926965")
-        #expect(result.first!.metaData.date == Date(timeIntervalSince1970: 1_669_915_560))
-        #expect(result.first!.postings.contains {
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result.first!.metaData.narration, "")
+        XCTAssertEqual(result.first!.metaData.metaData["journey-id"], "compass-card-load-43926965")
+        XCTAssertEqual(result.first!.metaData.date, Date(timeIntervalSince1970: 1_669_915_560))
+        XCTAssert(result.first!.postings.contains {
             $0.accountName.fullName == accountName && $0.amount.description == "20.00 CAD"
         })
-        #expect(result.first!.postings.contains {
+        XCTAssert(result.first!.postings.contains {
             $0.accountName == mapper.defaultAssetAccountName && $0.amount.description == "-20.00 CAD"
         })
     }
 
-    @Test
-
-    func TwoLoadTransaction() throws {
+    func testTwoLoadTransaction() throws {
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.load)\(CSV.load)")
-        #expect(result.count == 2)
-        #expect(result[0] == result[1])
-        #expect(result.first!.metaData.narration == "")
-        #expect(result.first!.metaData.metaData["journey-id"] == "compass-card-load-2022-12-01-09-26")
-        #expect(result.first!.metaData.date == Date(timeIntervalSince1970: 1_669_915_560))
-        #expect(result.first!.postings.contains {
+        XCTAssertEqual(result.count, 2)
+        XCTAssertEqual(result[0], result[1])
+        XCTAssertEqual(result.first!.metaData.narration, "")
+        XCTAssertEqual(result.first!.metaData.metaData["journey-id"], "compass-card-load-2022-12-01-09-26")
+        XCTAssertEqual(result.first!.metaData.date, Date(timeIntervalSince1970: 1_669_915_560))
+        XCTAssert(result.first!.postings.contains {
             $0.accountName.fullName == accountName && $0.amount.description == "20.00 CAD"
         })
-        #expect(result.first!.postings.contains {
+        XCTAssert(result.first!.postings.contains {
             $0.accountName == mapper.defaultAssetAccountName && $0.amount.description == "-20.00 CAD"
         })
     }
 
-    @Test
-
-    func AutoLoadTransactionCSVReader() throws {
+    func testAutoLoadTransactionCSVReader() throws {
         let reader = try CSVReader(string: "\(CSV.header)\(CSV.autoLoad)", hasHeaderRow: true)
         let result = try mapper.createTransactions(account: try AccountName(accountName), reader: reader)
-        #expect(result.count == 1)
-        #expect(result.first!.metaData.narration == "")
-        #expect(result.first!.metaData.metaData["journey-id"] == "compass-card-load-2022-12-01-09-26")
-        #expect(result.first!.metaData.date == Date(timeIntervalSince1970: 1_669_915_560))
-        #expect(result.first!.postings.contains {
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result.first!.metaData.narration, "")
+        XCTAssertEqual(result.first!.metaData.metaData["journey-id"], "compass-card-load-2022-12-01-09-26")
+        XCTAssertEqual(result.first!.metaData.date, Date(timeIntervalSince1970: 1_669_915_560))
+        XCTAssert(result.first!.postings.contains {
             $0.accountName.fullName == accountName && $0.amount.description == "20.00 CAD"
         })
-        #expect(result.first!.postings.contains {
+        XCTAssert(result.first!.postings.contains {
             $0.accountName == mapper.defaultAssetAccountName && $0.amount.description == "-20.00 CAD"
         })
     }
 
-    @Test
-
-    func AutoLoadTransactionNonDefaultAccount() throws {
+    func testAutoLoadTransactionNonDefaultAccount() throws {
         let loadAccountName = "Assets:Checking"
         let ledger = Ledger()
         try ledger.add(Account(name: try AccountName(accountName), metaData: ["card-number": cardNumber, "importer-type": "compass-card"]))
@@ -161,51 +137,45 @@ struct SwiftBeanCountCompassCardMapperTests {
         let mapper = SwiftBeanCountCompassCardMapper(ledger: ledger)
 
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.autoLoad)")
-        #expect(result.count == 1)
-        #expect(result.first!.postings.contains {
+        XCTAssertEqual(result.count, 1)
+        XCTAssert(result.first!.postings.contains {
             $0.accountName.fullName == accountName && $0.amount.description == "20.00 CAD"
         })
-        #expect(result.first!.postings.contains {
+        XCTAssert(result.first!.postings.contains {
             $0.accountName.fullName == loadAccountName && $0.amount.description == "-20.00 CAD"
         })
     }
 
-    @Test
-
-    func CreateTransaction() throws {
+    func testCreateTransaction() throws {
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.transaction1)")
-        #expect(result.count == 1)
-        #expect(result.first!.metaData.narration == "Bus Stop 60572")
-        #expect(result.first!.metaData.metaData["journey-id"] == "2022-11-18T04:39:00.0000000Z")
-        #expect(result.first!.metaData.date == Date(timeIntervalSince1970: 1_668_746_340))
-        #expect(result.first!.postings.contains {
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result.first!.metaData.narration, "Bus Stop 60572")
+        XCTAssertEqual(result.first!.metaData.metaData["journey-id"], "2022-11-18T04:39:00.0000000Z")
+        XCTAssertEqual(result.first!.metaData.date, Date(timeIntervalSince1970: 1_668_746_340))
+        XCTAssert(result.first!.postings.contains {
             $0.accountName.fullName == accountName && $0.amount.description == "-2.50 CAD"
         })
-        #expect(result.first!.postings.contains {
+        XCTAssert(result.first!.postings.contains {
             $0.accountName == mapper.defaultExpenseAccountName && $0.amount.description == "2.50 CAD"
         })
     }
 
-    @Test
-
-    func CreateTransactionCSVReader() throws {
+    func testCreateTransactionCSVReader() throws {
         let reader = try CSVReader(string: "\(CSV.header)\(CSV.transaction1)", hasHeaderRow: true)
         let result = try mapper.createTransactions(account: try AccountName(accountName), reader: reader)
-        #expect(result.count == 1)
-        #expect(result.first!.metaData.narration == "Bus Stop 60572")
-        #expect(result.first!.metaData.metaData["journey-id"] == "2022-11-18T04:39:00.0000000Z")
-        #expect(result.first!.metaData.date == Date(timeIntervalSince1970: 1_668_746_340))
-        #expect(result.first!.postings.contains {
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result.first!.metaData.narration, "Bus Stop 60572")
+        XCTAssertEqual(result.first!.metaData.metaData["journey-id"], "2022-11-18T04:39:00.0000000Z")
+        XCTAssertEqual(result.first!.metaData.date, Date(timeIntervalSince1970: 1_668_746_340))
+        XCTAssert(result.first!.postings.contains {
             $0.accountName.fullName == accountName && $0.amount.description == "-2.50 CAD"
         })
-        #expect(result.first!.postings.contains {
+        XCTAssert(result.first!.postings.contains {
             $0.accountName == mapper.defaultExpenseAccountName && $0.amount.description == "2.50 CAD"
         })
     }
 
-    @Test
-
-    func CreateTransactionNonDefaultAccount() throws {
+    func testCreateTransactionNonDefaultAccount() throws {
         let expenseAccountName = "Expenses:Transit"
         let ledger = Ledger()
         try ledger.add(Account(name: try AccountName(accountName), metaData: ["card-number": cardNumber, "importer-type": "compass-card"]))
@@ -214,18 +184,16 @@ struct SwiftBeanCountCompassCardMapperTests {
         let mapper = SwiftBeanCountCompassCardMapper(ledger: ledger)
 
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.transaction1)")
-        #expect(result.count == 1)
-        #expect(result.first!.postings.contains {
+        XCTAssertEqual(result.count, 1)
+        XCTAssert(result.first!.postings.contains {
             $0.accountName.fullName == accountName && $0.amount.description == "-2.50 CAD"
         })
-        #expect(result.first!.postings.contains {
+        XCTAssert(result.first!.postings.contains {
             $0.accountName.fullName == expenseAccountName && $0.amount.description == "2.50 CAD"
         })
     }
 
-    @Test
-
-    func CreateTransactionAlreadyInLedger() throws {
+    func testCreateTransactionAlreadyInLedger() throws {
         let expenseAccountName = "Expenses:Transit"
         let ledger = Ledger()
         try ledger.add(Account(name: try AccountName(accountName), metaData: ["card-number": cardNumber, "importer-type": "compass-card"]))
@@ -239,39 +207,33 @@ struct SwiftBeanCountCompassCardMapperTests {
         let mapper = SwiftBeanCountCompassCardMapper(ledger: ledger)
 
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.transaction1)")
-        #expect(result.count == 0)
+        XCTAssertEqual(result.count, 0)
     }
 
-    @Test
-
-    func CreateTransactionTransfer() throws {
+    func testCreateTransactionTransfer() throws {
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.transaction2)")
-        #expect(result.count == 1)
-        #expect(result.first!.metaData.narration == "Stadium -> Waterfront -> Edmonds") // Tap in, Tap out, Transfer at, Stn and duplicate entry for Waterfront is removed
-        #expect(result.first!.metaData.metaData["journey-id"] == "2022-12-07T00:59:00.0000000Z")
-        #expect(result.first!.metaData.date == Date(timeIntervalSince1970: 1_670_376_120))
-        #expect(result.first!.postings.contains {
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result.first!.metaData.narration, "Stadium -> Waterfront -> Edmonds") // Tap in, Tap out, Transfer at, Stn and duplicate entry for Waterfront is removed
+        XCTAssertEqual(result.first!.metaData.metaData["journey-id"], "2022-12-07T00:59:00.0000000Z")
+        XCTAssertEqual(result.first!.metaData.date, Date(timeIntervalSince1970: 1_670_376_120))
+        XCTAssert(result.first!.postings.contains {
             $0.accountName.fullName == accountName && $0.amount.description == "-3.65 CAD"
         })
-        #expect(result.first!.postings.contains {
+        XCTAssert(result.first!.postings.contains {
             $0.accountName == mapper.defaultExpenseAccountName && $0.amount.description == "3.65 CAD"
         })
     }
 
-    @Test
-
-    func CreateMultipleTransactions() throws {
+    func testCreateMultipleTransactions() throws {
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.transaction1)\(CSV.transaction2)")
-        #expect(result.count == 2)
-        #expect(result[0].metaData.narration == "Bus Stop 60572")
-        #expect(result[1].metaData.narration == "Stadium -> Waterfront -> Edmonds")
+        XCTAssertEqual(result.count, 2)
+        XCTAssertEqual(result[0].metaData.narration, "Bus Stop 60572")
+        XCTAssertEqual(result[1].metaData.narration, "Stadium -> Waterfront -> Edmonds")
     }
 
-    @Test
-
-    func CreateTransactionRefund() throws {
+    func testCreateTransactionRefund() throws {
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.refund)")
-        #expect(result.count == 0)
+        XCTAssertEqual(result.count, 0)
     }
 
 }

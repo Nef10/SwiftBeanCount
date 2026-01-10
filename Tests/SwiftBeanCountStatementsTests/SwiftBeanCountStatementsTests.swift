@@ -1,2 +1,2 @@
-import Testing
 @testable import SwiftBeanCountStatements
+import Testing
