@@ -42,6 +42,13 @@ SwiftBeanCount is a double-entry accounting software written in Swift, inspired 
 - Include return value descriptions
 - Use markdown formatting in documentation comments
 
+### DocC Documentation
+- Each module has its own `.docc` documentation catalog under `Sources/<ModuleName>/<ModuleName>.docc/`
+- The main documentation file is `<ModuleName>.md` within each catalog
+- Build documentation for a specific target: `swift package plugin generate-documentation --target <TargetName>`
+- Preview documentation: `swift package plugin preview-documentation --target <TargetName>`
+- All modules use DocC for comprehensive documentation generation
+
 ## Project Structure
 
 ### Multi-Package Organization
