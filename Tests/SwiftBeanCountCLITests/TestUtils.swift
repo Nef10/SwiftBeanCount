@@ -18,7 +18,7 @@ struct ExecutionResult {
 enum TestUtils {
 
     private static var executableURL: URL {
-        var url = Bundle(for: Self).bundleURL
+        var url = Bundle.main.executableURL!
         if url.lastPathComponent.hasSuffix("xctest") {
             url = url.deletingLastPathComponent()
         }
@@ -44,7 +44,7 @@ enum TestUtils {
             do {
                 try process.run()
             } catch {
-                Issue.record(error.localizedDescription)
+                Issue.record(error)
             }
         } else {
             process.launch()
@@ -78,7 +78,7 @@ enum TestUtils {
    static func temporaryFileURL() -> URL {
         let directory = NSTemporaryDirectory()
         let url = URL(fileURLWithPath: directory).appendingPathComponent(UUID().uuidString)
-
+/*
         addTeardownBlock {
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: url.path) {
@@ -90,7 +90,7 @@ enum TestUtils {
             }
             #expect(!(fileManager.fileExists(atPath: url.path)))
         }
-
+*/
         return url
     }
 

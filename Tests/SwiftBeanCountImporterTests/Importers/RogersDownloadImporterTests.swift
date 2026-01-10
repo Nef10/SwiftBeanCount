@@ -60,17 +60,14 @@ private struct TestAccount: RogersBankDownloader.Account {
         self.activityCallback = activityCallback
     }
 
-   @Test
    func downloadActivities(statementNumber: Int, completion: @escaping (Result<[Activity], DownloadError>) -> Void) {
         completion(activityCallback?(statementNumber) ?? .success([]))
     }
 
-   @Test
    func downloadStatement(statement _: Statement, completion _: @escaping (Result<URL, DownloadError>) -> Void) {
         // Empty
     }
 
-   @Test
    func searchStatements(completion _: @escaping (Result<[Statement], DownloadError>) -> Void) {
         // Empty
     }
@@ -108,7 +105,8 @@ private struct TestActivity: Activity, Equatable {
     }
 }
 
-final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this type_body_length
+@Suite
+struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
 
     private class TestAuthenticator: Authenticator {
         weak var delegate: (any RogersBankDownloader.RogersAuthenticatorDelegate)?
@@ -140,9 +138,9 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     private var ledger: Ledger!
     private var user: TestUser!
 
-    private var delegate: CredentialInputDelegate! // swiftlint:disable:this weak_delegate
+    private var delegate: CredentialInputDelegate!
 
-    override func setUpWithError() throws {
+    func init() {
         delegate = CredentialInputDelegate(inputNames: ["Username", "Password"],
                                            inputTypes: [.text([]), .secret],
                                            inputReturnValues: ["name", "password123"],
@@ -153,9 +151,8 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         accountName = try AccountName("Liabilities:CC:Rogers")
         ledger = Ledger()
         user = TestUser()
-        Self.load = { _, _, _ in .success(self.user) }
+        Self.load = { _, _, _ in .success(user) }
         try ledger.add(SwiftBeanCountModel.Account(name: accountName, metaData: ["last-four": "8520", "importer-type": "rogers"]))
-        try super.setUpWithError()
     }
 
    @Test

@@ -78,7 +78,7 @@ struct TransactionMetaDataParserTests {
 
    @Test
    func testInvalidDate() {
-        #expect(TransactionMetaDataParser.parseFrom(line: invalidDateTransactionMetaDataString == nil))
+        #expect(TransactionMetaDataParser.parseFrom(line: invalidDateTransactionMetaDataString) == nil)
     }
 
     // Helper

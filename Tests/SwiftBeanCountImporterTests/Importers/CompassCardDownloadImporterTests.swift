@@ -15,7 +15,6 @@ import Testing
 
 #if canImport(UIKit) || canImport(AppKit)
 
-@available(iOS 14.5, macOS 11.3, *)
 @Suite
 struct CompassCardDownloadImporterTests {
 

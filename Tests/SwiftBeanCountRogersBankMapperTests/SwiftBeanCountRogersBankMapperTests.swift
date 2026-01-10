@@ -169,7 +169,7 @@ struct SwiftBeanCountRogersBankMapperTests {
         activity.activityCategory = .purchase
         activity.postedDate = Date()
         activity.referenceNumber = "852741963"
-        mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        var mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
         var result = try mapper.mapActivitiesToTransactions(activities: [activity])
         #expect(result.count == 1)
 

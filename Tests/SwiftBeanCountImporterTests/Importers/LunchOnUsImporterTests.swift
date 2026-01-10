@@ -36,7 +36,7 @@ struct LunchOnUsImporterTests {
 
    @Test
    func testImportName() throws {
-        #expect(LunchOnUsImporter(ledger: nil == csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "LunchOnUs File TestName")
+        #expect(LunchOnUsImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName == "LunchOnUs File TestName")
     }
 
    @Test

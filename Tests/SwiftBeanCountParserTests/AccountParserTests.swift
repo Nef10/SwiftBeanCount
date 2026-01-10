@@ -68,12 +68,12 @@ struct AccountParserTests {
 
    @Test
    func testInvalidCloseWithCommodity() {
-        #expect(AccountParser.parseFrom(line: invalidCloseWithCommodityString == nil))
+        #expect(AccountParser.parseFrom(line: invalidCloseWithCommodityString) == nil)
     }
 
    @Test
    func testInvalidCloseDate() {
-        #expect(AccountParser.parseFrom(line: invalidCloseDateString == nil))
+        #expect(AccountParser.parseFrom(line: invalidCloseDateString) == nil)
     }
 
    @Test

@@ -87,7 +87,7 @@ struct PostingParserTests {
    @Test
    func testSpecialCharacterPostingString() throws {
         let posting = try PostingParser.parseFrom(line: specialCharacterPostingString)!
-        #expect(posting.accountName == try AccountName("Assets:💰"))
+        #expect(try AccountName("Assets:💰") == posting.accountName)
         #expect(posting.amount == Amount(number: Decimal(1), commoditySymbol: "💵", decimalDigits: 2))
     }
 
@@ -119,7 +119,7 @@ struct PostingParserTests {
    @Test
    func testCost() throws {
         let posting = try PostingParser.parseFrom(line: costPostingString)!
-        #expect(posting.cost! == try Cost(amount: Amount(number: Decimal(1.003), commoditySymbol: "EUR", decimalDigits: 3), date: TestUtils.date20170609, label: "TEST"))
+        #expect(try Cost(amount: Amount(number: Decimal(1.003), commoditySymbol: "EUR", decimalDigits: 3), date: TestUtils.date20170609, label: "TEST") == posting.cost!)
     }
 
    @Test
@@ -130,16 +130,15 @@ struct PostingParserTests {
    @Test
    func testCostAndUnitPrice() throws {
         let posting = try PostingParser.parseFrom(line: costAndUnitPricePostingString)!
-        #expect(posting.cost! == try Cost(amount: Amount(number: Decimal(1.003), commoditySymbol: "EUR", decimalDigits: 3), date: TestUtils.date20170609, label: nil))
+        #expect(try Cost(amount: Amount(number: Decimal(1.003), commoditySymbol: "EUR", decimalDigits: 3), date: TestUtils.date20170609, label: nil) == posting.cost!)
         #expect(posting.price == Amount(number: Decimal(1.003), commoditySymbol: "EUR", decimalDigits: 3))
     }
 
    @Test
    func testCostAndTotalPrice() throws {
         let posting = try PostingParser.parseFrom(line: costAndTotalPricePostingString)!
-        #expect(posting.cost! == try Cost(amount: Amount(number: Decimal(1.003), commoditySymbol: "EUR", decimalDigits: 3), date: nil, label: "TEST"))
+        #expect(try Cost(amount: Amount(number: Decimal(1.003), commoditySymbol: "EUR", decimalDigits: 3), date: nil, label: "TEST") == posting.cost!)
         #expect(posting.price == Amount(number: Decimal(1), commoditySymbol: "EUR", decimalDigits: 1))
     }
-
 
 }

@@ -15,11 +15,12 @@ struct TestAccount: Wealthsimple.Account {
 struct LedgerLookupTests {
 
     private let accountName = try! AccountName("Assets:Test") // swiftlint:disable:this force_try
-    private var ledger = Ledger()
-    private var ledgerLookup: LedgerLookup!
 
    @Test
    func testLedgerAccountCommoditySymbol() throws {
+        let ledger = Ledger()
+        var ledgerLookup = LedgerLookup(ledger)
+
         let name2 = try AccountName("Assets:Test1")
         let symbol = "CAD"
 
@@ -41,6 +42,9 @@ struct LedgerLookupTests {
 
    @Test
    func testLedgerAccountNameOf() throws {
+        let ledger = Ledger()
+        var ledgerLookup = LedgerLookup(ledger)
+
         let account = TestAccount(number: "abc")
 
         // not found
@@ -67,6 +71,9 @@ struct LedgerLookupTests {
 
    @Test
    func testLedgerAccountNameFor() throws { // swiftlint:disable:this function_body_length
+        let ledger = Ledger()
+        var ledgerLookup = LedgerLookup(ledger)
+
         var number = "abc123"
 
         // fallback for payment spend
@@ -118,6 +125,9 @@ struct LedgerLookupTests {
 
    @Test
    func testDoesTransactionExistInLedger() {
+        let ledger = Ledger()
+        var ledgerLookup = LedgerLookup(ledger)
+
         var metaData = TransactionMetaData(date: Date(), metaData: [MetaDataKeys.id: "abc"])
         var transaction = Transaction(metaData: metaData, postings: [])
         ledger.add(transaction)
@@ -153,6 +163,9 @@ struct LedgerLookupTests {
 
    @Test
    func testDoesPriceExistInLedger() throws {
+        let ledger = Ledger()
+        var ledgerLookup = LedgerLookup(ledger)
+
         let date = Date()
         var price = try Price(date: date, commoditySymbol: "CAD", amount: Amount(number: Decimal(1), commoditySymbol: "EUR"))
         try ledger.add(price)
@@ -176,6 +189,9 @@ struct LedgerLookupTests {
 
    @Test
    func testDoesBalanceExistInLedger() throws {
+        let ledger = Ledger()
+        var ledgerLookup = LedgerLookup(ledger)
+
         let date = Date()
         var balance = Balance(date: date, accountName: accountName, amount: Amount(number: Decimal(1), commoditySymbol: "USD"))
         ledger.add(balance)
@@ -203,6 +219,9 @@ struct LedgerLookupTests {
 
    @Test
    func testCommoditySymbolForAssetSymbol() throws {
+        let ledger = Ledger()
+        var ledgerLookup = LedgerLookup(ledger)
+
         var commodity = Commodity(symbol: "EUR")
         try ledger.add(commodity)
         ledgerLookup = LedgerLookup(ledger)

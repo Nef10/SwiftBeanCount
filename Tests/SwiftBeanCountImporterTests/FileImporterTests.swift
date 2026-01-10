@@ -26,7 +26,7 @@ struct FileImporterTests {
         #expect(FileImporterFactory.new(ledger: nil, url: nil) == nil)
 
         // invalid URL
-        #expect(FileImporterFactory.new(ledger: nil, url: URL(fileURLWithPath: "DOES_NOT_EXIST") == nil))
+        #expect(FileImporterFactory.new(ledger: nil, url: URL(fileURLWithPath: "DOES_NOT_EXIST")) == nil)
 
         // valid URL without matching headers
         let url = TestUtils.temporaryFileURL()

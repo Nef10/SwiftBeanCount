@@ -63,7 +63,7 @@ struct CustomsParserTests {
 
    @Test
    func testInvalidDate() {
-        #expect(CustomsParser.parseFrom(line: invalidDateString == nil))
+        #expect(CustomsParser.parseFrom(line: invalidDateString) == nil)
     }
 
 }

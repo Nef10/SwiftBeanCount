@@ -322,7 +322,7 @@ struct SwiftBeanCountTangerineMapperTests { // swiftlint:disable:this type_body_
    @Test
    func testLedgerAccountNameSavings() throws {
         // No Account
-        error = #expect(throws: (any Error).self) { try mapper.ledgerAccountName(account: savings) }
+        var error = #expect(throws: (any Error).self) { try mapper.ledgerAccountName(account: savings) }
         assertAccountNotFound(thrownError: error, account: savings)
 
         // Liability instead of Asset

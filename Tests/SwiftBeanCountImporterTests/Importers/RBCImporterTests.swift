@@ -36,7 +36,7 @@ struct RBCImporterTests {
 
    @Test
    func testImportName() throws {
-        #expect(RBCImporter(ledger: nil == csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "RBC File TestName")
+        #expect(RBCImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName == "RBC File TestName")
     }
 
    @Test

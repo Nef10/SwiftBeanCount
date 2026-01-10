@@ -20,8 +20,7 @@ struct TransactionMetaDataTests {
     private let dateString = "2017-06-08"
     private var transactionMetaData: TransactionMetaData?
 
-    override func setUp() {
-        super.setUp()
+    init() {
         transactionMetaData = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [])
     }
 
