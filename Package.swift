@@ -51,40 +51,34 @@ let package = Package(
                 "SwiftyTextTable",
                 "Rainbow",
             ],
-            exclude: ["README.md"],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .target(
             name: "SwiftBeanCountModel",
-            exclude: ["README.md"],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .target(
             name: "SwiftBeanCountParser",
             dependencies: ["SwiftBeanCountModel", "SwiftBeanCountParserUtils"],
-            exclude: ["README.md"],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .target(
             name: "SwiftBeanCountParserUtils",
-            exclude: ["README.md"],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .target(
             name: "SwiftBeanCountTax",
             dependencies: ["SwiftBeanCountModel"],
-            exclude: ["README.md"],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .target(
             name: "SwiftBeanCountStatements",
             dependencies: ["SwiftBeanCountModel"],
-            exclude: ["README.md"],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
@@ -95,7 +89,6 @@ let package = Package(
                 "SwiftBeanCountParserUtils",
                 "RogersBankDownloader",
             ],
-            exclude: ["README.md"],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
@@ -106,7 +99,6 @@ let package = Package(
                 "SwiftBeanCountModel",
                 .product(name: "CSV", package: "CSV.swift"),
             ],
-            exclude: ["README.md"],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
@@ -116,7 +108,6 @@ let package = Package(
                 "SwiftBeanCountParserUtils",
                 "SwiftBeanCountModel",
             ],
-            exclude: ["README.md"],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
@@ -127,7 +118,6 @@ let package = Package(
                 "SwiftBeanCountParserUtils",
                 .product(name: "Wealthsimple", package: "WealthsimpleDownloader")
             ],
-            exclude: ["README.md"],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
@@ -138,7 +128,6 @@ let package = Package(
                 "SwiftBeanCountParser",
                 .product(name: "GoogleAuthentication", package: "GoogleAuthentication", condition: .when(platforms: [.macOS, .iOS])),
             ],
-            exclude: ["README.md"],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
@@ -158,7 +147,6 @@ let package = Package(
                 .product(name: "CompassCardDownloader", package: "CompassCardDownloader", condition: .when(platforms: [.macOS, .iOS])),
                 .product(name: "TangerineDownloader", package: "TangerineDownloader", condition: .when(platforms: [.macOS, .iOS])),
             ],
-            exclude: ["README.md"],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
