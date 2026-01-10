@@ -191,7 +191,7 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
         return try getTransactionsAndPrices(matchedTransactions)
     }
 
-    private func parseContributions(_ input: String) throws -> [Contribution] {
+    private func parseContributions(_ input: String) throws(EquatePlusImporterError) -> [Contribution] {
         var result = [Contribution]()
         let pattern = #"((Jan\.|Feb\.|Mar\.|Apr\.|May|Jun\.|Jul\.|Aug\.|Sep\.|Oct\.|Nov\.|Dec\.) \d{1,2}, \d{4})([^$\d]*)\$ ([\d,]+\.\d+)[^€\d]*€ ([\d,]+\.\d+)((Jan\.|Feb\.|Mar\.|Apr\.|May|Jun\.|Jul\.|Aug\.|Sep\.|Oct\.|Nov\.|Dec\.) \d{1,2}, \d{4})(\d*.\d*)"# // swiftlint:disable:this line_length
         let regex = try! NSRegularExpression(pattern: pattern, options: []) // swiftlint:disable:this force_try
@@ -228,7 +228,7 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
         return result
     }
 
-    func groupContributions(_ contributions: [Contribution]) throws -> [GroupedContribution] {
+    func groupContributions(_ contributions: [Contribution]) throws(EquatePlusImporterError) -> [GroupedContribution] {
         var groupedContributions: [String: GroupedContribution] = [:]
 
         for contribution in contributions {
@@ -261,7 +261,7 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
         return Array(groupedContributions.values).filter { $0.amountEmployer != nil && $0.amountYou != nil }
     }
 
-    func parseTransactions(_ input: String) throws -> [EquatePlusTransaction] {
+    func parseTransactions(_ input: String) throws(EquatePlusImporterError) -> [EquatePlusTransaction] {
         var result = [EquatePlusTransaction]()
         let regexPattern = #"((Jan\.|Feb\.|Mar\.|Apr\.|May|Jun\.|Jul\.|Aug\.|Sep\.|Oct\.|Nov\.|Dec\.) \d{1,2}, \d{4})([^€]*)€ ([\d-]+.\d{5})([\d-]+.\d{6})"#
         let regex = try! NSRegularExpression(pattern: regexPattern, options: []) // swiftlint:disable:this force_try
@@ -293,7 +293,7 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
         return result
     }
 
-    func groupTransactions(_ transactions: [EquatePlusTransaction]) throws -> [GroupedTransaction] {
+    func groupTransactions(_ transactions: [EquatePlusTransaction]) throws(EquatePlusImporterError) -> [GroupedTransaction] {
         var groupedTransactions: [String: GroupedTransaction] = [:]
 
         for transaction in transactions {

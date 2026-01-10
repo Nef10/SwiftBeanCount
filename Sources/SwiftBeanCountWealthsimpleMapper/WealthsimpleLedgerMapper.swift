@@ -121,7 +121,9 @@ public struct WealthsimpleLedgerMapper { // swiftlint:disable:this type_body_len
     /// - Parameter wealthsimpleTransactions: downloaded transactions from one account
     /// - Throws: WealthsimpleConversionError
     /// - Returns: Prices and Transactions
-    public func mapTransactionsToPriceAndTransactions(_ wealthsimpleTransactions: [Wealthsimple.Transaction]) throws -> ([Price], [SwiftBeanCountModel.Transaction]) {
+    public func mapTransactionsToPriceAndTransactions(
+        _ wealthsimpleTransactions: [Wealthsimple.Transaction]
+    ) throws -> ([Price], [SwiftBeanCountModel.Transaction]) {
         guard let firstTransaction = wealthsimpleTransactions.first else {
             return ([], [])
         }
@@ -261,7 +263,7 @@ public struct WealthsimpleLedgerMapper { // swiftlint:disable:this type_body_len
         return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: postings)
     }
 
-    private func mapDividend(_ transaction: WTransaction, in account: WAccount, manufactured: Bool = false) throws -> STransaction {
+    private func mapDividend(_ transaction: WTransaction, in account: WAccount, manufactured: Bool = false) throws(WealthsimpleConversionError) -> STransaction {
         let (date, shares, foreignAmount) = parseDividendDescription(transaction.description)
         var income = transaction.negatedNetCash
         var price: Amount?

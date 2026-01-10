@@ -67,7 +67,7 @@ public struct SwiftBeanCountTangerineMapper {
     /// Gets the correct account from the ledger based on the downloaded account JSON
     /// - Parameter account: JSON from the API
     /// - Returns: AccountName from the ledger
-    public func ledgerAccountName(account: [String: Any]) throws -> AccountName {
+    public func ledgerAccountName(account: [String: Any]) throws(SwiftBeanCountTangerineMapperError) -> AccountName {
         var type: AccountType
         var importerType: String
         var metaDataKey: String

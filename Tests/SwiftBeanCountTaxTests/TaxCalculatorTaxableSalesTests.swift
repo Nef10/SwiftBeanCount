@@ -9,7 +9,7 @@ struct TaxCalculatorTaxableSalesTests {
    @Test
    func testGetTaxableSaleEmpty() throws {
         let ledger = try basicLedger()
-        let sales = try TaxCalculator.getTaxableSales(from: ledger, for: 2_022)
+        let sales = TaxCalculator.getTaxableSales(from: ledger, for: 2_022)
         #expect(sales.isEmpty)
     }
 
@@ -36,7 +36,7 @@ struct TaxCalculatorTaxableSalesTests {
         let transaction = Transaction(metaData: TransactionMetaData(date: date, payee: "", narration: "", flag: .complete, tags: []), postings: [posting1, posting2, posting3])
         ledger.add(transaction)
 
-        let sales = try TaxCalculator.getTaxableSales(from: ledger, for: 2_022)
+        let sales = TaxCalculator.getTaxableSales(from: ledger, for: 2_022)
         #expect(sales.count == 1)
 
         #expect(sales[0].date == date)
@@ -67,7 +67,7 @@ struct TaxCalculatorTaxableSalesTests {
         let transaction = Transaction(metaData: TransactionMetaData(date: date, payee: "", narration: "", flag: .complete, tags: []), postings: [posting1, posting2])
         ledger.add(transaction)
 
-        let sales = try TaxCalculator.getTaxableSales(from: ledger, for: 2_022)
+        let sales = TaxCalculator.getTaxableSales(from: ledger, for: 2_022)
         #expect(sales.isEmpty)
     }
 }

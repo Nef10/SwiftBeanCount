@@ -35,7 +35,7 @@ public enum StatementValidator {
     /// Gets the root folder from a settings of a ledger
     /// - Parameter ledger: ledger to read
     /// - Returns: string with the root folder. Returns nil if none found
-    public static func getRootFolder(from ledger: Ledger) throws -> String {
+    public static func getRootFolder(from ledger: Ledger) throws(StatementValidatorError) -> String {
         let settings = ledger.custom.filter { $0.name == StatementValidatorKeys.settings && $0.values.first == StatementValidatorKeys.rootFolder }
         guard let result = settings.max(by: { $0.date > $1.date })?.values[1] else {
             throw StatementValidatorError.noRootFolder

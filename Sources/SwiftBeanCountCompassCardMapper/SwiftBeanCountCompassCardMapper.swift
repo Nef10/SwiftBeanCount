@@ -77,7 +77,7 @@ public struct SwiftBeanCountCompassCardMapper {
     ///   - balance: String with the balance
     ///   - date: Date to balance assertion should use, if nil defaults to tomorrow
     /// - Returns: Array of Balances
-    public func createBalance(cardNumber: String, balance: String, date inputDate: Date? = nil) throws -> Balance {
+    public func createBalance(cardNumber: String, balance: String, date inputDate: Date? = nil) throws(SwiftBeanCountCompassCardMapperError) -> Balance {
         let date = inputDate ?? Calendar.current.date(byAdding: .day, value: 1, to: Date())!
         let number = cardNumber.components(separatedBy: .whitespacesAndNewlines).joined()
         let balanceString = balance.replacingOccurrences(of: "$", with: "").components(separatedBy: .whitespacesAndNewlines).joined()
@@ -115,7 +115,7 @@ public struct SwiftBeanCountCompassCardMapper {
     /// Gets the correct account for the Compass Card from the ledger based on the card number
     /// - Parameter cardNumber: Compass Card Number
     /// - Returns: AccountName from the ledger
-    public func ledgerCardAccountName(cardNumber: String) throws -> AccountName {
+    public func ledgerCardAccountName(cardNumber: String) throws(SwiftBeanCountCompassCardMapperError) -> AccountName {
         guard let accountName = ledger.accounts.first(where: {
             $0.metaData[MetaDataKey.importerType] == MetaDataKey.importerTypeValue && $0.metaData[MetaDataKey.cardNumber] == cardNumber
         })?.name else {
@@ -136,7 +136,7 @@ public struct SwiftBeanCountCompassCardMapper {
     }
 
     // swiftlint:disable:next function_body_length
-    private func createTransactions(_ transactions: [TransactionRow], cardNumber: String?, account: AccountName) throws -> [Transaction] {
+    private func createTransactions(_ transactions: [TransactionRow], cardNumber: String?, account: AccountName) -> [Transaction] {
         var result = [Transaction]()
 
         var currentJourney = ""

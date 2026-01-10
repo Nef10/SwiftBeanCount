@@ -33,7 +33,12 @@ public enum Parser {
     /// - Returns: Ledger with parsed content
     /// - Throws: Exceptions from opening the file
     public static func parse(contentOf path: URL) throws -> Ledger {
-        let text = try String(contentsOf: path)
+        let text: String
+        if #available(macOS 15, iOS 18, *) {
+            text = try String(contentsOf: path, encoding: .utf8)
+        } else {
+            text = try String(contentsOf: path)
+        }
         return self.parse(string: text)
     }
 
