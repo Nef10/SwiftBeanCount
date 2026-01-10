@@ -6,15 +6,15 @@ import Testing
 @Suite
 struct TaxCalculatorTaxableSalesTests {
 
-   @Test
-   func getTaxableSaleEmpty() throws {
+    @Test
+    func getTaxableSaleEmpty() throws {
         let ledger = try basicLedger()
         let sales = TaxCalculator.getTaxableSales(from: ledger, for: 2_022)
         #expect(sales.isEmpty)
     }
 
-   @Test
-   func getTaxableSales() throws {
+    @Test
+    func getTaxableSales() throws {
         let ledger = try basicLedger()
         let date = Date(timeIntervalSince1970: 1_650_013_015)
 
@@ -48,8 +48,8 @@ struct TaxCalculatorTaxableSalesTests {
         #expect(sales[0].provider == "Broker")
     }
 
-   @Test
-   func getTaxableSalesIgnoreSplit() throws {
+    @Test
+    func getTaxableSalesIgnoreSplit() throws {
         let ledger = try basicLedger()
         let date = Date(timeIntervalSince1970: 1_650_013_015)
 

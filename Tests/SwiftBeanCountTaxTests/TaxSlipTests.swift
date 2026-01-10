@@ -6,8 +6,8 @@ import Testing
 @Suite
 struct TaxSlipTests { // swiftlint:disable:this type_body_length
 
-   @Test
-   func testExtractInt() {
+    @Test
+    func extractIntFunction() {
         #expect(extractInt(from: "123") == 123)
         #expect(extractInt(from: "123abc456") == 123_456)
         #expect(extractInt(from: "abc123def") == 123)
@@ -15,8 +15,8 @@ struct TaxSlipTests { // swiftlint:disable:this type_body_length
         #expect(extractInt(from: "abc") == nil)
     }
 
-   @Test
-   func testBoxNumberSort() {
+    @Test
+    func boxNumberSortFunction() {
         #expect(boxNumberSort("1", "2"))
         #expect(!(boxNumberSort("2", "1")))
         #expect(boxNumberSort("A1", "A2"))
@@ -33,8 +33,8 @@ struct TaxSlipTests { // swiftlint:disable:this type_body_length
         #expect(!(boxNumberSort("b", "a")))
     }
 
-   @Test
-   func testAddOriginalValues() {
+    @Test
+    func addOriginalValuesFunction() {
         let amount = Amount(number: Decimal(10), commoditySymbol: "USD").multiCurrencyAmount
         let entry1 = TaxSlipEntry(symbol: nil, name: nil, box: "1", value: amount, originalValue: nil)
         let entry2 = TaxSlipEntry(symbol: nil, name: nil, box: "2", value: amount, originalValue: Amount(number: Decimal(20), commoditySymbol: "CAD").multiCurrencyAmount)
@@ -52,8 +52,8 @@ struct TaxSlipTests { // swiftlint:disable:this type_body_length
         #expect(addOriginalValues(amount, entry2) == (amount + entry2.originalValue!))
     }
 
-   @Test
-   func testRowValueBoxNumberSort() {
+    @Test
+    func rowValueBoxNumberSortFunction() {
         let rowValue1 = TaxSlipRowValue(box: "BOX1", value: nil, originalValue: nil)
         let rowValue2 = TaxSlipRowValue(box: "BOX2", value: nil, originalValue: nil)
         let rowValue3 = TaxSlipRowValue(box: "BOX3", value: nil, originalValue: nil)
@@ -69,8 +69,8 @@ struct TaxSlipTests { // swiftlint:disable:this type_body_length
         #expect(!(rowValueBoxNumberSort(rowValue5, rowValue4)))
     }
 
-   @Test
-   func testBoxes() throws {
+    @Test
+    func boxes() throws {
         let entries = [
             TaxSlipEntry(symbol: "A", name: "Name A", box: "Box 2", value: MultiCurrencyAmount(), originalValue: nil),
             TaxSlipEntry(symbol: "A", name: "Name A", box: "Box 1", value: MultiCurrencyAmount(), originalValue: nil),
@@ -80,8 +80,8 @@ struct TaxSlipTests { // swiftlint:disable:this type_body_length
         #expect(taxSlip.boxes == ["Box 1", "Box 2"])
     }
 
-   @Test
-   func testBoxesNumbers() throws {
+    @Test
+    func boxesNumbers() throws {
         let entries = [
             TaxSlipEntry(symbol: "A", name: "Name A", box: "Box", value: MultiCurrencyAmount(), originalValue: nil),
             TaxSlipEntry(symbol: "A", name: "Name A", box: "Box 1", value: MultiCurrencyAmount(), originalValue: nil),
@@ -93,8 +93,8 @@ struct TaxSlipTests { // swiftlint:disable:this type_body_length
         #expect(taxSlip.boxesWithoutNumbers == ["Box"])
     }
 
-   @Test
-   func testSymbols() throws {
+    @Test
+    func symbols() throws {
         let entries = [
             TaxSlipEntry(symbol: "B", name: "Name B", box: "Box 2", value: MultiCurrencyAmount(), originalValue: nil),
             TaxSlipEntry(symbol: "A", name: "Name A", box: "Box 1", value: MultiCurrencyAmount(), originalValue: nil),
@@ -104,8 +104,8 @@ struct TaxSlipTests { // swiftlint:disable:this type_body_length
         #expect(taxSlip.symbols == ["A", "B"])
     }
 
-   @Test
-   func testEntriesWithAndWithoutSymbol() {
+    @Test
+    func entriesWithAndWithoutSymbol() {
         let entries = [
             TaxSlipEntry(symbol: "B", name: "Name B", box: "Box 2", value: MultiCurrencyAmount(), originalValue: nil),
             TaxSlipEntry(symbol: nil, name: "Name A", box: "Box 1", value: MultiCurrencyAmount(), originalValue: nil),
@@ -113,8 +113,8 @@ struct TaxSlipTests { // swiftlint:disable:this type_body_length
         #expect(throws: (any Error).self) { try TaxSlip(name: "Test", year: 2_023, issuer: "Test Issuer", entries: entries) }
     }
 
-   @Test
-   func testRows() throws {
+    @Test
+    func rows() throws {
         let amount = Amount(number: Decimal(10), commoditySymbol: "USD").multiCurrencyAmount
 
         let entries = [
@@ -147,8 +147,8 @@ struct TaxSlipTests { // swiftlint:disable:this type_body_length
         #expect(rows[0].id != rows[1].id)
     }
 
-   @Test
-   func testRowsWithoutSymbols() throws {
+    @Test
+    func rowsWithoutSymbols() throws {
         let amount = Amount(number: Decimal(10), commoditySymbol: "USD").multiCurrencyAmount
 
         let entries = [
@@ -170,8 +170,8 @@ struct TaxSlipTests { // swiftlint:disable:this type_body_length
         #expect(rows[0].values[1].originalValue == amount)
     }
 
-   @Test
-   func testRowsNumbers() throws {
+    @Test
+    func rowsNumbers() throws {
         let amount = Amount(number: Decimal(10), commoditySymbol: "USD").multiCurrencyAmount
 
         let entries = [
@@ -199,8 +199,8 @@ struct TaxSlipTests { // swiftlint:disable:this type_body_length
         #expect(rows[0].values[0].originalValue == nil)
     }
 
-   @Test
-   func testSumRows() throws {
+    @Test
+    func sumRows() throws {
         let amount = Amount(number: Decimal(10), commoditySymbol: "USD").multiCurrencyAmount
 
         let entries = [
@@ -222,8 +222,8 @@ struct TaxSlipTests { // swiftlint:disable:this type_body_length
         #expect(sumRow.values[1].originalValue == amount)
     }
 
-   @Test
-   func testSumRowsNumbers() throws {
+    @Test
+    func sumRowsNumbers() throws {
         let amount = Amount(number: Decimal(10), commoditySymbol: "USD").multiCurrencyAmount
 
         let entries = [
@@ -250,8 +250,8 @@ struct TaxSlipTests { // swiftlint:disable:this type_body_length
         #expect(sumRow.values[0].originalValue == amount)
     }
 
-   @Test
-   func testTaxSlipStrings() throws {
+    @Test
+    func taxSlipStrings() throws {
         let taxSlip = try TaxSlip(name: "Test", year: 2_023, issuer: "", entries: [])
         #expect(taxSlip.issuer == nil)
         #expect(taxSlip.title == "Test")
@@ -268,16 +268,16 @@ struct TaxSlipTests { // swiftlint:disable:this type_body_length
         #expect(taxSlip3.header == "Bank Test - Tax year 2023")
     }
 
-   @Test
-   func testRowValueDescription() {
+    @Test
+    func rowValueDescription() {
         let amount1 = Amount(number: Decimal(-10), commoditySymbol: "USD").multiCurrencyAmount
         let amount2 = Amount(number: Decimal(12), commoditySymbol: "CAD").multiCurrencyAmount
         let rowValue = TaxSlipRowValue(box: "Box 2", value: amount1, originalValue: amount2)
         #expect(rowValue.description == "Box 2: 10.00 USD (12.00 CAD)")
     }
 
-   @Test
-   func testRowValueDisplayValue() {
+    @Test
+    func rowValueDisplayValue() {
         let amount1 = Amount(number: Decimal(-5), commoditySymbol: "EUR").multiCurrencyAmount
         let amount2 = Amount(number: Decimal(8), commoditySymbol: "JPY").multiCurrencyAmount
         let rowValue1 = TaxSlipRowValue(box: "Box 3", value: amount1, originalValue: nil)
@@ -291,25 +291,25 @@ struct TaxSlipTests { // swiftlint:disable:this type_body_length
     }
 
     @Test
-    func testRowDisplayName_noSymbolNoName() {
+    func rowDisplayName_noSymbolNoName() {
         let row = TaxSlipRow(symbol: nil, name: nil, values: [])
         #expect(row.displayName == nil)
     }
 
-   @Test
-   func testRowDisplayName_symbolOnly() {
+    @Test
+    func rowDisplayName_symbolOnly() {
         let row = TaxSlipRow(symbol: "SYM", name: nil, values: [])
         #expect(row.displayName == "SYM")
     }
 
-   @Test
-   func testRowDisplayName_symbolWithName() {
+    @Test
+    func rowDisplayName_symbolWithName() {
         let row = TaxSlipRow(symbol: "SYM", name: "NAME", values: [])
         #expect(row.displayName == "SYM (NAME)")
     }
 
-   @Test
-   func testRowDescription() {
+    @Test
+    func rowDescription() {
         let rva = TaxSlipRowValue(box: "A", value: Amount(number: Decimal(10), commoditySymbol: "USD").multiCurrencyAmount, originalValue: nil)
         let rvb = TaxSlipRowValue(box: "B", value: Amount(number: Decimal(20), commoditySymbol: "USD").multiCurrencyAmount, originalValue: nil)
         let rvc = TaxSlipRowValue(box: "C", value: Amount(number: Decimal(30), commoditySymbol: "USD").multiCurrencyAmount, originalValue: nil)
@@ -318,14 +318,14 @@ struct TaxSlipTests { // swiftlint:disable:this type_body_length
         #expect(row.description == "SYM:\nA: 10.00 USD\nB: 20.00 USD\nC: 30.00 USD")
     }
 
-   @Test
-   func testRowDescription_emptyRow() {
+    @Test
+    func rowDescription_emptyRow() {
         let row = TaxSlipRow(symbol: nil, name: nil, values: [])
         #expect(row.description.isEmpty)
     }
 
-   @Test
-   func testTaxSlipDescriptionWithSymbold() throws {
+    @Test
+    func taxSlipDescriptionWithSymbold() throws {
         let entries = [
             TaxSlipEntry(symbol: "Sym1", name: "Name1", box: "101", value: Amount(number: Decimal(1_234.56), commoditySymbol: "USD").multiCurrencyAmount, originalValue: nil),
             TaxSlipEntry(symbol: "Sym1", name: "Name1", box: "102", value: Amount(number: Decimal(5_678.90), commoditySymbol: "USD").multiCurrencyAmount, originalValue: nil),
@@ -351,8 +351,8 @@ struct TaxSlipTests { // swiftlint:disable:this type_body_length
         #expect(taxSlip.description == expectedDescription)
     }
 
-   @Test
-   func testTaxSlipDescriptionWithoutSymbols() throws {
+    @Test
+    func taxSlipDescriptionWithoutSymbols() throws {
         let entries = [
             TaxSlipEntry(symbol: nil, name: nil, box: "101", value: Amount(number: Decimal(1_234.56), commoditySymbol: "USD").multiCurrencyAmount, originalValue: nil),
             TaxSlipEntry(symbol: nil, name: nil, box: "102", value: Amount(number: Decimal(5_678.90), commoditySymbol: "USD").multiCurrencyAmount, originalValue: nil),

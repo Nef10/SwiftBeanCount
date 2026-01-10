@@ -6,8 +6,8 @@ import Testing
 @Suite
 struct TaxCalculatorTaxSlipTests {
 
-   @Test
-   func generateTaxSlips() throws {
+    @Test
+    func generateTaxSlips() throws {
         let ledger = try basicLedger()
 
         // Calculate tax slips
@@ -64,8 +64,8 @@ struct TaxCalculatorTaxSlipTests {
         #expect(try TaxCalculator.generateTaxSlips(from: ledger, for: 2_020).isEmpty)
     }
 
-   @Test
-   func generateTaxSlipsWithSymbol() throws {
+    @Test
+    func generateTaxSlipsWithSymbol() throws {
         let taxSlips = try TaxCalculator.generateTaxSlips(from: try symbolLedger(), for: 2_022)
         #expect(taxSlips.count == 2)
 
@@ -117,8 +117,8 @@ struct TaxCalculatorTaxSlipTests {
         #expect(row3.values[0].value == Amount(number: 150, commoditySymbol: "EUR").multiCurrencyAmount)
     }
 
-   @Test
-   func generateTaxSlipWithDifferentCurrencies() throws {
+    @Test
+    func generateTaxSlipWithDifferentCurrencies() throws {
 
         let ledger = try currencyLedger()
 
@@ -156,8 +156,8 @@ struct TaxCalculatorTaxSlipTests {
         )
     }
 
-   @Test
-   func generateTaxSlipsWithSplitAccounts() throws {
+    @Test
+    func generateTaxSlipsWithSplitAccounts() throws {
         let taxSlips = try TaxCalculator.generateTaxSlips(from: splitAccountLedger(), for: 2_022)
 
         // Check the generated tax slips
@@ -260,8 +260,8 @@ struct TaxCalculatorTaxSlipTests {
         #expect(row2.values[3].value == MultiCurrencyAmount())
     }
 
-   @Test
-   func splitAccountError() throws {
+    @Test
+    func splitAccountError() throws {
         let ledger = try splitSymbolErrorLedger()
         #expect(throws: (any Error).self) { try TaxCalculator.generateTaxSlips(from: ledger, for: 2_022) }
     }
