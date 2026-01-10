@@ -79,7 +79,7 @@ extension Amount: CustomStringConvertible {
     }
 
     private static func numberFormatter(fractionDigits: Int) -> NumberFormatter {
-        let numberFormatter = self.numberFormatter
+        let numberFormatter = numberFormatter
         numberFormatter.maximumFractionDigits = fractionDigits
         numberFormatter.minimumFractionDigits = fractionDigits
         return numberFormatter

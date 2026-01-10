@@ -114,7 +114,7 @@ final class BalanceTests: XCTestCase {
         }
     }
 
-    func testValidateWithAutoCreatedCommodity() throws {
+    func testValidateWithAutoCreatedCommodity() {
         // Test with auto-created commodity (no explicit opening date)
         let ledger = Ledger()
         ledger.plugins.append("beancount.plugins.check_commodity")

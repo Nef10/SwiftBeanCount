@@ -22,7 +22,7 @@ enum CommodityParser {
     /// - Parameter line: String of one line
     /// - Returns: commodity if the line could be parsed, otherwise nil
     static func parseFrom(line: String, metaData: [String: String] = [:]) -> Commodity? {
-        let commodityMatches = line.matchingStrings(regex: self.regex)
+        let commodityMatches = line.matchingStrings(regex: regex)
         guard
             let match = commodityMatches[safe: 0],
             let date = DateParser.parseFrom(string: match[1])

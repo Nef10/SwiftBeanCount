@@ -44,7 +44,7 @@ final class CommodityParserTests: XCTestCase {
     }
 
     func testPerformance() {
-        self.measure {
+        measure {
             for _ in 0...1_000 {
                 _ = CommodityParser.parseFrom(line: basicString)
                 _ = CommodityParser.parseFrom(line: whitespaceString)

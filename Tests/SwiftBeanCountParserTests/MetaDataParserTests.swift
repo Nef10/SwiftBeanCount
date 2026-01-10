@@ -43,7 +43,7 @@ final class MetaDataParserTests: XCTestCase {
     }
 
     func testPerformance() {
-        self.measure {
+        measure {
             for _ in 0...1_000 {
                 _ = MetaDataParser.parseFrom(line: basicString)
                 _ = MetaDataParser.parseFrom(line: whitespaceString)

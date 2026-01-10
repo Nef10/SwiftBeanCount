@@ -66,7 +66,7 @@ public enum TaxCalculator {
     ///   - ledger: ledger to get the transactions from
     ///   - year: tax year
     /// - Returns: Array of all sales
-    public static func getTaxableSales(from ledger: Ledger, for year: Int) throws -> [Sale] {
+    public static func getTaxableSales(from ledger: Ledger, for year: Int) -> [Sale] {
         // All transactions which have a posting with a cost, a negative amount and the account is marked as tax-sale
         let costTransactions = getTaxYearTransactions(ledger, year: year).filter {
             $0.postings.contains { posting in

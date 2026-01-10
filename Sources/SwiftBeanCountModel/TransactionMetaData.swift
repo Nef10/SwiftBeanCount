@@ -62,7 +62,7 @@ extension TransactionMetaData: CustomStringConvertible {
     public var description: String {
         var tagString = ""
         tags.forEach { tagString += " \(String(describing: $0))" }
-        var result = "\(self.dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\"\(tagString)"
+        var result = "\(dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\"\(tagString)"
         if !metaData.isEmpty {
             result += "\n\(metaData.map { "  \($0): \"\($1)\"" }.joined(separator: "\n"))"
         }

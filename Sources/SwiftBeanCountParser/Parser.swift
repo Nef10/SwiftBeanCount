@@ -34,7 +34,7 @@ public enum Parser {
     /// - Throws: Exceptions from opening the file
     public static func parse(contentOf path: URL) throws -> Ledger {
         let text = try String(contentsOf: path)
-        return self.parse(string: text)
+        return parse(string: text)
     }
 
     /// Parses a given String into a Ledger

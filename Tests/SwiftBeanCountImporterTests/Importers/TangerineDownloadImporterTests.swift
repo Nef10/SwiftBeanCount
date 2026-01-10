@@ -20,7 +20,7 @@ final class TangerineDownloadImporterTests: XCTestCase {
 
         weak var delegate: TangerineDownloaderDelegate?
 
-        func authorizeAndGetAccounts(username: String, password: String, _ completion: @escaping (Result<[[String: Any]], Error>) -> Void) {
+        func authorizeAndGetAccounts(username: String, password: String, _ completion: (Result<[[String: Any]], Error>) -> Void) {
             _ = delegate?.view()
             XCTAssertEqual(delegate?.getOTPCode(), "123456")
             completion(accountsLoading?(username, password) ?? .success([]))

@@ -16,7 +16,7 @@ final class LedgerLookupTests: XCTestCase {
     private var ledger = Ledger()
     private var ledgerLookup: LedgerLookup!
 
-    override func setUpWithError() throws {
+    override func setUp() {
         ledger = Ledger()
         ledgerLookup = LedgerLookup(ledger)
     }

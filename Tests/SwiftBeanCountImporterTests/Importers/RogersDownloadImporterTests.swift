@@ -59,15 +59,15 @@ private struct TestAccount: RogersBankDownloader.Account {
         self.activityCallback = activityCallback
     }
 
-    func downloadActivities(statementNumber: Int, completion: @escaping (Result<[Activity], DownloadError>) -> Void) {
+    func downloadActivities(statementNumber: Int, completion: (Result<[Activity], DownloadError>) -> Void) {
         completion(activityCallback?(statementNumber) ?? .success([]))
     }
 
-    func downloadStatement(statement _: Statement, completion _: @escaping (Result<URL, DownloadError>) -> Void) {
+    func downloadStatement(statement _: Statement, completion _: (Result<URL, DownloadError>) -> Void) {
         // Empty
     }
 
-    func searchStatements(completion _: @escaping (Result<[Statement], DownloadError>) -> Void) {
+    func searchStatements(completion _: (Result<[Statement], DownloadError>) -> Void) {
         // Empty
     }
 
@@ -113,8 +113,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
             // Empty
         }
 
-        // swiftlint:disable:next line_length
-        func login(username: String, password: String, deviceId: String?, completion: @escaping (Result<any RogersBankDownloader.User, RogersBankDownloader.DownloadError>) -> Void) {
+        func login(username: String, password: String, deviceId: String?, completion: (Result<any RogersBankDownloader.User, RogersBankDownloader.DownloadError>) -> Void) {
             completion(RogersDownloadImporterTests.load?(username, password, deviceId) ?? .success(TestUser()))
         }
 
@@ -191,7 +190,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         loadedImporter()
     }
 
-    func testDownloadActivitiesError() throws {
+    func testDownloadActivitiesError() {
         var receivedStatementNumbers = [false, false, false]
         var account = TestAccount {
             XCTAssert($0 < 3)
@@ -221,7 +220,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         XCTAssert(importer.balancesToImport().isEmpty)
     }
 
-    func testNoActivities() throws {
+    func testNoActivities() {
         var receivedStatementNumbers = [false, false, false]
         var account = TestAccount {
             XCTAssert($0 < 3)
@@ -242,7 +241,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         XCTAssertEqual(receivedStatementNumbers, [true, true, true])
     }
 
-    func testStatementsToLoad() throws {
+    func testStatementsToLoad() {
         ledger.custom.append(Custom(date: Date(), name: "rogers-download-importer", values: ["statementsToLoad", "1"]))
         ledger.custom.append(Custom(date: Date(timeIntervalSinceNow: -999_999), name: "rogers-download-importer", values: ["statementsToLoad", "200"]))
         var validated = false
@@ -259,7 +258,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         XCTAssert(validated)
     }
 
-    func testMultiAccount() throws {
+    func testMultiAccount() {
         var receivedStatementNumbers1 = [false, false, false]
         var receivedStatementNumbers2 = [false, false, false]
         let account1 = TestAccount {
@@ -287,7 +286,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         XCTAssertEqual(receivedStatementNumbers2, [true, true, true])
     }
 
-    func testActivityMappingError() throws {
+    func testActivityMappingError() {
         let activity = TestActivity()
         user.accounts = [TestAccount { _ in .success([activity]) }]
         setErrorDelegate(error: RogersBankMappingError.missingActivityData(activity: activity, key: "referenceNumber"))

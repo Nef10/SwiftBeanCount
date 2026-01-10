@@ -20,12 +20,12 @@ final class CompassCardDownloadImporterTests: XCTestCase {
     private class MockDownloader: CompassCardDownloaderProvider {
         weak var delegate: CompassCardDownloaderDelegate?
 
-        func authorizeAndGetBalance(email: String, password: String, _ completion: @escaping (Result<(String, String), Error>) -> Void) {
+        func authorizeAndGetBalance(email: String, password: String, _ completion: (Result<(String, String), Error>) -> Void) {
             _ = delegate?.view()
             completion(authAndBalanceLoading?(email, password) ?? .success(("123456789", "0.00")))
         }
 
-        func downloadCardTransactions(cardNumber: String, dateToLoadFrom: Date, _ completion: @escaping (Result<String, Error>) -> Void) {
+        func downloadCardTransactions(cardNumber: String, dateToLoadFrom: Date, _ completion: (Result<String, Error>) -> Void) {
             completion(transactionsLoading?(cardNumber, dateToLoadFrom) ?? .success(",\n"))
         }
     }

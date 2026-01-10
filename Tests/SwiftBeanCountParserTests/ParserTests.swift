@@ -217,7 +217,7 @@ final class ParserTests: XCTestCase {
     }
 
     func testPerformance() {
-        self.measure {
+        measure {
             _ = ledgerFor(testFile: .big)
         }
     }

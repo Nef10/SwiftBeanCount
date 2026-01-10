@@ -24,7 +24,7 @@ enum MetaDataParser {
     ///   - line: string of one line
     /// - Returns: a [String: String] or nil if the line does not contain valid meta data
     static func parseFrom(line: String) -> [String: String]? { // swiftlint:disable:this discouraged_optional_collection
-        let matches = line.matchingStrings(regex: self.regex)
+        let matches = line.matchingStrings(regex: regex)
         guard let match = matches[safe: 0] else {
             return nil
         }

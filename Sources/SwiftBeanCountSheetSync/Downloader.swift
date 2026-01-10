@@ -15,6 +15,8 @@ import SwiftBeanCountModel
 /// Downloads transactions from the Sheet and merges them into transactions in the ledgers
 public class Downloader: GenericSyncer, Syncer {
 
+    // see https://github.com/realm/SwiftLint/issues/6410
+    // swiftlint:disable:next unneeded_escaping
     public func start(authentication: Authentication, completion: @escaping (Result<SyncResult, Error>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async { [self] in
             let result = readLedgerSettingsAndTransactions()

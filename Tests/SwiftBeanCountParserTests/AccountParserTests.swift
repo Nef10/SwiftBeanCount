@@ -89,7 +89,7 @@ final class AccountParserTests: XCTestCase {
     }
 
     func testPerformance() {
-        self.measure {
+        measure {
             for _ in 0...1_000 {
                 _ = AccountParser.parseFrom(line: basicOpeningString)
                 _ = AccountParser.parseFrom(line: basicClosingString)

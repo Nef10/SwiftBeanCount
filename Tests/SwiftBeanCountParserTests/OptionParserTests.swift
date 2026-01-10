@@ -42,7 +42,7 @@ final class OptionParserTests: XCTestCase {
     }
 
     func testPerformance() {
-        self.measure {
+        measure {
             for _ in 0...1_000 {
                 _ = OptionParser.parseFrom(line: basicString)
                 _ = OptionParser.parseFrom(line: whitespaceString)

@@ -196,7 +196,7 @@ final class TransactionPostingTests: XCTestCase {
         XCTAssertNotEqual(balance2.amounts[TestUtils.cad], Decimal(37.5))
     }
 
-    func testInitErrorPriceWithoutType() throws {
+    func testInitErrorPriceWithoutType() {
         let amount = Amount(number: Decimal(1), commoditySymbol: "💵")
         let price = Amount(number: Decimal(1.555), commoditySymbol: TestUtils.eur)
 
@@ -205,7 +205,7 @@ final class TransactionPostingTests: XCTestCase {
         }
     }
 
-    func testInitErrorPriceTypeWithoutPrice() throws {
+    func testInitErrorPriceTypeWithoutPrice() {
         let amount = Amount(number: Decimal(1), commoditySymbol: "💵")
 
         XCTAssertThrowsError(try Posting(accountName: TestUtils.chequing, amount: amount, price: nil, priceType: .perUnit)) { error in

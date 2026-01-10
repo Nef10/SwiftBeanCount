@@ -36,7 +36,7 @@ struct LedgerLookup {
         guard let id = transaction.metaData.metaData[MetaDataKeys.id] else {
             return false
         }
-        return self.ledger.transactions.contains {
+        return ledger.transactions.contains {
             $0.metaData.metaData[MetaDataKeys.id]?.contains(id) ?? false ||
             $0.metaData.metaData[MetaDataKeys.nrwtId] == id
         }

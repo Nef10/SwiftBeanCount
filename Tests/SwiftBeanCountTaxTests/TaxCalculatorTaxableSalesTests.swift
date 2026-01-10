@@ -6,7 +6,7 @@ final class TaxCalculatorTaxableSalesTests: XCTestCase {
 
     func testGetTaxableSaleEmpty() throws {
         let ledger = try basicLedger()
-        let sales = try TaxCalculator.getTaxableSales(from: ledger, for: 2_022)
+        let sales = TaxCalculator.getTaxableSales(from: ledger, for: 2_022)
         XCTAssert(sales.isEmpty)
     }
 
@@ -32,7 +32,7 @@ final class TaxCalculatorTaxableSalesTests: XCTestCase {
         let transaction = Transaction(metaData: TransactionMetaData(date: date, payee: "", narration: "", flag: .complete, tags: []), postings: [posting1, posting2, posting3])
         ledger.add(transaction)
 
-        let sales = try TaxCalculator.getTaxableSales(from: ledger, for: 2_022)
+        let sales = TaxCalculator.getTaxableSales(from: ledger, for: 2_022)
         XCTAssertEqual(sales.count, 1)
 
         XCTAssertEqual(sales[0].date, date)
@@ -62,7 +62,7 @@ final class TaxCalculatorTaxableSalesTests: XCTestCase {
         let transaction = Transaction(metaData: TransactionMetaData(date: date, payee: "", narration: "", flag: .complete, tags: []), postings: [posting1, posting2])
         ledger.add(transaction)
 
-        let sales = try TaxCalculator.getTaxableSales(from: ledger, for: 2_022)
+        let sales = TaxCalculator.getTaxableSales(from: ledger, for: 2_022)
         XCTAssertEqual(sales.count, 0)
     }
 }
