@@ -228,7 +228,7 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
         return result
     }
 
-    func groupContributions(_ contributions: [Contribution]) throws -> [GroupedContribution] {
+    func groupContributions(_ contributions: [Contribution]) throws(EquatePlusImporterError) -> [GroupedContribution] {
         var groupedContributions: [String: GroupedContribution] = [:]
 
         for contribution in contributions {
@@ -293,7 +293,7 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
         return result
     }
 
-    func groupTransactions(_ transactions: [EquatePlusTransaction]) throws -> [GroupedTransaction] {
+    func groupTransactions(_ transactions: [EquatePlusTransaction]) throws(EquatePlusImporterError) -> [GroupedTransaction] {
         var groupedTransactions: [String: GroupedTransaction] = [:]
 
         for transaction in transactions {

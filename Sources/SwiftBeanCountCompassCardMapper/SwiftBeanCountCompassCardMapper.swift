@@ -136,7 +136,7 @@ public struct SwiftBeanCountCompassCardMapper {
     }
 
     // swiftlint:disable:next function_body_length
-    private func createTransactions(_ transactions: [TransactionRow], cardNumber: String?, account: AccountName) throws -> [Transaction] {
+    private func createTransactions(_ transactions: [TransactionRow], cardNumber: String?, account: AccountName) -> [Transaction] {
         var result = [Transaction]()
 
         var currentJourney = ""
