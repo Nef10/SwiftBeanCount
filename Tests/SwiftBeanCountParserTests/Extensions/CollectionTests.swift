@@ -6,17 +6,20 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 @testable import SwiftBeanCountParser
-import XCTest
+import Testing
 
-final class CollectionTests: XCTestCase {
+@Suite
+struct CollectionTests {
 
-    func testSafeArray() {
+    @Test
+    func safeArray() {
         var array = [String]()
-        XCTAssertNil(array[safe: 0])
+        #expect(array[safe: 0] == nil)
         array.append("value")
-        XCTAssertEqual(array[safe: 0], "value")
-        XCTAssertNil(array[safe: 1])
+        #expect(array[safe: 0] == "value")
+        #expect(array[safe: 1] == nil)
     }
 
 }
