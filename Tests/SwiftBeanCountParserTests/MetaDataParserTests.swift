@@ -6,6 +6,7 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountParser
 import Testing
@@ -21,12 +22,18 @@ struct MetaDataParserTests {
     private let endOfLineCommentString = "  test: \"ABC\";gfsdt     "
     private let specialCharacterString = "  test💵: \"ABC💵\""
 
-    func testBasic() {
+   @Test
+
+
+   func testBasic() {
         let metaData = MetaDataParser.parseFrom(line: basicString)
         #expect(metaData == ["test": "ABC"])
     }
 
-    func testWhitespace() {
+   @Test
+
+
+   func testWhitespace() {
         let metaData1 = MetaDataParser.parseFrom(line: whitespaceString)
         #expect(metaData1 == ["test": "A B C"])
         let metaData2 = MetaDataParser.parseFrom(line: whitespaceBeginningString)
@@ -35,17 +42,26 @@ struct MetaDataParserTests {
         #expect(metaData3 == nil)
     }
 
-    func testEndOfLineComment() {
+   @Test
+
+
+   func testEndOfLineComment() {
         let metaData = MetaDataParser.parseFrom(line: endOfLineCommentString)
         #expect(metaData == ["test": "ABC"])
     }
 
-    func testSpecialCharacter() {
+   @Test
+
+
+   func testSpecialCharacter() {
         let metaData = MetaDataParser.parseFrom(line: specialCharacterString)
         #expect(metaData == ["test💵": "ABC💵"])
     }
 
-    func testPerformance() {
+   @Test
+
+
+   func testPerformance() {
         self.measure {
             for _ in 0...1_000 {
                 _ = MetaDataParser.parseFrom(line: basicString)

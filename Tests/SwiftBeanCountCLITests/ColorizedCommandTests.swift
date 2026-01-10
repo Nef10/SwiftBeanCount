@@ -1,3 +1,4 @@
+
 import Foundation
 @testable import SwiftBeanCountCLI
 import Rainbow
@@ -13,7 +14,10 @@ struct TestColorizedCommand: ColorizedCommand {
 
 struct ColorizedCommandTests {
 
-    func testHelp() {
+   @Test
+
+
+   func testHelp() {
         let originalValue = Rainbow.enabled
         Rainbow.enabled = true
 

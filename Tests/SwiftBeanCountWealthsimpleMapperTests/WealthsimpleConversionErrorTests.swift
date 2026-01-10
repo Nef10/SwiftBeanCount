@@ -1,4 +1,5 @@
 
+
 import Foundation
 @testable import SwiftBeanCountWealthsimpleMapper
 import Testing
@@ -7,7 +8,10 @@ import Testing
 
 struct WealthsimpleConversionErrorTests {
 
-    func testWealthsimpleConversionErrorString() { // swiftlint:disable:this function_body_length
+   @Test
+
+
+   func testWealthsimpleConversionErrorString() { // swiftlint:disable:this function_body_length
         XCTAssertEqual(
             "\(WealthsimpleConversionError.missingCommodity("CAD").localizedDescription)",
             "The Commodity CAD was not found in your ledger. Please make sure you add the metadata \"wealthsimple-symbol: \"CAD\"\" to it."

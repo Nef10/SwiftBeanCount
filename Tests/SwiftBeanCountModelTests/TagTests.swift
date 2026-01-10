@@ -6,6 +6,7 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountModel
 import Testing
@@ -14,19 +15,28 @@ import Testing
 
 struct TagTests {
 
-    func testDescription() {
+   @Test
+
+
+   func testDescription() {
         let string = "String"
         let tag = Tag(name: string)
         #expect(String(describing: tag) == "#" + string)
     }
 
-    func testDescriptionSpecialCharacters() {
+   @Test
+
+
+   func testDescriptionSpecialCharacters() {
         let string = "#️⃣"
         let tag = Tag(name: string)
         #expect(String(describing: tag) == "#" + string)
     }
 
-    func testEqual() {
+   @Test
+
+
+   func testEqual() {
         let string1 = "String1"
         let string2 = "String2"
         let tag1 = Tag(name: string1)
@@ -43,7 +53,10 @@ struct TagTests {
         #expect(tag2 != tag3) // swiftlint:disable:this xct_specific_matcher
     }
 
-    func testGreater() {
+   @Test
+
+
+   func testGreater() {
         let string1 = "A"
         let string2 = "B"
         let tag1 = Tag(name: string1)

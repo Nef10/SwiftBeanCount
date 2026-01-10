@@ -6,6 +6,7 @@
 //  Copyright © 2021 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -15,7 +16,10 @@ import Testing
 
 struct DownloadImporterTests {
 
-    func testImporters() {
+   @Test
+
+
+   func testImporters() {
         #if canImport(UIKit) || canImport(AppKit)
             if #available(iOS 14.5, macOS 11.3, *) {
                 #if os(macOS)
@@ -35,7 +39,10 @@ struct DownloadImporterTests {
         #endif
     }
 
-    func testNew() {
+   @Test
+
+
+   func testNew() {
         #expect(DownloadImporterFactory.new(ledger: Ledger( == nil), name: "This is not a valid name"))
 
         let importers = DownloadImporterFactory.importers
@@ -44,7 +51,10 @@ struct DownloadImporterTests {
         }
     }
 
-    func testNoEqualImporterTypes() {
+   @Test
+
+
+   func testNoEqualImporterTypes() {
         var types = [String]()
         let importers = DownloadImporterFactory.importers as! [BaseImporter.Type] // swiftlint:disable:this force_cast
         for importer in importers {
@@ -56,7 +66,10 @@ struct DownloadImporterTests {
         }
     }
 
-    func testNoEqualName() {
+   @Test
+
+
+   func testNoEqualName() {
         var names = [String]()
         let importers = DownloadImporterFactory.importers
         for importer in importers {

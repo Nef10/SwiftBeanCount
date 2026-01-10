@@ -6,6 +6,7 @@
 //  Copyright © 2022 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -23,13 +24,19 @@ struct TangerineDownloadImporterTests {
 
         weak var delegate: TangerineDownloaderDelegate?
 
-        func authorizeAndGetAccounts(username: String, password: String, _ completion: @escaping (Result<[[String: Any]], Error>) -> Void) {
+       @Test
+
+
+       func authorizeAndGetAccounts(username: String, password: String, _ completion: @escaping (Result<[[String: Any]], Error>) -> Void) {
             _ = delegate?.view()
             #expect(delegate?.getOTPCode() == "123456")
             completion(accountsLoading?(username, password) ?? .success([]))
         }
 
-        func downloadAccountTransactions(accounts: [String: [String: Any]], dateToLoadFrom: Date) -> Result<[String: [[String: Any]]], Error> {
+       @Test
+
+
+       func downloadAccountTransactions(accounts: [String: [String: Any]], dateToLoadFrom: Date) -> Result<[String: [[String: Any]]], Error> {
             transactionsLoading?(accounts, dateToLoadFrom) ?? .success([:])
         }
 
@@ -39,18 +46,27 @@ struct TangerineDownloadImporterTests {
 
         let defaultAccountName = defaultAccount
 
-        func createTransactions(_ rawTransactions: [String: [[String: Any]]]) throws -> [Transaction] {
+       @Test
+
+
+       func createTransactions(_ rawTransactions: [String: [[String: Any]]]) throws -> [Transaction] {
             try transactionsMapping?(rawTransactions) ?? []
         }
 
-        func ledgerAccountName(account: [String: Any]) throws -> AccountName {
+       @Test
+
+
+       func ledgerAccountName(account: [String: Any]) throws -> AccountName {
             if let ledgerAccountNameMapping {
                 return try ledgerAccountNameMapping(account)
             }
             throw SwiftBeanCountTangerineMapperError.missingAccount(account: String(describing: account))
         }
 
-        func createBalances(accounts: [[String: Any]], date: Date) throws -> [Balance] {
+       @Test
+
+
+       func createBalances(accounts: [[String: Any]], date: Date) throws -> [Balance] {
             try balancesMapping?(accounts, date) ?? []
         }
 
@@ -78,23 +94,38 @@ struct TangerineDownloadImporterTests {
         super.setUp()
     }
 
-    func testImporterName() {
+   @Test
+
+
+   func testImporterName() {
         #expect(TangerineDownloadImporter.importerName == "Tangerine Download")
     }
 
-    func testImporterType() {
+   @Test
+
+
+   func testImporterType() {
         #expect(TangerineDownloadImporter.importerType == "tangerine-download")
     }
 
-    func testHelpText() {
+   @Test
+
+
+   func testHelpText() {
         #expect(TangerineDownloadImporter.helpText.hasPrefix("Downloads transactions and the current balance from the Tangerine website."))
     }
 
-    func testImportName() {
+   @Test
+
+
+   func testImportName() {
         #expect(TangerineDownloadImporter(ledger: nil).importName == "Tangerine Download")
     }
 
-    func testSavedCredentials() {
+   @Test
+
+
+   func testSavedCredentials() {
         Self.accountsLoading = {
             #expect($0 == "name")
             #expect($1 == "password123")
@@ -103,7 +134,10 @@ struct TangerineDownloadImporterTests {
         runImport()
     }
 
-    func testNoAccounts() {
+   @Test
+
+
+   func testNoAccounts() {
         Self.accountsLoading = {
             #expect($0 == "name")
             #expect($1 == "password123")
@@ -119,7 +153,10 @@ struct TangerineDownloadImporterTests {
         runImport()
     }
 
-    func testRemoveSavedCredentials() {
+   @Test
+
+
+   func testRemoveSavedCredentials() {
         let error = TestError()
 
         Self.accountsLoading = {
@@ -144,7 +181,10 @@ struct TangerineDownloadImporterTests {
         runImport()
     }
 
-    func testTransactionDownloadFailed() {
+   @Test
+
+
+   func testTransactionDownloadFailed() {
         let error = TestError()
 
         Self.accountsLoading = {
@@ -160,7 +200,10 @@ struct TangerineDownloadImporterTests {
         runImport()
     }
 
-    func testPastDaysToLoad() {
+   @Test
+
+
+   func testPastDaysToLoad() {
         let ledger = Ledger()
         ledger.custom.append(Custom(date: Date(), name: "tangerine-download-importer", values: ["pastDaysToLoad", "3"]))
         ledger.custom.append(Custom(date: Date(timeIntervalSinceNow: sixtyTwoDays), name: "tangerine-download-importer", values: ["pastDaysToLoad", "200"]))
@@ -177,7 +220,10 @@ struct TangerineDownloadImporterTests {
         runImport(ledger: ledger)
     }
 
-    func testTransactionMappingException() throws {
+   @Test
+
+
+   func testTransactionMappingException() throws {
         let error = TestError()
 
         Self.accountsLoading = { _, _ in
@@ -197,7 +243,10 @@ struct TangerineDownloadImporterTests {
         runImport()
     }
 
-    func testBalanceMappingException() throws {
+   @Test
+
+
+   func testBalanceMappingException() throws {
         let error = TestError()
 
         Self.accountsLoading = { _, _ in
@@ -210,7 +259,10 @@ struct TangerineDownloadImporterTests {
         runImport()
     }
 
-    func testDownload() throws { // swiftlint:disable:this function_body_length
+   @Test
+
+
+   func testDownload() throws { // swiftlint:disable:this function_body_length
         let balance = Balance(date: Date(), accountName: try AccountName("Assets:Testing"), amount: Amount(number: Decimal(20.25), commoditySymbol: "CAD"))
         let transactions = ["A": [["TEST": 10]]]
 

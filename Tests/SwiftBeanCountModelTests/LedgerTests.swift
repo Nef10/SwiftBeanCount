@@ -8,6 +8,7 @@
 //
 
 // swiftlint:disable:next type_body_length
+
 import Foundation
 @testable import SwiftBeanCountModel
 import Testing
@@ -15,7 +16,10 @@ import Testing
 @Suite
 struct LedgerTests {
 
-    func testCommodities() throws {
+   @Test
+
+
+   func testCommodities() throws {
         let ledger = Ledger()
         #expect(ledger.commodities.count == 0)
 
@@ -36,7 +40,10 @@ struct LedgerTests {
         #expect(ledger.commodities.contains(commodity2))
     }
 
-    func testAccounts() throws {
+   @Test
+
+
+   func testAccounts() throws {
         let ledger = Ledger()
         #expect(ledger.accounts.count == 0)
 
@@ -62,7 +69,10 @@ struct LedgerTests {
         #expect(ledger.accounts.count == 2)
     }
 
-    func testAccountGroups() {
+   @Test
+
+
+   func testAccountGroups() {
         let ledger = Ledger()
         #expect(ledger.accountGroups.count == AccountType.allValues().count)
         for accountGroup in ledger.accountGroups {
@@ -70,7 +80,10 @@ struct LedgerTests {
         }
     }
 
-    func testAccountGroup() throws {
+   @Test
+
+
+   func testAccountGroup() throws {
         let ledger = Ledger()
         let account1 = try Account(name: AccountName("Assets:Checking:RBC"))
         try ledger.add(account1)
@@ -87,7 +100,10 @@ struct LedgerTests {
         #expect(accountSubGroup.accounts.values.first! == account1)
     }
 
-    func testTransactions() throws {
+   @Test
+
+
+   func testTransactions() throws {
         let ledger = Ledger()
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170609,
                                                       payee: "Payee",
@@ -118,7 +134,10 @@ struct LedgerTests {
         #expect(ledger2.accounts.first!.opening == TestUtils.date20170610)
     }
 
-    func testPrices() throws {
+   @Test
+
+
+   func testPrices() throws {
         let ledger = Ledger()
 
         let amount = Amount(number: Decimal(1), commoditySymbol: TestUtils.cad)
@@ -157,7 +176,10 @@ struct LedgerTests {
 
     }
 
-    func testBalances() throws {
+   @Test
+
+
+   func testBalances() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash)
         let amount = Amount(number: Decimal(1), commoditySymbol: TestUtils.cad)
@@ -170,7 +192,10 @@ struct LedgerTests {
         #expect(ledger.accounts.first!.balances.first! == balance)
     }
 
-    func testParsingErrors() {
+   @Test
+
+
+   func testParsingErrors() {
         let error = "TEST"
         let ledger = Ledger()
         ledger.parsingErrors.append(error)
@@ -181,7 +206,10 @@ struct LedgerTests {
         #expect(String(describing: ledger) == "")
     }
 
-    func testValidateTransactions() {
+   @Test
+
+
+   func testValidateTransactions() {
         let ledger = Ledger()
         #expect(ledger.errors.isEmpty)
 
@@ -196,7 +224,10 @@ struct LedgerTests {
         #expect(!(ledger.errors.isEmpty))
     }
 
-    func testValidateTransactionsAtCost() throws {
+   @Test
+
+
+   func testValidateTransactionsAtCost() throws {
         let ledger = Ledger()
 
         let commodity1 = Commodity(symbol: "STOCK", opening: TestUtils.date20170608)
@@ -231,7 +262,10 @@ struct LedgerTests {
         #expect(ledger.errors.isEmpty)
     }
 
-    func testValidateAccounts() throws {
+   @Test
+
+
+   func testValidateAccounts() throws {
         var account = Account(name: TestUtils.cash)
 
         // valid account
@@ -246,7 +280,10 @@ struct LedgerTests {
         #expect(!(invalidLedger.errors.isEmpty))
     }
 
-    func testValidateAccountBalance() throws {
+   @Test
+
+
+   func testValidateAccountBalance() throws {
         let account = Account(name: TestUtils.cash)
 
         let validLedger = Ledger()
@@ -263,7 +300,10 @@ struct LedgerTests {
         #expect(!(invalidLedger.errors.isEmpty))
     }
 
-    func testValidateAccountInventory() throws {
+   @Test
+
+
+   func testValidateAccountInventory() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
         let amount = Amount(number: 1.1, commoditySymbol: TestUtils.cad, decimalDigits: 1)
@@ -290,7 +330,10 @@ struct LedgerTests {
         #expect(!(ledger.errors.isEmpty))
     }
 
-    func testValidateCommodities() throws {
+   @Test
+
+
+   func testValidateCommodities() throws {
         // Test with commodity that has opening date - should always be valid
         let validCommodity = Commodity(symbol: "EUR", opening: TestUtils.date20170608)
         let validLedger = Ledger()
@@ -311,7 +354,10 @@ struct LedgerTests {
         #expect(ledgerWithPlugin.errors.contains("Commodity EUR does not have an opening date"), "Should contain specific error message for EUR commodity")
     }
 
-    func testCommodityValidationWithAutoCreatedCommodities() throws {
+   @Test
+
+
+   func testCommodityValidationWithAutoCreatedCommodities() throws {
         // Test auto-created commodities without plugin
         let ledgerWithoutPlugin = Ledger()
         let posting = Posting(accountName: TestUtils.cash, amount: Amount(number: Decimal(100), commoditySymbol: "USD"))
@@ -335,7 +381,10 @@ struct LedgerTests {
         #expect(ledgerWithPlugin.errors.contains(expectedError), "Auto-created commodities should generate errors when plugin is enabled")
     }
 
-    func testDescriptionTransactionsAccountsCommodities() throws {
+   @Test
+
+
+   func testDescriptionTransactionsAccountsCommodities() throws {
         let accountName = TestUtils.cash
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
         let commodity = Commodity(symbol: "EUR", opening: TestUtils.date20170609)
@@ -379,7 +428,10 @@ struct LedgerTests {
         #expect(String(describing: ledger) == "\(String(describing: ledger.accounts.first!))\n\(String(describing: price))")
     }
 
-    func testDescriptionPrice() throws {
+   @Test
+
+
+   func testDescriptionPrice() throws {
         let ledger = Ledger()
         let price1 = try Price(date: TestUtils.date20170609, commoditySymbol: TestUtils.eur, amount: Amount(number: 10, commoditySymbol: TestUtils.cad, decimalDigits: 2))
         let price2 = try Price(date: TestUtils.date20170610, commoditySymbol: TestUtils.eur, amount: Amount(number: 10, commoditySymbol: TestUtils.cad, decimalDigits: 2))
@@ -389,7 +441,10 @@ struct LedgerTests {
         #expect(String(describing: ledger) == "\(String(describing: price1))\n\(String(describing: price2))")
     }
 
-    func testDescriptionOptions() {
+   @Test
+
+
+   func testDescriptionOptions() {
         let ledger = Ledger()
         let option1 = Option(name: "a", value: "b")
         ledger.option.append(option1)
@@ -401,7 +456,10 @@ struct LedgerTests {
         #expect(String(describing: ledger) == "\(String(describing: option1))\n\(String(describing: option2))\nplugin \"p\"")
     }
 
-    func testDescriptionPlugins() {
+   @Test
+
+
+   func testDescriptionPlugins() {
         let ledger = Ledger()
         ledger.plugins.append("p")
         #expect(String(describing: ledger) == "plugin \"p\"")
@@ -412,7 +470,10 @@ struct LedgerTests {
         #expect(String(describing: ledger) == "plugin \"p\"\nplugin \"p1\"\n\(String(describing: custom))")
     }
 
-    func testDescriptionCustoms() {
+   @Test
+
+
+   func testDescriptionCustoms() {
         let ledger = Ledger()
         let custom1 = Custom(date: TestUtils.date20170610, name: "a", values: ["b"])
         let custom2 = Custom(date: TestUtils.date20170609, name: "c", values: ["d", "e"])
@@ -425,7 +486,10 @@ struct LedgerTests {
         #expect(String(describing: ledger) == "\(String(describing: custom1))\n\(String(describing: custom2))\n\(String(describing: event))")
     }
 
-    func testDescriptionEvents() throws {
+   @Test
+
+
+   func testDescriptionEvents() throws {
         let ledger = Ledger()
         let event1 = Event(date: TestUtils.date20170610, name: "e", value: "e1")
         let event2 = Event(date: TestUtils.date20170609, name: "c", value: "d")
@@ -438,14 +502,20 @@ struct LedgerTests {
         #expect(String(describing: ledger) == "\(String(describing: event1))\n\(String(describing: event2))\n\(String(describing: commodity))")
     }
 
-    func testEqualEmpty() {
+   @Test
+
+
+   func testEqualEmpty() {
         let ledger1 = Ledger()
         let ledger2 = Ledger()
 
         #expect(ledger1 == ledger2)
     }
 
-    func testEqualErrors() {
+   @Test
+
+
+   func testEqualErrors() {
         let ledger1 = Ledger()
         let ledger2 = Ledger()
 
@@ -454,7 +524,10 @@ struct LedgerTests {
         #expect(ledger1 == ledger2)
     }
 
-    func testEqualTransactions() {
+   @Test
+
+
+   func testEqualTransactions() {
         let ledger1 = Ledger()
         let ledger2 = Ledger()
 
@@ -479,7 +552,10 @@ struct LedgerTests {
         #expect(ledger1 == ledger2)
     }
 
-    func testEqualCommodities() throws {
+   @Test
+
+
+   func testEqualCommodities() throws {
         let ledger1 = Ledger()
         let ledger2 = Ledger()
 
@@ -493,7 +569,10 @@ struct LedgerTests {
         #expect(ledger1 == ledger2)
     }
 
-    func testEqualAccounts() throws {
+   @Test
+
+
+   func testEqualAccounts() throws {
         let ledger1 = Ledger()
         let ledger2 = Ledger()
 
@@ -510,7 +589,10 @@ struct LedgerTests {
         #expect(ledger1 == ledger2)
     }
 
-    func testEqualPrices() throws {
+   @Test
+
+
+   func testEqualPrices() throws {
         let ledger1 = Ledger()
         let ledger2 = Ledger()
 
@@ -529,7 +611,10 @@ struct LedgerTests {
         #expect(ledger1 == ledger2)
     }
 
-    func testEqualCustom() {
+   @Test
+
+
+   func testEqualCustom() {
         let ledger1 = Ledger()
         let ledger2 = Ledger()
 
@@ -546,7 +631,10 @@ struct LedgerTests {
         #expect(ledger1 == ledger2)
     }
 
-    func testEqualOptions() {
+   @Test
+
+
+   func testEqualOptions() {
         let ledger1 = Ledger()
         let ledger2 = Ledger()
 
@@ -562,7 +650,10 @@ struct LedgerTests {
         #expect(ledger1 == ledger2)
     }
 
-    func testEqualEvents() {
+   @Test
+
+
+   func testEqualEvents() {
         let ledger1 = Ledger()
         let ledger2 = Ledger()
 
@@ -579,7 +670,10 @@ struct LedgerTests {
         #expect(ledger1 == ledger2)
     }
 
-    func testEqualPlugins() {
+   @Test
+
+
+   func testEqualPlugins() {
         let ledger1 = Ledger()
         let ledger2 = Ledger()
 
@@ -593,7 +687,10 @@ struct LedgerTests {
         #expect(ledger1 == ledger2)
     }
 
-    func testValidateUnusedAccountsWithoutPlugin() throws {
+   @Test
+
+
+   func testValidateUnusedAccountsWithoutPlugin() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash)
         try ledger.add(account)
@@ -602,7 +699,10 @@ struct LedgerTests {
         #expect(ledger.errors.isEmpty)
     }
 
-    func testValidateUnusedAccountsWithPlugin() throws {
+   @Test
+
+
+   func testValidateUnusedAccountsWithPlugin() throws {
         let ledger = Ledger()
         ledger.plugins.append("beancount.plugins.nounused")
         let account = Account(name: TestUtils.cash)
@@ -614,7 +714,10 @@ struct LedgerTests {
         #expect(ledger.errors[0] == "Account Assets:Cash has no postings")
     }
 
-    func testValidateUsedAccountsWithPlugin() throws {
+   @Test
+
+
+   func testValidateUsedAccountsWithPlugin() throws {
         let ledger = Ledger()
         ledger.plugins.append("beancount.plugins.nounused")
 
@@ -638,7 +741,10 @@ struct LedgerTests {
         #expect(ledger.errors.isEmpty)
     }
 
-    func testValidateMultipleUnusedAccountsWithPlugin() throws {
+   @Test
+
+
+   func testValidateMultipleUnusedAccountsWithPlugin() throws {
         let ledger = Ledger()
         ledger.plugins.append("beancount.plugins.nounused")
 
@@ -654,7 +760,10 @@ struct LedgerTests {
         #expect(ledger.errors.contains("Account Assets:Chequing has no postings"))
     }
 
-    func testValidateMixedAccountsWithPlugin() throws {
+   @Test
+
+
+   func testValidateMixedAccountsWithPlugin() throws {
         let ledger = Ledger()
         ledger.plugins.append("beancount.plugins.nounused")
 
@@ -681,7 +790,10 @@ struct LedgerTests {
         #expect(ledger.errors[0] == "Account Assets:Cash has no postings")
     }
 
-    func testValidateCommodityUsageDatesIntegration() throws {
+   @Test
+
+
+   func testValidateCommodityUsageDatesIntegration() throws {
         // Integration test for commodity usage date validation across different entities
         let ledger = Ledger()
         ledger.plugins.append("beancount.plugins.check_commodity")
@@ -714,7 +826,10 @@ struct LedgerTests {
         #expect(commodityUsageErrors.count >= 1, "Should have commodity usage errors showing validation is working")
     }
 
-    func testValidateCommodityUsageDatesIntegrationValid() throws {
+   @Test
+
+
+   func testValidateCommodityUsageDatesIntegrationValid() throws {
         // Integration test for valid commodity usage dates
         let ledger = Ledger()
         ledger.plugins.append("beancount.plugins.check_commodity")

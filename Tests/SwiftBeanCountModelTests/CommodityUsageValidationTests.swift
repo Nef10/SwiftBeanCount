@@ -6,6 +6,7 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountModel
 import Testing
@@ -14,7 +15,10 @@ import Testing
 
 struct CommodityUsageValidationTests {
 
-    func testValidateCommodityUsageDatesWithoutPlugin() throws {
+   @Test
+
+
+   func testValidateCommodityUsageDatesWithoutPlugin() throws {
         // Test that commodity usage dates are not validated when plugin is not enabled
         let ledger = Ledger()
 
@@ -43,7 +47,10 @@ struct CommodityUsageValidationTests {
         }
     }
 
-    func testValidateCommodityUsageDatesWithPlugin() throws {
+   @Test
+
+
+   func testValidateCommodityUsageDatesWithPlugin() throws {
         // Test that commodity usage dates are validated when plugin is enabled
         let ledger = Ledger()
         ledger.plugins.append("beancount.plugins.check_commodity")
@@ -74,7 +81,10 @@ struct CommodityUsageValidationTests {
         }
     }
 
-    func testValidatePriceCommodityUsageDates() throws {
+   @Test
+
+
+   func testValidatePriceCommodityUsageDates() throws {
         // Test validation of price commodity usage dates
         let ledger = Ledger()
         ledger.plugins.append("beancount.plugins.check_commodity")
@@ -106,7 +116,10 @@ struct CommodityUsageValidationTests {
         }
     }
 
-    func testValidateCostCommodityUsageDates() throws {
+   @Test
+
+
+   func testValidateCostCommodityUsageDates() throws {
         // Test validation of cost commodity usage dates
         let ledger = Ledger()
         ledger.plugins.append("beancount.plugins.check_commodity")
@@ -139,7 +152,10 @@ struct CommodityUsageValidationTests {
         }
     }
 
-    func testValidateCommodityUsageDatesValid() throws {
+   @Test
+
+
+   func testValidateCommodityUsageDatesValid() throws {
         // Test that validation passes when commodities are used on or after opening dates
         let ledger = Ledger()
         ledger.plugins.append("beancount.plugins.check_commodity")

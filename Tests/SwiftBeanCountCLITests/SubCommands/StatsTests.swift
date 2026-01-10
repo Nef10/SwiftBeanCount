@@ -1,3 +1,4 @@
+
 import Foundation
 @testable import SwiftBeanCountCLI
 import Testing
@@ -8,7 +9,10 @@ import Testing
 
 struct StatsTests {
 
-    func testFileDoesNotExist() {
+   @Test
+
+
+   func testFileDoesNotExist() {
         let url = temporaryFileURL()
         let result = outputFromExecutionWith(arguments: ["stats", url.path])
         #expect(result.exitCode == 1)
@@ -20,7 +24,10 @@ struct StatsTests {
         #endif
     }
 
-    func testEmptyFileTable() {
+   @Test
+
+
+   func testEmptyFileTable() {
         let table = """
             +---------------------------+
             | Statistics                |
@@ -47,7 +54,10 @@ struct StatsTests {
         assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "table"], outputPrefix: table)
     }
 
-    func testEmptyFileCSV() {
+   @Test
+
+
+   func testEmptyFileCSV() {
         let csv = """
             "Type", "Number"
             "Transactions", "0"
@@ -68,7 +78,10 @@ struct StatsTests {
         assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "csv"], output: csv)
     }
 
-    func testEmptyFileText() {
+   @Test
+
+
+   func testEmptyFileText() {
         let text = """
             Statistics
 
@@ -91,7 +104,10 @@ struct StatsTests {
         assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "text"], outputPrefix: text)
     }
 
-    func testTestTable() {
+   @Test
+
+
+   func testTestTable() {
         let table = """
             +---------------------------+
             | Statistics                |
@@ -118,7 +134,10 @@ struct StatsTests {
         assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "table"], outputPrefix: table)
     }
 
-    func testCSV() {
+   @Test
+
+
+   func testCSV() {
         let csv = """
             "Type", "Number"
             "Transactions", "1"
@@ -139,7 +158,10 @@ struct StatsTests {
         assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "csv"], output: csv)
     }
 
-    func testText() {
+   @Test
+
+
+   func testText() {
         let text = """
             Statistics
 

@@ -6,6 +6,7 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountModel
 import Testing
@@ -14,7 +15,10 @@ import Testing
 
 struct FlagTests {
 
-    func testDescription() {
+   @Test
+
+
+   func testDescription() {
         let complete = Flag.complete
         #expect(String(describing: complete) == "*")
         let incomplete = Flag.incomplete

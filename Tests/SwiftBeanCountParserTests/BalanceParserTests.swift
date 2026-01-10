@@ -6,6 +6,7 @@
 //  Copyright © 2019 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountParser
 import SwiftBeanCountModel
@@ -22,40 +23,58 @@ struct BalanceParserTests {
     private let invalidDateString = "2017-02-30 balance Assets:Cash 10.00 CAD"
     private let accountName = try! AccountName("Assets:Cash") // swiftlint:disable:this force_try
 
-    func testBasic() {
+   @Test
+
+
+   func testBasic() {
         let balance = BalanceParser.parseFrom(line: basicString)
         XCTAssertEqual(balance, Balance(date: TestUtils.date20170609,
                                         accountName: accountName,
                                         amount: Amount(number: 10, commoditySymbol: "CAD", decimalDigits: 2)))
     }
 
-    func testWhitespace() {
+   @Test
+
+
+   func testWhitespace() {
         let balance = BalanceParser.parseFrom(line: whitespaceString)
         XCTAssertEqual(balance, Balance(date: TestUtils.date20170609,
                                         accountName: accountName,
                                         amount: Amount(number: 10, commoditySymbol: "CAD", decimalDigits: 2)))
     }
 
-    func testEndOfLineComment() {
+   @Test
+
+
+   func testEndOfLineComment() {
         let balance = BalanceParser.parseFrom(line: endOfLineCommentString)
         XCTAssertEqual(balance, Balance(date: TestUtils.date20170609,
                                         accountName: accountName,
                                         amount: Amount(number: 10, commoditySymbol: "CAD", decimalDigits: 2)))
     }
 
-    func testSpecialCharacter() throws {
+   @Test
+
+
+   func testSpecialCharacter() throws {
         let balance = BalanceParser.parseFrom(line: specialCharacterString)
         XCTAssertEqual(balance, Balance(date: TestUtils.date20170609,
                                         accountName: try AccountName("Assets:💵"),
                                         amount: Amount(number: 10, commoditySymbol: "💵", decimalDigits: 2)))
     }
 
-    func testInvalidCloseDate() {
+   @Test
+
+
+   func testInvalidCloseDate() {
         let balance = BalanceParser.parseFrom(line: invalidDateString)
         #expect(balance == nil)
     }
 
-    func testPerformance() {
+   @Test
+
+
+   func testPerformance() {
         self.measure {
             for _ in 0...1_000 {
                 _ = BalanceParser.parseFrom(line: basicString)

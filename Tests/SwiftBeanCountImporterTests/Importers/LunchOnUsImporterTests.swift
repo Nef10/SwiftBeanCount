@@ -6,6 +6,7 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -15,27 +16,45 @@ import Testing
 
 struct LunchOnUsImporterTests {
 
-    func testHeaders() {
+   @Test
+
+
+   func testHeaders() {
         #expect(LunchOnUsImporter.headers == [["date", "type", "amount", "invoice", "remaining", "location"]])
     }
 
-    func testImporterName() {
+   @Test
+
+
+   func testImporterName() {
         #expect(LunchOnUsImporter.importerName == "Lunch On Us")
     }
 
-    func testImporterType() {
+   @Test
+
+
+   func testImporterType() {
         #expect(LunchOnUsImporter.importerType == "lunch-on-us")
     }
 
-    func testHelpText() { // swiftlint:disable:next line_length
+   @Test
+
+
+   func testHelpText() { // swiftlint:disable:next line_length
         #expect(LunchOnUsImporter.helpText == "Enables importing of CSV files downloaded from https://lunchmapper.appspot.com/csv. Does not support importing balances.\n\nTo use add importer-type: \"lunch-on-us\" to your account.")
     }
 
-    func testImportName() throws {
+   @Test
+
+
+   func testImportName() throws {
         #expect(LunchOnUsImporter(ledger: nil == csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "LunchOnUs File TestName")
     }
 
-    func testParseLineNormalPurchase() throws {
+   @Test
+
+
+   func testParseLineNormalPurchase() throws {
         let importer = LunchOnUsImporter(ledger: nil,
                                          csvReader: try TestUtils.csvReader(content: """
 date,type,amount,invoice,remaining,location
@@ -53,7 +72,10 @@ date,type,amount,invoice,remaining,location
         #expect(line.price == nil)
     }
 
-    func testParseLineRedeemUnlock() throws {
+   @Test
+
+
+   func testParseLineRedeemUnlock() throws {
         let importer = LunchOnUsImporter(ledger: nil,
                                          csvReader: try TestUtils.csvReader(content: """
 date,type,amount,invoice,remaining,location
@@ -71,7 +93,10 @@ date,type,amount,invoice,remaining,location
         #expect(line.price == nil)
     }
 
-    func testParseLineBalanceInquiryWithPartLock() throws { // #7
+   @Test
+
+
+   func testParseLineBalanceInquiryWithPartLock() throws { // #7
         let importer = LunchOnUsImporter(ledger: nil,
                                          csvReader: try TestUtils.csvReader(content: """
 date,type,amount,invoice,remaining,location
@@ -88,7 +113,10 @@ date,type,amount,invoice,remaining,location
         #expect(line.price == nil)
     }
 
-    func testParseLineActivateCard() throws {
+   @Test
+
+
+   func testParseLineActivateCard() throws {
         let importer = LunchOnUsImporter(ledger: nil,
                                          csvReader: try TestUtils.csvReader(content: """
 date,type,amount,invoice,remaining,location
@@ -105,7 +133,10 @@ date,type,amount,invoice,remaining,location
         #expect(line.price == nil)
     }
 
-    func testParseLineCashOut() throws {
+   @Test
+
+
+   func testParseLineCashOut() throws {
         let importer = LunchOnUsImporter(ledger: nil,
                                          csvReader: try TestUtils.csvReader(content: """
 date,type,amount,invoice,remaining,location

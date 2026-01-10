@@ -6,6 +6,7 @@
 //  Copyright © 2019 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountParser
 import SwiftBeanCountModel
@@ -22,46 +23,67 @@ struct CustomsParserTests {
     private let specialCharacterString = "2017-06-09 custom \"ABC💵\" \"DEF💵\" \"GHI💵\""
     private let invalidDateString = "2017-02-30 custom \"ABC\" \"DEF\""
 
-    func testBasic() {
+   @Test
+
+
+   func testBasic() {
         let event = CustomsParser.parseFrom(line: basicString)!
         #expect(event.date == TestUtils.date20170609)
         #expect(event.name == "ABC")
         #expect(event.values == ["DEF"])
     }
 
-    func testMultipleValues() {
+   @Test
+
+
+   func testMultipleValues() {
         let event = CustomsParser.parseFrom(line: multipleValuesString)!
         #expect(event.date == TestUtils.date20170609)
         #expect(event.name == "ABC")
         #expect(event.values == ["DEF", "GHI", "JKL", "MNO"])
     }
 
-    func testWhitespace() {
+   @Test
+
+
+   func testWhitespace() {
         let event = CustomsParser.parseFrom(line: whitespaceString)!
         #expect(event.date == TestUtils.date20170609)
         #expect(event.name == "  A B C  ")
         #expect(event.values == ["  D E F  ", "G H I"])
     }
 
-    func testEndOfLineComment() {
+   @Test
+
+
+   func testEndOfLineComment() {
         let event = CustomsParser.parseFrom(line: endOfLineCommentString)!
         #expect(event.date == TestUtils.date20170609)
         #expect(event.name == "ABC")
         #expect(event.values == ["DEF", "GHI"])
     }
 
-    func testSpecialCharacter() {
+   @Test
+
+
+   func testSpecialCharacter() {
         let event = CustomsParser.parseFrom(line: specialCharacterString)!
         #expect(event.date == TestUtils.date20170609)
         #expect(event.name == "ABC💵")
         #expect(event.values == ["DEF💵", "GHI💵"])
     }
 
-    func testInvalidDate() {
+   @Test
+
+
+   func testInvalidDate() {
         #expect(CustomsParser.parseFrom(line: invalidDateString == nil))
     }
 
-    func testPerformance() {
+   @Test
+
+
+   func testPerformance() {
         self.measure {
             for _ in 0...1_000 {
                 _ = CustomsParser.parseFrom(line: basicString)

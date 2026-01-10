@@ -6,6 +6,7 @@
 //  Copyright © 2019 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountModel
 import Testing
@@ -14,7 +15,10 @@ import Testing
 
 struct CustomTests {
 
-    func testEqual() {
+   @Test
+
+
+   func testEqual() {
         var custom1 = Custom(date: TestUtils.date20170608, name: "A", values: ["B"])
         var custom2 = Custom(date: TestUtils.date20170608, name: "A", values: ["B"])
         #expect(custom1 == custom2)
@@ -28,7 +32,10 @@ struct CustomTests {
         #expect(!(custom2 < custom1))
     }
 
-    func testEqualRespectsDate() {
+   @Test
+
+
+   func testEqualRespectsDate() {
         let custom1 = Custom(date: TestUtils.date20170608, name: "A", values: ["B"])
         let custom2 = Custom(date: TestUtils.date20170609, name: "A", values: ["B"])
         #expect(custom1 != custom2)
@@ -36,7 +43,10 @@ struct CustomTests {
         #expect(!(custom2 < custom1))
     }
 
-    func testEqualRespectsName() {
+   @Test
+
+
+   func testEqualRespectsName() {
         let custom1 = Custom(date: TestUtils.date20170608, name: "A", values: ["B"])
         let custom2 = Custom(date: TestUtils.date20170608, name: "C", values: ["B"])
         #expect(custom1 != custom2)
@@ -44,7 +54,10 @@ struct CustomTests {
         #expect(!(custom2 < custom1))
     }
 
-    func testEqualRespectsValue() {
+   @Test
+
+
+   func testEqualRespectsValue() {
         let custom1 = Custom(date: TestUtils.date20170608, name: "A", values: ["B"])
         let custom2 = Custom(date: TestUtils.date20170608, name: "A", values: ["B", "C"])
         #expect(custom1 != custom2)
@@ -52,14 +65,20 @@ struct CustomTests {
         #expect(!(custom2 < custom1))
     }
 
-    func testDescription() {
+   @Test
+
+
+   func testDescription() {
         var custom = Custom(date: TestUtils.date20170608, name: "name", values: ["B"])
         #expect(String(describing: custom) == "2017-06-08 custom \"name\" \"B\"")
         custom = Custom(date: TestUtils.date20170608, name: "name", values: ["B"], metaData: ["A": "B"])
         #expect(String(describing: custom) == "2017-06-08 custom \"name\" \"B\"\n  A: \"B\"")
     }
 
-    func testDescriptionMultipleValues() {
+   @Test
+
+
+   func testDescriptionMultipleValues() {
         let custom = Custom(date: TestUtils.date20170608, name: "name", values: ["B", "C", "D"])
         #expect(String(describing: custom) == "2017-06-08 custom \"name\" \"B\" \"C\" \"D\"")
     }

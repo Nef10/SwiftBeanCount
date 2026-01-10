@@ -6,6 +6,7 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -15,27 +16,45 @@ import Testing
 
 struct RBCImporterTests {
 
-    func testHeaders() {
+   @Test
+
+
+   func testHeaders() {
         #expect(RBCImporter.headers == [["Account Type", "Account Number", "Transaction Date", "Cheque Number", "Description 1", "Description 2", "CAD$", "USD$"]])
     }
 
-    func testImporterName() {
+   @Test
+
+
+   func testImporterName() {
         #expect(RBCImporter.importerName == "RBC")
     }
 
-    func testImporterType() {
+   @Test
+
+
+   func testImporterType() {
         #expect(RBCImporter.importerType == "rbc")
     }
 
-    func testHelpText() {
+   @Test
+
+
+   func testHelpText() {
         #expect(RBCImporter.helpText == "Enables importing of downloaded CSV files from RBC Accounts and Credit Cards.\n\nTo use add importer-type: \"rbc\" to your accounts.")
     }
 
-    func testImportName() throws {
+   @Test
+
+
+   func testImportName() throws {
         #expect(RBCImporter(ledger: nil == csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "RBC File TestName")
     }
 
-    func testParseLineAccount() throws {
+   @Test
+
+
+   func testParseLineAccount() throws {
         let importer = RBCImporter(ledger: nil,
                                    csvReader: try TestUtils.csvReader(content: """
 "Account Type","Account Number","Transaction Date","Cheque Number","Description 1","Description 2","CAD$","USD$"
@@ -53,7 +72,10 @@ Chequing,01234-1234567,6/10/2017,,"Merchant",,-4.00,,\n
         #expect(line.price == nil)
     }
 
-    func testParseLineCard() throws {
+   @Test
+
+
+   func testParseLineCard() throws {
         let importer = RBCImporter(ledger: nil,
                                    csvReader: try TestUtils.csvReader(content: """
 "Account Type","Account Number","Transaction Date","Cheque Number","Description 1","Description 2","CAD$","USD$"
@@ -71,7 +93,10 @@ MasterCard,1234123412341234,6/5/2020,,"Test Store",,-4.47,,\n
         #expect(line.price == nil)
     }
 
-    func testParseLineBothDescriptions() throws {
+   @Test
+
+
+   func testParseLineBothDescriptions() throws {
         let importer = RBCImporter(ledger: nil,
                                    csvReader: try TestUtils.csvReader(content: """
 "Account Type","Account Number","Transaction Date","Cheque Number","Description 1","Description 2","CAD$","USD$"
@@ -88,7 +113,10 @@ Chequing,01234-1234567,4/1/2020,,"INTER-FI FUND TR DR","Sender",-400.00,,\n
         #expect(line.price == nil)
     }
 
-    func testParseLineMonthlyFee() throws {
+   @Test
+
+
+   func testParseLineMonthlyFee() throws {
         let importer = RBCImporter(ledger: nil,
                                    csvReader: try TestUtils.csvReader(content: """
 "Account Type","Account Number","Transaction Date","Cheque Number","Description 1","Description 2","CAD$","USD$"

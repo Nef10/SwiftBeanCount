@@ -6,6 +6,7 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountModel
 import Testing
@@ -14,26 +15,38 @@ import Testing
 
 struct CommodityTests {
 
-    func testDescription() {
+   @Test
+
+
+   func testDescription() {
         let commodity = Commodity(symbol: TestUtils.cad)
         #expect(String(describing: commodity) == "")
     }
 
-    func testDescriptionSpecialCharactersOpening() {
+   @Test
+
+
+   func testDescriptionSpecialCharactersOpening() {
         let symbol = "💵"
         let string = "2017-06-08 commodity \(symbol)"
         let commodity = Commodity(symbol: symbol, opening: TestUtils.date20170608)
         #expect(String(describing: commodity) == string)
     }
 
-    func testDescriptionMetaData() {
+   @Test
+
+
+   func testDescriptionMetaData() {
         let symbol = "CAD"
         let string = "2017-06-08 commodity \(symbol)\n  A: \"B\""
         let commodity = Commodity(symbol: symbol, opening: TestUtils.date20170608, metaData: ["A": "B"])
         #expect(String(describing: commodity) == string)
     }
 
-    func testValidate() {
+   @Test
+
+
+   func testValidate() {
         let commodity = Commodity(symbol: "EUR", opening: TestUtils.date20170608)
         let ledgerWithPlugin = Ledger()
         ledgerWithPlugin.plugins.append("beancount.plugins.check_commodity")
@@ -43,7 +56,10 @@ struct CommodityTests {
         }
     }
 
-    func testValidateWithoutDate() {
+   @Test
+
+
+   func testValidateWithoutDate() {
         let commodity = Commodity(symbol: "EUR")
 
         // Test without plugin - should be valid
@@ -63,7 +79,10 @@ struct CommodityTests {
         }
     }
 
-    func testEqual() {
+   @Test
+
+
+   func testEqual() {
         var eur = Commodity(symbol: "EUR")
         var eur2 = Commodity(symbol: "EUR")
         let cad = Commodity(symbol: "CAD")
@@ -77,7 +96,10 @@ struct CommodityTests {
         #expect(eur == eur2)
     }
 
-    func testGreater() {
+   @Test
+
+
+   func testGreater() {
         let eur = TestUtils.eur
         let cad = TestUtils.cad
 
@@ -87,7 +109,10 @@ struct CommodityTests {
         #expect(!(cad < cad)) // swiftlint:disable:this identical_operands
     }
 
-    func testValidateUsageDate() {
+   @Test
+
+
+   func testValidateUsageDate() {
         // Test commodity with opening date - usage on same date should be valid
         let commodity = Commodity(symbol: "EUR", opening: TestUtils.date20170608)
         let ledgerWithPlugin = Ledger()
@@ -105,7 +130,10 @@ struct CommodityTests {
         }
     }
 
-    func testValidateUsageDateBeforeOpening() {
+   @Test
+
+
+   func testValidateUsageDateBeforeOpening() {
         // Test commodity with opening date - usage before opening should be invalid
         let commodity = Commodity(symbol: "EUR", opening: TestUtils.date20170609)
         let ledgerWithPlugin = Ledger()
@@ -118,7 +146,10 @@ struct CommodityTests {
         }
     }
 
-    func testValidateUsageDateWithoutPlugin() {
+   @Test
+
+
+   func testValidateUsageDateWithoutPlugin() {
         // Test without plugin - should always be valid regardless of dates
         let commodity = Commodity(symbol: "EUR", opening: TestUtils.date20170609)
         let ledgerWithoutPlugin = Ledger()
@@ -129,7 +160,10 @@ struct CommodityTests {
         }
     }
 
-    func testValidateUsageDateWithoutOpeningDate() {
+   @Test
+
+
+   func testValidateUsageDateWithoutOpeningDate() {
         // Test commodity without opening date
         let commodity = Commodity(symbol: "EUR")
         let ledgerWithPlugin = Ledger()

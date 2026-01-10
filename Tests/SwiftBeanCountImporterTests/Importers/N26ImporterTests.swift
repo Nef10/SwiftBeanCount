@@ -6,6 +6,7 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -15,7 +16,10 @@ import Testing
 
 struct N26ImporterTests {
 
-    func testHeaders() {
+   @Test
+
+
+   func testHeaders() {
         XCTAssertEqual(N26Importer.headers, [
             [
                 "Datum",
@@ -43,23 +47,38 @@ struct N26ImporterTests {
         ])
     }
 
-    func testImporterName() {
+   @Test
+
+
+   func testImporterName() {
         #expect(N26Importer.importerName == "N26")
     }
 
-    func testImporterType() {
+   @Test
+
+
+   func testImporterType() {
         #expect(N26Importer.importerType == "n26")
     }
 
-    func testHelpText() {
+   @Test
+
+
+   func testHelpText() {
         #expect(N26Importer.helpText == "Enables importing of downloaded CSV files from N26 Accounts.\n\nTo use add importer-type: \"n26\" to your account.")
     }
 
-    func testImportName() throws {
+   @Test
+
+
+   func testImportName() throws {
         #expect(N26Importer(ledger: nil == csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "N26 File TestName")
     }
 
-    func testParseLineNormalPurchase() throws {
+   @Test
+
+
+   func testParseLineNormalPurchase() throws {
         let importer = N26Importer(ledger: nil,
                                    csvReader: try TestUtils.csvReader(content: """
 "Datum", "Empfänger", "Kontonummer", "Transaktionstyp", "Verwendungszweck", "Kategorie", "Betrag (EUR)", "Betrag (Fremdwährung)", "Fremdwährung", "Wechselkurs"
@@ -77,7 +96,10 @@ struct N26ImporterTests {
         #expect(line.price == nil)
     }
 
-    func testParseLineSameCurrencyPurchase() throws {
+   @Test
+
+
+   func testParseLineSameCurrencyPurchase() throws {
         let importer = N26Importer(ledger: nil,
                                    csvReader: try TestUtils.csvReader(content: """
 "Datum", "Empfänger", "Kontonummer", "Transaktionstyp", "Verwendungszweck", "Kategorie", "Betrag (EUR)", "Betrag (Fremdwährung)", "Fremdwährung", "Wechselkurs"
@@ -94,7 +116,10 @@ struct N26ImporterTests {
         #expect(line.price == nil)
     }
 
-    func testParseLineOutgoingTransfer() throws {
+   @Test
+
+
+   func testParseLineOutgoingTransfer() throws {
         let importer = N26Importer(ledger: nil,
                                    csvReader: try TestUtils.csvReader(content: """
 "Datum", "Empfänger", "Kontonummer", "Transaktionstyp", "Verwendungszweck", "Kategorie", "Betrag (EUR)", "Betrag (Fremdwährung)", "Fremdwährung", "Wechselkurs"
@@ -112,7 +137,10 @@ struct N26ImporterTests {
         #expect(line.price == nil)
     }
 
-    func testParseLineIncomingTransfer() throws {
+   @Test
+
+
+   func testParseLineIncomingTransfer() throws {
         let importer = N26Importer(ledger: nil,
                                    csvReader: try TestUtils.csvReader(content: """
 "Datum", "Empfänger", "Kontonummer", "Transaktionstyp", "Verwendungszweck", "Kategorie", "Betrag (EUR)", "Betrag (Fremdwährung)", "Fremdwährung", "Wechselkurs"
@@ -129,7 +157,10 @@ struct N26ImporterTests {
         #expect(line.price == nil)
     }
 
-    func testParseLineForeignCurrency() throws {
+   @Test
+
+
+   func testParseLineForeignCurrency() throws {
         let importer = N26Importer(ledger: nil,
                                    csvReader: try TestUtils.csvReader(content: """
 "Datum", "Empfänger", "Kontonummer", "Transaktionstyp", "Verwendungszweck", "Kategorie", "Betrag (EUR)", "Betrag (Fremdwährung)", "Fremdwährung", "Wechselkurs"

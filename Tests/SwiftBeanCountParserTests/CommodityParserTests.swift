@@ -6,6 +6,7 @@
 //  Copyright © 2019 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountParser
 import SwiftBeanCountModel
@@ -21,32 +22,50 @@ struct CommodityParserTests {
     private let specialCharacterString = "2017-06-09 commodity CAD💵"
     private let invalidDateString = "2017-02-30 commodity CAD"
 
-    func testBasic() {
+   @Test
+
+
+   func testBasic() {
         let commodity = CommodityParser.parseFrom(line: basicString)
         #expect(commodity == Commodity(symbol: "CAD", opening: TestUtils.date20170609))
     }
 
-    func testWhitespace() {
+   @Test
+
+
+   func testWhitespace() {
         let commodity = CommodityParser.parseFrom(line: whitespaceString)
         #expect(commodity == Commodity(symbol: "CAD", opening: TestUtils.date20170609))
     }
 
-    func testEndOfLineComment() {
+   @Test
+
+
+   func testEndOfLineComment() {
         let commodity = CommodityParser.parseFrom(line: endOfLineCommentString)
         #expect(commodity == Commodity(symbol: "CAD", opening: TestUtils.date20170609))
     }
 
-    func testSpecialCharacter() {
+   @Test
+
+
+   func testSpecialCharacter() {
         let commodity = CommodityParser.parseFrom(line: specialCharacterString)
         #expect(commodity == Commodity(symbol: "CAD💵", opening: TestUtils.date20170609))
     }
 
-    func testInvalidCloseDate() {
+   @Test
+
+
+   func testInvalidCloseDate() {
         let commodity = CommodityParser.parseFrom(line: invalidDateString)
         #expect(commodity == nil)
     }
 
-    func testPerformance() {
+   @Test
+
+
+   func testPerformance() {
         self.measure {
             for _ in 0...1_000 {
                 _ = CommodityParser.parseFrom(line: basicString)

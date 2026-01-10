@@ -6,6 +6,7 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountModel
 import Testing
@@ -14,7 +15,10 @@ import Testing
 
 struct OptionTests {
 
-    func testDescription() {
+   @Test
+
+
+   func testDescription() {
         let option = Option(name: "name", value: "value1")
         #expect(String(describing: option) == "option \"name\" \"value1\"")
 
@@ -22,7 +26,10 @@ struct OptionTests {
         #expect(String(describing: optionSpecialCharacters) == "option \"😂\" \"😀\"")
     }
 
-    func testComparable() {
+   @Test
+
+
+   func testComparable() {
         let option1 = Option(name: "name", value: "value1")
         let option2 = Option(name: "name", value: "value1")
         let option3 = Option(name: "name1", value: "value1") // check name

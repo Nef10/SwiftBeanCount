@@ -6,6 +6,7 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountModel
 import Testing
@@ -20,7 +21,10 @@ struct AccountNameTests {
     ]
     private let validNames = ["Assets:Cash", "Assets:Cash:Test:Test:A", "Assets:Cash:Ca💰h:Test:💰", "Liabilities:Test", "Income:Test", "Expenses:Test", "Equity:Test"]
 
-    func testInitNames() {
+   @Test
+
+
+   func testInitNames() {
         for name in validNames {
             XCTAssertNoThrow(try AccountName(name))
         }
@@ -31,7 +35,10 @@ struct AccountNameTests {
         }
     }
 
-    func testIsAccountNameVaild() {
+   @Test
+
+
+   func testIsAccountNameVaild() {
         for name in validNames {
             #expect(AccountName.isNameValid(name))
         }
@@ -40,13 +47,19 @@ struct AccountNameTests {
         }
     }
 
-    func testNameItem() throws {
+   @Test
+
+
+   func testNameItem() throws {
         #expect(TestUtils.cash.nameItem == "Cash")
         #expect(try AccountName("Assets:A:B:C:D:E:Cash").nameItem == "Cash")
         #expect(try AccountName("Assets:💰").nameItem == "💰")
     }
 
-    func testAccountType() throws {
+   @Test
+
+
+   func testAccountType() throws {
         #expect(try AccountName("Assets:Test").accountType == AccountType.asset)
         #expect(try AccountName("Liabilities:Test").accountType == AccountType.liability)
         #expect(try AccountName("Income:Test").accountType == AccountType.income)
@@ -54,7 +67,10 @@ struct AccountNameTests {
         #expect(try AccountName("Equity:Test").accountType == AccountType.equity)
     }
 
-    func testAccountNameEqual() throws {
+   @Test
+
+
+   func testAccountNameEqual() throws {
         let name1 = try AccountName("Assets:Test")
         let name2 = try AccountName("Assets:Test")
         let name3 = try AccountName("Assets:Test:Test")

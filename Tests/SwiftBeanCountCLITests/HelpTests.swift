@@ -1,3 +1,4 @@
+
 import Foundation
 @testable import SwiftBeanCountCLI
 import Testing
@@ -8,7 +9,10 @@ import Testing
 
 struct HelpTests {
 
-   func testHelp() {
+  @Test
+
+
+  func testHelp() {
         let result = outputFromExecutionWith(arguments: ["--help"])
         #expect(result.exitCode == 0)
         #expect(result.errorOutput.isEmpty)

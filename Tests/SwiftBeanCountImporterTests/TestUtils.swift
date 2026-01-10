@@ -6,6 +6,7 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import CSV
@@ -16,15 +17,24 @@ class TestStorage: SettingsStorage {
 
     var storage = [String: Any]()
 
-    func set(_ value: Any?, forKey defaultName: String) {
+   @Test
+
+
+   func set(_ value: Any?, forKey defaultName: String) {
         storage[defaultName] = value
     }
 
-    func string(forKey defaultName: String) -> String? {
+   @Test
+
+
+   func string(forKey defaultName: String) -> String? {
         storage[defaultName] as? String
     }
 
-    func dictionary(forKey defaultName: String) -> [String: Any]? { // swiftlint:disable:this discouraged_optional_collection
+   @Test
+
+
+   func dictionary(forKey defaultName: String) -> [String: Any]? { // swiftlint:disable:this discouraged_optional_collection
         storage[defaultName] as? [String: Any]
     }
 }
@@ -193,7 +203,10 @@ enum TestUtils {
 
 extension XCTestCase {
 
-    func temporaryFileURL() -> URL {
+   @Test
+
+
+   func temporaryFileURL() -> URL {
         let directory = NSTemporaryDirectory()
         let url = URL(fileURLWithPath: directory).appendingPathComponent(UUID().uuidString)
 
@@ -212,7 +225,10 @@ extension XCTestCase {
         return url
     }
 
-    func createFile(at url: URL, content: String) {
+   @Test
+
+
+   func createFile(at url: URL, content: String) {
         do {
             try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
             try content.write(to: url, atomically: true, encoding: .utf8)

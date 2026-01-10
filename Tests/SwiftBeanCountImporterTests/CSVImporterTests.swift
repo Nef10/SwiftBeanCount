@@ -6,6 +6,7 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -15,11 +16,17 @@ import Testing
 
 struct CSVImporterTests {
 
-    func testImporters() {
+   @Test
+
+
+   func testImporters() {
         #expect(CSVImporterFactory.importers.count == 8)
     }
 
-    func testNew() {
+   @Test
+
+
+   func testNew() {
         // no url
         #expect(CSVImporterFactory.new(ledger: nil, url: nil == nil))
 
@@ -42,7 +49,10 @@ struct CSVImporterTests {
         }
     }
 
-    func testNoEqualHeaders() {
+   @Test
+
+
+   func testNoEqualHeaders() {
         var headers = [[String]]()
         let importers = CSVImporterFactory.importers
         for importer in importers {

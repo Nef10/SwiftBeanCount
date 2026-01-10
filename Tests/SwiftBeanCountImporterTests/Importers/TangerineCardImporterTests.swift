@@ -6,6 +6,7 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -15,30 +16,48 @@ import Testing
 
 struct TangerineCardImporterTests {
 
-    func testHeaders() {
+   @Test
+
+
+   func testHeaders() {
         #expect(TangerineCardImporter.headers == [["Transaction date", "Transaction", "Name", "Memo", "Amount"]])
     }
 
-    func testImporterName() {
+   @Test
+
+
+   func testImporterName() {
         #expect(TangerineCardImporter.importerName == "Tangerine Credit Card")
     }
 
-    func testImporterType() {
+   @Test
+
+
+   func testImporterType() {
         #expect(TangerineCardImporter.importerType == "tangerine-card")
     }
 
-    func testHelpText() {
+   @Test
+
+
+   func testHelpText() {
         #expect(TangerineCardImporter.helpText == "Enables importing of downloaded CSV files from Tangerine Credit Cards.\n\nTo use add importer-type: \"tangerine-card\" to your account.")
     }
 
-    func testImportName() throws {
+   @Test
+
+
+   func testImportName() throws {
         XCTAssertEqual(
             TangerineCardImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName,
             "Tangerine Credit Card File TestName"
         )
     }
 
-    func testParseLine() throws {
+   @Test
+
+
+   func testParseLine() throws {
         let importer = TangerineCardImporter(ledger: nil,
                                              csvReader: try TestUtils.csvReader(content: """
 Transaction date,Transaction,Name,Memo,Amount

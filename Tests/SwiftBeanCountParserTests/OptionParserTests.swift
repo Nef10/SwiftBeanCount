@@ -6,6 +6,7 @@
 //  Copyright © 2019 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountParser
 import SwiftBeanCountModel
@@ -20,31 +21,46 @@ struct OptionParserTests {
     private let endOfLineCommentString = "option \"ABC\" \"DEF\";gfsdt     "
     private let specialCharacterString = "option \"ABC💵\" \"DEF💵\""
 
-    func testBasic() {
+   @Test
+
+
+   func testBasic() {
         let option = OptionParser.parseFrom(line: basicString)!
         #expect(option.name == "ABC")
         #expect(option.value == "DEF")
     }
 
-    func testWhitespace() {
+   @Test
+
+
+   func testWhitespace() {
         let option = OptionParser.parseFrom(line: whitespaceString)!
         #expect(option.name == "  A B C  ")
         #expect(option.value == "  D E F  ")
     }
 
-    func testEndOfLineComment() {
+   @Test
+
+
+   func testEndOfLineComment() {
         let option = OptionParser.parseFrom(line: endOfLineCommentString)!
         #expect(option.name == "ABC")
         #expect(option.value == "DEF")
     }
 
-    func testSpecialCharacter() {
+   @Test
+
+
+   func testSpecialCharacter() {
         let option = OptionParser.parseFrom(line: specialCharacterString)!
         #expect(option.name == "ABC💵")
         #expect(option.value == "DEF💵")
     }
 
-    func testPerformance() {
+   @Test
+
+
+   func testPerformance() {
         self.measure {
             for _ in 0...1_000 {
                 _ = OptionParser.parseFrom(line: basicString)

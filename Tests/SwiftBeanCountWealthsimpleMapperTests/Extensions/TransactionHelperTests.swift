@@ -1,4 +1,5 @@
 
+
 import Foundation
 @testable import SwiftBeanCountWealthsimpleMapper
 import SwiftBeanCountModel
@@ -9,7 +10,10 @@ import Testing
 
 struct TransactionHelperTests {
 
-    func testExtension() {
+   @Test
+
+
+   func testExtension() {
         var transaction = TestTransaction()
 
         transaction.marketPriceAmount = "10.0110"

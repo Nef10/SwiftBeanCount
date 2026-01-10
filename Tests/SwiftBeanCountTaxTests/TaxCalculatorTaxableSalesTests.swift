@@ -1,4 +1,5 @@
 
+
 import Foundation
 @testable import SwiftBeanCountTax
 import SwiftBeanCountModel
@@ -8,13 +9,19 @@ import Testing
 
 struct TaxCalculatorTaxableSalesTests {
 
-    func testGetTaxableSaleEmpty() throws {
+   @Test
+
+
+   func testGetTaxableSaleEmpty() throws {
         let ledger = try basicLedger()
         let sales = try TaxCalculator.getTaxableSales(from: ledger, for: 2_022)
         #expect(sales.isEmpty)
     }
 
-    func testGetTaxableSales() throws {
+   @Test
+
+
+   func testGetTaxableSales() throws {
         let ledger = try basicLedger()
         let date = Date(timeIntervalSince1970: 1_650_013_015)
 
@@ -48,7 +55,10 @@ struct TaxCalculatorTaxableSalesTests {
         #expect(sales[0].provider == "Broker")
     }
 
-    func testGetTaxableSalesIgnoreSplit() throws {
+   @Test
+
+
+   func testGetTaxableSalesIgnoreSplit() throws {
         let ledger = try basicLedger()
         let date = Date(timeIntervalSince1970: 1_650_013_015)
 

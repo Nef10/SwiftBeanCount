@@ -6,6 +6,7 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -15,12 +16,18 @@ import Testing
 
 struct FileImporterTests {
 
-    func testImporters() {
+   @Test
+
+
+   func testImporters() {
         // currently only csv files are supported
         #expect(FileImporterFactory.importers.count == CSVImporterFactory.importers.count)
     }
 
-    func testNew() {
+   @Test
+
+
+   func testNew() {
         // no url
         #expect(FileImporterFactory.new(ledger: nil, url: nil == nil))
 
@@ -43,7 +50,10 @@ struct FileImporterTests {
         }
     }
 
-    func testNoEqualImporterTypes() {
+   @Test
+
+
+   func testNoEqualImporterTypes() {
         var types = [String]()
         let importers = FileImporterFactory.importers as! [BaseImporter.Type] // swiftlint:disable:this force_cast
         for importer in importers {

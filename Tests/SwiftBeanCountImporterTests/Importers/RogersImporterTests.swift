@@ -6,6 +6,7 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -15,7 +16,10 @@ import Testing
 
 struct RogersImporterTests {
 
-    func testHeaders() {
+   @Test
+
+
+   func testHeaders() {
         XCTAssertEqual(RogersImporter.headers, [
             ["Transaction Date", "Activity Type", "Merchant Name", "Merchant Category", "Amount"],
             ["Transaction Date", "Activity Type", "Merchant Name", "Merchant Category Description", "Amount"],
@@ -28,23 +32,38 @@ struct RogersImporterTests {
         ])
     }
 
-    func testImporterName() {
+   @Test
+
+
+   func testImporterName() {
         #expect(RogersImporter.importerName == "Rogers Bank")
     }
 
-    func testImporterType() {
+   @Test
+
+
+   func testImporterType() {
         #expect(RogersImporter.importerType == "rogers")
     }
 
-    func testHelpText() {
+   @Test
+
+
+   func testHelpText() {
         #expect(RogersImporter.helpText == "Enables importing of downloaded CSV files from Rogers Bank Credit Cards.\n\nTo use add importer-type: \"rogers\" to your account.")
     }
 
-    func testImportName() throws {
+   @Test
+
+
+   func testImportName() throws {
         #expect(RogersImporter(ledger: nil == csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "Rogers Bank File TestName")
     }
 
-    func testParseLine1() throws {
+   @Test
+
+
+   func testParseLine1() throws {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: try TestUtils.csvReader(content: """
 "Transaction Date","Activity Type","Merchant Name","Merchant Category","Amount"
@@ -62,7 +81,10 @@ struct RogersImporterTests {
         #expect(line.price == nil)
     }
 
-    func testParseLine2() throws {
+   @Test
+
+
+   func testParseLine2() throws {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: try TestUtils.csvReader(content: """
 "Transaction Date","Activity Type","Merchant Name","Merchant Category Description","Amount"
@@ -80,7 +102,10 @@ struct RogersImporterTests {
         #expect(line.price == nil)
     }
 
-    func testParseLine3() throws {
+   @Test
+
+
+   func testParseLine3() throws {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: try TestUtils.csvReader(content: """
 "Date","Activity Type","Merchant Name","Merchant Category","Amount"
@@ -98,7 +123,10 @@ struct RogersImporterTests {
         #expect(line.price == nil)
     }
 
-    func testParseLine4() throws {
+   @Test
+
+
+   func testParseLine4() throws {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: try TestUtils.csvReader(content: """
 "Date","Activity Type","Merchant Name","Merchant Category Description","Amount"
@@ -116,7 +144,10 @@ struct RogersImporterTests {
         #expect(line.price == nil)
     }
 
-    func testParseLine5() throws {
+   @Test
+
+
+   func testParseLine5() throws {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: try TestUtils.csvReader(content: """
 "Transaction Date","Activity Type","Merchant Name","Merchant Category","Amount","Rewards"
@@ -134,7 +165,10 @@ struct RogersImporterTests {
         #expect(line.price == nil)
     }
 
-    func testParseLine6() throws {
+   @Test
+
+
+   func testParseLine6() throws {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: try TestUtils.csvReader(content: """
 "Transaction Date","Activity Type","Merchant Name","Merchant Category Description","Amount","Rewards"
@@ -152,7 +186,10 @@ struct RogersImporterTests {
         #expect(line.price == nil)
     }
 
-    func testParseLine7() throws {
+   @Test
+
+
+   func testParseLine7() throws {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: try TestUtils.csvReader(content: """
 "Date","Activity Type","Merchant Name","Merchant Category","Amount","Rewards"
@@ -170,7 +207,10 @@ struct RogersImporterTests {
         #expect(line.price == nil)
     }
 
-    func testParseLine8() throws {
+   @Test
+
+
+   func testParseLine8() throws {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: try TestUtils.csvReader(content: """
 "Date","Activity Type","Merchant Name","Merchant Category Description","Amount","Rewards"
@@ -188,7 +228,10 @@ struct RogersImporterTests {
         #expect(line.price == nil)
     }
 
-    func testParseLineCashBack() throws {
+   @Test
+
+
+   func testParseLineCashBack() throws {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: try TestUtils.csvReader(content: """
 "Transaction Date","Activity Type","Merchant Name","Merchant Category","Amount"

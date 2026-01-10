@@ -6,6 +6,7 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -15,28 +16,46 @@ import Testing
 
 struct TangerineAccountImporterTests {
 
-    func testHeaders() {
+   @Test
+
+
+   func testHeaders() {
         #expect(TangerineAccountImporter.headers == [["Date", "Transaction", "Name", "Memo", "Amount"]])
     }
 
-    func testImporterName() {
+   @Test
+
+
+   func testImporterName() {
         #expect(TangerineAccountImporter.importerName == "Tangerine Accounts")
     }
 
-    func testImporterType() {
+   @Test
+
+
+   func testImporterType() {
         #expect(TangerineAccountImporter.importerType == "tangerine-account")
     }
 
-    func testHelpText() {
+   @Test
+
+
+   func testHelpText() {
         #expect(TangerineAccountImporter.helpText == "Enables importing of downloaded CSV files from Tangerine Accounts.\n\nTo use add importer-type: \"tangerine-account\" to your account.")
     }
 
-    func testImportName() throws {
+   @Test
+
+
+   func testImportName() throws {
         #expect(TangerineAccountImporter(ledger: nil == csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName,
                        "Tangerine Account File TestName")
     }
 
-    func testAccountsFromLedger() {
+   @Test
+
+
+   func testAccountsFromLedger() {
         var importer = TangerineAccountImporter(ledger: TestUtils.lederAccountNumers,
                                                 csvReader: TestUtils.basicCSVReader,
                                                 fileName: "Export \(TestUtils.accountNumberChequing).csv")
@@ -56,7 +75,10 @@ struct TangerineAccountImporterTests {
         #expect(possibleAccountNames.contains(TestUtils.chequing))
     }
 
-    func testAccountSuggestions() {
+   @Test
+
+
+   func testAccountSuggestions() {
         var importer = TangerineAccountImporter(ledger: TestUtils.lederAccountNumers,
                                                 csvReader: TestUtils.basicCSVReader,
                                                 fileName: "Export \(TestUtils.accountNumberChequing).csv")
@@ -74,7 +96,10 @@ struct TangerineAccountImporterTests {
         #expect(delegate.verified)
     }
 
-    func testParseLine() throws {
+   @Test
+
+
+   func testParseLine() throws {
         let importer = TangerineAccountImporter(ledger: nil,
                                                 csvReader: try TestUtils.csvReader(content: """
 Date,Transaction,Name,Memo,Amount
@@ -92,7 +117,10 @@ Date,Transaction,Name,Memo,Amount
         #expect(line.price == nil)
     }
 
-    func testParseLineEmptyMemo() throws {
+   @Test
+
+
+   func testParseLineEmptyMemo() throws {
         let importer = TangerineAccountImporter(ledger: nil,
                                                 csvReader: try TestUtils.csvReader(content: """
 Date,Transaction,Name,Memo,Amount
@@ -110,7 +138,10 @@ Date,Transaction,Name,Memo,Amount
         #expect(line.price == nil)
     }
 
-    func testParseLineInterest() throws {
+   @Test
+
+
+   func testParseLineInterest() throws {
         let importer = TangerineAccountImporter(ledger: nil,
                                                 csvReader: try TestUtils.csvReader(content: """
 Date,Transaction,Name,Memo,Amount
@@ -127,7 +158,10 @@ Date,Transaction,Name,Memo,Amount
         #expect(line.price == nil)
     }
 
-    func testParseLineInterac() throws {
+   @Test
+
+
+   func testParseLineInterac() throws {
         let importer = TangerineAccountImporter(ledger: nil,
                                                 csvReader: try TestUtils.csvReader(content: """
 Date,Transaction,Name,Memo,Amount

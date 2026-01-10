@@ -7,6 +7,7 @@
 //  Copyright © 2022 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -14,34 +15,51 @@ import Testing
 
 class BaseTestImporterDelegate: ImporterDelegate {
 
-    func requestInput(name _: String, type _: ImporterInputRequestType, completion _: (String) -> Bool) {
+   @Test
+
+
+   func requestInput(name _: String, type _: ImporterInputRequestType, completion _: (String) -> Bool) {
         XCTFail("requestInput should not be called")
     }
 
-    func saveCredential(_: String, for _: String) {
+   @Test
+
+
+   func saveCredential(_: String, for _: String) {
         XCTFail("saveCredential should not be called")
     }
 
-    func readCredential(_: String) -> String? {
+   @Test
+
+
+   func readCredential(_: String) -> String? {
         XCTFail("readCredential should not be called")
         return nil
     }
 
     // swiftlint:disable:next unused_parameter
-    func error(_ error: Error, completion: () -> Void) {
+   @Test
+
+   func error(_ error: Error, completion: () -> Void) {
         XCTFail("error should not be called, received \(error)")
     }
 
     #if canImport(UIKit)
 
-    func view() -> UIView? {
+   @Test
+
+
+   func view() -> UIView? {
         XCTFail("view should not be called")
         return nil
     }
 
     #elseif canImport(AppKit)
 
-    func view() -> NSView? {
+   @Test
+
+
+   func view() -> NSView? {
         XCTFail("view should not be called")
         return nil
     }
@@ -50,7 +68,10 @@ class BaseTestImporterDelegate: ImporterDelegate {
 
     #if canImport(UIKit) || canImport(AppKit)
 
-    func removeView() {
+   @Test
+
+
+   func removeView() {
         XCTFail("removeView should not be called")
     }
 

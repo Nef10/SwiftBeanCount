@@ -8,6 +8,7 @@
 //
 
 // swiftlint:disable:next type_body_length
+
 import Foundation
 @testable import SwiftBeanCountModel
 import Testing
@@ -15,7 +16,10 @@ import Testing
 @Suite
 struct AccountTests {
 
-    func testBookingMethod() {
+   @Test
+
+
+   func testBookingMethod() {
         let defaultAccount = Account(name: TestUtils.cash)
         #expect(defaultAccount.bookingMethod == .strict)
 
@@ -26,7 +30,10 @@ struct AccountTests {
         #expect(lifoAccount.bookingMethod == .lifo)
     }
 
-    func testDescription() {
+   @Test
+
+
+   func testDescription() {
         var accout = Account(name: TestUtils.cash)
         #expect(String(describing: accout) == "")
         accout = Account(name: TestUtils.cash, opening: TestUtils.date20170608)
@@ -39,7 +46,10 @@ struct AccountTests {
         #expect(String(describing: accout) == "2017-06-08 open \(TestUtils.cash) \(TestUtils.eur)\n  A: \"B\"\n2017-06-09 close \(TestUtils.cash)")
     }
 
-    func testDescriptionBookingMethod() {
+   @Test
+
+
+   func testDescriptionBookingMethod() {
         for bookingMethod in [BookingMethod.fifo, BookingMethod.lifo] {
             var accout = Account(name: TestUtils.cash, bookingMethod: bookingMethod)
             #expect(String(describing: accout) == "")
@@ -56,7 +66,10 @@ struct AccountTests {
         }
     }
 
-    func testDescriptionSpecialCharacters() throws {
+   @Test
+
+
+   func testDescriptionSpecialCharacters() throws {
         let accountNameSpecial = try AccountName("Assets:💰")
 
         var accout = Account(name: accountNameSpecial)
@@ -70,7 +83,10 @@ struct AccountTests {
         #expect(String(describing: accout) == "2017-06-08 open \(accountNameSpecial) \(symbol)\n2017-06-09 close \(accountNameSpecial)")
     }
 
-    func testIsPostingValid_NotOpenPast() {
+   @Test
+
+
+   func testIsPostingValid_NotOpenPast() {
         let account = Account(name: TestUtils.cash)
         let posting = Posting(accountName: TestUtils.cash, amount: Amount(number: Decimal(1), commoditySymbol: TestUtils.eur))
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
@@ -82,7 +98,10 @@ struct AccountTests {
         )
     }
 
-    func testIsPostingValid_NoOpenPresent() {
+   @Test
+
+
+   func testIsPostingValid_NoOpenPresent() {
         let account = Account(name: TestUtils.cash)
         let posting = Posting(accountName: TestUtils.cash, amount: Amount(number: Decimal(1), commoditySymbol: TestUtils.eur))
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
@@ -94,7 +113,10 @@ struct AccountTests {
         )
     }
 
-    func testIsPostingValid_BeforeOpening() {
+   @Test
+
+
+   func testIsPostingValid_BeforeOpening() {
         let account = Account(name: TestUtils.cash, opening: TestUtils.date20170609)
         let posting = Posting(accountName: TestUtils.cash, amount: Amount(number: Decimal(1), commoditySymbol: TestUtils.eur))
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
@@ -106,7 +128,10 @@ struct AccountTests {
         )
     }
 
-    func testIsPostingValid_AfterOpening() {
+   @Test
+
+
+   func testIsPostingValid_AfterOpening() {
         let account = Account(name: TestUtils.cash, opening: TestUtils.date20170609)
         let posting1 = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
         let transaction1 = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
@@ -119,7 +144,10 @@ struct AccountTests {
         #expect(account.validate(transaction2.postings[0]) == .valid)
     }
 
-    func testIsPostingValid_BeforeClosing() {
+   @Test
+
+
+   func testIsPostingValid_BeforeClosing() {
         let account = Account(name: TestUtils.cash, opening: TestUtils.date20170609, closing: TestUtils.date20170609)
         let posting = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
@@ -127,7 +155,10 @@ struct AccountTests {
         #expect(account.validate(transaction.postings[0]) == .valid)
     }
 
-    func testIsPostingValid_AfterClosing() {
+   @Test
+
+
+   func testIsPostingValid_AfterClosing() {
         let account = Account(name: TestUtils.cash, opening: TestUtils.date20170609, closing: TestUtils.date20170609)
         let posting = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170610, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
@@ -139,7 +170,10 @@ struct AccountTests {
         )
     }
 
-    func testIsPostingValid_WithoutCommodity() {
+   @Test
+
+
+   func testIsPostingValid_WithoutCommodity() {
         let account = Account(name: TestUtils.cash, opening: TestUtils.date20170608)
         let posting1 = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
         let transaction1 = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
@@ -152,7 +186,10 @@ struct AccountTests {
         #expect(account.validate(transaction2.postings[0]) == .valid)
     }
 
-    func testIsPostingValid_CorrectCommodity() {
+   @Test
+
+
+   func testIsPostingValid_CorrectCommodity() {
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.amount.commoditySymbol, opening: TestUtils.date20170608)
         let posting = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
@@ -160,7 +197,10 @@ struct AccountTests {
         #expect(account.validate(transaction.postings[0]) == .valid)
     }
 
-    func testIsPostingValid_WrongCommodity() {
+   @Test
+
+
+   func testIsPostingValid_WrongCommodity() {
         let account = Account(name: TestUtils.cash, commoditySymbol: "\(TestUtils.amount.commoditySymbol)1", opening: TestUtils.date20170608)
         let posting = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
@@ -172,7 +212,10 @@ struct AccountTests {
         )
     }
 
-    func testIsValid() {
+   @Test
+
+
+   func testIsValid() {
         var account = Account(name: TestUtils.cash)
 
         // neither closing nor opening
@@ -199,7 +242,10 @@ struct AccountTests {
         #expect(account.validate() == .invalid("Account Assets:Cash has a closing date but no opening"))
     }
 
-    func testValidateBalance() throws {
+   @Test
+
+
+   func testValidateBalance() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
         try ledger.add(account)
@@ -222,7 +268,10 @@ struct AccountTests {
         #expect(account.validateBalance(in: ledger) == .valid)
     }
 
-    func testValidateBalanceEmpty() throws {
+   @Test
+
+
+   func testValidateBalanceEmpty() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
         try ledger.add(account)
@@ -235,7 +284,10 @@ struct AccountTests {
         #expect(account.validateBalance(in: ledger) == .valid)
     }
 
-    func testValidateBalanceDifferentCommodity() throws {
+   @Test
+
+
+   func testValidateBalanceDifferentCommodity() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash)
         try ledger.add(account)
@@ -263,7 +315,10 @@ struct AccountTests {
         #expect(account.validateBalance(in: ledger) == .valid)
     }
 
-    func testValidateBalanceTolerance() throws {
+   @Test
+
+
+   func testValidateBalanceTolerance() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
         try ledger.add(account)
@@ -291,7 +346,10 @@ struct AccountTests {
         #expect(account.validateBalance(in: ledger) == .valid)
     }
 
-    func testValidateInventoryEmpty() throws {
+   @Test
+
+
+   func testValidateInventoryEmpty() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
         try ledger.add(account)
@@ -299,7 +357,10 @@ struct AccountTests {
         #expect(account.validateInventory(in: ledger) == .valid)
     }
 
-    func testValidateInventory() throws {
+   @Test
+
+
+   func testValidateInventory() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
         try ledger.add(account)
@@ -328,7 +389,10 @@ struct AccountTests {
         #expect(account.validateInventory(in: ledger) == .valid)
     }
 
-    func testValidateInvalidInventory() throws {
+   @Test
+
+
+   func testValidateInvalidInventory() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
         let amount = Amount(number: 1.1, commoditySymbol: TestUtils.cad, decimalDigits: 1)
@@ -358,13 +422,19 @@ struct AccountTests {
         )
     }
 
-    func testEqualName() {
+   @Test
+
+
+   func testEqualName() {
         let account1 = Account(name: TestUtils.cash)
         let account2 = Account(name: TestUtils.chequing)
         #expect(account1 != account2)
     }
 
-    func testEqualProperties() {
+   @Test
+
+
+   func testEqualProperties() {
         let date1 = TestUtils.date20170608
         let date2 = TestUtils.date20170609
 
@@ -401,7 +471,10 @@ struct AccountTests {
         #expect(account1 != account2)
     }
 
-    func testNameSeperatorIsPublic() {
+   @Test
+
+
+   func testNameSeperatorIsPublic() {
         // Test that the nameSeperator property is publicly accessible
         #expect(Account.nameSeperator == Character(":"))
     }

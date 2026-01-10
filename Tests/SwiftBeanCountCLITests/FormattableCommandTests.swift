@@ -1,3 +1,4 @@
+
 import Foundation
 @testable import SwiftBeanCountCLI
 import ArgumentParser
@@ -10,7 +11,10 @@ struct TestFormattableCommand: FormattableCommand {
     var formatOptions = FormattableCommandOptions()
     var colorOptions = ColorizedCommandOptions()
 
-    func getResult() throws -> [FormattableResult] {
+   @Test
+
+
+   func getResult() throws -> [FormattableResult] {
         [FormattableResult(title: "A", columns: ["B", "C"], values: [["D E", "F G"], ["H", "I"]], footer: "J")]
     }
 }
@@ -31,7 +35,10 @@ struct FormattableCommandTests {
     private let oneColumnOneRowResult = FormattableResult(title: "Title", columns: ["Column A"], values: [["1"]], footer: nil)
     private let zeroRowResult = FormattableResult(title: "Title", columns: ["Column A", "B"], values: [], footer: nil)
 
-    func testCSVColor() {
+   @Test
+
+
+   func testCSVColor() {
         let originalValue = Rainbow.enabled
         Rainbow.enabled = true
         var subject = TestFormattableCommand()
@@ -45,7 +52,10 @@ struct FormattableCommandTests {
         Rainbow.enabled = originalValue
     }
 
-    func testCSV() {
+   @Test
+
+
+   func testCSV() {
         let originalValue = Rainbow.enabled
         Rainbow.enabled = false
         var subject = TestFormattableCommand()
@@ -59,7 +69,10 @@ struct FormattableCommandTests {
         Rainbow.enabled = originalValue
     }
 
-    func testTableColor() {
+   @Test
+
+
+   func testTableColor() {
         let originalValue = Rainbow.enabled
         Rainbow.enabled = true
         var subject = TestFormattableCommand()
@@ -80,7 +93,10 @@ struct FormattableCommandTests {
         Rainbow.enabled = originalValue
     }
 
-    func testTable() {
+   @Test
+
+
+   func testTable() {
         let originalValue = Rainbow.enabled
         Rainbow.enabled = false
         var subject = TestFormattableCommand()
@@ -101,7 +117,10 @@ struct FormattableCommandTests {
         Rainbow.enabled = originalValue
     }
 
-    func testTextColor() {
+   @Test
+
+
+   func testTextColor() {
         let originalValue = Rainbow.enabled
         Rainbow.enabled = true
         var subject = TestFormattableCommand()
@@ -119,7 +138,10 @@ struct FormattableCommandTests {
         Rainbow.enabled = originalValue
     }
 
-    func testText() {
+   @Test
+
+
+   func testText() {
         let originalValue = Rainbow.enabled
         Rainbow.enabled = false
         var subject = TestFormattableCommand()
@@ -137,7 +159,10 @@ struct FormattableCommandTests {
         Rainbow.enabled = originalValue
     }
 
-    func testOneColumnOneRow() {
+   @Test
+
+
+   func testOneColumnOneRow() {
         let originalValue = Rainbow.enabled
         Rainbow.enabled = false
         var subject = TestFormattableCommand()
@@ -172,7 +197,10 @@ struct FormattableCommandTests {
         Rainbow.enabled = originalValue
     }
 
-    func testZeroRows() {
+   @Test
+
+
+   func testZeroRows() {
         let originalValue = Rainbow.enabled
         Rainbow.enabled = false
         var subject = TestFormattableCommand()

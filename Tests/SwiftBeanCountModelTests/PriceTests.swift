@@ -6,6 +6,7 @@
 //  Copyright © 2018 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountModel
 import Testing
@@ -14,7 +15,10 @@ import Testing
 
 struct PriceTests {
 
-    func testInit() {
+   @Test
+
+
+   func testInit() {
         let amount = Amount(number: Decimal(1), commoditySymbol: TestUtils.cad)
         XCTAssertNoThrow(try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount))
         XCTAssertThrowsError(try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.cad, amount: amount)) {
@@ -22,7 +26,10 @@ struct PriceTests {
         }
     }
 
-    func testDescription() throws {
+   @Test
+
+
+   func testDescription() throws {
         let amount = Amount(number: Decimal(1), commoditySymbol: TestUtils.cad)
         var price = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount)
         #expect(String(describing: price) == "2017-06-08 price \(TestUtils.eur) \(String(describing: amount))")
@@ -32,7 +39,10 @@ struct PriceTests {
 
     }
 
-    func testEqual() throws {
+   @Test
+
+
+   func testEqual() throws {
         let amount = Amount(number: Decimal(1), commoditySymbol: TestUtils.cad)
         var price = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount)
         var price2 = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount)
@@ -64,7 +74,10 @@ struct PriceTests {
         #expect(price != price6)
     }
 
-    func testValidateWithoutPlugin() throws {
+   @Test
+
+
+   func testValidateWithoutPlugin() throws {
         // Test that price validation is skipped when plugin is not enabled
         let ledger = Ledger()
 
@@ -85,7 +98,10 @@ struct PriceTests {
         }
     }
 
-    func testValidateWithPlugin() throws {
+   @Test
+
+
+   func testValidateWithPlugin() throws {
         // Test that price validation works when plugin is enabled
         let ledger = Ledger()
         ledger.plugins.append("beancount.plugins.check_commodity")
@@ -108,7 +124,10 @@ struct PriceTests {
         }
     }
 
-    func testValidateAmountCommodityUsageDate() throws {
+   @Test
+
+
+   func testValidateAmountCommodityUsageDate() throws {
         // Test validation of amount commodity usage date
         let ledger = Ledger()
         ledger.plugins.append("beancount.plugins.check_commodity")
@@ -131,7 +150,10 @@ struct PriceTests {
         }
     }
 
-    func testValidateValid() throws {
+   @Test
+
+
+   func testValidateValid() throws {
         // Test that validation passes when commodities are used on or after opening dates
         let ledger = Ledger()
         ledger.plugins.append("beancount.plugins.check_commodity")
@@ -153,7 +175,10 @@ struct PriceTests {
         }
     }
 
-    func testValidateWithAutoCreatedCommodities() throws {
+   @Test
+
+
+   func testValidateWithAutoCreatedCommodities() throws {
         // Test with auto-created commodities (no explicit opening date)
         let ledger = Ledger()
         ledger.plugins.append("beancount.plugins.check_commodity")

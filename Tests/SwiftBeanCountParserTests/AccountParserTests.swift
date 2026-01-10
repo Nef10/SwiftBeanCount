@@ -6,6 +6,7 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountParser
 import SwiftBeanCountModel
@@ -41,57 +42,96 @@ struct AccountParserTests {
     private let bookingMethodClosingString = "2017-06-09 close Assets:Cash ;gfsd"
     private let bookingMethodInClosingString = "2017-06-09 close Assets:Cash \"FIFO\" ;gfsd"
 
-    func testBasic() {
+   @Test
+
+
+   func testBasic() {
         testWith(openingString: basicOpeningString, closingString: basicClosingString, commoditySymbol: nil)
     }
 
-    func testInvalidName() {
+   @Test
+
+
+   func testInvalidName() {
         let account = AccountParser.parseFrom(line: invalidNameOpeningString)
         #expect(account == nil)
     }
 
-    func testWhitespace() {
+   @Test
+
+
+   func testWhitespace() {
         testWith(openingString: whitespaceOpeningString, closingString: whitespaceClosingString, commoditySymbol: "CAD")
     }
 
-    func testEndOfLineComment() {
+   @Test
+
+
+   func testEndOfLineComment() {
         testWith(openingString: endOfLineCommentOpeningString, closingString: endOfLineCommentClosingString, commoditySymbol: "EUR")
     }
 
-    func testSpecialCharacter() {
+   @Test
+
+
+   func testSpecialCharacter() {
         testWith(openingString: specialCharacterOpeningString, closingString: specialCharacterClosingString, commoditySymbol: "💵")
     }
 
-    func testInvalidCloseWithCommodity() {
+   @Test
+
+
+   func testInvalidCloseWithCommodity() {
         #expect(AccountParser.parseFrom(line: invalidCloseWithCommodityString == nil))
     }
 
-    func testInvalidCloseDate() {
+   @Test
+
+
+   func testInvalidCloseDate() {
         #expect(AccountParser.parseFrom(line: invalidCloseDateString == nil))
     }
 
-    func testCommodityWithSemicolon() {
+   @Test
+
+
+   func testCommodityWithSemicolon() {
         testWith(openingString: commodityWithSemicolonOpeningString, closingString: commodityWithSemicolonClosingString, commoditySymbol: "EUR;test")
     }
 
-    func testBookingMethodStrict() {
+   @Test
+
+
+   func testBookingMethodStrict() {
         testWith(openingString: bookingMethodStrictOpeningString, closingString: bookingMethodClosingString, commoditySymbol: "EUR;test", bookingMethod: .strict)
     }
 
-    func testBookingMethodLifo() {
+   @Test
+
+
+   func testBookingMethodLifo() {
         testWith(openingString: bookingMethodLifoOpeningString, closingString: bookingMethodClosingString, commoditySymbol: "EUR", bookingMethod: .lifo)
     }
 
-    func testBookingMethodFifo() {
+   @Test
+
+
+   func testBookingMethodFifo() {
         testWith(openingString: bookingMethodFifoOpeningString, closingString: bookingMethodClosingString, commoditySymbol: "💵", bookingMethod: .fifo)
     }
 
-    func testBookingMethodInClosingString() {
+   @Test
+
+
+   func testBookingMethodInClosingString() {
         let account = AccountParser.parseFrom(line: bookingMethodInClosingString)
         #expect(account == nil)
     }
 
-    func testPerformance() {
+   @Test
+
+
+   func testPerformance() {
         self.measure {
             for _ in 0...1_000 {
                 _ = AccountParser.parseFrom(line: basicOpeningString)

@@ -6,6 +6,7 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -15,11 +16,17 @@ import Testing
 
 struct ImporterTests {
 
-    func testAllImporters() {
+   @Test
+
+
+   func testAllImporters() {
         #expect(ImporterFactory.allImporters.count == (FileImporterFactory.importers + TextImporterFactory.importers + DownloadImporterFactory.importers).count)
     }
 
-    func testNoEqualImporterNames() {
+   @Test
+
+
+   func testNoEqualImporterNames() {
         var names = [String]()
         let importers = ImporterFactory.allImporters
         for importer in importers {
@@ -31,7 +38,10 @@ struct ImporterTests {
         }
     }
 
-    func testFileImporter() {
+   @Test
+
+
+   func testFileImporter() {
         // no url
         #expect(ImporterFactory.new(ledger: nil, url: nil == nil))
 
@@ -54,26 +64,38 @@ struct ImporterTests {
         }
     }
 
-    func testTextImporter() {
+   @Test
+
+
+   func testTextImporter() {
         let result = ImporterFactory.new(ledger: nil, transaction: "", balance: "")
         #expect(result != nil)
         #expect(result is ManuLifeImporter)
     }
 
-    func testDownloadImporter() {
+   @Test
+
+
+   func testDownloadImporter() {
         let importers = DownloadImporterFactory.importers
         for importer in importers {
             #expect(type(of: ImporterFactory.new(ledger: nil, name: importer.importerName)!) == importer) // swiftlint:disable:this xct_specific_matcher
         }
     }
 
-    func testDownloadImporterNames() {
+   @Test
+
+
+   func testDownloadImporterNames() {
         // see https://github.com/realm/SwiftLint/issues/5831
         // swiftlint:disable:next prefer_key_path
         #expect(ImporterFactory.downloadImporterNames == DownloadImporterFactory.importers.map { $0.importerName })
     }
 
-    func testImportedTransactionSaveMapped() {
+   @Test
+
+
+   func testImportedTransactionSaveMapped() {
         let originalDescription = "abcd"
         let description = "ab"
         let payee = "ef"

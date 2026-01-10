@@ -6,6 +6,7 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountParser
 import Testing
@@ -14,17 +15,26 @@ import Testing
 
 struct DateParserTests {
 
-    func testNormalParsing() {
+   @Test
+
+
+   func testNormalParsing() {
         let date = DateParser.parseFrom(string: "2017-06-09")
         #expect(date == TestUtils.date20170609)
     }
 
-    func testInvalidDate() {
+   @Test
+
+
+   func testInvalidDate() {
         let date = DateParser.parseFrom(string: "2017-00-09")
         #expect(date == nil)
     }
 
-    func testNonExistentDate() {
+   @Test
+
+
+   func testNonExistentDate() {
         let date = DateParser.parseFrom(string: "2017-02-30")
         #expect(date == nil)
     }

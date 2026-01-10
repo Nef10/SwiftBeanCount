@@ -6,6 +6,7 @@
 //  Copyright © 2021 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import Testing
@@ -14,7 +15,10 @@ import Testing
 
 struct SettingsTests {
 
-    func testDescriptionMappings() {
+   @Test
+
+
+   func testDescriptionMappings() {
         Settings.storage = TestStorage()
 
         #expect(Settings.allDescriptionMappings == [:])
@@ -36,7 +40,10 @@ struct SettingsTests {
         #expect(Settings.allDescriptionMappings == ["originalDescription": "newer one"])
     }
 
-    func testPayeeMappings() {
+   @Test
+
+
+   func testPayeeMappings() {
         Settings.storage = TestStorage()
 
         #expect(Settings.allPayeeMappings == [:])
@@ -58,7 +65,10 @@ struct SettingsTests {
         #expect(Settings.allPayeeMappings == ["originalDescription": "newer one"])
     }
 
-    func testAccountMappings() {
+   @Test
+
+
+   func testAccountMappings() {
         Settings.storage = TestStorage()
 
         #expect(Settings.allAccountMappings == [:])
@@ -80,7 +90,10 @@ struct SettingsTests {
         #expect(Settings.allAccountMappings == ["originalDescription": "newer one"])
     }
 
-    func testDateTolerance() {
+   @Test
+
+
+   func testDateTolerance() {
         Settings.storage = TestStorage()
 
         #expect(Settings.dateToleranceInDays == Settings.defaultDateTolerance)

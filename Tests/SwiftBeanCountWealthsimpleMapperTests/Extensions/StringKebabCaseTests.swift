@@ -1,4 +1,5 @@
 
+
 import Foundation
 @testable import SwiftBeanCountWealthsimpleMapper
 import Testing
@@ -7,7 +8,10 @@ import Testing
 
 struct StringKebabCaseTests {
 
-    func testCamelCaseToKebabCase() {
+   @Test
+
+
+   func testCamelCaseToKebabCase() {
         #expect("TEST123".camelCaseToKebabCase() == "test-123")
         #expect("TEST1Test".camelCaseToKebabCase() == "test-1-test")
         #expect("EURTest".camelCaseToKebabCase() == "eur-test")

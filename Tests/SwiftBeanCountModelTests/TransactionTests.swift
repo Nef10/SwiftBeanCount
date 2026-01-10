@@ -6,6 +6,7 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountModel
 import Testing
@@ -63,48 +64,72 @@ struct TransactionTests {
         try super.setUpWithError()
     }
 
-    func testDescriptionWithoutPosting() {
+   @Test
+
+
+   func testDescriptionWithoutPosting() {
         #expect(String(describing: transaction1WithoutPosting!) == String(describing: transaction1WithoutPosting!.metaData))
     }
 
-    func testDescriptionWithPostings() {
+   @Test
+
+
+   func testDescriptionWithPostings() {
         #expect(String(describing: transaction1WithPosting1And2!) == String(describing: transaction1WithPosting1And2!.metaData) + "\n"
                          + String(describing: transaction1WithPosting1And2!.postings[0]) + "\n"
                          + String(describing: transaction1WithPosting1And2!.postings[1]))
     }
 
-    func testEqual() {
+   @Test
+
+
+   func testEqual() {
         #expect(transaction1WithoutPosting == transaction2WithoutPosting)
         #expect(!(transaction1WithoutPosting < transaction2WithoutPosting))
         #expect(!(transaction2WithoutPosting < transaction1WithoutPosting))
     }
 
-    func testEqualWithPostings() {
+   @Test
+
+
+   func testEqualWithPostings() {
         #expect(transaction1WithPosting1And2 == transaction2WithPosting1And2)
         #expect(!(transaction1WithPosting1And2 < transaction2WithPosting1And2))
         #expect(!(transaction2WithPosting1And2 < transaction1WithPosting1And2))
     }
 
-    func testEqualRespectsPostings() {
+   @Test
+
+
+   func testEqualRespectsPostings() {
         #expect(transaction1WithPosting1 != transaction1WithPosting1And2)
         #expect(transaction1WithPosting1 < transaction1WithPosting1And2)
         #expect(!(transaction1WithPosting1And2 < transaction1WithPosting1))
     }
 
-    func testEqualRespectsTransactionMetaData() {
+   @Test
+
+
+   func testEqualRespectsTransactionMetaData() {
         #expect(transaction1WithPosting1 != transaction3WithPosting1)
         #expect(!(transaction1WithPosting1 < transaction3WithPosting1))
         #expect(transaction3WithPosting1 < transaction1WithPosting1)
     }
 
-    func testIsValid() {
+   @Test
+
+
+   func testIsValid() {
         guard case .valid = transaction2WithPosting1And2!.validate(in: ledger) else {
             XCTFail("\(transaction2WithPosting1And2!) is not valid")
             return
         }
     }
 
-    func testIsValidFromOutsideLedger() {
+   @Test
+
+
+   func testIsValidFromOutsideLedger() {
         let ledger = Ledger()
         guard case .invalid = transaction2WithPosting1And2!.validate(in: ledger) else {
             XCTFail("\(transaction2WithPosting1And2!) is valid")
@@ -112,7 +137,10 @@ struct TransactionTests {
         }
     }
 
-    func testIsValidWithoutPosting() {
+   @Test
+
+
+   func testIsValidWithoutPosting() {
         if case .invalid(let error) = transaction1WithoutPosting!.validate(in: ledger) {
             #expect(error == "2017-06-08 * \"Payee\" \"Narration\" has no postings")
         } else {
@@ -120,7 +148,10 @@ struct TransactionTests {
         }
     }
 
-    func testIsValidInvalidPosting() throws {
+   @Test
+
+
+   func testIsValidInvalidPosting() throws {
         // Accounts are not opened
         let ledger = Ledger()
         try ledger.add(Account(name: TestUtils.cash))
@@ -137,7 +168,10 @@ struct TransactionTests {
         }
     }
 
-    func testIsValidUnbalanced() {
+   @Test
+
+
+   func testIsValidUnbalanced() {
         if case .invalid(let error) = transaction1WithPosting1!.validate(in: ledger) {
             XCTAssertEqual(error, """
                 2017-06-08 * "Payee" "Narration"
@@ -148,7 +182,10 @@ struct TransactionTests {
         }
     }
 
-    func testIsValidUnbalancedIntegerTolerance() {
+   @Test
+
+
+   func testIsValidUnbalancedIntegerTolerance() {
         // Assets:Cash     -1  EUR
         // Assets:Checking 10.00000 CAD @ 0.101 EUR
 
@@ -176,7 +213,10 @@ struct TransactionTests {
         }
     }
 
-    func testIsValidUnbalancedTolerance() {
+   @Test
+
+
+   func testIsValidUnbalancedTolerance() {
         // Assets:Cash     -8.52  EUR
         // Assets:Checking 10.00000 CAD @ 0.85251 EUR
 
@@ -206,7 +246,10 @@ struct TransactionTests {
         }
     }
 
-    func testIsValidUnusedCommodity() {
+   @Test
+
+
+   func testIsValidUnusedCommodity() {
         // Assets:Checking 10.00000 CAD @ 0.85251 EUR
 
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
@@ -226,7 +269,10 @@ struct TransactionTests {
         }
     }
 
-    func testIsValidBalancedTolerance() {
+   @Test
+
+
+   func testIsValidBalancedTolerance() {
         // Assets:Cash     -8.52  EUR
         // Assets:Checking 10.00000 CAD @ 0.85250 EUR
 
@@ -250,7 +296,10 @@ struct TransactionTests {
         }
     }
 
-    func testIsValidBalancedToleranceCost() throws {
+   @Test
+
+
+   func testIsValidBalancedToleranceCost() throws {
         // Assets:Cash     -8.52  EUR
         // Assets:Checking 10.00000 CAD { 0.85250 EUR }
 
@@ -277,7 +326,10 @@ struct TransactionTests {
         }
     }
 
-    func testIsValidUnbalancedToleranceCost() throws {
+   @Test
+
+
+   func testIsValidUnbalancedToleranceCost() throws {
         // Assets:Cash     -8.52  EUR
         // Assets:Checking 10.00000 CAD { 0.85251 EUR }
 
@@ -310,7 +362,10 @@ struct TransactionTests {
         }
     }
 
-    func testEffectZeroPrice() throws {
+   @Test
+
+
+   func testEffectZeroPrice() throws {
         // Assets:Cash     -8.52  EUR
         // Assets:Checking 10.00000 CAD @ 0.85250 EUR
 
@@ -329,7 +384,10 @@ struct TransactionTests {
         }
     }
 
-    func testEffectCost() throws {
+   @Test
+
+
+   func testEffectCost() throws {
         // Income:Test     -8.52  EUR
         // Assets:Checking 10.00000 CAD { 0.85250 EUR }
 

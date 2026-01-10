@@ -6,6 +6,7 @@
 //  Copyright © 2018 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountParser
 import SwiftBeanCountModel
@@ -32,39 +33,57 @@ struct PriceParserTests {
     private let invalidPriceMissingSecondCurrency = "2017-06-09 price EUR 2.11"
     private let invalidPriceMissingCurrencies = "2017-06-09 price 2.11"
 
-    func testBasic() {
+   @Test
+
+
+   func testBasic() {
         let parsedPrice = PriceParser.parseFrom(line: basicPrice)
         #expect(parsedPrice != nil)
         #expect(parsedPrice == price)
     }
 
-    func testComment() {
+   @Test
+
+
+   func testComment() {
         let parsedPrice = PriceParser.parseFrom(line: priceComment)
         #expect(parsedPrice != nil)
         #expect(parsedPrice == price)
     }
 
-    func testWhitespace() {
+   @Test
+
+
+   func testWhitespace() {
         let parsedPrice = PriceParser.parseFrom(line: priceWhitespace)
         #expect(parsedPrice != nil)
         #expect(parsedPrice == price)
     }
 
-    func testSpecialCharacter() {
+   @Test
+
+
+   func testSpecialCharacter() {
         let parsedPrice = PriceParser.parseFrom(line: priceSpecialCharacter)
         #expect(parsedPrice != nil)
         #expect(parsedPrice!.commoditySymbol == "💵")
         #expect(parsedPrice!.amount.commoditySymbol == "💸")
     }
 
-    func testWholeNumber() {
+   @Test
+
+
+   func testWholeNumber() {
         let parsedPrice = PriceParser.parseFrom(line: priceWholeNumber)
         #expect(parsedPrice != nil)
         #expect(parsedPrice!.amount.number == 2)
         #expect(parsedPrice!.amount.decimalDigits == 0)
     }
 
-    func testInvalid() {
+   @Test
+
+
+   func testInvalid() {
         #expect(PriceParser.parseFrom(line: invalidPriceMissingNumber == nil))
         #expect(PriceParser.parseFrom(line: invalidPriceMissingFirstCurrency == nil))
         #expect(PriceParser.parseFrom(line: invalidPriceMissingSecondCurrency == nil))

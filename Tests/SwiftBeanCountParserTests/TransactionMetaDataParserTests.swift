@@ -6,6 +6,7 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountParser
 import SwiftBeanCountModel
@@ -23,22 +24,34 @@ struct TransactionMetaDataParserTests {
     private let tagsTransactionMetaDataString = "2017-06-09 * \"Payee\" \"Narration\" #1 #two"
     private let invalidDateTransactionMetaDataString = "2017-02-30 * \"Payee\" \"Narration\""
 
-    func testBasic() {
+   @Test
+
+
+   func testBasic() {
         let transactionMetaData = TransactionMetaDataParser.parseFrom(line: basicTransactionMetaDataString)!
         assertBasicTransactionMetaData(transactionMetaData)
     }
 
-    func testWhitespace() {
+   @Test
+
+
+   func testWhitespace() {
         let transactionMetaData = TransactionMetaDataParser.parseFrom(line: whitespaceTransactionMetaDataString)!
         assertBasicTransactionMetaData(transactionMetaData)
     }
 
-    func testEndOfLineCommentTransactionMetaDataString() {
+   @Test
+
+
+   func testEndOfLineCommentTransactionMetaDataString() {
         let transactionMetaData = TransactionMetaDataParser.parseFrom(line: endOfLineCommentTransactionMetaDataString)!
         assertBasicTransactionMetaData(transactionMetaData)
     }
 
-    func testSpecialCharacterTransactionMetaDataString() {
+   @Test
+
+
+   func testSpecialCharacterTransactionMetaDataString() {
         let transactionMetaData = TransactionMetaDataParser.parseFrom(line: specialCharacterTransactionMetaDataString)!
         #expect(transactionMetaData.narration == "🎉😊💵Test⚅℃⁒♾")
         #expect(transactionMetaData.payee == "öøuß´@🇩🇪🇨🇦💵")
@@ -49,7 +62,10 @@ struct TransactionMetaDataParserTests {
         #expect(String(describing: transactionMetaData) == specialCharacterTransactionMetaDataString)
     }
 
-    func testIncompleteTransactionMetaDataString() {
+   @Test
+
+
+   func testIncompleteTransactionMetaDataString() {
         let transactionMetaData = TransactionMetaDataParser.parseFrom(line: incompleteTransactionMetaDataString)!
         #expect(transactionMetaData.narration == "Narration")
         #expect(transactionMetaData.payee == "Payee")
@@ -59,7 +75,10 @@ struct TransactionMetaDataParserTests {
         #expect(String(describing: transactionMetaData) == incompleteTransactionMetaDataString)
     }
 
-    func testTags() {
+   @Test
+
+
+   func testTags() {
         let transactionMetaData = TransactionMetaDataParser.parseFrom(line: tagsTransactionMetaDataString)!
         #expect(transactionMetaData.narration == "Narration")
         #expect(transactionMetaData.payee == "Payee")
@@ -71,11 +90,17 @@ struct TransactionMetaDataParserTests {
         #expect(String(describing: transactionMetaData) == tagsTransactionMetaDataString)
     }
 
-    func testInvalidDate() {
+   @Test
+
+
+   func testInvalidDate() {
         #expect(TransactionMetaDataParser.parseFrom(line: invalidDateTransactionMetaDataString == nil))
     }
 
-    func testPerformance() {
+   @Test
+
+
+   func testPerformance() {
         self.measure {
             for _ in 0...1_000 {
                 _ = TransactionMetaDataParser.parseFrom(line: basicTransactionMetaDataString)!

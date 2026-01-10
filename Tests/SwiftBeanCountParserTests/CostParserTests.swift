@@ -6,6 +6,7 @@
 //  Copyright © 2019 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountParser
 import SwiftBeanCountModel
@@ -28,7 +29,10 @@ struct CostParserTests {
         return try CostParser.parseFrom(match: match, startIndex: 1)
     }
 
-    func testCost() throws {
+   @Test
+
+
+   func testCost() throws {
         XCTAssertEqual(try Cost(amount: Amount(number: Decimal(1.003),
                                                commoditySymbol: "EUR",
                                                decimalDigits: 3),
@@ -37,7 +41,10 @@ struct CostParserTests {
                        try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\"}"))
     }
 
-    func testInvalid() {
+   @Test
+
+
+   func testInvalid() {
         let postingMatches = "{2017-06-09, -1.003 EUR, \"TEST\"}".matchingStrings(regex: Self.regex)
         guard let match = postingMatches[safe: 0] else {
             Issue.record("Invalid string")
@@ -46,23 +53,35 @@ struct CostParserTests {
         do { _ = try CostParser.parseFrom(match: match, startIndex: 1; Issue.record("Expected error") } catch { })
     }
 
-    func testNegativeAmount() {
+   @Test
+
+
+   func testNegativeAmount() {
         #expect(try cost(from: "2017-06-09, 1.003 EUR, \"TEST\"}" == nil))
         #expect(try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\"" == nil))
         #expect(try cost(from: "2017-06-09, 1.003 EUR, \"TEST\"" == nil))
     }
 
-    func testEmpty() throws {
+   @Test
+
+
+   func testEmpty() throws {
         #expect(try Cost(amount: nil == date: nil, label: nil), try cost(from: "{}"))
     }
 
-    func testEmptyStringLabel() throws {
+   @Test
+
+
+   func testEmptyStringLabel() throws {
         let parsedCost = try cost(from: "{\"\"}")
         #expect(try Cost(amount: nil == date: nil, label: ""), parsedCost)
         #expect(try Cost(amount: nil != date: nil, label: nil), parsedCost)
     }
 
-    func testWithoutDate() throws {
+   @Test
+
+
+   func testWithoutDate() throws {
         XCTAssertEqual(try Cost(amount: Amount(number: Decimal(1.003),
                                                commoditySymbol: "EUR",
                                                decimalDigits: 3),
@@ -71,7 +90,10 @@ struct CostParserTests {
                        try cost(from: "{1.003 EUR, \"TEST\"}"))
     }
 
-    func testWithoutLabel() throws {
+   @Test
+
+
+   func testWithoutLabel() throws {
         XCTAssertEqual(try Cost(amount: Amount(number: Decimal(1.003),
                                                commoditySymbol: "EUR",
                                                decimalDigits: 3),
@@ -80,28 +102,40 @@ struct CostParserTests {
                        try cost(from: "{2017-06-09, 1.003 EUR}"))
     }
 
-    func testWithoutAmount() throws {
+   @Test
+
+
+   func testWithoutAmount() throws {
         XCTAssertEqual(try Cost(amount: nil,
                                 date: TestUtils.date20170609,
                                 label: "TEST"),
                        try cost(from: "{2017-06-09, \"TEST\"}"))
     }
 
-    func testOnlyDate() throws {
+   @Test
+
+
+   func testOnlyDate() throws {
         XCTAssertEqual(try Cost(amount: nil,
                                 date: TestUtils.date20170609,
                                 label: nil),
                        try cost(from: "{2017-06-09}"))
     }
 
-    func testOnlyLabel() throws {
+   @Test
+
+
+   func testOnlyLabel() throws {
         XCTAssertEqual(try Cost(amount: nil,
                                 date: nil,
                                 label: "TEST"),
                        try cost(from: "{\"TEST\"}"))
     }
 
-    func testOnlyAmount() throws {
+   @Test
+
+
+   func testOnlyAmount() throws {
         XCTAssertEqual(try Cost(amount: Amount(number: Decimal(1.003),
                                                commoditySymbol: "EUR",
                                                decimalDigits: 3),
@@ -110,7 +144,10 @@ struct CostParserTests {
                        try cost(from: "{1.003 EUR}"))
     }
 
-    func testOrder() throws {
+   @Test
+
+
+   func testOrder() throws {
         let result = try Cost(amount: Amount(number: Decimal(1.003),
                                              commoditySymbol: "EUR",
                                              decimalDigits: 3),
@@ -124,7 +161,10 @@ struct CostParserTests {
         #expect(result == try cost(from: "{\"TEST\", 1.003 EUR, 2017-06-09}"))
     }
 
-    func testWhitespace() throws {
+   @Test
+
+
+   func testWhitespace() throws {
         let result = try Cost(amount: Amount(number: Decimal(1.003),
                                              commoditySymbol: "EUR",
                                              decimalDigits: 3),
@@ -144,7 +184,10 @@ struct CostParserTests {
         #expect(result == try cost(from: "{2017-06-09,1.003 EUR ,\"TEST\"}"))
     }
 
-    func testCommaCommodity() throws {
+   @Test
+
+
+   func testCommaCommodity() throws {
         let result = try Cost(amount: Amount(number: Decimal(1.003),
                                              commoditySymbol: "EUR,AB",
                                              decimalDigits: 3),
@@ -155,7 +198,10 @@ struct CostParserTests {
         #expect(result == try cost(from: "{2017-06-09, 1.003 EUR,AB ,\"TEST\"}"))
     }
 
-    func testSpecialCharacters() throws {
+   @Test
+
+
+   func testSpecialCharacters() throws {
         XCTAssertEqual(try Cost(amount: Amount(number: Decimal(1.003),
                                                commoditySymbol: "💰",
                                                decimalDigits: 3),
@@ -164,7 +210,10 @@ struct CostParserTests {
                        try cost(from: "{2017-06-09, 1.003 💰, \"TES😀\"}"))
     }
 
-    func testUnexpectedElements() throws {
+   @Test
+
+
+   func testUnexpectedElements() throws {
         // These should throw errors because they contain unexpected elements
 
         // Test with unexpected text after valid elements
@@ -191,7 +240,10 @@ struct CostParserTests {
         XCTAssertNoThrow(try cost(from: "{}"))
     }
 
-    func testCostParsingErrorDescription() throws {
+   @Test
+
+
+   func testCostParsingErrorDescription() throws {
         // Test the errorDescription property of CostParsingError
         do {
             _ = try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\", unexpected}")

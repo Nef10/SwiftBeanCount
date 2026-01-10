@@ -6,6 +6,7 @@
 //  Copyright © 2019 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountParser
 import SwiftBeanCountModel
@@ -20,27 +21,42 @@ struct PluginParserTests {
     private let endOfLineCommentString = "plugin \"ABC\";gfsdt     "
     private let specialCharacterString = "plugin \"ABC💵\""
 
-    func testBasic() {
+   @Test
+
+
+   func testBasic() {
         let plugin = PluginParser.parseFrom(line: basicString)
         #expect(plugin == "ABC")
     }
 
-    func testWhitespace() {
+   @Test
+
+
+   func testWhitespace() {
         let plugin = PluginParser.parseFrom(line: whitespaceString)
         #expect(plugin == "  A B C  ")
     }
 
-    func testEndOfLineComment() {
+   @Test
+
+
+   func testEndOfLineComment() {
         let plugin = PluginParser.parseFrom(line: endOfLineCommentString)
         #expect(plugin == "ABC")
     }
 
-    func testSpecialCharacter() {
+   @Test
+
+
+   func testSpecialCharacter() {
         let plugin = PluginParser.parseFrom(line: specialCharacterString)
         #expect(plugin == "ABC💵")
     }
 
-    func testPerformance() {
+   @Test
+
+
+   func testPerformance() {
         self.measure {
             for _ in 0...1_000 {
                 _ = PluginParser.parseFrom(line: basicString)

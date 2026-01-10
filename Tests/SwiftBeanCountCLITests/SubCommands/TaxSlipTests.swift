@@ -1,3 +1,4 @@
+
 import Foundation
 @testable import SwiftBeanCountCLI
 import Testing
@@ -8,7 +9,10 @@ import Testing
 
 struct TaxSlipTests {
 
-    func testFileDoesNotExist() {
+   @Test
+
+
+   func testFileDoesNotExist() {
         let url = temporaryFileURL()
         let result = outputFromExecutionWith(arguments: ["tax-slips", url.path])
         #expect(result.exitCode == 1)
@@ -20,14 +24,20 @@ struct TaxSlipTests {
         #endif
     }
 
-    func testEmptyFile() {
+   @Test
+
+
+   func testEmptyFile() {
         let url = emptyFileURL()
         let result = outputFromExecutionWith(arguments: ["tax-slips", url.path])
         #expect(result.exitCode == 1)
         #expect(result.errorOutput.starts(with: "Error: There was no configured tax slip found for year "))
     }
 
-    func testNoSlip() {
+   @Test
+
+
+   func testNoSlip() {
         let url = temporaryFileURL()
         createFile(at: url, content: """
                                      2020-06-13 custom "tax-slip-settings" "slip-names" "t4"
@@ -36,7 +46,10 @@ struct TaxSlipTests {
         assertSuccessfulExecutionResult(arguments: ["tax-slips", url.path], output: "")
     }
 
-    func testSimpleSlip() {
+   @Test
+
+
+   func testSimpleSlip() {
         let url = temporaryFileURL()
         createFile(at: url, content: """
                                      2020-06-13 custom "tax-slip-settings" "slip-names" "t4"
@@ -56,7 +69,10 @@ struct TaxSlipTests {
                                         """)
     }
 
-    func testSlipArgument() {
+   @Test
+
+
+   func testSlipArgument() {
         let url = temporaryFileURL()
         createFile(at: url, content: """
                                      2020-06-13 custom "tax-slip-settings" "slip-names" "t5"
@@ -82,7 +98,10 @@ struct TaxSlipTests {
                                         """)
     }
 
-    func testSlipSymbol() {
+   @Test
+
+
+   func testSlipSymbol() {
         let url = temporaryFileURL()
         createFile(at: url, content: """
                                      2020-06-13 custom "tax-slip-settings" "slip-names" "t4"

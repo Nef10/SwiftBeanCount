@@ -6,6 +6,7 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountParser
 import Testing
@@ -14,7 +15,10 @@ import Testing
 
 struct CollectionTests {
 
-    func testSafeArray() {
+   @Test
+
+
+   func testSafeArray() {
         var array = [String]()
         #expect(array[safe: 0] == nil)
         array.append("value")

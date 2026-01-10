@@ -8,6 +8,7 @@
 
 // swiftlint:disable file_length
 
+
 import Foundation
 @testable import SwiftBeanCountModel
 import Testing
@@ -21,13 +22,19 @@ struct InventoryTests {
     private let date = TestUtils.date20170608
     private var transactionStore = [Transaction]() // required because the posting reference is unowned
 
-    func testInit() {
+   @Test
+
+
+   func testInit() {
         for bookingMethod in bookingMethods {
             #expect(Inventory(bookingMethod: bookingMethod != nil))
         }
     }
 
-    func testDescription() throws {
+   @Test
+
+
+   func testDescription() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -59,7 +66,10 @@ struct InventoryTests {
 
 extension InventoryTests { // Test Adding
 
-    func testAdding() throws {
+   @Test
+
+
+   func testAdding() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
             let amount = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
@@ -79,7 +89,10 @@ extension InventoryTests { // Test Adding
         }
     }
 
-    func testAddingTransactionDateUsed() throws {
+   @Test
+
+
+   func testAddingTransactionDateUsed() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
             let amount = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
@@ -97,7 +110,10 @@ extension InventoryTests { // Test Adding
         }
     }
 
-    func testAddingMultiple() throws {
+   @Test
+
+
+   func testAddingMultiple() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -126,7 +142,10 @@ extension InventoryTests { // Test Adding
         }
     }
 
-    func testAddingSameCost() throws {
+   @Test
+
+
+   func testAddingSameCost() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -154,7 +173,10 @@ extension InventoryTests { // Test Adding
         }
     }
 
-    func testAddingSameCostDifferentCommodity() throws {
+   @Test
+
+
+   func testAddingSameCostDifferentCommodity() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -182,7 +204,10 @@ extension InventoryTests { // Test Adding
         }
     }
 
-    func testAddingNegative() throws {
+   @Test
+
+
+   func testAddingNegative() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
             let amount = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
@@ -202,7 +227,10 @@ extension InventoryTests { // Test Adding
         }
     }
 
-    func testAddingMultipleNegative() throws {
+   @Test
+
+
+   func testAddingMultipleNegative() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -231,7 +259,10 @@ extension InventoryTests { // Test Adding
         }
     }
 
-    func testAddingSameCostNegative() throws {
+   @Test
+
+
+   func testAddingSameCostNegative() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -263,7 +294,10 @@ extension InventoryTests { // Test Adding
 
 extension InventoryTests { // Test Reduce
 
-    func testReduce() throws {
+   @Test
+
+
+   func testReduce() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -293,7 +327,10 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testReduceMoreThanExist() throws {
+   @Test
+
+
+   func testReduceMoreThanExist() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -318,7 +355,10 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testReduceNoLot() throws {
+   @Test
+
+
+   func testReduceNoLot() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -343,7 +383,10 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testReducePositive() throws {
+   @Test
+
+
+   func testReducePositive() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -371,7 +414,10 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testReduceDifferentCurrencyPresent() throws {
+   @Test
+
+
+   func testReduceDifferentCurrencyPresent() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -409,7 +455,10 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testReduceDifferentLotPresent() throws {
+   @Test
+
+
+   func testReduceDifferentLotPresent() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -446,7 +495,10 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testReduceAmbigiousStrict() throws {
+   @Test
+
+
+   func testReduceAmbigiousStrict() throws {
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
@@ -484,7 +536,10 @@ extension InventoryTests { // Test Reduce
         #expect(inventory.inventory.last?.cost == cost2)
     }
 
-    func testReduceAmbigiousNotEnoughUnits() throws {
+   @Test
+
+
+   func testReduceAmbigiousNotEnoughUnits() throws {
         for bookingMethod in [BookingMethod.lifo, BookingMethod.fifo] {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -515,7 +570,10 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testReduceAmbigiousLIFO() throws {
+   @Test
+
+
+   func testReduceAmbigiousLIFO() throws {
         let inventory = Inventory(bookingMethod: .lifo)
 
         let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
@@ -552,7 +610,10 @@ extension InventoryTests { // Test Reduce
         #expect(inventory.inventory.last?.cost == cost2)
     }
 
-    func testReduceAmbigiousLIFOExactLot() throws {
+   @Test
+
+
+   func testReduceAmbigiousLIFOExactLot() throws {
         let inventory = Inventory(bookingMethod: .lifo)
 
         let amount1 = Amount(number: 3.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
@@ -579,7 +640,10 @@ extension InventoryTests { // Test Reduce
         #expect(inventory.inventory.last?.cost == cost1)
     }
 
-    func testReduceAmbigiousLIFOMultipleLots() throws {
+   @Test
+
+
+   func testReduceAmbigiousLIFOMultipleLots() throws {
         let inventory = Inventory(bookingMethod: .lifo)
 
         let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
@@ -612,7 +676,10 @@ extension InventoryTests { // Test Reduce
         #expect(inventory.inventory.last?.cost == cost1)
     }
 
-    func testReduceAmbigiousFIFO() throws {
+   @Test
+
+
+   func testReduceAmbigiousFIFO() throws {
         let inventory = Inventory(bookingMethod: .fifo)
 
         let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
@@ -649,7 +716,10 @@ extension InventoryTests { // Test Reduce
         #expect(inventory.inventory.last?.cost == cost2)
     }
 
-    func testReduceAmbigiousFIFOExactLot() throws {
+   @Test
+
+
+   func testReduceAmbigiousFIFOExactLot() throws {
         let inventory = Inventory(bookingMethod: .fifo)
 
         let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
@@ -684,7 +754,10 @@ extension InventoryTests { // Test Reduce
         #expect(inventory.inventory.last?.cost == cost2)
     }
 
-    func testReduceAmbigiousFIFOMultipleLots() throws {
+   @Test
+
+
+   func testReduceAmbigiousFIFOMultipleLots() throws {
         let inventory = Inventory(bookingMethod: .fifo)
 
         let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
@@ -717,7 +790,10 @@ extension InventoryTests { // Test Reduce
         #expect(inventory.inventory.last?.cost == cost3)
     }
 
-    func testTotalReduce() throws {
+   @Test
+
+
+   func testTotalReduce() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -744,7 +820,10 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testTotalReduceMultipleLots() throws {
+   @Test
+
+
+   func testTotalReduceMultipleLots() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -775,7 +854,10 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testTotalReduceDifferentCurrencyPresent() throws {
+   @Test
+
+
+   func testTotalReduceDifferentCurrencyPresent() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -810,7 +892,10 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testTotalReduceDifferentLotPresent() throws {
+   @Test
+
+
+   func testTotalReduceDifferentLotPresent() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -844,7 +929,10 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func testAmountDifferentCurrency() throws {
+   @Test
+
+
+   func testAmountDifferentCurrency() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -875,7 +963,10 @@ extension InventoryTests { // Test Reduce
         }
     }
 
-    func transactionPosting(_ posting: Posting) -> TransactionPosting {
+   @Test
+
+
+   func transactionPosting(_ posting: Posting) -> TransactionPosting {
         let transaction = Transaction(metaData: TransactionMetaData(date: date,
                                                                     payee: "Payee",
                                                                     narration: "Narration",
@@ -891,14 +982,20 @@ extension InventoryTests { // Test Reduce
 
 extension InventoryTests { // Inventory.Lot Tests
 
-    func testLotDescription() throws {
+   @Test
+
+
+   func testLotDescription() throws {
         let amount = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
         let cost = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
         let lot = Inventory.Lot(units: amount, cost: cost)
         #expect(String(describing: lot) == "\(amount) \(cost)")
     }
 
-    func testLotEqual() throws {
+   @Test
+
+
+   func testLotEqual() throws {
         let amount = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
         let cost = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
         let lot1 = Inventory.Lot(units: amount, cost: cost)
@@ -906,7 +1003,10 @@ extension InventoryTests { // Inventory.Lot Tests
         #expect(lot1 == lot2)
     }
 
-    func testLotEqualRespectsAmount() throws {
+   @Test
+
+
+   func testLotEqualRespectsAmount() throws {
         let amount1 = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
         let amount2 = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 2)
         let cost = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
@@ -915,7 +1015,10 @@ extension InventoryTests { // Inventory.Lot Tests
         #expect(lot1 != lot2)
     }
 
-    func testLotEqualRespectsCost() throws {
+   @Test
+
+
+   func testLotEqualRespectsCost() throws {
         let amount = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
         let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 2), date: nil, label: nil)
         let cost2 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
@@ -928,7 +1031,10 @@ extension InventoryTests { // Inventory.Lot Tests
 
 extension InventoryTests { // BookingMethod tests
 
-    func testBookingMethodDescription() {
+   @Test
+
+
+   func testBookingMethodDescription() {
         #expect(String(describing: BookingMethod.fifo) == "FIFO")
         #expect(String(describing: BookingMethod.lifo) == "LIFO")
         #expect(String(describing: BookingMethod.strict) == "STRICT")

@@ -6,6 +6,7 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -134,30 +135,48 @@ struct ManuLifeImporterTests {
         try super.setUpWithError()
     }
 
-    func testImporterName() {
+   @Test
+
+
+   func testImporterName() {
         #expect(ManuLifeImporter.importerName == "ManuLife")
     }
 
-    func testImporterType() {
+   @Test
+
+
+   func testImporterType() {
         #expect(ManuLifeImporter.importerType == "manulife")
     }
 
-    func testHelpText() {
+   @Test
+
+
+   func testHelpText() {
         #expect(ManuLifeImporter.helpText.contains("importer-type: \"manulife\""))
     }
 
-    func testImportName() {
+   @Test
+
+
+   func testImportName() {
         #expect(loadedImporter().importName == "ManuLife Text")
     }
 
-    func testParseEmpty() {
+   @Test
+
+
+   func testParseEmpty() {
         let importer = loadedImporter()
         #expect(importer.nextTransaction( == nil))
         #expect(importer.balancesToImport() == [])
         #expect(importer.pricesToImport() == [])
     }
 
-    func testParseBalance() throws {
+   @Test
+
+
+   func testParseBalance() throws {
         let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), balance: balance)
         #expect(importer.nextTransaction( == nil))
         let balances = importer.balancesToImport()
@@ -172,7 +191,10 @@ struct ManuLifeImporterTests {
         #expect(parkingAccountDelegate.verified)
     }
 
-    func testTransaction() throws {
+   @Test
+
+
+   func testTransaction() throws {
         let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), transaction: transaction)
         let transaction = importer.nextTransaction()
         #expect(transaction != nil)
@@ -191,7 +213,10 @@ struct ManuLifeImporterTests {
         #expect(parkingAccountDelegate.verified)
     }
 
-    func testBalanceAndTransaction() throws {
+   @Test
+
+
+   func testBalanceAndTransaction() throws {
         let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), transaction: transaction, balance: balance)
         let transaction = importer.nextTransaction()
         #expect(transaction != nil)
@@ -206,7 +231,10 @@ struct ManuLifeImporterTests {
         #expect(parkingAccountDelegate.verified)
     }
 
-    func testNoLedger() {
+   @Test
+
+
+   func testNoLedger() {
         let importer = loadedImporter(transaction: transaction, balance: balance)
         let transaction = importer.nextTransaction()
         #expect(transaction != nil)
@@ -226,7 +254,10 @@ struct ManuLifeImporterTests {
         )
     }
 
-    func testBalanceAndPriceDuplicates() throws {
+   @Test
+
+
+   func testBalanceAndPriceDuplicates() throws {
         let ledger = try TestUtils.ledgerManuLife()
         let balanceAmount = Amount(number: Decimal(8.209_60), commoditySymbol: TestUtils.fundSymbol, decimalDigits: 5)
         let balanceObject = Balance(date: date, accountName: try AccountName("Assets:Cash:Employee:Voluntary:\(TestUtils.fundSymbol)"), amount: balanceAmount)
@@ -248,7 +279,10 @@ struct ManuLifeImporterTests {
         #expect(!(prices.contains(price2)))
     }
 
-    func testTransactionSettings() throws {
+   @Test
+
+
+   func testTransactionSettings() throws {
         let ledger = try TestUtils.ledgerManuLife(employeeBasic: "2.5", employerBasic: "3.25", employerMatch: "2.5", employeeVoluntary: "1.75")
         let importer = loadedImporter(ledger: ledger, transaction: transaction)
         let transaction = importer.nextTransaction()
@@ -268,7 +302,10 @@ struct ManuLifeImporterTests {
             """)
     }
 
-    func testTransactionSettingsZero1() throws {
+   @Test
+
+
+   func testTransactionSettingsZero1() throws {
         let ledger = try TestUtils.ledgerManuLife(employeeBasic: "2.5", employerBasic: "5", employerMatch: "2.5", employeeVoluntary: "0")
         let importer = loadedImporter(ledger: ledger, transaction: transaction)
         let transaction = importer.nextTransaction()
@@ -288,7 +325,10 @@ struct ManuLifeImporterTests {
             """)
     }
 
-    func testTransactionSettingsZero2() throws {
+   @Test
+
+
+   func testTransactionSettingsZero2() throws {
         let ledger = try TestUtils.ledgerManuLife(employeeBasic: "0", employerBasic: "0", employerMatch: "0", employeeVoluntary: "1")
         let importer = loadedImporter(ledger: ledger, transaction: transaction)
         let transaction = importer.nextTransaction()
@@ -305,7 +345,10 @@ struct ManuLifeImporterTests {
             """)
     }
 
-    func testTransactionGarbage() throws {
+   @Test
+
+
+   func testTransactionGarbage() throws {
         let strings = ["This is not a valid Transaction", transactionInvalidDate]
         for string in strings {
             let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), transaction: string)
@@ -315,7 +358,10 @@ struct ManuLifeImporterTests {
         }
     }
 
-    func testGetPossibleDuplicateFor() throws {
+   @Test
+
+
+   func testGetPossibleDuplicateFor() throws {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
         let ledger = try TestUtils.ledgerManuLife()
@@ -335,7 +381,10 @@ struct ManuLifeImporterTests {
         #expect(importedTransaction!.possibleDuplicate == transaction1)
     }
 
-    func testGetPossibleDuplicateForNone() throws {
+   @Test
+
+
+   func testGetPossibleDuplicateForNone() throws {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
         let ledger = try TestUtils.ledgerManuLife()

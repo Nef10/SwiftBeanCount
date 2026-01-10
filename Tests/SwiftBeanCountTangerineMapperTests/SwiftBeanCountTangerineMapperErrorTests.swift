@@ -1,4 +1,5 @@
 
+
 import Foundation
 @testable import SwiftBeanCountTangerineMapper
 import Testing
@@ -7,7 +8,10 @@ import Testing
 
 struct SwiftBeanCountTangerineMapperErrorTests {
 
-    func testDownloadErrorString() {
+   @Test
+
+
+   func testDownloadErrorString() {
          XCTAssertEqual(
             "\(SwiftBeanCountTangerineMapperError.missingAccount(account: "abc").localizedDescription)",
             "Missing account in ledger: abc"

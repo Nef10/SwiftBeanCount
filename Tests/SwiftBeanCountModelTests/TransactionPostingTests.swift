@@ -6,6 +6,7 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountModel
 import Testing
@@ -16,7 +17,10 @@ struct TransactionPostingTests {
 
     private var posting1 = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
 
-    func testInitTransactionPosting() {
+   @Test
+
+
+   func testInitTransactionPosting() {
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "", narration: "", flag: .complete, tags: []),
                                       postings: [])
         let posting = Posting(accountName: TestUtils.cash, amount: TestUtils.amount, metaData: ["A": "B"])
@@ -27,21 +31,30 @@ struct TransactionPostingTests {
         #expect(transaction == transactionPosting.transaction)
     }
 
-    func testDescription() {
+   @Test
+
+
+   func testDescription() {
         let amount = Amount(number: Decimal(1), commoditySymbol: "💵")
         let posting = Posting(accountName: TestUtils.chequing, amount: amount)
 
         #expect(String(describing: posting) == "  \(String(describing: TestUtils.chequing)) \(String(describing: amount))")
     }
 
-    func testDescriptionMetaData() {
+   @Test
+
+
+   func testDescriptionMetaData() {
         let amount = Amount(number: Decimal(1), commoditySymbol: "💵")
         let posting = Posting(accountName: TestUtils.chequing, amount: amount, metaData: ["A": "B"])
 
         #expect(String(describing: posting) == "  \(String(describing: TestUtils.chequing)) \(String(describing: amount))\n    A: \"B\"")
     }
 
-    func testDescriptionPrice() {
+   @Test
+
+
+   func testDescriptionPrice() {
         let amount = Amount(number: Decimal(1), commoditySymbol: "💵")
         let price = Amount(number: Decimal(1.555), commoditySymbol: TestUtils.eur)
         let posting = Posting(accountName: TestUtils.chequing, amount: amount, price: price)
@@ -49,7 +62,10 @@ struct TransactionPostingTests {
         #expect(String(describing: posting) == "  \(String(describing: TestUtils.chequing)) \(String(describing: amount)) @ \(price)")
     }
 
-    func testDescriptionCost() throws {
+   @Test
+
+
+   func testDescriptionCost() throws {
         let amount = Amount(number: Decimal(1), commoditySymbol: "💵")
         let cost = try Cost(amount: amount, date: nil, label: "label")
         let posting = Posting(accountName: TestUtils.chequing, amount: amount, price: nil, cost: cost)
@@ -57,7 +73,10 @@ struct TransactionPostingTests {
         #expect(String(describing: posting) == "  \(String(describing: TestUtils.chequing)) \(String(describing: amount)) \(String(describing: cost))")
     }
 
-    func testDescriptionCostAndPrice() throws {
+   @Test
+
+
+   func testDescriptionCostAndPrice() throws {
         let amount = Amount(number: Decimal(1), commoditySymbol: "💵")
         let price = Amount(number: Decimal(1.555), commoditySymbol: TestUtils.eur)
         let cost = try Cost(amount: amount, date: nil, label: "label")
@@ -66,42 +85,63 @@ struct TransactionPostingTests {
         #expect(String(describing: posting) == "  \(String(describing: TestUtils.chequing)) \(String(describing: amount)) \(String(describing: cost)) @ \(price)")
     }
 
-    func testEqual() {
+   @Test
+
+
+   func testEqual() {
         let posting2 = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
         #expect(posting1 == posting2)
     }
 
-    func testEqualRespectsMetaData() {
+   @Test
+
+
+   func testEqualRespectsMetaData() {
         let posting2 = Posting(accountName: TestUtils.cash, amount: TestUtils.amount, metaData: ["A": "B"])
         #expect(posting1 != posting2)
     }
 
-    func testEqualRespectsAccount() throws {
+   @Test
+
+
+   func testEqualRespectsAccount() throws {
         let posting2 = Posting(accountName: try AccountName("\(String(describing: TestUtils.cash)):💰"), amount: TestUtils.amount)
         #expect(posting1 != posting2)
     }
 
-    func testEqualRespectsAmount() {
+   @Test
+
+
+   func testEqualRespectsAmount() {
         let posting2 = Posting(accountName: TestUtils.cash,
                                amount: Amount(number: posting1.amount.number + posting1.amount.number,
                                               commoditySymbol: "\(TestUtils.eur)1"))
         #expect(posting1 != posting2)
     }
 
-    func testEqualRespectsPrice() {
+   @Test
+
+
+   func testEqualRespectsPrice() {
         let price = Amount(number: Decimal(1.555), commoditySymbol: TestUtils.eur)
         let posting2 = Posting(accountName: TestUtils.cash, amount: TestUtils.amount, price: price)
         #expect(posting1 != posting2)
     }
 
-    func testEqualRespectsCost() throws {
+   @Test
+
+
+   func testEqualRespectsCost() throws {
         let amount = Amount(number: Decimal(1.555), commoditySymbol: TestUtils.eur)
         let cost = try Cost(amount: amount, date: nil, label: "label")
         let posting2 = Posting(accountName: TestUtils.cash, amount: TestUtils.amount, price: nil, cost: cost)
         #expect(posting1 != posting2)
     }
 
-    func testDescriptionTotalPrice() throws {
+   @Test
+
+
+   func testDescriptionTotalPrice() throws {
         let amount = Amount(number: Decimal(1), commoditySymbol: "💵")
         let price = Amount(number: Decimal(1.555), commoditySymbol: TestUtils.eur)
         let posting = try Posting(accountName: TestUtils.chequing, amount: amount, price: price, priceType: .total)
@@ -109,14 +149,20 @@ struct TransactionPostingTests {
         #expect(String(describing: posting) == "  \(String(describing: TestUtils.chequing)) \(String(describing: amount)) @@ \(price)")
     }
 
-    func testEqualRespectsPriceType() throws {
+   @Test
+
+
+   func testEqualRespectsPriceType() throws {
         let price = Amount(number: Decimal(1.555), commoditySymbol: TestUtils.eur)
         let posting2 = try Posting(accountName: TestUtils.cash, amount: TestUtils.amount, price: price, priceType: .perUnit)
         let posting3 = try Posting(accountName: TestUtils.cash, amount: TestUtils.amount, price: price, priceType: .total)
         #expect(posting2 != posting3)
     }
 
-    func testBalanceTotalPrice() throws {
+   @Test
+
+
+   func testBalanceTotalPrice() throws {
         let ledger = Ledger()
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170609, payee: "", narration: "", flag: .complete, tags: [])
 
@@ -134,7 +180,10 @@ struct TransactionPostingTests {
         #expect(balance.amounts[TestUtils.eur] == Decimal(155.5))
     }
 
-    func testBalancePerUnitPrice() throws {
+   @Test
+
+
+   func testBalancePerUnitPrice() throws {
         let ledger = Ledger()
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170609, payee: "", narration: "", flag: .complete, tags: [])
 
@@ -152,7 +201,10 @@ struct TransactionPostingTests {
         #expect(balance.amounts[TestUtils.eur] == Decimal(155.5))
     }
 
-    func testIntegrationPerUnitAndTotalPrices() throws {
+   @Test
+
+
+   func testIntegrationPerUnitAndTotalPrices() throws {
         // Integration test showing @ and @@ working together
         let ledger = Ledger()
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170609, payee: "Test", narration: "Integration test", flag: .complete, tags: [])
@@ -199,7 +251,10 @@ struct TransactionPostingTests {
         #expect(balance2.amounts[TestUtils.cad] != Decimal(37.5))
     }
 
-    func testInitErrorPriceWithoutType() throws {
+   @Test
+
+
+   func testInitErrorPriceWithoutType() throws {
         let amount = Amount(number: Decimal(1), commoditySymbol: "💵")
         let price = Amount(number: Decimal(1.555), commoditySymbol: TestUtils.eur)
 
@@ -208,7 +263,10 @@ struct TransactionPostingTests {
         }
     }
 
-    func testInitErrorPriceTypeWithoutPrice() throws {
+   @Test
+
+
+   func testInitErrorPriceTypeWithoutPrice() throws {
         let amount = Amount(number: Decimal(1), commoditySymbol: "💵")
 
         XCTAssertThrowsError(try Posting(accountName: TestUtils.chequing, amount: amount, price: nil, priceType: .perUnit)) { error in

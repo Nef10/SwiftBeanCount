@@ -6,6 +6,7 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -15,7 +16,10 @@ import Testing
 
 struct TextImporterTests {
 
-    func testNew() {
+   @Test
+
+
+   func testNew() {
         var result = TextImporterFactory.new(ledger: nil, transaction: "", balance: "")
         #expect(result != nil)
         #expect(result is ManuLifeImporter)
@@ -24,7 +28,10 @@ struct TextImporterTests {
         #expect(result is EquatePlusImporter)
     }
 
-    func testImporters() {
+   @Test
+
+
+   func testImporters() {
         #expect(TextImporterFactory.importers.count == 2)
     }
 

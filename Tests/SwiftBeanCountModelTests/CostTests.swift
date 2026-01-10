@@ -6,6 +6,7 @@
 //  Copyright © 2019 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountModel
 import Testing
@@ -17,19 +18,28 @@ struct CostTests {
     private let label1 = "1"
     private let label2 = "2"
 
-    func testNegativeAmount() {
+   @Test
+
+
+   func testNegativeAmount() {
         XCTAssertThrowsError(try Cost(amount: Amount(number: -1, commoditySymbol: TestUtils.eur), date: nil, label: nil)) {
             #expect($0.localizedDescription == "Invalid Cost, negative amount: {-1 EUR}")
         }
     }
 
-    func testEqual() throws {
+   @Test
+
+
+   func testEqual() throws {
         let cost1 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: label1)
         let cost2 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: label1)
         #expect(cost1 == cost2)
     }
 
-    func testEqualRespectsAmount() throws {
+   @Test
+
+
+   func testEqualRespectsAmount() throws {
         let cost1 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: label1)
         let cost2 = try Cost(amount: TestUtils.amount2, date: TestUtils.date20170608, label: label1)
         let cost3 = try Cost(amount: nil, date: TestUtils.date20170608, label: label1)
@@ -37,7 +47,10 @@ struct CostTests {
         #expect(cost1 != cost3)
     }
 
-    func testEqualRespectsDate() throws {
+   @Test
+
+
+   func testEqualRespectsDate() throws {
         let cost1 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: label1)
         let cost2 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170609, label: label1)
         let cost3 = try Cost(amount: TestUtils.amount, date: nil, label: label1)
@@ -45,7 +58,10 @@ struct CostTests {
         #expect(cost1 != cost3)
     }
 
-    func testEqualRespectsLabel() throws {
+   @Test
+
+
+   func testEqualRespectsLabel() throws {
         let cost1 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: label1)
         let cost2 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: label2)
         let cost3 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: nil)
@@ -53,114 +69,174 @@ struct CostTests {
         #expect(cost1 != cost3)
     }
 
-    func testEqualWorksWithNil() throws {
+   @Test
+
+
+   func testEqualWorksWithNil() throws {
         let cost1 = try Cost(amount: nil, date: nil, label: nil)
         let cost2 = try Cost(amount: nil, date: nil, label: nil)
         #expect(cost1 == cost2)
     }
 
-    func testMatches() throws {
+   @Test
+
+
+   func testMatches() throws {
         let cost1 = try Cost(amount: TestUtils.amount, date: nil, label: label1)
         let cost2 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: label1)
         #expect(cost1.matches(cost: cost2))
     }
 
-    func testMatchesNil() throws {
+   @Test
+
+
+   func testMatchesNil() throws {
         let cost1 = try Cost(amount: nil, date: nil, label: nil)
         let cost2 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: label1)
         #expect(cost1.matches(cost: cost2))
     }
 
-    func testMatchesLabel() throws {
+   @Test
+
+
+   func testMatchesLabel() throws {
         let cost1 = try Cost(amount: nil, date: nil, label: label1)
         let cost2 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: label1)
         #expect(cost1.matches(cost: cost2))
     }
 
-    func testMatchesDate() throws {
+   @Test
+
+
+   func testMatchesDate() throws {
         let cost1 = try Cost(amount: nil, date: TestUtils.date20170608, label: nil)
         let cost2 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: label1)
         #expect(cost1.matches(cost: cost2))
     }
 
-    func testMatchesAmount() throws {
+   @Test
+
+
+   func testMatchesAmount() throws {
         let cost1 = try Cost(amount: TestUtils.amount, date: nil, label: nil)
         let cost2 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: label1)
         #expect(cost1.matches(cost: cost2))
     }
 
-    func testNotMatchesLabel() throws {
+   @Test
+
+
+   func testNotMatchesLabel() throws {
         let cost1 = try Cost(amount: nil, date: nil, label: label2)
         let cost2 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: label1)
         #expect(!(cost1.matches(cost: cost2)))
     }
 
-    func testNotMatchesDate() throws {
+   @Test
+
+
+   func testNotMatchesDate() throws {
         let cost1 = try Cost(amount: nil, date: TestUtils.date20170609, label: nil)
         let cost2 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: label1)
         #expect(!(cost1.matches(cost: cost2)))
     }
 
-    func testNotMatchesAmount() throws {
+   @Test
+
+
+   func testNotMatchesAmount() throws {
         let cost1 = try Cost(amount: TestUtils.amount2, date: nil, label: nil)
         let cost2 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: label1)
         #expect(!(cost1.matches(cost: cost2)))
     }
 
-    func testMatchesLabelWrong() throws {
+   @Test
+
+
+   func testMatchesLabelWrong() throws {
         let cost1 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: label2)
         let cost2 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: label1)
         #expect(!(cost1.matches(cost: cost2)))
     }
 
-    func testMatchesDateWrong() throws {
+   @Test
+
+
+   func testMatchesDateWrong() throws {
         let cost1 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170609, label: label1)
         let cost2 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: label1)
         #expect(!(cost1.matches(cost: cost2)))
     }
 
-    func testMatchesAmountWrong() throws {
+   @Test
+
+
+   func testMatchesAmountWrong() throws {
         let cost1 = try Cost(amount: TestUtils.amount2, date: TestUtils.date20170608, label: label1)
         let cost2 = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: label1)
         #expect(!(cost1.matches(cost: cost2)))
     }
 
-    func testDescription() throws {
+   @Test
+
+
+   func testDescription() throws {
         let cost = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: label1)
         #expect(String(describing: cost) == "{2017-06-08, \(String(describing: TestUtils.amount)), \"\(label1)\"}")
     }
 
-    func testDescriptionWithoutDate() throws {
+   @Test
+
+
+   func testDescriptionWithoutDate() throws {
         let cost = try Cost(amount: TestUtils.amount, date: nil, label: label1)
         #expect(String(describing: cost) == "{\(String(describing: TestUtils.amount)), \"\(label1)\"}")
     }
 
-    func testDescriptionWithoutAmount() throws {
+   @Test
+
+
+   func testDescriptionWithoutAmount() throws {
         let cost = try Cost(amount: nil, date: TestUtils.date20170608, label: label1)
         #expect(String(describing: cost) == "{2017-06-08, \"\(label1)\"}")
     }
 
-    func testDescriptionWithoutLabel() throws {
+   @Test
+
+
+   func testDescriptionWithoutLabel() throws {
         let cost = try Cost(amount: TestUtils.amount, date: TestUtils.date20170608, label: nil)
         #expect(String(describing: cost) == "{2017-06-08, \(String(describing: TestUtils.amount))}")
     }
 
-    func testDescriptionWithOnlyAmount() throws {
+   @Test
+
+
+   func testDescriptionWithOnlyAmount() throws {
         let cost = try Cost(amount: TestUtils.amount, date: nil, label: nil)
         #expect(String(describing: cost) == "{\(String(describing: TestUtils.amount))}")
     }
 
-    func testDescriptionWithOnlyDate() throws {
+   @Test
+
+
+   func testDescriptionWithOnlyDate() throws {
         let cost = try Cost(amount: nil, date: TestUtils.date20170608, label: nil)
         #expect(String(describing: cost) == "{2017-06-08}")
     }
 
-    func testDescriptionWithOnlyLabel() throws {
+   @Test
+
+
+   func testDescriptionWithOnlyLabel() throws {
         let cost = try Cost(amount: nil, date: nil, label: label1)
         #expect(String(describing: cost) == "{\"\(label1)\"}")
     }
 
-    func testEmptyDescription() throws {
+   @Test
+
+
+   func testEmptyDescription() throws {
         let cost = try Cost(amount: nil, date: nil, label: nil)
         #expect(String(describing: cost) == "{}")
     }

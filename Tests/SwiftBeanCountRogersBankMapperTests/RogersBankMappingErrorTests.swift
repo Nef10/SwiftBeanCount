@@ -1,4 +1,5 @@
 
+
 import Foundation
 @testable import SwiftBeanCountRogersBankMapper
 import RogersBankDownloader
@@ -8,7 +9,10 @@ import Testing
 
 struct RogersBankMappingErrorTests {
 
-    func testSRogersBankMappingErrorString() {
+   @Test
+
+
+   func testSRogersBankMappingErrorString() {
         XCTAssertEqual(
             "\(RogersBankMappingError.missingAccount(lastFour: "4320").localizedDescription)",
             "The account with the last four digits 4320 was not found in your ledger. Please make sure you add importer-type: \"rogers\" and last-four: \"4320\" to it."

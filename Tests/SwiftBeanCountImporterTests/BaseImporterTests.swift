@@ -6,6 +6,7 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -18,49 +19,79 @@ class InvalidAccountNameProvider {
 
 struct BaseImporterTests {
 
-    func testInit() {
+   @Test
+
+
+   func testInit() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
         #expect(importer.ledger == TestUtils.ledger)
     }
 
-    func testImporterName() {
+   @Test
+
+
+   func testImporterName() {
         #expect(BaseImporter.importerName == "")
     }
 
-    func testImporterType() {
+   @Test
+
+
+   func testImporterType() {
         #expect(BaseImporter.importerType == "")
     }
 
-    func testHelpText() {
+   @Test
+
+
+   func testHelpText() {
         #expect(BaseImporter.helpText == "")
     }
 
-    func testLoad() {
+   @Test
+
+
+   func testLoad() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
         importer.load()
     }
 
-    func testImportName() {
+   @Test
+
+
+   func testImportName() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
         #expect(importer.importName == "")
     }
 
-    func testNextTransaction() {
+   @Test
+
+
+   func testNextTransaction() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
         #expect(importer.nextTransaction( == nil))
     }
 
-    func testBalancesToImport() {
+   @Test
+
+
+   func testBalancesToImport() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
         #expect(importer.balancesToImport().isEmpty)
     }
 
-    func testPricesToImport() {
+   @Test
+
+
+   func testPricesToImport() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
         #expect(importer.pricesToImport().isEmpty)
     }
 
-    func testCommoditySymbol() {
+   @Test
+
+
+   func testCommoditySymbol() {
         var importer = BaseImporter(ledger: TestUtils.ledger)
         #expect(importer.commoditySymbol == Settings.fallbackCommodity)
 
@@ -71,7 +102,10 @@ struct BaseImporterTests {
         #expect(cashAccountDelegate.verified)
     }
 
-    func testConfiguredAccountName() throws {
+   @Test
+
+
+   func testConfiguredAccountName() throws {
         let ledger = TestUtils.ledger
         var importer = BaseImporter(ledger: ledger)
         var delegate = AccountNameSuggestionVerifier(expectedValues: [])
@@ -103,7 +137,10 @@ struct BaseImporterTests {
         _ = importer.configuredAccountName
     }
 
-    func testSavedPayee() {
+   @Test
+
+
+   func testSavedPayee() {
         let description = "abcd"
         let payeeMapping = "efg"
         Settings.storage = TestStorage()
@@ -114,7 +151,10 @@ struct BaseImporterTests {
         #expect(savedPayee == payeeMapping)
     }
 
-    func testSavedDescription() {
+   @Test
+
+
+   func testSavedDescription() {
         let description = "abcd"
         let descriptionMapping = "efg"
         Settings.storage = TestStorage()
@@ -125,7 +165,10 @@ struct BaseImporterTests {
         #expect(savedDescription == descriptionMapping)
     }
 
-    func testSavedAccount() {
+   @Test
+
+
+   func testSavedAccount() {
         let payee = "abcd"
         Settings.storage = TestStorage()
 
@@ -134,7 +177,10 @@ struct BaseImporterTests {
         #expect(importer.savedAccountNameFor(payee: payee) == TestUtils.chequing)
     }
 
-    func testGetPossibleDuplicateFor() {
+   @Test
+
+
+   func testGetPossibleDuplicateFor() {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
         let ledger = TestUtils.lederAccounts
@@ -145,7 +191,10 @@ struct BaseImporterTests {
         #expect(importer.getPossibleDuplicateFor(transaction) == transaction)
     }
 
-    func testGetPossibleDuplicateForDateToleranceInside() {
+   @Test
+
+
+   func testGetPossibleDuplicateForDateToleranceInside() {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
         let ledger = TestUtils.lederAccounts
@@ -173,7 +222,10 @@ struct BaseImporterTests {
         #expect(importer.getPossibleDuplicateFor(importedTransaction) == transaction)
     }
 
-    func testGetPossibleDuplicateForDateToleranceOutside() {
+   @Test
+
+
+   func testGetPossibleDuplicateForDateToleranceOutside() {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
         let ledger = TestUtils.lederAccounts
@@ -201,7 +253,10 @@ struct BaseImporterTests {
         #expect(importer.getPossibleDuplicateFor(importedTransaction == nil))
     }
 
-    func testSanitizeDescription() {
+   @Test
+
+
+   func testSanitizeDescription() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
         #expect(importer.sanitize(description: "Shop1 C-IDP PURCHASE - 1234  BC  CA") == "Shop1")
         #expect(importer.sanitize(description: "Shop1 IDP PURCHASE-1234") == "Shop1")
@@ -223,37 +278,54 @@ struct BaseImporterTests {
 
 extension InvalidAccountNameProvider: ImporterDelegate {
 
-    func requestInput(name _: String, type _: ImporterInputRequestType, completion: (String) -> Bool) {
+   @Test
+
+
+   func requestInput(name _: String, type _: ImporterInputRequestType, completion: (String) -> Bool) {
         var result = completion("Not an valid account name")
         #expect(!(result))
         result = completion(TestUtils.cash.fullName)
         #expect(result)
     }
 
-    func saveCredential(_: String, for _: String) {
+   @Test
+
+
+   func saveCredential(_: String, for _: String) {
         XCTFail("saveCredential should not be called")
     }
 
-    func readCredential(_: String) -> String? {
+   @Test
+
+
+   func readCredential(_: String) -> String? {
         XCTFail("readCredential should not be called")
         return nil
     }
 
     // swiftlint:disable:next unused_parameter
-    func error(_: Error, completion: () -> Void) {
+   @Test
+
+   func error(_: Error, completion: () -> Void) {
         XCTFail("error should not be called")
     }
 
     #if canImport(UIKit)
 
-    func view() -> UIView? {
+   @Test
+
+
+   func view() -> UIView? {
         XCTFail("view should not be called")
         return nil
     }
 
     #elseif canImport(AppKit)
 
-    func view() -> NSView? {
+   @Test
+
+
+   func view() -> NSView? {
         XCTFail("view should not be called")
         return nil
     }
@@ -262,7 +334,10 @@ extension InvalidAccountNameProvider: ImporterDelegate {
 
     #if canImport(UIKit) || canImport(AppKit)
 
-    func removeView() {
+   @Test
+
+
+   func removeView() {
         XCTFail("removeView should not be called")
     }
 

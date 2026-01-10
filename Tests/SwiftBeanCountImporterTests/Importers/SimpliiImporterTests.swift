@@ -6,6 +6,7 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -15,27 +16,45 @@ import Testing
 
 struct SimpliiImporterTests {
 
-    func testHeaders() {
+   @Test
+
+
+   func testHeaders() {
         #expect(SimpliiImporter.headers == [["Date", "Transaction Details", "Funds Out", "Funds In"]])
     }
 
-    func testImporterName() {
+   @Test
+
+
+   func testImporterName() {
         #expect(SimpliiImporter.importerName == "Simplii")
     }
 
-    func testImporterType() {
+   @Test
+
+
+   func testImporterType() {
         #expect(SimpliiImporter.importerType == "simplii")
     }
 
-    func testHelpText() {
+   @Test
+
+
+   func testHelpText() {
         #expect(SimpliiImporter.helpText == "Enables importing of downloaded CSV files from Simplii Accounts.\n\nTo use add importer-type: \"simplii\" to your account.")
     }
 
-    func testImportName() throws {
+   @Test
+
+
+   func testImportName() throws {
         #expect(SimpliiImporter(ledger: nil == csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "Simplii File TestName")
     }
 
-    func testParseLine() throws {
+   @Test
+
+
+   func testParseLine() throws {
         let importer = SimpliiImporter(ledger: nil,
                                        csvReader: try TestUtils.csvReader(content: """
 Date, Transaction Details, Funds Out, Funds In
@@ -53,7 +72,10 @@ Date, Transaction Details, Funds Out, Funds In
         #expect(line.price == nil)
     }
 
-    func testParseLineAmountOut() throws {
+   @Test
+
+
+   func testParseLineAmountOut() throws {
         let importer = SimpliiImporter(ledger: nil,
                                        csvReader: try TestUtils.csvReader(content: """
 Date, Transaction Details, Funds Out, Funds In
@@ -70,7 +92,10 @@ Date, Transaction Details, Funds Out, Funds In
         #expect(line.price == nil)
     }
 
-    func testParseLineInterest() throws {
+   @Test
+
+
+   func testParseLineInterest() throws {
         let importer = SimpliiImporter(ledger: nil,
                                        csvReader: try TestUtils.csvReader(content: """
 Date, Transaction Details, Funds Out, Funds In

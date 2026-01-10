@@ -1,4 +1,5 @@
 
+
 import Foundation
 @testable import SwiftBeanCountTax
 import SwiftBeanCountModel
@@ -8,7 +9,10 @@ import Testing
 
 struct TaxCalculatorTaxSlipTests {
 
-    func testGenerateTaxSlips() throws {
+   @Test
+
+
+   func testGenerateTaxSlips() throws {
         let ledger = try basicLedger()
 
         // Calculate tax slips
@@ -65,7 +69,10 @@ struct TaxCalculatorTaxSlipTests {
         #expect(try TaxCalculator.generateTaxSlips(from: ledger == for: 2_020).count, 0)
     }
 
-    func testGenerateTaxSlipsWithSymbol() throws {
+   @Test
+
+
+   func testGenerateTaxSlipsWithSymbol() throws {
         let taxSlips = try TaxCalculator.generateTaxSlips(from: try symbolLedger(), for: 2_022)
         #expect(taxSlips.count == 2)
 
@@ -117,7 +124,10 @@ struct TaxCalculatorTaxSlipTests {
         #expect(row3.values[0].value == Amount(number: 150, commoditySymbol: "EUR").multiCurrencyAmount)
     }
 
-    func testGenerateTaxSlipWithDifferentCurrencies() throws {
+   @Test
+
+
+   func testGenerateTaxSlipWithDifferentCurrencies() throws {
 
         let ledger = try currencyLedger()
 
@@ -155,7 +165,10 @@ struct TaxCalculatorTaxSlipTests {
         )
     }
 
-    func testGenerateTaxSlipsWithSplitAccounts() throws {
+   @Test
+
+
+   func testGenerateTaxSlipsWithSplitAccounts() throws {
         let taxSlips = try TaxCalculator.generateTaxSlips(from: splitAccountLedger(), for: 2_022)
 
         // Check the generated tax slips
@@ -204,7 +217,10 @@ struct TaxCalculatorTaxSlipTests {
         #expect(row2.values[0].value == Amount(number: 150, commoditySymbol: "EUR").multiCurrencyAmount)
     }
 
-     func testGenerateSplitTaxSlipsWithSymbol() throws {
+    @Test
+
+
+    func testGenerateSplitTaxSlipsWithSymbol() throws {
         let taxSlips = try TaxCalculator.generateTaxSlips(from: try splitSymbolLedger(), for: 2_022)
         #expect(taxSlips.count == 1)
 
@@ -257,7 +273,10 @@ struct TaxCalculatorTaxSlipTests {
         #expect(row2.values[3].value == MultiCurrencyAmount())
     }
 
-    func testSplitAccountError() throws {
+   @Test
+
+
+   func testSplitAccountError() throws {
         let ledger = try splitSymbolErrorLedger()
         do { _ = try TaxCalculator.generateTaxSlips(from: ledger, for: 2_022; Issue.record("Expected error") } catch { })
     }

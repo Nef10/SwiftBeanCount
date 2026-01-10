@@ -6,6 +6,7 @@
 //  Copyright © 2017-2021 Steffen Kötte. All rights reserved.
 //
 
+
 import Foundation
 @testable import SwiftBeanCountParserUtils
 import Testing
@@ -14,7 +15,9 @@ import Testing
 struct StringTests {
 
     @Test
-    func matchingStrings_multipleGroups() throws {
+   @Test
+
+   func matchingStrings_multipleGroups() throws {
         let regex = try NSRegularExpression(pattern: "^\\s+([^\\s]+:[^\\s]+)\\s+(-?[0-9]+(.[0-9]+)?)\\s+([^\\s]+)\\s*(;.*)?$", options: [])
         let results = "  Assets:Checking 1.00 EUR".matchingStrings(regex: regex)
         #expect(results.count == 1)
@@ -22,7 +25,9 @@ struct StringTests {
     }
 
     @Test
-    func matchingStrings_multipleResults() throws {
+   @Test
+
+   func matchingStrings_multipleResults() throws {
         let regex = try NSRegularExpression(pattern: "\\d\\D\\d", options: [])
         let results = "0a01b1".matchingStrings(regex: regex)
         #expect(results.count == 2)
@@ -31,7 +36,9 @@ struct StringTests {
     }
 
     @Test
-    func matchingStrings_ExtendedGraphemeClusters() throws {
+   @Test
+
+   func matchingStrings_ExtendedGraphemeClusters() throws {
         var regex = try NSRegularExpression(pattern: "[0-9]", options: [])
         var results = "🇩🇪€4€9".matchingStrings(regex: regex)
         #expect(results.count == 2)
@@ -45,7 +52,9 @@ struct StringTests {
     }
 
     @Test
-    func amountDecimal() {
+   @Test
+
+   func amountDecimal() {
         var (decimal, decimalDigits) = "1".amountDecimal()
         #expect(decimal == Decimal(1))
         #expect(decimalDigits == 0)
