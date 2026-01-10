@@ -108,7 +108,7 @@ public class Ledger {
     ///
     /// - Parameter account: account to add
     /// - Throws: If the account already exists
-    public func add(_ account: Account) throws {
+    public func add(_ account: Account) throws(LedgerError) {
         guard self.account[account.name.fullName] == nil else {
             throw LedgerError.alreadyExists(String(describing: account))
         }
@@ -122,7 +122,7 @@ public class Ledger {
     ///
     /// - Parameter commodity: commodity to add
     /// - Throws: If the commodity already exists
-    public func add(_ commodity: Commodity) throws {
+    public func add(_ commodity: Commodity) throws(LedgerError) {
         guard self.commodity[commodity.symbol] == nil else {
             throw LedgerError.alreadyExists(String(describing: commodity))
         }
@@ -133,7 +133,7 @@ public class Ledger {
     ///
     /// - Parameter price: `Price` to add
     /// - Throws: If the price already exists
-    public func add(_ price: Price) throws {
+    public func add(_ price: Price) throws(LedgerError) {
         guard self.price[price.commoditySymbol]?[price.amount.commoditySymbol]?[price.date] == nil else {
             throw LedgerError.alreadyExists(String(describing: price))
         }

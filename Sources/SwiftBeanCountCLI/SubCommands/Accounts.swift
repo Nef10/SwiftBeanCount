@@ -34,7 +34,7 @@ struct Accounts: FormattableLedgerCommand {
     @ArgumentParser.Flag(name: [.short, .long], help: "Display the number of accounts.")
     private var count = false
 
-    func validate() throws {
+    func validate() throws(ValidationError) {
         if formatOptions.format == .csv && count {
             throw ValidationError("Cannot print count in csv format. Please remove count flag or specify another format.")
         }

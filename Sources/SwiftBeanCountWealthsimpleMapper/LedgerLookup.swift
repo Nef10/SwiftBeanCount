@@ -64,7 +64,7 @@ struct LedgerLookup {
     /// - Parameter assetSymbol: asset symbol to find the commodity for
     /// - Throws: WealthsimpleConversionError if the commodity cannot be found in the ledger
     /// - Returns: CommoditySymbol
-    func commoditySymbol(for assetSymbol: String) throws -> CommoditySymbol {
+    func commoditySymbol(for assetSymbol: String) throws(WealthsimpleConversionError) -> CommoditySymbol {
         var commodity = ledger.commodities.first { $0.metaData[MetaDataKeys.commoditySymbol] == assetSymbol }
         if commodity == nil {
             commodity = ledger.commodities.first { $0.symbol == assetSymbol }
@@ -86,7 +86,7 @@ struct LedgerLookup {
         for type: AccoutLookupType,
         in account: Wealthsimple.Account,
         ofType accountTypes: [SwiftBeanCountModel.AccountType]
-    ) throws -> AccountName {
+    ) throws(WealthsimpleConversionError) -> AccountName {
         let key: String
         switch type {
         case let .transactionType(transactionType):
@@ -118,7 +118,7 @@ struct LedgerLookup {
     ///   - assetSymbol: Assets symbol in the account. If not specified cash account will be returned
     /// - Throws: WealthsimpleConversionError if the account cannot be found
     /// - Returns: Name of the matching account
-    func ledgerAccountName(of account: Wealthsimple.Account, symbol assetSymbol: String? = nil) throws -> AccountName {
+    func ledgerAccountName(of account: Wealthsimple.Account, symbol assetSymbol: String? = nil) throws(WealthsimpleConversionError) -> AccountName {
         let baseAccount = ledger.accounts.first {
             $0.metaData[MetaDataKeys.importerType] == MetaData.importerType &&
             $0.metaData[MetaDataKeys.number]?.contains(account.number) ?? false

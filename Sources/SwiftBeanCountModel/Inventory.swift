@@ -112,7 +112,7 @@ class Inventory {
     /// - Parameter lot: lot to reduce
     /// - Returns: The price which should be used for the posting of the lot (negative of the amount paid for the units)
     /// - Throws: InventoryError if the lot cannot be reduced (e.g. ambiguous lot match)
-    private func reduce(_ lot: Lot) throws -> MultiCurrencyAmount {
+    private func reduce(_ lot: Lot) throws(InventoryError) -> MultiCurrencyAmount {
         let matches = inventory.indices.filter { inventory[$0].units.commoditySymbol == lot.units.commoditySymbol && lot.cost.matches(cost: inventory[$0].cost) }
         let isTotalReduction = matches.reduce(Decimal()) { $0 + inventory[$1].units.number } == -lot.units.number
         if isTotalReduction {
@@ -146,7 +146,7 @@ class Inventory {
     ///   - matches: indices of matches in the inventory for the cost of the lot to reduce
     /// - Returns: The price which should be used for the posting of the lot (negative of the amount paid for the units)
     /// - Throws: InventoryError, e.g. for the strict booking method
-    private func reduceAmbigious(_ lot: Lot, matches: [Int]) throws -> MultiCurrencyAmount {
+    private func reduceAmbigious(_ lot: Lot, matches: [Int]) throws(InventoryError) -> MultiCurrencyAmount {
         switch bookingMethod {
         case .strict:
             throw InventoryError.ambiguousBooking("Ambigious Booking: \(lot), matches: \(matches.map { "\(inventory[$0])" }.joined(separator: "\n")), inventory: \(self)")
@@ -166,7 +166,7 @@ class Inventory {
     ///   - matches: indices of the matches which should be reduced
     /// - Returns: The price which should be used for the posting of the lot (negative of the amount paid for the units)
     /// - Throws: InventoryError, e.g. if not enough units exist in the inventory
-    private func reduceAmbigious(_ lot: Lot, fromMatchesInOrder matches: [Int]) throws -> MultiCurrencyAmount {
+    private func reduceAmbigious(_ lot: Lot, fromMatchesInOrder matches: [Int]) throws(InventoryError) -> MultiCurrencyAmount {
         var matches = matches
         var toRemove = [Int]()
         var number = lot.units.number

@@ -219,3 +219,8 @@ This project is in an alpha stage, please do not use unless you are open to expe
 ## Contributing
 
 Contributions in form of bug reports or pull requests are very welcome!
+
+
+# Copyright
+
+While my code is licensed under the [MIT License](https://github.com/Nef10/SwiftBeanCount/blob/main/LICENSE), the source repository may include names or other trademarks of TransLink, CompassCard, Rogers, Rogers Bank, Tangerine, Scotiabank, Wealthsimple, RBC, N26, Google, EquatePlus, flatexDEGIRO Bank, Simplii or other entities; potential usage restrictions for these elements still apply and are not touched by the software license. Same applies for the API design. I am in no way affiliated with them other than being customer.

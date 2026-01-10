@@ -1,20 +1,18 @@
-# SwiftBeanCountTax
+# ``SwiftBeanCountTax``
 
-[![CI Status](https://github.com/Nef10/SwiftBeanCountTax/workflows/CI/badge.svg?event=push)](https://github.com/Nef10/SwiftBeanCountTax/actions?query=workflow%3A%22CI%22) [![Documentation percentage](https://nef10.github.io/SwiftBeanCountTax/badge.svg)](https://nef10.github.io/SwiftBeanCountTax/) [![License: MIT](https://img.shields.io/github/license/Nef10/SwiftBeanCountTax)](https://github.com/Nef10/SwiftBeanCountTax/blob/main/LICENSE) [![Latest version](https://img.shields.io/github/v/release/Nef10/SwiftBeanCountTax?label=SemVer&sort=semver)](https://github.com/Nef10/SwiftBeanCountTax/releases) ![platforms supported: linux | macOS | iOS | watchOS | tvOS](https://img.shields.io/badge/platform-linux%20%7C%20macOS%20%7C%20iOS%20%7C%20watchOS%20%7C%20tvOS-blue) ![SPM compatible](https://img.shields.io/badge/SPM-compatible-blue)
+Tax calculation utilities for SwiftBeanCount ledgers.
 
-### ***This project is part for SwiftBeanCount, please check out the main documentation [here](https://github.com/Nef10/SwiftBeanCount).***
-
-## What
+## Overview
 
 This is a library to help you during tax season. Right now it can list taxable sales and generate expected tax slips based on your beancount file. This allows you to easily verify your received tax slips to check for errors on either the providers side or your tracking.
 
-## Beancount meta data
+## Beancount Meta Data
 
 The library relies on meta data and custom directives in your Beancount file for configuration.
 
 ### Taxable Sales
 
-On the account you are selling from, add the `"tax-sale"` meta data, specifing the name the sales should show be grouped by, usually the brokers name.
+On the account you are selling from, add the `"tax-sale"` meta data, specifying the name the sales should show be grouped by, usually the brokers name.
 
 ### Tax Slips
 
@@ -40,7 +38,7 @@ Example:
 
 Some tax slips are split up by individual stock / ETF. To configure this, either the last or second last part of the account name must match a configured commodity or you add `tax-symbol` meta-data to the account.
 
-Aditionally to the symbol, you can add a description. For a commodity add `name` or on an account the `tax-description` meta data.
+Additionally to the symbol, you can add a description. For a commodity add `name` or on an account the `tax-description` meta data.
 
 Example:
 
@@ -58,7 +56,7 @@ Example:
 ```
 If your account has the name matching to a commodity, but you don't want to treat it as one, add `tax-symbol: ""` to it.
 
-#### Split accounts
+#### Split Accounts
 
 Sometimes, if you split up your slip by stock, you don't want to create a separate account for everything. E.g. you track the dividends via different income accounts, but don't want to create separate expense accounts per stock for tax paid. To do this:
 
@@ -98,21 +96,9 @@ At all other places used, remove the brackets, e.g. use `t4ap`:
 
 Sometimes income is earned in one year, but only paid in another; or a sale is performed in one year but only settled in the next. You can change the year a transaction should count towards via the `tax-year` meta data on a transaction, e.g. `tax-year: "2022"`.
 
-## How
+## How to Use
 
-1) Load your ledger, e.g. via  [SwiftBeanCountParser](https://github.com/Nef10/SwiftBeanCountParser)
+1) Load your ledger, e.g. via  [SwiftBeanCountParser](/SwiftBeanCount/documentation/swiftbeancountparser)
 2) Call one of the public functions on `TaxCalculator`, for example:
     1) `TaxCalculator.generateTaxSlips(from ledger: Ledger, for year: Int)`
     2) `TaxCalculator.getTaxableSales(from ledger: Ledger, for year: Int)`
-
-Please also check out the complete documentation [here](https://nef10.github.io/SwiftBeanCountTax/).
-
-## Usage
-
-The library supports the Swift Package Manger, so simply add a dependency in your `Package.swift`:
-
-```
-.package(url: "https://github.com/Nef10/SwiftBeanCountTax.git", .exact(from: "X.Y.Z")),
-```
-
-*Note: as per semantic versioning all versions changes < 1.0.0 can be breaking, so please use `.exact` for now*

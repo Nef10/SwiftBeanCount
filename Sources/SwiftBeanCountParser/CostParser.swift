@@ -66,7 +66,7 @@ enum CostParser {
     ///   - date: The parsed date
     ///   - label: The parsed label
     /// - Throws: Error if unexpected elements are found
-    private static func validateCostContent(_ costString: String, amount: Amount?, date: Date?, label: String?) throws {
+    private static func validateCostContent(_ costString: String, amount: Amount?, date: Date?, label: String?) throws(CostParsingError) {
         // Remove the braces and extract the content
         let content = String(costString.dropFirst().dropLast()).trimmingCharacters(in: .whitespaces)
 
