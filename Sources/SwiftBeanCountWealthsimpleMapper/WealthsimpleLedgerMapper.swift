@@ -81,7 +81,7 @@ public struct WealthsimpleLedgerMapper { // swiftlint:disable:this type_body_len
     /// - Parameter positions: downloaded positions from one account
     /// - Throws: WealthsimpleConversionError
     /// - Returns: Prices and Balances
-    public func mapPositionsToPriceAndBalance(_ positions: [Position]) throws(any Error) -> ([Price], [Balance]) {
+    public func mapPositionsToPriceAndBalance(_ positions: [Position]) throws -> ([Price], [Balance]) {
         guard let firstPosition = positions.first else {
             return ([], [])
         }
@@ -123,7 +123,7 @@ public struct WealthsimpleLedgerMapper { // swiftlint:disable:this type_body_len
     /// - Returns: Prices and Transactions
     public func mapTransactionsToPriceAndTransactions(
         _ wealthsimpleTransactions: [Wealthsimple.Transaction]
-    ) throws(any Error) -> ([Price], [SwiftBeanCountModel.Transaction]) {
+    ) throws -> ([Price], [SwiftBeanCountModel.Transaction]) {
         guard let firstTransaction = wealthsimpleTransactions.first else {
             return ([], [])
         }
@@ -294,7 +294,7 @@ public struct WealthsimpleLedgerMapper { // swiftlint:disable:this type_body_len
         return (try Price(date: transaction.processDate, commoditySymbol: lookup.commoditySymbol(for: transaction.symbol), amount: transaction.marketPrice), result)
     }
 
-    private func mapNonResidentWithholdingTax(_ transaction: WTransaction, in account: WAccount) throws(any Error) -> STransaction {
+    private func mapNonResidentWithholdingTax(_ transaction: WTransaction, in account: WAccount) throws -> STransaction {
         let amount = try parseNRWTDescription(transaction.description)
         let price = Amount(number: transaction.fxAmount.number, commoditySymbol: amount.commoditySymbol, decimalDigits: transaction.fxAmount.decimalDigits)
         let posting1 = Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash, price: price)

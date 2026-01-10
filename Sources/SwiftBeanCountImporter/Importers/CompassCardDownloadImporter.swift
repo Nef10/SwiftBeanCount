@@ -29,7 +29,7 @@ protocol SwiftBeanCountCompassCardMapperProvider {
     var defaultAssetAccountName: AccountName { get }
 
     func createBalance(cardNumber: String, balance: String, date: Date?) throws -> Balance
-    func createTransactions(cardNumber: String, transactions: String) throws(any Error) -> [Transaction]
+    func createTransactions(cardNumber: String, transactions: String) throws -> [Transaction]
     func ledgerCardAccountName(cardNumber: String) throws -> AccountName
 }
 
@@ -162,7 +162,7 @@ class CompassCardDownloadImporter: BaseImporter, DownloadImporter {
         }
     }
 
-    private func mapTransactions(_ importedTransactions: [Transaction], cardNumber: String) throws(any Error) {
+    private func mapTransactions(_ importedTransactions: [Transaction], cardNumber: String) throws {
         transactions = importedTransactions.map {
             let defaultAccounts = [mapper.defaultExpenseAccountName, mapper.defaultAssetAccountName]
             let description = $0.metaData.narration

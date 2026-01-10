@@ -26,7 +26,7 @@ enum PostingParser {
     ///   - line: string of one line
     /// - Returns: a Posting or nil if the line does not contain a valid Posting
     /// - Throws: When it is a valid posting string with invalid values
-    static func parseFrom(line: String, metaData: [String: String] = [:]) throws(any Error) -> Posting? {
+    static func parseFrom(line: String, metaData: [String: String] = [:]) throws -> Posting? {
         let postingMatches = line.matchingStrings(regex: self.regex)
         guard let match = postingMatches[safe: 0] else {
             return nil

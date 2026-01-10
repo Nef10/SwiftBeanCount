@@ -32,7 +32,7 @@ public enum Parser {
     /// - Parameter contentOf: URL to parse Encoding has to be UTF-8
     /// - Returns: Ledger with parsed content
     /// - Throws: Exceptions from opening the file
-    public static func parse(contentOf path: URL) throws(any Error) -> Ledger {
+    public static func parse(contentOf path: URL) throws -> Ledger {
         let text = try String(contentsOf: path)
         return self.parse(string: text)
     }

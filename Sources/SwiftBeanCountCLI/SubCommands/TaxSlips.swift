@@ -18,7 +18,7 @@ struct TaxSlips: FormattableLedgerCommand {
     @OptionGroup()
     var colorOptions: ColorizedCommandOptions
 
-    func getResult(from ledger: Ledger, parsingDuration _: Double) throws(any Error) -> [FormattableResult] {
+    func getResult(from ledger: Ledger, parsingDuration _: Double) throws -> [FormattableResult] {
         try TaxCalculator.generateTaxSlips(from: ledger, for: year).filter { slip != nil ? $0.name.lowercased() == slip!.lowercased() : true }.map { slip in
             var values: [[String]] = slip.rows.map {
                 slip.symbols.isEmpty ? $0.values.map(\.displayValue) : [$0.symbol!, $0.name!] + $0.values.map(\.displayValue)

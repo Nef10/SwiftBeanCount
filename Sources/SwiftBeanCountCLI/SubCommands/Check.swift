@@ -14,7 +14,7 @@ struct Check: LedgerCommand, ColorizedCommand {
     @OptionGroup()
     var colorOptions: ColorizedCommandOptions
 
-    func run() throws(any Error) {
+    func run() throws {
         adjustColorization()
         let ledger = try parseLedger()
         let errors = ledger.errors

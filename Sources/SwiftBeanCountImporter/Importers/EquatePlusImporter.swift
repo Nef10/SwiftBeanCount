@@ -343,7 +343,7 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
         return result
     }
 
-    private func getTransactionsAndPrices(_ matchedTransactions: [MatchedTransaction]) throws(any Error) -> ([ImportedTransaction], [Price]) {
+    private func getTransactionsAndPrices(_ matchedTransactions: [MatchedTransaction]) throws -> ([ImportedTransaction], [Price]) {
         let prices: [Price] = matchedTransactions.compactMap { try? Price(date: $0.date, commoditySymbol: stockCommodity, amount: $0.price) }
         let transactions = try matchedTransactions.map {
             var postings = [Posting]()

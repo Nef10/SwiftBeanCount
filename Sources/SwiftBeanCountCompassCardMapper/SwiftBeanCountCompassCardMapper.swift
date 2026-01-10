@@ -94,7 +94,7 @@ public struct SwiftBeanCountCompassCardMapper {
     ///   - cardNumber: String with the compass card number
     ///   - transactions: String of the transaction CSV
     /// - Returns: Array of transactions
-    public func createTransactions(cardNumber: String, transactions: String) throws(any Error) -> [Transaction] {
+    public func createTransactions(cardNumber: String, transactions: String) throws -> [Transaction] {
         let account = try ledgerCardAccountName(cardNumber: cardNumber)
         let reader = try CSVReader(string: transactions, hasHeaderRow: true)
         return try createTransactions(getRows(reader), cardNumber: cardNumber, account: account)
@@ -108,7 +108,7 @@ public struct SwiftBeanCountCompassCardMapper {
     ///   - account: AccountName of asset account in the ledger
     ///   - reader: CSVReader with the transaction CSV
     /// - Returns: Array of transactions
-    public func createTransactions(account: AccountName, reader: CSVReader) throws(any Error) -> [Transaction] {
+    public func createTransactions(account: AccountName, reader: CSVReader) throws -> [Transaction] {
         try createTransactions(getRows(reader), cardNumber: nil, account: account)
     }
 
@@ -124,7 +124,7 @@ public struct SwiftBeanCountCompassCardMapper {
         return accountName
     }
 
-    private func getRows(_ reader: CSVReader) throws(any Error) -> [TransactionRow] {
+    private func getRows(_ reader: CSVReader) throws -> [TransactionRow] {
         var rows = [TransactionRow]()
         let decoder = CSVRowDecoder()
         decoder.dateDecodingStrategy = .formatted(Self.dateFormatter)
@@ -136,7 +136,7 @@ public struct SwiftBeanCountCompassCardMapper {
     }
 
     // swiftlint:disable:next function_body_length
-    private func createTransactions(_ transactions: [TransactionRow], cardNumber: String?, account: AccountName) throws(any Error) -> [Transaction] {
+    private func createTransactions(_ transactions: [TransactionRow], cardNumber: String?, account: AccountName) throws -> [Transaction] {
         var result = [Transaction]()
 
         var currentJourney = ""

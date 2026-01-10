@@ -27,9 +27,9 @@ protocol TangerineDownloaderProvider: AnyObject {
 protocol SwiftBeanCountTangerineMapperProvider {
     var defaultAccountName: AccountName { get }
 
-    func createTransactions(_ rawTransactions: [String: [[String: Any]]]) throws(any Error) -> [Transaction]
+    func createTransactions(_ rawTransactions: [String: [[String: Any]]]) throws -> [Transaction]
     func createBalances(accounts: [[String: Any]], date: Date) throws -> [Balance]
-    func ledgerAccountName(account: [String: Any]) throws(any Error) -> AccountName
+    func ledgerAccountName(account: [String: Any]) throws -> AccountName
 }
 
 class TangerineDownloadImporter: BaseImporter, DownloadImporter {
@@ -156,7 +156,7 @@ class TangerineDownloadImporter: BaseImporter, DownloadImporter {
         }
     }
 
-    private func mapTransactions(_ downloadedTransactions: [String: [[String: Any]]]) throws(any Error) {
+    private func mapTransactions(_ downloadedTransactions: [String: [[String: Any]]]) throws {
         transactions = try mapper.createTransactions(downloadedTransactions).map {
             if !$0.metaData.payee.isEmpty || $0.metaData.metaData["id"]?.contains(" ") ?? false {
                 return ImportedTransaction($0, shouldAllowUserToEdit: false)
@@ -262,7 +262,7 @@ extension TangerineDownloadImporter: TangerineDownloaderDelegate {
 }
 
 extension SwiftBeanCountTangerineMapperProvider {
-    func createBalances(accounts: [[String: Any]]) throws(any Error) -> [Balance] {
+    func createBalances(accounts: [[String: Any]]) throws -> [Balance] {
         try createBalances(accounts: accounts, date: Date())
     }
 }

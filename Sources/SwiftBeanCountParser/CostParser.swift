@@ -33,7 +33,7 @@ enum CostParser {
 
     static let costGroup = "(\\{\\s*\(costLabelGroup)\(costPriceGroup)\(costDateGroup).*\\})"
 
-    static func parseFrom(match: [String], startIndex: Int) throws(any Error) -> Cost? {
+    static func parseFrom(match: [String], startIndex: Int) throws -> Cost? {
         var cost: Cost?
         if !match[startIndex].isEmpty { // cost
             var amount: Amount?
