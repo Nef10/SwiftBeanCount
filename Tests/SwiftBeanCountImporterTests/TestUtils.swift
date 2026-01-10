@@ -18,22 +18,16 @@ class TestStorage: SettingsStorage {
     var storage = [String: Any]()
 
    @Test
-
-
    func set(_ value: Any?, forKey defaultName: String) {
         storage[defaultName] = value
     }
 
    @Test
-
-
    func string(forKey defaultName: String) -> String? {
         storage[defaultName] as? String
     }
 
    @Test
-
-
    func dictionary(forKey defaultName: String) -> [String: Any]? { // swiftlint:disable:this discouraged_optional_collection
         storage[defaultName] as? [String: Any]
     }
@@ -204,8 +198,6 @@ enum TestUtils {
 extension XCTestCase {
 
    @Test
-
-
    func temporaryFileURL() -> URL {
         let directory = NSTemporaryDirectory()
         let url = URL(fileURLWithPath: directory).appendingPathComponent(UUID().uuidString)
@@ -226,8 +218,6 @@ extension XCTestCase {
     }
 
    @Test
-
-
    func createFile(at url: URL, content: String) {
         do {
             try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)

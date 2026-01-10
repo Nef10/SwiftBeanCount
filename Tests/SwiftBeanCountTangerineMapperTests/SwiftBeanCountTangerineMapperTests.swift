@@ -17,15 +17,11 @@ struct SwiftBeanCountTangerineMapperTests {
     private let mapper = SwiftBeanCountTangerineMapper(ledger: Ledger())
 
    @Test
-
-
    func testDefaultAccountName() throws {
         #expect(mapper.defaultAccountName == try AccountName("Expenses:TODO"))
     }
 
    @Test
-
-
    func testCreateBalances() throws {
         let accounts = [creditCard, chequing, loan, savings, ["type": "SAVINGS", "display_name": "1001"]]
         let ledger = Ledger()
@@ -56,8 +52,6 @@ struct SwiftBeanCountTangerineMapperTests {
     }
 
    @Test
-
-
    func testCreateBalancesExceptions() {
         // No account
         XCTAssertThrowsError(try mapper.createBalances(accounts: [creditCard])) {
@@ -82,8 +76,6 @@ struct SwiftBeanCountTangerineMapperTests {
     }
 
    @Test
-
-
    func testCreateTransactionsAlreadyExists() throws {
         let transactions = [ "account": [["id": 12_345]]]
         let ledger = Ledger()
@@ -100,8 +92,6 @@ struct SwiftBeanCountTangerineMapperTests {
     }
 
    @Test
-
-
    func testCreateTransactions() throws {
         let transactions = ["Assets:Checking": [["posted_date": "2022-10-10T10:10:10", "description": "ABC", "amount": 10.50] as [String: Any]]]
         let result = try mapper.createTransactions(transactions)
@@ -115,8 +105,6 @@ struct SwiftBeanCountTangerineMapperTests {
     }
 
    @Test
-
-
    func testCreateTransactionCreditCardRewardNotSetup() throws {
         let transactions: [String: [[String: Any]]] =
             ["Assets:Savings:Tangerine": [["id": 852_254, "posted_date": "2022-10-10T10:10:10", "description": "ABC", "amount": 10.50, "type": "CC_RE"] as [String: Any]]]
@@ -131,8 +119,6 @@ struct SwiftBeanCountTangerineMapperTests {
     }
 
    @Test
-
-
    func testCreateTransactionCreditCardReward() throws {
         let ledger = Ledger()
         let accountName1 = try AccountName("Assets:Savings:Tangerine")
@@ -156,8 +142,6 @@ struct SwiftBeanCountTangerineMapperTests {
     }
 
    @Test
-
-
    func testCreateInterestTransactionNotSetup() throws {
         let ledger = Ledger()
         let accountName1 = try AccountName("Assets:Savings:Tangerine")
@@ -177,8 +161,6 @@ struct SwiftBeanCountTangerineMapperTests {
     }
 
    @Test
-
-
    func testCreateInterestTransaction() throws {
         let ledger = Ledger()
         let accountName1 = try AccountName("Assets:Savings:Tangerine")
@@ -205,8 +187,6 @@ struct SwiftBeanCountTangerineMapperTests {
     }
 
    @Test
-
-
    func testCreateTransactionsCommoditySymbol() throws {
         let transactions = [ "Assets:Checking": [["posted_date": "2022-10-10T10:10:10", "description": "ABC", "amount": 10.50] as [String: Any]]]
         let ledger = Ledger()
@@ -223,8 +203,6 @@ struct SwiftBeanCountTangerineMapperTests {
     }
 
    @Test
-
-
    func testCreateTransactionsEmpty() throws {
         let transactions = [ "Assets:Checking": [["posted_date": "2022-10-10T10:10:10"]]]
         let ledger = Ledger()
@@ -246,8 +224,6 @@ struct SwiftBeanCountTangerineMapperTests {
     }
 
    @Test
-
-
    func testLedgerAccountNameEmptyDict() {
         XCTAssertThrowsError(try mapper.ledgerAccountName(account: [:])) {
              assertAccountNotFound(thrownError: $0, account: [:])
@@ -255,8 +231,6 @@ struct SwiftBeanCountTangerineMapperTests {
     }
 
    @Test
-
-
    func testLedgerAccountNameCreditCard() throws {
         // No Account
         var mapper = SwiftBeanCountTangerineMapper(ledger: Ledger())
@@ -293,8 +267,6 @@ struct SwiftBeanCountTangerineMapperTests {
     }
 
    @Test
-
-
    func testLedgerAccountNameLoan() throws {
         // No Account
         XCTAssertThrowsError(try mapper.ledgerAccountName(account: loan)) {
@@ -330,8 +302,6 @@ struct SwiftBeanCountTangerineMapperTests {
     }
 
    @Test
-
-
    func testLedgerAccountNameChequing() throws {
         // No Account
         XCTAssertThrowsError(try mapper.ledgerAccountName(account: chequing)) {
@@ -367,8 +337,6 @@ struct SwiftBeanCountTangerineMapperTests {
     }
 
    @Test
-
-
    func testLedgerAccountNameSavings() throws {
         // No Account
         XCTAssertThrowsError(try mapper.ledgerAccountName(account: savings)) {

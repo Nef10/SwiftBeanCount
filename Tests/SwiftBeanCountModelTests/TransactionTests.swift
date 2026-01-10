@@ -65,15 +65,11 @@ struct TransactionTests {
     }
 
    @Test
-
-
    func testDescriptionWithoutPosting() {
         #expect(String(describing: transaction1WithoutPosting!) == String(describing: transaction1WithoutPosting!.metaData))
     }
 
    @Test
-
-
    func testDescriptionWithPostings() {
         #expect(String(describing: transaction1WithPosting1And2!) == String(describing: transaction1WithPosting1And2!.metaData) + "\n"
                          + String(describing: transaction1WithPosting1And2!.postings[0]) + "\n"
@@ -81,8 +77,6 @@ struct TransactionTests {
     }
 
    @Test
-
-
    func testEqual() {
         #expect(transaction1WithoutPosting == transaction2WithoutPosting)
         #expect(!(transaction1WithoutPosting < transaction2WithoutPosting))
@@ -90,8 +84,6 @@ struct TransactionTests {
     }
 
    @Test
-
-
    func testEqualWithPostings() {
         #expect(transaction1WithPosting1And2 == transaction2WithPosting1And2)
         #expect(!(transaction1WithPosting1And2 < transaction2WithPosting1And2))
@@ -99,8 +91,6 @@ struct TransactionTests {
     }
 
    @Test
-
-
    func testEqualRespectsPostings() {
         #expect(transaction1WithPosting1 != transaction1WithPosting1And2)
         #expect(transaction1WithPosting1 < transaction1WithPosting1And2)
@@ -108,8 +98,6 @@ struct TransactionTests {
     }
 
    @Test
-
-
    func testEqualRespectsTransactionMetaData() {
         #expect(transaction1WithPosting1 != transaction3WithPosting1)
         #expect(!(transaction1WithPosting1 < transaction3WithPosting1))
@@ -117,8 +105,6 @@ struct TransactionTests {
     }
 
    @Test
-
-
    func testIsValid() {
         guard case .valid = transaction2WithPosting1And2!.validate(in: ledger) else {
             XCTFail("\(transaction2WithPosting1And2!) is not valid")
@@ -127,8 +113,6 @@ struct TransactionTests {
     }
 
    @Test
-
-
    func testIsValidFromOutsideLedger() {
         let ledger = Ledger()
         guard case .invalid = transaction2WithPosting1And2!.validate(in: ledger) else {
@@ -138,8 +122,6 @@ struct TransactionTests {
     }
 
    @Test
-
-
    func testIsValidWithoutPosting() {
         if case .invalid(let error) = transaction1WithoutPosting!.validate(in: ledger) {
             #expect(error == "2017-06-08 * \"Payee\" \"Narration\" has no postings")
@@ -149,8 +131,6 @@ struct TransactionTests {
     }
 
    @Test
-
-
    func testIsValidInvalidPosting() throws {
         // Accounts are not opened
         let ledger = Ledger()
@@ -169,8 +149,6 @@ struct TransactionTests {
     }
 
    @Test
-
-
    func testIsValidUnbalanced() {
         if case .invalid(let error) = transaction1WithPosting1!.validate(in: ledger) {
             XCTAssertEqual(error, """
@@ -183,8 +161,6 @@ struct TransactionTests {
     }
 
    @Test
-
-
    func testIsValidUnbalancedIntegerTolerance() {
         // Assets:Cash     -1  EUR
         // Assets:Checking 10.00000 CAD @ 0.101 EUR
@@ -214,8 +190,6 @@ struct TransactionTests {
     }
 
    @Test
-
-
    func testIsValidUnbalancedTolerance() {
         // Assets:Cash     -8.52  EUR
         // Assets:Checking 10.00000 CAD @ 0.85251 EUR
@@ -247,8 +221,6 @@ struct TransactionTests {
     }
 
    @Test
-
-
    func testIsValidUnusedCommodity() {
         // Assets:Checking 10.00000 CAD @ 0.85251 EUR
 
@@ -270,8 +242,6 @@ struct TransactionTests {
     }
 
    @Test
-
-
    func testIsValidBalancedTolerance() {
         // Assets:Cash     -8.52  EUR
         // Assets:Checking 10.00000 CAD @ 0.85250 EUR
@@ -297,8 +267,6 @@ struct TransactionTests {
     }
 
    @Test
-
-
    func testIsValidBalancedToleranceCost() throws {
         // Assets:Cash     -8.52  EUR
         // Assets:Checking 10.00000 CAD { 0.85250 EUR }
@@ -327,8 +295,6 @@ struct TransactionTests {
     }
 
    @Test
-
-
    func testIsValidUnbalancedToleranceCost() throws {
         // Assets:Cash     -8.52  EUR
         // Assets:Checking 10.00000 CAD { 0.85251 EUR }
@@ -363,8 +329,6 @@ struct TransactionTests {
     }
 
    @Test
-
-
    func testEffectZeroPrice() throws {
         // Assets:Cash     -8.52  EUR
         // Assets:Checking 10.00000 CAD @ 0.85250 EUR
@@ -385,8 +349,6 @@ struct TransactionTests {
     }
 
    @Test
-
-
    func testEffectCost() throws {
         // Income:Test     -8.52  EUR
         // Assets:Checking 10.00000 CAD { 0.85250 EUR }

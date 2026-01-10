@@ -17,8 +17,6 @@ import Testing
 struct RogersImporterTests {
 
    @Test
-
-
    func testHeaders() {
         XCTAssertEqual(RogersImporter.headers, [
             ["Transaction Date", "Activity Type", "Merchant Name", "Merchant Category", "Amount"],
@@ -33,36 +31,26 @@ struct RogersImporterTests {
     }
 
    @Test
-
-
    func testImporterName() {
         #expect(RogersImporter.importerName == "Rogers Bank")
     }
 
    @Test
-
-
    func testImporterType() {
         #expect(RogersImporter.importerType == "rogers")
     }
 
    @Test
-
-
    func testHelpText() {
         #expect(RogersImporter.helpText == "Enables importing of downloaded CSV files from Rogers Bank Credit Cards.\n\nTo use add importer-type: \"rogers\" to your account.")
     }
 
    @Test
-
-
    func testImportName() throws {
         #expect(RogersImporter(ledger: nil == csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "Rogers Bank File TestName")
     }
 
    @Test
-
-
    func testParseLine1() throws {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: try TestUtils.csvReader(content: """
@@ -82,8 +70,6 @@ struct RogersImporterTests {
     }
 
    @Test
-
-
    func testParseLine2() throws {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: try TestUtils.csvReader(content: """
@@ -103,8 +89,6 @@ struct RogersImporterTests {
     }
 
    @Test
-
-
    func testParseLine3() throws {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: try TestUtils.csvReader(content: """
@@ -124,8 +108,6 @@ struct RogersImporterTests {
     }
 
    @Test
-
-
    func testParseLine4() throws {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: try TestUtils.csvReader(content: """
@@ -145,8 +127,6 @@ struct RogersImporterTests {
     }
 
    @Test
-
-
    func testParseLine5() throws {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: try TestUtils.csvReader(content: """
@@ -166,8 +146,6 @@ struct RogersImporterTests {
     }
 
    @Test
-
-
    func testParseLine6() throws {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: try TestUtils.csvReader(content: """
@@ -187,8 +165,6 @@ struct RogersImporterTests {
     }
 
    @Test
-
-
    func testParseLine7() throws {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: try TestUtils.csvReader(content: """
@@ -208,8 +184,6 @@ struct RogersImporterTests {
     }
 
    @Test
-
-
    func testParseLine8() throws {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: try TestUtils.csvReader(content: """
@@ -229,8 +203,6 @@ struct RogersImporterTests {
     }
 
    @Test
-
-
    func testParseLineCashBack() throws {
         let importer = RogersImporter(ledger: nil,
                                       csvReader: try TestUtils.csvReader(content: """

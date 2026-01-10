@@ -16,7 +16,6 @@ struct StringTests {
 
     @Test
    @Test
-
    func matchingStrings_multipleGroups() throws {
         let regex = try NSRegularExpression(pattern: "^\\s+([^\\s]+:[^\\s]+)\\s+(-?[0-9]+(.[0-9]+)?)\\s+([^\\s]+)\\s*(;.*)?$", options: [])
         let results = "  Assets:Checking 1.00 EUR".matchingStrings(regex: regex)
@@ -26,7 +25,6 @@ struct StringTests {
 
     @Test
    @Test
-
    func matchingStrings_multipleResults() throws {
         let regex = try NSRegularExpression(pattern: "\\d\\D\\d", options: [])
         let results = "0a01b1".matchingStrings(regex: regex)
@@ -37,7 +35,6 @@ struct StringTests {
 
     @Test
    @Test
-
    func matchingStrings_ExtendedGraphemeClusters() throws {
         var regex = try NSRegularExpression(pattern: "[0-9]", options: [])
         var results = "🇩🇪€4€9".matchingStrings(regex: regex)
@@ -53,7 +50,6 @@ struct StringTests {
 
     @Test
    @Test
-
    func amountDecimal() {
         var (decimal, decimalDigits) = "1".amountDecimal()
         #expect(decimal == Decimal(1))

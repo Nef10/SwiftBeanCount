@@ -43,94 +43,68 @@ struct AccountParserTests {
     private let bookingMethodInClosingString = "2017-06-09 close Assets:Cash \"FIFO\" ;gfsd"
 
    @Test
-
-
    func testBasic() {
         testWith(openingString: basicOpeningString, closingString: basicClosingString, commoditySymbol: nil)
     }
 
    @Test
-
-
    func testInvalidName() {
         let account = AccountParser.parseFrom(line: invalidNameOpeningString)
         #expect(account == nil)
     }
 
    @Test
-
-
    func testWhitespace() {
         testWith(openingString: whitespaceOpeningString, closingString: whitespaceClosingString, commoditySymbol: "CAD")
     }
 
    @Test
-
-
    func testEndOfLineComment() {
         testWith(openingString: endOfLineCommentOpeningString, closingString: endOfLineCommentClosingString, commoditySymbol: "EUR")
     }
 
    @Test
-
-
    func testSpecialCharacter() {
         testWith(openingString: specialCharacterOpeningString, closingString: specialCharacterClosingString, commoditySymbol: "💵")
     }
 
    @Test
-
-
    func testInvalidCloseWithCommodity() {
         #expect(AccountParser.parseFrom(line: invalidCloseWithCommodityString == nil))
     }
 
    @Test
-
-
    func testInvalidCloseDate() {
         #expect(AccountParser.parseFrom(line: invalidCloseDateString == nil))
     }
 
    @Test
-
-
    func testCommodityWithSemicolon() {
         testWith(openingString: commodityWithSemicolonOpeningString, closingString: commodityWithSemicolonClosingString, commoditySymbol: "EUR;test")
     }
 
    @Test
-
-
    func testBookingMethodStrict() {
         testWith(openingString: bookingMethodStrictOpeningString, closingString: bookingMethodClosingString, commoditySymbol: "EUR;test", bookingMethod: .strict)
     }
 
    @Test
-
-
    func testBookingMethodLifo() {
         testWith(openingString: bookingMethodLifoOpeningString, closingString: bookingMethodClosingString, commoditySymbol: "EUR", bookingMethod: .lifo)
     }
 
    @Test
-
-
    func testBookingMethodFifo() {
         testWith(openingString: bookingMethodFifoOpeningString, closingString: bookingMethodClosingString, commoditySymbol: "💵", bookingMethod: .fifo)
     }
 
    @Test
-
-
    func testBookingMethodInClosingString() {
         let account = AccountParser.parseFrom(line: bookingMethodInClosingString)
         #expect(account == nil)
     }
 
    @Test
-
-
    func testPerformance() {
         self.measure {
             for _ in 0...1_000 {

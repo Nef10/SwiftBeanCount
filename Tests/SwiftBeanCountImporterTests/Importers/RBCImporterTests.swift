@@ -17,43 +17,31 @@ import Testing
 struct RBCImporterTests {
 
    @Test
-
-
    func testHeaders() {
         #expect(RBCImporter.headers == [["Account Type", "Account Number", "Transaction Date", "Cheque Number", "Description 1", "Description 2", "CAD$", "USD$"]])
     }
 
    @Test
-
-
    func testImporterName() {
         #expect(RBCImporter.importerName == "RBC")
     }
 
    @Test
-
-
    func testImporterType() {
         #expect(RBCImporter.importerType == "rbc")
     }
 
    @Test
-
-
    func testHelpText() {
         #expect(RBCImporter.helpText == "Enables importing of downloaded CSV files from RBC Accounts and Credit Cards.\n\nTo use add importer-type: \"rbc\" to your accounts.")
     }
 
    @Test
-
-
    func testImportName() throws {
         #expect(RBCImporter(ledger: nil == csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "RBC File TestName")
     }
 
    @Test
-
-
    func testParseLineAccount() throws {
         let importer = RBCImporter(ledger: nil,
                                    csvReader: try TestUtils.csvReader(content: """
@@ -73,8 +61,6 @@ Chequing,01234-1234567,6/10/2017,,"Merchant",,-4.00,,\n
     }
 
    @Test
-
-
    func testParseLineCard() throws {
         let importer = RBCImporter(ledger: nil,
                                    csvReader: try TestUtils.csvReader(content: """
@@ -94,8 +80,6 @@ MasterCard,1234123412341234,6/5/2020,,"Test Store",,-4.47,,\n
     }
 
    @Test
-
-
    func testParseLineBothDescriptions() throws {
         let importer = RBCImporter(ledger: nil,
                                    csvReader: try TestUtils.csvReader(content: """
@@ -114,8 +98,6 @@ Chequing,01234-1234567,4/1/2020,,"INTER-FI FUND TR DR","Sender",-400.00,,\n
     }
 
    @Test
-
-
    func testParseLineMonthlyFee() throws {
         let importer = RBCImporter(ledger: nil,
                                    csvReader: try TestUtils.csvReader(content: """

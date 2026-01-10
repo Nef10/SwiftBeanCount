@@ -35,36 +35,26 @@ struct EquatePlusImporterTests {
     }
 
    @Test
-
-
    func testImporterName() {
         #expect(EquatePlusImporter.importerName == "EquatePlus")
     }
 
    @Test
-
-
    func testImporterType() {
         #expect(EquatePlusImporter.importerType == "equateplus")
     }
 
    @Test
-
-
    func testHelpText() {
         #expect(EquatePlusImporter.helpText.contains("importer-type: \"equateplus\""))
     }
 
    @Test
-
-
    func testImportName() {
         #expect(loadedImporter().importName == "EquatePlus Text")
     }
 
    @Test
-
-
    func testBalanceImport() {
         let importer = EquatePlusImporter(ledger: nil, transaction: "", balance: "TEST")
         let delegate = ErrorDelegate(error: EquatePlusImporterError.balanceImportNotSupported("TEST"))
@@ -74,8 +64,6 @@ struct EquatePlusImporterTests {
     }
 
    @Test
-
-
    func testParseEmpty() {
         let importer = loadedImporter()
         #expect(importer.nextTransaction( == nil))
@@ -84,8 +72,6 @@ struct EquatePlusImporterTests {
     }
 
    @Test
-
-
    func testWrongContributionDate() {
         let importer = EquatePlusImporter(ledger: nil, transaction: wrongContributionDate, balance: "")
         let delegate = ErrorDelegate(error: EquatePlusImporterError.failedToParseDate("Nov. 32, 2023"))
@@ -95,8 +81,6 @@ struct EquatePlusImporterTests {
     }
 
    @Test
-
-
    func testWrongPurchaseDate() {
         let importer = EquatePlusImporter(ledger: nil, transaction: wrongPurchaseDate, balance: "")
         let delegate = ErrorDelegate(error: EquatePlusImporterError.failedToParseDate("Dec. 32, 2023"))
@@ -106,8 +90,6 @@ struct EquatePlusImporterTests {
     }
 
    @Test
-
-
    func testWrongTransactionDate() {
         let importer = EquatePlusImporter(ledger: nil, transaction: wrongTransactionDate, balance: "")
         let delegate = ErrorDelegate(error: EquatePlusImporterError.failedToParseDate("Dec. 33, 2023"))
@@ -117,8 +99,6 @@ struct EquatePlusImporterTests {
     }
 
    @Test
-
-
    func testInvalidPurchaseTransactionMapping() {
         let importer = EquatePlusImporter(ledger: nil, transaction: invalidPurchaseTransactionMapping, balance: "")
         let delegate = ErrorDelegate(error: EquatePlusImporterError.invalidTransactionMapping(
@@ -130,8 +110,6 @@ struct EquatePlusImporterTests {
     }
 
    @Test
-
-
    func testInvalidMatchTransactionMapping() {
         let importer = EquatePlusImporter(ledger: nil, transaction: invalidMatchTransactionMapping, balance: "")
         let delegate = ErrorDelegate(error: EquatePlusImporterError.invalidTransactionMapping(
@@ -143,8 +121,6 @@ struct EquatePlusImporterTests {
     }
 
    @Test
-
-
    func testInvalidYouContributionMapping() {
         let importer = EquatePlusImporter(ledger: nil, transaction: invalidYouContributionMapping, balance: "")
         let delegate = ErrorDelegate(error: EquatePlusImporterError.invalidContributionMapping(
@@ -156,8 +132,6 @@ struct EquatePlusImporterTests {
     }
 
    @Test
-
-
    func testinvalidEmployerContributionMapping() {
         let importer = EquatePlusImporter(ledger: nil, transaction: invalidEmployerContributionMapping, balance: "")
         let delegate = ErrorDelegate(error: EquatePlusImporterError.invalidContributionMapping(
@@ -169,8 +143,6 @@ struct EquatePlusImporterTests {
     }
 
    @Test
-
-
    func testSuccess() { // swiftlint:disable:this function_body_length
         let importer = loadedImporter(ledger: nil, transaction: fullString, balance: "")
         let transaction1 = importer.nextTransaction()
@@ -217,8 +189,6 @@ struct EquatePlusImporterTests {
     }
 
    @Test
-
-
    func testLedgerMapping() throws {
         let ledger = Ledger()
         try ledger.add(Account(name: try AccountName("Assets:EP:Cash"), commoditySymbol: "STOCK", metaData: [
@@ -252,8 +222,6 @@ struct EquatePlusImporterTests {
     }
 
    @Test
-
-
    func testInvalidStockName() throws {
         let ledger = Ledger()
         try ledger.add(Account(name: try AccountName("Assets:EP:Cash"), commoditySymbol: "STOCK", metaData: [
@@ -267,8 +235,6 @@ struct EquatePlusImporterTests {
     }
 
    @Test
-
-
    func testErrorDescription() {
         XCTAssertEqual(
             EquatePlusImporterError.balanceImportNotSupported("BAL").errorDescription,

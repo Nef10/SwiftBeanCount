@@ -17,15 +17,11 @@ import Testing
 struct CSVImporterTests {
 
    @Test
-
-
    func testImporters() {
         #expect(CSVImporterFactory.importers.count == 8)
     }
 
    @Test
-
-
    func testNew() {
         // no url
         #expect(CSVImporterFactory.new(ledger: nil, url: nil == nil))
@@ -50,8 +46,6 @@ struct CSVImporterTests {
     }
 
    @Test
-
-
    func testNoEqualHeaders() {
         var headers = [[String]]()
         let importers = CSVImporterFactory.importers

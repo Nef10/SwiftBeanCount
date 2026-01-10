@@ -25,32 +25,24 @@ struct TransactionMetaDataParserTests {
     private let invalidDateTransactionMetaDataString = "2017-02-30 * \"Payee\" \"Narration\""
 
    @Test
-
-
    func testBasic() {
         let transactionMetaData = TransactionMetaDataParser.parseFrom(line: basicTransactionMetaDataString)!
         assertBasicTransactionMetaData(transactionMetaData)
     }
 
    @Test
-
-
    func testWhitespace() {
         let transactionMetaData = TransactionMetaDataParser.parseFrom(line: whitespaceTransactionMetaDataString)!
         assertBasicTransactionMetaData(transactionMetaData)
     }
 
    @Test
-
-
    func testEndOfLineCommentTransactionMetaDataString() {
         let transactionMetaData = TransactionMetaDataParser.parseFrom(line: endOfLineCommentTransactionMetaDataString)!
         assertBasicTransactionMetaData(transactionMetaData)
     }
 
    @Test
-
-
    func testSpecialCharacterTransactionMetaDataString() {
         let transactionMetaData = TransactionMetaDataParser.parseFrom(line: specialCharacterTransactionMetaDataString)!
         #expect(transactionMetaData.narration == "🎉😊💵Test⚅℃⁒♾")
@@ -63,8 +55,6 @@ struct TransactionMetaDataParserTests {
     }
 
    @Test
-
-
    func testIncompleteTransactionMetaDataString() {
         let transactionMetaData = TransactionMetaDataParser.parseFrom(line: incompleteTransactionMetaDataString)!
         #expect(transactionMetaData.narration == "Narration")
@@ -76,8 +66,6 @@ struct TransactionMetaDataParserTests {
     }
 
    @Test
-
-
    func testTags() {
         let transactionMetaData = TransactionMetaDataParser.parseFrom(line: tagsTransactionMetaDataString)!
         #expect(transactionMetaData.narration == "Narration")
@@ -91,15 +79,11 @@ struct TransactionMetaDataParserTests {
     }
 
    @Test
-
-
    func testInvalidDate() {
         #expect(TransactionMetaDataParser.parseFrom(line: invalidDateTransactionMetaDataString == nil))
     }
 
    @Test
-
-
    func testPerformance() {
         self.measure {
             for _ in 0...1_000 {

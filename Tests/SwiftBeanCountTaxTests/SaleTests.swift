@@ -10,8 +10,6 @@ import Testing
 struct SaleTests {
 
    @Test
-
-
    func testDescriptionWithName() {
         let date = Date(timeIntervalSince1970: 1_650_013_015)
         let sale = Sale(date: date,
@@ -25,8 +23,6 @@ struct SaleTests {
     }
 
    @Test
-
-
    func testDescriptionWithoutName() {
         let date = Date(timeIntervalSince1970: 1_650_013_015)
         let sale = Sale(date: date,

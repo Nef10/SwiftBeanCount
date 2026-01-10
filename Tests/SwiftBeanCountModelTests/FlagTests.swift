@@ -16,8 +16,6 @@ import Testing
 struct FlagTests {
 
    @Test
-
-
    func testDescription() {
         let complete = Flag.complete
         #expect(String(describing: complete) == "*")

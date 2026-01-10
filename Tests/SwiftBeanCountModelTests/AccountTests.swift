@@ -17,8 +17,6 @@ import Testing
 struct AccountTests {
 
    @Test
-
-
    func testBookingMethod() {
         let defaultAccount = Account(name: TestUtils.cash)
         #expect(defaultAccount.bookingMethod == .strict)
@@ -31,8 +29,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testDescription() {
         var accout = Account(name: TestUtils.cash)
         #expect(String(describing: accout) == "")
@@ -47,8 +43,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testDescriptionBookingMethod() {
         for bookingMethod in [BookingMethod.fifo, BookingMethod.lifo] {
             var accout = Account(name: TestUtils.cash, bookingMethod: bookingMethod)
@@ -67,8 +61,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testDescriptionSpecialCharacters() throws {
         let accountNameSpecial = try AccountName("Assets:💰")
 
@@ -84,8 +76,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testIsPostingValid_NotOpenPast() {
         let account = Account(name: TestUtils.cash)
         let posting = Posting(accountName: TestUtils.cash, amount: Amount(number: Decimal(1), commoditySymbol: TestUtils.eur))
@@ -99,8 +89,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testIsPostingValid_NoOpenPresent() {
         let account = Account(name: TestUtils.cash)
         let posting = Posting(accountName: TestUtils.cash, amount: Amount(number: Decimal(1), commoditySymbol: TestUtils.eur))
@@ -114,8 +102,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testIsPostingValid_BeforeOpening() {
         let account = Account(name: TestUtils.cash, opening: TestUtils.date20170609)
         let posting = Posting(accountName: TestUtils.cash, amount: Amount(number: Decimal(1), commoditySymbol: TestUtils.eur))
@@ -129,8 +115,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testIsPostingValid_AfterOpening() {
         let account = Account(name: TestUtils.cash, opening: TestUtils.date20170609)
         let posting1 = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
@@ -145,8 +129,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testIsPostingValid_BeforeClosing() {
         let account = Account(name: TestUtils.cash, opening: TestUtils.date20170609, closing: TestUtils.date20170609)
         let posting = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
@@ -156,8 +138,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testIsPostingValid_AfterClosing() {
         let account = Account(name: TestUtils.cash, opening: TestUtils.date20170609, closing: TestUtils.date20170609)
         let posting = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
@@ -171,8 +151,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testIsPostingValid_WithoutCommodity() {
         let account = Account(name: TestUtils.cash, opening: TestUtils.date20170608)
         let posting1 = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
@@ -187,8 +165,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testIsPostingValid_CorrectCommodity() {
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.amount.commoditySymbol, opening: TestUtils.date20170608)
         let posting = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
@@ -198,8 +174,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testIsPostingValid_WrongCommodity() {
         let account = Account(name: TestUtils.cash, commoditySymbol: "\(TestUtils.amount.commoditySymbol)1", opening: TestUtils.date20170608)
         let posting = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
@@ -213,8 +187,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testIsValid() {
         var account = Account(name: TestUtils.cash)
 
@@ -243,8 +215,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testValidateBalance() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
@@ -269,8 +239,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testValidateBalanceEmpty() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
@@ -285,8 +253,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testValidateBalanceDifferentCommodity() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash)
@@ -316,8 +282,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testValidateBalanceTolerance() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
@@ -347,8 +311,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testValidateInventoryEmpty() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
@@ -358,8 +320,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testValidateInventory() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
@@ -390,8 +350,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testValidateInvalidInventory() throws {
         let ledger = Ledger()
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
@@ -423,8 +381,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testEqualName() {
         let account1 = Account(name: TestUtils.cash)
         let account2 = Account(name: TestUtils.chequing)
@@ -432,8 +388,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testEqualProperties() {
         let date1 = TestUtils.date20170608
         let date2 = TestUtils.date20170609
@@ -472,8 +426,6 @@ struct AccountTests {
     }
 
    @Test
-
-
    func testNameSeperatorIsPublic() {
         // Test that the nameSeperator property is publicly accessible
         #expect(Account.nameSeperator == Character(":"))

@@ -22,8 +22,6 @@ struct AccountNameTests {
     private let validNames = ["Assets:Cash", "Assets:Cash:Test:Test:A", "Assets:Cash:Ca💰h:Test:💰", "Liabilities:Test", "Income:Test", "Expenses:Test", "Equity:Test"]
 
    @Test
-
-
    func testInitNames() {
         for name in validNames {
             XCTAssertNoThrow(try AccountName(name))
@@ -36,8 +34,6 @@ struct AccountNameTests {
     }
 
    @Test
-
-
    func testIsAccountNameVaild() {
         for name in validNames {
             #expect(AccountName.isNameValid(name))
@@ -48,8 +44,6 @@ struct AccountNameTests {
     }
 
    @Test
-
-
    func testNameItem() throws {
         #expect(TestUtils.cash.nameItem == "Cash")
         #expect(try AccountName("Assets:A:B:C:D:E:Cash").nameItem == "Cash")
@@ -57,8 +51,6 @@ struct AccountNameTests {
     }
 
    @Test
-
-
    func testAccountType() throws {
         #expect(try AccountName("Assets:Test").accountType == AccountType.asset)
         #expect(try AccountName("Liabilities:Test").accountType == AccountType.liability)
@@ -68,8 +60,6 @@ struct AccountNameTests {
     }
 
    @Test
-
-
    func testAccountNameEqual() throws {
         let name1 = try AccountName("Assets:Test")
         let name2 = try AccountName("Assets:Test")

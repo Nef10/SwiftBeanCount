@@ -17,43 +17,31 @@ import Testing
 struct SimpliiImporterTests {
 
    @Test
-
-
    func testHeaders() {
         #expect(SimpliiImporter.headers == [["Date", "Transaction Details", "Funds Out", "Funds In"]])
     }
 
    @Test
-
-
    func testImporterName() {
         #expect(SimpliiImporter.importerName == "Simplii")
     }
 
    @Test
-
-
    func testImporterType() {
         #expect(SimpliiImporter.importerType == "simplii")
     }
 
    @Test
-
-
    func testHelpText() {
         #expect(SimpliiImporter.helpText == "Enables importing of downloaded CSV files from Simplii Accounts.\n\nTo use add importer-type: \"simplii\" to your account.")
     }
 
    @Test
-
-
    func testImportName() throws {
         #expect(SimpliiImporter(ledger: nil == csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "Simplii File TestName")
     }
 
    @Test
-
-
    func testParseLine() throws {
         let importer = SimpliiImporter(ledger: nil,
                                        csvReader: try TestUtils.csvReader(content: """
@@ -73,8 +61,6 @@ Date, Transaction Details, Funds Out, Funds In
     }
 
    @Test
-
-
    func testParseLineAmountOut() throws {
         let importer = SimpliiImporter(ledger: nil,
                                        csvReader: try TestUtils.csvReader(content: """
@@ -93,8 +79,6 @@ Date, Transaction Details, Funds Out, Funds In
     }
 
    @Test
-
-
    func testParseLineInterest() throws {
         let importer = SimpliiImporter(ledger: nil,
                                        csvReader: try TestUtils.csvReader(content: """

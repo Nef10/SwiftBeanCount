@@ -23,8 +23,6 @@ struct EventParserTests {
     private let invalidDateString = "2017-02-30 event \"ABC\" \"DEF\""
 
    @Test
-
-
    func testBasic() {
         let event = EventParser.parseFrom(line: basicString)!
         #expect(event.date == TestUtils.date20170609)
@@ -33,8 +31,6 @@ struct EventParserTests {
     }
 
    @Test
-
-
    func testWhitespace() {
         let event = EventParser.parseFrom(line: whitespaceString)!
         #expect(event.date == TestUtils.date20170609)
@@ -43,8 +39,6 @@ struct EventParserTests {
     }
 
    @Test
-
-
    func testEndOfLineComment() {
         let event = EventParser.parseFrom(line: endOfLineCommentString)!
         #expect(event.date == TestUtils.date20170609)
@@ -53,8 +47,6 @@ struct EventParserTests {
     }
 
    @Test
-
-
    func testSpecialCharacter() {
         let event = EventParser.parseFrom(line: specialCharacterString)!
         #expect(event.date == TestUtils.date20170609)
@@ -63,15 +55,11 @@ struct EventParserTests {
     }
 
    @Test
-
-
    func testInvalidDate() {
         #expect(EventParser.parseFrom(line: invalidDateString == nil))
     }
 
    @Test
-
-
    func testPerformance() {
         self.measure {
             for _ in 0...1_000 {

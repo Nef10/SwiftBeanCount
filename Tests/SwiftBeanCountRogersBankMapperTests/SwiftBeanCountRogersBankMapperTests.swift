@@ -26,8 +26,6 @@ struct SwiftBeanCountRogersBankMapperTests {
     }
 
    @Test
-
-
    func testMapAccount() throws {
         let accountName = try AccountName("Liabilities:CC:Rogers")
         try ledger.add(Account(name: accountName, metaData: ["last-four": "4862", "importer-type": "rogers"]))
@@ -46,22 +44,16 @@ struct SwiftBeanCountRogersBankMapperTests {
     }
 
    @Test
-
-
    func testMapAccountMissingAccount() throws {
         assert(try mapper.mapAccountToBalance(account: TestAccount()), throws: RogersBankMappingError.missingAccount(lastFour: "4862"))
     }
 
    @Test
-
-
    func testMapActivitiesEmpty() throws {
         #expect(try mapper.mapActivitiesToTransactions(activities: []).isEmpty)
     }
 
    @Test
-
-
    func testMapActivitiesNotPosted() throws {
         var activity = TestActivity()
         activity.activityStatus = .approved
@@ -70,8 +62,6 @@ struct SwiftBeanCountRogersBankMapperTests {
     }
 
    @Test
-
-
    func testMapActivitiesMissingPostingDate() throws {
         var activity = TestActivity()
         activity.activityStatus = .approved
@@ -79,8 +69,6 @@ struct SwiftBeanCountRogersBankMapperTests {
     }
 
    @Test
-
-
    func testMapActivitiesMissingReferenceNumber() throws {
         var activity = TestActivity()
         activity.activityStatus = .approved
@@ -91,8 +79,6 @@ struct SwiftBeanCountRogersBankMapperTests {
     }
 
    @Test
-
-
    func testMapActivitiesMissingAccount() throws {
         var activity = TestActivity()
         activity.activityStatus = .approved
@@ -114,8 +100,6 @@ struct SwiftBeanCountRogersBankMapperTests {
     }
 
    @Test
-
-
    func testMapActivities() throws {
         let accountName = try AccountName("Liabilities:CC:Rogers")
         try ledger.add(Account(name: accountName, metaData: ["last-four": "1234", "importer-type": "rogers"]))
@@ -142,8 +126,6 @@ struct SwiftBeanCountRogersBankMapperTests {
     }
 
    @Test
-
-
    func testMapActivitiesPayment() throws {
         let accountName = try AccountName("Liabilities:CC:Rogers")
         try ledger.add(Account(name: accountName, metaData: ["last-four": "1234", "importer-type": "rogers"]))
@@ -162,8 +144,6 @@ struct SwiftBeanCountRogersBankMapperTests {
     }
 
    @Test
-
-
    func testMapActivitiesOverLimitFee() throws {
         let accountName = try AccountName("Liabilities:CC:Rogers")
         try ledger.add(Account(name: accountName, metaData: ["last-four": "1234", "importer-type": "rogers"]))
@@ -183,8 +163,6 @@ struct SwiftBeanCountRogersBankMapperTests {
     }
 
    @Test
-
-
    func testMapActivityDuplicate() throws {
         let accountName = try AccountName("Liabilities:CC:Rogers")
         try ledger.add(Account(name: accountName, metaData: ["last-four": "1234", "importer-type": "rogers"]))

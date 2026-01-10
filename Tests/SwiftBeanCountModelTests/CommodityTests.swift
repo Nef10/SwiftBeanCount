@@ -16,16 +16,12 @@ import Testing
 struct CommodityTests {
 
    @Test
-
-
    func testDescription() {
         let commodity = Commodity(symbol: TestUtils.cad)
         #expect(String(describing: commodity) == "")
     }
 
    @Test
-
-
    func testDescriptionSpecialCharactersOpening() {
         let symbol = "💵"
         let string = "2017-06-08 commodity \(symbol)"
@@ -34,8 +30,6 @@ struct CommodityTests {
     }
 
    @Test
-
-
    func testDescriptionMetaData() {
         let symbol = "CAD"
         let string = "2017-06-08 commodity \(symbol)\n  A: \"B\""
@@ -44,8 +38,6 @@ struct CommodityTests {
     }
 
    @Test
-
-
    func testValidate() {
         let commodity = Commodity(symbol: "EUR", opening: TestUtils.date20170608)
         let ledgerWithPlugin = Ledger()
@@ -57,8 +49,6 @@ struct CommodityTests {
     }
 
    @Test
-
-
    func testValidateWithoutDate() {
         let commodity = Commodity(symbol: "EUR")
 
@@ -80,8 +70,6 @@ struct CommodityTests {
     }
 
    @Test
-
-
    func testEqual() {
         var eur = Commodity(symbol: "EUR")
         var eur2 = Commodity(symbol: "EUR")
@@ -97,8 +85,6 @@ struct CommodityTests {
     }
 
    @Test
-
-
    func testGreater() {
         let eur = TestUtils.eur
         let cad = TestUtils.cad
@@ -110,8 +96,6 @@ struct CommodityTests {
     }
 
    @Test
-
-
    func testValidateUsageDate() {
         // Test commodity with opening date - usage on same date should be valid
         let commodity = Commodity(symbol: "EUR", opening: TestUtils.date20170608)
@@ -131,8 +115,6 @@ struct CommodityTests {
     }
 
    @Test
-
-
    func testValidateUsageDateBeforeOpening() {
         // Test commodity with opening date - usage before opening should be invalid
         let commodity = Commodity(symbol: "EUR", opening: TestUtils.date20170609)
@@ -147,8 +129,6 @@ struct CommodityTests {
     }
 
    @Test
-
-
    func testValidateUsageDateWithoutPlugin() {
         // Test without plugin - should always be valid regardless of dates
         let commodity = Commodity(symbol: "EUR", opening: TestUtils.date20170609)
@@ -161,8 +141,6 @@ struct CommodityTests {
     }
 
    @Test
-
-
    func testValidateUsageDateWithoutOpeningDate() {
         // Test commodity without opening date
         let commodity = Commodity(symbol: "EUR")

@@ -136,36 +136,26 @@ struct ManuLifeImporterTests {
     }
 
    @Test
-
-
    func testImporterName() {
         #expect(ManuLifeImporter.importerName == "ManuLife")
     }
 
    @Test
-
-
    func testImporterType() {
         #expect(ManuLifeImporter.importerType == "manulife")
     }
 
    @Test
-
-
    func testHelpText() {
         #expect(ManuLifeImporter.helpText.contains("importer-type: \"manulife\""))
     }
 
    @Test
-
-
    func testImportName() {
         #expect(loadedImporter().importName == "ManuLife Text")
     }
 
    @Test
-
-
    func testParseEmpty() {
         let importer = loadedImporter()
         #expect(importer.nextTransaction( == nil))
@@ -174,8 +164,6 @@ struct ManuLifeImporterTests {
     }
 
    @Test
-
-
    func testParseBalance() throws {
         let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), balance: balance)
         #expect(importer.nextTransaction( == nil))
@@ -192,8 +180,6 @@ struct ManuLifeImporterTests {
     }
 
    @Test
-
-
    func testTransaction() throws {
         let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), transaction: transaction)
         let transaction = importer.nextTransaction()
@@ -214,8 +200,6 @@ struct ManuLifeImporterTests {
     }
 
    @Test
-
-
    func testBalanceAndTransaction() throws {
         let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), transaction: transaction, balance: balance)
         let transaction = importer.nextTransaction()
@@ -232,8 +216,6 @@ struct ManuLifeImporterTests {
     }
 
    @Test
-
-
    func testNoLedger() {
         let importer = loadedImporter(transaction: transaction, balance: balance)
         let transaction = importer.nextTransaction()
@@ -255,8 +237,6 @@ struct ManuLifeImporterTests {
     }
 
    @Test
-
-
    func testBalanceAndPriceDuplicates() throws {
         let ledger = try TestUtils.ledgerManuLife()
         let balanceAmount = Amount(number: Decimal(8.209_60), commoditySymbol: TestUtils.fundSymbol, decimalDigits: 5)
@@ -280,8 +260,6 @@ struct ManuLifeImporterTests {
     }
 
    @Test
-
-
    func testTransactionSettings() throws {
         let ledger = try TestUtils.ledgerManuLife(employeeBasic: "2.5", employerBasic: "3.25", employerMatch: "2.5", employeeVoluntary: "1.75")
         let importer = loadedImporter(ledger: ledger, transaction: transaction)
@@ -303,8 +281,6 @@ struct ManuLifeImporterTests {
     }
 
    @Test
-
-
    func testTransactionSettingsZero1() throws {
         let ledger = try TestUtils.ledgerManuLife(employeeBasic: "2.5", employerBasic: "5", employerMatch: "2.5", employeeVoluntary: "0")
         let importer = loadedImporter(ledger: ledger, transaction: transaction)
@@ -326,8 +302,6 @@ struct ManuLifeImporterTests {
     }
 
    @Test
-
-
    func testTransactionSettingsZero2() throws {
         let ledger = try TestUtils.ledgerManuLife(employeeBasic: "0", employerBasic: "0", employerMatch: "0", employeeVoluntary: "1")
         let importer = loadedImporter(ledger: ledger, transaction: transaction)
@@ -346,8 +320,6 @@ struct ManuLifeImporterTests {
     }
 
    @Test
-
-
    func testTransactionGarbage() throws {
         let strings = ["This is not a valid Transaction", transactionInvalidDate]
         for string in strings {
@@ -359,8 +331,6 @@ struct ManuLifeImporterTests {
     }
 
    @Test
-
-
    func testGetPossibleDuplicateFor() throws {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
@@ -382,8 +352,6 @@ struct ManuLifeImporterTests {
     }
 
    @Test
-
-
    func testGetPossibleDuplicateForNone() throws {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2

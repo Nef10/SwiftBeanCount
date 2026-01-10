@@ -28,23 +28,17 @@ struct TransactionMetaDataTests {
     }
 
    @Test
-
-
    func testDescription() {
         #expect(String(describing: transactionMetaData!) == "\(dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\"")
     }
 
    @Test
-
-
    func testDescriptionMetaData() {
         let transactionMetaData = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [], metaData: ["A": "B"])
         #expect(String(describing: transactionMetaData) == "\(dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\"\n  A: \"B\"")
     }
 
    @Test
-
-
    func testDescriptionSpecialCharacters() {
         let payee = "🏫"
         let narration = "🎓"
@@ -53,8 +47,6 @@ struct TransactionMetaDataTests {
     }
 
    @Test
-
-
    func testDescriptionTag() {
         let tag = Tag(name: "🎁")
         let transactionMetaData = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [tag])
@@ -62,8 +54,6 @@ struct TransactionMetaDataTests {
     }
 
    @Test
-
-
    func testDescriptionTags() {
         let tag1 = Tag(name: "tag1")
         let tag2 = Tag(name: "tag2")
@@ -72,16 +62,12 @@ struct TransactionMetaDataTests {
     }
 
    @Test
-
-
    func testEqual() {
         let transactionMetaData1 = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [])
         #expect(transactionMetaData == transactionMetaData1)
     }
 
    @Test
-
-
    func testEqualWithTags() {
         let tag1 = Tag(name: "tag1")
         let tag2 = Tag(name: "tag2")
@@ -91,40 +77,30 @@ struct TransactionMetaDataTests {
     }
 
    @Test
-
-
    func testEqualRespectsMetaData() {
         let transactionMetaData1 = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [], metaData: ["A": "B"])
         #expect(transactionMetaData != transactionMetaData1)
     }
 
    @Test
-
-
    func testEqualRespectsDate() {
         let transactionMetaData1 = TransactionMetaData(date: date.addingTimeInterval(TimeInterval(1)), payee: payee, narration: narration, flag: flag, tags: [])
         #expect(transactionMetaData != transactionMetaData1)
     }
 
    @Test
-
-
    func testEqualRespectsPayee() {
         let transactionMetaData1 = TransactionMetaData(date: date, payee: payee + "1", narration: narration, flag: flag, tags: [])
         #expect(transactionMetaData != transactionMetaData1)
     }
 
    @Test
-
-
    func testEqualRespectsNarration() {
         let transactionMetaData1 = TransactionMetaData(date: date, payee: payee, narration: narration + "1", flag: flag, tags: [])
         #expect(transactionMetaData != transactionMetaData1)
     }
 
    @Test
-
-
    func testEqualRespectsTags() {
         let tag1 = Tag(name: "tag1")
         let transactionMetaData1 = TransactionMetaData(date: date, payee: payee, narration: narration, flag: Flag.incomplete, tags: [tag1])

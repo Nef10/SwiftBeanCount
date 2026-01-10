@@ -10,8 +10,6 @@ import Testing
 struct TaxCalculatorTaxableSalesTests {
 
    @Test
-
-
    func testGetTaxableSaleEmpty() throws {
         let ledger = try basicLedger()
         let sales = try TaxCalculator.getTaxableSales(from: ledger, for: 2_022)
@@ -19,8 +17,6 @@ struct TaxCalculatorTaxableSalesTests {
     }
 
    @Test
-
-
    func testGetTaxableSales() throws {
         let ledger = try basicLedger()
         let date = Date(timeIntervalSince1970: 1_650_013_015)
@@ -56,8 +52,6 @@ struct TaxCalculatorTaxableSalesTests {
     }
 
    @Test
-
-
    func testGetTaxableSalesIgnoreSplit() throws {
         let ledger = try basicLedger()
         let date = Date(timeIntervalSince1970: 1_650_013_015)

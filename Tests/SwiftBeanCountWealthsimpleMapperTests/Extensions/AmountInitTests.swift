@@ -10,8 +10,6 @@ import Testing
 struct AmountInitTests {
 
    @Test
-
-
    func testInit() {
         #expect(Amount(for: "1.0" == in: "CAD"), Amount(number: Decimal(1), commoditySymbol: "CAD", decimalDigits: 2))
         #expect(Amount(for: "1.000" == in: "EUR"), Amount(number: Decimal(1), commoditySymbol: "EUR", decimalDigits: 3))

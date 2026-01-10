@@ -16,8 +16,6 @@ import Testing
 struct SettingsTests {
 
    @Test
-
-
    func testDescriptionMappings() {
         Settings.storage = TestStorage()
 
@@ -41,8 +39,6 @@ struct SettingsTests {
     }
 
    @Test
-
-
    func testPayeeMappings() {
         Settings.storage = TestStorage()
 
@@ -66,8 +62,6 @@ struct SettingsTests {
     }
 
    @Test
-
-
    func testAccountMappings() {
         Settings.storage = TestStorage()
 
@@ -91,8 +85,6 @@ struct SettingsTests {
     }
 
    @Test
-
-
    func testDateTolerance() {
         Settings.storage = TestStorage()
 

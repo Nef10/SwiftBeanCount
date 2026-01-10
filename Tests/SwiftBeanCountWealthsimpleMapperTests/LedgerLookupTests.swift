@@ -22,31 +22,27 @@ struct LedgerLookupTests {
     private var ledgerLookup: LedgerLookup!
 
    @Test
-
-
    func testLedgerAccountCommoditySymbol() throws {
         let name2 = try AccountName("Assets:Test1")
         let symbol = "CAD"
 
         // account does not exist
-        #expect(ledgerLookup.ledgerAccountCommoditySymbol(of: accountName == nil))
+        #expect(ledgerLookup.ledgerAccountCommoditySymbol(of: accountName) == nil)
 
         // account does not have a commodity
         try ledger.add(Account(name: accountName))
         ledgerLookup = LedgerLookup(ledger)
-        #expect(ledgerLookup.ledgerAccountCommoditySymbol(of: accountName == nil))
+        #expect(ledgerLookup.ledgerAccountCommoditySymbol(of: accountName) == nil)
 
         // account has a commodity
         try ledger.add(Account(name: name2, commoditySymbol: symbol))
         ledgerLookup = LedgerLookup(ledger)
-        #expect(ledgerLookup.ledgerAccountCommoditySymbol(of: accountName == nil))
+        #expect(ledgerLookup.ledgerAccountCommoditySymbol(of: accountName) == nil)
         #expect(ledgerLookup.ledgerAccountCommoditySymbol(of: name2) == symbol)
 
     }
 
    @Test
-
-
    func testLedgerAccountNameOf() throws {
         let account = TestAccount(number: "abc")
 
@@ -74,8 +70,6 @@ struct LedgerLookupTests {
     }
 
    @Test
-
-
    func testLedgerAccountNameFor() throws {
         var number = "abc123"
 
@@ -124,8 +118,6 @@ struct LedgerLookupTests {
     }
 
    @Test
-
-
    func testDoesTransactionExistInLedger() {
         var metaData = TransactionMetaData(date: Date(), metaData: [MetaDataKeys.id: "abc"])
         var transaction = Transaction(metaData: metaData, postings: [])
@@ -161,8 +153,6 @@ struct LedgerLookupTests {
     }
 
    @Test
-
-
    func testDoesPriceExistInLedger() throws {
         let date = Date()
         var price = try Price(date: date, commoditySymbol: "CAD", amount: Amount(number: Decimal(1), commoditySymbol: "EUR"))
@@ -186,8 +176,6 @@ struct LedgerLookupTests {
     }
 
    @Test
-
-
    func testDoesBalanceExistInLedger() throws {
         let date = Date()
         var balance = Balance(date: date, accountName: accountName, amount: Amount(number: Decimal(1), commoditySymbol: "USD"))
@@ -215,8 +203,6 @@ struct LedgerLookupTests {
     }
 
    @Test
-
-
    func testCommoditySymbolForAssetSymbol() throws {
         var commodity = Commodity(symbol: "EUR")
         try ledger.add(commodity)

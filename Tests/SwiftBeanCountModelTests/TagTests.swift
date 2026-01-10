@@ -16,8 +16,6 @@ import Testing
 struct TagTests {
 
    @Test
-
-
    func testDescription() {
         let string = "String"
         let tag = Tag(name: string)
@@ -25,8 +23,6 @@ struct TagTests {
     }
 
    @Test
-
-
    func testDescriptionSpecialCharacters() {
         let string = "#️⃣"
         let tag = Tag(name: string)
@@ -34,8 +30,6 @@ struct TagTests {
     }
 
    @Test
-
-
    func testEqual() {
         let string1 = "String1"
         let string2 = "String2"
@@ -54,8 +48,6 @@ struct TagTests {
     }
 
    @Test
-
-
    func testGreater() {
         let string1 = "A"
         let string2 = "B"

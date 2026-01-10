@@ -10,8 +10,6 @@ import Testing
 struct RogersBankMappingErrorTests {
 
    @Test
-
-
    func testSRogersBankMappingErrorString() {
         XCTAssertEqual(
             "\(RogersBankMappingError.missingAccount(lastFour: "4320").localizedDescription)",

@@ -16,8 +16,6 @@ import Testing
 struct BalanceTests {
 
    @Test
-
-
    func testDescription() {
         let account = Account(name: TestUtils.cash)
         let amount = Amount(number: Decimal(1), commoditySymbol: TestUtils.cad)
@@ -30,8 +28,6 @@ struct BalanceTests {
     }
 
    @Test
-
-
    func testEqual() {
         let amount = Amount(number: Decimal(1), commoditySymbol: TestUtils.cad)
         var balance = Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: amount)
@@ -65,8 +61,6 @@ struct BalanceTests {
     }
 
    @Test
-
-
    func testValidateWithoutPlugin() throws {
         // Test that balance validation is skipped when plugin is not enabled
         let ledger = Ledger()
@@ -87,8 +81,6 @@ struct BalanceTests {
     }
 
    @Test
-
-
    func testValidateWithPlugin() throws {
         // Test that balance validation works when plugin is enabled
         let ledger = Ledger()
@@ -111,8 +103,6 @@ struct BalanceTests {
     }
 
    @Test
-
-
    func testValidateValid() throws {
         // Test that validation passes when commodity is used on or after opening date
         let ledger = Ledger()
@@ -134,8 +124,6 @@ struct BalanceTests {
     }
 
    @Test
-
-
    func testValidateWithAutoCreatedCommodity() throws {
         // Test with auto-created commodity (no explicit opening date)
         let ledger = Ledger()

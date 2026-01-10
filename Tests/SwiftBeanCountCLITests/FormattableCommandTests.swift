@@ -12,7 +12,6 @@ struct TestFormattableCommand: FormattableCommand {
     var colorOptions = ColorizedCommandOptions()
 
    @Test
-
    func getResult() throws -> [FormattableResult] {
         [FormattableResult(title: "A", columns: ["B", "C"], values: [["D E", "F G"], ["H", "I"]], footer: "J")]
     }
@@ -35,7 +34,6 @@ struct FormattableCommandTests {
     private let zeroRowResult = FormattableResult(title: "Title", columns: ["Column A", "B"], values: [], footer: nil)
 
    @Test
-
    func testCSVColor() {
         let originalValue = Rainbow.enabled
         Rainbow.enabled = true
@@ -51,7 +49,6 @@ struct FormattableCommandTests {
     }
 
    @Test
-
    func testCSV() {
         let originalValue = Rainbow.enabled
         Rainbow.enabled = false
@@ -67,7 +64,6 @@ struct FormattableCommandTests {
     }
 
    @Test
-
    func testTableColor() {
         let originalValue = Rainbow.enabled
         Rainbow.enabled = true
@@ -90,7 +86,6 @@ struct FormattableCommandTests {
     }
 
    @Test
-
    func testTable() {
         let originalValue = Rainbow.enabled
         Rainbow.enabled = false
@@ -113,7 +108,6 @@ struct FormattableCommandTests {
     }
 
    @Test
-
    func testTextColor() {
         let originalValue = Rainbow.enabled
         Rainbow.enabled = true
@@ -133,7 +127,6 @@ struct FormattableCommandTests {
     }
 
    @Test
-
    func testText() {
         let originalValue = Rainbow.enabled
         Rainbow.enabled = false
@@ -153,7 +146,6 @@ struct FormattableCommandTests {
     }
 
    @Test
-
    func testOneColumnOneRow() {
         let originalValue = Rainbow.enabled
         Rainbow.enabled = false
@@ -190,7 +182,6 @@ struct FormattableCommandTests {
     }
 
    @Test
-
    func testZeroRows() {
         let originalValue = Rainbow.enabled
         Rainbow.enabled = false

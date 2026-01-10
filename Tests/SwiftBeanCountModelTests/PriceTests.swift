@@ -16,8 +16,6 @@ import Testing
 struct PriceTests {
 
    @Test
-
-
    func testInit() {
         let amount = Amount(number: Decimal(1), commoditySymbol: TestUtils.cad)
         XCTAssertNoThrow(try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount))
@@ -27,8 +25,6 @@ struct PriceTests {
     }
 
    @Test
-
-
    func testDescription() throws {
         let amount = Amount(number: Decimal(1), commoditySymbol: TestUtils.cad)
         var price = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount)
@@ -40,8 +36,6 @@ struct PriceTests {
     }
 
    @Test
-
-
    func testEqual() throws {
         let amount = Amount(number: Decimal(1), commoditySymbol: TestUtils.cad)
         var price = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount)
@@ -75,8 +69,6 @@ struct PriceTests {
     }
 
    @Test
-
-
    func testValidateWithoutPlugin() throws {
         // Test that price validation is skipped when plugin is not enabled
         let ledger = Ledger()
@@ -99,8 +91,6 @@ struct PriceTests {
     }
 
    @Test
-
-
    func testValidateWithPlugin() throws {
         // Test that price validation works when plugin is enabled
         let ledger = Ledger()
@@ -125,8 +115,6 @@ struct PriceTests {
     }
 
    @Test
-
-
    func testValidateAmountCommodityUsageDate() throws {
         // Test validation of amount commodity usage date
         let ledger = Ledger()
@@ -151,8 +139,6 @@ struct PriceTests {
     }
 
    @Test
-
-
    func testValidateValid() throws {
         // Test that validation passes when commodities are used on or after opening dates
         let ledger = Ledger()
@@ -176,8 +162,6 @@ struct PriceTests {
     }
 
    @Test
-
-
    func testValidateWithAutoCreatedCommodities() throws {
         // Test with auto-created commodities (no explicit opening date)
         let ledger = Ledger()

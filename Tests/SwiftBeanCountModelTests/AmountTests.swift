@@ -16,36 +16,26 @@ import Testing
 struct AmountTests {
 
    @Test
-
-
    func testEqual() {
         #expect(TestUtils.amount == Amount(number: Decimal(1), commoditySymbol: TestUtils.cad))
     }
 
    @Test
-
-
    func testEqualRespectsAmount() {
         #expect(TestUtils.amount != Amount(number: Decimal(10), commoditySymbol: TestUtils.cad))
     }
 
    @Test
-
-
    func testEqualRespectsCommodity() {
         #expect(TestUtils.amount != TestUtils.amount2)
     }
 
    @Test
-
-
    func testEqualRespectsDecimalDigits() {
         #expect(TestUtils.amount != Amount(number: Decimal(1.0), commoditySymbol: TestUtils.eur, decimalDigits: 1))
     }
 
    @Test
-
-
    func testDescriptionInteger() {
         let amountInteger = 123
         let amount = Amount(number: Decimal(amountInteger), commoditySymbol: TestUtils.cad)
@@ -54,8 +44,6 @@ struct AmountTests {
     }
 
    @Test
-
-
    func testDescriptionThousandsSeperator() {
         let amountInteger = 1_234_567_890.00
         let amount = Amount(number: Decimal(amountInteger), commoditySymbol: TestUtils.cad, decimalDigits: 2)
@@ -64,8 +52,6 @@ struct AmountTests {
     }
 
    @Test
-
-
    func testDescriptionFloat() {
         let amountOneDecimal = Amount(number: Decimal(125.5), commoditySymbol: TestUtils.cad, decimalDigits: 1)
         #expect(String(describing: amountOneDecimal) == "125.5 \(TestUtils.cad)")
@@ -75,16 +61,12 @@ struct AmountTests {
     }
 
    @Test
-
-
    func testDescriptionLongFloat() {
         let amount = Amount(number: Decimal(0.000_976_562_5), commoditySymbol: TestUtils.cad, decimalDigits: 10)
         #expect(String(describing: amount) == "0.0009765625 \(TestUtils.cad)")
     }
 
    @Test
-
-
    func testMultiCurrencyAmount() {
         let decimal = Decimal(10)
         let amount = Amount(number: decimal, commoditySymbol: TestUtils.eur)
@@ -93,8 +75,6 @@ struct AmountTests {
     }
 
    @Test
-
-
    func testMultiCurrencyAmountDecimalDigits() {
         let decimal = Decimal(10.25)
         let amount = Amount(number: decimal, commoditySymbol: TestUtils.eur, decimalDigits: 2)
@@ -103,8 +83,6 @@ struct AmountTests {
     }
 
    @Test
-
-
    func testAmountStringPublic() {
         // Test that amountString is publicly accessible and returns formatted number without commodity
         let amountInteger = Amount(number: Decimal(123), commoditySymbol: TestUtils.cad, decimalDigits: 0)
@@ -123,8 +101,6 @@ struct AmountTests {
     }
 
    @Test
-
-
    func testAmountStringMinMaxDecimalDigits() {
         // Fill with zeros to the right number of decimal digits
         let amount = Amount(number: Decimal(0.67), commoditySymbol: TestUtils.cad, decimalDigits: 3)

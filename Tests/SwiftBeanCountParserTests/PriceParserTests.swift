@@ -34,8 +34,6 @@ struct PriceParserTests {
     private let invalidPriceMissingCurrencies = "2017-06-09 price 2.11"
 
    @Test
-
-
    func testBasic() {
         let parsedPrice = PriceParser.parseFrom(line: basicPrice)
         #expect(parsedPrice != nil)
@@ -43,8 +41,6 @@ struct PriceParserTests {
     }
 
    @Test
-
-
    func testComment() {
         let parsedPrice = PriceParser.parseFrom(line: priceComment)
         #expect(parsedPrice != nil)
@@ -52,8 +48,6 @@ struct PriceParserTests {
     }
 
    @Test
-
-
    func testWhitespace() {
         let parsedPrice = PriceParser.parseFrom(line: priceWhitespace)
         #expect(parsedPrice != nil)
@@ -61,8 +55,6 @@ struct PriceParserTests {
     }
 
    @Test
-
-
    func testSpecialCharacter() {
         let parsedPrice = PriceParser.parseFrom(line: priceSpecialCharacter)
         #expect(parsedPrice != nil)
@@ -71,8 +63,6 @@ struct PriceParserTests {
     }
 
    @Test
-
-
    func testWholeNumber() {
         let parsedPrice = PriceParser.parseFrom(line: priceWholeNumber)
         #expect(parsedPrice != nil)
@@ -81,8 +71,6 @@ struct PriceParserTests {
     }
 
    @Test
-
-
    func testInvalid() {
         #expect(PriceParser.parseFrom(line: invalidPriceMissingNumber == nil))
         #expect(PriceParser.parseFrom(line: invalidPriceMissingFirstCurrency == nil))

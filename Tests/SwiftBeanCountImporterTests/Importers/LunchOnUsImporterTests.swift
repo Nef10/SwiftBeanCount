@@ -17,43 +17,31 @@ import Testing
 struct LunchOnUsImporterTests {
 
    @Test
-
-
    func testHeaders() {
         #expect(LunchOnUsImporter.headers == [["date", "type", "amount", "invoice", "remaining", "location"]])
     }
 
    @Test
-
-
    func testImporterName() {
         #expect(LunchOnUsImporter.importerName == "Lunch On Us")
     }
 
    @Test
-
-
    func testImporterType() {
         #expect(LunchOnUsImporter.importerType == "lunch-on-us")
     }
 
    @Test
-
-
    func testHelpText() { // swiftlint:disable:next line_length
         #expect(LunchOnUsImporter.helpText == "Enables importing of CSV files downloaded from https://lunchmapper.appspot.com/csv. Does not support importing balances.\n\nTo use add importer-type: \"lunch-on-us\" to your account.")
     }
 
    @Test
-
-
    func testImportName() throws {
         #expect(LunchOnUsImporter(ledger: nil == csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "LunchOnUs File TestName")
     }
 
    @Test
-
-
    func testParseLineNormalPurchase() throws {
         let importer = LunchOnUsImporter(ledger: nil,
                                          csvReader: try TestUtils.csvReader(content: """
@@ -73,8 +61,6 @@ date,type,amount,invoice,remaining,location
     }
 
    @Test
-
-
    func testParseLineRedeemUnlock() throws {
         let importer = LunchOnUsImporter(ledger: nil,
                                          csvReader: try TestUtils.csvReader(content: """
@@ -94,8 +80,6 @@ date,type,amount,invoice,remaining,location
     }
 
    @Test
-
-
    func testParseLineBalanceInquiryWithPartLock() throws { // #7
         let importer = LunchOnUsImporter(ledger: nil,
                                          csvReader: try TestUtils.csvReader(content: """
@@ -114,8 +98,6 @@ date,type,amount,invoice,remaining,location
     }
 
    @Test
-
-
    func testParseLineActivateCard() throws {
         let importer = LunchOnUsImporter(ledger: nil,
                                          csvReader: try TestUtils.csvReader(content: """
@@ -134,8 +116,6 @@ date,type,amount,invoice,remaining,location
     }
 
    @Test
-
-
    func testParseLineCashOut() throws {
         let importer = LunchOnUsImporter(ledger: nil,
                                          csvReader: try TestUtils.csvReader(content: """

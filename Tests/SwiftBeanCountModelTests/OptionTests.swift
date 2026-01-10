@@ -16,8 +16,6 @@ import Testing
 struct OptionTests {
 
    @Test
-
-
    func testDescription() {
         let option = Option(name: "name", value: "value1")
         #expect(String(describing: option) == "option \"name\" \"value1\"")
@@ -27,8 +25,6 @@ struct OptionTests {
     }
 
    @Test
-
-
    func testComparable() {
         let option1 = Option(name: "name", value: "value1")
         let option2 = Option(name: "name", value: "value1")

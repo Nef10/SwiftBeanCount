@@ -10,7 +10,6 @@ import Testing
 struct HelpTests {
 
   @Test
-
   func testHelp() {
         let result = outputFromExecutionWith(arguments: ["--help"])
         #expect(result.exitCode == 0)

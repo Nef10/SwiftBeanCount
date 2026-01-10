@@ -24,8 +24,6 @@ struct CustomsParserTests {
     private let invalidDateString = "2017-02-30 custom \"ABC\" \"DEF\""
 
    @Test
-
-
    func testBasic() {
         let event = CustomsParser.parseFrom(line: basicString)!
         #expect(event.date == TestUtils.date20170609)
@@ -34,8 +32,6 @@ struct CustomsParserTests {
     }
 
    @Test
-
-
    func testMultipleValues() {
         let event = CustomsParser.parseFrom(line: multipleValuesString)!
         #expect(event.date == TestUtils.date20170609)
@@ -44,8 +40,6 @@ struct CustomsParserTests {
     }
 
    @Test
-
-
    func testWhitespace() {
         let event = CustomsParser.parseFrom(line: whitespaceString)!
         #expect(event.date == TestUtils.date20170609)
@@ -54,8 +48,6 @@ struct CustomsParserTests {
     }
 
    @Test
-
-
    func testEndOfLineComment() {
         let event = CustomsParser.parseFrom(line: endOfLineCommentString)!
         #expect(event.date == TestUtils.date20170609)
@@ -64,8 +56,6 @@ struct CustomsParserTests {
     }
 
    @Test
-
-
    func testSpecialCharacter() {
         let event = CustomsParser.parseFrom(line: specialCharacterString)!
         #expect(event.date == TestUtils.date20170609)
@@ -74,15 +64,11 @@ struct CustomsParserTests {
     }
 
    @Test
-
-
    func testInvalidDate() {
         #expect(CustomsParser.parseFrom(line: invalidDateString == nil))
     }
 
    @Test
-
-
    func testPerformance() {
         self.measure {
             for _ in 0...1_000 {

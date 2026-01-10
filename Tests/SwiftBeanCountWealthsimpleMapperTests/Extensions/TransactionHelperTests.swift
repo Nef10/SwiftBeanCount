@@ -11,8 +11,6 @@ import Testing
 struct TransactionHelperTests {
 
    @Test
-
-
    func testExtension() {
         var transaction = TestTransaction()
 

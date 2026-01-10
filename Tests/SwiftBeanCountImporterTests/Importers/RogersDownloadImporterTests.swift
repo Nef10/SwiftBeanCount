@@ -62,22 +62,16 @@ private struct TestAccount: RogersBankDownloader.Account {
     }
 
    @Test
-
-
    func downloadActivities(statementNumber: Int, completion: @escaping (Result<[Activity], DownloadError>) -> Void) {
         completion(activityCallback?(statementNumber) ?? .success([]))
     }
 
    @Test
-
-
    func downloadStatement(statement _: Statement, completion _: @escaping (Result<URL, DownloadError>) -> Void) {
         // Empty
     }
 
    @Test
-
-
    func searchStatements(completion _: @escaping (Result<[Statement], DownloadError>) -> Void) {
         // Empty
     }
@@ -126,7 +120,6 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
 
         // swiftlint:disable:next line_length
        @Test
-
        func login(username: String, password: String, deviceId: String?, completion: @escaping (Result<any RogersBankDownloader.User, RogersBankDownloader.DownloadError>) -> Void) {
             completion(RogersDownloadImporterTests.load?(username, password, deviceId) ?? .success(TestUser()))
         }
@@ -164,36 +157,26 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 
    @Test
-
-
    func testImporterName() {
         #expect(RogersDownloadImporter.importerName == "Rogers Bank Download")
     }
 
    @Test
-
-
    func testImporterType() {
         #expect(RogersDownloadImporter.importerType == "rogers")
     }
 
    @Test
-
-
    func testHelpText() {
         #expect(RogersDownloadImporter.helpText.hasPrefix("Downloads transactions and the current balance from the Rogers Bank website."))
     }
 
    @Test
-
-
    func testImportName() {
         #expect(RogersDownloadImporter(ledger: nil).importName == "Rogers Bank Download")
     }
 
    @Test
-
-
    func testNoAccounts() {
         Self.load = {
             #expect($0 == "name")
@@ -207,8 +190,6 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 
    @Test
-
-
    func testLoadAuthenticationError() {
         Self.load = { _, _, _ in .failure(DownloadError.invalidParameters(parameters: ["a": "bc"])) }
         delegate = ErrorDelegate(inputNames: ["Username", "Password", "The login failed. Do you want to remove the saved credentials"],
@@ -223,8 +204,6 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 
    @Test
-
-
    func testDownloadActivitiesError() throws {
         var receivedStatementNumbers = [false, false, false]
         var account = TestAccount {
@@ -248,8 +227,6 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 
    @Test
-
-
    func testNoLedgerAccount() {
         user.accounts = [TestAccount()]
         setErrorDelegate(error: RogersBankMappingError.missingAccount(lastFour: "8520"))
@@ -259,8 +236,6 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 
    @Test
-
-
    func testNoActivities() throws {
         var receivedStatementNumbers = [false, false, false]
         var account = TestAccount {
@@ -283,8 +258,6 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 
    @Test
-
-
    func testStatementsToLoad() throws {
         ledger.custom.append(Custom(date: Date(), name: "rogers-download-importer", values: ["statementsToLoad", "1"]))
         ledger.custom.append(Custom(date: Date(timeIntervalSinceNow: -999_999), name: "rogers-download-importer", values: ["statementsToLoad", "200"]))
@@ -303,8 +276,6 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 
    @Test
-
-
    func testMultiAccount() throws {
         var receivedStatementNumbers1 = [false, false, false]
         var receivedStatementNumbers2 = [false, false, false]
@@ -334,8 +305,6 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 
    @Test
-
-
    func testActivityMappingError() throws {
         let activity = TestActivity()
         user.accounts = [TestAccount { _ in .success([activity]) }]
@@ -346,8 +315,6 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 
    @Test
-
-
    func testActivities() throws {
         var activity1 = TestActivity()
         var activity3 = TestActivity()
@@ -377,8 +344,6 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 
    @Test
-
-
    func testActivitySavedMapping() {
         Settings.storage = TestStorage()
         var activity = TestActivity()
@@ -407,8 +372,6 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 
    @Test
-
-
    func testLoadSavedCredentials() {
         Self.load = {
             #expect($0 == "name")
@@ -438,8 +401,6 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 
    @Test
-
-
    func testGetTwoFactorCode() {
         delegate = CredentialInputDelegate(inputNames: ["One Time Password"],
                                            inputTypes: [.otp],
@@ -456,8 +417,6 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 
    @Test
-
-
    func testSelectTwoFactorPreferenceOneOption() throws {
         delegate = CredentialInputDelegate(inputNames: [],
                                            inputTypes: [],
@@ -475,8 +434,6 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 
    @Test
-
-
    func testSelectTwoFactorPreferenceTwoOptions() throws {
         delegate = CredentialInputDelegate(inputNames: ["prefered One Time Password option"],
                                            inputTypes: [.choice(["123456789", "abc@def.ge"])],
@@ -495,8 +452,6 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 
    @Test
-
-
    func testSaveDeviceId() {
         delegate = CredentialInputDelegate(inputNames: [],
                                            inputTypes: [],

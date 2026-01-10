@@ -16,8 +16,6 @@ import Testing
 struct EventTests {
 
    @Test
-
-
    func testEqual() {
         let event1 = Event(date: TestUtils.date20170608, name: "A", value: "B")
         let event2 = Event(date: TestUtils.date20170608, name: "A", value: "B")
@@ -27,8 +25,6 @@ struct EventTests {
     }
 
    @Test
-
-
    func testEqualRespectsDate() {
         let event1 = Event(date: TestUtils.date20170608, name: "A", value: "B")
         let event2 = Event(date: TestUtils.date20170609, name: "A", value: "B")
@@ -38,8 +34,6 @@ struct EventTests {
     }
 
    @Test
-
-
    func testEqualRespectsName() {
         let event1 = Event(date: TestUtils.date20170608, name: "A", value: "B")
         let event2 = Event(date: TestUtils.date20170608, name: "C", value: "B")
@@ -49,8 +43,6 @@ struct EventTests {
     }
 
    @Test
-
-
    func testEqualRespectsValue() {
         let event1 = Event(date: TestUtils.date20170608, name: "A", value: "B")
         let event2 = Event(date: TestUtils.date20170608, name: "A", value: "C")
@@ -60,8 +52,6 @@ struct EventTests {
     }
 
    @Test
-
-
    func testEqualRespectsMetaData() {
         let event1 = Event(date: TestUtils.date20170608, name: "A", value: "B", metaData: ["A": "B"])
         var event2 = Event(date: TestUtils.date20170608, name: "A", value: "B")
@@ -75,8 +65,6 @@ struct EventTests {
     }
 
    @Test
-
-
    func testDescription() {
         var event = Event(date: TestUtils.date20170608, name: "name", value: "B")
         #expect(String(describing: event) == "2017-06-08 event \"name\" \"B\"")

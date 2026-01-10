@@ -10,8 +10,6 @@ import Testing
 struct TaxCalculatorTaxSlipTests {
 
    @Test
-
-
    func testGenerateTaxSlips() throws {
         let ledger = try basicLedger()
 
@@ -70,8 +68,6 @@ struct TaxCalculatorTaxSlipTests {
     }
 
    @Test
-
-
    func testGenerateTaxSlipsWithSymbol() throws {
         let taxSlips = try TaxCalculator.generateTaxSlips(from: try symbolLedger(), for: 2_022)
         #expect(taxSlips.count == 2)
@@ -125,8 +121,6 @@ struct TaxCalculatorTaxSlipTests {
     }
 
    @Test
-
-
    func testGenerateTaxSlipWithDifferentCurrencies() throws {
 
         let ledger = try currencyLedger()
@@ -166,8 +160,6 @@ struct TaxCalculatorTaxSlipTests {
     }
 
    @Test
-
-
    func testGenerateTaxSlipsWithSplitAccounts() throws {
         let taxSlips = try TaxCalculator.generateTaxSlips(from: splitAccountLedger(), for: 2_022)
 
@@ -218,8 +210,6 @@ struct TaxCalculatorTaxSlipTests {
     }
 
     @Test
-
-
     func testGenerateSplitTaxSlipsWithSymbol() throws {
         let taxSlips = try TaxCalculator.generateTaxSlips(from: try splitSymbolLedger(), for: 2_022)
         #expect(taxSlips.count == 1)
@@ -274,8 +264,6 @@ struct TaxCalculatorTaxSlipTests {
     }
 
    @Test
-
-
    func testSplitAccountError() throws {
         let ledger = try splitSymbolErrorLedger()
         do { _ = try TaxCalculator.generateTaxSlips(from: ledger, for: 2_022; Issue.record("Expected error") } catch { })

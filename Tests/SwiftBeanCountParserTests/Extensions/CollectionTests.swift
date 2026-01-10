@@ -16,8 +16,6 @@ import Testing
 struct CollectionTests {
 
    @Test
-
-
    func testSafeArray() {
         var array = [String]()
         #expect(array[safe: 0] == nil)

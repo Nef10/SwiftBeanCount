@@ -17,44 +17,32 @@ import Testing
 struct TangerineAccountImporterTests {
 
    @Test
-
-
    func testHeaders() {
         #expect(TangerineAccountImporter.headers == [["Date", "Transaction", "Name", "Memo", "Amount"]])
     }
 
    @Test
-
-
    func testImporterName() {
         #expect(TangerineAccountImporter.importerName == "Tangerine Accounts")
     }
 
    @Test
-
-
    func testImporterType() {
         #expect(TangerineAccountImporter.importerType == "tangerine-account")
     }
 
    @Test
-
-
    func testHelpText() {
         #expect(TangerineAccountImporter.helpText == "Enables importing of downloaded CSV files from Tangerine Accounts.\n\nTo use add importer-type: \"tangerine-account\" to your account.")
     }
 
    @Test
-
-
    func testImportName() throws {
         #expect(TangerineAccountImporter(ledger: nil == csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName,
                        "Tangerine Account File TestName")
     }
 
    @Test
-
-
    func testAccountsFromLedger() {
         var importer = TangerineAccountImporter(ledger: TestUtils.lederAccountNumers,
                                                 csvReader: TestUtils.basicCSVReader,
@@ -76,8 +64,6 @@ struct TangerineAccountImporterTests {
     }
 
    @Test
-
-
    func testAccountSuggestions() {
         var importer = TangerineAccountImporter(ledger: TestUtils.lederAccountNumers,
                                                 csvReader: TestUtils.basicCSVReader,
@@ -97,8 +83,6 @@ struct TangerineAccountImporterTests {
     }
 
    @Test
-
-
    func testParseLine() throws {
         let importer = TangerineAccountImporter(ledger: nil,
                                                 csvReader: try TestUtils.csvReader(content: """
@@ -118,8 +102,6 @@ Date,Transaction,Name,Memo,Amount
     }
 
    @Test
-
-
    func testParseLineEmptyMemo() throws {
         let importer = TangerineAccountImporter(ledger: nil,
                                                 csvReader: try TestUtils.csvReader(content: """
@@ -139,8 +121,6 @@ Date,Transaction,Name,Memo,Amount
     }
 
    @Test
-
-
    func testParseLineInterest() throws {
         let importer = TangerineAccountImporter(ledger: nil,
                                                 csvReader: try TestUtils.csvReader(content: """
@@ -159,8 +139,6 @@ Date,Transaction,Name,Memo,Amount
     }
 
    @Test
-
-
    func testParseLineInterac() throws {
         let importer = TangerineAccountImporter(ledger: nil,
                                                 csvReader: try TestUtils.csvReader(content: """

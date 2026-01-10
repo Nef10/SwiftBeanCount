@@ -46,8 +46,6 @@ struct WealthsimpleLedgerMapperTests {
     }
 
    @Test
-
-
    func testMapPositionsErrors() throws {
         // empty the data setup by default
         ledger = Ledger()
@@ -76,8 +74,6 @@ struct WealthsimpleLedgerMapperTests {
     }
 
    @Test
-
-
    func testMapPositions() throws {
         var position = TestPositon(accountId: accountId, priceAmount: "1234", priceCurrency: "EUR", quantity: "9.871")
         position.assetSymbol = "CAD"
@@ -105,8 +101,6 @@ struct WealthsimpleLedgerMapperTests {
     }
 
    @Test
-
-
    func testMapTransactionsErrors() throws {
         // empty the data setup by default
         ledger = Ledger()
@@ -138,8 +132,6 @@ struct WealthsimpleLedgerMapperTests {
     }
 
    @Test
-
-
    func testMapSpecialTransactionsErrors() throws {
         var transaction = TestTransaction(accountId: accountId)
 
@@ -162,8 +154,6 @@ struct WealthsimpleLedgerMapperTests {
     }
 
    @Test
-
-
    func testMapTransactionsBuy() throws {
         var transaction = testTransaction
 
@@ -190,8 +180,6 @@ struct WealthsimpleLedgerMapperTests {
     }
 
    @Test
-
-
    func testMapTransactionsSell() throws {
         var transaction = testTransaction
 
@@ -222,8 +210,6 @@ struct WealthsimpleLedgerMapperTests {
     }
 
    @Test
-
-
    func testMapTransactionsAlreadyExisting() throws {
         ledger.add(Transaction(metaData: TransactionMetaData(date: Date(), metaData: [MetaDataKeys.id: transactionId]), postings: []))
 
@@ -252,8 +238,6 @@ struct WealthsimpleLedgerMapperTests {
     }
 
    @Test
-
-
    func testMapTransactionsNRWT() throws {
         var nrwt = testTransaction
         nrwt.transactionType = .nonResidentWithholdingTax
@@ -288,8 +272,6 @@ struct WealthsimpleLedgerMapperTests {
     }
 
    @Test
-
-
    func testMapTransactionsDividend() throws {
         try ledger.add(SAccount(name: try AccountName("Income:t"), metaData: ["\(MetaDataKeys.dividendPrefix)ETF": accountNumber]))
         var dividend = testTransaction
@@ -329,8 +311,6 @@ struct WealthsimpleLedgerMapperTests {
     }
 
    @Test
-
-
    func testMapTransactionsStockDividend() throws {
         var transaction = testTransaction
         transaction.transactionType = .stockDividend
@@ -351,8 +331,6 @@ struct WealthsimpleLedgerMapperTests {
     }
 
    @Test
-
-
    func testMapTransactionsTransfers() throws {
         var count = 1
         let types: [SwiftBeanCountModel.AccountType: [Wealthsimple.TransactionType]] = [
@@ -388,8 +366,6 @@ struct WealthsimpleLedgerMapperTests {
     }
 
    @Test
-
-
    func testMapTransferFX() throws {
         var transaction = testTransaction
         transaction.transactionType = .purchase
@@ -414,8 +390,6 @@ struct WealthsimpleLedgerMapperTests {
     }
 
    @Test
-
-
    func testMapTransferAllowFXFalseButFXPresent() throws {
         var transaction = testTransaction
         transaction.transactionType = .payment
@@ -437,8 +411,6 @@ struct WealthsimpleLedgerMapperTests {
     }
 
    @Test
-
-
    func testMapTransactionsContributionRoom() throws {
         let roomCommodity = "TFSA.ROOM"
         let assetAccountName = try AccountName("Assets:ContributionRoom")
@@ -466,8 +438,6 @@ struct WealthsimpleLedgerMapperTests {
     }
 
    @Test
-
-
    func testMapTransactionsStockLoanTypesAreIgnored() throws {
         var transaction = testTransaction
 
@@ -485,8 +455,6 @@ struct WealthsimpleLedgerMapperTests {
     }
 
    @Test
-
-
    func testSplitTransactions() throws {
         var transaction1 = testTransaction
         transaction1.transactionType = .stockDistribution
@@ -508,8 +476,6 @@ struct WealthsimpleLedgerMapperTests {
     }
 
    @Test
-
-
    func testSplitTransactionsDifferentCommodities() throws {
         try? ledger.add(Commodity(symbol: "ETF2"))
 

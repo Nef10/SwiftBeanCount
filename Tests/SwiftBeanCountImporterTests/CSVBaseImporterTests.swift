@@ -45,16 +45,12 @@ struct CSVBaseImporterTests {
     }
 
    @Test
-
-
    func testImportName() {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.basicCSVReader, fileName: "ABCDTEST")
         #expect(importer.importName == "ABCDTEST")
     }
 
    @Test
-
-
    func testLoad() {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.basicCSVReader, fileName: "")
         importer.delegate = cashAccountDelegate
@@ -71,8 +67,6 @@ struct CSVBaseImporterTests {
     }
 
    @Test
-
-
    func testLoadSortDate() {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.dateMixedCSVReader, fileName: "")
         importer.delegate = cashAccountDelegate
@@ -87,8 +81,6 @@ struct CSVBaseImporterTests {
     }
 
    @Test
-
-
    func testNextTransaction() {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.basicCSVReader, fileName: "")
         importer.delegate = cashAccountDelegate
@@ -105,8 +97,6 @@ struct CSVBaseImporterTests {
     }
 
    @Test
-
-
    func testPrice() throws {
         let transaction = try transactionHelper(description: "price")
         let posting = transaction.postings.first { $0.accountName != TestUtils.cash }!
@@ -116,8 +106,6 @@ struct CSVBaseImporterTests {
     }
 
    @Test
-
-
    func testAccountName() throws {
         let transaction = try transactionHelper(description: "")
         #expect(transaction.postings.count == 2)
@@ -126,8 +114,6 @@ struct CSVBaseImporterTests {
     }
 
    @Test
-
-
    func testSavedPayee() throws {
         let description = "abcd"
         let payeeMapping = "efg"
@@ -138,8 +124,6 @@ struct CSVBaseImporterTests {
     }
 
    @Test
-
-
    func testSavedDescription() throws {
         let description = "abcd"
         let descriptionMapping = "efg"
@@ -150,8 +134,6 @@ struct CSVBaseImporterTests {
     }
 
    @Test
-
-
    func testSavedAccount() throws {
         let payee = "abcd"
         Settings.storage = TestStorage()
@@ -161,8 +143,6 @@ struct CSVBaseImporterTests {
     }
 
    @Test
-
-
    func testSavedPayeeAccount() throws {
         let description = "abcd"
         let payee = "efg"
@@ -174,8 +154,6 @@ struct CSVBaseImporterTests {
     }
 
    @Test
-
-
    func testGetPossibleDuplicateFor() throws {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
@@ -192,8 +170,6 @@ struct CSVBaseImporterTests {
     }
 
    @Test
-
-
    func testGetPossibleDuplicateForNone() throws {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
@@ -212,8 +188,6 @@ struct CSVBaseImporterTests {
     }
 
    @Test
-
-
    func testSanitizeDescription() throws {
         #expect(try descriptionHelper(description: "Shop1 C-IDP PURCHASE - 1234  BC  CA") == "Shop1")
         #expect(try descriptionHelper(description: "Shop1 IDP PURCHASE-1234") == "Shop1")

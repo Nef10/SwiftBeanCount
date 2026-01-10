@@ -16,8 +16,6 @@ import Testing
 struct CommodityUsageValidationTests {
 
    @Test
-
-
    func testValidateCommodityUsageDatesWithoutPlugin() throws {
         // Test that commodity usage dates are not validated when plugin is not enabled
         let ledger = Ledger()
@@ -48,8 +46,6 @@ struct CommodityUsageValidationTests {
     }
 
    @Test
-
-
    func testValidateCommodityUsageDatesWithPlugin() throws {
         // Test that commodity usage dates are validated when plugin is enabled
         let ledger = Ledger()
@@ -82,8 +78,6 @@ struct CommodityUsageValidationTests {
     }
 
    @Test
-
-
    func testValidatePriceCommodityUsageDates() throws {
         // Test validation of price commodity usage dates
         let ledger = Ledger()
@@ -117,8 +111,6 @@ struct CommodityUsageValidationTests {
     }
 
    @Test
-
-
    func testValidateCostCommodityUsageDates() throws {
         // Test validation of cost commodity usage dates
         let ledger = Ledger()
@@ -153,8 +145,6 @@ struct CommodityUsageValidationTests {
     }
 
    @Test
-
-
    func testValidateCommodityUsageDatesValid() throws {
         // Test that validation passes when commodities are used on or after opening dates
         let ledger = Ledger()

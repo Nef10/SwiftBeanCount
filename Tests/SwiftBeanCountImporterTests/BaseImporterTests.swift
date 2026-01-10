@@ -20,77 +20,57 @@ class InvalidAccountNameProvider {
 struct BaseImporterTests {
 
    @Test
-
-
    func testInit() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
         #expect(importer.ledger == TestUtils.ledger)
     }
 
    @Test
-
-
    func testImporterName() {
         #expect(BaseImporter.importerName == "")
     }
 
    @Test
-
-
    func testImporterType() {
         #expect(BaseImporter.importerType == "")
     }
 
    @Test
-
-
    func testHelpText() {
         #expect(BaseImporter.helpText == "")
     }
 
    @Test
-
-
    func testLoad() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
         importer.load()
     }
 
    @Test
-
-
    func testImportName() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
         #expect(importer.importName == "")
     }
 
    @Test
-
-
    func testNextTransaction() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
         #expect(importer.nextTransaction( == nil))
     }
 
    @Test
-
-
    func testBalancesToImport() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
         #expect(importer.balancesToImport().isEmpty)
     }
 
    @Test
-
-
    func testPricesToImport() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
         #expect(importer.pricesToImport().isEmpty)
     }
 
    @Test
-
-
    func testCommoditySymbol() {
         var importer = BaseImporter(ledger: TestUtils.ledger)
         #expect(importer.commoditySymbol == Settings.fallbackCommodity)
@@ -103,8 +83,6 @@ struct BaseImporterTests {
     }
 
    @Test
-
-
    func testConfiguredAccountName() throws {
         let ledger = TestUtils.ledger
         var importer = BaseImporter(ledger: ledger)
@@ -138,8 +116,6 @@ struct BaseImporterTests {
     }
 
    @Test
-
-
    func testSavedPayee() {
         let description = "abcd"
         let payeeMapping = "efg"
@@ -152,8 +128,6 @@ struct BaseImporterTests {
     }
 
    @Test
-
-
    func testSavedDescription() {
         let description = "abcd"
         let descriptionMapping = "efg"
@@ -166,8 +140,6 @@ struct BaseImporterTests {
     }
 
    @Test
-
-
    func testSavedAccount() {
         let payee = "abcd"
         Settings.storage = TestStorage()
@@ -178,8 +150,6 @@ struct BaseImporterTests {
     }
 
    @Test
-
-
    func testGetPossibleDuplicateFor() {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
@@ -192,8 +162,6 @@ struct BaseImporterTests {
     }
 
    @Test
-
-
    func testGetPossibleDuplicateForDateToleranceInside() {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
@@ -223,8 +191,6 @@ struct BaseImporterTests {
     }
 
    @Test
-
-
    func testGetPossibleDuplicateForDateToleranceOutside() {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
@@ -254,8 +220,6 @@ struct BaseImporterTests {
     }
 
    @Test
-
-
    func testSanitizeDescription() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
         #expect(importer.sanitize(description: "Shop1 C-IDP PURCHASE - 1234  BC  CA") == "Shop1")
@@ -279,8 +243,6 @@ struct BaseImporterTests {
 extension InvalidAccountNameProvider: ImporterDelegate {
 
    @Test
-
-
    func requestInput(name _: String, type _: ImporterInputRequestType, completion: (String) -> Bool) {
         var result = completion("Not an valid account name")
         #expect(!(result))
@@ -289,15 +251,11 @@ extension InvalidAccountNameProvider: ImporterDelegate {
     }
 
    @Test
-
-
    func saveCredential(_: String, for _: String) {
         XCTFail("saveCredential should not be called")
     }
 
    @Test
-
-
    func readCredential(_: String) -> String? {
         XCTFail("readCredential should not be called")
         return nil
@@ -305,7 +263,6 @@ extension InvalidAccountNameProvider: ImporterDelegate {
 
     // swiftlint:disable:next unused_parameter
    @Test
-
    func error(_: Error, completion: () -> Void) {
         XCTFail("error should not be called")
     }
@@ -313,8 +270,6 @@ extension InvalidAccountNameProvider: ImporterDelegate {
     #if canImport(UIKit)
 
    @Test
-
-
    func view() -> UIView? {
         XCTFail("view should not be called")
         return nil
@@ -323,8 +278,6 @@ extension InvalidAccountNameProvider: ImporterDelegate {
     #elseif canImport(AppKit)
 
    @Test
-
-
    func view() -> NSView? {
         XCTFail("view should not be called")
         return nil
@@ -335,8 +288,6 @@ extension InvalidAccountNameProvider: ImporterDelegate {
     #if canImport(UIKit) || canImport(AppKit)
 
    @Test
-
-
    func removeView() {
         XCTFail("removeView should not be called")
     }

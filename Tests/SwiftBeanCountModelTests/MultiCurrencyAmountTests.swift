@@ -16,24 +16,18 @@ import Testing
 struct MultiCurrencyAmountTests {
 
    @Test
-
-
    func testInit() {
         let multiCurrencyAmount = MultiCurrencyAmount()
         #expect(multiCurrencyAmount.amounts == [:])
     }
 
    @Test
-
-
    func testMultiCurrencyAmount() {
         let multiCurrencyAmount = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(10)], decimalDigits: [TestUtils.eur: 0])
         #expect(multiCurrencyAmount.multiCurrencyAmount == multiCurrencyAmount)
     }
 
    @Test
-
-
    func testAmountFor() {
         var multiCurrencyAmount = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(10)], decimalDigits: [TestUtils.eur: 3])
         var result = multiCurrencyAmount.amountFor(symbol: TestUtils.eur)
@@ -59,8 +53,6 @@ struct MultiCurrencyAmountTests {
     }
 
    @Test
-
-
    func testPlusSameCurrency() {
         let fifteenEuro = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(15)], decimalDigits: [TestUtils.eur: 0])
         let tenEuro = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(10)], decimalDigits: [TestUtils.eur: 0])
@@ -74,8 +66,6 @@ struct MultiCurrencyAmountTests {
     }
 
    @Test
-
-
    func testPlusDifferentCurrency() {
         let fiveEuroAndTenCanadianDollar = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(5), TestUtils.cad: Decimal(10)],
                                                                decimalDigits: [TestUtils.eur: 0, TestUtils.cad: 0])
@@ -89,8 +79,6 @@ struct MultiCurrencyAmountTests {
     }
 
    @Test
-
-
    func testPlusEmpty() {
         let nothing = MultiCurrencyAmount()
         let fiveEuro = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(5)], decimalDigits: [TestUtils.eur: 0])
@@ -103,8 +91,6 @@ struct MultiCurrencyAmountTests {
     }
 
    @Test
-
-
    func testPlusDecimalDigits() {
         let fiveEuro = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(5)], decimalDigits: [TestUtils.eur: 0])
         let fiveEuroZero = MultiCurrencyAmount(amounts: [TestUtils.eur: Decimal(5.0)], decimalDigits: [TestUtils.eur: 1])
@@ -137,8 +123,6 @@ struct MultiCurrencyAmountTests {
     }
 
    @Test
-
-
    func testPlusKeepsDecimalDigits() {
         // the plus operation needs to keep decimal digits of unrelated currencies
         //
@@ -159,8 +143,6 @@ struct MultiCurrencyAmountTests {
     }
 
    @Test
-
-
    func testEqual() {
         let nothing = MultiCurrencyAmount()
         #expect(nothing == nothing)
@@ -186,8 +168,6 @@ struct MultiCurrencyAmountTests {
     }
 
    @Test
-
-
    func testEqualDecimalDigits() {
         let fiveTwentyFife1 = MultiCurrencyAmount(amounts: [TestUtils.cad: Decimal(5.25)], decimalDigits: [TestUtils.cad: 2])
         let fiveTwentyFife2 = MultiCurrencyAmount(amounts: [TestUtils.cad: Decimal(5.25)], decimalDigits: [TestUtils.cad: 2])
@@ -198,8 +178,6 @@ struct MultiCurrencyAmountTests {
     }
 
    @Test
-
-
    func testValidateZeroWithTolerance() {
         let commodity = TestUtils.cad
         var amount = MultiCurrencyAmount(amounts: [:], decimalDigits: [:])
@@ -224,8 +202,6 @@ struct MultiCurrencyAmountTests {
     }
 
    @Test
-
-
    func testValidateOneAmountWithTolerance() {
         let commoditySymbol = TestUtils.cad
         var multiCurrencyAmount = MultiCurrencyAmount(amounts: [:], decimalDigits: [:])

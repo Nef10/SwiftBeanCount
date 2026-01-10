@@ -16,8 +16,6 @@ import Testing
 struct CustomTests {
 
    @Test
-
-
    func testEqual() {
         var custom1 = Custom(date: TestUtils.date20170608, name: "A", values: ["B"])
         var custom2 = Custom(date: TestUtils.date20170608, name: "A", values: ["B"])
@@ -33,8 +31,6 @@ struct CustomTests {
     }
 
    @Test
-
-
    func testEqualRespectsDate() {
         let custom1 = Custom(date: TestUtils.date20170608, name: "A", values: ["B"])
         let custom2 = Custom(date: TestUtils.date20170609, name: "A", values: ["B"])
@@ -44,8 +40,6 @@ struct CustomTests {
     }
 
    @Test
-
-
    func testEqualRespectsName() {
         let custom1 = Custom(date: TestUtils.date20170608, name: "A", values: ["B"])
         let custom2 = Custom(date: TestUtils.date20170608, name: "C", values: ["B"])
@@ -55,8 +49,6 @@ struct CustomTests {
     }
 
    @Test
-
-
    func testEqualRespectsValue() {
         let custom1 = Custom(date: TestUtils.date20170608, name: "A", values: ["B"])
         let custom2 = Custom(date: TestUtils.date20170608, name: "A", values: ["B", "C"])
@@ -66,8 +58,6 @@ struct CustomTests {
     }
 
    @Test
-
-
    func testDescription() {
         var custom = Custom(date: TestUtils.date20170608, name: "name", values: ["B"])
         #expect(String(describing: custom) == "2017-06-08 custom \"name\" \"B\"")
@@ -76,8 +66,6 @@ struct CustomTests {
     }
 
    @Test
-
-
    func testDescriptionMultipleValues() {
         let custom = Custom(date: TestUtils.date20170608, name: "name", values: ["B", "C", "D"])
         #expect(String(describing: custom) == "2017-06-08 custom \"name\" \"B\" \"C\" \"D\"")

@@ -17,16 +17,12 @@ import Testing
 struct FileImporterTests {
 
    @Test
-
-
    func testImporters() {
         // currently only csv files are supported
         #expect(FileImporterFactory.importers.count == CSVImporterFactory.importers.count)
     }
 
    @Test
-
-
    func testNew() {
         // no url
         #expect(FileImporterFactory.new(ledger: nil, url: nil == nil))
@@ -51,8 +47,6 @@ struct FileImporterTests {
     }
 
    @Test
-
-
    func testNoEqualImporterTypes() {
         var types = [String]()
         let importers = FileImporterFactory.importers as! [BaseImporter.Type] // swiftlint:disable:this force_cast

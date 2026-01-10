@@ -9,8 +9,6 @@ import Testing
 struct SwiftBeanCountTangerineMapperErrorTests {
 
    @Test
-
-
    func testDownloadErrorString() {
          XCTAssertEqual(
             "\(SwiftBeanCountTangerineMapperError.missingAccount(account: "abc").localizedDescription)",

@@ -50,30 +50,22 @@ struct ParserTests {
     private let comment = "; TEST comment"
 
    @Test
-
-
    func testMinimal() {
         ensureMinimal(testFile: .minimal)
     }
 
    @Test
-
-
    func testWhitespace() {
         ensureMinimal(testFile: .whitespace)
     }
 
    @Test
-
-
    func testPostingWithoutTransaction() {
         let ledger = ensureEmpty(testFile: .postingWithoutTransaction)
         #expect(ledger.errors.count == 1)
     }
 
    @Test
-
-
    func testTransactionWithoutPosting() {
         let ledger = ledgerFor(testFile: .transactionWithoutPosting)
         #expect(ledger.errors.count == 1)
@@ -81,23 +73,17 @@ struct ParserTests {
     }
 
    @Test
-
-
    func testComments() {
         let ledger = ensureEmpty(testFile: .comments)
         #expect(ledger.errors.count == 0)
     }
 
    @Test
-
-
    func testCommentsEndOfLine() {
         ensureMinimal(testFile: .commentsEndOfLine)
     }
 
    @Test
-
-
    func testInvalidCost() {
         var errorMessage = "" // do not check for the exact error message from library, just check that the parser correctly copies it
         do {
@@ -111,8 +97,6 @@ struct ParserTests {
     }
 
    @Test
-
-
    func testAccounts() {
         // open and close is ok
         var ledger = Parser.parse(string: "\(basicAccountOpeningString)\n\(basicAccountClosingString)")
@@ -150,8 +134,6 @@ struct ParserTests {
     }
 
    @Test
-
-
    func testCommodity() {
         var ledger = Parser.parse(string: "\(commodityString)")
         #expect(ledger.errors.isEmpty)
@@ -164,8 +146,6 @@ struct ParserTests {
     }
 
    @Test
-
-
    func testPrice() {
         var ledger = Parser.parse(string: "\(priceString)")
         #expect(ledger.parsingErrors.isEmpty)
@@ -178,8 +158,6 @@ struct ParserTests {
     }
 
    @Test
-
-
    func testBalance() {
         var ledger = Parser.parse(string: "\(balanceString)")
         #expect(ledger.parsingErrors.isEmpty)
@@ -192,24 +170,18 @@ struct ParserTests {
     }
 
    @Test
-
-
    func testOption() {
         let ledger = Parser.parse(string: "\(optionString)")
         #expect(ledger.option.first == Option(name: "ABC", value: "DEF"))
     }
 
    @Test
-
-
    func testPlugin() {
         let ledger = Parser.parse(string: "\(pluginString)")
         #expect(ledger.plugins.first == "ABC")
     }
 
    @Test
-
-
    func testEvent() {
         var ledger = Parser.parse(string: "\(eventString)")
         #expect(ledger.events.first == Event(date: TestUtils.date20170609, name: "ABC", value: "DEF"))
@@ -219,8 +191,6 @@ struct ParserTests {
     }
 
    @Test
-
-
    func testCustom() {
         var ledger = Parser.parse(string: "\(customString)")
         #expect(ledger.custom.first == Custom(date: TestUtils.date20170609, name: "ABC", values: ["DEF"]))
@@ -230,8 +200,6 @@ struct ParserTests {
     }
 
    @Test
-
-
    func testCommentsMetaData() {
         var ledger = Parser.parse(string: "\(comment)")
         #expect(ledger.errors.isEmpty)
@@ -247,8 +215,6 @@ struct ParserTests {
     }
 
    @Test
-
-
    func testMetaData() {
         let ledger = ledgerFor(testFile: .metaData)
         #expect(ledger.accounts[0].metaData == metaData2)
@@ -263,8 +229,6 @@ struct ParserTests {
     }
 
    @Test
-
-
    func testRoundTrip() {
         for testFile in TestFile.withoutError {
             let ledger1 = ledgerFor(testFile: testFile)
@@ -275,8 +239,6 @@ struct ParserTests {
     }
 
    @Test
-
-
    func testPerformance() {
         self.measure {
             _ = ledgerFor(testFile: .big)

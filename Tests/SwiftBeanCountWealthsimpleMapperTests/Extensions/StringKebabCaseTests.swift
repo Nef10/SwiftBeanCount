@@ -9,8 +9,6 @@ import Testing
 struct StringKebabCaseTests {
 
    @Test
-
-
    func testCamelCaseToKebabCase() {
         #expect("TEST123".camelCaseToKebabCase() == "test-123")
         #expect("TEST1Test".camelCaseToKebabCase() == "test-1-test")

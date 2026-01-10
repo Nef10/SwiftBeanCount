@@ -23,16 +23,12 @@ struct MetaDataParserTests {
     private let specialCharacterString = "  test💵: \"ABC💵\""
 
    @Test
-
-
    func testBasic() {
         let metaData = MetaDataParser.parseFrom(line: basicString)
         #expect(metaData == ["test": "ABC"])
     }
 
    @Test
-
-
    func testWhitespace() {
         let metaData1 = MetaDataParser.parseFrom(line: whitespaceString)
         #expect(metaData1 == ["test": "A B C"])
@@ -43,24 +39,18 @@ struct MetaDataParserTests {
     }
 
    @Test
-
-
    func testEndOfLineComment() {
         let metaData = MetaDataParser.parseFrom(line: endOfLineCommentString)
         #expect(metaData == ["test": "ABC"])
     }
 
    @Test
-
-
    func testSpecialCharacter() {
         let metaData = MetaDataParser.parseFrom(line: specialCharacterString)
         #expect(metaData == ["test💵": "ABC💵"])
     }
 
    @Test
-
-
    func testPerformance() {
         self.measure {
             for _ in 0...1_000 {

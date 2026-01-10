@@ -22,8 +22,6 @@ struct OptionParserTests {
     private let specialCharacterString = "option \"ABC💵\" \"DEF💵\""
 
    @Test
-
-
    func testBasic() {
         let option = OptionParser.parseFrom(line: basicString)!
         #expect(option.name == "ABC")
@@ -31,8 +29,6 @@ struct OptionParserTests {
     }
 
    @Test
-
-
    func testWhitespace() {
         let option = OptionParser.parseFrom(line: whitespaceString)!
         #expect(option.name == "  A B C  ")
@@ -40,8 +36,6 @@ struct OptionParserTests {
     }
 
    @Test
-
-
    func testEndOfLineComment() {
         let option = OptionParser.parseFrom(line: endOfLineCommentString)!
         #expect(option.name == "ABC")
@@ -49,8 +43,6 @@ struct OptionParserTests {
     }
 
    @Test
-
-
    func testSpecialCharacter() {
         let option = OptionParser.parseFrom(line: specialCharacterString)!
         #expect(option.name == "ABC💵")
@@ -58,8 +50,6 @@ struct OptionParserTests {
     }
 
    @Test
-
-
    func testPerformance() {
         self.measure {
             for _ in 0...1_000 {

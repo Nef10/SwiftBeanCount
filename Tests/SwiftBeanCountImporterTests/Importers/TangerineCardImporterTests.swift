@@ -17,36 +17,26 @@ import Testing
 struct TangerineCardImporterTests {
 
    @Test
-
-
    func testHeaders() {
         #expect(TangerineCardImporter.headers == [["Transaction date", "Transaction", "Name", "Memo", "Amount"]])
     }
 
    @Test
-
-
    func testImporterName() {
         #expect(TangerineCardImporter.importerName == "Tangerine Credit Card")
     }
 
    @Test
-
-
    func testImporterType() {
         #expect(TangerineCardImporter.importerType == "tangerine-card")
     }
 
    @Test
-
-
    func testHelpText() {
         #expect(TangerineCardImporter.helpText == "Enables importing of downloaded CSV files from Tangerine Credit Cards.\n\nTo use add importer-type: \"tangerine-card\" to your account.")
     }
 
    @Test
-
-
    func testImportName() throws {
         XCTAssertEqual(
             TangerineCardImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName,
@@ -55,8 +45,6 @@ struct TangerineCardImporterTests {
     }
 
    @Test
-
-
    func testParseLine() throws {
         let importer = TangerineCardImporter(ledger: nil,
                                              csvReader: try TestUtils.csvReader(content: """

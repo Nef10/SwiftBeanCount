@@ -23,48 +23,36 @@ struct CommodityParserTests {
     private let invalidDateString = "2017-02-30 commodity CAD"
 
    @Test
-
-
    func testBasic() {
         let commodity = CommodityParser.parseFrom(line: basicString)
         #expect(commodity == Commodity(symbol: "CAD", opening: TestUtils.date20170609))
     }
 
    @Test
-
-
    func testWhitespace() {
         let commodity = CommodityParser.parseFrom(line: whitespaceString)
         #expect(commodity == Commodity(symbol: "CAD", opening: TestUtils.date20170609))
     }
 
    @Test
-
-
    func testEndOfLineComment() {
         let commodity = CommodityParser.parseFrom(line: endOfLineCommentString)
         #expect(commodity == Commodity(symbol: "CAD", opening: TestUtils.date20170609))
     }
 
    @Test
-
-
    func testSpecialCharacter() {
         let commodity = CommodityParser.parseFrom(line: specialCharacterString)
         #expect(commodity == Commodity(symbol: "CAD💵", opening: TestUtils.date20170609))
     }
 
    @Test
-
-
    func testInvalidCloseDate() {
         let commodity = CommodityParser.parseFrom(line: invalidDateString)
         #expect(commodity == nil)
     }
 
    @Test
-
-
    func testPerformance() {
         self.measure {
             for _ in 0...1_000 {

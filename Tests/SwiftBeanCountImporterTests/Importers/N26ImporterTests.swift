@@ -17,8 +17,6 @@ import Testing
 struct N26ImporterTests {
 
    @Test
-
-
    func testHeaders() {
         XCTAssertEqual(N26Importer.headers, [
             [
@@ -48,36 +46,26 @@ struct N26ImporterTests {
     }
 
    @Test
-
-
    func testImporterName() {
         #expect(N26Importer.importerName == "N26")
     }
 
    @Test
-
-
    func testImporterType() {
         #expect(N26Importer.importerType == "n26")
     }
 
    @Test
-
-
    func testHelpText() {
         #expect(N26Importer.helpText == "Enables importing of downloaded CSV files from N26 Accounts.\n\nTo use add importer-type: \"n26\" to your account.")
     }
 
    @Test
-
-
    func testImportName() throws {
         #expect(N26Importer(ledger: nil == csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "N26 File TestName")
     }
 
    @Test
-
-
    func testParseLineNormalPurchase() throws {
         let importer = N26Importer(ledger: nil,
                                    csvReader: try TestUtils.csvReader(content: """
@@ -97,8 +85,6 @@ struct N26ImporterTests {
     }
 
    @Test
-
-
    func testParseLineSameCurrencyPurchase() throws {
         let importer = N26Importer(ledger: nil,
                                    csvReader: try TestUtils.csvReader(content: """
@@ -117,8 +103,6 @@ struct N26ImporterTests {
     }
 
    @Test
-
-
    func testParseLineOutgoingTransfer() throws {
         let importer = N26Importer(ledger: nil,
                                    csvReader: try TestUtils.csvReader(content: """
@@ -138,8 +122,6 @@ struct N26ImporterTests {
     }
 
    @Test
-
-
    func testParseLineIncomingTransfer() throws {
         let importer = N26Importer(ledger: nil,
                                    csvReader: try TestUtils.csvReader(content: """
@@ -158,8 +140,6 @@ struct N26ImporterTests {
     }
 
    @Test
-
-
    func testParseLineForeignCurrency() throws {
         let importer = N26Importer(ledger: nil,
                                    csvReader: try TestUtils.csvReader(content: """

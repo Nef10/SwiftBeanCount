@@ -17,8 +17,6 @@ import Testing
 struct DownloadImporterTests {
 
    @Test
-
-
    func testImporters() {
         #if canImport(UIKit) || canImport(AppKit)
             if #available(iOS 14.5, macOS 11.3, *) {
@@ -40,8 +38,6 @@ struct DownloadImporterTests {
     }
 
    @Test
-
-
    func testNew() {
         #expect(DownloadImporterFactory.new(ledger: Ledger( == nil), name: "This is not a valid name"))
 
@@ -52,8 +48,6 @@ struct DownloadImporterTests {
     }
 
    @Test
-
-
    func testNoEqualImporterTypes() {
         var types = [String]()
         let importers = DownloadImporterFactory.importers as! [BaseImporter.Type] // swiftlint:disable:this force_cast
@@ -67,8 +61,6 @@ struct DownloadImporterTests {
     }
 
    @Test
-
-
    func testNoEqualName() {
         var names = [String]()
         let importers = DownloadImporterFactory.importers

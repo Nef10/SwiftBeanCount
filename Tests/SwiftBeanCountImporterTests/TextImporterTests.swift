@@ -17,8 +17,6 @@ import Testing
 struct TextImporterTests {
 
    @Test
-
-
    func testNew() {
         var result = TextImporterFactory.new(ledger: nil, transaction: "", balance: "")
         #expect(result != nil)
@@ -29,8 +27,6 @@ struct TextImporterTests {
     }
 
    @Test
-
-
    func testImporters() {
         #expect(TextImporterFactory.importers.count == 2)
     }

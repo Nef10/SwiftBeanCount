@@ -17,15 +17,11 @@ import Testing
 struct ImporterTests {
 
    @Test
-
-
    func testAllImporters() {
         #expect(ImporterFactory.allImporters.count == (FileImporterFactory.importers + TextImporterFactory.importers + DownloadImporterFactory.importers).count)
     }
 
    @Test
-
-
    func testNoEqualImporterNames() {
         var names = [String]()
         let importers = ImporterFactory.allImporters
@@ -39,8 +35,6 @@ struct ImporterTests {
     }
 
    @Test
-
-
    func testFileImporter() {
         // no url
         #expect(ImporterFactory.new(ledger: nil, url: nil == nil))
@@ -65,8 +59,6 @@ struct ImporterTests {
     }
 
    @Test
-
-
    func testTextImporter() {
         let result = ImporterFactory.new(ledger: nil, transaction: "", balance: "")
         #expect(result != nil)
@@ -74,8 +66,6 @@ struct ImporterTests {
     }
 
    @Test
-
-
    func testDownloadImporter() {
         let importers = DownloadImporterFactory.importers
         for importer in importers {
@@ -84,8 +74,6 @@ struct ImporterTests {
     }
 
    @Test
-
-
    func testDownloadImporterNames() {
         // see https://github.com/realm/SwiftLint/issues/5831
         // swiftlint:disable:next prefer_key_path
@@ -93,8 +81,6 @@ struct ImporterTests {
     }
 
    @Test
-
-
    func testImportedTransactionSaveMapped() {
         let originalDescription = "abcd"
         let description = "ab"

@@ -22,40 +22,30 @@ struct PluginParserTests {
     private let specialCharacterString = "plugin \"ABC💵\""
 
    @Test
-
-
    func testBasic() {
         let plugin = PluginParser.parseFrom(line: basicString)
         #expect(plugin == "ABC")
     }
 
    @Test
-
-
    func testWhitespace() {
         let plugin = PluginParser.parseFrom(line: whitespaceString)
         #expect(plugin == "  A B C  ")
     }
 
    @Test
-
-
    func testEndOfLineComment() {
         let plugin = PluginParser.parseFrom(line: endOfLineCommentString)
         #expect(plugin == "ABC")
     }
 
    @Test
-
-
    func testSpecialCharacter() {
         let plugin = PluginParser.parseFrom(line: specialCharacterString)
         #expect(plugin == "ABC💵")
     }
 
    @Test
-
-
    func testPerformance() {
         self.measure {
             for _ in 0...1_000 {

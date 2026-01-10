@@ -68,29 +68,21 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
         }
 
        @Test
-
-
        func authenticate(completion: @escaping (Error?) -> Void) {
             completion(WealthsimpleDownloadImporterTests.authenticate?())
         }
 
        @Test
-
-
        func getAccounts(completion: @escaping (Result<[Wealthsimple.Account], Wealthsimple.AccountError>) -> Void) {
             completion(WealthsimpleDownloadImporterTests.getAccounts?() ?? .success([]))
         }
 
        @Test
-
-
        func getPositions(in account: Wealthsimple.Account, date: Date?, completion: @escaping (Result<[Position], PositionError>) -> Void) {
             completion(WealthsimpleDownloadImporterTests.getPositions?(account, date) ?? .success([]))
         }
 
        @Test
-
-
        func getTransactions(
             in account: Wealthsimple.Account,
             startDate: Date,
@@ -124,36 +116,26 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
     }
 
    @Test
-
-
    func testImporterName() {
         #expect(WealthsimpleDownloadImporter.importerName == "Wealthsimple Download")
     }
 
    @Test
-
-
    func testImporterType() {
         #expect(WealthsimpleDownloadImporter.importerType == "wealthsimple")
     }
 
    @Test
-
-
    func testHelpText() {
         #expect(WealthsimpleDownloadImporter.helpText.hasPrefix("Downloads transactions, prices and balances from Wealthsimple."))
     }
 
    @Test
-
-
    func testImportName() {
         #expect(WealthsimpleDownloadImporter(ledger: nil).importName == "Wealthsimple Download")
     }
 
    @Test
-
-
    func testNoData() {
         let importer = WealthsimpleDownloadImporter(ledger: nil)
         importer.downloaderClass = TestDownloader.self
@@ -164,8 +146,6 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
     }
 
    @Test
-
-
    func testLoadAuthenticationError() {
         let importer = WealthsimpleDownloadImporter(ledger: nil)
         let error = TestError()
@@ -190,8 +170,6 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
     }
 
    @Test
-
-
    func testLoadAccountError() {
         let importer = WealthsimpleDownloadImporter(ledger: nil)
         let error = AccountError.httpError(error: "TESTErrorString")
@@ -212,8 +190,6 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
     }
 
    @Test
-
-
    func testLoad() {
         let importer = WealthsimpleDownloadImporter(ledger: nil)
         var verifiedPositions = false
@@ -246,8 +222,6 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
     }
 
    @Test
-
-
    func testPastDaysToLoad() {
         let ledger = Ledger()
         ledger.custom.append(Custom(date: Date(), name: "wealthsimple-importer", values: ["pastDaysToLoad", "3"]))
@@ -268,8 +242,6 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
     }
 
    @Test
-
-
    func testLoadTransactions() throws {
         let ledger = Ledger()
         try ledger.add(SwiftBeanCountModel.Account(name: try AccountName("Assets:W:Cash"), metaData: ["importer-type": "wealthsimple", "number": "A1B2"]))
@@ -304,8 +276,6 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
     }
 
    @Test
-
-
    func testLoadPositions() throws {
         let ledger = Ledger()
         try ledger.add(SwiftBeanCountModel.Account(name: try AccountName("Assets:W:Cash"), metaData: ["importer-type": "wealthsimple", "number": "A1B2"]))
@@ -331,8 +301,6 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
     }
 
    @Test
-
-
    func testLoadTransactionMappingError() {
         let importer = WealthsimpleDownloadImporter(ledger: nil)
         let account = TestAccount()
@@ -352,8 +320,6 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
     }
 
    @Test
-
-
    func testLoadPositionMappingError() {
         let importer = WealthsimpleDownloadImporter(ledger: nil)
         let account = TestAccount()
@@ -376,8 +342,6 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
     }
 
    @Test
-
-
    func testLoadAccounts() { // swiftlint:disable:this function_body_length
         let importer = WealthsimpleDownloadImporter(ledger: nil)
         var verifiedPositionsOne = false, verifiedPositionsTwo = false, verifiedTransactionsOne = false, verifiedTransactionsTwo = false
@@ -416,8 +380,6 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
     }
 
    @Test
-
-
    func testPositionError() {
         let importer = WealthsimpleDownloadImporter(ledger: nil)
         let account = TestAccount()
@@ -436,8 +398,6 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
     }
 
    @Test
-
-
    func testTransactionError() {
         let importer = WealthsimpleDownloadImporter(ledger: nil)
         let account = TestAccount()
@@ -453,8 +413,6 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
     }
 
    @Test
-
-
    func testCredentialStorage() {
         let importer = WealthsimpleDownloadImporter(ledger: nil)
         let delegate = CredentialInputDelegate(saveKeys: ["wealthsimple-testKey2"], saveValues: ["testValue"], readKeys: ["wealthsimple-testKey"], readReturnValues: [nil])
@@ -467,8 +425,6 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
     }
 
    @Test
-
-
    func testAuthenticationCallback() {
         let expectation = XCTestExpectation(description: "authenticationCallback called")
         let importer = WealthsimpleDownloadImporter(ledger: nil)

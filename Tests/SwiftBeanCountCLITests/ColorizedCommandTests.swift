@@ -15,7 +15,6 @@ struct TestColorizedCommand: ColorizedCommand {
 struct ColorizedCommandTests {
 
    @Test
-
    func testHelp() {
         let originalValue = Rainbow.enabled
         Rainbow.enabled = true
