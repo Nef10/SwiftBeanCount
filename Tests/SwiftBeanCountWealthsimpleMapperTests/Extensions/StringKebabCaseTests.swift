@@ -1,5 +1,3 @@
-
-
 import Foundation
 @testable import SwiftBeanCountWealthsimpleMapper
 import Testing

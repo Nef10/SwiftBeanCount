@@ -1,8 +1,7 @@
-
-import Foundation
-@testable import SwiftBeanCountCLI
 import ArgumentParser
+import Foundation
 import Rainbow
+@testable import SwiftBeanCountCLI
 import Testing
 
 #if os(macOS)

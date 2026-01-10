@@ -1,11 +1,10 @@
-
 // swiftlint:disable:next type_body_length
 
 import Foundation
-@testable import SwiftBeanCountWealthsimpleMapper
 import SwiftBeanCountModel
-import Wealthsimple
+@testable import SwiftBeanCountWealthsimpleMapper
 import Testing
+import Wealthsimple
 
 @Suite
 struct WealthsimpleLedgerMapperTests {

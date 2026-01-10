@@ -7,7 +7,6 @@
 //  Copyright © 2022 Steffen Kötte. All rights reserved.
 //
 
-
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -33,7 +32,7 @@ class BaseTestImporterDelegate: ImporterDelegate {
 
     // swiftlint:disable:next unused_parameter
    @Test
-   func error(_ error: Error, completion: () -> Void) {
+   func error(_ error: Error, completion _: () -> Void) {
         XCTFail("error should not be called, received \(error)")
     }
 

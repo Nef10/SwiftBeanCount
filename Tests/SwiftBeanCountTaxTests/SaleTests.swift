@@ -1,8 +1,6 @@
-
-
 import Foundation
-@testable import SwiftBeanCountTax
 import SwiftBeanCountModel
+@testable import SwiftBeanCountTax
 import Testing
 
 @Suite

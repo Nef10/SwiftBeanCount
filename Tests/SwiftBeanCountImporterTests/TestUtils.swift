@@ -6,10 +6,9 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
-
+import CSV
 import Foundation
 @testable import SwiftBeanCountImporter
-import CSV
 import SwiftBeanCountModel
 import Testing
 

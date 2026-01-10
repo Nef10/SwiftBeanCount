@@ -1,8 +1,6 @@
-
-
 import Foundation
-@testable import SwiftBeanCountRogersBankMapper
 import RogersBankDownloader
+@testable import SwiftBeanCountRogersBankMapper
 import Testing
 
 @Suite

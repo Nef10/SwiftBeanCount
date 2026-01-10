@@ -8,7 +8,6 @@
 
 // swiftlint:disable file_length
 
-
 import Foundation
 @testable import SwiftBeanCountModel
 import Testing
@@ -766,7 +765,7 @@ extension InventoryTests { // Test Reduce
                 XCTFail("Error thrown")
             }
 
-            #expect(inventory.inventory.count == 0)
+            #expect(inventory.inventory.isEmpty)
         }
     }
 
@@ -798,7 +797,7 @@ extension InventoryTests { // Test Reduce
                 XCTFail("Error thrown")
             }
 
-            #expect(inventory.inventory.count == 0)
+            #expect(inventory.inventory.isEmpty)
         }
     }
 
@@ -901,7 +900,7 @@ extension InventoryTests { // Test Reduce
                 XCTFail("Error thrown")
             }
 
-            #expect(inventory.inventory.count == 0)
+            #expect(inventory.inventory.isEmpty)
         }
     }
 

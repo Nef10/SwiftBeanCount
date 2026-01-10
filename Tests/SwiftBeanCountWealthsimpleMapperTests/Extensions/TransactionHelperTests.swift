@@ -1,10 +1,8 @@
-
-
 import Foundation
-@testable import SwiftBeanCountWealthsimpleMapper
 import SwiftBeanCountModel
-import Wealthsimple
+@testable import SwiftBeanCountWealthsimpleMapper
 import Testing
+import Wealthsimple
 
 @Suite
 

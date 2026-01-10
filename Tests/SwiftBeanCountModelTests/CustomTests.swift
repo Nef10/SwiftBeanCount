@@ -6,7 +6,6 @@
 //  Copyright © 2019 Steffen Kötte. All rights reserved.
 //
 
-
 import Foundation
 @testable import SwiftBeanCountModel
 import Testing

@@ -1,7 +1,6 @@
-
 import Foundation
-@testable import SwiftBeanCountCLI
 import Rainbow
+@testable import SwiftBeanCountCLI
 import Testing
 
 #if os(macOS)

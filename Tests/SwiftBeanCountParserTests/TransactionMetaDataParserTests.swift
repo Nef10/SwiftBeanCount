@@ -6,10 +6,9 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
-
 import Foundation
-@testable import SwiftBeanCountParser
 import SwiftBeanCountModel
+@testable import SwiftBeanCountParser
 import Testing
 
 @Suite
@@ -61,7 +60,7 @@ struct TransactionMetaDataParserTests {
         #expect(transactionMetaData.payee == "Payee")
         #expect(transactionMetaData.flag == Flag.incomplete)
         #expect(transactionMetaData.date == TestUtils.date20170609)
-        #expect(transactionMetaData.tags.count == 0)
+        #expect(transactionMetaData.tags.isEmpty)
         #expect(String(describing: transactionMetaData) == incompleteTransactionMetaDataString)
     }
 
@@ -101,7 +100,7 @@ struct TransactionMetaDataParserTests {
         #expect(transactionMetaData.narration == "Narration")
         #expect(transactionMetaData.payee == "Payee")
         #expect(transactionMetaData.flag == Flag.complete)
-        #expect(transactionMetaData.tags.count == 0)
+        #expect(transactionMetaData.tags.isEmpty)
         #expect(transactionMetaData.date == TestUtils.date20170609)
         #expect(String(describing: transactionMetaData) == basicTransactionMetaDataString)
     }

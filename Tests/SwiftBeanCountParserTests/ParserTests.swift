@@ -6,10 +6,9 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
-
 import Foundation
-@testable import SwiftBeanCountParser
 import SwiftBeanCountModel
+@testable import SwiftBeanCountParser
 import Testing
 
 @Suite
@@ -69,13 +68,13 @@ struct ParserTests {
    func testTransactionWithoutPosting() {
         let ledger = ledgerFor(testFile: .transactionWithoutPosting)
         #expect(ledger.errors.count == 1)
-        #expect(ledger.parsingErrors.count == 0)
+        #expect(ledger.parsingErrors.isEmpty)
     }
 
    @Test
    func testComments() {
         let ledger = ensureEmpty(testFile: .comments)
-        #expect(ledger.errors.count == 0)
+        #expect(ledger.errors.isEmpty)
     }
 
    @Test
@@ -249,7 +248,7 @@ struct ParserTests {
 
     private func ensureEmpty(testFile: TestFile) -> Ledger {
         let ledger = ledgerFor(testFile: testFile)
-        #expect(ledger.transactions.count == 0)
+        #expect(ledger.transactions.isEmpty)
         return ledger
     }
 

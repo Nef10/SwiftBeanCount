@@ -1,8 +1,6 @@
-
-
 import Foundation
-@testable import SwiftBeanCountTax
 import SwiftBeanCountModel
+@testable import SwiftBeanCountTax
 import Testing
 
 @Suite
@@ -71,6 +69,6 @@ struct TaxCalculatorTaxableSalesTests {
         ledger.add(transaction)
 
         let sales = try TaxCalculator.getTaxableSales(from: ledger, for: 2_022)
-        #expect(sales.count == 0)
+        #expect(sales.isEmpty)
     }
 }

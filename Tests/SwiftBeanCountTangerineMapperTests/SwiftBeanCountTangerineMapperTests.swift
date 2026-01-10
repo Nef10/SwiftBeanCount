@@ -1,9 +1,8 @@
-
 // swiftlint:disable:next type_body_length
 
 import Foundation
-@testable import SwiftBeanCountTangerineMapper
 import SwiftBeanCountModel
+@testable import SwiftBeanCountTangerineMapper
 import Testing
 
 @Suite
