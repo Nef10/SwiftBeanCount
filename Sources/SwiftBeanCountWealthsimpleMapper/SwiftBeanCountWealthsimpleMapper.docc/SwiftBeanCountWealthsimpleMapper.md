@@ -1,19 +1,17 @@
-# SwiftBeanCountWealthsimpleMapper
+# ``SwiftBeanCountWealthsimpleMapper``
 
-[![CI Status](https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper/workflows/CI/badge.svg?event=push)](https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper/actions?query=workflow%3A%22CI%22) [![Documentation percentage](https://nef10.github.io/SwiftBeanCountWealthsimpleMapper/badge.svg)](https://nef10.github.io/SwiftBeanCountWealthsimpleMapper/) [![License: MIT](https://img.shields.io/github/license/Nef10/SwiftBeanCountWealthsimpleMapper)](https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper/blob/main/LICENSE) [![Latest version](https://img.shields.io/github/v/release/Nef10/SwiftBeanCountWealthsimpleMapper?label=SemVer&sort=semver)](https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper/releases) ![platforms supported: linux | macOS | iOS | watchOS | tvOS](https://img.shields.io/badge/platform-linux%20%7C%20macOS%20%7C%20iOS%20%7C%20watchOS%20%7C%20tvOS-blue) ![SPM compatible](https://img.shields.io/badge/SPM-compatible-blue)
+Convert Wealthsimple account data to Beancount format.
 
-### ***This project is part for SwiftBeanCount, please check out the main documentation [here](https://github.com/Nef10/SwiftBeanCount).***
+## Overview
 
-## What
-
-This is a small library to convert downloaded data from Wealthsimple (via [WealthsimpleDownloader](https://github.com/Nef10/WealthsimpleDownloader)) to the Beancount format (via [SwiftBeanCountModel](https://github.com/Nef10/SwiftBeanCountModel)).
+This is a small library to convert downloaded data from Wealthsimple (via [WealthsimpleDownloader](https://github.com/Nef10/WealthsimpleDownloader)) to the Beancount format (via [SwiftBeanCountModel](/SwiftBeanCount/documentation/swiftbeancountmodel)).
 
 ## Limitations
 
 1. Renames of stock tickers are not imported.
 1. Return of capital and non cash distributions are also not imported, as these usually appear very late.
 
-## Beancount meta data
+## Beancount Meta Data
 
 The library relies heavily on meta data in your Beancount file to find accounts and commodities. Please add these to your Beancount file:
 
@@ -33,8 +31,8 @@ For Wealthsimple accounts themselves, you need to add this metadata: `importer-t
 For accounts used in transactions to and from your Wealthsimple accounts you need to provide meta data as well. These is in the form of `wealthsimple-key: "accountNumber1 accountNumber2"`. The account number is the same as above, and you can specify one or multiple per key. As keys use these values:
 
 * For dividend income accounts `wealthsimple-dividend-COMMODITYSYMBOL`, e.g. `wealthsimple-dividend-XGRO`
-* For the assset account you are using to contribute to registered accounts from, use `wealthsimple-contribution`
-* For the assset account you are using to deposit to non-registered accounts from, use `wealthsimple-deposit`
+* For the asset account you are using to contribute to registered accounts from, use `wealthsimple-contribution`
+* For the asset account you are using to deposit to non-registered accounts from, use `wealthsimple-deposit`
 * Use `wealthsimple-fee` on an expense account to track the wealthsimple fees
 * Use `wealthsimple-non-resident-withholding-tax` on an expense account for non resident withholding tax
 * In case some transaction does not balance within your ledger, an expense account with `wealthsimple-rounding` will get the difference
@@ -52,8 +50,7 @@ For accounts used in transactions to and from your Wealthsimple accounts you nee
   * `wealthsimple-refund`
   * `wealthsimple-payment-spend` (optional, will use fallback account if not provided)
 
-<details>
-  <summary>Full Example</summary>
+### Full Example
 
 ```
 2020-07-31 open Assets:Checking:Wealthsimple CAD
@@ -86,30 +83,19 @@ For accounts used in transactions to and from your Wealthsimple accounts you nee
 
 2020-07-31 open Expenses:TFSAContributionRoom TFSA.ROOM
   wealthsimple-contribution-room: "B002"
-````
-</details>
+```
 
-## How
+## How to Use
 
 1) First create an instance of the mapper via `WealthsimpleLedgerMapper(ledger:)`, passing the ledger which contains the meta data discussed above.
 2) Assign the downloaded wealthsimple accounts to the `accounts` property on the mapper.
 3) Call `mapPositionsToPriceAndBalance` or `mapTransactionsToPriceAndTransactions` to map your downloaded positions / transactions to SwiftBeanCountModel Prices and Balances / Prices and Transactions.
 
-Please also check out the complete documentation [here](https://nef10.github.io/SwiftBeanCountWealthsimpleMapper/). Additionally, you can have a look at the [SwiftBeanCountImporter](https://github.com/Nef10/SwiftBeanCountImporter) which uses this library.
+Additionally, you can have a look at the `WealthsimpleDownloadImporter` in the  SwiftBeanCountImporter which uses this library.
 
-## Usage
-
-The library supports the Swift Package Manger, so simply add a dependency in your `Package.swift`:
-
-```
-.package(url: "https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper.git", .upToNextMajor(from: "X.Y.Z")),
-```
-
-## Limitations
+## Additional Limitations
 
 Please note that I developed this library for my own needs and there may be bugs. It currently has some limitations:
 
 * Sell Gains are not calculated
 * In case a transactions does not balance it will not add a rounding posting because SwiftBeanCountModel does not yet fully supporting Beancount rounding
-
-Pull requests to extend the scope or remove limitations are very welcome.
