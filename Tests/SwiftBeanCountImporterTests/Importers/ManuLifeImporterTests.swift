@@ -416,10 +416,11 @@ final class ManuLifeImporterTests: XCTestCase {
 
     func testInvalidTransactionAndBalanceText() throws {
         // Should error for both when both are invalid
+        var receivedErrors: [ManuLifeImporterError] = []
         let errorDelegate = ErrorCheckDelegate { error in
             if let manuLifeError = error as? ManuLifeImporterError {
-                return manuLifeError == .failedToParseTransaction(invalidTransactionText) ||
-                       manuLifeError == .failedToParseBalance(invalidBalanceText)
+                receivedErrors.append(manuLifeError)
+                return true
             }
             return false
         }
@@ -427,8 +428,12 @@ final class ManuLifeImporterTests: XCTestCase {
         let importer = ManuLifeImporter(ledger: ledger, transaction: invalidTransactionText, balance: invalidBalanceText)
         importer.delegate = errorDelegate
         importer.load()
-        // Note: We expect the error delegate to be called twice (once for transaction, once for balance)
-        // but ErrorCheckDelegate only verifies the first error. This is acceptable for this test.
+
+        // Verify both errors were reported
+        XCTAssertEqual(receivedErrors.count, 2, "Expected 2 errors to be reported")
+        XCTAssert(receivedErrors.contains(.failedToParseTransaction(invalidTransactionText)), "Expected transaction error")
+        XCTAssert(receivedErrors.contains(.failedToParseBalance(invalidBalanceText)), "Expected balance error")
+
         XCTAssertNil(importer.nextTransaction())
         XCTAssertEqual(importer.balancesToImport(), [])
         XCTAssertEqual(importer.pricesToImport(), [])
