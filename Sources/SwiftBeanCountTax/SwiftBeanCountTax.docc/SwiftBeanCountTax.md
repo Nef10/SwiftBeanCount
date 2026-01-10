@@ -4,8 +4,6 @@ Tax calculation utilities for SwiftBeanCount ledgers.
 
 ## Overview
 
-***This project is part of SwiftBeanCount, please check out the main documentation [here](https://github.com/Nef10/SwiftBeanCount).***
-
 This is a library to help you during tax season. Right now it can list taxable sales and generate expected tax slips based on your beancount file. This allows you to easily verify your received tax slips to check for errors on either the providers side or your tracking.
 
 ## Beancount Meta Data
@@ -104,16 +102,6 @@ Sometimes income is earned in one year, but only paid in another; or a sale is p
 2) Call one of the public functions on `TaxCalculator`, for example:
     1) `TaxCalculator.generateTaxSlips(from ledger: Ledger, for year: Int)`
     2) `TaxCalculator.getTaxableSales(from ledger: Ledger, for year: Int)`
-
-## Usage
-
-The library supports the Swift Package Manager, so simply add a dependency in your `Package.swift`:
-
-```swift
-.package(url: "https://github.com/Nef10/SwiftBeanCountTax.git", .exact(from: "X.Y.Z")),
-```
-
-*Note: as per semantic versioning all versions changes < 1.0.0 can be breaking, so please use `.exact` for now*
 
 ## Topics
 

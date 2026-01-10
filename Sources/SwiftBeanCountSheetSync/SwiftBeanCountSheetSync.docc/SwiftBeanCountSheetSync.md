@@ -4,8 +4,6 @@ Synchronize transactions between Beancount files and Google Sheets.
 
 ## Overview
 
-***This project is part of SwiftBeanCount, please check out the main documentation [here](https://github.com/Nef10/SwiftBeanCount).***
-
 This library synchronizes transactions from Beancount files to a Google Sheets with shared transactions. This is helpful when you share expenses with another person who does not use beancount.
 
 ## How to Use
@@ -61,14 +59,6 @@ The following columns are required to be within columns A-I, other columns are i
 - `Part Name1` and `Part Name2`. `Name1` and `Name2` should be the name of the people (e.g. replace them). One of them must be the same as configured as name in the ledger (see above). Each column must contain a number which represents the amount this party is paying for the purchase. Same formatting rules as for amount apply.
 - `Who paid` One of the two names
 - `Comment` While the column is required, it can be an empty string
-
-## Usage
-
-The library supports the Swift Package Manager, so simply add a dependency in your `Package.swift`:
-
-```swift
-.package(url: "https://github.com/Nef10/SwiftBeanCountSheetSync.git", .upToNextMajor(from: "X.Y.Z")),
-```
 
 ## Topics
 

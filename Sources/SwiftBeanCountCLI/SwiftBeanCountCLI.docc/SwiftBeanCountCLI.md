@@ -4,8 +4,6 @@ Command-line interface for SwiftBeanCount.
 
 ## Overview
 
-***This project is part of SwiftBeanCount, please check out the main documentation [here](https://github.com/Nef10/SwiftBeanCount).***
-
 This is the command-line tool of SwiftBeanCount.
 
 ## Usage

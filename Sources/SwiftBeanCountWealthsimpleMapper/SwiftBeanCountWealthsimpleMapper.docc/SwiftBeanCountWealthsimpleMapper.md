@@ -4,8 +4,6 @@ Convert Wealthsimple account data to Beancount format.
 
 ## Overview
 
-***This project is part of SwiftBeanCount, please check out the main documentation [here](https://github.com/Nef10/SwiftBeanCount).***
-
 This is a small library to convert downloaded data from Wealthsimple (via [WealthsimpleDownloader](https://github.com/Nef10/WealthsimpleDownloader)) to the Beancount format (via [SwiftBeanCountModel](https://github.com/Nef10/SwiftBeanCountModel)).
 
 ## Limitations
@@ -94,14 +92,6 @@ For accounts used in transactions to and from your Wealthsimple accounts you nee
 3) Call `mapPositionsToPriceAndBalance` or `mapTransactionsToPriceAndTransactions` to map your downloaded positions / transactions to SwiftBeanCountModel Prices and Balances / Prices and Transactions.
 
 Additionally, you can have a look at the [SwiftBeanCountImporter](https://github.com/Nef10/SwiftBeanCountImporter) which uses this library.
-
-## Usage
-
-The library supports the Swift Package Manager, so simply add a dependency in your `Package.swift`:
-
-```swift
-.package(url: "https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper.git", .upToNextMajor(from: "X.Y.Z")),
-```
 
 ## Additional Limitations
 
