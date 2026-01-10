@@ -121,20 +121,17 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
             let (buys, date) = parsePurchase(string: transactionInputString, commodities: commodities)
             parsedManuLifeBuys = buys
             parsedTransactionDate = date
-            // Check if we failed to parse anything meaningful from non-empty input
             if buys.isEmpty || date == nil {
                 errors.append(.failedToParseTransaction(transactionInputString))
             }
         }
         if !balanceInputString.isEmpty {
             parsedManuLifeBalances = parseBalances(string: balanceInputString, commodities: commodities)
-            // Check if we failed to parse anything meaningful from non-empty input
             if parsedManuLifeBalances.isEmpty {
                 errors.append(.failedToParseBalance(balanceInputString))
             }
         }
 
-        // Report all collected errors
         if !errors.isEmpty {
             let group = DispatchGroup()
             for error in errors {
@@ -142,8 +139,8 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
                 self.delegate?.error(error) {
                     group.leave()
                 }
+                group.wait()
             }
-            group.wait()
         }
     }
 
