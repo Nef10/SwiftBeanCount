@@ -114,31 +114,36 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
                 $0[name] = $1.symbol
             }
         } ?? [:]
+
+        var errors: [ManuLifeImporterError] = []
+
         if !transactionInputString.isEmpty {
             let (buys, date) = parsePurchase(string: transactionInputString, commodities: commodities)
             parsedManuLifeBuys = buys
             parsedTransactionDate = date
             // Check if we failed to parse anything meaningful from non-empty input
             if buys.isEmpty || date == nil {
-                let group = DispatchGroup()
-                group.enter()
-                self.delegate?.error(ManuLifeImporterError.failedToParseTransaction(transactionInputString)) {
-                    group.leave()
-                }
-                group.wait()
+                errors.append(.failedToParseTransaction(transactionInputString))
             }
         }
         if !balanceInputString.isEmpty {
             parsedManuLifeBalances = parseBalances(string: balanceInputString, commodities: commodities)
             // Check if we failed to parse anything meaningful from non-empty input
             if parsedManuLifeBalances.isEmpty {
-                let group = DispatchGroup()
+                errors.append(.failedToParseBalance(balanceInputString))
+            }
+        }
+
+        // Report all collected errors
+        if !errors.isEmpty {
+            let group = DispatchGroup()
+            for error in errors {
                 group.enter()
-                self.delegate?.error(ManuLifeImporterError.failedToParseBalance(balanceInputString)) {
+                self.delegate?.error(error) {
                     group.leave()
                 }
-                group.wait()
             }
+            group.wait()
         }
     }
 
