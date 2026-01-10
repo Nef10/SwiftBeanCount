@@ -156,7 +156,7 @@ struct ManuLifeImporterTests {
    @Test
    func testParseEmpty() {
         let importer = loadedImporter()
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         #expect(importer.balancesToImport().isEmpty)
         #expect(importer.pricesToImport().isEmpty)
     }
@@ -164,14 +164,14 @@ struct ManuLifeImporterTests {
    @Test
    func testParseBalance() throws {
         let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), balance: balance)
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         let balances = importer.balancesToImport()
         let prices = importer.pricesToImport()
         #expect(balances.count == 4)
         #expect(prices.count == 2)
 
-        XCTAssertEqual(
-            "\(balances.map { "\($0)" }.joined(separator: "\n"))\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))",
+        #expect(
+            "\(balances.map { "\($0)" }.joined(separator: "\n"))\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))" ==
             "\(balanceResult())\n\n\(balancePricesResult())"
         )
         #expect(parkingAccountDelegate.verified)
@@ -185,13 +185,13 @@ struct ManuLifeImporterTests {
         #expect(transaction!.originalDescription.isEmpty)
         #expect(!(transaction!.shouldAllowUserToEdit))
         #expect(transaction!.accountName == nil)
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         let prices = importer.pricesToImport()
         #expect(importer.balancesToImport().isEmpty)
         #expect(prices.count == 2)
 
-        XCTAssertEqual(
-            "\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))",
+        #expect(
+            "\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))" ==
             "\(transactionResult())\n\n\(transactionPricesResult())"
         )
         #expect(parkingAccountDelegate.verified)
@@ -206,8 +206,8 @@ struct ManuLifeImporterTests {
         let prices = importer.pricesToImport()
         #expect(balances.count == 4)
         #expect(prices.count == 4)
-        XCTAssertEqual(
-            "\(transaction!.transaction)\n\n\(balances.map { "\($0)" }.joined(separator: "\n"))\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))",
+        #expect(
+            "\(transaction!.transaction)\n\n\(balances.map { "\($0)" }.joined(separator: "\n"))\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))" ==
             "\(transactionResult())\n\n\(balanceResult())\n\n\(transactionPricesResult())\n\(balancePricesResult())"
         )
         #expect(parkingAccountDelegate.verified)
@@ -222,8 +222,8 @@ struct ManuLifeImporterTests {
         let prices = importer.pricesToImport()
         #expect(balances.isEmpty)
         #expect(prices.count == 4)
-        XCTAssertEqual(
-            "\(transaction!.transaction)\n\n\(balances.map { "\($0)" }.joined(separator: "\n"))\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))",
+        #expect(
+            "\(transaction!.transaction)\n\n\(balances.map { "\($0)" }.joined(separator: "\n"))\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))" ==
             """
             2020-06-05 * "" ""
               Assets:Cash:Parking -149.28 CAD
@@ -265,7 +265,7 @@ struct ManuLifeImporterTests {
         #expect(transaction != nil)
         #expect(importer.balancesToImport().isEmpty)
         let prices = importer.pricesToImport()
-        XCTAssertEqual("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))", """
+        #expect("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))" == """
             2020-06-05 * "" ""
               Assets:Cash:Parking -149.28 USD
               Assets:Cash:Employee:Basic:\(TestUtils.fundSymbol) 3.82386 \(TestUtils.fundSymbol) {9.148 USD}
@@ -287,7 +287,7 @@ struct ManuLifeImporterTests {
         #expect(importer.balancesToImport().isEmpty)
         let prices = importer.pricesToImport()
         #expect(prices.count == 2)
-        XCTAssertEqual("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))", """
+        #expect("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))" == """
             2020-06-05 * "" ""
               Assets:Cash:Parking -149.28 USD
               Assets:Cash:Employee:Basic:\(TestUtils.fundSymbol) 3.82386 \(TestUtils.fundSymbol) {9.148 USD}
@@ -307,7 +307,7 @@ struct ManuLifeImporterTests {
         #expect(transaction != nil)
         #expect(importer.balancesToImport().isEmpty)
         let prices = importer.pricesToImport()
-        XCTAssertEqual("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))", """
+        #expect("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))" == """
             2020-06-05 * "" ""
               Assets:Cash:Parking -149.28 USD
               Assets:Cash:Employee:Voluntary:\(TestUtils.fundSymbol) 15.29544 \(TestUtils.fundSymbol) {9.148 USD}
@@ -322,7 +322,7 @@ struct ManuLifeImporterTests {
         let strings = ["This is not a valid Transaction", transactionInvalidDate]
         for string in strings {
             let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), transaction: string)
-            #expect(importer.nextTransaction( == nil))
+            #expect(importer.nextTransaction() == nil)
             #expect(importer.balancesToImport().isEmpty)
             #expect(importer.pricesToImport().isEmpty)
         }

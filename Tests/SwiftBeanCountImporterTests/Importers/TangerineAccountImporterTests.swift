@@ -37,7 +37,7 @@ struct TangerineAccountImporterTests {
 
    @Test
    func testImportName() throws {
-        #expect(TangerineAccountImporter(ledger: nil == csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName,
+        #expect(TangerineAccountImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName ===
                        "Tangerine Account File TestName")
     }
 

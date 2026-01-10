@@ -292,8 +292,8 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
         importer.downloaderClass = TestDownloader.self
         importer.load()
         #expect(importer.nextTransaction() == nil)
-        XCTAssertEqual(
-            importer.pricesToImport(),
+        #expect(
+            importer.pricesToImport() ==
             [try Price(date: position.positionDate, commoditySymbol: "XGRO", amount: Amount(number: Decimal(string: "1.11")!, commoditySymbol: "CAD", decimalDigits: 2))]
         )
         #expect(importer.balancesToImport()

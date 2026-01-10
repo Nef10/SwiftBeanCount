@@ -220,22 +220,19 @@ struct TransactionPostingTests {
         let amount = Amount(number: Decimal(1), commoditySymbol: "💵")
         let price = Amount(number: Decimal(1.555), commoditySymbol: TestUtils.eur)
 
-        XCTAssertThrowsError(try Posting(accountName: TestUtils.chequing, amount: amount, price: price, priceType: nil)) { error in
-            #expect(error as? PostingError == PostingError.priceWithoutType)
-        }
+        let error = #expect(throws: (any Error).self) { try Posting(accountName: TestUtils.chequing, amount: amount, price: price, priceType: nil) }
+        #expect(error as? PostingError == PostingError.priceWithoutType)
     }
 
    @Test
    func testInitErrorPriceTypeWithoutPrice() throws {
         let amount = Amount(number: Decimal(1), commoditySymbol: "💵")
 
-        XCTAssertThrowsError(try Posting(accountName: TestUtils.chequing, amount: amount, price: nil, priceType: .perUnit)) { error in
-            #expect(error as? PostingError == PostingError.priceTypeWithoutPrice)
-        }
+        let error1 = #expect(throws: (any Error).self) { try Posting(accountName: TestUtils.chequing, amount: amount, price: nil, priceType: .perUnit) }
+        #expect(error1 as? PostingError == PostingError.priceTypeWithoutPrice)
 
-        XCTAssertThrowsError(try Posting(accountName: TestUtils.chequing, amount: amount, price: nil, priceType: .total)) { error in
-            #expect(error as? PostingError == PostingError.priceTypeWithoutPrice)
-        }
+        let error2 = #expect(throws: (any Error).self) { try Posting(accountName: TestUtils.chequing, amount: amount, price: nil, priceType: .total) }
+        #expect(error2 as? PostingError == PostingError.priceTypeWithoutPrice)
     }
 
 }

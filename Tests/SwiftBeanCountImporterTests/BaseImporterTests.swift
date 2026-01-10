@@ -6,6 +6,12 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -261,28 +267,28 @@ extension InvalidAccountNameProvider: ImporterDelegate {
         Issue.record("error should not be called")
     }
 
-    #if canImport(UIKit)
+#if canImport(UIKit)
 
    func view() -> UIView? {
         Issue.record("view should not be called")
         return nil
     }
 
-    #elseif canImport(AppKit)
+#elseif canImport(AppKit)
 
    func view() -> NSView? {
         Issue.record("view should not be called")
         return nil
     }
 
-    #endif
+#endif
 
-    #if canImport(UIKit) || canImport(AppKit)
+#if canImport(UIKit) || canImport(AppKit)
 
    func removeView() {
         Issue.record("removeView should not be called")
     }
 
-    #endif
+#endif
 
 }

@@ -22,12 +22,11 @@ struct AccountNameTests {
    @Test
    func testInitNames() {
         for name in validNames {
-            XCTAssertNoThrow(try AccountName(name))
+            #expect(throws: Never.self) { try AccountName(name) }
         }
         for name in invalidNames {
-            XCTAssertThrowsError(try AccountName(name)) {
-                #expect($0.localizedDescription == "Invalid Account name: \(name)")
-            }
+            let error = #expect(throws: (any Error).self) { try AccountName(name) }
+            #expect(error.localizedDescription == "Invalid Account name: \(name)")
         }
     }
 

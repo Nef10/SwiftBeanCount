@@ -16,7 +16,7 @@ struct RogersImporterTests {
 
    @Test
    func testHeaders() {
-        XCTAssertEqual(RogersImporter.headers, [
+        #expect(RogersImporter.headers == [
             ["Transaction Date", "Activity Type", "Merchant Name", "Merchant Category", "Amount"],
             ["Transaction Date", "Activity Type", "Merchant Name", "Merchant Category Description", "Amount"],
             ["Date", "Activity Type", "Merchant Name", "Merchant Category", "Amount"],

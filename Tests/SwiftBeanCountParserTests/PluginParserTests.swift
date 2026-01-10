@@ -43,16 +43,4 @@ struct PluginParserTests {
         #expect(plugin == "ABC💵")
     }
 
-   @Test
-   func testPerformance() {
-        self.measure {
-            for _ in 0...1_000 {
-                _ = PluginParser.parseFrom(line: basicString)
-                _ = PluginParser.parseFrom(line: whitespaceString)
-                _ = PluginParser.parseFrom(line: endOfLineCommentString)
-                _ = PluginParser.parseFrom(line: specialCharacterString)
-            }
-        }
-    }
-
 }

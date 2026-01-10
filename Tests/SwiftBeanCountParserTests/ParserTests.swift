@@ -236,13 +236,6 @@ struct ParserTests {
         }
     }
 
-   @Test
-   func testPerformance() {
-        self.measure {
-            _ = ledgerFor(testFile: .big)
-        }
-    }
-
     //  Helper
 
     private func ensureEmpty(testFile: TestFile) -> Ledger {

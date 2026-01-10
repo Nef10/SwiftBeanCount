@@ -70,10 +70,10 @@ struct PriceParserTests {
 
    @Test
    func testInvalid() {
-        #expect(PriceParser.parseFrom(line: invalidPriceMissingNumber == nil))
-        #expect(PriceParser.parseFrom(line: invalidPriceMissingFirstCurrency == nil))
-        #expect(PriceParser.parseFrom(line: invalidPriceMissingSecondCurrency == nil))
-        #expect(PriceParser.parseFrom(line: invalidPriceMissingCurrencies == nil))
+        #expect(PriceParser.parseFrom(line: invalidPriceMissingNumber) == nil)
+        #expect(PriceParser.parseFrom(line: invalidPriceMissingFirstCurrency) == nil)
+        #expect(PriceParser.parseFrom(line: invalidPriceMissingSecondCurrency) == nil)
+        #expect(PriceParser.parseFrom(line: invalidPriceMissingCurrencies) == nil)
     }
 
 }

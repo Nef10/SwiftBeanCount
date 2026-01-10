@@ -22,15 +22,13 @@ struct TangerineDownloadImporterTests { // swiftlint:disable:this type_body_leng
 
         weak var delegate: TangerineDownloaderDelegate?
 
-       @Test
-       func authorizeAndGetAccounts(username: String, password: String, _ completion: @escaping (Result<[[String: Any]], Error>) -> Void) {
+        func authorizeAndGetAccounts(username: String, password: String, _ completion: @escaping (Result<[[String: Any]], Error>) -> Void) {
             _ = delegate?.view()
             #expect(delegate?.getOTPCode() == "123456")
             completion(accountsLoading?(username, password) ?? .success([]))
         }
 
-       @Test
-       func downloadAccountTransactions(accounts: [String: [String: Any]], dateToLoadFrom: Date) -> Result<[String: [[String: Any]]], Error> {
+        func downloadAccountTransactions(accounts: [String: [String: Any]], dateToLoadFrom: Date) -> Result<[String: [[String: Any]]], Error> {
             transactionsLoading?(accounts, dateToLoadFrom) ?? .success([:])
         }
 
@@ -40,21 +38,18 @@ struct TangerineDownloadImporterTests { // swiftlint:disable:this type_body_leng
 
         let defaultAccountName = defaultAccount
 
-       @Test
-       func createTransactions(_ rawTransactions: [String: [[String: Any]]]) throws -> [Transaction] {
+        func createTransactions(_ rawTransactions: [String: [[String: Any]]]) throws -> [Transaction] {
             try transactionsMapping?(rawTransactions) ?? []
         }
 
-       @Test
-       func ledgerAccountName(account: [String: Any]) throws -> AccountName {
+        func ledgerAccountName(account: [String: Any]) throws -> AccountName {
             if let ledgerAccountNameMapping {
                 return try ledgerAccountNameMapping(account)
             }
             throw SwiftBeanCountTangerineMapperError.missingAccount(account: String(describing: account))
         }
 
-       @Test
-       func createBalances(accounts: [[String: Any]], date: Date) throws -> [Balance] {
+        func createBalances(accounts: [[String: Any]], date: Date) throws -> [Balance] {
             try balancesMapping?(accounts, date) ?? []
         }
 
@@ -72,7 +67,7 @@ struct TangerineDownloadImporterTests { // swiftlint:disable:this type_body_leng
 
     private var delegate: CredentialInputAndViewDelegate?
 
-    override func setUp() {
+    init() {
         Self.accountsLoading = nil
         Self.transactionsLoading = nil
         Self.transactionsMapping = nil

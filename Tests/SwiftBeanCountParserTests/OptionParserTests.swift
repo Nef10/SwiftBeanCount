@@ -47,16 +47,4 @@ struct OptionParserTests {
         #expect(option.value == "DEF💵")
     }
 
-   @Test
-   func testPerformance() {
-        self.measure {
-            for _ in 0...1_000 {
-                _ = OptionParser.parseFrom(line: basicString)
-                _ = OptionParser.parseFrom(line: whitespaceString)
-                _ = OptionParser.parseFrom(line: endOfLineCommentString)
-                _ = OptionParser.parseFrom(line: specialCharacterString)
-            }
-        }
-    }
-
 }

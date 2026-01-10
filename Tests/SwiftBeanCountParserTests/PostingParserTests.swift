@@ -93,7 +93,7 @@ struct PostingParserTests {
 
    @Test
    func testInvalidAccount() throws {
-        #expect(try PostingParser.parseFrom(line: invalidAccountPostingString == nil))
+        #expect(try PostingParser.parseFrom(line: invalidAccountPostingString) == nil)
     }
 
    @Test
@@ -141,18 +141,5 @@ struct PostingParserTests {
         #expect(posting.price == Amount(number: Decimal(1), commoditySymbol: "EUR", decimalDigits: 1))
     }
 
-   @Test
-   func testPerformance() {
-        self.measure {
-            for _ in 0...1_000 {
-                // swiftlint:disable force_try
-                _ = try! PostingParser.parseFrom(line: basicPostingString)!
-                _ = try! PostingParser.parseFrom(line: whitespacePostingString)!
-                _ = try! PostingParser.parseFrom(line: endOfLineCommentPostingString)!
-                _ = try! PostingParser.parseFrom(line: specialCharacterPostingString)!
-                // swiftlint:enable force_try
-            }
-        }
-    }
 
 }

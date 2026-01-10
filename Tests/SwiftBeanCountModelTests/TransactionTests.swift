@@ -136,7 +136,7 @@ struct TransactionTests { // swiftlint:disable:this type_body_length
         try ledger.add(Account(name: TestUtils.chequing, opening: TestUtils.date20170608))
         ledger.add(transaction1WithPosting1And2)
         if case .invalid(let error) = transaction1WithPosting1And2.validate(in: ledger) {
-            XCTAssertEqual(error, """
+            #expect(error == """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash 10 EUR
                   Assets:Chequing -10 EUR was posted while the accout Assets:Cash was closed
@@ -149,7 +149,7 @@ struct TransactionTests { // swiftlint:disable:this type_body_length
    @Test
    func testIsValidUnbalanced() {
         if case .invalid(let error) = transaction1WithPosting1!.validate(in: ledger) {
-            XCTAssertEqual(error, """
+            #expect(error == """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash 10 EUR is not balanced - 10 EUR too much (0 tolerance)
                 """)
@@ -177,7 +177,7 @@ struct TransactionTests { // swiftlint:disable:this type_body_length
         // (Percision of price is irrelevant, percision of CAD is not used because no posting in CAD)
         // 0.01 > 0 -> is invalid
         if case .invalid(let error) = transaction.validate(in: ledger) {
-            XCTAssertEqual(error, """
+            #expect(error == """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash -1 EUR
                   Assets:Chequing 10.00000 CAD @ 0.101 EUR is not balanced - 0.01 EUR too much (0 tolerance)
@@ -208,7 +208,7 @@ struct TransactionTests { // swiftlint:disable:this type_body_length
         // (Percision of price is irrelevant, percision of CAD is not used because no posting in CAD)
         // 0.0051 > 0.005 -> is invalid
         if case .invalid(let error) = transaction.validate(in: ledger) {
-            XCTAssertEqual(error, """
+            #expect(error == """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash -8.52 EUR
                   Assets:Chequing 10.00000 CAD @ 0.85251 EUR is not balanced - 0.0051 EUR too much (0.005 tolerance)
@@ -230,7 +230,7 @@ struct TransactionTests { // swiftlint:disable:this type_body_length
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting1])
 
         if case .invalid(let error) = transaction.validate(in: ledger) {
-            XCTAssertEqual(error, """
+            #expect(error == """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash 10.00000 CAD @ 0.85251 EUR is not balanced - 8.5251 EUR too much (0 tolerance)
                 """)
@@ -316,7 +316,7 @@ struct TransactionTests { // swiftlint:disable:this type_body_length
         // (Percision of cost is irrelevant, percision of CAD is not used because no posting in CAD)
         // 0.0051 > 0.005 -> is invalid
         if case .invalid(let error) = transaction.validate(in: ledger) {
-            XCTAssertEqual(error, """
+            #expect(error == """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash -8.52 EUR
                   Assets:Chequing 10.00000 CAD {0.85251 EUR} is not balanced - 0.0051 EUR too much (0.005 tolerance)

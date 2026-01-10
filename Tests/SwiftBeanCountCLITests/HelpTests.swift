@@ -9,7 +9,7 @@ struct HelpTests {
 
   @Test
   func testHelp() {
-        let result = outputFromExecutionWith(arguments: ["--help"])
+        let result = TestUtils.outputFromExecutionWith(arguments: ["--help"])
         #expect(result.exitCode == 0)
         #expect(result.errorOutput.isEmpty)
         #expect(result.output.contains("OVERVIEW: A CLI tool for SwiftBeanCount"))

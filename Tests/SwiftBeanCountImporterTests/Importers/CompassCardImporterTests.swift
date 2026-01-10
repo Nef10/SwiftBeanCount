@@ -34,8 +34,8 @@ struct CompassCardImporterTests {
     }
 
     func testImportName() throws {
-        XCTAssertEqual(
-            CompassCardImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName,
+        #expect(
+            CompassCardImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName ==
             "Compass Card File TestName"
         )
     }
@@ -66,7 +66,7 @@ struct CompassCardImporterTests {
         #expect(result?.accountName == accountName)
         #expect(importer.balancesToImport().isEmpty)
         #expect(importer.pricesToImport().isEmpty)
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
     }
 
     func testError() throws {
@@ -80,7 +80,7 @@ struct CompassCardImporterTests {
         let importer = CompassCardImporter(ledger: Ledger(), csvReader: reader, fileName: "")
         importer.delegate = delegate
         importer.load()
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         #expect(delegate.verified)
     }
 

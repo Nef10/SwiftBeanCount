@@ -66,17 +66,4 @@ struct CustomsParserTests {
         #expect(CustomsParser.parseFrom(line: invalidDateString == nil))
     }
 
-   @Test
-   func testPerformance() {
-        self.measure {
-            for _ in 0...1_000 {
-                _ = CustomsParser.parseFrom(line: basicString)
-                _ = CustomsParser.parseFrom(line: multipleValuesString)
-                _ = CustomsParser.parseFrom(line: whitespaceString)
-                _ = CustomsParser.parseFrom(line: endOfLineCommentString)
-                _ = CustomsParser.parseFrom(line: specialCharacterString)
-            }
-        }
-    }
-
 }

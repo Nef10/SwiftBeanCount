@@ -8,16 +8,16 @@ import Testing
 struct AccountsTests {
 
     func testInvalidArguments() {
-        let url = emptyFileURL()
-        let result = outputFromExecutionWith(arguments: ["accounts", url.path, "-c", "-f", "csv"])
+        let url = TestUtils.emptyFileURL()
+        let result = TestUtils.outputFromExecutionWith(arguments: ["accounts", url.path, "-c", "-f", "csv"])
         #expect(result.exitCode == 64)
         #expect(result.output.isEmpty)
         #expect(result.errorOutput.hasPrefix("Error: Cannot print count in csv format. Please remove count flag or specify another format."))
     }
 
     func testFileDoesNotExist() {
-        let url = temporaryFileURL()
-        let result = outputFromExecutionWith(arguments: ["accounts", url.path])
+        let url = TestUtils.temporaryFileURL()
+        let result = TestUtils.outputFromExecutionWith(arguments: ["accounts", url.path])
         #expect(result.exitCode == 1)
         #expect(result.errorOutput.isEmpty)
         #if os(Linux)
@@ -43,9 +43,9 @@ struct AccountsTests {
             +-------------+------------+------------+
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path], output: table)
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "table", "--open", "--closed", "--dates", "--no-activity"], output: table)
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "table", "--no-postings"], output: table)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path], output: table)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "table", "--open", "--closed", "--dates", "--no-activity"], output: table)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "table", "--no-postings"], output: table)
     }
 
     func testCSV() {
@@ -59,8 +59,8 @@ struct AccountsTests {
             "Income:Test", "2020-05-16", ""
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--dates"], output: csv)
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--no-postings"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--dates"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--no-postings"], output: csv)
     }
 
     func testText() {
@@ -76,15 +76,15 @@ struct AccountsTests {
             Income:Test  2020-05-16
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "text", "--open", "--closed", "--dates", "--no-activity"], output: text)
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "text", "--no-postings"], output: text)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "text", "--open", "--closed", "--dates", "--no-activity"], output: text)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "text", "--no-postings"], output: text)
     }
 
     func testEmptyFileCSV() {
         let csv = #""Name", "Opening", "Closing""#
-        let url = emptyFileURL()
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--dates"], output: csv)
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--no-activity"], output: csv)
+        let url = TestUtils.emptyFileURL()
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--dates"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--no-activity"], output: csv)
     }
 
     func testNoDates() {
@@ -98,8 +98,8 @@ struct AccountsTests {
             "Income:Test"
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--no-dates"], output: csv)
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--no-dates"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--no-dates"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--no-dates"], output: csv)
     }
 
     func testNoOpen() {
@@ -109,8 +109,8 @@ struct AccountsTests {
             "Assets:USD", "2020-05-11", "2020-05-13"
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--no-open", "--closed", "--dates"], output: csv)
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--no-open"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--no-open", "--closed", "--dates"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--no-open"], output: csv)
     }
 
     func testNoClosed() {
@@ -122,8 +122,8 @@ struct AccountsTests {
             "Income:Test", "2020-05-16"
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--no-closed", "--dates"], output: csv)
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--no-closed"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--no-closed", "--dates"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--no-closed"], output: csv)
     }
 
     func testNoOpenNoClosed() {
@@ -131,8 +131,8 @@ struct AccountsTests {
             "Name", "Opening"
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--no-open", "--no-closed", "--dates"], output: csv)
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--no-closed", "--no-open"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--no-open", "--no-closed", "--dates"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--no-closed", "--no-open"], output: csv)
     }
 
     func testFilter() {
@@ -143,8 +143,8 @@ struct AccountsTests {
             "Income:Job3", "2020-05-15", ""
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--dates", "Job"], output: csv)
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "Job", "--format", "csv", "--no-postings"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--dates", "Job"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "Job", "--format", "csv", "--no-postings"], output: csv)
     }
 
     func testFilterNoResult() {
@@ -152,8 +152,8 @@ struct AccountsTests {
             "Name", "Opening", "Closing"
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--dates", "Job12"], output: csv)
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "Job12", "--format", "csv", "--no-postings"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--dates", "Job12"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "Job12", "--format", "csv", "--no-postings"], output: csv)
     }
 
     func testPostings() {
@@ -167,8 +167,8 @@ struct AccountsTests {
             "Income:Test", "0", "2020-05-16", ""
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--dates", "--postings"], output: csv)
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--postings", "--no-activity"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--dates", "--postings"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--postings", "--no-activity"], output: csv)
     }
 
     func testActivity() {
@@ -182,8 +182,8 @@ struct AccountsTests {
             "Income:Test", "0", "2020-07-13", "2020-05-16", ""
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--dates", "--postings", "--activity"], output: csv)
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--postings", "--activity"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--dates", "--postings", "--activity"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--postings", "--activity"], output: csv)
     }
 
     func testTestTableCount() {
@@ -200,9 +200,9 @@ struct AccountsTests {
             2 Accounts
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--no-open", "--count"], output: table)
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "table", "--no-open", "--closed", "--dates", "--count"], output: table)
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "table", "--no-postings", "-c", "--no-open"], output: table)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--no-open", "--count"], output: table)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "table", "--no-open", "--closed", "--dates", "--count"], output: table)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "table", "--no-postings", "-c", "--no-open"], output: table)
     }
 
     func testTextCount() {
@@ -220,8 +220,8 @@ struct AccountsTests {
             6 Accounts
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "text", "--open", "--closed", "--dates", "-c"], output: text)
-        assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "text", "--no-postings", "--count"], output: text)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "text", "--open", "--closed", "--dates", "-c"], output: text)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "text", "--no-postings", "--count"], output: text)
     }
 
     private func basicLedgerURL() -> URL {
@@ -242,8 +242,8 @@ struct AccountsTests {
               Income:Job2 -20.00 CAD
             2020-07-13 balance Income:Test 0.00 CAD
             """
-        let url = temporaryFileURL()
-        createFile(at: url, content: content)
+        let url = TestUtils.temporaryFileURL()
+        TestUtils.createFile(at: url, content: content)
         return url
     }
 

@@ -142,13 +142,13 @@ struct TaxCalculatorTaxSlipTests {
 
         // Check tax box 1 in tax slip 1
         #expect(row1.values[0].box == "TaxBox1")
-        XCTAssertEqual(
-            row1.values[0].value,
+        #expect(
+            row1.values[0].value ==
             (Amount(number: 637.50, commoditySymbol: "USD").multiCurrencyAmount +
             Amount(number: 50, commoditySymbol: "JPY").multiCurrencyAmount)
         )
-        XCTAssertEqual(
-            row1.values[0].originalValue,
+        #expect(
+            row1.values[0].originalValue ==
             (Amount(number: 100, commoditySymbol: "USD").multiCurrencyAmount +
             Amount(number: 50, commoditySymbol: "JPY").multiCurrencyAmount +
             Amount(number: 200, commoditySymbol: "EUR").multiCurrencyAmount +

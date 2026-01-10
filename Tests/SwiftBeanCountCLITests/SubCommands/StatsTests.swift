@@ -8,8 +8,8 @@ import Testing
 struct StatsTests {
 
     func testFileDoesNotExist() {
-        let url = temporaryFileURL()
-        let result = outputFromExecutionWith(arguments: ["stats", url.path])
+        let url = TestUtils.temporaryFileURL()
+        let result = TestUtils.outputFromExecutionWith(arguments: ["stats", url.path])
         #expect(result.exitCode == 1)
         #expect(result.errorOutput.isEmpty)
         #if os(Linux)
@@ -40,10 +40,10 @@ struct StatsTests {
             | Plugins          | 0      |
             +------------------+--------+
             """
-        let url = emptyFileURL()
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path], outputPrefix: table)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "table"], outputPrefix: table)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "table"], outputPrefix: table)
+        let url = TestUtils.emptyFileURL()
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path], outputPrefix: table)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "table"], outputPrefix: table)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "table"], outputPrefix: table)
     }
 
     func testEmptyFileCSV() {
@@ -62,9 +62,9 @@ struct StatsTests {
             "Options", "0"
             "Plugins", "0"
             """
-        let url = emptyFileURL()
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "csv"], output: csv)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "csv"], output: csv)
+        let url = TestUtils.emptyFileURL()
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "csv"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "csv"], output: csv)
     }
 
     func testEmptyFileText() {
@@ -85,9 +85,9 @@ struct StatsTests {
             Options           0
             Plugins           0
             """
-        let url = emptyFileURL()
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "text"], outputPrefix: text)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "text"], outputPrefix: text)
+        let url = TestUtils.emptyFileURL()
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "text"], outputPrefix: text)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "text"], outputPrefix: text)
     }
 
     func testTestTable() {
@@ -112,9 +112,9 @@ struct StatsTests {
             +------------------+--------+
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path], outputPrefix: table)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "table"], outputPrefix: table)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "table"], outputPrefix: table)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path], outputPrefix: table)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "table"], outputPrefix: table)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "table"], outputPrefix: table)
     }
 
     func testCSV() {
@@ -134,8 +134,8 @@ struct StatsTests {
             "Plugins", "5"
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "csv"], output: csv)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "csv"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "csv"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "csv"], output: csv)
     }
 
     func testText() {
@@ -157,8 +157,8 @@ struct StatsTests {
             Plugins           5
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "text"], outputPrefix: text)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "text"], outputPrefix: text)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "text"], outputPrefix: text)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "text"], outputPrefix: text)
     }
 
     private func basicLedgerURL() -> URL {
@@ -189,8 +189,8 @@ struct StatsTests {
             2020-06-14 event "location" "B"
             2020-06-15 event "location" "A"
             """
-        let url = temporaryFileURL()
-        createFile(at: url, content: content)
+        let url = TestUtils.temporaryFileURL()
+        TestUtils.createFile(at: url, content: content)
         return url
     }
 

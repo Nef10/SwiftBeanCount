@@ -16,10 +16,9 @@ struct SwiftBeanCountRogersBankMapperTests {
     private var ledger = Ledger()
     private var mapper: SwiftBeanCountRogersBankMapper!
 
-    override func setUpWithError() throws {
+    init() {
         ledger = Ledger()
         mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
-        try super.setUpWithError()
     }
 
    @Test
@@ -42,7 +41,7 @@ struct SwiftBeanCountRogersBankMapperTests {
 
    @Test
    func testMapAccountMissingAccount() throws {
-        assert(try mapper.mapAccountToBalance(account: TestAccount()), throws: RogersBankMappingError.missingAccount(lastFour: "4862"))
+        #expect(throws: RogersBankMappingError.missingAccount(lastFour: "4862")) { try mapper.mapAccountToBalance(account: TestAccount()) }
     }
 
    @Test
@@ -62,7 +61,7 @@ struct SwiftBeanCountRogersBankMapperTests {
    func testMapActivitiesMissingPostingDate() throws {
         var activity = TestActivity()
         activity.activityStatus = .approved
-        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingActivityData(activity: activity, key: "postedDate"))
+        #expect(throws: RogersBankMappingError.missingActivityData(activity: activity, key: "postedDate")) { try mapper.mapActivitiesToTransactions(activities: [activity]) }
     }
 
    @Test
@@ -72,7 +71,9 @@ struct SwiftBeanCountRogersBankMapperTests {
         activity.postedDate = Date()
         activity.activityCategory = .purchase
         let mapper = SwiftBeanCountRogersBankMapper(ledger: Ledger())
-        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingActivityData(activity: activity, key: "referenceNumber"))
+        #expect(throws: RogersBankMappingError.missingActivityData(activity: activity, key: "referenceNumber")) {
+            try mapper.mapActivitiesToTransactions(activities: [activity])
+        }
     }
 
    @Test
@@ -81,19 +82,19 @@ struct SwiftBeanCountRogersBankMapperTests {
         activity.activityStatus = .approved
         activity.postedDate = Date()
         let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
-        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingAccount(lastFour: "1234"))
+        #expect(throws: RogersBankMappingError.missingAccount(lastFour: "1234")) { try mapper.mapActivitiesToTransactions(activities: [activity]) }
         // different number
         try ledger.add(Account(name: try AccountName("Liabilities:CC:Rogers"), metaData: ["last-four": "4862", "importer-type": "rogers"]))
-        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingAccount(lastFour: "1234"))
+        #expect(throws: RogersBankMappingError.missingAccount(lastFour: "1234")) { try mapper.mapActivitiesToTransactions(activities: [activity]) }
         // wrong type
         try ledger.add(Account(name: try AccountName("Liabilities:CC:Rogers1"), metaData: ["last-four": "1234", "importer-type": "rogers1"]))
-        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingAccount(lastFour: "1234"))
+        #expect(throws: RogersBankMappingError.missingAccount(lastFour: "1234")) { try mapper.mapActivitiesToTransactions(activities: [activity]) }
         // no type
         try ledger.add(Account(name: try AccountName("Liabilities:CC:Rogers2"), metaData: ["last-four": "1234"]))
-        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingAccount(lastFour: "1234"))
+        #expect(throws: RogersBankMappingError.missingAccount(lastFour: "1234")) { try mapper.mapActivitiesToTransactions(activities: [activity]) }
         // no number
-        try ledger.add(Account(name: try AccountName("Liabilities:CC:Rogers3"), metaData: ["importer-type": "rogers1"]))
-        assert(try mapper.mapActivitiesToTransactions(activities: [activity]), throws: RogersBankMappingError.missingAccount(lastFour: "1234"))
+        try ledger.add(Account(name: try AccountName("Liabilities:CC:Rogers3"), metaData: ["importer-type": "rogers1"])) // broken on purpose, must be last found 123*4*
+        #expect(throws: RogersBankMappingError.missingAccount(lastFour: "1235")) { try mapper.mapActivitiesToTransactions(activities: [activity]) }
     }
 
    @Test

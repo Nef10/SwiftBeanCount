@@ -28,16 +28,16 @@ struct CSVImporterTests {
         #expect(CSVImporterFactory.new(ledger: nil, url: URL(fileURLWithPath: "DOES_NOT_EXIST") == nil))
 
         // valid URL without matching headers
-        let url = temporaryFileURL()
-        createFile(at: url, content: "Header, no, matching, anything\n")
+        let url = TestUtils.temporaryFileURL()
+        TestUtils.createFile(at: url, content: "Header, no, matching, anything\n")
         #expect(CSVImporterFactory.new(ledger: nil, url: url == nil))
 
         // matching header
         let importers = CSVImporterFactory.importers
         for importer in importers {
             for header in importer.headers {
-                let url = temporaryFileURL()
-                createFile(at: url, content: "\(header.joined(separator: ", "))\n")
+                let url = TestUtils.temporaryFileURL()
+                TestUtils.createFile(at: url, content: "\(header.joined(separator: ", "))\n")
                 #expect(type(of: CSVImporterFactory.new(ledger: nil, url: url)!) == importer)
             }
         }

@@ -11,8 +11,8 @@ struct TaxSlipTests { // swiftlint:disable:this type_body_length
         #expect(extractInt(from: "123") == 123)
         #expect(extractInt(from: "123abc456") == 123_456)
         #expect(extractInt(from: "abc123def") == 123)
-        #expect(extractInt(from: "" == nil))
-        #expect(extractInt(from: "abc" == nil))
+        #expect(extractInt(from: "") == nil)
+        #expect(extractInt(from: "abc") == nil)
     }
 
    @Test
@@ -40,16 +40,16 @@ struct TaxSlipTests { // swiftlint:disable:this type_body_length
         let entry2 = TaxSlipEntry(symbol: nil, name: nil, box: "2", value: amount, originalValue: Amount(number: Decimal(20), commoditySymbol: "CAD").multiCurrencyAmount)
 
         // Test case where sum and entry original values are nil
-        #expect(addOriginalValues(nil, entry1 == nil))
+        #expect(addOriginalValues(nil, entry1) == nil)
 
         // Test case where entry original value is nil but sum has value
-        #expect(addOriginalValues(amount == entry1), amount)
+        #expect(addOriginalValues(amount, entry1) == amount)
 
         // Test case where entry original value is not nil and sum is nil
-        #expect(addOriginalValues(nil == entry2), entry2.originalValue)
+        #expect(addOriginalValues(nil, entry2) == entry2.originalValue)
 
         // Test case where entry and sum original values are not nil
-        #expect(addOriginalValues(amount == entry2), (amount + entry2.originalValue!))
+        #expect(addOriginalValues(amount, entry2) == (amount + entry2.originalValue!))
     }
 
    @Test

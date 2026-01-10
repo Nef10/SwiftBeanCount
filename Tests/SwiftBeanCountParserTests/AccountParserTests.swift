@@ -102,25 +102,6 @@ struct AccountParserTests {
         #expect(account == nil)
     }
 
-   @Test
-   func testPerformance() {
-        self.measure {
-            for _ in 0...1_000 {
-                _ = AccountParser.parseFrom(line: basicOpeningString)
-                _ = AccountParser.parseFrom(line: basicClosingString)
-
-                _ = AccountParser.parseFrom(line: whitespaceOpeningString)
-                _ = AccountParser.parseFrom(line: whitespaceClosingString)
-
-                _ = AccountParser.parseFrom(line: endOfLineCommentOpeningString)
-                _ = AccountParser.parseFrom(line: endOfLineCommentClosingString)
-
-                _ = AccountParser.parseFrom(line: specialCharacterOpeningString)
-                _ = AccountParser.parseFrom(line: specialCharacterClosingString)
-            }
-        }
-    }
-
     // Helper
     private func testWith(openingString: String, closingString: String, commoditySymbol: CommoditySymbol?, bookingMethod: BookingMethod? = nil) {
         let account1 = AccountParser.parseFrom(line: openingString)

@@ -164,20 +164,20 @@ struct EquatePlusImporterTests {
         #expect(beancountTransaction1!.metaData.payee.isEmpty)
         #expect(beancountTransaction1!.metaData.flag == .complete)
         #expect(beancountTransaction1!.metaData.date == TestUtils.date20231202)
-        XCTAssert(beancountTransaction1!.postings.contains {
+        #expect(beancountTransaction1!.postings.contains {
             $0.accountName == TestUtils.parking && $0.amount.description == "-863.19 UNKNOWN" && $0.price?.description == "-0.67 UNKNOWN"
         })
-        XCTAssert(beancountTransaction1!.postings.contains {
+        #expect(beancountTransaction1!.postings.contains {
             $0.accountName.fullName == "Assets:Cash:UNKNOWN" && $0.amount.description == "3.910474 UNKNOWN" && $0.cost!.amount!.description == "59.37774 UNKNOWN"
         })
         #expect(beancountTransaction2!.metaData.narration.isEmpty)
         #expect(beancountTransaction2!.metaData.payee.isEmpty)
         #expect(beancountTransaction2!.metaData.flag == .complete)
         #expect(beancountTransaction2!.metaData.date == TestUtils.date20240101)
-        XCTAssert(beancountTransaction2!.postings.contains {
+        #expect(beancountTransaction2!.postings.contains {
             $0.accountName == TestUtils.parking && $0.amount.description == "-755.30 UNKNOWN" && $0.price?.description == "-0.68 UNKNOWN"
         })
-        XCTAssert(beancountTransaction2!.postings.contains {
+        #expect(beancountTransaction2!.postings.contains {
             $0.accountName.fullName == "Assets:Cash:UNKNOWN" && $0.amount.description == "3.744300 UNKNOWN" && $0.cost!.amount!.description == "48.21871 UNKNOWN"
         })
 
@@ -203,16 +203,16 @@ struct EquatePlusImporterTests {
         #expect(beancountTransaction1 != nil)
         #expect(beancountTransaction2 != nil)
         print(beancountTransaction1!.postings)
-        XCTAssert(beancountTransaction1!.postings.contains {
+        #expect(beancountTransaction1!.postings.contains {
             $0.accountName.fullName == "Assets:EP:Cash" && $0.amount.description == "-863.19 EUR" && $0.price!.description == "-0.67 USD"
         })
-        XCTAssert(beancountTransaction1!.postings.contains {
+        #expect(beancountTransaction1!.postings.contains {
             $0.accountName.fullName == "Assets:EP:STOCK" && $0.amount.description == "3.910474 STOCK" && $0.cost!.amount!.description == "59.37774 USD"
         })
-        XCTAssert(beancountTransaction2!.postings.contains {
+        #expect(beancountTransaction2!.postings.contains {
             $0.accountName.fullName == "Assets:EP:Cash" && $0.amount.description == "-755.30 EUR" && $0.price?.description == "-0.68 USD"
         })
-        XCTAssert(beancountTransaction2!.postings.contains {
+        #expect(beancountTransaction2!.postings.contains {
             $0.accountName.fullName == "Assets:EP:STOCK" && $0.amount.description == "3.744300 STOCK" && $0.cost!.amount!.description == "48.21871 USD"
         })
 
@@ -234,28 +234,28 @@ struct EquatePlusImporterTests {
 
    @Test
    func testErrorDescription() {
-        XCTAssertEqual(
-            EquatePlusImporterError.balanceImportNotSupported("BAL").errorDescription,
+        #expect(
+            EquatePlusImporterError.balanceImportNotSupported("BAL").errorDescription ==
             "This importer does not support importing balances. Trying to import: BAL"
         )
-        XCTAssertEqual(
-            EquatePlusImporterError.failedToParseDate("DATE").errorDescription,
+        #expect(
+            EquatePlusImporterError.failedToParseDate("DATE").errorDescription ==
             "Failed to parse date: DATE"
         )
-        XCTAssertEqual(
-            EquatePlusImporterError.unknownContributionType("TYPE").errorDescription,
+        #expect(
+            EquatePlusImporterError.unknownContributionType("TYPE").errorDescription ==
             "Unknow contribution type: TYPE"
         )
-        XCTAssertEqual(
-            EquatePlusImporterError.unknownTransactionType("TYPE").errorDescription,
+        #expect(
+            EquatePlusImporterError.unknownTransactionType("TYPE").errorDescription ==
             "Unknow transaction type: TYPE"
         )
-        XCTAssertEqual(
-            EquatePlusImporterError.invalidContributionMapping("TYPE", "CONT").errorDescription,
+        #expect(
+            EquatePlusImporterError.invalidContributionMapping("TYPE", "CONT").errorDescription ==
             "Unable to map contributions correctly. Found second contribtuion for type TYPE: CONT"
         )
-        XCTAssertEqual(
-            EquatePlusImporterError.invalidTransactionMapping("TYPE", "TRANS").errorDescription,
+        #expect(
+            EquatePlusImporterError.invalidTransactionMapping("TYPE", "TRANS").errorDescription ==
             "Unable to map transactions correctly. Found second transaction for type TYPE: TRANS"
         )
     }

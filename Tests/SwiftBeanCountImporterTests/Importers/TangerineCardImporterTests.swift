@@ -37,8 +37,8 @@ struct TangerineCardImporterTests {
 
    @Test
    func testImportName() throws {
-        XCTAssertEqual(
-            TangerineCardImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName,
+        #expect(
+            TangerineCardImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName ==
             "Tangerine Credit Card File TestName"
         )
     }

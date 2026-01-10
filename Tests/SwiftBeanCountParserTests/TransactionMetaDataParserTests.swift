@@ -81,18 +81,6 @@ struct TransactionMetaDataParserTests {
         #expect(TransactionMetaDataParser.parseFrom(line: invalidDateTransactionMetaDataString == nil))
     }
 
-   @Test
-   func testPerformance() {
-        self.measure {
-            for _ in 0...1_000 {
-                _ = TransactionMetaDataParser.parseFrom(line: basicTransactionMetaDataString)!
-                _ = TransactionMetaDataParser.parseFrom(line: whitespaceTransactionMetaDataString)!
-                _ = TransactionMetaDataParser.parseFrom(line: endOfLineCommentTransactionMetaDataString)!
-                _ = TransactionMetaDataParser.parseFrom(line: specialCharacterTransactionMetaDataString)!
-            }
-        }
-    }
-
     // Helper
 
     private func assertBasicTransactionMetaData(_ transactionMetaData: TransactionMetaData) {

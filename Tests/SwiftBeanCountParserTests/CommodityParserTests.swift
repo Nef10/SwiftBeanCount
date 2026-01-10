@@ -50,16 +50,4 @@ struct CommodityParserTests {
         #expect(commodity == nil)
     }
 
-   @Test
-   func testPerformance() {
-        self.measure {
-            for _ in 0...1_000 {
-                _ = CommodityParser.parseFrom(line: basicString)
-                _ = CommodityParser.parseFrom(line: whitespaceString)
-                _ = CommodityParser.parseFrom(line: endOfLineCommentString)
-                _ = CommodityParser.parseFrom(line: specialCharacterString)
-            }
-        }
-    }
-
 }

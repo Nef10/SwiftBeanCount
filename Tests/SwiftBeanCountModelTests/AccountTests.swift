@@ -79,7 +79,7 @@ struct AccountTests { // swiftlint:disable:this type_body_length
         let posting = Posting(accountName: TestUtils.cash, amount: Amount(number: Decimal(1), commoditySymbol: TestUtils.eur))
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                       postings: [posting])
-        XCTAssertEqual(account.validate(transaction.postings[0]), .invalid("""
+        #expect(account.validate(transaction.postings[0]) == .invalid("""
             2017-06-08 * "Payee" "Narration"
               Assets:Cash 1 EUR was posted while the accout Assets:Cash was closed
             """)
@@ -92,7 +92,7 @@ struct AccountTests { // swiftlint:disable:this type_body_length
         let posting = Posting(accountName: TestUtils.cash, amount: Amount(number: Decimal(1), commoditySymbol: TestUtils.eur))
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                       postings: [posting])
-        XCTAssertEqual(account.validate(transaction.postings[0]), .invalid("""
+        #expect(account.validate(transaction.postings[0]) == .invalid("""
             2017-06-08 * "Payee" "Narration"
               Assets:Cash 1 EUR was posted while the accout Assets:Cash was closed
             """)
@@ -105,7 +105,7 @@ struct AccountTests { // swiftlint:disable:this type_body_length
         let posting = Posting(accountName: TestUtils.cash, amount: Amount(number: Decimal(1), commoditySymbol: TestUtils.eur))
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                       postings: [posting])
-        XCTAssertEqual(account.validate(transaction.postings[0]), .invalid("""
+        #expect(account.validate(transaction.postings[0]) == .invalid("""
             2017-06-08 * "Payee" "Narration"
               Assets:Cash 1 EUR was posted while the accout Assets:Cash was closed
             """)
@@ -141,7 +141,7 @@ struct AccountTests { // swiftlint:disable:this type_body_length
         let posting = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170610, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                       postings: [posting])
-        XCTAssertEqual(account.validate(transaction.postings[0]), .invalid("""
+        #expect(account.validate(transaction.postings[0]) == .invalid("""
             2017-06-10 * "Payee" "Narration"
               Assets:Cash 1 CAD was posted while the accout Assets:Cash was closed
             """)
@@ -177,7 +177,7 @@ struct AccountTests { // swiftlint:disable:this type_body_length
         let posting = Posting(accountName: TestUtils.cash, amount: TestUtils.amount)
         let transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: []),
                                       postings: [posting])
-        XCTAssertEqual(account.validate(transaction.postings[0]), .invalid("""
+        #expect(account.validate(transaction.postings[0]) == .invalid("""
             2017-06-09 * "Payee" "Narration"
               Assets:Cash 1 CAD uses a wrong commodiy for account Assets:Cash - Only CAD1 is allowed
             """)
@@ -370,7 +370,7 @@ struct AccountTests { // swiftlint:disable:this type_body_length
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170610, payee: "", narration: "", flag: .complete, tags: []), postings: [posting])
         ledger.add(transaction)
 
-        XCTAssertEqual(account.validateInventory(in: ledger), .invalid("""
+        #expect(account.validateInventory(in: ledger) == .invalid("""
             Ambigious Booking: -1 CAD {5 CAD}, matches: 1.1 CAD {2017-06-08, 5 CAD, "1"}
             1.1 CAD {2017-06-09, 5 CAD, "1"}, inventory: 1.1 CAD {2017-06-08, 5 CAD, "1"}
             1.1 CAD {2017-06-09, 5 CAD, "1"}

@@ -48,17 +48,4 @@ struct MetaDataParserTests {
         #expect(metaData == ["test💵": "ABC💵"])
     }
 
-   @Test
-   func testPerformance() {
-        self.measure {
-            for _ in 0...1_000 {
-                _ = MetaDataParser.parseFrom(line: basicString)
-                _ = MetaDataParser.parseFrom(line: whitespaceString)
-                _ = MetaDataParser.parseFrom(line: whitespaceBeginningString)
-                _ = MetaDataParser.parseFrom(line: endOfLineCommentString)
-                _ = MetaDataParser.parseFrom(line: specialCharacterString)
-            }
-        }
-    }
-
 }

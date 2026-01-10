@@ -40,11 +40,10 @@ struct CompassCardDownloadImporterTests {
     private let sixtyTwoDays = -60 * 60 * 24 * 62.0
     private let threeDays = -60 * 60 * 24 * 3.0
 
-    override func setUp() {
+    init() {
         Self.authAndBalanceLoading = nil
         Self.transactionsLoading = nil
         setDefaultDelegate()
-        super.setUp()
     }
 
     func testImporterName() {

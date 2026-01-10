@@ -22,16 +22,15 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
         let commodity1 = Commodity(symbol: "EUR", metaData: ["A": "B"])
         try ledger.add(commodity1)
         #expect(ledger.commodities.count == 1)
-        XCTAssertThrowsError(try ledger.add(commodity1)) {
-            #expect($0.localizedDescription == "Entry already exists in Ledger: \(commodity1)")
-        }
+        let error = #expect(throws: (any Error).self) { try ledger.add(commodity1) }
+        #expect(error.localizedDescription == "Entry already exists in Ledger: \(commodity1)")
         #expect(ledger.commodities.count == 1)
         #expect(ledger.commodities.first == commodity1)
 
         let commodity2 = Commodity(symbol: "💵")
         try ledger.add(commodity2)
         #expect(ledger.commodities.count == 2)
-        XCTAssertThrowsError(try ledger.add(commodity2))
+        #expect(throws: (any Error).self) { try ledger.add(commodity2) }
         #expect(ledger.commodities.count == 2)
         #expect(ledger.commodities.contains(commodity2))
     }
@@ -44,22 +43,22 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
         let account1 = Account(name: TestUtils.chequing, metaData: ["A": "B"])
         try ledger.add(account1)
         #expect(ledger.accounts.count == 1)
-        XCTAssertThrowsError(try ledger.add(account1))
+        #expect(throws: (any Error).self) { try ledger.add(account1) }
         #expect(ledger.accounts.count == 1)
         #expect(ledger.accounts.first == account1)
 
         let account2 = Account(name: TestUtils.cash)
         try ledger.add(account2)
         #expect(ledger.accounts.count == 2)
-        XCTAssertThrowsError(try ledger.add(account2))
+        #expect(throws: (any Error).self) { try ledger.add(account2) }
         #expect(ledger.accounts.count == 2)
         #expect(ledger.accounts.contains(account2))
 
-        XCTAssertThrowsError(try ledger.add(Account(name: AccountName("Invalid"))))
+        #expect(throws: (any Error).self) { try ledger.add(Account(name: AccountName("Invalid"))) }
         #expect(ledger.accounts.count == 2)
-        XCTAssertThrowsError(try ledger.add(Account(name: AccountName("Assets:Invalid:"))))
+        #expect(throws: (any Error).self) { try ledger.add(Account(name: AccountName("Assets:Invalid:"))) }
         #expect(ledger.accounts.count == 2)
-        XCTAssertThrowsError(try ledger.add(Account(name: AccountName("Assets::Invalid"))))
+        #expect(throws: (any Error).self) { try ledger.add(Account(name: AccountName("Assets::Invalid"))) }
         #expect(ledger.accounts.count == 2)
     }
 
@@ -85,8 +84,8 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
         let accountSubGroup = accountGroup.accountGroups.values.first!
         #expect(accountGroup.accounts.values.first! == account2)
         #expect(accountGroup.children().count == 2)
-        #expect(accountGroup.children( != nil).contains { $0.nameItem == "Cash" })
-        #expect(accountGroup.children( != nil).contains { $0.nameItem == "Checking" })
+        #expect(accountGroup.children().contains { $0.nameItem == "Cash" })
+        #expect(accountGroup.children().contains { $0.nameItem == "Checking" })
         #expect(accountSubGroup.accounts.values.first! == account1)
     }
 
@@ -129,29 +128,29 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
         let amount = Amount(number: Decimal(1), commoditySymbol: TestUtils.cad)
         let price = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount, metaData: ["A": "B"])
 
-        XCTAssertNoThrow(try ledger.add(price))
-        XCTAssertThrowsError(try ledger.add(price))
+        #expect(throws: Never.self) { try ledger.add(price) }
+        #expect(throws: (any Error).self) { try ledger.add(price) }
 
         // Date different
         let price2 = try Price(date: TestUtils.date20170609, commoditySymbol: TestUtils.eur, amount: amount)
-        XCTAssertNoThrow(try ledger.add(price2))
-        XCTAssertThrowsError(try ledger.add(price2))
+        #expect(throws: Never.self) { try ledger.add(price2) }
+        #expect(throws: (any Error).self) { try ledger.add(price2) }
 
         // Commodity different
         let price3 = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.usd, amount: amount)
-        XCTAssertNoThrow(try ledger.add(price3))
-        XCTAssertThrowsError(try ledger.add(price3))
+        #expect(throws: Never.self) { try ledger.add(price3) }
+        #expect(throws: (any Error).self) { try ledger.add(price3) }
 
         // Amount commodity different
         let amount2 = Amount(number: Decimal(1), commoditySymbol: TestUtils.usd)
         let price4 = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount2)
-        XCTAssertNoThrow(try ledger.add(price4))
-        XCTAssertThrowsError(try ledger.add(price4))
+        #expect(throws: Never.self) { try ledger.add(price4) }
+        #expect(throws: (any Error).self) { try ledger.add(price4) }
 
         // Amount number different
         let amount3 = Amount(number: Decimal(2), commoditySymbol: TestUtils.cad)
         let price5 = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount3)
-        XCTAssertThrowsError(try ledger.add(price5))
+        #expect(throws: (any Error).self) { try ledger.add(price5) }
 
         #expect(ledger.prices.count == 4)
 

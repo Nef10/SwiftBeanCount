@@ -54,19 +54,7 @@ struct EventParserTests {
 
    @Test
    func testInvalidDate() {
-        #expect(EventParser.parseFrom(line: invalidDateString == nil))
-    }
-
-   @Test
-   func testPerformance() {
-        self.measure {
-            for _ in 0...1_000 {
-                _ = EventParser.parseFrom(line: basicString)
-                _ = EventParser.parseFrom(line: whitespaceString)
-                _ = EventParser.parseFrom(line: endOfLineCommentString)
-                _ = EventParser.parseFrom(line: specialCharacterString)
-            }
-        }
+        #expect(EventParser.parseFrom(line: invalidDateString) == nil)
     }
 
 }

@@ -16,7 +16,7 @@ struct N26ImporterTests {
 
    @Test
    func testHeaders() {
-        XCTAssertEqual(N26Importer.headers, [
+        #expect(N26Importer.headers == [
             [
                 "Datum",
                 "Empfänger",

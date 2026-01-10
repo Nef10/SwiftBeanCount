@@ -16,10 +16,9 @@ struct PriceTests {
    @Test
    func testInit() {
         let amount = Amount(number: Decimal(1), commoditySymbol: TestUtils.cad)
-        XCTAssertNoThrow(try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount))
-        XCTAssertThrowsError(try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.cad, amount: amount)) {
-            #expect($0.localizedDescription == "Invalid Price, using same commodity: CAD")
-        }
+        #expect(throws: Never.self) { try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount) }
+        let error = #expect(throws: (any Error).self) { try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.cad, amount: amount) }
+        #expect(error.localizedDescription == "Invalid Price, using same commodity: CAD")
     }
 
    @Test

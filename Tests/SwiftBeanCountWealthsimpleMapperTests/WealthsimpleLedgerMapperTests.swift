@@ -55,19 +55,19 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
 
         // no account set on mapper
         var position = TestPositon(accountId: accountId)
-        assert(try mapper.mapPositionsToPriceAndBalance([position]), throws: WealthsimpleConversionError.accountNotFound(accountId))
+        #expect(throws: WealthsimpleConversionError.accountNotFound(accountId)) { try mapper.mapPositionsToPriceAndBalance([position]) }
 
         // missing commodity
         testAccounts = [TestAccount(number: accountNumber, id: accountId)]
         position.priceAmount = "1234"
         position.priceCurrency = "EUR"
         position.assetSymbol = "CAD"
-        assert(try mapper.mapPositionsToPriceAndBalance([position]), throws: WealthsimpleConversionError.missingCommodity("CAD"))
+        #expect(throws: WealthsimpleConversionError.missingCommodity("CAD")) { try mapper.mapPositionsToPriceAndBalance([position]) }
 
         // missing account in ledger
         try ledger.add(Commodity(symbol: "CAD"))
         position.quantity = "9.871"
-        assert(try mapper.mapPositionsToPriceAndBalance([position]), throws: WealthsimpleConversionError.missingWealthsimpleAccount(accountNumber))
+        #expect(throws: WealthsimpleConversionError.missingWealthsimpleAccount(accountNumber)) { try mapper.mapPositionsToPriceAndBalance([position]) }
     }
 
    @Test
@@ -110,22 +110,22 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
 
         // no account set on mapper
         var transaction = TestTransaction(accountId: accountId)
-        assert(try mapper.mapTransactionsToPriceAndTransactions([transaction]), throws: WealthsimpleConversionError.accountNotFound(accountId))
+        #expect(throws: WealthsimpleConversionError.accountNotFound(accountId)) { try mapper.mapTransactionsToPriceAndTransactions([transaction]) }
 
         // missing account in ledger
         testAccounts = [TestAccount(number: accountNumber, id: accountId)]
         transaction.symbol = "CAD"
         transaction.netCashAmount = "7.53"
-        assert(try mapper.mapTransactionsToPriceAndTransactions([transaction]), throws: WealthsimpleConversionError.missingWealthsimpleAccount(accountNumber) )
+        #expect(throws: WealthsimpleConversionError.missingWealthsimpleAccount(accountNumber)) { try mapper.mapTransactionsToPriceAndTransactions([transaction]) }
 
         // missing commodity
         try ledger.add(SAccount(name: cashAccountName, metaData: [MetaDataKeys.importerType: MetaData.importerType, MetaDataKeys.number: accountNumber]))
-        assert(try mapper.mapTransactionsToPriceAndTransactions([transaction]), throws: WealthsimpleConversionError.missingCommodity("CAD"))
-
+        #expect(throws: WealthsimpleConversionError.missingCommodity("CAD")) { try mapper.mapTransactionsToPriceAndTransactions([transaction]) }
         // unsupported type
         transaction.transactionType = .hst
-        assert(try mapper.mapTransactionsToPriceAndTransactions([transaction]),
-               throws: WealthsimpleConversionError.unsupportedTransactionType(transaction.transactionType.rawValue))
+        #expect(throws: WealthsimpleConversionError.unsupportedTransactionType(transaction.transactionType.rawValue)) {
+            try mapper.mapTransactionsToPriceAndTransactions([transaction])
+        }
     }
 
    @Test
@@ -138,16 +138,15 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         nrwt.transactionType = .nonResidentWithholdingTax
         nrwt.fxRate = "1.2343"
         nrwt.description = "Garbage"
-        assert(try mapper.mapTransactionsToPriceAndTransactions([nrwt]), throws: WealthsimpleConversionError.unexpectedDescription(nrwt.description))
+        #expect(throws: WealthsimpleConversionError.unexpectedDescription(nrwt.description)) { try mapper.mapTransactionsToPriceAndTransactions([nrwt]) }
 
         // only one transaction for stock split
         transaction.transactionType = .stockDistribution
-        assert(try mapper.mapTransactionsToPriceAndTransactions([transaction]), throws: WealthsimpleConversionError.unexpectedStockSplit(transaction.description))
-
+        #expect(throws: WealthsimpleConversionError.unexpectedStockSplit(transaction.description)) { try mapper.mapTransactionsToPriceAndTransactions([transaction]) }
         // two buy transactions for stock split
         var split = TestTransaction(accountId: accountId)
         split.transactionType = .stockDistribution
-        assert(try mapper.mapTransactionsToPriceAndTransactions([transaction, split]), throws: WealthsimpleConversionError.unexpectedStockSplit(split.description))
+        #expect(throws: WealthsimpleConversionError.unexpectedStockSplit(split.description)) { try mapper.mapTransactionsToPriceAndTransactions([transaction, split]) }
     }
 
    @Test

@@ -29,12 +29,12 @@ struct CostParserTests {
 
    @Test
    func testCost() throws {
-        XCTAssertEqual(try Cost(amount: Amount(number: Decimal(1.003),
-                                               commoditySymbol: "EUR",
-                                               decimalDigits: 3),
-                                 date: TestUtils.date20170609,
-                                 label: "TEST"),
-                       try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\"}"))
+        #expect(try Cost(amount: Amount(number: Decimal(1.003),
+                                        commoditySymbol: "EUR",
+                                        decimalDigits: 3),
+                        date: TestUtils.date20170609,
+                        label: "TEST") ==
+                try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\"}"))
     }
 
    @Test
@@ -68,56 +68,56 @@ struct CostParserTests {
 
    @Test
    func testWithoutDate() throws {
-        XCTAssertEqual(try Cost(amount: Amount(number: Decimal(1.003),
-                                               commoditySymbol: "EUR",
-                                               decimalDigits: 3),
-                            date: nil,
-                            label: "TEST"),
-                       try cost(from: "{1.003 EUR, \"TEST\"}"))
-    }
+        #expect(try Cost(amount: Amount(number: Decimal(1.003),
+                                        commoditySymbol: "EUR",
+                                        decimalDigits: 3),
+                        date: nil,
+                        label: "TEST") ==
+                try cost(from: "{1.003 EUR, \"TEST\"}"))
+}
 
    @Test
    func testWithoutLabel() throws {
-        XCTAssertEqual(try Cost(amount: Amount(number: Decimal(1.003),
-                                               commoditySymbol: "EUR",
-                                               decimalDigits: 3),
+        #expect(try Cost(amount: Amount(number: Decimal(1.003),
+                                        commoditySymbol: "EUR",
+                                        decimalDigits: 3),
                                  date: TestUtils.date20170609,
-                                 label: nil),
-                       try cost(from: "{2017-06-09, 1.003 EUR}"))
+                                 label: nil) ==
+                try cost(from: "{2017-06-09, 1.003 EUR}"))
     }
 
    @Test
    func testWithoutAmount() throws {
-        XCTAssertEqual(try Cost(amount: nil,
-                                date: TestUtils.date20170609,
-                                label: "TEST"),
-                       try cost(from: "{2017-06-09, \"TEST\"}"))
+        #expect(try Cost(amount: nil,
+                         date: TestUtils.date20170609,
+                         label: "TEST") ==
+                try cost(from: "{2017-06-09, \"TEST\"}"))
     }
 
    @Test
    func testOnlyDate() throws {
-        XCTAssertEqual(try Cost(amount: nil,
-                                date: TestUtils.date20170609,
-                                label: nil),
-                       try cost(from: "{2017-06-09}"))
+        #expect(try Cost(amount: nil,
+                         date: TestUtils.date20170609,
+                         label: nil) ==
+                try cost(from: "{2017-06-09}"))
     }
 
    @Test
    func testOnlyLabel() throws {
-        XCTAssertEqual(try Cost(amount: nil,
-                                date: nil,
-                                label: "TEST"),
-                       try cost(from: "{\"TEST\"}"))
+        #expect(try Cost(amount: nil,
+                         date: nil,
+                         label: "TEST") ==
+                try cost(from: "{\"TEST\"}"))
     }
 
    @Test
    func testOnlyAmount() throws {
-        XCTAssertEqual(try Cost(amount: Amount(number: Decimal(1.003),
-                                               commoditySymbol: "EUR",
-                                               decimalDigits: 3),
-                            date: nil,
-                            label: nil),
-                       try cost(from: "{1.003 EUR}"))
+        #expect(try Cost(amount: Amount(number: Decimal(1.003),
+                                        commoditySymbol: "EUR",
+                                        decimalDigits: 3),
+                         date: nil,
+                         label: nil) ==
+                try cost(from: "{1.003 EUR}"))
     }
 
    @Test
@@ -170,12 +170,12 @@ struct CostParserTests {
 
    @Test
    func testSpecialCharacters() throws {
-        XCTAssertEqual(try Cost(amount: Amount(number: Decimal(1.003),
-                                               commoditySymbol: "💰",
-                                               decimalDigits: 3),
-                                 date: TestUtils.date20170609,
-                                 label: "TES😀"),
-                       try cost(from: "{2017-06-09, 1.003 💰, \"TES😀\"}"))
+        #expect(try Cost(amount: Amount(number: Decimal(1.003),
+                                        commoditySymbol: "💰",
+                                        decimalDigits: 3),
+                         date: TestUtils.date20170609,
+                         label: "TES😀") ==
+                try cost(from: "{2017-06-09, 1.003 💰, \"TES😀\"}"))
     }
 
    @Test
@@ -199,11 +199,11 @@ struct CostParserTests {
         #expect(throws: (any Error).self) { try cost(from: "{2017-06-09, unexpected, 1.003 EUR}") }
 
         // Test that valid costs still work (should not throw)
-        XCTAssertNoThrow(try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\"}"))
-        XCTAssertNoThrow(try cost(from: "{\"TEST\"}"))
-        XCTAssertNoThrow(try cost(from: "{2017-06-09}"))
-        XCTAssertNoThrow(try cost(from: "{1.003 EUR}"))
-        XCTAssertNoThrow(try cost(from: "{}"))
+        #expect(throws: Never.self) { try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\"}") }
+        #expect(throws: Never.self) { try cost(from: "{\"TEST\"}") }
+        #expect(throws: Never.self) { try cost(from: "{2017-06-09}") }
+        #expect(throws: Never.self) { try cost(from: "{1.003 EUR}") }
+        #expect(throws: Never.self) { try cost(from: "{}") }
     }
 
    @Test

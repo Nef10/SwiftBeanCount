@@ -18,9 +18,8 @@ struct CostTests {
 
    @Test
    func testNegativeAmount() {
-        XCTAssertThrowsError(try Cost(amount: Amount(number: -1, commoditySymbol: TestUtils.eur), date: nil, label: nil)) {
-            #expect($0.localizedDescription == "Invalid Cost, negative amount: {-1 EUR}")
-        }
+        let error = #expect(throws: (any Error).self) { try Cost(amount: Amount(number: -1, commoditySymbol: TestUtils.eur), date: nil, label: nil) }
+        #expect(error.localizedDescription == "Invalid Cost, negative amount: {-1 EUR}")
     }
 
    @Test

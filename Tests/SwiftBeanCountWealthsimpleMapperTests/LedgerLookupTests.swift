@@ -44,10 +44,9 @@ struct LedgerLookupTests {
         let account = TestAccount(number: "abc")
 
         // not found
-        assert(
-            try ledgerLookup.ledgerAccountName(of: account),
-            throws: WealthsimpleConversionError.missingWealthsimpleAccount("abc")
-        )
+        #expect(throws: WealthsimpleConversionError.missingWealthsimpleAccount("abc")) {
+            try ledgerLookup.ledgerAccountName(of: account)
+        }
 
         // base account
         try ledger.add(Commodity(symbol: "XGRO"))
@@ -56,38 +55,41 @@ struct LedgerLookupTests {
         #expect(try ledgerLookup.ledgerAccountName(of: account) == accountName)
 
         // commodity account
-        #expect(try ledgerLookup.ledgerAccountName(of: account == symbol: "XGRO"), try AccountName("Assets:XGRO"))
+        let expectedAccountName = try AccountName("Assets:XGRO")
+        #expect(try ledgerLookup.ledgerAccountName(of: account, symbol: "XGRO") == expectedAccountName)
 
         // invalid commodity symbol
         try ledger.add(Commodity(symbol: "XGRO:"))
-        assert(
-            try ledgerLookup.ledgerAccountName(of: account, symbol: "XGRO:"),
-            throws: WealthsimpleConversionError.invalidCommoditySymbol("XGRO:")
-        )
+        #expect(throws: WealthsimpleConversionError.invalidCommoditySymbol("XGRO:")) {
+            try ledgerLookup.ledgerAccountName(of: account, symbol: "XGRO:")
+        }
     }
 
    @Test
-   func testLedgerAccountNameFor() throws {
+   func testLedgerAccountNameFor() throws { // swiftlint:disable:this function_body_length
         var number = "abc123"
 
         // fallback for payment spend
-        #expect(try ledgerLookup.ledgerAccountName(for: .transactionType(.paymentSpend) == in: TestAccount(number: number), ofType: [.expense] ),
+        #expect(try ledgerLookup.ledgerAccountName(for: .transactionType(.paymentSpend), in: TestAccount(number: number), ofType: [.expense] ) ==
                        WealthsimpleLedgerMapper.fallbackExpenseAccountName)
 
         // not found
-        assert(try ledgerLookup.ledgerAccountName(for: .rounding, in: TestAccount(number: number), ofType: [.income]),
-               throws: WealthsimpleConversionError.missingAccount(MetaDataKeys.rounding, number, "Income"))
-        assert(try ledgerLookup.ledgerAccountName(for: .transactionType(.dividend), in: TestAccount(number: number), ofType: [.income]),
-               throws: WealthsimpleConversionError.missingAccount("\(MetaDataKeys.prefix)\(TransactionType.dividend)", number, "Income"))
+        #expect(throws: WealthsimpleConversionError.missingAccount(MetaDataKeys.rounding, number, "Income")) {
+            try ledgerLookup.ledgerAccountName(for: .rounding, in: TestAccount(number: number), ofType: [.income])
+        }
+        #expect(throws: WealthsimpleConversionError.missingAccount("\(MetaDataKeys.prefix)\(TransactionType.dividend)", number, "Income")) {
+            try ledgerLookup.ledgerAccountName(for: .transactionType(.dividend), in: TestAccount(number: number), ofType: [.income])
+        }
 
         // rounding
         try ledger.add(Account(name: accountName, metaData: [MetaDataKeys.rounding: number]))
         ledgerLookup = LedgerLookup(ledger)
-        #expect(try ledgerLookup.ledgerAccountName(for: .rounding == in: TestAccount(number: number), ofType: [.asset] ), accountName)
+        #expect(try ledgerLookup.ledgerAccountName(for: .rounding, in: TestAccount(number: number), ofType: [.asset] ) == accountName)
 
         // wrong type
-        assert(try ledgerLookup.ledgerAccountName(for: .rounding, in: TestAccount(number: number), ofType: [.income, .expense, .equity] ),
-               throws: WealthsimpleConversionError.missingAccount(MetaDataKeys.rounding, number, "Income, or Expenses, or Equity"))
+        #expect(throws: WealthsimpleConversionError.missingAccount(MetaDataKeys.rounding, number, "Income, or Expenses, or Equity")) {
+            try ledgerLookup.ledgerAccountName(for: .rounding, in: TestAccount(number: number), ofType: [.income, .expense, .equity])
+        }
 
         // multiple numbers
         var name = try AccountName("Assets:Test:Two")
@@ -95,14 +97,14 @@ struct LedgerLookupTests {
         let number2 = "ghi789"
         try ledger.add(Account(name: name, metaData: [MetaDataKeys.rounding: "\(number) \(number2)"]))
         ledgerLookup = LedgerLookup(ledger)
-        #expect(try ledgerLookup.ledgerAccountName(for: .rounding == in: TestAccount(number: number), ofType: [.asset] ), name)
-        #expect(try ledgerLookup.ledgerAccountName(for: .rounding == in: TestAccount(number: number2), ofType: [.asset] ), name)
+        #expect(try ledgerLookup.ledgerAccountName(for: .rounding, in: TestAccount(number: number), ofType: [.asset] ) == name)
+        #expect(try ledgerLookup.ledgerAccountName(for: .rounding, in: TestAccount(number: number2), ofType: [.asset] ) == name)
 
         // contribution room
         name = try AccountName("Assets:Test:Three")
         try ledger.add(Account(name: name, metaData: [MetaDataKeys.contributionRoom: number]))
         ledgerLookup = LedgerLookup(ledger)
-        #expect(try ledgerLookup.ledgerAccountName(for: .contributionRoom == in: TestAccount(number: number), ofType: [.asset] ), name)
+        #expect(try ledgerLookup.ledgerAccountName(for: .contributionRoom, in: TestAccount(number: number), ofType: [.asset] ) == name)
 
         // dividend + transaction type multi key
         name = try AccountName("Income:Test")
@@ -110,8 +112,8 @@ struct LedgerLookupTests {
         try ledger.add(Account(name: name, metaData: ["\(MetaDataKeys.dividendPrefix)\(symbol)": number, "\(MetaDataKeys.prefix)giveaway-bonus": number]))
         try ledger.add(Commodity(symbol: symbol))
         ledgerLookup = LedgerLookup(ledger)
-        #expect(try ledgerLookup.ledgerAccountName(for: .dividend(symbol) == in: TestAccount(number: number), ofType: [.income] ), name)
-        #expect(try ledgerLookup.ledgerAccountName(for: .transactionType(.giveawayBonus) == in: TestAccount(number: number), ofType: [.income] ), name)
+        #expect(try ledgerLookup.ledgerAccountName(for: .dividend(symbol), in: TestAccount(number: number), ofType: [.income] ) == name)
+        #expect(try ledgerLookup.ledgerAccountName(for: .transactionType(.giveawayBonus), in: TestAccount(number: number), ofType: [.income] ) == name)
     }
 
    @Test
@@ -206,10 +208,9 @@ struct LedgerLookupTests {
         ledgerLookup = LedgerLookup(ledger)
 
         // not existing
-        assert(
-            try ledgerLookup.commoditySymbol(for: "USD"),
-            throws: WealthsimpleConversionError.missingCommodity("USD")
-        )
+        #expect(throws: WealthsimpleConversionError.missingCommodity("USD")) {
+            try ledgerLookup.commoditySymbol(for: "USD")
+        }
 
         // fallback
         #expect(try ledgerLookup.commoditySymbol(for: "EUR") == "EUR")
