@@ -40,7 +40,7 @@ public enum TaxCalculator {
     ///   - ledger: `Ledger`
     ///   - year: tax year to get the slips for
     /// - Returns: Array of `TaxSlip`s
-    public static func generateTaxSlips(from ledger: Ledger, for year: Int) throws -> [TaxSlip] {
+    public static func generateTaxSlips(from ledger: Ledger, for year: Int) throws(any Error) -> [TaxSlip] {
         // Only get setting in effect during the tax year or earlier years
         let settings = ledger.custom.filter { $0.name == MetaDataKeys.settings && $0.date < Calendar.current.date(from: DateComponents(year: year + 1, month: 1, day: 1))! }
         let taxSlipCurrencySettings = settings.filter { $0.values.count == 3 && $0.values[0] == MetaDataKeys.slipCurrency }

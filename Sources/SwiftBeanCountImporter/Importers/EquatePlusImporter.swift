@@ -191,7 +191,7 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
         return try getTransactionsAndPrices(matchedTransactions)
     }
 
-    private func parseContributions(_ input: String) throws -> [Contribution] {
+    private func parseContributions(_ input: String) throws(EquatePlusImporterError) -> [Contribution] {
         var result = [Contribution]()
         let pattern = #"((Jan\.|Feb\.|Mar\.|Apr\.|May|Jun\.|Jul\.|Aug\.|Sep\.|Oct\.|Nov\.|Dec\.) \d{1,2}, \d{4})([^$\d]*)\$ ([\d,]+\.\d+)[^€\d]*€ ([\d,]+\.\d+)((Jan\.|Feb\.|Mar\.|Apr\.|May|Jun\.|Jul\.|Aug\.|Sep\.|Oct\.|Nov\.|Dec\.) \d{1,2}, \d{4})(\d*.\d*)"# // swiftlint:disable:this line_length
         let regex = try! NSRegularExpression(pattern: pattern, options: []) // swiftlint:disable:this force_try
@@ -261,7 +261,7 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
         return Array(groupedContributions.values).filter { $0.amountEmployer != nil && $0.amountYou != nil }
     }
 
-    func parseTransactions(_ input: String) throws -> [EquatePlusTransaction] {
+    func parseTransactions(_ input: String) throws(EquatePlusImporterError) -> [EquatePlusTransaction] {
         var result = [EquatePlusTransaction]()
         let regexPattern = #"((Jan\.|Feb\.|Mar\.|Apr\.|May|Jun\.|Jul\.|Aug\.|Sep\.|Oct\.|Nov\.|Dec\.) \d{1,2}, \d{4})([^€]*)€ ([\d-]+.\d{5})([\d-]+.\d{6})"#
         let regex = try! NSRegularExpression(pattern: regexPattern, options: []) // swiftlint:disable:this force_try
@@ -343,7 +343,7 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
         return result
     }
 
-    private func getTransactionsAndPrices(_ matchedTransactions: [MatchedTransaction]) throws -> ([ImportedTransaction], [Price]) {
+    private func getTransactionsAndPrices(_ matchedTransactions: [MatchedTransaction]) throws(any Error) -> ([ImportedTransaction], [Price]) {
         let prices: [Price] = matchedTransactions.compactMap { try? Price(date: $0.date, commoditySymbol: stockCommodity, amount: $0.price) }
         let transactions = try matchedTransactions.map {
             var postings = [Posting]()

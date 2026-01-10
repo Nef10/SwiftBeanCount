@@ -94,7 +94,7 @@ public class Posting {
         priceType: PostingPriceType? = nil,
         cost: Cost? = nil,
         metaData: [String: String] = [:]
-    ) throws {
+    ) throws(PostingError) {
         self.accountName = accountName
         self.amount = amount
         self.cost = cost

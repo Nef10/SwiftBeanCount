@@ -77,7 +77,7 @@ public struct SwiftBeanCountCompassCardMapper {
     ///   - balance: String with the balance
     ///   - date: Date to balance assertion should use, if nil defaults to tomorrow
     /// - Returns: Array of Balances
-    public func createBalance(cardNumber: String, balance: String, date inputDate: Date? = nil) throws -> Balance {
+    public func createBalance(cardNumber: String, balance: String, date inputDate: Date? = nil) throws(SwiftBeanCountCompassCardMapperError) -> Balance {
         let date = inputDate ?? Calendar.current.date(byAdding: .day, value: 1, to: Date())!
         let number = cardNumber.components(separatedBy: .whitespacesAndNewlines).joined()
         let balanceString = balance.replacingOccurrences(of: "$", with: "").components(separatedBy: .whitespacesAndNewlines).joined()
@@ -94,7 +94,7 @@ public struct SwiftBeanCountCompassCardMapper {
     ///   - cardNumber: String with the compass card number
     ///   - transactions: String of the transaction CSV
     /// - Returns: Array of transactions
-    public func createTransactions(cardNumber: String, transactions: String) throws -> [Transaction] {
+    public func createTransactions(cardNumber: String, transactions: String) throws(any Error) -> [Transaction] {
         let account = try ledgerCardAccountName(cardNumber: cardNumber)
         let reader = try CSVReader(string: transactions, hasHeaderRow: true)
         return try createTransactions(getRows(reader), cardNumber: cardNumber, account: account)
@@ -108,14 +108,14 @@ public struct SwiftBeanCountCompassCardMapper {
     ///   - account: AccountName of asset account in the ledger
     ///   - reader: CSVReader with the transaction CSV
     /// - Returns: Array of transactions
-    public func createTransactions(account: AccountName, reader: CSVReader) throws -> [Transaction] {
+    public func createTransactions(account: AccountName, reader: CSVReader) throws(any Error) -> [Transaction] {
         try createTransactions(getRows(reader), cardNumber: nil, account: account)
     }
 
     /// Gets the correct account for the Compass Card from the ledger based on the card number
     /// - Parameter cardNumber: Compass Card Number
     /// - Returns: AccountName from the ledger
-    public func ledgerCardAccountName(cardNumber: String) throws -> AccountName {
+    public func ledgerCardAccountName(cardNumber: String) throws(SwiftBeanCountCompassCardMapperError) -> AccountName {
         guard let accountName = ledger.accounts.first(where: {
             $0.metaData[MetaDataKey.importerType] == MetaDataKey.importerTypeValue && $0.metaData[MetaDataKey.cardNumber] == cardNumber
         })?.name else {
@@ -124,7 +124,7 @@ public struct SwiftBeanCountCompassCardMapper {
         return accountName
     }
 
-    private func getRows(_ reader: CSVReader) throws -> [TransactionRow] {
+    private func getRows(_ reader: CSVReader) throws(any Error) -> [TransactionRow] {
         var rows = [TransactionRow]()
         let decoder = CSVRowDecoder()
         decoder.dateDecodingStrategy = .formatted(Self.dateFormatter)
@@ -136,7 +136,7 @@ public struct SwiftBeanCountCompassCardMapper {
     }
 
     // swiftlint:disable:next function_body_length
-    private func createTransactions(_ transactions: [TransactionRow], cardNumber: String?, account: AccountName) throws -> [Transaction] {
+    private func createTransactions(_ transactions: [TransactionRow], cardNumber: String?, account: AccountName) throws(any Error) -> [Transaction] {
         var result = [Transaction]()
 
         var currentJourney = ""

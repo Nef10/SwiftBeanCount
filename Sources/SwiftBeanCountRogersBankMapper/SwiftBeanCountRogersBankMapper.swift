@@ -27,7 +27,7 @@ public struct SwiftBeanCountRogersBankMapper {
     /// - Parameter account: account to map
     /// - Throws: RogersBankMappingError if no matching account was found
     /// - Returns: balance assertion with the current balance form the credit card account
-    public func mapAccountToBalance(account: RogersBankDownloader.Account) throws -> Balance {
+    public func mapAccountToBalance(account: RogersBankDownloader.Account) throws(RogersBankMappingError) -> Balance {
         let (number, decimalDigits) = account.currentBalance.value.amountDecimal()
         let amount = Amount(number: -number, commoditySymbol: account.currentBalance.currency, decimalDigits: decimalDigits)
         let accountName = try ledgerAccountName(lastFour: account.customer.cardLast4)
@@ -41,7 +41,7 @@ public struct SwiftBeanCountRogersBankMapper {
     ///   - referenceNumber: Reference Number to add to the meta data
     /// - Throws: RogersBankMappingError
     /// - Returns: Transactions
-    private func mapActivity(_ activity: Activity, date: Date, referenceNumber: String) throws -> Transaction {
+    private func mapActivity(_ activity: Activity, date: Date, referenceNumber: String) throws(RogersBankMappingError) -> Transaction {
         let accountName = try ledgerAccountName(lastFour: String(activity.cardNumber.suffix(4)))
         let metaData = TransactionMetaData(date: date, narration: activity.merchant.name, metaData: [MetaDataKeys.activityId: referenceNumber])
         let (number, decimalDigits) = activity.amount.value.amountDecimal()
@@ -62,7 +62,7 @@ public struct SwiftBeanCountRogersBankMapper {
     /// - Parameter activities: Activities to map
     /// - Throws: RogersBankMappingError
     /// - Returns: Transactions
-    public func mapActivitiesToTransactions(activities: [Activity]) throws -> [Transaction] {
+    public func mapActivitiesToTransactions(activities: [Activity]) throws(RogersBankMappingError) -> [Transaction] {
         var transactions = [Transaction]()
         for activity in activities where activity.activityStatus == .approved && activity.activityType == .transaction {
             guard let postedDate = activity.postedDate else {
@@ -89,7 +89,7 @@ public struct SwiftBeanCountRogersBankMapper {
         return transactions
     }
 
-    private func ledgerAccountName(lastFour: String) throws -> AccountName {
+    private func ledgerAccountName(lastFour: String) throws(RogersBankMappingError) -> AccountName {
         guard let accountName = ledger.accounts.first(where: {
             $0.name.accountType == .liability && $0.metaData[MetaDataKeys.lastFour] == lastFour && $0.metaData[MetaDataKeys.importerType] == MetaDataKeys.importerTypeValue
         })?.name else {

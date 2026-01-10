@@ -33,7 +33,7 @@ protocol FormattableCommand: ColorizedCommand {
 
     var formatOptions: FormattableCommandOptions { get }
 
-    func getResult() throws -> [FormattableResult]
+    func getResult() throws(any Error) -> [FormattableResult]
 
 }
 

@@ -14,7 +14,7 @@ protocol LedgerCommand: ParsableCommand {
 
 extension LedgerCommand {
 
-    func parseLedger() throws -> Ledger {
+    func parseLedger() throws(any Error) -> Ledger {
         let ledger: Ledger
         do {
             ledger = try Parser.parse(contentOf: URL(fileURLWithPath: ledgerOptions.file))

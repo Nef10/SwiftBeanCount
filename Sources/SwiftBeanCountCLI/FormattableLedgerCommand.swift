@@ -2,12 +2,12 @@ import Foundation
 import SwiftBeanCountModel
 
 protocol FormattableLedgerCommand: FormattableCommand, LedgerCommand {
-    func getResult(from ledger: Ledger, parsingDuration: Double) throws -> [FormattableResult]
+    func getResult(from ledger: Ledger, parsingDuration: Double) throws(any Error) -> [FormattableResult]
 }
 
 extension FormattableLedgerCommand {
 
-    func getResult() throws -> [FormattableResult] {
+    func getResult() throws(any Error) -> [FormattableResult] {
         let start = Date.timeIntervalSinceReferenceDate
         let ledger = try parseLedger()
         let end = Date.timeIntervalSinceReferenceDate

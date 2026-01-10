@@ -33,7 +33,7 @@ enum CostParser {
 
     static let costGroup = "(\\{\\s*\(costLabelGroup)\(costPriceGroup)\(costDateGroup).*\\})"
 
-    static func parseFrom(match: [String], startIndex: Int) throws -> Cost? {
+    static func parseFrom(match: [String], startIndex: Int) throws(any Error) -> Cost? {
         var cost: Cost?
         if !match[startIndex].isEmpty { // cost
             var amount: Amount?
@@ -66,7 +66,7 @@ enum CostParser {
     ///   - date: The parsed date
     ///   - label: The parsed label
     /// - Throws: Error if unexpected elements are found
-    private static func validateCostContent(_ costString: String, amount: Amount?, date: Date?, label: String?) throws {
+    private static func validateCostContent(_ costString: String, amount: Amount?, date: Date?, label: String?) throws(CostParsingError) {
         // Remove the braces and extract the content
         let content = String(costString.dropFirst().dropLast()).trimmingCharacters(in: .whitespaces)
 

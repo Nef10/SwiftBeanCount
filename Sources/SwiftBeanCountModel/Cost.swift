@@ -33,7 +33,7 @@ public class Cost {
     ///   - date: optional Date
     ///   - label: optional label String
     /// - Throws: if the cost cannot be created, e.g. if the amount is negative
-    public init(amount: Amount?, date: Date?, label: String?) throws {
+    public init(amount: Amount?, date: Date?, label: String?) throws(CostError) {
         self.amount = amount
         self.date = date
         self.label = label

@@ -40,7 +40,7 @@ public struct SwiftBeanCountTangerineMapper {
     ///   - accounts: JSONs downloaded from the Tangerine API
     ///   - date: Date to balance assertion should use, defaults to the current date
     /// - Returns: Array of Balances
-    public func createBalances(accounts: [[String: Any]], date: Date = Date()) throws -> [Balance] {
+    public func createBalances(accounts: [[String: Any]], date: Date = Date()) throws(any Error) -> [Balance] {
         try accounts.map {
             var (decimal, _) = (String($0["account_balance"] as? Double ?? 0)).amountDecimal()
             if $0["type"] as? String == "CREDIT_CARD" || $0["type"] as? String == "LOAN" {
@@ -58,7 +58,7 @@ public struct SwiftBeanCountTangerineMapper {
     ///
     /// - Parameter rawTransactions: Array of JSON objects
     /// - Returns: Array of transactions
-    public func createTransactions(_ rawTransactions: [String: [[String: Any]]]) throws -> [Transaction] {
+    public func createTransactions(_ rawTransactions: [String: [[String: Any]]]) throws(any Error) -> [Transaction] {
         try rawTransactions.flatMap { accountName, transactions in
             try createTransactions(transactions, for: accountName)
         }
@@ -67,7 +67,7 @@ public struct SwiftBeanCountTangerineMapper {
     /// Gets the correct account from the ledger based on the downloaded account JSON
     /// - Parameter account: JSON from the API
     /// - Returns: AccountName from the ledger
-    public func ledgerAccountName(account: [String: Any]) throws -> AccountName {
+    public func ledgerAccountName(account: [String: Any]) throws(SwiftBeanCountTangerineMapperError) -> AccountName {
         var type: AccountType
         var importerType: String
         var metaDataKey: String
@@ -98,7 +98,7 @@ public struct SwiftBeanCountTangerineMapper {
         return accountName
     }
 
-    private func createTransactions(_ transactions: [[String: Any]], for accountName: String) throws -> [Transaction] {
+    private func createTransactions(_ transactions: [[String: Any]], for accountName: String) throws(any Error) -> [Transaction] {
         try transactions.compactMap { (json: [String: Any]) -> Transaction? in
             guard !doesTransactionExistInLedger(json) else {
                 return nil

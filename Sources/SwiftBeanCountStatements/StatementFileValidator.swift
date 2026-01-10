@@ -25,7 +25,7 @@ public enum StatementFileValidator {
     ///   - folder: folder to check
     ///   - statementNames: part of file names to recognize
     /// - Returns: Array of StatementResult for identified statement filename in the folder.
-    public static func checkStatementsFrom(folder: URL, statementNames: [String]) async throws -> [StatementResult] {
+    public static func checkStatementsFrom(folder: URL, statementNames: [String]) async throws(any Error) -> [StatementResult] {
         let dateLength = 6
 
         let fileManager = FileManager()
