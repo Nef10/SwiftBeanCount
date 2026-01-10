@@ -55,10 +55,10 @@ struct TaxCalculatorTaxSlipTests {
         #expect(row2.values[0].value == Amount(number: 150, commoditySymbol: "EUR").multiCurrencyAmount)
 
         // No tax slips configured
-        do { _ = try TaxCalculator.generateTaxSlips(from: ledger, for: 2_000; Issue.record("Expected error") } catch { })
+        #expect(throws: (any Error).self) { try TaxCalculator.generateTaxSlips(from: ledger, for: 2_000) }
 
         // No tax slip currency configured
-        do { _ = try TaxCalculator.generateTaxSlips(from: ledger, for: 2_021; Issue.record("Expected error") } catch { })
+        #expect(throws: (any Error).self) { try TaxCalculator.generateTaxSlips(from: ledger, for: 2_021) }
 
         // No transactions
         #expect(try TaxCalculator.generateTaxSlips(from: ledger, for: 2_020).isEmpty)
@@ -263,7 +263,7 @@ struct TaxCalculatorTaxSlipTests {
    @Test
    func testSplitAccountError() throws {
         let ledger = try splitSymbolErrorLedger()
-        do { _ = try TaxCalculator.generateTaxSlips(from: ledger, for: 2_022; Issue.record("Expected error") } catch { })
+        #expect(throws: (any Error).self) { try TaxCalculator.generateTaxSlips(from: ledger, for: 2_022) }
     }
 
 }

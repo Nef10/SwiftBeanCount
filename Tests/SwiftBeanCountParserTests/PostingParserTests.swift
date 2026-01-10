@@ -124,7 +124,7 @@ struct PostingParserTests {
 
    @Test
    func testInvalidCost() throws {
-        do { _ = try PostingParser.parseFrom(line: invalidCostPostingString; Issue.record("Expected error") } catch { })
+        #expect(throws: (any Error).self) { try PostingParser.parseFrom(line: invalidCostPostingString) }
     }
 
    @Test

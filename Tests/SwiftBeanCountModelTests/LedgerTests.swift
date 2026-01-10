@@ -12,7 +12,7 @@ import Foundation
 import Testing
 
 @Suite
-struct LedgerTests {
+struct LedgerTests { // swiftlint:disable:this type_body_length
 
    @Test
    func testCommodities() throws {
@@ -372,7 +372,8 @@ struct LedgerTests {
 
         // Ledger with transactions, account opening and commodity
         ledger.add(transaction)
-        #expect(String(describing: ledger) == "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
+        #expect(String(describing: ledger)
+            == "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
 
         // Ledger with transaction, account opening as well as closing and commodity
         ledger = Ledger()
@@ -380,7 +381,8 @@ struct LedgerTests {
         account = Account(name: accountName, opening: TestUtils.date20170609, closing: TestUtils.date20170610)
         try ledger.add(account)
         ledger.add(transaction)
-        #expect(String(describing: ledger) == "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
+        #expect(String(describing: ledger)
+            == "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
 
         // ledger with only account opening
         ledger = Ledger()

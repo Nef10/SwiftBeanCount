@@ -31,7 +31,8 @@ struct TangerineCardImporterTests {
 
    @Test
    func testHelpText() {
-        #expect(TangerineCardImporter.helpText == "Enables importing of downloaded CSV files from Tangerine Credit Cards.\n\nTo use add importer-type: \"tangerine-card\" to your account.")
+        #expect(TangerineCardImporter.helpText
+            == "Enables importing of downloaded CSV files from Tangerine Credit Cards.\n\nTo use add importer-type: \"tangerine-card\" to your account.")
     }
 
    @Test

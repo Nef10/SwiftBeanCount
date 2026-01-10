@@ -56,7 +56,8 @@ struct TransactionMetaDataTests {
         let tag1 = Tag(name: "tag1")
         let tag2 = Tag(name: "tag2")
         let transactionMetaData = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [tag1, tag2])
-        #expect(String(describing: transactionMetaData) == "\(dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\" \(String(describing: tag1)) \(String(describing: tag2))")
+        #expect(String(describing: transactionMetaData)
+            == "\(dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\" \(String(describing: tag1)) \(String(describing: tag2))")
     }
 
    @Test

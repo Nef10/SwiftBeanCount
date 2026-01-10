@@ -44,7 +44,7 @@ struct CostParserTests {
             Issue.record("Invalid string")
             return
         }
-        do { _ = try CostParser.parseFrom(match: match, startIndex: 1; Issue.record("Expected error") } catch { })
+        #expect(throws: (any Error).self) { try CostParser.parseFrom(match: match, startIndex: 1) }
     }
 
    @Test
@@ -183,20 +183,20 @@ struct CostParserTests {
         // These should throw errors because they contain unexpected elements
 
         // Test with unexpected text after valid elements
-        do { _ = try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\", unexpected}"; Issue.record("Expected error") } catch { })
+        #expect(throws: (any Error).self) { try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\", unexpected}") }
 
         // Test with unexpected numbers
-        do { _ = try cost(from: "{2017-06-09, 1.003 EUR, 123}"; Issue.record("Expected error") } catch { })
+        #expect(throws: (any Error).self) { try cost(from: "{2017-06-09, 1.003 EUR, 123}") }
 
         // Test with unexpected symbols
-        do { _ = try cost(from: "{2017-06-09, 1.003 EUR, @invalid}"; Issue.record("Expected error") } catch { })
+        #expect(throws: (any Error).self) { try cost(from: "{2017-06-09, 1.003 EUR, @invalid}") }
 
         // Test with multiple unexpected elements
-        do { _ = try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\", extra, stuff}"; Issue.record("Expected error") } catch { })
+        #expect(throws: (any Error).self) { try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\", extra, stuff}") }
 
         // Test with unexpected text in different positions
-        do { _ = try cost(from: "{unexpected, 2017-06-09, 1.003 EUR}"; Issue.record("Expected error") } catch { })
-        do { _ = try cost(from: "{2017-06-09, unexpected, 1.003 EUR}"; Issue.record("Expected error") } catch { })
+        #expect(throws: (any Error).self) { try cost(from: "{unexpected, 2017-06-09, 1.003 EUR}") }
+        #expect(throws: (any Error).self) { try cost(from: "{2017-06-09, unexpected, 1.003 EUR}") }
 
         // Test that valid costs still work (should not throw)
         XCTAssertNoThrow(try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\"}"))

@@ -139,7 +139,7 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
         let importer = WealthsimpleDownloadImporter(ledger: nil)
         importer.downloaderClass = TestDownloader.self
         importer.load()
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         #expect(importer.balancesToImport().isEmpty)
         #expect(importer.pricesToImport().isEmpty)
     }
@@ -204,7 +204,7 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
             return .success([])
         }
         Self.getTransactions = { requestedAccount, date in
-            #expect(Calendar.current.compare(date! == to: Date(timeIntervalSinceNow: self.sixtyTwoDays), toGranularity: .minute), .orderedSame)
+            #expect(Calendar.current.compare(date!, to: Date(timeIntervalSinceNow: self.sixtyTwoDays), toGranularity: .minute) == .orderedSame)
             #expect(requestedAccount.id == account.id)
             #expect(requestedAccount.number == account.number)
             #expect(!(verifiedTransactions))
@@ -215,7 +215,7 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
         importer.load()
         #expect(verifiedPositions)
         #expect(verifiedTransactions)
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         #expect(importer.balancesToImport().isEmpty)
         #expect(importer.pricesToImport().isEmpty)
     }
@@ -231,7 +231,7 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
         Self.getAccounts = { .success([account]) }
         Self.getPositions = { _, _ in .success([]) }
         Self.getTransactions = { _, date in
-            #expect(Calendar.current.compare(date! == to: Date(timeIntervalSinceNow: self.threeDays), toGranularity: .minute), .orderedSame)
+            #expect(Calendar.current.compare(date!, to: Date(timeIntervalSinceNow: self.threeDays), toGranularity: .minute) == .orderedSame)
             verifiedTransactions = true
             return .success([])
         }
@@ -269,7 +269,7 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
             try Posting(accountName: try AccountName("Expenses:TODO"), amount: postings[1].amount, price: price, priceType: .total)
         ])
         #expect(importer.nextTransaction() == ImportedTransaction(transaction, shouldAllowUserToEdit: true, accountName: postings[0].accountName))
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         #expect(importer.pricesToImport() == [try Price(date: transaction1.processDate, commoditySymbol: "ETF", amount: postings[1].cost!.amount!)])
         #expect(importer.balancesToImport().isEmpty)
     }
@@ -291,12 +291,13 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
         Self.getTransactions = { _, _ in .success([]) }
         importer.downloaderClass = TestDownloader.self
         importer.load()
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         XCTAssertEqual(
             importer.pricesToImport(),
             [try Price(date: position.positionDate, commoditySymbol: "XGRO", amount: Amount(number: Decimal(string: "1.11")!, commoditySymbol: "CAD", decimalDigits: 2))]
         )
-        #expect(importer.balancesToImport() == [Balance(date: position.positionDate, accountName: xgroAccount, amount: Amount(number: Decimal(2), commoditySymbol: "XGRO", decimalDigits: 2))])
+        #expect(importer.balancesToImport()
+            == [Balance(date: position.positionDate, accountName: xgroAccount, amount: Amount(number: Decimal(2), commoditySymbol: "XGRO", decimalDigits: 2))])
     }
 
    @Test
@@ -313,7 +314,7 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
         importer.downloaderClass = TestDownloader.self
         importer.load()
         #expect(delegate.verified)
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         #expect(importer.pricesToImport().isEmpty)
         #expect(importer.balancesToImport().isEmpty)
     }
@@ -335,7 +336,7 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
         importer.downloaderClass = TestDownloader.self
         importer.load()
         #expect(delegate.verified)
-        #expect(importer.nextTransaction( == nil))
+        #expect(importer.nextTransaction() == nil)
         #expect(importer.pricesToImport().isEmpty)
         #expect(importer.balancesToImport().isEmpty)
     }

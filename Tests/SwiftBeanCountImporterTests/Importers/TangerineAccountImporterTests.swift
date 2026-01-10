@@ -31,7 +31,8 @@ struct TangerineAccountImporterTests {
 
    @Test
    func testHelpText() {
-        #expect(TangerineAccountImporter.helpText == "Enables importing of downloaded CSV files from Tangerine Accounts.\n\nTo use add importer-type: \"tangerine-account\" to your account.")
+        #expect(TangerineAccountImporter.helpText
+            == "Enables importing of downloaded CSV files from Tangerine Accounts.\n\nTo use add importer-type: \"tangerine-account\" to your account.")
     }
 
    @Test

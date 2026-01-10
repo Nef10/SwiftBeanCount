@@ -11,7 +11,7 @@ import Foundation
 import Testing
 
 @Suite
-struct TransactionTests {
+struct TransactionTests { // swiftlint:disable:this type_body_length
 
     private var transaction1WithoutPosting: Transaction!
     private var transaction2WithoutPosting: Transaction!

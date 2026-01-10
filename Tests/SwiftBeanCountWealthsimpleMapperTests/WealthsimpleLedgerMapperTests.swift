@@ -5,7 +5,7 @@ import Testing
 import Wealthsimple
 
 @Suite
-struct WealthsimpleLedgerMapperTests {
+struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_length
 
     private typealias SAccount = SwiftBeanCountModel.Account
 

@@ -12,7 +12,7 @@ import Foundation
 import Testing
 
 @Suite
-struct AccountTests {
+struct AccountTests { // swiftlint:disable:this type_body_length
 
    @Test
    func testBookingMethod() {

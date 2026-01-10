@@ -4,7 +4,7 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-struct TaxSlipTests {
+struct TaxSlipTests { // swiftlint:disable:this type_body_length
 
    @Test
    func testExtractInt() {
@@ -110,7 +110,7 @@ struct TaxSlipTests {
             TaxSlipEntry(symbol: "B", name: "Name B", box: "Box 2", value: MultiCurrencyAmount(), originalValue: nil),
             TaxSlipEntry(symbol: nil, name: "Name A", box: "Box 1", value: MultiCurrencyAmount(), originalValue: nil),
         ]
-        do { _ = try TaxSlip(name: "Test", year: 2_023, issuer: "Test Issuer", entries: entries; Issue.record("Expected error") } catch { })
+        #expect(throws: (any Error).self) { try TaxSlip(name: "Test", year: 2_023, issuer: "Test Issuer", entries: entries) }
     }
 
    @Test

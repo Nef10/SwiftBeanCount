@@ -16,7 +16,7 @@ import Testing
 #if canImport(UIKit) || canImport(AppKit)
 
 @Suite
-struct TangerineDownloadImporterTests {
+struct TangerineDownloadImporterTests { // swiftlint:disable:this type_body_length
 
     private class MockDownloader: TangerineDownloaderProvider {
 

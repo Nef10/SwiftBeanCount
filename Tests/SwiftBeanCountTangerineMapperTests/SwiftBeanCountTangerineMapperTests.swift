@@ -4,7 +4,7 @@ import SwiftBeanCountModel
 import Testing
 
 @Suite
-struct SwiftBeanCountTangerineMapperTests {
+struct SwiftBeanCountTangerineMapperTests { // swiftlint:disable:this type_body_length
 
     private let creditCard: [String: Any] = ["type": "CREDIT_CARD", "account_balance": 10.50, "currency_type": "CAD", "display_name": "1234 XXXX YYYY 1583"]
     private let chequing: [String: Any] = ["type": "CHEQUING", "display_name": "123456", "account_balance": 150.30]
