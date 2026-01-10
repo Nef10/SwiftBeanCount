@@ -1,165 +1,16 @@
+import Foundation
+@testable import SwiftBeanCountCLI
+import Testing
+
 #if os(macOS)
 
-@testable import SwiftBeanCountCLI
-import XCTest
+@Suite
+class StatsTests {
 
-final class StatsTests: XCTestCase {
+    private let basicLedgerURL: URL
+    private let cleanup: () -> Void
 
-    func testFileDoesNotExist() {
-        let url = temporaryFileURL()
-        let result = outputFromExecutionWith(arguments: ["stats", url.path])
-        XCTAssertEqual(result.exitCode, 1)
-        XCTAssert(result.errorOutput.isEmpty)
-        #if os(Linux)
-        XCTAssertEqual(result.output, "The operation could not be completed. The file doesn’t exist.")
-        #else
-        XCTAssertEqual(result.output, "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
-        #endif
-    }
-
-    func testEmptyFileTable() {
-        let table = """
-            +---------------------------+
-            | Statistics                |
-            +---------------------------+
-            | Type             | Number |
-            +------------------+--------+
-            | Transactions     | 0      |
-            | Accounts         | 0      |
-            | Account openings | 0      |
-            | Account closings | 0      |
-            | Balances         | 0      |
-            | Prices           | 0      |
-            | Commodities      | 0      |
-            | Tags             | 0      |
-            | Events           | 0      |
-            | Customs          | 0      |
-            | Options          | 0      |
-            | Plugins          | 0      |
-            +------------------+--------+
-            """
-        let url = emptyFileURL()
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path], outputPrefix: table)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "table"], outputPrefix: table)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "table"], outputPrefix: table)
-    }
-
-    func testEmptyFileCSV() {
-        let csv = """
-            "Type", "Number"
-            "Transactions", "0"
-            "Accounts", "0"
-            "Account openings", "0"
-            "Account closings", "0"
-            "Balances", "0"
-            "Prices", "0"
-            "Commodities", "0"
-            "Tags", "0"
-            "Events", "0"
-            "Customs", "0"
-            "Options", "0"
-            "Plugins", "0"
-            """
-        let url = emptyFileURL()
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "csv"], output: csv)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "csv"], output: csv)
-    }
-
-    func testEmptyFileText() {
-        let text = """
-            Statistics
-
-            Type              Number
-            Transactions      0
-            Accounts          0
-            Account openings  0
-            Account closings  0
-            Balances          0
-            Prices            0
-            Commodities       0
-            Tags              0
-            Events            0
-            Customs           0
-            Options           0
-            Plugins           0
-            """
-        let url = emptyFileURL()
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "text"], outputPrefix: text)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "text"], outputPrefix: text)
-    }
-
-    func testTestTable() {
-        let table = """
-            +---------------------------+
-            | Statistics                |
-            +---------------------------+
-            | Type             | Number |
-            +------------------+--------+
-            | Transactions     | 1      |
-            | Accounts         | 2      |
-            | Account openings | 2      |
-            | Account closings | 1      |
-            | Balances         | 2      |
-            | Prices           | 0      |
-            | Commodities      | 3      |
-            | Tags             | 6      |
-            | Events           | 3      |
-            | Customs          | 2      |
-            | Options          | 4      |
-            | Plugins          | 5      |
-            +------------------+--------+
-            """
-        let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path], outputPrefix: table)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "table"], outputPrefix: table)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "table"], outputPrefix: table)
-    }
-
-    func testCSV() {
-        let csv = """
-            "Type", "Number"
-            "Transactions", "1"
-            "Accounts", "2"
-            "Account openings", "2"
-            "Account closings", "1"
-            "Balances", "2"
-            "Prices", "0"
-            "Commodities", "3"
-            "Tags", "6"
-            "Events", "3"
-            "Customs", "2"
-            "Options", "4"
-            "Plugins", "5"
-            """
-        let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "csv"], output: csv)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "csv"], output: csv)
-    }
-
-    func testText() {
-        let text = """
-            Statistics
-
-            Type              Number
-            Transactions      1
-            Accounts          2
-            Account openings  2
-            Account closings  1
-            Balances          2
-            Prices            0
-            Commodities       3
-            Tags              6
-            Events            3
-            Customs           2
-            Options           4
-            Plugins           5
-            """
-        let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "text"], outputPrefix: text)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "text"], outputPrefix: text)
-    }
-
-    private func basicLedgerURL() -> URL {
+    init() {
         let content = """
             2020-06-13 commodity CAD
             2020-06-13 commodity CHF
@@ -187,9 +38,180 @@ final class StatsTests: XCTestCase {
             2020-06-14 event "location" "B"
             2020-06-15 event "location" "A"
             """
-        let url = temporaryFileURL()
-        createFile(at: url, content: content)
-        return url
+        (basicLedgerURL, cleanup) = TestUtils.temporaryFileURL()
+        TestUtils.createFile(at: basicLedgerURL, content: content)
+    }
+
+    @Test
+    func fileDoesNotExist() {
+        let (url, cleanup) = TestUtils.temporaryFileURL()
+        defer { cleanup() }
+        let result = TestUtils.outputFromExecutionWith(arguments: ["stats", url.path])
+        #expect(result.exitCode == 1)
+        #expect(result.errorOutput.isEmpty)
+        #if os(Linux)
+        #expect(result.output == "The operation could not be completed. The file doesn’t exist.")
+        #else
+        #expect(result.output == "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
+        #endif
+    }
+
+    @Test
+    func emptyFileTable() {
+        let table = """
+            +---------------------------+
+            | Statistics                |
+            +---------------------------+
+            | Type             | Number |
+            +------------------+--------+
+            | Transactions     | 0      |
+            | Accounts         | 0      |
+            | Account openings | 0      |
+            | Account closings | 0      |
+            | Balances         | 0      |
+            | Prices           | 0      |
+            | Commodities      | 0      |
+            | Tags             | 0      |
+            | Events           | 0      |
+            | Customs          | 0      |
+            | Options          | 0      |
+            | Plugins          | 0      |
+            +------------------+--------+
+            """
+        let (url, cleanup) = TestUtils.temporaryFileURL()
+        TestUtils.createFile(at: url, content: "\n")
+        defer { cleanup() }
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path], outputPrefix: table)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "table"], outputPrefix: table)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "table"], outputPrefix: table)
+    }
+
+    @Test
+    func emptyFileCSV() {
+        let csv = """
+            "Type", "Number"
+            "Transactions", "0"
+            "Accounts", "0"
+            "Account openings", "0"
+            "Account closings", "0"
+            "Balances", "0"
+            "Prices", "0"
+            "Commodities", "0"
+            "Tags", "0"
+            "Events", "0"
+            "Customs", "0"
+            "Options", "0"
+            "Plugins", "0"
+            """
+        let (url, cleanup) = TestUtils.temporaryFileURL()
+        TestUtils.createFile(at: url, content: "\n")
+        defer { cleanup() }
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "csv"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "csv"], output: csv)
+    }
+
+    @Test
+    func emptyFileText() {
+        let text = """
+            Statistics
+
+            Type              Number
+            Transactions      0
+            Accounts          0
+            Account openings  0
+            Account closings  0
+            Balances          0
+            Prices            0
+            Commodities       0
+            Tags              0
+            Events            0
+            Customs           0
+            Options           0
+            Plugins           0
+            """
+        let (url, cleanup) = TestUtils.temporaryFileURL()
+        TestUtils.createFile(at: url, content: "\n")
+        defer { cleanup() }
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "text"], outputPrefix: text)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "text"], outputPrefix: text)
+    }
+
+    @Test
+    func testTable() {
+        let table = """
+            +---------------------------+
+            | Statistics                |
+            +---------------------------+
+            | Type             | Number |
+            +------------------+--------+
+            | Transactions     | 1      |
+            | Accounts         | 2      |
+            | Account openings | 2      |
+            | Account closings | 1      |
+            | Balances         | 2      |
+            | Prices           | 0      |
+            | Commodities      | 3      |
+            | Tags             | 6      |
+            | Events           | 3      |
+            | Customs          | 2      |
+            | Options          | 4      |
+            | Plugins          | 5      |
+            +------------------+--------+
+            """
+        let url = basicLedgerURL
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path], outputPrefix: table)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "table"], outputPrefix: table)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "table"], outputPrefix: table)
+    }
+
+    @Test
+    func csv() {
+        let csv = """
+            "Type", "Number"
+            "Transactions", "1"
+            "Accounts", "2"
+            "Account openings", "2"
+            "Account closings", "1"
+            "Balances", "2"
+            "Prices", "0"
+            "Commodities", "3"
+            "Tags", "6"
+            "Events", "3"
+            "Customs", "2"
+            "Options", "4"
+            "Plugins", "5"
+            """
+        let url = basicLedgerURL
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "csv"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "csv"], output: csv)
+    }
+
+    @Test
+    func text() {
+        let text = """
+            Statistics
+
+            Type              Number
+            Transactions      1
+            Accounts          2
+            Account openings  2
+            Account closings  1
+            Balances          2
+            Prices            0
+            Commodities       3
+            Tags              6
+            Events            3
+            Customs           2
+            Options           4
+            Plugins           5
+            """
+        let url = basicLedgerURL
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "text"], outputPrefix: text)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "text"], outputPrefix: text)
+    }
+
+    deinit {
+        cleanup()
     }
 
 }
