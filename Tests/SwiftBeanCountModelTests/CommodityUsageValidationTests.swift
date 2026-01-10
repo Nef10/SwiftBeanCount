@@ -6,12 +6,15 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 @testable import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class CommodityUsageValidationTests: XCTestCase {
+@Suite
+struct CommodityUsageValidationTests {
 
-    func testValidateCommodityUsageDatesWithoutPlugin() throws {
+    @Test
+    func validateCommodityUsageDatesWithoutPlugin() throws {
         // Test that commodity usage dates are not validated when plugin is not enabled
         let ledger = Ledger()
 
@@ -35,12 +38,13 @@ final class CommodityUsageValidationTests: XCTestCase {
 
         // Should be valid since plugin is not enabled
         guard case .valid = transaction.validate(in: ledger) else {
-            XCTFail("Transaction should be valid when check_commodity plugin is not enabled")
+            Issue.record("Transaction should be valid when check_commodity plugin is not enabled")
             return
         }
     }
 
-    func testValidateCommodityUsageDatesWithPlugin() throws {
+    @Test
+    func validateCommodityUsageDatesWithPlugin() throws {
         // Test that commodity usage dates are validated when plugin is enabled
         let ledger = Ledger()
         ledger.plugins.append("beancount.plugins.check_commodity")
@@ -65,13 +69,14 @@ final class CommodityUsageValidationTests: XCTestCase {
 
         // Should be invalid since commodity is used before opening
         if case .invalid(let error) = transaction.validate(in: ledger) {
-            XCTAssertTrue(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
+            #expect(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
         } else {
-            XCTFail("Transaction should be invalid when commodity is used before opening date")
+            Issue.record("Transaction should be invalid when commodity is used before opening date")
         }
     }
 
-    func testValidatePriceCommodityUsageDates() throws {
+    @Test
+    func validatePriceCommodityUsageDates() throws {
         // Test validation of price commodity usage dates
         let ledger = Ledger()
         ledger.plugins.append("beancount.plugins.check_commodity")
@@ -97,13 +102,14 @@ final class CommodityUsageValidationTests: XCTestCase {
 
         // Should be invalid since EUR (price commodity) is used before opening
         if case .invalid(let error) = transaction.validate(in: ledger) {
-            XCTAssertTrue(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
+            #expect(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
         } else {
-            XCTFail("Transaction should be invalid when price commodity is used before opening date")
+            Issue.record("Transaction should be invalid when price commodity is used before opening date")
         }
     }
 
-    func testValidateCostCommodityUsageDates() throws {
+    @Test
+    func validateCostCommodityUsageDates() throws {
         // Test validation of cost commodity usage dates
         let ledger = Ledger()
         ledger.plugins.append("beancount.plugins.check_commodity")
@@ -130,13 +136,14 @@ final class CommodityUsageValidationTests: XCTestCase {
 
         // Should be invalid since EUR (cost commodity) is used before opening
         if case .invalid(let error) = transaction.validate(in: ledger) {
-            XCTAssertTrue(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
+            #expect(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
         } else {
-            XCTFail("Transaction should be invalid when cost commodity is used before opening date")
+            Issue.record("Transaction should be invalid when cost commodity is used before opening date")
         }
     }
 
-    func testValidateCommodityUsageDatesValid() throws {
+    @Test
+    func validateCommodityUsageDatesValid() throws {
         // Test that validation passes when commodities are used on or after opening dates
         let ledger = Ledger()
         ledger.plugins.append("beancount.plugins.check_commodity")
@@ -161,7 +168,7 @@ final class CommodityUsageValidationTests: XCTestCase {
 
         // Should be valid since commodities are used on or after opening dates
         guard case .valid = transaction.validate(in: ledger) else {
-            XCTFail("Transaction should be valid when commodities are used on or after opening dates")
+            Issue.record("Transaction should be valid when commodities are used on or after opening dates")
             return
         }
     }

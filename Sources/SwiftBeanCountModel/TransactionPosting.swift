@@ -9,7 +9,7 @@
 import Foundation
 
 /// Type of price specification in posting
-public enum PostingPriceType {
+public enum PostingPriceType: CaseIterable {
     /// Price per unit (@)
     case perUnit
     /// Total price (@@)

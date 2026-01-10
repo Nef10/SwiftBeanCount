@@ -9,7 +9,7 @@
 import Foundation
 
 /// The Booking Method for an Inventory defines how ambiguous lot matches are handled
-public enum BookingMethod {
+public enum BookingMethod: CaseIterable {
     /// throw error for ambiguous matches
     case strict
     /// last in first out
@@ -19,7 +19,7 @@ public enum BookingMethod {
 }
 
 /// Errors an inventory booking can throw
-public enum InventoryError: Error {
+public enum InventoryError: Error, Equatable {
     /// an ambiguous match when trying to reduce the inventory
     case ambiguousBooking(String)
     /// trying to reduce a lot by more units than it has

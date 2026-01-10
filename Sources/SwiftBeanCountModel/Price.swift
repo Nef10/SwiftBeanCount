@@ -9,7 +9,7 @@
 import Foundation
 
 /// Errors a price can throw
-public enum PriceError: Error {
+public enum PriceError: Error, Equatable {
     /// the price is listed in its own commodity
     case sameCommodity(String)
 }
