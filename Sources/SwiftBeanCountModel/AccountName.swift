@@ -33,7 +33,7 @@ public struct AccountName: AccountItem {
     /// - Parameters:
     ///   - name: a vaild name for the account
     /// - Throws: AccountNameError.invaildName in case the account name is invalid
-    public init(_ name: String) throws {
+    public init(_ name: String) throws(AccountNameError) {
         guard Self.isNameValid(name) else {
             throw AccountNameError.invaildName(name)
         }

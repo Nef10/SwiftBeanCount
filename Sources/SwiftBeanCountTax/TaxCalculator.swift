@@ -66,7 +66,7 @@ public enum TaxCalculator {
     ///   - ledger: ledger to get the transactions from
     ///   - year: tax year
     /// - Returns: Array of all sales
-    public static func getTaxableSales(from ledger: Ledger, for year: Int) throws -> [Sale] {
+    public static func getTaxableSales(from ledger: Ledger, for year: Int) -> [Sale] {
         // All transactions which have a posting with a cost, a negative amount and the account is marked as tax-sale
         let costTransactions = getTaxYearTransactions(ledger, year: year).filter {
             $0.postings.contains { posting in
@@ -128,7 +128,7 @@ public enum TaxCalculator {
     ) throws -> [TaxSlip] {
         let taxSlipRelevantAccounts = ledger.accounts.filter { $0.metaData.keys.contains(slip) }
         let issuers = Array(Set(taxSlipRelevantAccounts.map { $0.metaData[MetaDataKeys.issuer] ?? "" }))
-        return try issuers.compactMap { issuer throws -> TaxSlip? in
+        return try issuers.compactMap { issuer -> TaxSlip? in
             let issuerTaxSlipRelevantAccounts = taxSlipRelevantAccounts.filter { $0.metaData[MetaDataKeys.issuer] ?? "" == issuer }
             var entries = issuerTaxSlipRelevantAccounts.compactMap { account -> TaxSlipEntry? in
                 let postings = taxYearTransactions.flatMap { $0.postings.filter { $0.accountName == account.name } }

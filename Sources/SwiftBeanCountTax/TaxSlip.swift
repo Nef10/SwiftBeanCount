@@ -187,7 +187,7 @@ public struct TaxSlip: Identifiable {
         sumRowFrom(boxes: boxesWithoutNumbers)
     }
 
-    init(name: String, year: Int, issuer: String?, entries: [TaxSlipEntry]) throws {
+    init(name: String, year: Int, issuer: String?, entries: [TaxSlipEntry]) throws(TaxErrors) {
         self.name = name
         self.year = year
         self.issuer = (issuer?.isEmpty ?? true) ? nil : issuer
