@@ -1,4 +1,3 @@
-
 import Foundation
 @testable import SwiftBeanCountCLI
 import Testing
@@ -9,13 +8,7 @@ import Testing
 
 struct StatsTests {
 
-   @Test
-
-  @Test
-
-@Test
-
-func testFileDoesNotExist() {
+    func testFileDoesNotExist() {
         let url = temporaryFileURL()
         let result = outputFromExecutionWith(arguments: ["stats", url.path])
         #expect(result.exitCode == 1)
@@ -27,13 +20,7 @@ func testFileDoesNotExist() {
         #endif
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testEmptyFileTable() {
+    func testEmptyFileTable() {
         let table = """
             +---------------------------+
             | Statistics                |
@@ -60,13 +47,7 @@ func testEmptyFileTable() {
         assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "table"], outputPrefix: table)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testEmptyFileCSV() {
+    func testEmptyFileCSV() {
         let csv = """
             "Type", "Number"
             "Transactions", "0"
@@ -87,13 +68,7 @@ func testEmptyFileCSV() {
         assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "csv"], output: csv)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testEmptyFileText() {
+    func testEmptyFileText() {
         let text = """
             Statistics
 
@@ -116,13 +91,7 @@ func testEmptyFileText() {
         assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "text"], outputPrefix: text)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testTestTable() {
+    func testTestTable() {
         let table = """
             +---------------------------+
             | Statistics                |
@@ -149,13 +118,7 @@ func testTestTable() {
         assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "table"], outputPrefix: table)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testCSV() {
+    func testCSV() {
         let csv = """
             "Type", "Number"
             "Transactions", "1"
@@ -176,13 +139,7 @@ func testCSV() {
         assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "csv"], output: csv)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testText() {
+    func testText() {
         let text = """
             Statistics
 

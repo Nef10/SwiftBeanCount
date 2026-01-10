@@ -1,4 +1,3 @@
-
 import Foundation
 @testable import SwiftBeanCountCLI
 import Testing
@@ -9,27 +8,15 @@ import Testing
 
 struct AccountsTests {
 
-   @Test
-
-  @Test
-
-@Test
-
-func testInvalidArguments() {
+    func testInvalidArguments() {
         let url = emptyFileURL()
         let result = outputFromExecutionWith(arguments: ["accounts", url.path, "-c", "-f", "csv"])
         #expect(result.exitCode == 64)
-        #expect(result.output.isEmpty)
+        #expect(result.output == "")
         #expect(result.errorOutput.hasPrefix("Error: Cannot print count in csv format. Please remove count flag or specify another format."))
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testFileDoesNotExist() {
+    func testFileDoesNotExist() {
         let url = temporaryFileURL()
         let result = outputFromExecutionWith(arguments: ["accounts", url.path])
         #expect(result.exitCode == 1)
@@ -41,13 +28,7 @@ func testFileDoesNotExist() {
         #endif
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testTestTable() {
+    func testTestTable() {
         let table = """
             +---------------------------------------+
             | Accounts                              |
@@ -68,13 +49,7 @@ func testTestTable() {
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "table", "--no-postings"], output: table)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testCSV() {
+    func testCSV() {
         let csv = """
             "Name", "Opening", "Closing"
             "Assets:CAD", "2020-06-11", "2020-06-13"
@@ -89,13 +64,7 @@ func testCSV() {
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--no-postings"], output: csv)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testText() {
+    func testText() {
         let text = """
             Accounts
 
@@ -112,26 +81,14 @@ func testText() {
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "text", "--no-postings"], output: text)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testEmptyFileCSV() {
+    func testEmptyFileCSV() {
         let csv = #""Name", "Opening", "Closing""#
         let url = emptyFileURL()
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "-f", "csv", "--open", "--closed", "--dates"], output: csv)
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--no-activity"], output: csv)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testNoDates() {
+    func testNoDates() {
         let csv = """
             "Name"
             "Assets:CAD"
@@ -146,13 +103,7 @@ func testNoDates() {
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--no-dates"], output: csv)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testNoOpen() {
+    func testNoOpen() {
         let csv = """
             "Name", "Opening", "Closing"
             "Assets:CAD", "2020-06-11", "2020-06-13"
@@ -163,13 +114,7 @@ func testNoOpen() {
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--no-open"], output: csv)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testNoClosed() {
+    func testNoClosed() {
         let csv = """
             "Name", "Opening"
             "Income:Job", "2020-06-13"
@@ -182,13 +127,7 @@ func testNoClosed() {
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--no-closed"], output: csv)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testNoOpenNoClosed() {
+    func testNoOpenNoClosed() {
         let csv = """
             "Name", "Opening"
             """
@@ -197,13 +136,7 @@ func testNoOpenNoClosed() {
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--no-closed", "--no-open"], output: csv)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testFilter() {
+    func testFilter() {
         let csv = """
             "Name", "Opening", "Closing"
             "Income:Job", "2020-06-13", ""
@@ -215,13 +148,7 @@ func testFilter() {
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "Job", "--format", "csv", "--no-postings"], output: csv)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testFilterNoResult() {
+    func testFilterNoResult() {
         let csv = """
             "Name", "Opening", "Closing"
             """
@@ -230,13 +157,7 @@ func testFilterNoResult() {
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "Job12", "--format", "csv", "--no-postings"], output: csv)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testPostings() {
+    func testPostings() {
         let csv = """
             "Name", "# Postings", "Opening", "Closing"
             "Assets:CAD", "2", "2020-06-11", "2020-06-13"
@@ -251,13 +172,7 @@ func testPostings() {
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--postings", "--no-activity"], output: csv)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testActivity() {
+    func testActivity() {
         let csv = """
             "Name", "# Postings", "Last Activity", "Opening", "Closing"
             "Assets:CAD", "2", "2020-06-13", "2020-06-11", "2020-06-13"
@@ -272,13 +187,7 @@ func testActivity() {
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "csv", "--postings", "--activity"], output: csv)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testTestTableCount() {
+    func testTestTableCount() {
         let table = """
             +--------------------------------------+
             | Accounts                             |
@@ -297,13 +206,7 @@ func testTestTableCount() {
         assertSuccessfulExecutionResult(arguments: ["accounts", url.path, "--format", "table", "--no-postings", "-c", "--no-open"], output: table)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testTextCount() {
+    func testTextCount() {
         let text = """
             Accounts
 

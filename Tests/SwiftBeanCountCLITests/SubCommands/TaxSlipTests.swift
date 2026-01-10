@@ -1,4 +1,3 @@
-
 import Foundation
 @testable import SwiftBeanCountCLI
 import Testing
@@ -9,13 +8,7 @@ import Testing
 
 struct TaxSlipTests {
 
-   @Test
-
-  @Test
-
-@Test
-
-func testFileDoesNotExist() {
+    func testFileDoesNotExist() {
         let url = temporaryFileURL()
         let result = outputFromExecutionWith(arguments: ["tax-slips", url.path])
         #expect(result.exitCode == 1)
@@ -27,26 +20,14 @@ func testFileDoesNotExist() {
         #endif
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testEmptyFile() {
+    func testEmptyFile() {
         let url = emptyFileURL()
         let result = outputFromExecutionWith(arguments: ["tax-slips", url.path])
         #expect(result.exitCode == 1)
         #expect(result.errorOutput.starts(with: "Error: There was no configured tax slip found for year "))
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testNoSlip() {
+    func testNoSlip() {
         let url = temporaryFileURL()
         createFile(at: url, content: """
                                      2020-06-13 custom "tax-slip-settings" "slip-names" "t4"
@@ -55,13 +36,7 @@ func testNoSlip() {
         assertSuccessfulExecutionResult(arguments: ["tax-slips", url.path], output: "")
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testSimpleSlip() {
+    func testSimpleSlip() {
         let url = temporaryFileURL()
         createFile(at: url, content: """
                                      2020-06-13 custom "tax-slip-settings" "slip-names" "t4"
@@ -81,13 +56,7 @@ func testSimpleSlip() {
                                         """)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testSlipArgument() {
+    func testSlipArgument() {
         let url = temporaryFileURL()
         createFile(at: url, content: """
                                      2020-06-13 custom "tax-slip-settings" "slip-names" "t5"
@@ -113,13 +82,7 @@ func testSlipArgument() {
                                         """)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testSlipSymbol() {
+    func testSlipSymbol() {
         let url = temporaryFileURL()
         createFile(at: url, content: """
                                      2020-06-13 custom "tax-slip-settings" "slip-names" "t4"

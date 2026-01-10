@@ -1,4 +1,3 @@
-
 import Foundation
 @testable import SwiftBeanCountCLI
 import Testing
@@ -9,13 +8,7 @@ import Testing
 
 struct CheckTests {
 
-   @Test
-
-  @Test
-
-@Test
-
-func testFileDoesNotExist() {
+    func testFileDoesNotExist() {
         let url = temporaryFileURL()
         let result = outputFromExecutionWith(arguments: ["check", url.path])
         #expect(result.exitCode == 1)
@@ -27,24 +20,12 @@ func testFileDoesNotExist() {
         #endif
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testEmptyFile() {
+    func testEmptyFile() {
         let url = emptyFileURL()
         assertSuccessfulExecutionResult(arguments: ["check", url.path], output: "No errors found.")
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testSuccessful() {
+    func testSuccessful() {
         let url = temporaryFileURL()
         createFile(at: url, content: """
                                      2020-06-13 commodity CAD
@@ -57,13 +38,7 @@ func testSuccessful() {
         assertSuccessfulExecutionResult(arguments: ["check", url.path], output: "No errors found.")
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testError() {
+    func testError() {
         let url = temporaryFileURL()
         createFile(at: url, content: "plugin \"beancount.plugins.check_commodity\"\n\n2020-06-13 * \"\" \"\"\n  Assets:CAD 10.00 CAD\n  Income:Job -15.00 CAD")
         let result = outputFromExecutionWith(arguments: ["check", url.path])
@@ -79,26 +54,14 @@ func testError() {
                                         """)
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testQuietSuccessful() {
+    func testQuietSuccessful() {
         let url = temporaryFileURL()
         createFile(at: url, content: "\n")
         assertSuccessfulExecutionResult(arguments: ["check", url.path, "-q"], output: "")
         assertSuccessfulExecutionResult(arguments: ["check", url.path, "--quiet"], output: "")
     }
 
-   @Test
-
-  @Test
-
-@Test
-
-func testQuietError() {
+    func testQuietError() {
         let url = temporaryFileURL()
         createFile(at: url, content: "2020-06-13 * \"\" \"\"\n  Assets:CAD 10.00 CAD\n  Income:Job -15.00 CAD")
         var result = outputFromExecutionWith(arguments: ["check", url.path, "-q"])
