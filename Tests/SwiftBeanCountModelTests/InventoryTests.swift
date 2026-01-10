@@ -7,23 +7,28 @@
 //
 
 // swiftlint:disable file_length
-@testable import SwiftBeanCountModel
-import XCTest
 
-final class InventoryTests: XCTestCase {
+import Foundation
+@testable import SwiftBeanCountModel
+import Testing
+
+@Suite
+struct InventoryTests {
 
     private let bookingMethods = [BookingMethod.strict, BookingMethod.lifo, BookingMethod.fifo]
 
     private let date = TestUtils.date20170608
     private var transactionStore = [Transaction]() // required because the posting reference is unowned
 
-    func testInit() {
+   @Test
+   func testInit() {
         for bookingMethod in bookingMethods {
-            XCTAssertNotNil(Inventory(bookingMethod: bookingMethod))
+            #expect(Inventory(bookingMethod: bookingMethod) != nil)
         }
     }
 
-    func testDescription() throws {
+   @Test
+   func testDescription() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -38,13 +43,13 @@ final class InventoryTests: XCTestCase {
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
-            XCTAssertEqual(String(describing: inventory), """
+            #expect(String(describing: inventory) == """
                 \(amount1) \(cost1)
                 \(amount2) \(cost2)
                 """)
@@ -55,7 +60,8 @@ final class InventoryTests: XCTestCase {
 
 extension InventoryTests { // Test Adding
 
-    func testAdding() throws {
+   @Test
+   func testAdding() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
             let amount = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
@@ -64,18 +70,19 @@ extension InventoryTests { // Test Adding
 
             do {
                 let result = try inventory.book(posting: transactionPosting(posting))
-                XCTAssertNil(result)
+                #expect(result == nil)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 1)
-            XCTAssertEqual(inventory.inventory.first?.units, amount)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost)
+            #expect(inventory.inventory.count == 1)
+            #expect(inventory.inventory.first?.units == amount)
+            #expect(inventory.inventory.first?.cost == cost)
         }
     }
 
-    func testAddingTransactionDateUsed() throws {
+   @Test
+   func testAddingTransactionDateUsed() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
             let amount = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
@@ -84,16 +91,17 @@ extension InventoryTests { // Test Adding
 
             do {
                 let result = try inventory.book(posting: transactionPosting(posting))
-                XCTAssertNil(result)
+                #expect(result == nil)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.first?.cost.date, date)
+            #expect(inventory.inventory.first?.cost.date == date)
         }
     }
 
-    func testAddingMultiple() throws {
+   @Test
+   func testAddingMultiple() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -108,21 +116,22 @@ extension InventoryTests { // Test Adding
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 2)
-            XCTAssertEqual(inventory.inventory.first?.units, amount1)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost1)
-            XCTAssertEqual(inventory.inventory.last?.units, amount2)
-            XCTAssertEqual(inventory.inventory.last?.cost, cost2)
+            #expect(inventory.inventory.count == 2)
+            #expect(inventory.inventory.first?.units == amount1)
+            #expect(inventory.inventory.first?.cost == cost1)
+            #expect(inventory.inventory.last?.units == amount2)
+            #expect(inventory.inventory.last?.cost == cost2)
         }
     }
 
-    func testAddingSameCost() throws {
+   @Test
+   func testAddingSameCost() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -136,21 +145,22 @@ extension InventoryTests { // Test Adding
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 1)
-            XCTAssertEqual(inventory.inventory.first?.units.commoditySymbol, TestUtils.eur)
-            XCTAssertEqual(inventory.inventory.first?.units.decimalDigits, 2)
-            XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number + amount2.number)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost)
+            #expect(inventory.inventory.count == 1)
+            #expect(inventory.inventory.first?.units.commoditySymbol == TestUtils.eur)
+            #expect(inventory.inventory.first?.units.decimalDigits == 2)
+            #expect(inventory.inventory.first?.units.number == amount1.number + amount2.number)
+            #expect(inventory.inventory.first?.cost == cost)
         }
     }
 
-    func testAddingSameCostDifferentCommodity() throws {
+   @Test
+   func testAddingSameCostDifferentCommodity() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -164,21 +174,22 @@ extension InventoryTests { // Test Adding
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 2)
-            XCTAssertEqual(inventory.inventory.first?.units, amount1)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost)
-            XCTAssertEqual(inventory.inventory.last?.units, amount2)
-            XCTAssertEqual(inventory.inventory.last?.cost, cost)
+            #expect(inventory.inventory.count == 2)
+            #expect(inventory.inventory.first?.units == amount1)
+            #expect(inventory.inventory.first?.cost == cost)
+            #expect(inventory.inventory.last?.units == amount2)
+            #expect(inventory.inventory.last?.cost == cost)
         }
     }
 
-    func testAddingNegative() throws {
+   @Test
+   func testAddingNegative() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
             let amount = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
@@ -187,18 +198,19 @@ extension InventoryTests { // Test Adding
 
             do {
                 let result = try inventory.book(posting: transactionPosting(posting))
-                XCTAssertNil(result)
+                #expect(result == nil)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 1)
-            XCTAssertEqual(inventory.inventory.first?.units, amount)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost)
+            #expect(inventory.inventory.count == 1)
+            #expect(inventory.inventory.first?.units == amount)
+            #expect(inventory.inventory.first?.cost == cost)
         }
     }
 
-    func testAddingMultipleNegative() throws {
+   @Test
+   func testAddingMultipleNegative() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -213,21 +225,22 @@ extension InventoryTests { // Test Adding
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 2)
-            XCTAssertEqual(inventory.inventory.first?.units, amount1)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost1)
-            XCTAssertEqual(inventory.inventory.last?.units, amount2)
-            XCTAssertEqual(inventory.inventory.last?.cost, cost2)
+            #expect(inventory.inventory.count == 2)
+            #expect(inventory.inventory.first?.units == amount1)
+            #expect(inventory.inventory.first?.cost == cost1)
+            #expect(inventory.inventory.last?.units == amount2)
+            #expect(inventory.inventory.last?.cost == cost2)
         }
     }
 
-    func testAddingSameCostNegative() throws {
+   @Test
+   func testAddingSameCostNegative() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -241,17 +254,17 @@ extension InventoryTests { // Test Adding
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 1)
-            XCTAssertEqual(inventory.inventory.first?.units.commoditySymbol, TestUtils.eur)
-            XCTAssertEqual(inventory.inventory.first?.units.decimalDigits, 2)
-            XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number + amount2.number)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost)
+            #expect(inventory.inventory.count == 1)
+            #expect(inventory.inventory.first?.units.commoditySymbol == TestUtils.eur)
+            #expect(inventory.inventory.first?.units.decimalDigits == 2)
+            #expect(inventory.inventory.first?.units.number == amount1.number + amount2.number)
+            #expect(inventory.inventory.first?.cost == cost)
         }
     }
 
@@ -259,7 +272,8 @@ extension InventoryTests { // Test Adding
 
 extension InventoryTests { // Test Reduce
 
-    func testReduce() throws {
+   @Test
+   func testReduce() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -274,22 +288,23 @@ extension InventoryTests { // Test Reduce
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
-                XCTAssertNil(result1)
-                XCTAssertEqual(result2, Amount(number: -cost1.amount!.number,
-                                               commoditySymbol: cost1.amount!.commoditySymbol,
-                                               decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
+                #expect(result1 == nil)
+                #expect(result2 == Amount(number: -cost1.amount!.number,
+                                          commoditySymbol: cost1.amount!.commoditySymbol,
+                                          decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 1)
-            XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number + amount2.number)
-            XCTAssertEqual(inventory.inventory.first?.units.decimalDigits, 2)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost1)
+            #expect(inventory.inventory.count == 1)
+            #expect(inventory.inventory.first?.units.number == amount1.number + amount2.number)
+            #expect(inventory.inventory.first?.units.decimalDigits == 2)
+            #expect(inventory.inventory.first?.cost == cost1)
         }
     }
 
-    func testReduceMoreThanExist() throws {
+   @Test
+   func testReduceMoreThanExist() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -304,17 +319,18 @@ extension InventoryTests { // Test Reduce
             var errorMessage = ""
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
-                XCTAssertNil(result1)
+                #expect(result1 == nil)
                 _ = try inventory.book(posting: transactionPosting(posting2))
             } catch {
                 errorMessage = error.localizedDescription
             }
 
-            XCTAssertEqual(errorMessage, "Lot not big enough: Trying to reduce 2.0 EUR {2017-06-08, 3.0 CAD} by -3.00 EUR {}")
+            #expect(errorMessage == "Lot not big enough: Trying to reduce 2.0 EUR {2017-06-08, 3.0 CAD} by -3.00 EUR {}")
         }
     }
 
-    func testReduceNoLot() throws {
+   @Test
+   func testReduceNoLot() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -329,17 +345,18 @@ extension InventoryTests { // Test Reduce
             var errorMessage = ""
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
-                XCTAssertNil(result1)
+                #expect(result1 == nil)
                 _ = try inventory.book(posting: transactionPosting(posting2))
             } catch {
                 errorMessage = error.localizedDescription
             }
 
-            XCTAssertEqual(errorMessage, "No Lot matching -1.00 EUR {4.0 CAD} found, inventory: 2.0 EUR {2017-06-08, 3.0 CAD}")
+            #expect(errorMessage == "No Lot matching -1.00 EUR {4.0 CAD} found, inventory: 2.0 EUR {2017-06-08, 3.0 CAD}")
         }
     }
 
-    func testReducePositive() throws {
+   @Test
+   func testReducePositive() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -354,20 +371,21 @@ extension InventoryTests { // Test Reduce
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
-                XCTAssertNil(result1)
-                XCTAssertEqual(result2, cost1.amount?.multiCurrencyAmount)
+                #expect(result1 == nil)
+                #expect(result2 == cost1.amount?.multiCurrencyAmount)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 1)
-            XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number + amount2.number)
-            XCTAssertEqual(inventory.inventory.first?.units.decimalDigits, 2)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost1)
+            #expect(inventory.inventory.count == 1)
+            #expect(inventory.inventory.first?.units.number == amount1.number + amount2.number)
+            #expect(inventory.inventory.first?.units.decimalDigits == 2)
+            #expect(inventory.inventory.first?.cost == cost1)
         }
     }
 
-    func testReduceDifferentCurrencyPresent() throws {
+   @Test
+   func testReduceDifferentCurrencyPresent() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -387,25 +405,26 @@ extension InventoryTests { // Test Reduce
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
                 let result3 = try inventory.book(posting: transactionPosting(posting3))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
-                XCTAssertEqual(result3, Amount(number: -cost1.amount!.number,
-                                               commoditySymbol: cost1.amount!.commoditySymbol,
-                                               decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
+                #expect(result3 == Amount(number: -cost1.amount!.number,
+                                          commoditySymbol: cost1.amount!.commoditySymbol,
+                                          decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 2)
-            XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number + amount3.number)
-            XCTAssertEqual(inventory.inventory.first?.units.decimalDigits, 2)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost1)
-            XCTAssertEqual(inventory.inventory.last?.units, amount2)
-            XCTAssertEqual(inventory.inventory.last?.cost, cost2)
+            #expect(inventory.inventory.count == 2)
+            #expect(inventory.inventory.first?.units.number == amount1.number + amount3.number)
+            #expect(inventory.inventory.first?.units.decimalDigits == 2)
+            #expect(inventory.inventory.first?.cost == cost1)
+            #expect(inventory.inventory.last?.units == amount2)
+            #expect(inventory.inventory.last?.cost == cost2)
         }
     }
 
-    func testReduceDifferentLotPresent() throws {
+   @Test
+   func testReduceDifferentLotPresent() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -424,25 +443,26 @@ extension InventoryTests { // Test Reduce
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
                 let result3 = try inventory.book(posting: transactionPosting(posting3))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
-                XCTAssertEqual(result3, Amount(number: -cost1.amount!.number,
-                                               commoditySymbol: cost1.amount!.commoditySymbol,
-                                               decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
+                #expect(result3 == Amount(number: -cost1.amount!.number,
+                                          commoditySymbol: cost1.amount!.commoditySymbol,
+                                          decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 2)
-            XCTAssertEqual(inventory.inventory.first?.units.number, amount1.number + amount3.number)
-            XCTAssertEqual(inventory.inventory.first?.units.decimalDigits, 2)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost1)
-            XCTAssertEqual(inventory.inventory.last?.units, amount2)
-            XCTAssertEqual(inventory.inventory.last?.cost, cost2)
+            #expect(inventory.inventory.count == 2)
+            #expect(inventory.inventory.first?.units.number == amount1.number + amount3.number)
+            #expect(inventory.inventory.first?.units.decimalDigits == 2)
+            #expect(inventory.inventory.first?.cost == cost1)
+            #expect(inventory.inventory.last?.units == amount2)
+            #expect(inventory.inventory.last?.cost == cost2)
         }
     }
 
-    func testReduceAmbigiousStrict() throws {
+   @Test
+   func testReduceAmbigiousStrict() throws {
         let inventory = Inventory(bookingMethod: .strict)
 
         let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
@@ -459,28 +479,28 @@ extension InventoryTests { // Test Reduce
         do {
             let result1 = try inventory.book(posting: transactionPosting(posting1))
             let result2 = try inventory.book(posting: transactionPosting(posting2))
-            XCTAssertNil(result1)
-            XCTAssertNil(result2)
+            #expect(result1 == nil)
+            #expect(result2 == nil)
         } catch {
-            XCTFail("Error thrown")
+            Issue.record("Error thrown")
         }
 
-        XCTAssertThrowsError(try inventory.book(posting: transactionPosting(posting3))) {
-            XCTAssertEqual($0.localizedDescription, """
+        let error = #expect(throws: (any Error).self) { try inventory.book(posting: transactionPosting(posting3)) }
+        #expect(error.localizedDescription == """
             Ambigious Booking: -1.00 EUR {}, matches: 2.0 EUR {2017-06-08, 3.0 CAD}
             2.0 EUR {2017-06-08, 2.0 CAD}, inventory: 2.0 EUR {2017-06-08, 3.0 CAD}
             2.0 EUR {2017-06-08, 2.0 CAD}
             """)
-        }
 
-        XCTAssertEqual(inventory.inventory.count, 2)
-        XCTAssertEqual(inventory.inventory.first?.units, amount1)
-        XCTAssertEqual(inventory.inventory.first?.cost, cost1)
-        XCTAssertEqual(inventory.inventory.last?.units, amount2)
-        XCTAssertEqual(inventory.inventory.last?.cost, cost2)
+        #expect(inventory.inventory.count == 2)
+        #expect(inventory.inventory.first?.units == amount1)
+        #expect(inventory.inventory.first?.cost == cost1)
+        #expect(inventory.inventory.last?.units == amount2)
+        #expect(inventory.inventory.last?.cost == cost2)
     }
 
-    func testReduceAmbigiousNotEnoughUnits() throws {
+   @Test
+   func testReduceAmbigiousNotEnoughUnits() throws {
         for bookingMethod in [BookingMethod.lifo, BookingMethod.fifo] {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -499,19 +519,19 @@ extension InventoryTests { // Test Reduce
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
-            XCTAssertThrowsError(try inventory.book(posting: transactionPosting(posting3))) {
-                XCTAssertEqual($0.localizedDescription, "Not enough units: Trying to reduce by \(amount3) \(cost3)")
-            }
+            let error = #expect(throws: (any Error).self) { try inventory.book(posting: transactionPosting(posting3)) }
+            #expect(error.localizedDescription == "Not enough units: Trying to reduce by \(amount3) \(cost3)")
         }
     }
 
-    func testReduceAmbigiousLIFO() throws {
+   @Test
+   func testReduceAmbigiousLIFO() throws {
         let inventory = Inventory(bookingMethod: .lifo)
 
         let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
@@ -528,27 +548,28 @@ extension InventoryTests { // Test Reduce
         do {
             let result1 = try inventory.book(posting: transactionPosting(posting1))
             let result2 = try inventory.book(posting: transactionPosting(posting2))
-            XCTAssertNil(result1)
-            XCTAssertNil(result2)
+            #expect(result1 == nil)
+            #expect(result2 == nil)
         } catch {
-            XCTFail("Error thrown")
+            Issue.record("Error thrown")
         }
 
         do {
             let result = try inventory.book(posting: transactionPosting(posting3))
-            XCTAssertEqual(result, Amount(number: -2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
+            #expect(result == Amount(number: -2.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
         } catch {
-            XCTFail("Error thrown")
+            Issue.record("Error thrown")
         }
 
-        XCTAssertEqual(inventory.inventory.count, 2)
-        XCTAssertEqual(inventory.inventory.first?.units, amount1)
-        XCTAssertEqual(inventory.inventory.first?.cost, cost1)
-        XCTAssertEqual(inventory.inventory.last?.units, Amount(number: 1.0, commoditySymbol: TestUtils.eur, decimalDigits: 1))
-        XCTAssertEqual(inventory.inventory.last?.cost, cost2)
+        #expect(inventory.inventory.count == 2)
+        #expect(inventory.inventory.first?.units == amount1)
+        #expect(inventory.inventory.first?.cost == cost1)
+        #expect(inventory.inventory.last?.units == Amount(number: 1.0, commoditySymbol: TestUtils.eur, decimalDigits: 1))
+        #expect(inventory.inventory.last?.cost == cost2)
     }
 
-    func testReduceAmbigiousLIFOExactLot() throws {
+   @Test
+   func testReduceAmbigiousLIFOExactLot() throws {
         let inventory = Inventory(bookingMethod: .lifo)
 
         let amount1 = Amount(number: 3.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
@@ -564,18 +585,19 @@ extension InventoryTests { // Test Reduce
 
         let result1 = try inventory.book(posting: transactionPosting(posting1))
         let result2 = try inventory.book(posting: transactionPosting(posting2))
-        XCTAssertNil(result1)
-        XCTAssertNil(result2)
+        #expect(result1 == nil)
+        #expect(result2 == nil)
 
         let result = try inventory.book(posting: transactionPosting(posting3))
-        XCTAssertEqual(result, Amount(number: -4.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
+        #expect(result == Amount(number: -4.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
 
-        XCTAssertEqual(inventory.inventory.count, 1)
-        XCTAssertEqual(inventory.inventory.last?.units, amount1)
-        XCTAssertEqual(inventory.inventory.last?.cost, cost1)
+        #expect(inventory.inventory.count == 1)
+        #expect(inventory.inventory.last?.units == amount1)
+        #expect(inventory.inventory.last?.cost == cost1)
     }
 
-    func testReduceAmbigiousLIFOMultipleLots() throws {
+   @Test
+   func testReduceAmbigiousLIFOMultipleLots() throws {
         let inventory = Inventory(bookingMethod: .lifo)
 
         let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
@@ -596,19 +618,20 @@ extension InventoryTests { // Test Reduce
         let result1 = try inventory.book(posting: transactionPosting(posting1))
         let result2 = try inventory.book(posting: transactionPosting(posting2))
         let result3 = try inventory.book(posting: transactionPosting(posting3))
-        XCTAssertNil(result1)
-        XCTAssertNil(result2)
-        XCTAssertNil(result3)
+        #expect(result1 == nil)
+        #expect(result2 == nil)
+        #expect(result3 == nil)
 
         let result = try inventory.book(posting: transactionPosting(posting4))
-        XCTAssertEqual(result, Amount(number: -15.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
+        #expect(result == Amount(number: -15.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
 
-        XCTAssertEqual(inventory.inventory.count, 1)
-        XCTAssertEqual(inventory.inventory.last?.units, Amount(number: 1.0, commoditySymbol: TestUtils.eur, decimalDigits: 1))
-        XCTAssertEqual(inventory.inventory.last?.cost, cost1)
+        #expect(inventory.inventory.count == 1)
+        #expect(inventory.inventory.last?.units == Amount(number: 1.0, commoditySymbol: TestUtils.eur, decimalDigits: 1))
+        #expect(inventory.inventory.last?.cost == cost1)
     }
 
-    func testReduceAmbigiousFIFO() throws {
+   @Test
+   func testReduceAmbigiousFIFO() throws {
         let inventory = Inventory(bookingMethod: .fifo)
 
         let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
@@ -625,27 +648,28 @@ extension InventoryTests { // Test Reduce
         do {
             let result1 = try inventory.book(posting: transactionPosting(posting1))
             let result2 = try inventory.book(posting: transactionPosting(posting2))
-            XCTAssertNil(result1)
-            XCTAssertNil(result2)
+            #expect(result1 == nil)
+            #expect(result2 == nil)
         } catch {
-            XCTFail("Error thrown")
+            Issue.record("Error thrown")
         }
 
         do {
             let result = try inventory.book(posting: transactionPosting(posting3))
-            XCTAssertEqual(result, Amount(number: -3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
+            #expect(result == Amount(number: -3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
         } catch {
-            XCTFail("Error thrown")
+            Issue.record("Error thrown")
         }
 
-        XCTAssertEqual(inventory.inventory.count, 2)
-        XCTAssertEqual(inventory.inventory.first?.units, Amount(number: 1.0, commoditySymbol: TestUtils.eur, decimalDigits: 1))
-        XCTAssertEqual(inventory.inventory.first?.cost, cost1)
-        XCTAssertEqual(inventory.inventory.last?.units, amount2)
-        XCTAssertEqual(inventory.inventory.last?.cost, cost2)
+        #expect(inventory.inventory.count == 2)
+        #expect(inventory.inventory.first?.units == Amount(number: 1.0, commoditySymbol: TestUtils.eur, decimalDigits: 1))
+        #expect(inventory.inventory.first?.cost == cost1)
+        #expect(inventory.inventory.last?.units == amount2)
+        #expect(inventory.inventory.last?.cost == cost2)
     }
 
-    func testReduceAmbigiousFIFOExactLot() throws {
+   @Test
+   func testReduceAmbigiousFIFOExactLot() throws {
         let inventory = Inventory(bookingMethod: .fifo)
 
         let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
@@ -662,25 +686,26 @@ extension InventoryTests { // Test Reduce
         do {
             let result1 = try inventory.book(posting: transactionPosting(posting1))
             let result2 = try inventory.book(posting: transactionPosting(posting2))
-            XCTAssertNil(result1)
-            XCTAssertNil(result2)
+            #expect(result1 == nil)
+            #expect(result2 == nil)
         } catch {
-            XCTFail("Error thrown")
+            Issue.record("Error thrown")
         }
 
         do {
             let result = try inventory.book(posting: transactionPosting(posting3))
-            XCTAssertEqual(result, Amount(number: -6.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
+            #expect(result == Amount(number: -6.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
         } catch {
-            XCTFail("Error thrown")
+            Issue.record("Error thrown")
         }
 
-        XCTAssertEqual(inventory.inventory.count, 1)
-        XCTAssertEqual(inventory.inventory.last?.units, amount2)
-        XCTAssertEqual(inventory.inventory.last?.cost, cost2)
+        #expect(inventory.inventory.count == 1)
+        #expect(inventory.inventory.last?.units == amount2)
+        #expect(inventory.inventory.last?.cost == cost2)
     }
 
-    func testReduceAmbigiousFIFOMultipleLots() throws {
+   @Test
+   func testReduceAmbigiousFIFOMultipleLots() throws {
         let inventory = Inventory(bookingMethod: .fifo)
 
         let amount1 = Amount(number: 2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
@@ -701,19 +726,20 @@ extension InventoryTests { // Test Reduce
         let result1 = try inventory.book(posting: transactionPosting(posting1))
         let result2 = try inventory.book(posting: transactionPosting(posting2))
         let result3 = try inventory.book(posting: transactionPosting(posting3))
-        XCTAssertNil(result1)
-        XCTAssertNil(result2)
-        XCTAssertNil(result3)
+        #expect(result1 == nil)
+        #expect(result2 == nil)
+        #expect(result3 == nil)
 
         let result = try inventory.book(posting: transactionPosting(posting4))
-        XCTAssertEqual(result, Amount(number: -14.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
+        #expect(result == Amount(number: -14.0, commoditySymbol: TestUtils.cad, decimalDigits: 1).multiCurrencyAmount)
 
-        XCTAssertEqual(inventory.inventory.count, 1)
-        XCTAssertEqual(inventory.inventory.last?.units, Amount(number: 1.0, commoditySymbol: TestUtils.eur, decimalDigits: 1))
-        XCTAssertEqual(inventory.inventory.last?.cost, cost3)
+        #expect(inventory.inventory.count == 1)
+        #expect(inventory.inventory.last?.units == Amount(number: 1.0, commoditySymbol: TestUtils.eur, decimalDigits: 1))
+        #expect(inventory.inventory.last?.cost == cost3)
     }
 
-    func testTotalReduce() throws {
+   @Test
+   func testTotalReduce() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -728,19 +754,20 @@ extension InventoryTests { // Test Reduce
             do {
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
-                XCTAssertNil(result1)
-                XCTAssertEqual(result2, Amount(number: amount2.number * cost1.amount!.number,
-                                               commoditySymbol: cost1.amount!.commoditySymbol,
-                                               decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
+                #expect(result1 == nil)
+                #expect(result2 == Amount(number: amount2.number * cost1.amount!.number,
+                                          commoditySymbol: cost1.amount!.commoditySymbol,
+                                          decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 0)
+            #expect(inventory.inventory.isEmpty)
         }
     }
 
-    func testTotalReduceMultipleLots() throws {
+   @Test
+   func testTotalReduceMultipleLots() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -760,18 +787,19 @@ extension InventoryTests { // Test Reduce
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
                 let result3 = try inventory.book(posting: transactionPosting(posting3))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
-                XCTAssertEqual(result3, MultiCurrencyAmount(amounts: [TestUtils.cad: -11.1], decimalDigits: [TestUtils.cad: 2]))
+                #expect(result1 == nil)
+                #expect(result2 == nil)
+                #expect(result3 == MultiCurrencyAmount(amounts: [TestUtils.cad: -11.1], decimalDigits: [TestUtils.cad: 2]))
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 0)
+            #expect(inventory.inventory.isEmpty)
         }
     }
 
-    func testTotalReduceDifferentCurrencyPresent() throws {
+   @Test
+   func testTotalReduceDifferentCurrencyPresent() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -791,22 +819,23 @@ extension InventoryTests { // Test Reduce
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
                 let result3 = try inventory.book(posting: transactionPosting(posting3))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
-                XCTAssertEqual(result3, Amount(number: amount3.number * cost1.amount!.number,
-                                               commoditySymbol: cost1.amount!.commoditySymbol,
-                                               decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
+                #expect(result3 == Amount(number: amount3.number * cost1.amount!.number,
+                                          commoditySymbol: cost1.amount!.commoditySymbol,
+                                          decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 1)
-            XCTAssertEqual(inventory.inventory.first?.units, amount2)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost2)
+            #expect(inventory.inventory.count == 1)
+            #expect(inventory.inventory.first?.units == amount2)
+            #expect(inventory.inventory.first?.cost == cost2)
         }
     }
 
-    func testTotalReduceDifferentLotPresent() throws {
+   @Test
+   func testTotalReduceDifferentLotPresent() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -825,22 +854,23 @@ extension InventoryTests { // Test Reduce
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
                 let result3 = try inventory.book(posting: transactionPosting(posting3))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
-                XCTAssertEqual(result3, Amount(number: amount3.number * cost1.amount!.number,
-                                               commoditySymbol: cost1.amount!.commoditySymbol,
-                                               decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
+                #expect(result1 == nil)
+                #expect(result2 == nil)
+                #expect(result3 == Amount(number: amount3.number * cost1.amount!.number,
+                                          commoditySymbol: cost1.amount!.commoditySymbol,
+                                          decimalDigits: cost1.amount!.decimalDigits).multiCurrencyAmount)
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 1)
-            XCTAssertEqual(inventory.inventory.first?.units, amount2)
-            XCTAssertEqual(inventory.inventory.first?.cost, cost2)
+            #expect(inventory.inventory.count == 1)
+            #expect(inventory.inventory.first?.units == amount2)
+            #expect(inventory.inventory.first?.cost == cost2)
         }
     }
 
-    func testAmountDifferentCurrency() throws {
+   @Test
+   func testAmountDifferentCurrency() throws {
         for bookingMethod in bookingMethods {
             let inventory = Inventory(bookingMethod: bookingMethod)
 
@@ -860,18 +890,18 @@ extension InventoryTests { // Test Reduce
                 let result1 = try inventory.book(posting: transactionPosting(posting1))
                 let result2 = try inventory.book(posting: transactionPosting(posting2))
                 let result3 = try inventory.book(posting: transactionPosting(posting3))
-                XCTAssertNil(result1)
-                XCTAssertNil(result2)
-                XCTAssertEqual(result3, MultiCurrencyAmount(amounts: [TestUtils.eur: -6.10, TestUtils.cad: -5.0], decimalDigits: [TestUtils.eur: 2, TestUtils.cad: 1]))
+                #expect(result1 == nil)
+                #expect(result2 == nil)
+                #expect(result3 == MultiCurrencyAmount(amounts: [TestUtils.eur: -6.10, TestUtils.cad: -5.0], decimalDigits: [TestUtils.eur: 2, TestUtils.cad: 1]))
             } catch {
-                XCTFail("Error thrown")
+                Issue.record("Error thrown")
             }
 
-            XCTAssertEqual(inventory.inventory.count, 0)
+            #expect(inventory.inventory.isEmpty)
         }
     }
 
-    func transactionPosting(_ posting: Posting) -> TransactionPosting {
+   func transactionPosting(_ posting: Posting) -> TransactionPosting {
         let transaction = Transaction(metaData: TransactionMetaData(date: date,
                                                                     payee: "Payee",
                                                                     narration: "Narration",
@@ -887,47 +917,52 @@ extension InventoryTests { // Test Reduce
 
 extension InventoryTests { // Inventory.Lot Tests
 
-    func testLotDescription() throws {
+   @Test
+   func testLotDescription() throws {
         let amount = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
         let cost = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
         let lot = Inventory.Lot(units: amount, cost: cost)
-        XCTAssertEqual(String(describing: lot), "\(amount) \(cost)")
+        #expect(String(describing: lot) == "\(amount) \(cost)")
     }
 
-    func testLotEqual() throws {
+   @Test
+   func testLotEqual() throws {
         let amount = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
         let cost = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
         let lot1 = Inventory.Lot(units: amount, cost: cost)
         let lot2 = Inventory.Lot(units: amount, cost: cost)
-        XCTAssertEqual(lot1, lot2)
+        #expect(lot1 == lot2)
     }
 
-    func testLotEqualRespectsAmount() throws {
+   @Test
+   func testLotEqualRespectsAmount() throws {
         let amount1 = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
         let amount2 = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 2)
         let cost = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
         let lot1 = Inventory.Lot(units: amount1, cost: cost)
         let lot2 = Inventory.Lot(units: amount2, cost: cost)
-        XCTAssertNotEqual(lot1, lot2)
+        #expect(lot1 != lot2)
     }
 
-    func testLotEqualRespectsCost() throws {
+   @Test
+   func testLotEqualRespectsCost() throws {
         let amount = Amount(number: -2.0, commoditySymbol: TestUtils.eur, decimalDigits: 1)
         let cost1 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 2), date: nil, label: nil)
         let cost2 = try Cost(amount: Amount(number: 3.0, commoditySymbol: TestUtils.cad, decimalDigits: 1), date: nil, label: nil)
         let lot1 = Inventory.Lot(units: amount, cost: cost1)
         let lot2 = Inventory.Lot(units: amount, cost: cost2)
-        XCTAssertNotEqual(lot1, lot2)
+        #expect(lot1 != lot2)
     }
 
 }
 
 extension InventoryTests { // BookingMethod tests
 
-    func testBookingMethodDescription() {
-        XCTAssertEqual(String(describing: BookingMethod.fifo), "FIFO")
-        XCTAssertEqual(String(describing: BookingMethod.lifo), "LIFO")
-        XCTAssertEqual(String(describing: BookingMethod.strict), "STRICT")
+   @Test
+   func testBookingMethodDescription() {
+        #expect(String(describing: BookingMethod.fifo) == "FIFO")
+        #expect(String(describing: BookingMethod.lifo) == "LIFO")
+        #expect(String(describing: BookingMethod.strict) == "STRICT")
     }
 
 }

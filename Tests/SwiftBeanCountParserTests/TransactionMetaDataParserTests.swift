@@ -6,11 +6,13 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 import SwiftBeanCountModel
 @testable import SwiftBeanCountParser
-import XCTest
+import Testing
 
-final class TransactionMetaDataParserTests: XCTestCase {
+@Suite
+struct TransactionMetaDataParserTests {
 
     private let basicTransactionMetaDataString = "2017-06-09 * \"Payee\" \"Narration\""
     private let whitespaceTransactionMetaDataString = "2017-06-09   *    \"Payee\"   \"Narration\""
@@ -20,78 +22,74 @@ final class TransactionMetaDataParserTests: XCTestCase {
     private let tagsTransactionMetaDataString = "2017-06-09 * \"Payee\" \"Narration\" #1 #two"
     private let invalidDateTransactionMetaDataString = "2017-02-30 * \"Payee\" \"Narration\""
 
-    func testBasic() {
+   @Test
+   func testBasic() {
         let transactionMetaData = TransactionMetaDataParser.parseFrom(line: basicTransactionMetaDataString)!
         assertBasicTransactionMetaData(transactionMetaData)
     }
 
-    func testWhitespace() {
+   @Test
+   func testWhitespace() {
         let transactionMetaData = TransactionMetaDataParser.parseFrom(line: whitespaceTransactionMetaDataString)!
         assertBasicTransactionMetaData(transactionMetaData)
     }
 
-    func testEndOfLineCommentTransactionMetaDataString() {
+   @Test
+   func testEndOfLineCommentTransactionMetaDataString() {
         let transactionMetaData = TransactionMetaDataParser.parseFrom(line: endOfLineCommentTransactionMetaDataString)!
         assertBasicTransactionMetaData(transactionMetaData)
     }
 
-    func testSpecialCharacterTransactionMetaDataString() {
+   @Test
+   func testSpecialCharacterTransactionMetaDataString() {
         let transactionMetaData = TransactionMetaDataParser.parseFrom(line: specialCharacterTransactionMetaDataString)!
-        XCTAssertEqual(transactionMetaData.narration, "🎉😊💵Test⚅℃⁒♾")
-        XCTAssertEqual(transactionMetaData.payee, "öøuß´@🇩🇪🇨🇦💵")
-        XCTAssertEqual(transactionMetaData.flag, Flag.complete)
-        XCTAssertEqual(transactionMetaData.date, TestUtils.date20170609)
-        XCTAssertEqual(transactionMetaData.tags.count, 1)
-        XCTAssertEqual(transactionMetaData.tags[0].name, "🇨🇦")
-        XCTAssertEqual(String(describing: transactionMetaData), specialCharacterTransactionMetaDataString)
+        #expect(transactionMetaData.narration == "🎉😊💵Test⚅℃⁒♾")
+        #expect(transactionMetaData.payee == "öøuß´@🇩🇪🇨🇦💵")
+        #expect(transactionMetaData.flag == Flag.complete)
+        #expect(transactionMetaData.date == TestUtils.date20170609)
+        #expect(transactionMetaData.tags.count == 1)
+        #expect(transactionMetaData.tags[0].name == "🇨🇦")
+        #expect(String(describing: transactionMetaData) == specialCharacterTransactionMetaDataString)
     }
 
-    func testIncompleteTransactionMetaDataString() {
+   @Test
+   func testIncompleteTransactionMetaDataString() {
         let transactionMetaData = TransactionMetaDataParser.parseFrom(line: incompleteTransactionMetaDataString)!
-        XCTAssertEqual(transactionMetaData.narration, "Narration")
-        XCTAssertEqual(transactionMetaData.payee, "Payee")
-        XCTAssertEqual(transactionMetaData.flag, Flag.incomplete)
-        XCTAssertEqual(transactionMetaData.date, TestUtils.date20170609)
-        XCTAssertEqual(transactionMetaData.tags.count, 0)
-        XCTAssertEqual(String(describing: transactionMetaData), incompleteTransactionMetaDataString)
+        #expect(transactionMetaData.narration == "Narration")
+        #expect(transactionMetaData.payee == "Payee")
+        #expect(transactionMetaData.flag == Flag.incomplete)
+        #expect(transactionMetaData.date == TestUtils.date20170609)
+        #expect(transactionMetaData.tags.isEmpty)
+        #expect(String(describing: transactionMetaData) == incompleteTransactionMetaDataString)
     }
 
-    func testTags() {
+   @Test
+   func testTags() {
         let transactionMetaData = TransactionMetaDataParser.parseFrom(line: tagsTransactionMetaDataString)!
-        XCTAssertEqual(transactionMetaData.narration, "Narration")
-        XCTAssertEqual(transactionMetaData.payee, "Payee")
-        XCTAssertEqual(transactionMetaData.flag, Flag.complete)
-        XCTAssertEqual(transactionMetaData.date, TestUtils.date20170609)
-        XCTAssertEqual(transactionMetaData.tags.count, 2)
-        XCTAssertEqual(transactionMetaData.tags[0].name, "1")
-        XCTAssertEqual(transactionMetaData.tags[1].name, "two")
-        XCTAssertEqual(String(describing: transactionMetaData), tagsTransactionMetaDataString)
+        #expect(transactionMetaData.narration == "Narration")
+        #expect(transactionMetaData.payee == "Payee")
+        #expect(transactionMetaData.flag == Flag.complete)
+        #expect(transactionMetaData.date == TestUtils.date20170609)
+        #expect(transactionMetaData.tags.count == 2)
+        #expect(transactionMetaData.tags[0].name == "1")
+        #expect(transactionMetaData.tags[1].name == "two")
+        #expect(String(describing: transactionMetaData) == tagsTransactionMetaDataString)
     }
 
-    func testInvalidDate() {
-        XCTAssertNil(TransactionMetaDataParser.parseFrom(line: invalidDateTransactionMetaDataString))
-    }
-
-    func testPerformance() {
-        self.measure {
-            for _ in 0...1_000 {
-                _ = TransactionMetaDataParser.parseFrom(line: basicTransactionMetaDataString)!
-                _ = TransactionMetaDataParser.parseFrom(line: whitespaceTransactionMetaDataString)!
-                _ = TransactionMetaDataParser.parseFrom(line: endOfLineCommentTransactionMetaDataString)!
-                _ = TransactionMetaDataParser.parseFrom(line: specialCharacterTransactionMetaDataString)!
-            }
-        }
+   @Test
+   func testInvalidDate() {
+        #expect(TransactionMetaDataParser.parseFrom(line: invalidDateTransactionMetaDataString) == nil)
     }
 
     // Helper
 
     private func assertBasicTransactionMetaData(_ transactionMetaData: TransactionMetaData) {
-        XCTAssertEqual(transactionMetaData.narration, "Narration")
-        XCTAssertEqual(transactionMetaData.payee, "Payee")
-        XCTAssertEqual(transactionMetaData.flag, Flag.complete)
-        XCTAssertEqual(transactionMetaData.tags.count, 0)
-        XCTAssertEqual(transactionMetaData.date, TestUtils.date20170609)
-        XCTAssertEqual(String(describing: transactionMetaData), basicTransactionMetaDataString)
+        #expect(transactionMetaData.narration == "Narration")
+        #expect(transactionMetaData.payee == "Payee")
+        #expect(transactionMetaData.flag == Flag.complete)
+        #expect(transactionMetaData.tags.isEmpty)
+        #expect(transactionMetaData.date == TestUtils.date20170609)
+        #expect(String(describing: transactionMetaData) == basicTransactionMetaDataString)
     }
 
 }

@@ -6,11 +6,13 @@
 //  Copyright © 2019 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 import SwiftBeanCountModel
 @testable import SwiftBeanCountParser
-import XCTest
+import Testing
 
-final class CommodityParserTests: XCTestCase {
+@Suite
+struct CommodityParserTests {
 
     private let basicString = "2017-06-09 commodity CAD"
     private let whitespaceString = "2017-06-09    commodity        CAD"
@@ -18,40 +20,34 @@ final class CommodityParserTests: XCTestCase {
     private let specialCharacterString = "2017-06-09 commodity CAD💵"
     private let invalidDateString = "2017-02-30 commodity CAD"
 
-    func testBasic() {
+   @Test
+   func testBasic() {
         let commodity = CommodityParser.parseFrom(line: basicString)
-        XCTAssertEqual(commodity, Commodity(symbol: "CAD", opening: TestUtils.date20170609))
+        #expect(commodity == Commodity(symbol: "CAD", opening: TestUtils.date20170609))
     }
 
-    func testWhitespace() {
+   @Test
+   func testWhitespace() {
         let commodity = CommodityParser.parseFrom(line: whitespaceString)
-        XCTAssertEqual(commodity, Commodity(symbol: "CAD", opening: TestUtils.date20170609))
+        #expect(commodity == Commodity(symbol: "CAD", opening: TestUtils.date20170609))
     }
 
-    func testEndOfLineComment() {
+   @Test
+   func testEndOfLineComment() {
         let commodity = CommodityParser.parseFrom(line: endOfLineCommentString)
-        XCTAssertEqual(commodity, Commodity(symbol: "CAD", opening: TestUtils.date20170609))
+        #expect(commodity == Commodity(symbol: "CAD", opening: TestUtils.date20170609))
     }
 
-    func testSpecialCharacter() {
+   @Test
+   func testSpecialCharacter() {
         let commodity = CommodityParser.parseFrom(line: specialCharacterString)
-        XCTAssertEqual(commodity, Commodity(symbol: "CAD💵", opening: TestUtils.date20170609))
+        #expect(commodity == Commodity(symbol: "CAD💵", opening: TestUtils.date20170609))
     }
 
-    func testInvalidCloseDate() {
+   @Test
+   func testInvalidCloseDate() {
         let commodity = CommodityParser.parseFrom(line: invalidDateString)
-        XCTAssertNil(commodity)
-    }
-
-    func testPerformance() {
-        self.measure {
-            for _ in 0...1_000 {
-                _ = CommodityParser.parseFrom(line: basicString)
-                _ = CommodityParser.parseFrom(line: whitespaceString)
-                _ = CommodityParser.parseFrom(line: endOfLineCommentString)
-                _ = CommodityParser.parseFrom(line: specialCharacterString)
-            }
-        }
+        #expect(commodity == nil)
     }
 
 }

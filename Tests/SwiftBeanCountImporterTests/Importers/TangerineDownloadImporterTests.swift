@@ -6,15 +6,17 @@
 //  Copyright © 2022 Steffen Kötte. All rights reserved.
 //
 
-#if canImport(UIKit) || canImport(AppKit)
-
+import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
 import SwiftBeanCountTangerineMapper
 import TangerineDownloader
-import XCTest
+import Testing
 
-final class TangerineDownloadImporterTests: XCTestCase {
+#if canImport(UIKit) || canImport(AppKit)
+
+@Suite
+struct TangerineDownloadImporterTests { // swiftlint:disable:this type_body_length
 
     private class MockDownloader: TangerineDownloaderProvider {
 
@@ -22,7 +24,7 @@ final class TangerineDownloadImporterTests: XCTestCase {
 
         func authorizeAndGetAccounts(username: String, password: String, _ completion: @escaping (Result<[[String: Any]], Error>) -> Void) {
             _ = delegate?.view()
-            XCTAssertEqual(delegate?.getOTPCode(), "123456")
+            #expect(delegate?.getOTPCode() == "123456")
             completion(accountsLoading?(username, password) ?? .success([]))
         }
 
@@ -63,9 +65,9 @@ final class TangerineDownloadImporterTests: XCTestCase {
     private let sixtyTwoDays = -60 * 60 * 24 * 62.0
     private let threeDays = -60 * 60 * 24 * 3.0
 
-    private var delegate: CredentialInputAndViewDelegate? // swiftlint:disable:this weak_delegate
+    private var delegate: CredentialInputAndViewDelegate?
 
-    override func setUp() {
+    init() {
         Self.accountsLoading = nil
         Self.transactionsLoading = nil
         Self.transactionsMapping = nil
@@ -75,35 +77,41 @@ final class TangerineDownloadImporterTests: XCTestCase {
         super.setUp()
     }
 
-    func testImporterName() {
-        XCTAssertEqual(TangerineDownloadImporter.importerName, "Tangerine Download")
+   @Test
+   func testImporterName() {
+        #expect(TangerineDownloadImporter.importerName == "Tangerine Download")
     }
 
-    func testImporterType() {
-        XCTAssertEqual(TangerineDownloadImporter.importerType, "tangerine-download")
+   @Test
+   func testImporterType() {
+        #expect(TangerineDownloadImporter.importerType == "tangerine-download")
     }
 
-    func testHelpText() {
-        XCTAssert(TangerineDownloadImporter.helpText.hasPrefix("Downloads transactions and the current balance from the Tangerine website."))
+   @Test
+   func testHelpText() {
+        #expect(TangerineDownloadImporter.helpText.hasPrefix("Downloads transactions and the current balance from the Tangerine website."))
     }
 
-    func testImportName() {
-        XCTAssertEqual(TangerineDownloadImporter(ledger: nil).importName, "Tangerine Download")
+   @Test
+   func testImportName() {
+        #expect(TangerineDownloadImporter(ledger: nil).importName == "Tangerine Download")
     }
 
-    func testSavedCredentials() {
+   @Test
+   func testSavedCredentials() {
         Self.accountsLoading = {
-            XCTAssertEqual($0, "name")
-            XCTAssertEqual($1, "password123")
+            #expect($0 == "name")
+            #expect($1 == "password123")
             return .success([])
         }
         runImport()
     }
 
-    func testNoAccounts() {
+   @Test
+   func testNoAccounts() {
         Self.accountsLoading = {
-            XCTAssertEqual($0, "name")
-            XCTAssertEqual($1, "password123")
+            #expect($0 == "name")
+            #expect($1 == "password123")
             return .success([])
         }
         delegate = CredentialInputAndViewDelegate(inputNames: ["Username", "PIN", "SMS Security Code"],
@@ -116,12 +124,13 @@ final class TangerineDownloadImporterTests: XCTestCase {
         runImport()
     }
 
-    func testRemoveSavedCredentials() {
+   @Test
+   func testRemoveSavedCredentials() {
         let error = TestError()
 
         Self.accountsLoading = {
-            XCTAssertEqual($0, "name")
-            XCTAssertEqual($1, "password123")
+            #expect($0 == "name")
+            #expect($1 == "password123")
             return .failure(error)
         }
         delegate = CredentialInputAndViewDelegate(inputNames: ["SMS Security Code", "The login failed. Do you want to remove the saved credentials"],
@@ -141,40 +150,43 @@ final class TangerineDownloadImporterTests: XCTestCase {
         runImport()
     }
 
-    func testTransactionDownloadFailed() {
+   @Test
+   func testTransactionDownloadFailed() {
         let error = TestError()
 
         Self.accountsLoading = {
-            XCTAssertEqual($0, "name")
-            XCTAssertEqual($1, "password123")
+            #expect($0 == "name")
+            #expect($1 == "password123")
             return .success([])
         }
         Self.transactionsLoading = { _, date in
-            XCTAssertEqual(Calendar.current.compare(date, to: Date(timeIntervalSinceNow: self.sixtyTwoDays), toGranularity: .minute), .orderedSame)
+            #expect(Calendar.current.compare(date, to: Date(timeIntervalSinceNow: sixtyTwoDays), toGranularity: .minute) == .orderedSame)
             return .failure(error)
         }
         setDefaultDelegate(error: error)
         runImport()
     }
 
-    func testPastDaysToLoad() {
+   @Test
+   func testPastDaysToLoad() {
         let ledger = Ledger()
         ledger.custom.append(Custom(date: Date(), name: "tangerine-download-importer", values: ["pastDaysToLoad", "3"]))
         ledger.custom.append(Custom(date: Date(timeIntervalSinceNow: sixtyTwoDays), name: "tangerine-download-importer", values: ["pastDaysToLoad", "200"]))
 
         Self.accountsLoading = {
-            XCTAssertEqual($0, "name")
-            XCTAssertEqual($1, "password123")
+            #expect($0 == "name")
+            #expect($1 == "password123")
             return .success([])
         }
         Self.transactionsLoading = { _, date in
-            XCTAssertEqual(Calendar.current.compare(date, to: Date(timeIntervalSinceNow: self.threeDays), toGranularity: .minute), .orderedSame)
+            #expect(Calendar.current.compare(date, to: Date(timeIntervalSinceNow: threeDays), toGranularity: .minute) == .orderedSame)
             return .success([:])
         }
         runImport(ledger: ledger)
     }
 
-    func testTransactionMappingException() throws {
+   @Test
+   func testTransactionMappingException() throws {
         let error = TestError()
 
         Self.accountsLoading = { _, _ in
@@ -184,7 +196,7 @@ final class TangerineDownloadImporterTests: XCTestCase {
             .success(["A": [["TEST": 10]]])
         }
         Self.ledgerAccountNameMapping = { account in
-            XCTAssertEqual(account["display_name"] as? String, "1564894")
+            #expect(account["display_name"] as? String == "1564894")
             return try AccountName("Assets:Checking")
         }
         Self.transactionsMapping = { _ in
@@ -194,7 +206,8 @@ final class TangerineDownloadImporterTests: XCTestCase {
         runImport()
     }
 
-    func testBalanceMappingException() throws {
+   @Test
+   func testBalanceMappingException() throws {
         let error = TestError()
 
         Self.accountsLoading = { _, _ in
@@ -207,7 +220,8 @@ final class TangerineDownloadImporterTests: XCTestCase {
         runImport()
     }
 
-    func testDownload() throws { // swiftlint:disable:this function_body_length
+   @Test
+   func testDownload() throws { // swiftlint:disable:this function_body_length
         let balance = Balance(date: Date(), accountName: try AccountName("Assets:Testing"), amount: Amount(number: Decimal(20.25), commoditySymbol: "CAD"))
         let transactions = ["A": [["TEST": 10]]]
 
@@ -219,31 +233,31 @@ final class TangerineDownloadImporterTests: XCTestCase {
             .success([["account_balance": 10.25, "type": "CHEQUING", "currency_type": "USD", "display_name": "1564894"]])
         }
         Self.transactionsLoading = { receivedAccounts, _ in
-            XCTAssertEqual(receivedAccounts.count, 1)
-            XCTAssertEqual(receivedAccounts["Assets:Checking"]?["display_name"] as? String, "1564894")
+            #expect(receivedAccounts.count == 1)
+            #expect(receivedAccounts["Assets:Checking"]?["display_name"] as? String == "1564894")
             return .success(transactions)
         }
         Self.balancesMapping = { receivedAccounts, date in
-            XCTAssertEqual(receivedAccounts.count, 1)
-            XCTAssertEqual(receivedAccounts[0]["display_name"] as? String, "1564894")
-            XCTAssertEqual(Calendar.current.compare(date, to: Date(), toGranularity: .minute), .orderedSame)
+            #expect(receivedAccounts.count == 1)
+            #expect(receivedAccounts[0]["display_name"] as? String == "1564894")
+            #expect(Calendar.current.compare(date, to: Date(), toGranularity: .minute) == .orderedSame)
             return [balance]
         }
         Self.ledgerAccountNameMapping = { account in
-            XCTAssertEqual(account["display_name"] as? String, "1564894")
+            #expect(account["display_name"] as? String == "1564894")
             return try AccountName("Assets:Checking")
         }
         Self.transactionsMapping = {
-            XCTAssertEqual($0 as? [String: [[String: Int]]], transactions)
+            #expect($0 as? [String: [[String: Int]]] == transactions)
             return [transaction]
         }
         runImport { importer in
             let result = importer.nextTransaction()
-            XCTAssertEqual(result?.transaction, transaction)
-            XCTAssertEqual(result?.accountName?.fullName, "Assets:Testing")
-            XCTAssert(result?.shouldAllowUserToEdit ?? false)
-            XCTAssertNil(importer.nextTransaction())
-            XCTAssertEqual(importer.balancesToImport(), [balance])
+            #expect(result?.transaction == transaction)
+            #expect(result?.accountName?.fullName == "Assets:Testing")
+            #expect(result?.shouldAllowUserToEdit ?? false)
+            #expect(importer.nextTransaction() == nil)
+            #expect(importer.balancesToImport() == [balance])
         }
         savedMappingTest()
     }
@@ -256,9 +270,9 @@ final class TangerineDownloadImporterTests: XCTestCase {
         setDefaultDelegate()
         runImport { importer in
             let result = importer.nextTransaction()
-            XCTAssertEqual(result?.accountName?.fullName, "Assets:Testing")
-            XCTAssert(result?.shouldAllowUserToEdit ?? false)
-            XCTAssertNil(importer.nextTransaction())
+            #expect(result?.accountName?.fullName == "Assets:Testing")
+            #expect(result?.shouldAllowUserToEdit ?? false)
+            #expect(importer.nextTransaction() == nil)
         }
     }
 
@@ -268,13 +282,13 @@ final class TangerineDownloadImporterTests: XCTestCase {
         importer.delegate = delegate
         DispatchQueue.global(qos: .userInitiated).async {
             importer.load()
-            XCTAssert(importer.pricesToImport().isEmpty)
-            XCTAssert(self.delegate!.verified)
+            #expect(importer.pricesToImport().isEmpty)
+            #expect(delegate!.verified)
             if let verify {
                 verify(importer)
             } else {
-                XCTAssertNil(importer.nextTransaction())
-                XCTAssert(importer.balancesToImport().isEmpty)
+                #expect(importer.nextTransaction() == nil)
+                #expect(importer.balancesToImport().isEmpty)
             }
             expectation.fulfill()
         }

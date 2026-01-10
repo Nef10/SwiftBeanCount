@@ -9,7 +9,7 @@
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
-import XCTest
+import Testing
 
 private class TestCSVBaseImporter: CSVBaseImporter {
 
@@ -32,21 +32,24 @@ private class TestCSVBaseImporter: CSVBaseImporter {
 
 }
 
-final class CSVBaseImporterTests: XCTestCase {
+@Suite
+struct CSVBaseImporterTests {
 
-    private var cashAccountDelegate: InputProviderDelegate! // swiftlint:disable:this weak_delegate
+    private var cashAccountDelegate: InputProviderDelegate!
 
     override func setUpWithError() throws {
         cashAccountDelegate = InputProviderDelegate(names: ["Account"], types: [.text([])], returnValues: [TestUtils.cash.fullName])
         try super.setUpWithError()
     }
 
-    func testImportName() {
+   @Test
+   func testImportName() {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.basicCSVReader, fileName: "ABCDTEST")
-        XCTAssertEqual(importer.importName, "ABCDTEST")
+        #expect(importer.importName == "ABCDTEST")
     }
 
-    func testLoad() {
+   @Test
+   func testLoad() {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.basicCSVReader, fileName: "")
         importer.delegate = cashAccountDelegate
 
@@ -55,92 +58,101 @@ final class CSVBaseImporterTests: XCTestCase {
         importer.load()
 
         let importedTransaction = importer.nextTransaction()
-        XCTAssertNotNil(importedTransaction)
+        #expect(importedTransaction != nil)
 
         let noTransaction = importer.nextTransaction()
-        XCTAssertNil(noTransaction)
+        #expect(noTransaction == nil)
     }
 
-    func testLoadSortDate() {
+   @Test
+   func testLoadSortDate() {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.dateMixedCSVReader, fileName: "")
         importer.delegate = cashAccountDelegate
         importer.load()
 
         let importedTransaction1 = importer.nextTransaction()
-        XCTAssertNotNil(importedTransaction1)
+        #expect(importedTransaction1 != nil)
         let importedTransaction2 = importer.nextTransaction()
-        XCTAssertNotNil(importedTransaction2)
+        #expect(importedTransaction2 != nil)
 
-        XCTAssertTrue(importedTransaction1!.transaction.metaData.date < importedTransaction2!.transaction.metaData.date)
+        #expect(importedTransaction1!.transaction.metaData.date < importedTransaction2!.transaction.metaData.date)
     }
 
-    func testNextTransaction() {
+   @Test
+   func testNextTransaction() {
         let importer = TestCSVBaseImporter(ledger: nil, csvReader: TestUtils.basicCSVReader, fileName: "")
         importer.delegate = cashAccountDelegate
         importer.load()
 
         let importedTransaction = importer.nextTransaction()
-        XCTAssertNotNil(importedTransaction)
-        XCTAssertTrue(importedTransaction!.shouldAllowUserToEdit)
-        XCTAssertEqual(importedTransaction!.accountName, TestUtils.cash)
+        #expect(importedTransaction != nil)
+        #expect(importedTransaction!.shouldAllowUserToEdit)
+        #expect(importedTransaction!.accountName == TestUtils.cash)
 
         let noTransaction = importer.nextTransaction()
-        XCTAssertNil(noTransaction)
-        XCTAssert(cashAccountDelegate.verified)
+        #expect(noTransaction == nil)
+        #expect(cashAccountDelegate.verified)
     }
 
-    func testPrice() throws {
+   @Test
+   func testPrice() throws {
         let transaction = try transactionHelper(description: "price")
         let posting = transaction.postings.first { $0.accountName != TestUtils.cash }!
-        XCTAssertEqual(posting.price!.number, -1)
-        XCTAssertEqual(posting.amount.number, 10)
-        XCTAssertEqual(posting.amount.commoditySymbol, TestUtils.usd)
+        #expect(posting.price!.number == -1)
+        #expect(posting.amount.number == 10)
+        #expect(posting.amount.commoditySymbol == TestUtils.usd)
     }
 
-    func testAccountName() throws {
+   @Test
+   func testAccountName() throws {
         let transaction = try transactionHelper(description: "")
-        XCTAssertEqual(transaction.postings.count, 2)
-        XCTAssertEqual(transaction.postings.filter { $0.accountName.fullName == Settings.defaultAccountName }.count, 1)
-        XCTAssertEqual(transaction.postings.filter { $0.accountName == TestUtils.cash }.count, 1)
+        #expect(transaction.postings.count == 2)
+        #expect(transaction.postings.filter { $0.accountName.fullName == Settings.defaultAccountName }.count == 1)
+        #expect(transaction.postings.filter { $0.accountName == TestUtils.cash }.count == 1)
     }
 
-    func testSavedPayee() throws {
+   @Test
+   func testSavedPayee() throws {
         let description = "abcd"
         let payeeMapping = "efg"
         Settings.storage = TestStorage()
 
         Settings.setPayeeMapping(key: description, payee: payeeMapping)
-        XCTAssertEqual(try transactionHelper(description: description).metaData.payee, payeeMapping)
+        #expect(try transactionHelper(description: description).metaData.payee == payeeMapping)
     }
 
-    func testSavedDescription() throws {
+   @Test
+   func testSavedDescription() throws {
         let description = "abcd"
         let descriptionMapping = "efg"
         Settings.storage = TestStorage()
 
         Settings.setDescriptionMapping(key: description, description: descriptionMapping)
-        XCTAssertEqual(try descriptionHelper(description: description), descriptionMapping)
+        #expect(try descriptionHelper(description: description) == descriptionMapping)
     }
 
-    func testSavedAccount() throws {
+   @Test
+   func testSavedAccount() throws {
         let payee = "abcd"
         Settings.storage = TestStorage()
 
         Settings.setAccountMapping(key: payee, account: TestUtils.chequing.fullName)
-        XCTAssertEqual(try transactionHelper(description: "", payee: payee).postings.first { $0.accountName != TestUtils.cash }?.accountName, TestUtils.chequing)
+        #expect(try transactionHelper(description: "" == payee: payee).postings.first { $0.accountName != TestUtils.cash }?.accountName, TestUtils.chequing)
     }
 
-    func testSavedPayeeAccount() throws {
+   @Test
+   func testSavedPayeeAccount() throws {
         let description = "abcd"
         let payee = "efg"
         Settings.storage = TestStorage()
 
         Settings.setAccountMapping(key: payee, account: TestUtils.chequing.fullName)
         Settings.setPayeeMapping(key: description, payee: payee)
-        XCTAssertEqual(try transactionHelper(description: description).postings.first { $0.accountName != TestUtils.cash }?.accountName, TestUtils.chequing)
+        #expect(try transactionHelper(description: description).postings.first { $0.accountName != TestUtils.cash }?.accountName == TestUtils.chequing)
     }
 
-    func testGetPossibleDuplicateFor() throws {
+   @Test
+   func testGetPossibleDuplicateFor() throws {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
         let ledger = TestUtils.lederAccounts
@@ -151,11 +163,12 @@ final class CSVBaseImporterTests: XCTestCase {
         importer.delegate = cashAccountDelegate
         importer.load()
         let importedTransaction = importer.nextTransaction()
-        XCTAssertNotNil(importedTransaction)
-        XCTAssertEqual(importedTransaction!.possibleDuplicate, transaction)
+        #expect(importedTransaction != nil)
+        #expect(importedTransaction!.possibleDuplicate == transaction)
     }
 
-    func testGetPossibleDuplicateForNone() throws {
+   @Test
+   func testGetPossibleDuplicateForNone() throws {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
         let ledger = TestUtils.lederAccounts
@@ -167,27 +180,28 @@ final class CSVBaseImporterTests: XCTestCase {
         importer.delegate = delegate
         importer.load()
         let importedTransaction = importer.nextTransaction()
-        XCTAssertNotNil(importedTransaction)
-        XCTAssertNil(importedTransaction!.possibleDuplicate)
-        XCTAssert(delegate.verified)
+        #expect(importedTransaction != nil)
+        #expect(importedTransaction!.possibleDuplicate == nil)
+        #expect(delegate.verified)
     }
 
-    func testSanitizeDescription() throws {
-        XCTAssertEqual(try descriptionHelper(description: "Shop1 C-IDP PURCHASE - 1234  BC  CA"), "Shop1")
-        XCTAssertEqual(try descriptionHelper(description: "Shop1 IDP PURCHASE-1234"), "Shop1")
-        XCTAssertEqual(try descriptionHelper(description: "Shop1 VISA DEBIT PUR-1234"), "Shop1")
-        XCTAssertEqual(try descriptionHelper(description: "Shop1 VISA DEBIT REF-1234"), "Shop1")
-        XCTAssertEqual(try descriptionHelper(description: "Shop1 WWWINTERAC PUR 1234"), "Shop1")
-        XCTAssertEqual(try descriptionHelper(description: "Shop1 INTERAC E-TRF- 1234"), "Shop1")
-        XCTAssertEqual(try descriptionHelper(description: "Shop1 1234 ~ Internet Withdrawal"), "Shop1")
-        XCTAssertEqual(try descriptionHelper(description: "Shop1 - SAP"), "Shop1")
-        XCTAssertEqual(try descriptionHelper(description: "Shop1 SAP"), "Shop1")
-        XCTAssertEqual(try descriptionHelper(description: " SAP CANADA"), "SAP CANADA")
-        XCTAssertEqual(try descriptionHelper(description: "Shop1 -MAY 2014"), "Shop1")
-        XCTAssertEqual(try descriptionHelper(description: "Shop1 - JUNE 2016"), "Shop1")
-        XCTAssertEqual(try descriptionHelper(description: "Shop1  BC  CA"), "Shop1")
-        XCTAssertEqual(try descriptionHelper(description: "Shop1 #12345"), "Shop1")
-        XCTAssertEqual(try descriptionHelper(description: "Shop1 # 12"), "Shop1")
+   @Test
+   func testSanitizeDescription() throws {
+        #expect(try descriptionHelper(description: "Shop1 C-IDP PURCHASE - 1234  BC  CA") == "Shop1")
+        #expect(try descriptionHelper(description: "Shop1 IDP PURCHASE-1234") == "Shop1")
+        #expect(try descriptionHelper(description: "Shop1 VISA DEBIT PUR-1234") == "Shop1")
+        #expect(try descriptionHelper(description: "Shop1 VISA DEBIT REF-1234") == "Shop1")
+        #expect(try descriptionHelper(description: "Shop1 WWWINTERAC PUR 1234") == "Shop1")
+        #expect(try descriptionHelper(description: "Shop1 INTERAC E-TRF- 1234") == "Shop1")
+        #expect(try descriptionHelper(description: "Shop1 1234 ~ Internet Withdrawal") == "Shop1")
+        #expect(try descriptionHelper(description: "Shop1 - SAP") == "Shop1")
+        #expect(try descriptionHelper(description: "Shop1 SAP") == "Shop1")
+        #expect(try descriptionHelper(description: " SAP CANADA") == "SAP CANADA")
+        #expect(try descriptionHelper(description: "Shop1 -MAY 2014") == "Shop1")
+        #expect(try descriptionHelper(description: "Shop1 - JUNE 2016") == "Shop1")
+        #expect(try descriptionHelper(description: "Shop1  BC  CA") == "Shop1")
+        #expect(try descriptionHelper(description: "Shop1 #12345") == "Shop1")
+        #expect(try descriptionHelper(description: "Shop1 # 12") == "Shop1")
     }
 
     private func descriptionHelper(description: String) throws -> String {
@@ -200,8 +214,8 @@ final class CSVBaseImporterTests: XCTestCase {
         importer.delegate = cashAccountDelegate
         importer.load()
         let importedTransaction = importer.nextTransaction()
-        XCTAssertNotNil(importedTransaction)
-        XCTAssert(cashAccountDelegate.verified)
+        #expect(importedTransaction != nil)
+        #expect(cashAccountDelegate.verified)
         return importedTransaction!.transaction
     }
 

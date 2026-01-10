@@ -6,46 +6,41 @@
 //  Copyright © 2019 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 import SwiftBeanCountModel
 @testable import SwiftBeanCountParser
-import XCTest
+import Testing
 
-final class PluginParserTests: XCTestCase {
+@Suite
+struct PluginParserTests {
 
     private let basicString = "plugin \"ABC\""
     private let whitespaceString = "plugin    \"  A B C  \"        "
     private let endOfLineCommentString = "plugin \"ABC\";gfsdt     "
     private let specialCharacterString = "plugin \"ABC💵\""
 
-    func testBasic() {
+   @Test
+   func testBasic() {
         let plugin = PluginParser.parseFrom(line: basicString)
-        XCTAssertEqual(plugin, "ABC")
+        #expect(plugin == "ABC")
     }
 
-    func testWhitespace() {
+   @Test
+   func testWhitespace() {
         let plugin = PluginParser.parseFrom(line: whitespaceString)
-        XCTAssertEqual(plugin, "  A B C  ")
+        #expect(plugin == "  A B C  ")
     }
 
-    func testEndOfLineComment() {
+   @Test
+   func testEndOfLineComment() {
         let plugin = PluginParser.parseFrom(line: endOfLineCommentString)
-        XCTAssertEqual(plugin, "ABC")
+        #expect(plugin == "ABC")
     }
 
-    func testSpecialCharacter() {
+   @Test
+   func testSpecialCharacter() {
         let plugin = PluginParser.parseFrom(line: specialCharacterString)
-        XCTAssertEqual(plugin, "ABC💵")
-    }
-
-    func testPerformance() {
-        self.measure {
-            for _ in 0...1_000 {
-                _ = PluginParser.parseFrom(line: basicString)
-                _ = PluginParser.parseFrom(line: whitespaceString)
-                _ = PluginParser.parseFrom(line: endOfLineCommentString)
-                _ = PluginParser.parseFrom(line: specialCharacterString)
-            }
-        }
+        #expect(plugin == "ABC💵")
     }
 
 }

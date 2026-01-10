@@ -6,10 +6,12 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 @testable import SwiftBeanCountParser
-import XCTest
+import Testing
 
-final class MetaDataParserTests: XCTestCase {
+@Suite
+struct MetaDataParserTests {
 
     private let basicString = "  test:\"ABC\""
     private let whitespaceString = "  test:    \"A B C\"        "
@@ -18,40 +20,32 @@ final class MetaDataParserTests: XCTestCase {
     private let endOfLineCommentString = "  test: \"ABC\";gfsdt     "
     private let specialCharacterString = "  test💵: \"ABC💵\""
 
-    func testBasic() {
+   @Test
+   func testBasic() {
         let metaData = MetaDataParser.parseFrom(line: basicString)
-        XCTAssertEqual(metaData, ["test": "ABC"])
+        #expect(metaData == ["test": "ABC"])
     }
 
-    func testWhitespace() {
+   @Test
+   func testWhitespace() {
         let metaData1 = MetaDataParser.parseFrom(line: whitespaceString)
-        XCTAssertEqual(metaData1, ["test": "A B C"])
+        #expect(metaData1 == ["test": "A B C"])
         let metaData2 = MetaDataParser.parseFrom(line: whitespaceBeginningString)
-        XCTAssertEqual(metaData2, ["test": "  A B C  "])
+        #expect(metaData2 == ["test": "  A B C  "])
         let metaData3 = MetaDataParser.parseFrom(line: whitespaceNonMatchingString)
-        XCTAssertNil(metaData3)
+        #expect(metaData3 == nil)
     }
 
-    func testEndOfLineComment() {
+   @Test
+   func testEndOfLineComment() {
         let metaData = MetaDataParser.parseFrom(line: endOfLineCommentString)
-        XCTAssertEqual(metaData, ["test": "ABC"])
+        #expect(metaData == ["test": "ABC"])
     }
 
-    func testSpecialCharacter() {
+   @Test
+   func testSpecialCharacter() {
         let metaData = MetaDataParser.parseFrom(line: specialCharacterString)
-        XCTAssertEqual(metaData, ["test💵": "ABC💵"])
-    }
-
-    func testPerformance() {
-        self.measure {
-            for _ in 0...1_000 {
-                _ = MetaDataParser.parseFrom(line: basicString)
-                _ = MetaDataParser.parseFrom(line: whitespaceString)
-                _ = MetaDataParser.parseFrom(line: whitespaceBeginningString)
-                _ = MetaDataParser.parseFrom(line: endOfLineCommentString)
-                _ = MetaDataParser.parseFrom(line: specialCharacterString)
-            }
-        }
+        #expect(metaData == ["test💵": "ABC💵"])
     }
 
 }

@@ -6,10 +6,12 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 @testable import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class TransactionMetaDataTests: XCTestCase {
+@Suite
+struct TransactionMetaDataTests {
 
     private let payee = "Payee"
     private let narration = "Narration"
@@ -18,78 +20,89 @@ final class TransactionMetaDataTests: XCTestCase {
     private let dateString = "2017-06-08"
     private var transactionMetaData: TransactionMetaData?
 
-    override func setUp() {
-        super.setUp()
+    init() {
         transactionMetaData = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [])
     }
 
-    func testDescription() {
-        XCTAssertEqual(String(describing: transactionMetaData!), "\(dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\"")
+   @Test
+   func testDescription() {
+        #expect(String(describing: transactionMetaData!) == "\(dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\"")
     }
 
-    func testDescriptionMetaData() {
+   @Test
+   func testDescriptionMetaData() {
         let transactionMetaData = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [], metaData: ["A": "B"])
-        XCTAssertEqual(String(describing: transactionMetaData), "\(dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\"\n  A: \"B\"")
+        #expect(String(describing: transactionMetaData) == "\(dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\"\n  A: \"B\"")
     }
 
-    func testDescriptionSpecialCharacters() {
+   @Test
+   func testDescriptionSpecialCharacters() {
         let payee = "🏫"
         let narration = "🎓"
         let transactionMetaData = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [])
-        XCTAssertEqual(String(describing: transactionMetaData), "\(dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\"")
+        #expect(String(describing: transactionMetaData) == "\(dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\"")
     }
 
-    func testDescriptionTag() {
+   @Test
+   func testDescriptionTag() {
         let tag = Tag(name: "🎁")
         let transactionMetaData = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [tag])
-        XCTAssertEqual(String(describing: transactionMetaData), "\(dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\" \(String(describing: tag))")
+        #expect(String(describing: transactionMetaData) == "\(dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\" \(String(describing: tag))")
     }
 
-    func testDescriptionTags() {
+   @Test
+   func testDescriptionTags() {
         let tag1 = Tag(name: "tag1")
         let tag2 = Tag(name: "tag2")
         let transactionMetaData = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [tag1, tag2])
-        XCTAssertEqual(String(describing: transactionMetaData),
-                       "\(dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\" \(String(describing: tag1)) \(String(describing: tag2))")
+        #expect(String(describing: transactionMetaData)
+            == "\(dateString) \(String(describing: flag)) \"\(payee)\" \"\(narration)\" \(String(describing: tag1)) \(String(describing: tag2))")
     }
 
-    func testEqual() {
+   @Test
+   func testEqual() {
         let transactionMetaData1 = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [])
-        XCTAssertEqual(transactionMetaData, transactionMetaData1)
+        #expect(transactionMetaData == transactionMetaData1)
     }
 
-    func testEqualWithTags() {
+   @Test
+   func testEqualWithTags() {
         let tag1 = Tag(name: "tag1")
         let tag2 = Tag(name: "tag2")
         let transactionMetaData1 = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [tag1, tag2])
         let transactionMetaData2 = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [tag1, tag2])
-        XCTAssertEqual(transactionMetaData1, transactionMetaData2)
+        #expect(transactionMetaData1 == transactionMetaData2)
     }
 
-    func testEqualRespectsMetaData() {
+   @Test
+   func testEqualRespectsMetaData() {
         let transactionMetaData1 = TransactionMetaData(date: date, payee: payee, narration: narration, flag: flag, tags: [], metaData: ["A": "B"])
-        XCTAssertNotEqual(transactionMetaData, transactionMetaData1)
+        #expect(transactionMetaData != transactionMetaData1)
     }
 
-    func testEqualRespectsDate() {
+   @Test
+   func testEqualRespectsDate() {
         let transactionMetaData1 = TransactionMetaData(date: date.addingTimeInterval(TimeInterval(1)), payee: payee, narration: narration, flag: flag, tags: [])
-        XCTAssertNotEqual(transactionMetaData, transactionMetaData1)
+        #expect(transactionMetaData != transactionMetaData1)
     }
 
-    func testEqualRespectsPayee() {
+   @Test
+   func testEqualRespectsPayee() {
         let transactionMetaData1 = TransactionMetaData(date: date, payee: payee + "1", narration: narration, flag: flag, tags: [])
-        XCTAssertNotEqual(transactionMetaData, transactionMetaData1)
+        #expect(transactionMetaData != transactionMetaData1)
     }
 
-    func testEqualRespectsNarration() {
+   @Test
+   func testEqualRespectsNarration() {
         let transactionMetaData1 = TransactionMetaData(date: date, payee: payee, narration: narration + "1", flag: flag, tags: [])
-        XCTAssertNotEqual(transactionMetaData, transactionMetaData1)
+        #expect(transactionMetaData != transactionMetaData1)
     }
 
-    func testEqualRespectsTags() {
+   @Test
+   func testEqualRespectsTags() {
         let tag1 = Tag(name: "tag1")
         let transactionMetaData1 = TransactionMetaData(date: date, payee: payee, narration: narration, flag: Flag.incomplete, tags: [tag1])
-        XCTAssertNotEqual(transactionMetaData, transactionMetaData1)
+        #expect(transactionMetaData != transactionMetaData1)
     }
 
 }

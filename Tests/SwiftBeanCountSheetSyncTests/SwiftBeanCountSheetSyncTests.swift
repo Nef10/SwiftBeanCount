@@ -1,6 +1,7 @@
 @testable import SwiftBeanCountSheetSync
-import XCTest
+import Testing
 
-final class SwiftBeanCountSheetSyncTests: XCTestCase {
+@Suite
+struct SwiftBeanCountSheetSyncTests {
 
 }

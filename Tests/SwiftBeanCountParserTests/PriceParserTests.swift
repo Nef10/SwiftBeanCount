@@ -6,11 +6,13 @@
 //  Copyright © 2018 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 import SwiftBeanCountModel
 @testable import SwiftBeanCountParser
-import XCTest
+import Testing
 
-final class PriceParserTests: XCTestCase {
+@Suite
+struct PriceParserTests {
 
     // swiftlint:disable:next force_try
     private let price = try! Price(date: TestUtils.date20170609,
@@ -29,43 +31,49 @@ final class PriceParserTests: XCTestCase {
     private let invalidPriceMissingSecondCurrency = "2017-06-09 price EUR 2.11"
     private let invalidPriceMissingCurrencies = "2017-06-09 price 2.11"
 
-    func testBasic() {
+   @Test
+   func testBasic() {
         let parsedPrice = PriceParser.parseFrom(line: basicPrice)
-        XCTAssertNotNil(parsedPrice)
-        XCTAssertEqual(parsedPrice, price)
+        #expect(parsedPrice != nil)
+        #expect(parsedPrice == price)
     }
 
-    func testComment() {
+   @Test
+   func testComment() {
         let parsedPrice = PriceParser.parseFrom(line: priceComment)
-        XCTAssertNotNil(parsedPrice)
-        XCTAssertEqual(parsedPrice, price)
+        #expect(parsedPrice != nil)
+        #expect(parsedPrice == price)
     }
 
-    func testWhitespace() {
+   @Test
+   func testWhitespace() {
         let parsedPrice = PriceParser.parseFrom(line: priceWhitespace)
-        XCTAssertNotNil(parsedPrice)
-        XCTAssertEqual(parsedPrice, price)
+        #expect(parsedPrice != nil)
+        #expect(parsedPrice == price)
     }
 
-    func testSpecialCharacter() {
+   @Test
+   func testSpecialCharacter() {
         let parsedPrice = PriceParser.parseFrom(line: priceSpecialCharacter)
-        XCTAssertNotNil(parsedPrice)
-        XCTAssertEqual(parsedPrice!.commoditySymbol, "💵")
-        XCTAssertEqual(parsedPrice!.amount.commoditySymbol, "💸")
+        #expect(parsedPrice != nil)
+        #expect(parsedPrice!.commoditySymbol == "💵")
+        #expect(parsedPrice!.amount.commoditySymbol == "💸")
     }
 
-    func testWholeNumber() {
+   @Test
+   func testWholeNumber() {
         let parsedPrice = PriceParser.parseFrom(line: priceWholeNumber)
-        XCTAssertNotNil(parsedPrice)
-        XCTAssertEqual(parsedPrice!.amount.number, 2)
-        XCTAssertEqual(parsedPrice!.amount.decimalDigits, 0)
+        #expect(parsedPrice != nil)
+        #expect(parsedPrice!.amount.number == 2)
+        #expect(parsedPrice!.amount.decimalDigits == 0)
     }
 
-    func testInvalid() {
-        XCTAssertNil(PriceParser.parseFrom(line: invalidPriceMissingNumber))
-        XCTAssertNil(PriceParser.parseFrom(line: invalidPriceMissingFirstCurrency))
-        XCTAssertNil(PriceParser.parseFrom(line: invalidPriceMissingSecondCurrency))
-        XCTAssertNil(PriceParser.parseFrom(line: invalidPriceMissingCurrencies))
+   @Test
+   func testInvalid() {
+        #expect(PriceParser.parseFrom(line: invalidPriceMissingNumber) == nil)
+        #expect(PriceParser.parseFrom(line: invalidPriceMissingFirstCurrency) == nil)
+        #expect(PriceParser.parseFrom(line: invalidPriceMissingSecondCurrency) == nil)
+        #expect(PriceParser.parseFrom(line: invalidPriceMissingCurrencies) == nil)
     }
 
 }

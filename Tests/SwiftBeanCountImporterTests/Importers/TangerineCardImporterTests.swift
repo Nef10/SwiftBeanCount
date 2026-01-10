@@ -6,38 +6,45 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class TangerineCardImporterTests: XCTestCase {
+@Suite
+struct TangerineCardImporterTests {
 
-    func testHeaders() {
-        XCTAssertEqual(TangerineCardImporter.headers,
-                       [["Transaction date", "Transaction", "Name", "Memo", "Amount"]])
+   @Test
+   func testHeaders() {
+        #expect(TangerineCardImporter.headers == [["Transaction date", "Transaction", "Name", "Memo", "Amount"]])
     }
 
-    func testImporterName() {
-        XCTAssertEqual(TangerineCardImporter.importerName, "Tangerine Credit Card")
+   @Test
+   func testImporterName() {
+        #expect(TangerineCardImporter.importerName == "Tangerine Credit Card")
     }
 
-    func testImporterType() {
-        XCTAssertEqual(TangerineCardImporter.importerType, "tangerine-card")
+   @Test
+   func testImporterType() {
+        #expect(TangerineCardImporter.importerType == "tangerine-card")
     }
 
-    func testHelpText() {
-        XCTAssertEqual(TangerineCardImporter.helpText,
-                       "Enables importing of downloaded CSV files from Tangerine Credit Cards.\n\nTo use add importer-type: \"tangerine-card\" to your account.")
+   @Test
+   func testHelpText() {
+        #expect(TangerineCardImporter.helpText
+            == "Enables importing of downloaded CSV files from Tangerine Credit Cards.\n\nTo use add importer-type: \"tangerine-card\" to your account.")
     }
 
-    func testImportName() throws {
-        XCTAssertEqual(
-            TangerineCardImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName,
+   @Test
+   func testImportName() throws {
+        #expect(
+            TangerineCardImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName ==
             "Tangerine Credit Card File TestName"
         )
     }
 
-    func testParseLine() throws {
+   @Test
+   func testParseLine() throws {
         let importer = TangerineCardImporter(ledger: nil,
                                              csvReader: try TestUtils.csvReader(content: """
 Transaction date,Transaction,Name,Memo,Amount
@@ -48,11 +55,11 @@ Transaction date,Transaction,Name,Memo,Amount
 
         importer.csvReader.next()
         let line = importer.parseLine()
-        XCTAssert(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
-        XCTAssertEqual(line.description.trimmingCharacters(in: .whitespaces), "Merchant VANCOUVER BC")
-        XCTAssertEqual(line.amount, Decimal(string: "-39.20", locale: Locale(identifier: "en_CA"))!)
-        XCTAssertEqual(line.payee, "")
-        XCTAssertNil(line.price)
+        #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
+        #expect(line.description.trimmingCharacters(in: .whitespaces) == "Merchant VANCOUVER BC")
+        #expect(line.amount == Decimal(string: "-39.20", locale: Locale(identifier: "en_CA"))!)
+        #expect(line.payee.isEmpty)
+        #expect(line.price == nil)
     }
 
 }

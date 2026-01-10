@@ -6,34 +6,41 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class SimpliiImporterTests: XCTestCase {
+@Suite
+struct SimpliiImporterTests {
 
-    func testHeaders() {
-        XCTAssertEqual(SimpliiImporter.headers, [["Date", "Transaction Details", "Funds Out", "Funds In"]])
+   @Test
+   func testHeaders() {
+        #expect(SimpliiImporter.headers == [["Date", "Transaction Details", "Funds Out", "Funds In"]])
     }
 
-    func testImporterName() {
-        XCTAssertEqual(SimpliiImporter.importerName, "Simplii")
+   @Test
+   func testImporterName() {
+        #expect(SimpliiImporter.importerName == "Simplii")
     }
 
-    func testImporterType() {
-        XCTAssertEqual(SimpliiImporter.importerType, "simplii")
+   @Test
+   func testImporterType() {
+        #expect(SimpliiImporter.importerType == "simplii")
     }
 
-    func testHelpText() {
-        XCTAssertEqual(SimpliiImporter.helpText,
-                       "Enables importing of downloaded CSV files from Simplii Accounts.\n\nTo use add importer-type: \"simplii\" to your account.")
+   @Test
+   func testHelpText() {
+        #expect(SimpliiImporter.helpText == "Enables importing of downloaded CSV files from Simplii Accounts.\n\nTo use add importer-type: \"simplii\" to your account.")
     }
 
-    func testImportName() throws {
-        XCTAssertEqual(SimpliiImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName, "Simplii File TestName")
+   @Test
+   func testImportName() throws {
+        #expect(SimpliiImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName == "Simplii File TestName")
     }
 
-    func testParseLine() throws {
+   @Test
+   func testParseLine() throws {
         let importer = SimpliiImporter(ledger: nil,
                                        csvReader: try TestUtils.csvReader(content: """
 Date, Transaction Details, Funds Out, Funds In
@@ -44,14 +51,15 @@ Date, Transaction Details, Funds Out, Funds In
 
         importer.csvReader.next()
         let line = importer.parseLine()
-        XCTAssert(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
-        XCTAssertEqual(line.description.trimmingCharacters(in: .whitespaces), "PAYROLL DEPOSIT COMPANY INC.")
-        XCTAssertEqual(line.amount, Decimal(string: "123.45", locale: Locale(identifier: "en_CA"))!)
-        XCTAssertEqual(line.payee, "")
-        XCTAssertNil(line.price)
+        #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20170610))
+        #expect(line.description.trimmingCharacters(in: .whitespaces) == "PAYROLL DEPOSIT COMPANY INC.")
+        #expect(line.amount == Decimal(string: "123.45", locale: Locale(identifier: "en_CA"))!)
+        #expect(line.payee.isEmpty)
+        #expect(line.price == nil)
     }
 
-    func testParseLineAmountOut() throws {
+   @Test
+   func testParseLineAmountOut() throws {
         let importer = SimpliiImporter(ledger: nil,
                                        csvReader: try TestUtils.csvReader(content: """
 Date, Transaction Details, Funds Out, Funds In
@@ -62,13 +70,14 @@ Date, Transaction Details, Funds Out, Funds In
 
         importer.csvReader.next()
         let line = importer.parseLine()
-        XCTAssertEqual(line.description.trimmingCharacters(in: .whitespaces), "BANK TO BANK TSF EXT TSF")
-        XCTAssertEqual(line.amount, Decimal(string: "-1234.56", locale: Locale(identifier: "en_CA"))!)
-        XCTAssertEqual(line.payee, "")
-        XCTAssertNil(line.price)
+        #expect(line.description.trimmingCharacters(in: .whitespaces) == "BANK TO BANK TSF EXT TSF")
+        #expect(line.amount == Decimal(string: "-1234.56", locale: Locale(identifier: "en_CA"))!)
+        #expect(line.payee.isEmpty)
+        #expect(line.price == nil)
     }
 
-    func testParseLineInterest() throws {
+   @Test
+   func testParseLineInterest() throws {
         let importer = SimpliiImporter(ledger: nil,
                                        csvReader: try TestUtils.csvReader(content: """
 Date, Transaction Details, Funds Out, Funds In
@@ -79,11 +88,11 @@ Date, Transaction Details, Funds Out, Funds In
 
         importer.csvReader.next()
         let line = importer.parseLine()
-        XCTAssert(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20200605))
-        XCTAssertEqual(line.description.trimmingCharacters(in: .whitespaces), "INTEREST")
-        XCTAssertEqual(line.amount, Decimal(string: "0.69", locale: Locale(identifier: "en_CA"))!)
-        XCTAssertEqual(line.payee, "Simplii")
-        XCTAssertNil(line.price)
+        #expect(Calendar.current.isDate(line.date, inSameDayAs: TestUtils.date20200605))
+        #expect(line.description.trimmingCharacters(in: .whitespaces) == "INTEREST")
+        #expect(line.amount == Decimal(string: "0.69", locale: Locale(identifier: "en_CA"))!)
+        #expect(line.payee == "Simplii")
+        #expect(line.price == nil)
     }
 
 }

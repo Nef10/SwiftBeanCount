@@ -10,21 +10,21 @@ import CSV
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
-import XCTest
+import Testing
 
 class TestStorage: SettingsStorage {
 
     var storage = [String: Any]()
 
-    func set(_ value: Any?, forKey defaultName: String) {
+   func set(_ value: Any?, forKey defaultName: String) {
         storage[defaultName] = value
     }
 
-    func string(forKey defaultName: String) -> String? {
+   func string(forKey defaultName: String) -> String? {
         storage[defaultName] as? String
     }
 
-    func dictionary(forKey defaultName: String) -> [String: Any]? { // swiftlint:disable:this discouraged_optional_collection
+   func dictionary(forKey defaultName: String) -> [String: Any]? { // swiftlint:disable:this discouraged_optional_collection
         storage[defaultName] as? [String: Any]
     }
 }
@@ -189,11 +189,7 @@ enum TestUtils {
         return ledger
     }
 
-}
-
-extension XCTestCase {
-
-    func temporaryFileURL() -> URL {
+   static func temporaryFileURL() -> URL {
         let directory = NSTemporaryDirectory()
         let url = URL(fileURLWithPath: directory).appendingPathComponent(UUID().uuidString)
 
@@ -203,21 +199,21 @@ extension XCTestCase {
                 do {
                     try fileManager.removeItem(at: url)
                 } catch {
-                    XCTFail("Error deleting temporary file: \(error)")
+                    Issue.record("Error deleting temporary file: \(error)")
                 }
             }
-            XCTAssertFalse(fileManager.fileExists(atPath: url.path))
+            #expect(!(fileManager.fileExists(atPath: url.path)))
         }
 
         return url
     }
 
-    func createFile(at url: URL, content: String) {
+   static func createFile(at url: URL, content: String) {
         do {
             try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
             try content.write(to: url, atomically: true, encoding: .utf8)
         } catch {
-            XCTFail("Error writing temporary file: \(error)")
+            Issue.record("Error writing temporary file: \(error)")
         }
     }
 

@@ -9,7 +9,7 @@
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
-import XCTest
+import Testing
 
 private let balance = """
 
@@ -123,102 +123,110 @@ private func balancePricesResult(fundSymbol: String = TestUtils.fundSymbol, curr
     """
 }
 
-final class ManuLifeImporterTests: XCTestCase {
+@Suite
+struct ManuLifeImporterTests {
 
-    private var parkingAccountDelegate: InputProviderDelegate! // swiftlint:disable:this weak_delegate
+    private var parkingAccountDelegate: InputProviderDelegate!
 
     override func setUpWithError() throws {
         parkingAccountDelegate = InputProviderDelegate(names: ["Account"], types: [.text([])], returnValues: [TestUtils.parking.fullName])
         try super.setUpWithError()
     }
 
-    func testImporterName() {
-        XCTAssertEqual(ManuLifeImporter.importerName, "ManuLife")
+   @Test
+   func testImporterName() {
+        #expect(ManuLifeImporter.importerName == "ManuLife")
     }
 
-    func testImporterType() {
-        XCTAssertEqual(ManuLifeImporter.importerType, "manulife")
+   @Test
+   func testImporterType() {
+        #expect(ManuLifeImporter.importerType == "manulife")
     }
 
-    func testHelpText() {
-        XCTAssert(ManuLifeImporter.helpText.contains("importer-type: \"manulife\""))
+   @Test
+   func testHelpText() {
+        #expect(ManuLifeImporter.helpText.contains("importer-type: \"manulife\""))
     }
 
-    func testImportName() {
-        XCTAssertEqual(loadedImporter().importName, "ManuLife Text")
+   @Test
+   func testImportName() {
+        #expect(loadedImporter().importName == "ManuLife Text")
     }
 
-    func testParseEmpty() {
+   @Test
+   func testParseEmpty() {
         let importer = loadedImporter()
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssertEqual(importer.balancesToImport(), [])
-        XCTAssertEqual(importer.pricesToImport(), [])
+        #expect(importer.nextTransaction() == nil)
+        #expect(importer.balancesToImport().isEmpty)
+        #expect(importer.pricesToImport().isEmpty)
     }
 
-    func testParseBalance() throws {
+   @Test
+   func testParseBalance() throws {
         let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), balance: balance)
-        XCTAssertNil(importer.nextTransaction())
+        #expect(importer.nextTransaction() == nil)
         let balances = importer.balancesToImport()
         let prices = importer.pricesToImport()
-        XCTAssertEqual(balances.count, 4)
-        XCTAssertEqual(prices.count, 2)
+        #expect(balances.count == 4)
+        #expect(prices.count == 2)
 
-        XCTAssertEqual(
-            "\(balances.map { "\($0)" }.joined(separator: "\n"))\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))",
+        #expect(
+            "\(balances.map { "\($0)" }.joined(separator: "\n"))\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))" ==
             "\(balanceResult())\n\n\(balancePricesResult())"
         )
-        XCTAssert(parkingAccountDelegate.verified)
+        #expect(parkingAccountDelegate.verified)
     }
 
-    func testTransaction() throws {
+   @Test
+   func testTransaction() throws {
         let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), transaction: transaction)
         let transaction = importer.nextTransaction()
-        XCTAssertNotNil(transaction)
-        XCTAssertEqual(transaction!.originalDescription, "")
-        XCTAssertFalse(transaction!.shouldAllowUserToEdit)
-        XCTAssertNil(transaction!.accountName)
-        XCTAssertNil(importer.nextTransaction())
+        #expect(transaction != nil)
+        #expect(transaction!.originalDescription.isEmpty)
+        #expect(!(transaction!.shouldAllowUserToEdit))
+        #expect(transaction!.accountName == nil)
+        #expect(importer.nextTransaction() == nil)
         let prices = importer.pricesToImport()
-        XCTAssertTrue(importer.balancesToImport().isEmpty)
-        XCTAssertEqual(prices.count, 2)
+        #expect(importer.balancesToImport().isEmpty)
+        #expect(prices.count == 2)
 
-        XCTAssertEqual(
-            "\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))",
+        #expect(
+            "\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))" ==
             "\(transactionResult())\n\n\(transactionPricesResult())"
         )
-        XCTAssert(parkingAccountDelegate.verified)
+        #expect(parkingAccountDelegate.verified)
     }
 
-    func testBalanceAndTransaction() throws {
+   @Test
+   func testBalanceAndTransaction() throws {
         let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), transaction: transaction, balance: balance)
         let transaction = importer.nextTransaction()
-        XCTAssertNotNil(transaction)
+        #expect(transaction != nil)
         let balances = importer.balancesToImport()
         let prices = importer.pricesToImport()
-        XCTAssertEqual(balances.count, 4)
-        XCTAssertEqual(prices.count, 4)
-        XCTAssertEqual(
-            "\(transaction!.transaction)\n\n\(balances.map { "\($0)" }.joined(separator: "\n"))\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))",
+        #expect(balances.count == 4)
+        #expect(prices.count == 4)
+        #expect(
+            "\(transaction!.transaction)\n\n\(balances.map { "\($0)" }.joined(separator: "\n"))\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))" ==
             "\(transactionResult())\n\n\(balanceResult())\n\n\(transactionPricesResult())\n\(balancePricesResult())"
         )
-        XCTAssert(parkingAccountDelegate.verified)
+        #expect(parkingAccountDelegate.verified)
     }
 
-    func testNoLedger() {
+   @Test
+   func testNoLedger() {
         let importer = loadedImporter(transaction: transaction, balance: balance)
         let transaction = importer.nextTransaction()
-        XCTAssertNotNil(transaction)
+        #expect(transaction != nil)
         let balances = importer.balancesToImport()
         let prices = importer.pricesToImport()
-        XCTAssertEqual(balances.count, 0)
-        XCTAssertEqual(prices.count, 4)
-        XCTAssertEqual(
-            "\(transaction!.transaction)\n\n\(balances.map { "\($0)" }.joined(separator: "\n"))\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))",
+        #expect(balances.isEmpty)
+        #expect(prices.count == 4)
+        #expect(
+            "\(transaction!.transaction)\n\n\(balances.map { "\($0)" }.joined(separator: "\n"))\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))" ==
             """
             2020-06-05 * "" ""
               Assets:Cash:Parking -149.28 CAD
-
-
 
             \(transactionPricesResult(fundSymbol: "5678 ML Easy BB q9", currencySymbol: "CAD"))
             \(balancePricesResult(fundSymbol: "5678 ML Easy BB q9", currencySymbol: "CAD"))
@@ -226,7 +234,8 @@ final class ManuLifeImporterTests: XCTestCase {
         )
     }
 
-    func testBalanceAndPriceDuplicates() throws {
+   @Test
+   func testBalanceAndPriceDuplicates() throws {
         let ledger = try TestUtils.ledgerManuLife()
         let balanceAmount = Amount(number: Decimal(8.209_60), commoditySymbol: TestUtils.fundSymbol, decimalDigits: 5)
         let balanceObject = Balance(date: date, accountName: try AccountName("Assets:Cash:Employee:Voluntary:\(TestUtils.fundSymbol)"), amount: balanceAmount)
@@ -241,21 +250,22 @@ final class ManuLifeImporterTests: XCTestCase {
         _ = importer.nextTransaction()
         let balances = importer.balancesToImport()
         let prices = importer.pricesToImport()
-        XCTAssertEqual(balances.count, 3)
-        XCTAssertEqual(prices.count, 2)
-        XCTAssertFalse(balances.contains(balanceObject))
-        XCTAssertFalse(prices.contains(price1))
-        XCTAssertFalse(prices.contains(price2))
+        #expect(balances.count == 3)
+        #expect(prices.count == 2)
+        #expect(!(balances.contains(balanceObject)))
+        #expect(!(prices.contains(price1)))
+        #expect(!(prices.contains(price2)))
     }
 
-    func testTransactionSettings() throws {
+   @Test
+   func testTransactionSettings() throws {
         let ledger = try TestUtils.ledgerManuLife(employeeBasic: "2.5", employerBasic: "3.25", employerMatch: "2.5", employeeVoluntary: "1.75")
         let importer = loadedImporter(ledger: ledger, transaction: transaction)
         let transaction = importer.nextTransaction()
-        XCTAssertNotNil(transaction)
-        XCTAssertTrue(importer.balancesToImport().isEmpty)
+        #expect(transaction != nil)
+        #expect(importer.balancesToImport().isEmpty)
         let prices = importer.pricesToImport()
-        XCTAssertEqual("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))", """
+        #expect("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))" == """
             2020-06-05 * "" ""
               Assets:Cash:Parking -149.28 USD
               Assets:Cash:Employee:Basic:\(TestUtils.fundSymbol) 3.82386 \(TestUtils.fundSymbol) {9.148 USD}
@@ -268,15 +278,16 @@ final class ManuLifeImporterTests: XCTestCase {
             """)
     }
 
-    func testTransactionSettingsZero1() throws {
+   @Test
+   func testTransactionSettingsZero1() throws {
         let ledger = try TestUtils.ledgerManuLife(employeeBasic: "2.5", employerBasic: "5", employerMatch: "2.5", employeeVoluntary: "0")
         let importer = loadedImporter(ledger: ledger, transaction: transaction)
         let transaction = importer.nextTransaction()
-        XCTAssertNotNil(transaction)
-        XCTAssertTrue(importer.balancesToImport().isEmpty)
+        #expect(transaction != nil)
+        #expect(importer.balancesToImport().isEmpty)
         let prices = importer.pricesToImport()
-        XCTAssertEqual(prices.count, 2)
-        XCTAssertEqual("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))", """
+        #expect(prices.count == 2)
+        #expect("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))" == """
             2020-06-05 * "" ""
               Assets:Cash:Parking -149.28 USD
               Assets:Cash:Employee:Basic:\(TestUtils.fundSymbol) 3.82386 \(TestUtils.fundSymbol) {9.148 USD}
@@ -288,14 +299,15 @@ final class ManuLifeImporterTests: XCTestCase {
             """)
     }
 
-    func testTransactionSettingsZero2() throws {
+   @Test
+   func testTransactionSettingsZero2() throws {
         let ledger = try TestUtils.ledgerManuLife(employeeBasic: "0", employerBasic: "0", employerMatch: "0", employeeVoluntary: "1")
         let importer = loadedImporter(ledger: ledger, transaction: transaction)
         let transaction = importer.nextTransaction()
-        XCTAssertNotNil(transaction)
-        XCTAssertTrue(importer.balancesToImport().isEmpty)
+        #expect(transaction != nil)
+        #expect(importer.balancesToImport().isEmpty)
         let prices = importer.pricesToImport()
-        XCTAssertEqual("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))", """
+        #expect("\(transaction!.transaction)\n\n\(prices.map { "\($0)" }.joined(separator: "\n"))" == """
             2020-06-05 * "" ""
               Assets:Cash:Parking -149.28 USD
               Assets:Cash:Employee:Voluntary:\(TestUtils.fundSymbol) 15.29544 \(TestUtils.fundSymbol) {9.148 USD}
@@ -305,17 +317,19 @@ final class ManuLifeImporterTests: XCTestCase {
             """)
     }
 
-    func testTransactionGarbage() throws {
+   @Test
+   func testTransactionGarbage() throws {
         let strings = ["This is not a valid Transaction", transactionInvalidDate]
         for string in strings {
             let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), transaction: string)
-            XCTAssertNil(importer.nextTransaction())
-            XCTAssertEqual(importer.balancesToImport(), [])
-            XCTAssertEqual(importer.pricesToImport(), [])
+            #expect(importer.nextTransaction() == nil)
+            #expect(importer.balancesToImport().isEmpty)
+            #expect(importer.pricesToImport().isEmpty)
         }
     }
 
-    func testGetPossibleDuplicateFor() throws {
+   @Test
+   func testGetPossibleDuplicateFor() throws {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
         let ledger = try TestUtils.ledgerManuLife()
@@ -331,11 +345,12 @@ final class ManuLifeImporterTests: XCTestCase {
 
         let importer = loadedImporter(ledger: ledger, transaction: transaction)
         let importedTransaction = importer.nextTransaction()
-        XCTAssertNotNil(importedTransaction)
-        XCTAssertEqual(importedTransaction!.possibleDuplicate, transaction1)
+        #expect(importedTransaction != nil)
+        #expect(importedTransaction!.possibleDuplicate == transaction1)
     }
 
-    func testGetPossibleDuplicateForNone() throws {
+   @Test
+   func testGetPossibleDuplicateForNone() throws {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
         let ledger = try TestUtils.ledgerManuLife()
@@ -344,8 +359,8 @@ final class ManuLifeImporterTests: XCTestCase {
 
         let importer = loadedImporter(ledger: ledger, transaction: transaction)
         let importedTransaction = importer.nextTransaction()
-        XCTAssertNotNil(importedTransaction)
-        XCTAssertNil(importedTransaction!.possibleDuplicate)
+        #expect(importedTransaction != nil)
+        #expect(importedTransaction!.possibleDuplicate == nil)
     }
 
     private func loadedImporter(ledger: Ledger? = nil, transaction: String = "", balance: String = "") -> ManuLifeImporter {

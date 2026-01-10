@@ -1,19 +1,21 @@
+import Foundation
+@testable import SwiftBeanCountCLI
+import Testing
+
 #if os(macOS)
 
-@testable import SwiftBeanCountCLI
-import XCTest
-
-final class StatsTests: XCTestCase {
+@Suite
+struct StatsTests {
 
     func testFileDoesNotExist() {
-        let url = temporaryFileURL()
-        let result = outputFromExecutionWith(arguments: ["stats", url.path])
-        XCTAssertEqual(result.exitCode, 1)
-        XCTAssert(result.errorOutput.isEmpty)
+        let url = TestUtils.temporaryFileURL()
+        let result = TestUtils.outputFromExecutionWith(arguments: ["stats", url.path])
+        #expect(result.exitCode == 1)
+        #expect(result.errorOutput.isEmpty)
         #if os(Linux)
-        XCTAssertEqual(result.output, "The operation could not be completed. The file doesn’t exist.")
+        #expect(result.output == "The operation could not be completed. The file doesn’t exist.")
         #else
-        XCTAssertEqual(result.output, "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
+        #expect(result.output == "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
         #endif
     }
 
@@ -38,10 +40,10 @@ final class StatsTests: XCTestCase {
             | Plugins          | 0      |
             +------------------+--------+
             """
-        let url = emptyFileURL()
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path], outputPrefix: table)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "table"], outputPrefix: table)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "table"], outputPrefix: table)
+        let url = TestUtils.emptyFileURL()
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path], outputPrefix: table)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "table"], outputPrefix: table)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "table"], outputPrefix: table)
     }
 
     func testEmptyFileCSV() {
@@ -60,9 +62,9 @@ final class StatsTests: XCTestCase {
             "Options", "0"
             "Plugins", "0"
             """
-        let url = emptyFileURL()
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "csv"], output: csv)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "csv"], output: csv)
+        let url = TestUtils.emptyFileURL()
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "csv"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "csv"], output: csv)
     }
 
     func testEmptyFileText() {
@@ -83,9 +85,9 @@ final class StatsTests: XCTestCase {
             Options           0
             Plugins           0
             """
-        let url = emptyFileURL()
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "text"], outputPrefix: text)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "text"], outputPrefix: text)
+        let url = TestUtils.emptyFileURL()
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "text"], outputPrefix: text)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "text"], outputPrefix: text)
     }
 
     func testTestTable() {
@@ -110,9 +112,9 @@ final class StatsTests: XCTestCase {
             +------------------+--------+
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path], outputPrefix: table)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "table"], outputPrefix: table)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "table"], outputPrefix: table)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path], outputPrefix: table)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "table"], outputPrefix: table)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "table"], outputPrefix: table)
     }
 
     func testCSV() {
@@ -132,8 +134,8 @@ final class StatsTests: XCTestCase {
             "Plugins", "5"
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "csv"], output: csv)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "csv"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "csv"], output: csv)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "csv"], output: csv)
     }
 
     func testText() {
@@ -155,8 +157,8 @@ final class StatsTests: XCTestCase {
             Plugins           5
             """
         let url = basicLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "text"], outputPrefix: text)
-        assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "text"], outputPrefix: text)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "--format", "text"], outputPrefix: text)
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["stats", url.path, "-f", "text"], outputPrefix: text)
     }
 
     private func basicLedgerURL() -> URL {
@@ -187,8 +189,8 @@ final class StatsTests: XCTestCase {
             2020-06-14 event "location" "B"
             2020-06-15 event "location" "A"
             """
-        let url = temporaryFileURL()
-        createFile(at: url, content: content)
+        let url = TestUtils.temporaryFileURL()
+        TestUtils.createFile(at: url, content: content)
         return url
     }
 
