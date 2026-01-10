@@ -20,6 +20,7 @@ let package = Package(
         .library(name: "SwiftBeanCountParser", targets: ["SwiftBeanCountParser"]),
         .library(name: "SwiftBeanCountParserUtils", targets: ["SwiftBeanCountParserUtils"]),
         .library(name: "SwiftBeanCountTax", targets: ["SwiftBeanCountTax"]),
+        .library(name: "SwiftBeanCountStatements", targets: ["SwiftBeanCountStatements"]),
         .library(name: "SwiftBeanCountRogersBankMapper", targets: ["SwiftBeanCountRogersBankMapper"]),
         .library(name: "SwiftBeanCountCompassCardMapper", targets: ["SwiftBeanCountCompassCardMapper"]),
         .library(name: "SwiftBeanCountTangerineMapper", targets: ["SwiftBeanCountTangerineMapper"]),
