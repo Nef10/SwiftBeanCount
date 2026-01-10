@@ -13,9 +13,6 @@ import Foundation
 import SwiftBeanCountModel
 import XCTest
 
-extension ManuLifeImporterError: EquatableError {
-}
-
 private let balance = """
 
     Investment details
@@ -443,4 +440,7 @@ final class ManuLifeImporterTests: XCTestCase {
         importer.load()
         return importer
     }
+}
+
+extension ManuLifeImporterError: EquatableError {
 }
