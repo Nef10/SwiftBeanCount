@@ -1,17 +1,20 @@
+import Foundation
 import RogersBankDownloader
 @testable import SwiftBeanCountRogersBankMapper
-import XCTest
+import Testing
 
-final class RogersBankMappingErrorTests: XCTestCase {
+@Suite
+struct RogersBankMappingErrorTests {
 
-    func testSRogersBankMappingErrorString() {
-        XCTAssertEqual(
-            "\(RogersBankMappingError.missingAccount(lastFour: "4320").localizedDescription)",
+    @Test
+    func rogersBankMappingErrorString() {
+        #expect(
+            "\(RogersBankMappingError.missingAccount(lastFour: "4320").localizedDescription)" ==
             "The account with the last four digits 4320 was not found in your ledger. Please make sure you add importer-type: \"rogers\" and last-four: \"4320\" to it."
         )
         let activity = TestActivity()
-        XCTAssertEqual(
-            "\(RogersBankMappingError.missingActivityData(activity: activity, key: "keyName").localizedDescription)",
+        #expect(
+            "\(RogersBankMappingError.missingActivityData(activity: activity, key: "keyName").localizedDescription)" ==
             "A downloaded activty ist missing keyName data: \(activity)"
         )
     }
