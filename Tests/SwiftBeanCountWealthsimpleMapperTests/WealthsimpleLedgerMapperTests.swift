@@ -452,7 +452,7 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         transaction.netCashAmount = transaction.quantity
         transaction.marketPriceAmount = "1.00"
         try? ledger.add(SAccount(name: try AccountName("Assets:Cash"),
-                                      metaData: ["\(MetaDataKeys.prefix)\("\(transaction.transactionType)".camelCaseToKebabCase())": accountNumber]))
+                                 metaData: ["\(MetaDataKeys.prefix)\("\(transaction.transactionType)".camelCaseToKebabCase())": accountNumber]))
         try? ledger.add(SAccount(name: assetAccountName, commoditySymbol: roomCommodity, metaData: ["\(MetaDataKeys.contributionRoom)": accountNumber]))
         try? ledger.add(SAccount(name: expenseAccountName, commoditySymbol: roomCommodity, metaData: ["\(MetaDataKeys.contributionRoom)": accountNumber]))
 
