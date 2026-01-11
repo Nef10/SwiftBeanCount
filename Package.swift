@@ -1,12 +1,19 @@
 // swift-tools-version:6.2
 
+import class Foundation.ProcessInfo
 import PackageDescription
 
-let swiftSettings: [SwiftSetting] = [
+var swiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v5),
-    .treatAllWarnings(as: .error),
-    .treatWarning("SendableClosureCaptures", as: .warning),
 ]
+
+// Workaround for https://forums.swift.org/t/warnings-as-errors-in-sub-packages/70810/24
+if ProcessInfo.processInfo.environment["CI"] == "true" {
+    swiftSettings.append(contentsOf: [
+       .treatAllWarnings(as: .error),
+       .treatWarning("SendableClosureCaptures", as: .warning),
+    ])
+}
 
 let package = Package(
     name: "SwiftBeanCount",
@@ -20,6 +27,7 @@ let package = Package(
         .library(name: "SwiftBeanCountParser", targets: ["SwiftBeanCountParser"]),
         .library(name: "SwiftBeanCountParserUtils", targets: ["SwiftBeanCountParserUtils"]),
         .library(name: "SwiftBeanCountTax", targets: ["SwiftBeanCountTax"]),
+        .library(name: "SwiftBeanCountStatements", targets: ["SwiftBeanCountStatements"]),
         .library(name: "SwiftBeanCountRogersBankMapper", targets: ["SwiftBeanCountRogersBankMapper"]),
         .library(name: "SwiftBeanCountCompassCardMapper", targets: ["SwiftBeanCountCompassCardMapper"]),
         .library(name: "SwiftBeanCountTangerineMapper", targets: ["SwiftBeanCountTangerineMapper"]),
