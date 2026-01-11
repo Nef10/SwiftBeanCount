@@ -1,10 +1,13 @@
+import Foundation
 import SwiftBeanCountModel
 @testable import SwiftBeanCountTax
-import XCTest
+import Testing
 
-final class SaleTests: XCTestCase {
+@Suite
+struct SaleTests {
 
-    func testDescriptionWithName() {
+   @Test
+   func descriptionWithName() {
         let date = Date(timeIntervalSince1970: 1_650_013_015)
         let sale = Sale(date: date,
                         symbol: "STOCK",
@@ -13,10 +16,11 @@ final class SaleTests: XCTestCase {
                         proceeds: Amount(number: 100, commoditySymbol: "USD").multiCurrencyAmount,
                         gain: Amount(number: 10, commoditySymbol: "CAD").multiCurrencyAmount,
                         provider: "Bank")
-        XCTAssertEqual(sale.description, "2022-04-15 STOCK 4 Stock Company 100.00 USD 10.00 CAD")
+        #expect(sale.description == "2022-04-15 STOCK 4 Stock Company 100.00 USD 10.00 CAD")
     }
 
-    func testDescriptionWithoutName() {
+   @Test
+   func descriptionWithoutName() {
         let date = Date(timeIntervalSince1970: 1_650_013_015)
         let sale = Sale(date: date,
                         symbol: "STOCK",
@@ -25,7 +29,7 @@ final class SaleTests: XCTestCase {
                         proceeds: Amount(number: 100, commoditySymbol: "USD").multiCurrencyAmount,
                         gain: Amount(number: 10, commoditySymbol: "CAD").multiCurrencyAmount,
                         provider: "Bank")
-        XCTAssertEqual(sale.description, "2022-04-15 STOCK 4  100.00 USD 10.00 CAD")
+        #expect(sale.description == "2022-04-15 STOCK 4  100.00 USD 10.00 CAD")
     }
 
 }
