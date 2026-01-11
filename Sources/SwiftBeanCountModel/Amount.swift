@@ -74,7 +74,7 @@ extension Amount: CustomStringConvertible {
             return min
         }
 
-        fatalError("Unable to format amountString for number: \(number) with decimalDigits: \(decimalDigits)")
+        fatalError("Unable to format amountString for number: \(number) with decimalDigits: \(decimalDigits). Min decimal digits: \(minDecimalDigits), Max decimal digits: \(maxDecimalDigits)")
 #endif
     }
 
