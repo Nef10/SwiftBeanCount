@@ -6,6 +6,8 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+// swiftlint:disable file_length
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
@@ -70,6 +72,16 @@ private let transactionInvalidDate = """
     Total		9.36
     """
 
+private let invalidTransactionText = """
+    This is completely invalid transaction text
+    that should not parse to anything meaningful
+    """
+
+private let invalidBalanceText = """
+    This is completely invalid balance text
+    that should not parse to anything meaningful
+    """
+
 private func transactionResult(fundSymbol: String = TestUtils.fundSymbol, currencySymbol: String = TestUtils.usd) -> String {
     """
     2020-06-05 * "" ""
@@ -123,6 +135,7 @@ private func balancePricesResult(fundSymbol: String = TestUtils.fundSymbol, curr
     """
 }
 
+// swiftlint:disable:next type_body_length
 final class ManuLifeImporterTests: XCTestCase {
 
     private var parkingAccountDelegate: InputProviderDelegate! // swiftlint:disable:this weak_delegate
@@ -308,7 +321,18 @@ final class ManuLifeImporterTests: XCTestCase {
     func testTransactionGarbage() throws {
         let strings = ["This is not a valid Transaction", transactionInvalidDate]
         for string in strings {
-            let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), transaction: string)
+            // These invalid strings should now trigger error callbacks
+            let errorDelegate = ErrorCheckDelegate { error in
+                if let manuLifeError = error as? ManuLifeImporterError {
+                    return manuLifeError == .failedToParseTransaction(string)
+                }
+                return false
+            }
+            let ledger = try TestUtils.ledgerManuLife()
+            let importer = ManuLifeImporter(ledger: ledger, transaction: string, balance: "")
+            importer.delegate = errorDelegate
+            importer.load()
+            XCTAssert(errorDelegate.verified, "Expected error to be reported for invalid transaction: \(string)")
             XCTAssertNil(importer.nextTransaction())
             XCTAssertEqual(importer.balancesToImport(), [])
             XCTAssertEqual(importer.pricesToImport(), [])
@@ -348,10 +372,80 @@ final class ManuLifeImporterTests: XCTestCase {
         XCTAssertNil(importedTransaction!.possibleDuplicate)
     }
 
+    func testInvalidTransactionText() throws {
+        let errorDelegate = ErrorDelegate<ManuLifeImporterError>(error: .failedToParseTransaction(invalidTransactionText))
+        let ledger = try TestUtils.ledgerManuLife()
+        let importer = ManuLifeImporter(ledger: ledger, transaction: invalidTransactionText, balance: "")
+        importer.delegate = errorDelegate
+        importer.load()
+        XCTAssert(errorDelegate.verified)
+        XCTAssertNil(importer.nextTransaction())
+        XCTAssertEqual(importer.balancesToImport(), [])
+        XCTAssertEqual(importer.pricesToImport(), [])
+    }
+
+    func testInvalidBalanceText() throws {
+        let errorDelegate = ErrorDelegate<ManuLifeImporterError>(error: .failedToParseBalance(invalidBalanceText))
+        let ledger = try TestUtils.ledgerManuLife()
+        let importer = ManuLifeImporter(ledger: ledger, transaction: "", balance: invalidBalanceText)
+        importer.delegate = errorDelegate
+        importer.load()
+        XCTAssert(errorDelegate.verified)
+        XCTAssertNil(importer.nextTransaction())
+        XCTAssertEqual(importer.balancesToImport(), [])
+        XCTAssertEqual(importer.pricesToImport(), [])
+    }
+
+    func testOnlyBalanceTextPassedNoTransactionError() throws {
+        // When only balance text is passed, should not error for missing transaction
+        let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), balance: balance)
+        XCTAssertNil(importer.nextTransaction())
+        let balances = importer.balancesToImport()
+        XCTAssertEqual(balances.count, 4)
+        XCTAssert(parkingAccountDelegate.verified)
+    }
+
+    func testOnlyTransactionTextPassedNoBalanceError() throws {
+        // When only transaction text is passed, should not error for missing balance
+        let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), transaction: transaction)
+        let importedTransaction = importer.nextTransaction()
+        XCTAssertNotNil(importedTransaction)
+        XCTAssertTrue(importer.balancesToImport().isEmpty)
+        XCTAssert(parkingAccountDelegate.verified)
+    }
+
+    func testInvalidTransactionAndBalanceText() throws {
+        // Should error for both when both are invalid
+        var receivedErrors: [ManuLifeImporterError] = []
+        let errorDelegate = ErrorCheckDelegate { error in
+            if let manuLifeError = error as? ManuLifeImporterError {
+                receivedErrors.append(manuLifeError)
+                return true
+            }
+            return false
+        }
+        let ledger = try TestUtils.ledgerManuLife()
+        let importer = ManuLifeImporter(ledger: ledger, transaction: invalidTransactionText, balance: invalidBalanceText)
+        importer.delegate = errorDelegate
+        importer.load()
+
+        // Verify both errors were reported
+        XCTAssertEqual(receivedErrors.count, 2, "Expected 2 errors to be reported")
+        XCTAssert(receivedErrors.contains(.failedToParseTransaction(invalidTransactionText)), "Expected transaction error")
+        XCTAssert(receivedErrors.contains(.failedToParseBalance(invalidBalanceText)), "Expected balance error")
+
+        XCTAssertNil(importer.nextTransaction())
+        XCTAssertEqual(importer.balancesToImport(), [])
+        XCTAssertEqual(importer.pricesToImport(), [])
+    }
+
     private func loadedImporter(ledger: Ledger? = nil, transaction: String = "", balance: String = "") -> ManuLifeImporter {
         let importer = ManuLifeImporter(ledger: ledger, transaction: transaction, balance: balance)
         importer.delegate = parkingAccountDelegate
         importer.load()
         return importer
     }
+}
+
+extension ManuLifeImporterError: EquatableError {
 }
