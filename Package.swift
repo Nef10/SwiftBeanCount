@@ -8,7 +8,7 @@ var swiftSettings: [SwiftSetting] = [
 ]
 
 // Workaround for https://forums.swift.org/t/warnings-as-errors-in-sub-packages/70810/24
-if ProcessInfo.processInfo.environment["SWIFTBEANCOUNT_DISABLE_ERRORS"] != "1" {
+if ProcessInfo.processInfo.environment["CI"] == "TRUE" {
     swiftSettings.append(contentsOf: [
        .treatAllWarnings(as: .error),
        .treatWarning("SendableClosureCaptures", as: .warning),
