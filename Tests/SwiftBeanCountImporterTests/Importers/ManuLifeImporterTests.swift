@@ -408,8 +408,8 @@ final class ManuLifeImporterTests: XCTestCase {
     func testOnlyTransactionTextPassedNoBalanceError() throws {
         // When only transaction text is passed, should not error for missing balance
         let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), transaction: transaction)
-        let transaction = importer.nextTransaction()
-        XCTAssertNotNil(transaction)
+        let importedTransaction = importer.nextTransaction()
+        XCTAssertNotNil(importedTransaction)
         XCTAssertTrue(importer.balancesToImport().isEmpty)
         XCTAssert(parkingAccountDelegate.verified)
     }
