@@ -9,7 +9,7 @@
 import Foundation
 
 /// Errors Cost can throw
-public enum CostError: Error {
+public enum CostError: Error, Equatable {
     /// a negative amount
     case negativeAmount(String)
 }

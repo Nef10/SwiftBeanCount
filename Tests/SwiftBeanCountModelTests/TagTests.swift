@@ -6,51 +6,57 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 @testable import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class TagTests: XCTestCase {
+@Suite
+struct TagTests {
 
-    func testDescription() {
+    @Test
+    func description() {
         let string = "String"
         let tag = Tag(name: string)
-        XCTAssertEqual(String(describing: tag), "#" + string)
+        #expect(String(describing: tag) == "#" + string)
     }
 
-    func testDescriptionSpecialCharacters() {
+    @Test
+    func descriptionSpecialCharacters() {
         let string = "#️⃣"
         let tag = Tag(name: string)
-        XCTAssertEqual(String(describing: tag), "#" + string)
+        #expect(String(describing: tag) == "#" + string)
     }
 
-    func testEqual() {
+    @Test
+    func equal() {
         let string1 = "String1"
         let string2 = "String2"
         let tag1 = Tag(name: string1)
         let tag2 = Tag(name: string1)
         let tag3 = Tag(name: string2)
 
-        XCTAssertEqual(tag1, tag2)
-        XCTAssert(tag1 == tag2) // swiftlint:disable:this xct_specific_matcher
+        #expect(tag1 == tag2)
+        #expect(tag1 == tag2)
 
-        XCTAssertNotEqual(tag1, tag3)
-        XCTAssert(tag1 != tag3) // swiftlint:disable:this xct_specific_matcher
+        #expect(tag1 != tag3)
+        #expect(tag1 != tag3)
 
-        XCTAssertNotEqual(tag2, tag3)
-        XCTAssert(tag2 != tag3) // swiftlint:disable:this xct_specific_matcher
+        #expect(tag2 != tag3)
+        #expect(tag2 != tag3)
     }
 
-    func testGreater() {
+    @Test
+    func greater() {
         let string1 = "A"
         let string2 = "B"
         let tag1 = Tag(name: string1)
         let tag2 = Tag(name: string2)
 
-        XCTAssert(tag1 < tag2)
-        XCTAssertFalse(tag1 > tag2)
+        #expect(tag1 < tag2)
+        #expect(!(tag1 > tag2))
 
-        XCTAssertFalse(tag1 > tag1) // swiftlint:disable:this identical_operands
-        XCTAssertFalse(tag2 < tag2) // swiftlint:disable:this identical_operands
+        #expect(!(tag1 > tag1)) // swiftlint:disable:this identical_operands
+        #expect(!(tag2 < tag2)) // swiftlint:disable:this identical_operands
     }
 
 }

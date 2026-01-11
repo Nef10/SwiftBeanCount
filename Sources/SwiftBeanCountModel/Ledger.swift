@@ -9,7 +9,7 @@
 import Foundation
 
 /// Errors which can occur when working with the ledger
-public enum LedgerError: Error {
+public enum LedgerError: Error, Equatable {
     /// Error if the object your try to add already exists in the ledger
     case alreadyExists(String)
 }
