@@ -1,18 +1,21 @@
+import Foundation
 @testable import SwiftBeanCountWealthsimpleMapper
-import XCTest
+import Testing
 
-final class StringKebabCaseTests: XCTestCase {
+@Suite
+struct StringKebabCaseTests {
 
-    func testCamelCaseToKebabCase() {
-        XCTAssertEqual("TEST123".camelCaseToKebabCase(), "test-123")
-        XCTAssertEqual("TEST1Test".camelCaseToKebabCase(), "test-1-test")
-        XCTAssertEqual("EURTest".camelCaseToKebabCase(), "eur-test")
-        XCTAssertEqual("ThisIsATest".camelCaseToKebabCase(), "this-is-a-test")
-        XCTAssertEqual("1234ThisIsATest".camelCaseToKebabCase(), "1234-this-is-a-test")
-        XCTAssertEqual("test123".camelCaseToKebabCase(), "test-123")
-        XCTAssertEqual("test".camelCaseToKebabCase(), "test")
-        XCTAssertEqual("123".camelCaseToKebabCase(), "123")
-        XCTAssertEqual("".camelCaseToKebabCase(), "")
+    @Test
+    func camelCaseToKebabCaseFunction() {
+        #expect("TEST123".camelCaseToKebabCase() == "test-123")
+        #expect("TEST1Test".camelCaseToKebabCase() == "test-1-test")
+        #expect("EURTest".camelCaseToKebabCase() == "eur-test")
+        #expect("ThisIsATest".camelCaseToKebabCase() == "this-is-a-test")
+        #expect("1234ThisIsATest".camelCaseToKebabCase() == "1234-this-is-a-test")
+        #expect("test123".camelCaseToKebabCase() == "test-123")
+        #expect("test".camelCaseToKebabCase() == "test")
+        #expect("123".camelCaseToKebabCase() == "123")
+        #expect("".camelCaseToKebabCase().isEmpty)
     }
 
 }
