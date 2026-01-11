@@ -1,11 +1,13 @@
 @testable import SwiftBeanCountCompassCardMapper
-import XCTest
+import Testing
 
-final class SwiftBeanCountCompassCardMapperErrorTests: XCTestCase {
+@Suite
+struct SwiftBeanCountCompassCardMapperErrorTests {
 
-    func testDownloadErrorString() {
-         XCTAssertEqual(
-            "\(SwiftBeanCountCompassCardMapperError.missingAccount(cardNumber: "123").localizedDescription)",
+    @Test
+    func downloadErrorString() {
+         #expect(
+            "\(SwiftBeanCountCompassCardMapperError.missingAccount(cardNumber: "123").localizedDescription)" ==
             "Missing account in ledger for compass card: 123. Make sure to add importer-type: \"compass-card\" and card-number: \"123\" to it."
         )
     }
