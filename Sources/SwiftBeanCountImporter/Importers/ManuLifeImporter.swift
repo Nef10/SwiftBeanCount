@@ -139,8 +139,8 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
                 self.delegate?.error(error) {
                     group.leave()
                 }
+                group.wait()
             }
-            group.wait()
         }
     }
 
