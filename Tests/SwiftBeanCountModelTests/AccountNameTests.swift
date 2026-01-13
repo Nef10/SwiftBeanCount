@@ -26,7 +26,7 @@ struct AccountNameTests {
 
     @Test(arguments: invalidNames)
     func initInvalidName(name: String) throws {
-        #expect(throws: AccountNameError.invaildName(name)) { try AccountName(name) }
+        #expect(throws: AccountNameError.invalidName(name)) { try AccountName(name) }
     }
 
     @Test(arguments: validNames)
