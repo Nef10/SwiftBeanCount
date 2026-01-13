@@ -193,6 +193,7 @@ let package = Package(
         .testTarget(
             name: "SwiftBeanCountStatementsTests",
             dependencies: ["SwiftBeanCountStatements"],
+            resources: [.copy("Resources")],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
