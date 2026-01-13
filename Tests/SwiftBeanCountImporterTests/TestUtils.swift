@@ -10,7 +10,14 @@ import CSV
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
-import XCTest
+import Testing
+
+@Suite(.serialized)
+struct TestsUsingStorage {
+    // All tests using Settings.storage should be inside this suite to avoid interference between tests
+    // For each test file, wrap the @Suite struct in an extension of TestsUsingStorage
+    // See https://github.com/swiftlang/swift-testing/issues/683
+}
 
 class TestStorage: SettingsStorage {
 
@@ -189,35 +196,31 @@ enum TestUtils {
         return ledger
     }
 
-}
-
-extension XCTestCase {
-
-    func temporaryFileURL() -> URL {
+    static func temporaryFileURL() -> (URL, () -> Void) {
         let directory = NSTemporaryDirectory()
         let url = URL(fileURLWithPath: directory).appendingPathComponent(UUID().uuidString)
 
-        addTeardownBlock {
+        let cleanup: () -> Void = {
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: url.path) {
                 do {
                     try fileManager.removeItem(at: url)
                 } catch {
-                    XCTFail("Error deleting temporary file: \(error)")
+                    Issue.record("Error deleting temporary file: \(error)")
                 }
             }
-            XCTAssertFalse(fileManager.fileExists(atPath: url.path))
+            #expect(!(fileManager.fileExists(atPath: url.path)))
         }
 
-        return url
+        return (url, cleanup)
     }
 
-    func createFile(at url: URL, content: String) {
+    static func createFile(at url: URL, content: String) {
         do {
             try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
             try content.write(to: url, atomically: true, encoding: .utf8)
         } catch {
-            XCTFail("Error writing temporary file: \(error)")
+            Issue.record("Error writing temporary file: \(error)")
         }
     }
 

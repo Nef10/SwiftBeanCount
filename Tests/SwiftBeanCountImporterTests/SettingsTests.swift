@@ -8,85 +8,94 @@
 
 import Foundation
 @testable import SwiftBeanCountImporter
-import XCTest
+import Testing
 
-final class SettingsTests: XCTestCase {
+extension TestsUsingStorage {
 
-    func testDescriptionMappings() {
+@Suite
+struct SettingsTests {
+
+    @Test
+    func descriptionMappings() {
         Settings.storage = TestStorage()
 
-        XCTAssertEqual(Settings.allDescriptionMappings, [:])
+        #expect(Settings.allDescriptionMappings.isEmpty)
 
         // set
         Settings.setDescriptionMapping(key: "originalDescription", description: "new one")
-        XCTAssertEqual(Settings.allDescriptionMappings, ["originalDescription": "new one"])
+        #expect(Settings.allDescriptionMappings == ["originalDescription": "new one"])
 
         // update
         Settings.setDescriptionMapping(key: "originalDescription", description: "newer one")
-        XCTAssertEqual(Settings.allDescriptionMappings, ["originalDescription": "newer one"])
+        #expect(Settings.allDescriptionMappings == ["originalDescription": "newer one"])
 
         // two
         Settings.setDescriptionMapping(key: "originalDescription2", description: "new")
-        XCTAssertEqual(Settings.allDescriptionMappings, ["originalDescription": "newer one", "originalDescription2": "new"])
+        #expect(Settings.allDescriptionMappings == ["originalDescription": "newer one", "originalDescription2": "new"])
 
         // delete
         Settings.setDescriptionMapping(key: "originalDescription2", description: nil)
-        XCTAssertEqual(Settings.allDescriptionMappings, ["originalDescription": "newer one"])
+        #expect(Settings.allDescriptionMappings == ["originalDescription": "newer one"])
     }
 
-    func testPayeeMappings() {
+    @Test
+    func payeeMappings() {
         Settings.storage = TestStorage()
 
-        XCTAssertEqual(Settings.allPayeeMappings, [:])
+        #expect(Settings.allPayeeMappings.isEmpty)
 
         // set
         Settings.setPayeeMapping(key: "originalDescription", payee: "new one")
-        XCTAssertEqual(Settings.allPayeeMappings, ["originalDescription": "new one"])
+        #expect(Settings.allPayeeMappings == ["originalDescription": "new one"])
 
         // update
         Settings.setPayeeMapping(key: "originalDescription", payee: "newer one")
-        XCTAssertEqual(Settings.allPayeeMappings, ["originalDescription": "newer one"])
+        #expect(Settings.allPayeeMappings == ["originalDescription": "newer one"])
 
         // two
         Settings.setPayeeMapping(key: "originalDescription2", payee: "new")
-        XCTAssertEqual(Settings.allPayeeMappings, ["originalDescription": "newer one", "originalDescription2": "new"])
+        #expect(Settings.allPayeeMappings == ["originalDescription": "newer one", "originalDescription2": "new"])
 
         // delete
         Settings.setPayeeMapping(key: "originalDescription2", payee: nil)
-        XCTAssertEqual(Settings.allPayeeMappings, ["originalDescription": "newer one"])
+        #expect(Settings.allPayeeMappings == ["originalDescription": "newer one"])
     }
 
-    func testAccountMappings() {
+    @Test
+    func accountMappings() {
         Settings.storage = TestStorage()
 
-        XCTAssertEqual(Settings.allAccountMappings, [:])
+        #expect(Settings.allAccountMappings.isEmpty)
 
         // set
         Settings.setAccountMapping(key: "originalDescription", account: "new one")
-        XCTAssertEqual(Settings.allAccountMappings, ["originalDescription": "new one"])
+        #expect(Settings.allAccountMappings == ["originalDescription": "new one"])
 
         // update
         Settings.setAccountMapping(key: "originalDescription", account: "newer one")
-        XCTAssertEqual(Settings.allAccountMappings, ["originalDescription": "newer one"])
+        #expect(Settings.allAccountMappings == ["originalDescription": "newer one"])
 
         // two
         Settings.setAccountMapping(key: "originalDescription2", account: "new")
-        XCTAssertEqual(Settings.allAccountMappings, ["originalDescription": "newer one", "originalDescription2": "new"])
+        #expect(Settings.allAccountMappings == ["originalDescription": "newer one", "originalDescription2": "new"])
 
         // delete
         Settings.setAccountMapping(key: "originalDescription2", account: nil)
-        XCTAssertEqual(Settings.allAccountMappings, ["originalDescription": "newer one"])
+        #expect(Settings.allAccountMappings == ["originalDescription": "newer one"])
     }
 
-    func testDateTolerance() {
+    @Test
+    func dateTolerance() {
         Settings.storage = TestStorage()
 
-        XCTAssertEqual(Settings.dateToleranceInDays, Settings.defaultDateTolerance)
-        XCTAssertEqual(Settings.dateTolerance, Double(Settings.defaultDateTolerance * 60 * 60 * 24))
+        #expect(Settings.dateToleranceInDays == Settings.defaultDateTolerance)
+        #expect(Settings.dateTolerance == Double(Settings.defaultDateTolerance * 60 * 60 * 24))
 
         Settings.dateToleranceInDays = 4
-        XCTAssertEqual(Settings.dateToleranceInDays, 4)
-        XCTAssertEqual(Settings.dateTolerance, Double(4 * 60 * 60 * 24))
+        #expect(Settings.dateToleranceInDays == 4)
+        #expect(Settings.dateTolerance == Double(4 * 60 * 60 * 24))
     }
+
+}
 
 }

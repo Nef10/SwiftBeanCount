@@ -7,42 +7,47 @@
 //  Copyright © 2022 Steffen Kötte. All rights reserved.
 //
 
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
-import XCTest
+import Testing
 
 class BaseTestImporterDelegate: ImporterDelegate {
 
     func requestInput(name _: String, type _: ImporterInputRequestType, completion _: (String) -> Bool) {
-        XCTFail("requestInput should not be called")
+        Issue.record("requestInput should not be called")
     }
 
     func saveCredential(_: String, for _: String) {
-        XCTFail("saveCredential should not be called")
+        Issue.record("saveCredential should not be called")
     }
 
     func readCredential(_: String) -> String? {
-        XCTFail("readCredential should not be called")
+        Issue.record("readCredential should not be called")
         return nil
     }
 
-    // swiftlint:disable:next unused_parameter
-    func error(_ error: Error, completion: () -> Void) {
-        XCTFail("error should not be called, received \(error)")
+    func error(_ error: Error, completion _: () -> Void) {
+        Issue.record("error should not be called, received \(error)")
     }
 
     #if canImport(UIKit)
 
     func view() -> UIView? {
-        XCTFail("view should not be called")
+        Issue.record("view should not be called")
         return nil
     }
 
     #elseif canImport(AppKit)
 
     func view() -> NSView? {
-        XCTFail("view should not be called")
+        Issue.record("view should not be called")
         return nil
     }
 
@@ -51,7 +56,7 @@ class BaseTestImporterDelegate: ImporterDelegate {
     #if canImport(UIKit) || canImport(AppKit)
 
     func removeView() {
-        XCTFail("removeView should not be called")
+        Issue.record("removeView should not be called")
     }
 
     #endif
@@ -67,8 +72,8 @@ class AccountNameSuggestionVerifier: BaseTestImporterDelegate {
     }
 
     override func requestInput(name: String, type: ImporterInputRequestType, completion: (String) -> Bool) {
-        XCTAssertEqual(name, "Account")
-        XCTAssertEqual(type, .text(expectedValues))
+        #expect(name == "Account")
+        #expect(type == .text(expectedValues))
         verified = true
         _ = completion(TestUtils.cash.fullName)
     }
@@ -99,7 +104,7 @@ class InputProviderDelegate: BaseTestImporterDelegate {
         self.types = types
         self.returnValues = returnValues
         if names.count != types.count || names.count != returnValues.count {
-            XCTFail("Invalid parameters")
+            Issue.record("Invalid parameters")
         }
         if names.isEmpty {
             verifiedInput = true
@@ -108,12 +113,12 @@ class InputProviderDelegate: BaseTestImporterDelegate {
 
     override func requestInput(name: String, type: ImporterInputRequestType, completion: (String) -> Bool) {
         guard index < names.count else {
-            XCTFail("Called requestInput too often")
+            Issue.record("Called requestInput too often")
             return
         }
-        XCTAssertEqual(name, names[index])
-        XCTAssertEqual(types[index], type)
-        XCTAssert(completion(returnValues[index]))
+        #expect(name == names[index])
+        #expect(types[index] == type)
+        #expect(completion(returnValues[index]))
         index += 1
         if index == names.count {
             verifiedInput = true
@@ -162,7 +167,7 @@ class CredentialInputDelegate: InputProviderDelegate { // swiftlint:disable:this
         self.readKeys = readKeys
         self.readReturnValues = readReturnValues
         if saveKeys.count != saveValues.count || readKeys.count != readReturnValues.count {
-            XCTFail("Invalid parameters")
+            Issue.record("Invalid parameters")
         }
         if saveKeys.isEmpty {
             verifiedSave = true
@@ -175,11 +180,11 @@ class CredentialInputDelegate: InputProviderDelegate { // swiftlint:disable:this
 
     override func saveCredential(_ value: String, for key: String) {
         guard saveIndex < saveKeys.count else {
-            XCTFail("Called saveCredential too often")
+            Issue.record("Called saveCredential too often")
             return
         }
-        XCTAssertEqual(value, saveValues[saveIndex])
-        XCTAssertEqual(key, saveKeys[saveIndex])
+        #expect(value == saveValues[saveIndex])
+        #expect(key == saveKeys[saveIndex])
         saveIndex += 1
         if saveIndex == saveKeys.count {
             verifiedSave = true
@@ -188,10 +193,10 @@ class CredentialInputDelegate: InputProviderDelegate { // swiftlint:disable:this
 
     override func readCredential(_ key: String) -> String? {
         guard readIndex < readKeys.count else {
-            XCTFail("Called readCredential too often")
+            Issue.record("Called readCredential too often")
             return nil
         }
-        XCTAssertEqual(key, readKeys[readIndex])
+        #expect(key == readKeys[readIndex])
         readIndex += 1
         if readIndex == readKeys.count {
             verifiedRead = true
@@ -233,9 +238,9 @@ class ErrorDelegate<T: EquatableError>: CredentialInputDelegate {
 
     override func error(_ error: Error, completion: () -> Void) {
         if self.error == nil {
-            XCTFail("Received unexpected error: \(error)")
+            Issue.record("Received unexpected error: \(error)")
         }
-        XCTAssertEqual(error as? T, self.error)
+        #expect(error as? T == self.error)
         errorVerified = true
         completion()
     }
@@ -270,10 +275,10 @@ class ErrorCheckDelegate: CredentialInputDelegate {
 
     override func error(_ error: Error, completion: () -> Void) {
         guard let check else {
-            XCTFail("Received unexpected error: \(error)")
+            Issue.record("Received unexpected error: \(error)")
             return
         }
-        XCTAssert(check(error))
+        #expect(check(error))
         errorVerified = true
         completion()
     }
@@ -296,7 +301,7 @@ class CredentialInputAndViewDelegate: ErrorDelegate<TestError> {
     #if canImport(UIKit)
 
     override func view() -> UIView? {
-        XCTAssertFalse(getViewCalled, "view called too often")
+        #expect(!getViewCalled, "view called too often")
         getViewCalled = true
         return nil
     }
@@ -304,7 +309,7 @@ class CredentialInputAndViewDelegate: ErrorDelegate<TestError> {
     #elseif canImport(AppKit)
 
     override func view() -> NSView? {
-        XCTAssertFalse(getViewCalled, "view called too often")
+        #expect(!getViewCalled, "view called too often")
         getViewCalled = true
         return nil
     }
@@ -314,7 +319,7 @@ class CredentialInputAndViewDelegate: ErrorDelegate<TestError> {
     #if canImport(UIKit) || canImport(AppKit)
 
     override func removeView() {
-        XCTAssertFalse(removeViewCalled, "removeView called too often")
+        #expect(!removeViewCalled, "removeView called too often")
         removeViewCalled = true
     }
 

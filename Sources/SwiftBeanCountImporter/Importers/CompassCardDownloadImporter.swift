@@ -33,7 +33,6 @@ protocol SwiftBeanCountCompassCardMapperProvider {
     func ledgerCardAccountName(cardNumber: String) throws -> AccountName
 }
 
-@available(iOS 14.5, macOS 11.3, *)
 class CompassCardDownloadImporter: BaseImporter, DownloadImporter {
 
     enum MetaDataKey {
@@ -239,7 +238,6 @@ class CompassCardDownloadImporter: BaseImporter, DownloadImporter {
 
 }
 
-@available(iOS 14.5, macOS 11.3, *)
 extension CompassCardDownloadImporter: CompassCardDownloaderDelegate {
 
     #if canImport(UIKit)
@@ -257,7 +255,6 @@ extension CompassCardDownloadImporter: CompassCardDownloaderDelegate {
     #endif
 }
 
-@available(iOS 14.5, macOS 11.3, *)
 extension CompassCardDownloader: CompassCardDownloaderProvider {
 }
 

@@ -7,38 +7,46 @@
 //
 
 import CSV
+import Foundation
 import SwiftBeanCountCompassCardMapper
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class CompassCardImporterTests: XCTestCase {
+@Suite
+struct CompassCardImporterTests {
 
-    func testHeaders() {
+    @Test
+    func headers() {
         // swiftlint:disable:next line_length
-        XCTAssertEqual(CompassCardImporter.headers, [["DateTime", "Transaction", "Product", "LineItem", "Amount", "BalanceDetails", "JourneyId", "LocationDisplay", "TransactonTime", "OrderDate", "Payment", "OrderNumber", "AuthCode", "Total"]])
+        #expect(CompassCardImporter.headers == [["DateTime", "Transaction", "Product", "LineItem", "Amount", "BalanceDetails", "JourneyId", "LocationDisplay", "TransactonTime", "OrderDate", "Payment", "OrderNumber", "AuthCode", "Total"]])
     }
 
-    func testImporterName() {
-        XCTAssertEqual(CompassCardImporter.importerName, "Compass Card")
+    @Test
+    func importerName() {
+        #expect(CompassCardImporter.importerName == "Compass Card")
     }
 
-    func testImporterType() {
-        XCTAssertEqual(CompassCardImporter.importerType, "compass-card")
+    @Test
+    func importerType() {
+        #expect(CompassCardImporter.importerType == "compass-card")
     }
 
-    func testHelpText() {
-        XCTAssert(CompassCardImporter.helpText.starts(with: "Imports Compass Card transactions from CSV files downloaded from the Compass Card website."))
+    @Test
+    func helpText() {
+        #expect(CompassCardImporter.helpText.starts(with: "Imports Compass Card transactions from CSV files downloaded from the Compass Card website."))
     }
 
-    func testImportName() throws {
-        XCTAssertEqual(
-            CompassCardImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName,
+    @Test
+    func importName() throws {
+        #expect(
+            CompassCardImporter(ledger: nil, csvReader: try TestUtils.csvReader(content: "A"), fileName: "TestName").importName ==
             "Compass Card File TestName"
         )
     }
 
-    func testImport() throws {
+    @Test
+    func `import`() throws {
         // swiftlint:disable:next line_length
         let transactions = "DateTime,Transaction,Product,LineItem,Amount,BalanceDetails,JourneyId,LocationDisplay,TransactonTime,OrderDate,Payment,OrderNumber,AuthCode,Total\nNov-17-2022 08:39 PM,Tap in at Bus Stop 60572,Stored Value,,-$2.50,$7.45,2022-11-18T04:39:00.0000000Z,\"Tap in at Bus Stop 60572 Stored Value\",08:39 PM,,,,,\n"
         let reader = try CSVReader(string: transactions, hasHeaderRow: true)
@@ -60,14 +68,15 @@ final class CompassCardImporterTests: XCTestCase {
 
         let result = importer.nextTransaction()
 
-        XCTAssertEqual(result!.transaction, transaction)
-        XCTAssertEqual(result?.accountName, accountName)
-        XCTAssert(importer.balancesToImport().isEmpty)
-        XCTAssert(importer.pricesToImport().isEmpty)
-        XCTAssertNil(importer.nextTransaction())
+        #expect(result!.transaction == transaction)
+        #expect(result?.accountName == accountName)
+        #expect(importer.balancesToImport().isEmpty)
+        #expect(importer.pricesToImport().isEmpty)
+        #expect(importer.nextTransaction() == nil)
     }
 
-    func testError() throws {
+    @Test
+    func error() throws {
         let reader = try CSVReader(string: ",\n,", hasHeaderRow: true)
         let delegate = ErrorCheckDelegate(inputNames: ["Account"], inputTypes: [.text([])], inputReturnValues: ["Assets:CompassCard"]) {
             if case let DecodingError.keyNotFound(key, _) = $0 {
@@ -78,8 +87,8 @@ final class CompassCardImporterTests: XCTestCase {
         let importer = CompassCardImporter(ledger: Ledger(), csvReader: reader, fileName: "")
         importer.delegate = delegate
         importer.load()
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssertTrue(delegate.verified)
+        #expect(importer.nextTransaction() == nil)
+        #expect(delegate.verified)
     }
 
 }
