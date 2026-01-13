@@ -113,7 +113,9 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
                 }
             }
             do {
-                self.balances.append(try self.mapper.mapAccountToBalance(account: account))
+                if let balance = try self.mapper.mapAccountToBalance(account: account) {
+                    self.balances.append(balance)
+                }
             } catch {
                 showError(error)
                 errorOccurred = true
