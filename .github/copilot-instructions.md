@@ -32,7 +32,7 @@ SwiftBeanCount is a double-entry accounting software written in Swift, inspired 
 - Install SwiftLint: `curl -L https://github.com/realm/SwiftLint/releases/download/0.59.1/swiftlint_linux.zip -o swiftlint.zip && unzip swiftlint.zip -d swiftlint`
 - Run SwiftLint: `./swiftlint/swiftlint --strict --reporter github-actions-logging` - NEVER CANCEL. Set timeout to 60 seconds.
 - The project uses extensive SwiftLint rules (100+ enabled) for code quality
-- MUST pass before submiting code
+- MUST pass before submitting code
 
 ## Swift Standards
 
