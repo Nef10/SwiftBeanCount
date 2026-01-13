@@ -165,7 +165,7 @@ The project is organized into multiple Swift packages:
 - Reset package: `rm -rf .build && swift package resolve`
 - Check for missing dependencies
 
-### Test Issues  
+### Test Issues
 - Run specific test: `swift test --filter <TestName>`
 - Enable verbose output: `swift test --verbose`
 - Check test resources are properly included
