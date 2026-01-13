@@ -66,7 +66,7 @@ struct SwiftBeanCountTangerineMapperTests { // swiftlint:disable:this type_body_
         // Invalid Account Name
         error = #expect(throws: (any Error).self) { try mapper.createTransactions( ["InvalidName": [["posted_date": "2022-10-10T10:10:10"]]]) }
         if let error, let accountNameError = error as? AccountNameError {
-            if case let AccountNameError.invaildName(name) = accountNameError {
+            if case let AccountNameError.invalidName(name) = accountNameError {
                 #expect(name == "InvalidName")
             } else {
                 Issue.record("Wrong AccountNameError type: \(accountNameError)")
