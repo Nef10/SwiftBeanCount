@@ -7,9 +7,9 @@ SwiftBeanCount is a double-entry accounting software written in Swift, inspired 
 **Key Facts:**
 - Multi-package Swift project with 12+ modules
 - Supports macOS 13+, iOS 16+
-- Uses Swift 6.2+ with strict compiler settings
+- Uses very new Swift with strict compiler settings
 - Zero-tolerance for warnings (all warnings are errors in CI)
-- Requires 82% minimum test coverage
+- Requires very high (around 90%) minimum test coverage
 - Uses SwiftLint with 100+ rules enabled
 
 ## Working Effectively
@@ -144,8 +144,8 @@ The project is organized into multiple Swift packages:
 ### CI Pipeline
 - Runs on every pull request and push to main
 - Tests on macOS, Ubuntu, and iOS platforms
-- Uses Swift 6.2.3 (check `.github/workflows/ci.yml` for exact version)
-- Enforces code coverage minimum (82%)
+- Uses very new Swift (check `.github/workflows/ci.yml` for exact version)
+- Enforces high code coverage minimum 
 - Runs SwiftLint in strict mode
 - All checks must pass before merge
 
@@ -173,7 +173,7 @@ The project is organized into multiple Swift packages:
 ### Linting Issues
 - Auto-fix when possible: SwiftLint can fix many issues automatically
 - Review SwiftLint configuration in `.swiftlint.yml`
-- Don't disable rules without good reason
+- Never disable rules
 - Follow existing code patterns
 
 ## Code Quality Standards
