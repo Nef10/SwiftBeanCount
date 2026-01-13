@@ -26,7 +26,7 @@ public struct SwiftBeanCountRogersBankMapper {
     /// Maps an account to a balance assertion
     /// - Parameter account: account to map
     /// - Throws: RogersBankMappingError if no matching account was found
-    /// - Returns: balance assertion with the current balance form the credit card account, or nil if an identical balance already exists in the ledger
+    /// - Returns: balance assertion with the current balance from the credit card account, or nil if an identical balance already exists in the ledger
     public func mapAccountToBalance(account: RogersBankDownloader.Account) throws(RogersBankMappingError) -> Balance? {
         let (number, decimalDigits) = account.currentBalance.value.amountDecimal()
         let amount = Amount(number: -number, commoditySymbol: account.currentBalance.currency, decimalDigits: decimalDigits)
