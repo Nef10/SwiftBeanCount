@@ -188,7 +188,7 @@ struct SheetParserTests {
     func parseSheetWithMissingValues() {
         let data = [
             ["Date", "Paid to", "Amount", "Category", "Who paid", "Comment", "Part Alice", "Part Bob"],
-            ["2024-01-15", "Store"],
+            ["2024-01-15", "Store", "100.00", "Groceries", "Alice"],  // Missing Comment and amounts
             ["2024-01-16", "Restaurant", "80.00", "Dining", "Bob", "Dinner", "40.00", "40.00"]
         ]
 
