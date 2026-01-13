@@ -14,7 +14,7 @@ struct StatementFileValidatorTests {
 
     @Test
     func checkStatementsFromMonthly() async throws {
-        let resourcesURL = try #require(Bundle.module.url(forResource: "Resources", withExtension: nil))
+        let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let results = try await StatementFileValidator.checkStatementsFrom(
             folder: resourcesURL,
             statementNames: ["Statement Monthly"]
@@ -28,7 +28,7 @@ struct StatementFileValidatorTests {
 
     @Test
     func checkStatementsFromQuarterly() async throws {
-        let resourcesURL = try #require(Bundle.module.url(forResource: "Resources", withExtension: nil))
+        let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let results = try await StatementFileValidator.checkStatementsFrom(
             folder: resourcesURL,
             statementNames: ["Statement Quarterly"]
@@ -42,7 +42,7 @@ struct StatementFileValidatorTests {
 
     @Test
     func checkStatementsFromYearly() async throws {
-        let resourcesURL = try #require(Bundle.module.url(forResource: "Resources", withExtension: nil))
+        let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let results = try await StatementFileValidator.checkStatementsFrom(
             folder: resourcesURL,
             statementNames: ["Statement Yearly"]
@@ -56,7 +56,7 @@ struct StatementFileValidatorTests {
 
     @Test
     func checkStatementsFromWithGaps() async throws {
-        let resourcesURL = try #require(Bundle.module.url(forResource: "Resources", withExtension: nil))
+        let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let results = try await StatementFileValidator.checkStatementsFrom(
             folder: resourcesURL,
             statementNames: ["Statement Gap"]
@@ -72,7 +72,7 @@ struct StatementFileValidatorTests {
 
     @Test
     func checkStatementsFromMultipleTypes() async throws {
-        let resourcesURL = try #require(Bundle.module.url(forResource: "Resources", withExtension: nil))
+        let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let results = try await StatementFileValidator.checkStatementsFrom(
             folder: resourcesURL,
             statementNames: ["Statement A", "Statement B"]
@@ -89,7 +89,7 @@ struct StatementFileValidatorTests {
 
     @Test
     func checkStatementsFromSingle() async throws {
-        let resourcesURL = try #require(Bundle.module.url(forResource: "Resources", withExtension: nil))
+        let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let results = try await StatementFileValidator.checkStatementsFrom(
             folder: resourcesURL,
             statementNames: ["Statement Single"]
@@ -121,7 +121,7 @@ struct StatementFileValidatorTests {
 
     @Test
     func checkStatementsFromNoMatchingFiles() async throws {
-        let resourcesURL = try #require(Bundle.module.url(forResource: "Resources", withExtension: nil))
+        let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let results = try await StatementFileValidator.checkStatementsFrom(
             folder: resourcesURL,
             statementNames: ["NonExistent"]
@@ -134,7 +134,7 @@ struct StatementFileValidatorTests {
 
     @Test
     func checkStatementsFromMixedMonthlyAndQuarterly() async throws {
-        let resourcesURL = try #require(Bundle.module.url(forResource: "Resources", withExtension: nil))
+        let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let results = try await StatementFileValidator.checkStatementsFrom(
             folder: resourcesURL,
             statementNames: ["Statement Monthly", "Statement Quarterly"]

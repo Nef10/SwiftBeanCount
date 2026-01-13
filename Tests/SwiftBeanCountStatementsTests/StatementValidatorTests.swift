@@ -89,7 +89,7 @@ struct StatementValidatorTests {
     @Test
     func validateWithResourcesFolder() async throws {
         // Setup ledger with statement settings
-        let resourcesURL = try #require(Bundle.module.url(forResource: "Resources", withExtension: nil))
+        let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let parentURL = resourcesURL.deletingLastPathComponent()
 
         let custom = Custom(
@@ -101,13 +101,12 @@ struct StatementValidatorTests {
         let account = Account(
             name: testAccountName,
             opening: Date(timeIntervalSince1970: 1_672_531_200),
-            metaData: ["folder": "Resources", "statements": "enabled"]
+            metaData: ["folder": "Resource", "statements": "enabled"]
         )
 
         let ledger = Ledger()
         ledger.custom.append(custom)
-        // swiftlint:disable:next force_try
-        try! ledger.add(account)
+        try ledger.add(account)
 
         let results = try await StatementValidator.validate(
             ledger,
@@ -120,12 +119,12 @@ struct StatementValidatorTests {
         #expect(!results.isEmpty)
         let accountResult = try #require(results[testAccountName])
         #expect(!accountResult.statementResults.isEmpty)
-        #expect(accountResult.folderName.contains("Resources"))
+        #expect(accountResult.folderName.contains("Resource"))
     }
 
     @Test
     func validateExcludesClosedAccounts() async throws {
-        let resourcesURL = try #require(Bundle.module.url(forResource: "Resources", withExtension: nil))
+        let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let parentURL = resourcesURL.deletingLastPathComponent()
 
         let custom = Custom(
@@ -138,13 +137,12 @@ struct StatementValidatorTests {
             name: testAccountName,
             opening: Date(timeIntervalSince1970: 1_672_531_200),
             closing: Date(timeIntervalSince1970: 1_675_209_600),
-            metaData: ["folder": "Resources"]
+            metaData: ["folder": "Resource"]
         )
 
         let ledger = Ledger()
         ledger.custom.append(custom)
-        // swiftlint:disable:next force_try
-        try! ledger.add(closedAccount)
+        try ledger.add(closedAccount)
 
         let results = try await StatementValidator.validate(
             ledger,
@@ -159,7 +157,7 @@ struct StatementValidatorTests {
 
     @Test
     func validateIncludesClosedAccounts() async throws {
-        let resourcesURL = try #require(Bundle.module.url(forResource: "Resources", withExtension: nil))
+        let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let parentURL = resourcesURL.deletingLastPathComponent()
 
         let custom = Custom(
@@ -172,13 +170,12 @@ struct StatementValidatorTests {
             name: testAccountName,
             opening: Date(timeIntervalSince1970: 1_672_531_200),
             closing: Date(timeIntervalSince1970: 1_675_209_600),
-            metaData: ["folder": "Resources"]
+            metaData: ["folder": "Resource"]
         )
 
         let ledger = Ledger()
         ledger.custom.append(custom)
-        // swiftlint:disable:next force_try
-        try! ledger.add(closedAccount)
+        try ledger.add(closedAccount)
 
         let results = try await StatementValidator.validate(
             ledger,
@@ -194,7 +191,7 @@ struct StatementValidatorTests {
 
     @Test
     func validateExcludesDisabledAccounts() async throws {
-        let resourcesURL = try #require(Bundle.module.url(forResource: "Resources", withExtension: nil))
+        let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let parentURL = resourcesURL.deletingLastPathComponent()
 
         let custom = Custom(
@@ -206,13 +203,12 @@ struct StatementValidatorTests {
         let disabledAccount = Account(
             name: testAccountName,
             opening: Date(timeIntervalSince1970: 1_672_531_200),
-            metaData: ["folder": "Resources", "statements": "disable"]
+            metaData: ["folder": "Resource", "statements": "disable"]
         )
 
         let ledger = Ledger()
         ledger.custom.append(custom)
-        // swiftlint:disable:next force_try
-        try! ledger.add(disabledAccount)
+        try ledger.add(disabledAccount)
 
         let results = try await StatementValidator.validate(
             ledger,
@@ -227,7 +223,7 @@ struct StatementValidatorTests {
 
     @Test
     func validateExcludesAccountsWithoutFolder() async throws {
-        let resourcesURL = try #require(Bundle.module.url(forResource: "Resources", withExtension: nil))
+        let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let parentURL = resourcesURL.deletingLastPathComponent()
 
         let custom = Custom(
@@ -243,8 +239,7 @@ struct StatementValidatorTests {
 
         let ledger = Ledger()
         ledger.custom.append(custom)
-        // swiftlint:disable:next force_try
-        try! ledger.add(accountWithoutFolder)
+        try ledger.add(accountWithoutFolder)
 
         let results = try await StatementValidator.validate(
             ledger,
@@ -259,7 +254,7 @@ struct StatementValidatorTests {
 
     @Test
     func validateWithStartEndDateWarning() async throws {
-        let resourcesURL = try #require(Bundle.module.url(forResource: "Resources", withExtension: nil))
+        let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let parentURL = resourcesURL.deletingLastPathComponent()
 
         let custom = Custom(
@@ -271,13 +266,12 @@ struct StatementValidatorTests {
         let account = Account(
             name: testAccountName,
             opening: Date(timeIntervalSince1970: 1_609_459_200), // Different from statement start
-            metaData: ["folder": "Resources"]
+            metaData: ["folder": "Resource"]
         )
 
         let ledger = Ledger()
         ledger.custom.append(custom)
-        // swiftlint:disable:next force_try
-        try! ledger.add(account)
+        try ledger.add(account)
 
         let results = try await StatementValidator.validate(
             ledger,
