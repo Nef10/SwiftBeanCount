@@ -65,11 +65,12 @@ struct StatementDatesValidatorTests {
 
     @Test
     func identifyFrequencyUnknown() {
-        // Dates with irregular intervals
+        // Dates with irregular intervals - needs more than 3 dates to be clearly irregular
         let dates = [
             Date(timeIntervalSince1970: 1_672_531_200), // 2023-01-01
-            Date(timeIntervalSince1970: 1_677_628_800), // 2023-03-01
-            Date(timeIntervalSince1970: 1_688_169_600)  // 2023-07-01
+            Date(timeIntervalSince1970: 1_677_628_800), // 2023-03-01 (2 month gap)
+            Date(timeIntervalSince1970: 1_688_169_600), // 2023-07-01 (4 month gap)
+            Date(timeIntervalSince1970: 1_690_848_000)  // 2023-08-01 (1 month gap)
         ]
         let frequency = StatementDatesValidator.identifyFrequency(dates)
         #expect(frequency == .unkown)
@@ -99,13 +100,20 @@ struct StatementDatesValidatorTests {
         var dates = [Date]()
         let calendar = Calendar.current
         let startDate = Date(timeIntervalSince1970: 1_672_531_200) // 2023-01-01
-        dates.append(startDate)
+        // Create enough dates for monthly detection (Jan, Feb, Apr, May, Jun)
+        dates.append(startDate) // Jan
         if let feb = calendar.date(byAdding: .month, value: 1, to: startDate) {
-            dates.append(feb)
+            dates.append(feb) // Feb
         }
         // Skip March
         if let apr = calendar.date(byAdding: .month, value: 3, to: startDate) {
-            dates.append(apr)
+            dates.append(apr) // Apr
+        }
+        if let may = calendar.date(byAdding: .month, value: 4, to: startDate) {
+            dates.append(may) // May
+        }
+        if let jun = calendar.date(byAdding: .month, value: 5, to: startDate) {
+            dates.append(jun) // Jun
         }
         let result = StatementDatesValidator.checkDates(dates, for: "Test Gap")
         #expect(result.frequency == .monthly)
