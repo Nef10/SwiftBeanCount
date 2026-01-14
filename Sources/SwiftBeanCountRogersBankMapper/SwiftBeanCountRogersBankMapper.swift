@@ -64,8 +64,12 @@ public struct SwiftBeanCountRogersBankMapper {
         if let foreign = activity.foreign {
             let (number, decimalDigits) = foreign.originalAmount.value.amountDecimal()
             let foreignAmount = Amount(number: number, commoditySymbol: foreign.originalAmount.currency, decimalDigits: decimalDigits)
-            // swiftlint:disable:next force_try
-            postings.append(try! Posting(accountName: expenseAccountName, amount: foreignAmount, price: amount, priceType: .total))
+            do {
+                let posting = try Posting(accountName: expenseAccountName, amount: foreignAmount, price: amount, priceType: .total)
+                postings.append(posting)
+            } catch {
+                throw RogersBankMappingError.postingCreationFailed("Failed to create foreign currency posting: \(error)")
+            }
         } else {
             postings.append(Posting(accountName: expenseAccountName, amount: amount))
         }
