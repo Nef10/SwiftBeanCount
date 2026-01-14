@@ -6,8 +6,8 @@ import Testing
 @Suite
 struct SaleTests {
 
-   @Test
-   func descriptionWithName() {
+    @Test
+    func descriptionWithName() {
         let date = Date(timeIntervalSince1970: 1_650_013_015)
         let sale = Sale(date: date,
                         symbol: "STOCK",
@@ -19,8 +19,8 @@ struct SaleTests {
         #expect(sale.description == "2022-04-15 STOCK 4 Stock Company 100.00 USD 10.00 CAD")
     }
 
-   @Test
-   func descriptionWithoutName() {
+    @Test
+    func descriptionWithoutName() {
         let date = Date(timeIntervalSince1970: 1_650_013_015)
         let sale = Sale(date: date,
                         symbol: "STOCK",

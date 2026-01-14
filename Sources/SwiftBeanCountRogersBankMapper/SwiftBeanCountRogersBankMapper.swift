@@ -26,12 +26,25 @@ public struct SwiftBeanCountRogersBankMapper {
     /// Maps an account to a balance assertion
     /// - Parameter account: account to map
     /// - Throws: RogersBankMappingError if no matching account was found
-    /// - Returns: balance assertion with the current balance form the credit card account
-    public func mapAccountToBalance(account: RogersBankDownloader.Account) throws(RogersBankMappingError) -> Balance {
+    /// - Returns: balance assertion with the current balance from the credit card account, or nil if an identical balance already exists in the ledger
+    public func mapAccountToBalance(account: RogersBankDownloader.Account) throws(RogersBankMappingError) -> Balance? {
         let (number, decimalDigits) = account.currentBalance.value.amountDecimal()
         let amount = Amount(number: -number, commoditySymbol: account.currentBalance.currency, decimalDigits: decimalDigits)
         let accountName = try ledgerAccountName(lastFour: account.customer.cardLast4)
-        return Balance(date: Date(), accountName: accountName, amount: amount)
+        let balance = Balance(date: Date(), accountName: accountName, amount: amount)
+
+        // Check if an identical balance already exists in the ledger
+        // We compare dates at day granularity since balances are per-day assertions
+        let balanceExists = ledger.accounts.contains { account in
+            account.balances.contains { existingBalance in
+                existingBalance.accountName == balance.accountName &&
+                existingBalance.amount == balance.amount &&
+                existingBalance.metaData == balance.metaData &&
+                Calendar.current.isDate(existingBalance.date, inSameDayAs: balance.date)
+            }
+        }
+
+        return balanceExists ? nil : balance
     }
 
     /// Maps an activity to a transaction

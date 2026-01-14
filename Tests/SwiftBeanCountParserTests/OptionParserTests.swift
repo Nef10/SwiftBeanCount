@@ -6,50 +6,45 @@
 //  Copyright © 2019 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 import SwiftBeanCountModel
 @testable import SwiftBeanCountParser
-import XCTest
+import Testing
 
-final class OptionParserTests: XCTestCase {
+@Suite
+struct OptionParserTests {
 
     private let basicString = "option \"ABC\" \"DEF\""
     private let whitespaceString = "option    \"  A B C  \"       \"  D E F  \"     "
     private let endOfLineCommentString = "option \"ABC\" \"DEF\";gfsdt     "
     private let specialCharacterString = "option \"ABC💵\" \"DEF💵\""
 
-    func testBasic() {
+    @Test
+    func basic() {
         let option = OptionParser.parseFrom(line: basicString)!
-        XCTAssertEqual(option.name, "ABC")
-        XCTAssertEqual(option.value, "DEF")
+        #expect(option.name == "ABC")
+        #expect(option.value == "DEF")
     }
 
-    func testWhitespace() {
+    @Test
+    func whitespace() {
         let option = OptionParser.parseFrom(line: whitespaceString)!
-        XCTAssertEqual(option.name, "  A B C  ")
-        XCTAssertEqual(option.value, "  D E F  ")
+        #expect(option.name == "  A B C  ")
+        #expect(option.value == "  D E F  ")
     }
 
-    func testEndOfLineComment() {
+    @Test
+    func endOfLineComment() {
         let option = OptionParser.parseFrom(line: endOfLineCommentString)!
-        XCTAssertEqual(option.name, "ABC")
-        XCTAssertEqual(option.value, "DEF")
+        #expect(option.name == "ABC")
+        #expect(option.value == "DEF")
     }
 
-    func testSpecialCharacter() {
+    @Test
+    func specialCharacter() {
         let option = OptionParser.parseFrom(line: specialCharacterString)!
-        XCTAssertEqual(option.name, "ABC💵")
-        XCTAssertEqual(option.value, "DEF💵")
-    }
-
-    func testPerformance() {
-        self.measure {
-            for _ in 0...1_000 {
-                _ = OptionParser.parseFrom(line: basicString)
-                _ = OptionParser.parseFrom(line: whitespaceString)
-                _ = OptionParser.parseFrom(line: endOfLineCommentString)
-                _ = OptionParser.parseFrom(line: specialCharacterString)
-            }
-        }
+        #expect(option.name == "ABC💵")
+        #expect(option.value == "DEF💵")
     }
 
 }

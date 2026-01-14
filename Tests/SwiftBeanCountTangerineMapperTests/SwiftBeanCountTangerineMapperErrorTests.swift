@@ -5,8 +5,8 @@ import Testing
 @Suite
 struct SwiftBeanCountTangerineMapperErrorTests {
 
-   @Test
-   func downloadErrorString() {
+    @Test
+    func downloadErrorString() {
          #expect(
             "\(SwiftBeanCountTangerineMapperError.missingAccount(account: "abc").localizedDescription)" ==
             "Missing account in ledger: abc"

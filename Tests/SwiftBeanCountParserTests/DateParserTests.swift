@@ -6,24 +6,29 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 @testable import SwiftBeanCountParser
-import XCTest
+import Testing
 
-final class DateParserTests: XCTestCase {
+@Suite
+struct DateParserTests {
 
-    func testNormalParsing() {
+    @Test
+    func normalParsing() {
         let date = DateParser.parseFrom(string: "2017-06-09")
-        XCTAssertEqual(date, TestUtils.date20170609)
+        #expect(date == TestUtils.date20170609)
     }
 
-    func testInvalidDate() {
+    @Test
+    func invalidDate() {
         let date = DateParser.parseFrom(string: "2017-00-09")
-        XCTAssertNil(date)
+        #expect(date == nil)
     }
 
-    func testNonExistentDate() {
+    @Test
+    func nonExistentDate() {
         let date = DateParser.parseFrom(string: "2017-02-30")
-        XCTAssertNil(date)
+        #expect(date == nil)
     }
 
 }
