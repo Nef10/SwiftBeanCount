@@ -7,6 +7,12 @@ struct TaxableSales: FormattableLedgerCommand {
 
     static var configuration = CommandConfiguration(abstract: "List taxable sales for a tax year")
 
+    private static let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter
+    }()
+
     @OptionGroup()
     var ledgerOptions: LedgerCommandOptions
     @Argument(help: "Tax year to list sales for.")
@@ -17,12 +23,6 @@ struct TaxableSales: FormattableLedgerCommand {
     var formatOptions: FormattableCommandOptions
     @OptionGroup()
     var colorOptions: ColorizedCommandOptions
-
-    private var dateFormatter: DateFormatter {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter
-    }
 
     func validate() throws(ValidationError) {
         if formatOptions.format == .csv && groupByProvider {
@@ -45,7 +45,7 @@ struct TaxableSales: FormattableLedgerCommand {
             let providerSales = groupedSales[provider]!.sorted { $0.date < $1.date }
             let values = providerSales.map { sale in
                 [
-                    dateFormatter.string(from: sale.date),
+                    Self.dateFormatter.string(from: sale.date),
                     sale.symbol,
                     sale.name ?? "",
                     String(describing: sale.quantity),
@@ -55,10 +55,7 @@ struct TaxableSales: FormattableLedgerCommand {
             }
             return FormattableResult(
                 title: "Taxable Sales \(year) - \(provider)",
-                columns:
-                    [
-                        "Date", "Symbol", "Name", "Quantity", "Proceeds", "Gain"
-                    ],
+                columns: ["Date", "Symbol", "Name", "Quantity", "Proceeds", "Gain"],
                 values: values
             )
         }
@@ -68,7 +65,7 @@ struct TaxableSales: FormattableLedgerCommand {
         let sortedSales = sales.sorted { $0.date < $1.date }
         let values = sortedSales.map { sale in
             [
-                dateFormatter.string(from: sale.date),
+                Self.dateFormatter.string(from: sale.date),
                 sale.symbol,
                 sale.name ?? "",
                 String(describing: sale.quantity),
@@ -80,10 +77,7 @@ struct TaxableSales: FormattableLedgerCommand {
         return [
             FormattableResult(
                 title: "Taxable Sales \(year)",
-                columns:
-                    [
-                        "Date", "Symbol", "Name", "Quantity", "Proceeds", "Gain", "Provider"
-                    ],
+                columns: ["Date", "Symbol", "Name", "Quantity", "Proceeds", "Gain", "Provider"],
                 values: values
             )
         ]
