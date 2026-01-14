@@ -63,10 +63,10 @@ struct CostParserTests {
     @Test
     func emptyStringLabel() throws {
         let parsedCost = try cost(from: "{\"\"}")
-        let expected1 = try Cost(amount: nil, date: nil, label: "")
-        let expected2 = try Cost(amount: nil, date: nil, label: nil)
-        #expect(expected1 == parsedCost)
-        #expect(expected2 == parsedCost)
+        let emptyString = try Cost(amount: nil, date: nil, label: "")
+        let nilLabel = try Cost(amount: nil, date: nil, label: nil)
+        #expect(emptyString == parsedCost)
+        #expect(nilLabel != parsedCost)
     }
 
     @Test
@@ -201,7 +201,7 @@ struct CostParserTests {
         #expect(throws: (any Error).self) { try cost(from: "{unexpected, 2017-06-09, 1.003 EUR}") }
         #expect(throws: (any Error).self) { try cost(from: "{2017-06-09, unexpected, 1.003 EUR}") }
 
-        // Test that valid costs still work (should not throw)
+        // Test with valid costs work (should not throw)
         #expect(throws: Never.self) { try cost(from: "{2017-06-09, 1.003 EUR, \"TEST\"}") }
         #expect(throws: Never.self) { try cost(from: "{\"TEST\"}") }
         #expect(throws: Never.self) { try cost(from: "{2017-06-09}") }

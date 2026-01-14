@@ -16,7 +16,7 @@ struct PostingParserTests {
 
     private let transaction = Transaction(metaData: TransactionMetaData(date: Date(), payee: "Payee", narration: "Narration"), postings: [])
 
-    private var basicPosting: Posting?
+    private var basicPosting: Posting
 
     private let basicPostingString = "  Assets:Checking 1.23 EUR"
     private let integerPostingString = "  Assets:Checking 1 EUR"
@@ -36,10 +36,17 @@ struct PostingParserTests {
     private let costAndUnitPricePostingString = "  Assets:💰 2.0 💵 {2017-06-09, 1.003 EUR} @ 1.003 EUR"
     private let costAndTotalPricePostingString = "  Assets:💰 2.0 💵 {1.003 EUR, \"TEST\"} @@ 2.0 EUR"
 
+    init() throws {
+        basicPosting = Posting(accountName: try AccountName("Assets:Checking"),
+                               amount: Amount(number: Decimal(1.23),
+                                              commoditySymbol: "EUR",
+                                              decimalDigits: 2))
+
+    }
     @Test
     func basic() throws {
         let posting = try PostingParser.parseFrom(line: basicPostingString)!
-        #expect(posting == basicPosting!)
+        #expect(posting == basicPosting)
     }
 
     @Test
@@ -69,7 +76,7 @@ struct PostingParserTests {
     @Test
     func positive() throws {
         let posting = try PostingParser.parseFrom(line: positivePostingString)!
-        #expect(posting == basicPosting!)
+        #expect(posting == basicPosting)
     }
 
     @Test
@@ -81,7 +88,7 @@ struct PostingParserTests {
     @Test
     func whitespace() throws {
         let posting = try PostingParser.parseFrom(line: whitespacePostingString)!
-        #expect(posting == basicPosting!)
+        #expect(posting == basicPosting)
     }
 
     @Test
@@ -99,7 +106,7 @@ struct PostingParserTests {
     @Test
     func endOfLineCommentPosting() throws {
         let posting = try PostingParser.parseFrom(line: endOfLineCommentPostingString)!
-        #expect(posting == basicPosting!)
+        #expect(posting == basicPosting)
     }
 
     @Test
