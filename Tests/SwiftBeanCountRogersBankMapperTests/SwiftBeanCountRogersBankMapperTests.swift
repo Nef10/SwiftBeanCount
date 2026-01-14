@@ -173,9 +173,10 @@ struct SwiftBeanCountRogersBankMapperTests {
         #expect(result.count == 1)
         let postings = [
             Posting(accountName: accountName, amount: SwiftBeanCountModel.Amount(number: Decimal(string: "-1.13")!, commoditySymbol: "CAD", decimalDigits: 2)),
-            Posting(accountName: mapper.expenseAccountName,
-                    amount: SwiftBeanCountModel.Amount(number: Decimal(string: "2.79")!, commoditySymbol: "USD", decimalDigits: 2),
-                    price: SwiftBeanCountModel.Amount(number: Decimal(string: "1.13")!, commoditySymbol: "CAD", decimalDigits: 2))
+            try Posting(accountName: mapper.expenseAccountName,
+                        amount: SwiftBeanCountModel.Amount(number: Decimal(string: "2.79")!, commoditySymbol: "USD", decimalDigits: 2),
+                        price: SwiftBeanCountModel.Amount(number: Decimal(string: "1.13")!, commoditySymbol: "CAD", decimalDigits: 2),
+                        priceType: .total)
         ]
         let transactionMetaData = TransactionMetaData(date: activity.postedDate!, narration: "Test Merchant Name", metaData: [MetaDataKeys.activityId: "852741963"])
         #expect(result[0] == Transaction(metaData: transactionMetaData, postings: postings))
@@ -247,6 +248,9 @@ extension RogersBankMappingError: Equatable {
         }
         if case let .missingActivityData(lhsActivity, lhsString) = lhs, case let .missingActivityData(rhsActivity, rhsString) = rhs {
             return (lhsActivity as! TestActivity).id == (rhsActivity as! TestActivity).id && lhsString == rhsString // swiftlint:disable:this force_cast
+        }
+        if case let .postingCreationFailed(lhsString) = lhs, case let .postingCreationFailed(rhsString) = rhs {
+            return lhsString == rhsString
         }
         return false
     }

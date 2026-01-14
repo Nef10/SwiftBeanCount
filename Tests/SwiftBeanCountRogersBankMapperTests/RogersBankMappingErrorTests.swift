@@ -17,6 +17,10 @@ struct RogersBankMappingErrorTests {
             "\(RogersBankMappingError.missingActivityData(activity: activity, key: "keyName").localizedDescription)" ==
             "A downloaded activty ist missing keyName data: \(activity)"
         )
+        #expect(
+            "\(RogersBankMappingError.postingCreationFailed("test error").localizedDescription)" ==
+            "Failed to create posting: test error"
+        )
     }
 
 }
