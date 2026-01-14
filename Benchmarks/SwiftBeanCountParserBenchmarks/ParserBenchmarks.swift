@@ -39,12 +39,7 @@ let benchmarks = {
 
     Benchmark("Parse Big File (String)", configuration: config) { benchmark in
         let fileURL = loadBigFile()
-        let text: String
-        if #available(macOS 15, iOS 18, *) {
-            text = try String(contentsOf: fileURL, encoding: .utf8)
-        } else {
-            text = try String(contentsOf: fileURL)
-        }
+        let text = try String(contentsOf: fileURL, encoding: .utf8)
         benchmark.startMeasurement()
         for _ in benchmark.scaledIterations {
             _ = Parser.parse(string: text)
