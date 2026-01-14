@@ -13,95 +13,95 @@ import Testing
 struct StatementFileValidatorTests {
 
     @Test
-    func checkStatementsFromMonthly() async throws {
+    func statementsFromMonthly() async throws {
         let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let results = try await StatementFileValidator.checkStatementsFrom(
             folder: resourcesURL,
             statementNames: ["Statement Monthly"]
         )
 
-        #expect(!results.isEmpty)
+        #expect(results.count == 1)
         let monthlyResult = try #require(results.first { $0.name == "Statement Monthly" })
         #expect(monthlyResult.frequency == .monthly)
         #expect(monthlyResult.errors.isEmpty)
     }
 
     @Test
-    func checkStatementsFromQuarterly() async throws {
+    func statementsFromQuarterly() async throws {
         let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let results = try await StatementFileValidator.checkStatementsFrom(
             folder: resourcesURL,
             statementNames: ["Statement Quarterly"]
         )
 
-        #expect(!results.isEmpty)
+        #expect(results.count == 1)
         let quarterlyResult = try #require(results.first { $0.name == "Statement Quarterly" })
         #expect(quarterlyResult.frequency == .quarterly)
         #expect(quarterlyResult.errors.isEmpty)
     }
 
     @Test
-    func checkStatementsFromYearly() async throws {
+    func statementsFromYearly() async throws {
         let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let results = try await StatementFileValidator.checkStatementsFrom(
             folder: resourcesURL,
             statementNames: ["Statement Yearly"]
         )
 
-        #expect(!results.isEmpty)
+        #expect(results.count == 1)
         let yearlyResult = try #require(results.first { $0.name == "Statement Yearly" })
         #expect(yearlyResult.frequency == .yearly)
         #expect(yearlyResult.errors.isEmpty)
     }
 
     @Test
-    func checkStatementsFromWithGaps() async throws {
+    func statementsFromWithGaps() async throws {
         let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let results = try await StatementFileValidator.checkStatementsFrom(
             folder: resourcesURL,
             statementNames: ["Statement Gap"]
         )
 
-        #expect(!results.isEmpty)
+        #expect(results.count == 1)
         let gapResult = try #require(results.first { $0.name == "Statement Gap" })
         // With only 3 files (Jan, Feb, Apr), it can't reliably determine the frequency
         // The algorithm should detect it as unknown since there's not enough data
-        #expect(gapResult.frequency != .single)
-        #expect(!gapResult.errors.isEmpty || gapResult.frequency == .unkown)
+        #expect(gapResult.frequency == .unkown)
+        #expect(gapResult.errors.count == 1)
+        #expect(gapResult.errors.contains { $0.contains("Frequency could not be determined") })
     }
 
     @Test
-    func checkStatementsFromMultipleTypes() async throws {
+    func statementsFromMultipleTypes() async throws {
         let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let results = try await StatementFileValidator.checkStatementsFrom(
             folder: resourcesURL,
-            statementNames: ["Statement A", "Statement B"]
+            statementNames: ["Statement A", "Statement Monthly"]
         )
 
-        // The files "230101 Statement A:Statement B.pdf" contain both types separated by :
-        // which should be split into two statements
-        #expect(!results.isEmpty)
+        #expect(results.count == 2)
         // Both Statement A and Statement B should be detected
         let hasA = results.contains { $0.name == "Statement A" }
-        let hasB = results.contains { $0.name == "Statement B" }
+        let hasB = results.contains { $0.name == "Statement Monthly" }
         #expect(hasA && hasB)
     }
 
     @Test
-    func checkStatementsFromSingle() async throws {
+    func statementsFromSingle() async throws {
         let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let results = try await StatementFileValidator.checkStatementsFrom(
             folder: resourcesURL,
             statementNames: ["Statement Single"]
         )
 
-        #expect(!results.isEmpty)
+        #expect(results.count == 1)
         let singleResult = try #require(results.first { $0.name == "Statement Single" })
         #expect(singleResult.frequency == .single)
+        #expect(singleResult.errors.isEmpty)
     }
 
     @Test
-    func checkStatementsFromEmptyFolder() async throws {
+    func statementsFromEmptyFolder() async throws {
         // Create a temporary empty directory
         let tempDir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
@@ -114,26 +114,30 @@ struct StatementFileValidatorTests {
             statementNames: ["Statement"]
         )
 
-        #expect(!results.isEmpty)
+        #expect(results.count == 1)
         let result = try #require(results.first)
+        #expect(result.frequency == .unkown)
+        #expect(result.errors.count == 1)
         #expect(result.errors.contains { $0.contains("Could not find statement files") })
     }
 
     @Test
-    func checkStatementsFromNoMatchingFiles() async throws {
+    func statementsFromNoMatchingFiles() async throws {
         let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let results = try await StatementFileValidator.checkStatementsFrom(
             folder: resourcesURL,
             statementNames: ["NonExistent"]
         )
 
-        #expect(!results.isEmpty)
+        #expect(results.count == 1)
         let result = try #require(results.first)
+        #expect(result.frequency == .unkown)
+        #expect(result.errors.count == 1)
         #expect(result.errors.contains { $0.contains("Could not find statement files") })
     }
 
     @Test
-    func checkStatementsFromMixedMonthlyAndQuarterly() async throws {
+    func statementsFromMixedMonthlyAndQuarterly() async throws {
         let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
         let results = try await StatementFileValidator.checkStatementsFrom(
             folder: resourcesURL,
@@ -141,9 +145,9 @@ struct StatementFileValidatorTests {
         )
 
         // Should find both monthly and quarterly statements
-        #expect(results.count >= 2)
-        #expect(results.contains { $0.name == "Statement Monthly" && $0.frequency == .monthly })
-        #expect(results.contains { $0.name == "Statement Quarterly" && $0.frequency == .quarterly })
+        #expect(results.count == 2)
+        #expect(results.contains { $0.name == "Statement Monthly" && $0.frequency == .monthly && $0.errors.isEmpty })
+        #expect(results.contains { $0.name == "Statement Quarterly" && $0.frequency == .quarterly && $0.errors.isEmpty })
     }
 
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 /// Errors which can occur when validating
-public enum StatementValidatorError: LocalizedError {
+public enum StatementValidatorError: LocalizedError, CaseIterable {
     /// No root founder was configued in the ledger
     case noRootFolder
     /// Error when reading properties of a file

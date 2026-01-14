@@ -17,6 +17,17 @@ struct StatementValidatorTests {
         try! AccountName("Assets:Test") // swiftlint:disable:this force_try
     }
 
+    private var parentURL: URL {
+        let resourcesURL = try! #require(Bundle.module.url(forResource: "Resource", withExtension: nil)) // swiftlint:disable:this force_try
+        return resourcesURL.deletingLastPathComponent()
+    }
+
+    private let customFileNames = Custom(
+        date: Date(timeIntervalSince1970: 1_672_531_200),
+        name: "statements-settings",
+        values: ["file-names", "Statement Monthly"],
+    )
+
     // MARK: - getRootFolder Tests
 
     @Test
@@ -59,26 +70,19 @@ struct StatementValidatorTests {
         ledger.custom.append(custom2)
 
         let rootFolder = try StatementValidator.getRootFolder(from: ledger)
-        // Note: The implementation uses max(by: { $0.date > $1.date }) which actually gives the minimum date
-        // This appears to be a bug in the source code, but we test the actual behavior
-        #expect(rootFolder == "/old/path")
+        #expect(rootFolder == "/new/path")
     }
 
     @Test
     func getRootFolderIgnoresOtherSettings() throws {
-        let custom1 = Custom(
-            date: Date(timeIntervalSince1970: 1_672_531_200),
-            name: "statements-settings",
-            values: ["file-names", "Statement"]
-        )
-        let custom2 = Custom(
+        let custom = Custom(
             date: Date(timeIntervalSince1970: 1_672_531_200),
             name: "statements-settings",
             values: ["root-folder", "/path/to/statements"]
         )
         let ledger = Ledger()
-        ledger.custom.append(custom1)
-        ledger.custom.append(custom2)
+        ledger.custom.append(customFileNames)
+        ledger.custom.append(custom)
 
         let rootFolder = try StatementValidator.getRootFolder(from: ledger)
         #expect(rootFolder == "/path/to/statements")
@@ -88,24 +92,14 @@ struct StatementValidatorTests {
 
     @Test
     func validateWithResourcesFolder() async throws {
-        // Setup ledger with statement settings
-        let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
-        let parentURL = resourcesURL.deletingLastPathComponent()
-
-        let custom = Custom(
-            date: Date(timeIntervalSince1970: 1_672_531_200),
-            name: "statements-settings",
-            values: ["file-names", "Statement Monthly Statement Quarterly"]
-        )
-
         let account = Account(
             name: testAccountName,
             opening: Date(timeIntervalSince1970: 1_672_531_200),
-            metaData: ["folder": "Resource", "statements": "enabled"]
+            metaData: ["folder": "Resource"]
         )
 
         let ledger = Ledger()
-        ledger.custom.append(custom)
+        ledger.custom.append(customFileNames)
         try ledger.add(account)
 
         let results = try await StatementValidator.validate(
@@ -116,23 +110,16 @@ struct StatementValidatorTests {
             includeCurrentStatementWarning: false
         )
 
-        #expect(!results.isEmpty)
+        #expect(results.count == 1)
         let accountResult = try #require(results[testAccountName])
-        #expect(!accountResult.statementResults.isEmpty)
+        #expect(accountResult.statementResults.count == 2)
+        #expect(accountResult.statementResults.contains { $0.name == "Statement Monthly" && $0.frequency == .monthly && $0.errors.isEmpty && $0.warnings.isEmpty })
+        #expect(accountResult.statementResults.contains { $0.name == "Statement A" && $0.frequency == .monthly && $0.errors.isEmpty && $0.warnings.isEmpty })
         #expect(accountResult.folderName.contains("Resource"))
     }
 
     @Test
-    func validateExcludesClosedAccounts() async throws {
-        let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
-        let parentURL = resourcesURL.deletingLastPathComponent()
-
-        let custom = Custom(
-            date: Date(timeIntervalSince1970: 1_672_531_200),
-            name: "statements-settings",
-            values: ["file-names", "Statement Monthly"]
-        )
-
+    func validateClosedAccounts() async throws {
         let closedAccount = Account(
             name: testAccountName,
             opening: Date(timeIntervalSince1970: 1_672_531_200),
@@ -141,46 +128,23 @@ struct StatementValidatorTests {
         )
 
         let ledger = Ledger()
-        ledger.custom.append(custom)
+        ledger.custom.append(customFileNames)
         try ledger.add(closedAccount)
 
-        let results = try await StatementValidator.validate(
+        var results = try await StatementValidator.validate(
             ledger,
             securityScopedRootURL: parentURL,
-            includeClosedAccounts: false,
+            includeClosedAccounts: false, // exclude closed accounts
             includeStartEndDateWarning: false,
             includeCurrentStatementWarning: false
         )
 
         #expect(results.isEmpty)
-    }
 
-    @Test
-    func validateIncludesClosedAccounts() async throws {
-        let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
-        let parentURL = resourcesURL.deletingLastPathComponent()
-
-        let custom = Custom(
-            date: Date(timeIntervalSince1970: 1_672_531_200),
-            name: "statements-settings",
-            values: ["file-names", "Statement Monthly"]
-        )
-
-        let closedAccount = Account(
-            name: testAccountName,
-            opening: Date(timeIntervalSince1970: 1_672_531_200),
-            closing: Date(timeIntervalSince1970: 1_675_209_600),
-            metaData: ["folder": "Resource"]
-        )
-
-        let ledger = Ledger()
-        ledger.custom.append(custom)
-        try ledger.add(closedAccount)
-
-        let results = try await StatementValidator.validate(
+        results = try await StatementValidator.validate(
             ledger,
             securityScopedRootURL: parentURL,
-            includeClosedAccounts: true,
+            includeClosedAccounts: true, // include closed accounts
             includeStartEndDateWarning: false,
             includeCurrentStatementWarning: false
         )
@@ -191,15 +155,6 @@ struct StatementValidatorTests {
 
     @Test
     func validateExcludesDisabledAccounts() async throws {
-        let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
-        let parentURL = resourcesURL.deletingLastPathComponent()
-
-        let custom = Custom(
-            date: Date(timeIntervalSince1970: 1_672_531_200),
-            name: "statements-settings",
-            values: ["file-names", "Statement Monthly"]
-        )
-
         let disabledAccount = Account(
             name: testAccountName,
             opening: Date(timeIntervalSince1970: 1_672_531_200),
@@ -207,7 +162,7 @@ struct StatementValidatorTests {
         )
 
         let ledger = Ledger()
-        ledger.custom.append(custom)
+        ledger.custom.append(customFileNames)
         try ledger.add(disabledAccount)
 
         let results = try await StatementValidator.validate(
@@ -223,22 +178,13 @@ struct StatementValidatorTests {
 
     @Test
     func validateExcludesAccountsWithoutFolder() async throws {
-        let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
-        let parentURL = resourcesURL.deletingLastPathComponent()
-
-        let custom = Custom(
-            date: Date(timeIntervalSince1970: 1_672_531_200),
-            name: "statements-settings",
-            values: ["file-names", "Statement Monthly"]
-        )
-
         let accountWithoutFolder = Account(
             name: testAccountName,
             opening: Date(timeIntervalSince1970: 1_672_531_200)
         )
 
         let ledger = Ledger()
-        ledger.custom.append(custom)
+        ledger.custom.append(customFileNames)
         try ledger.add(accountWithoutFolder)
 
         let results = try await StatementValidator.validate(
@@ -254,15 +200,6 @@ struct StatementValidatorTests {
 
     @Test
     func validateWithStartEndDateWarning() async throws {
-        let resourcesURL = try #require(Bundle.module.url(forResource: "Resource", withExtension: nil))
-        let parentURL = resourcesURL.deletingLastPathComponent()
-
-        let custom = Custom(
-            date: Date(timeIntervalSince1970: 1_672_531_200),
-            name: "statements-settings",
-            values: ["file-names", "Statement Monthly"]
-        )
-
         let account = Account(
             name: testAccountName,
             opening: Date(timeIntervalSince1970: 1_609_459_200), // Different from statement start
@@ -270,7 +207,7 @@ struct StatementValidatorTests {
         )
 
         let ledger = Ledger()
-        ledger.custom.append(custom)
+        ledger.custom.append(customFileNames)
         try ledger.add(account)
 
         let results = try await StatementValidator.validate(
@@ -287,9 +224,52 @@ struct StatementValidatorTests {
     }
 
     @Test
-    func validateEmptyLedger() async throws {
+    func validateWithCurrentStatementWarning() async throws {
+        let account = Account(
+            name: testAccountName,
+            opening: Date(timeIntervalSince1970: 1_609_459_200), // Different from statement start
+            metaData: ["folder": "Resource"]
+        )
+
+        let ledger = Ledger()
+        ledger.custom.append(customFileNames)
+        try ledger.add(account)
+
+        let results = try await StatementValidator.validate(
+            ledger,
+            securityScopedRootURL: parentURL,
+            includeClosedAccounts: false,
+            includeStartEndDateWarning: false,
+            includeCurrentStatementWarning: true
+        )
+
+        let accountResult = try #require(results[testAccountName])
+        // Should have warnings due to date mismatch
+        #expect(accountResult.statementResults.contains { !$0.warnings.isEmpty })
+    }
+
+    @Test
+    func emptyLedger() async throws {
         let tempDir = FileManager.default.temporaryDirectory
         let ledger = Ledger()
+
+        let results = try await StatementValidator.validate(
+            ledger,
+            securityScopedRootURL: tempDir,
+            includeClosedAccounts: false,
+            includeStartEndDateWarning: false,
+            includeCurrentStatementWarning: false
+        )
+
+        #expect(results.isEmpty)
+    }
+
+    @Test
+    func ledgerWithoutAccounts() async throws {
+        let tempDir = FileManager.default.temporaryDirectory
+        let ledger = Ledger()
+
+        ledger.custom.append(customFileNames)
 
         let results = try await StatementValidator.validate(
             ledger,

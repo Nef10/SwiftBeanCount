@@ -20,7 +20,7 @@ struct AccountStartEndDateValidatorMonthlyTests { // swiftlint:disable:this type
     // MARK: - Monthly Opening Date Tests
 
     @Test
-    func validateMonthlyMatchingOpeningDate() {
+    func monthlyMatchingOpeningDate() {
         let calendar = Calendar.current
         let openingDate = Date(timeIntervalSince1970: 1_672_531_200) // 2023-01-01
         let startDate = openingDate
@@ -38,7 +38,7 @@ struct AccountStartEndDateValidatorMonthlyTests { // swiftlint:disable:this type
     }
 
     @Test
-    func validateMonthlyMismatchedOpeningDate() {
+    func monthlyMismatchedOpeningDate() {
         let calendar = Calendar.current
         let openingDate = Date(timeIntervalSince1970: 1_672_531_200) // 2023-01-01
         let startDate = calendar.date(byAdding: .month, value: 1, to: openingDate)! // 2023-02-01
@@ -52,14 +52,14 @@ struct AccountStartEndDateValidatorMonthlyTests { // swiftlint:disable:this type
         )
 
         let validated = AccountStartEndDateValidator.validate(account, result: result)
-        #expect(!validated.warnings.isEmpty)
-        #expect(validated.warnings.contains { $0.contains("opened") && $0.contains("statements start") })
+        #expect(validated.warnings.count == 1)
+        #expect(validated.warnings.contains { $0.contains("opened") && $0.contains("but statements start") })
     }
 
     // MARK: - Monthly Closing Date Tests
 
     @Test
-    func validateMonthlyMatchingClosingDate() {
+    func monthlyMatchingClosingDate() {
         let calendar = Calendar.current
         let openingDate = Date(timeIntervalSince1970: 1_672_531_200) // 2023-01-01
         let closingDate = calendar.date(byAdding: .month, value: 2, to: openingDate)! // 2023-03-01
@@ -78,7 +78,7 @@ struct AccountStartEndDateValidatorMonthlyTests { // swiftlint:disable:this type
     }
 
     @Test
-    func validateMonthlyMismatchedClosingDate() {
+    func monthlyMismatchedClosingDate() {
         let calendar = Calendar.current
         let openingDate = Date(timeIntervalSince1970: 1_672_531_200) // 2023-01-01
         let closingDate = calendar.date(byAdding: .month, value: 3, to: openingDate)! // 2023-04-01
@@ -93,14 +93,14 @@ struct AccountStartEndDateValidatorMonthlyTests { // swiftlint:disable:this type
         )
 
         let validated = AccountStartEndDateValidator.validate(account, result: result)
-        #expect(!validated.warnings.isEmpty)
-        #expect(validated.warnings.contains { $0.contains("closed") && $0.contains("statements end") })
+        #expect(validated.warnings.count == 1)
+        #expect(validated.warnings.contains { $0.contains("closed") && $0.contains("but statements end") })
     }
 
     // MARK: - Quarterly Opening Date Tests
 
     @Test
-    func validateQuarterlyMatchingOpeningDate() {
+    func quarterlyMatchingOpeningDate() {
         let calendar = Calendar.current
         let openingDate = Date(timeIntervalSince1970: 1_672_531_200) // 2023-01-01 Q1
         let startDate = openingDate
@@ -118,7 +118,7 @@ struct AccountStartEndDateValidatorMonthlyTests { // swiftlint:disable:this type
     }
 
     @Test
-    func validateQuarterlyMismatchedOpeningDate() {
+    func quarterlyMismatchedOpeningDate() {
         let calendar = Calendar.current
         let openingDate = Date(timeIntervalSince1970: 1_672_531_200) // 2023-01-01 Q1
         let startDate = calendar.date(byAdding: .month, value: 3, to: openingDate)! // 2023-04-01 Q2
@@ -132,14 +132,14 @@ struct AccountStartEndDateValidatorMonthlyTests { // swiftlint:disable:this type
         )
 
         let validated = AccountStartEndDateValidator.validate(account, result: result)
-        #expect(!validated.warnings.isEmpty)
-        #expect(validated.warnings.contains { $0.contains("opened Q") && $0.contains("statements start Q") })
+        #expect(validated.warnings.count == 1)
+        #expect(validated.warnings.contains { $0.contains("opened") && $0.contains("but statements start") })
     }
 
     // MARK: - Quarterly Closing Date Tests
 
     @Test
-    func validateQuarterlyMatchingClosingDate() {
+    func quarterlyMatchingClosingDate() {
         let calendar = Calendar.current
         let openingDate = Date(timeIntervalSince1970: 1_672_531_200) // 2023-01-01 Q1
         let closingDate = calendar.date(byAdding: .month, value: 6, to: openingDate)! // 2023-07-01 Q3
@@ -158,7 +158,7 @@ struct AccountStartEndDateValidatorMonthlyTests { // swiftlint:disable:this type
     }
 
     @Test
-    func validateQuarterlyMismatchedClosingDate() {
+    func quarterlyMismatchedClosingDate() {
         let calendar = Calendar.current
         let openingDate = Date(timeIntervalSince1970: 1_672_531_200) // 2023-01-01 Q1
         let closingDate = calendar.date(byAdding: .month, value: 6, to: openingDate)! // 2023-07-01 Q3
@@ -173,14 +173,14 @@ struct AccountStartEndDateValidatorMonthlyTests { // swiftlint:disable:this type
         )
 
         let validated = AccountStartEndDateValidator.validate(account, result: result)
-        #expect(!validated.warnings.isEmpty)
-        #expect(validated.warnings.contains { $0.contains("closed Q") && $0.contains("statements end Q") })
+        #expect(validated.warnings.count == 1)
+        #expect(validated.warnings.contains { $0.contains("closed") && $0.contains("but statements end") })
     }
 
     // MARK: - Yearly Opening Date Tests
 
     @Test
-    func validateYearlyMatchingOpeningDate() {
+    func yearlyMatchingOpeningDate() {
         let calendar = Calendar.current
         let openingDate = Date(timeIntervalSince1970: 1_672_531_200) // 2023-01-01
         let startDate = openingDate
@@ -198,7 +198,7 @@ struct AccountStartEndDateValidatorMonthlyTests { // swiftlint:disable:this type
     }
 
     @Test
-    func validateYearlyMismatchedOpeningDate() {
+    func yearlyMismatchedOpeningDate() {
         let calendar = Calendar.current
         let openingDate = Date(timeIntervalSince1970: 1_672_531_200) // 2023-01-01
         let startDate = calendar.date(byAdding: .year, value: 1, to: openingDate)! // 2024-01-01
@@ -212,14 +212,14 @@ struct AccountStartEndDateValidatorMonthlyTests { // swiftlint:disable:this type
         )
 
         let validated = AccountStartEndDateValidator.validate(account, result: result)
-        #expect(!validated.warnings.isEmpty)
-        #expect(validated.warnings.contains { $0.contains("opened") && $0.contains("statements start") })
+        #expect(validated.warnings.count == 1)
+        #expect(validated.warnings.contains { $0.contains("opened") && $0.contains("but statements start") })
     }
 
     // MARK: - Yearly Closing Date Tests
 
     @Test
-    func validateYearlyMatchingClosingDate() {
+    func yearlyMatchingClosingDate() {
         let calendar = Calendar.current
         let openingDate = Date(timeIntervalSince1970: 1_672_531_200) // 2023-01-01
         let closingDate = calendar.date(byAdding: .year, value: 2, to: openingDate)! // 2025-01-01
@@ -238,7 +238,7 @@ struct AccountStartEndDateValidatorMonthlyTests { // swiftlint:disable:this type
     }
 
     @Test
-    func validateYearlyMismatchedClosingDate() {
+    func yearlyMismatchedClosingDate() {
         let calendar = Calendar.current
         let openingDate = Date(timeIntervalSince1970: 1_672_531_200) // 2023-01-01
         let closingDate = calendar.date(byAdding: .year, value: 2, to: openingDate)! // 2025-01-01
@@ -253,14 +253,14 @@ struct AccountStartEndDateValidatorMonthlyTests { // swiftlint:disable:this type
         )
 
         let validated = AccountStartEndDateValidator.validate(account, result: result)
-        #expect(!validated.warnings.isEmpty)
-        #expect(validated.warnings.contains { $0.contains("closed") && $0.contains("statements end") })
+        #expect(validated.warnings.count == 1)
+        #expect(validated.warnings.contains { $0.contains("closed") && $0.contains("but statements end") })
     }
 
     // MARK: - Edge Cases
 
     @Test
-    func validateNoOpeningDate() {
+    func noOpeningDate() {
         let account = Account(name: testAccountName)
         let result = StatementResult(
             name: "Test",
@@ -274,7 +274,7 @@ struct AccountStartEndDateValidatorMonthlyTests { // swiftlint:disable:this type
     }
 
     @Test
-    func validateNoClosingDate() {
+    func noClosingDate() {
         let openingDate = Date(timeIntervalSince1970: 1_672_531_200)
         let account = Account(name: testAccountName, opening: openingDate)
         let result = StatementResult(
@@ -289,7 +289,7 @@ struct AccountStartEndDateValidatorMonthlyTests { // swiftlint:disable:this type
     }
 
     @Test
-    func validateNilStartDate() {
+    func nilStartDate() {
         let account = Account(name: testAccountName, opening: Date(timeIntervalSince1970: 1_672_531_200))
         let result = StatementResult(
             name: "Test",
@@ -303,7 +303,7 @@ struct AccountStartEndDateValidatorMonthlyTests { // swiftlint:disable:this type
     }
 
     @Test
-    func validateNilEndDate() {
+    func nilEndDate() {
         let account = Account(name: testAccountName, opening: Date(timeIntervalSince1970: 1_672_531_200), closing: Date(timeIntervalSince1970: 1_675_209_600))
         let result = StatementResult(
             name: "Test",
@@ -317,7 +317,7 @@ struct AccountStartEndDateValidatorMonthlyTests { // swiftlint:disable:this type
     }
 
     @Test
-    func validateSingleFrequency() {
+    func singleFrequency() {
         let openingDate = Date(timeIntervalSince1970: 1_672_531_200)
         let account = Account(name: testAccountName, opening: openingDate)
         let result = StatementResult(
@@ -332,7 +332,7 @@ struct AccountStartEndDateValidatorMonthlyTests { // swiftlint:disable:this type
     }
 
     @Test
-    func validateUnknownFrequency() {
+    func unknownFrequency() {
         let openingDate = Date(timeIntervalSince1970: 1_672_531_200)
         let account = Account(name: testAccountName, opening: openingDate, closing: Date(timeIntervalSince1970: 1_675_209_600))
         let result = StatementResult(
@@ -347,7 +347,7 @@ struct AccountStartEndDateValidatorMonthlyTests { // swiftlint:disable:this type
     }
 
     @Test
-    func validatePreservesExistingData() {
+    func preservesExistingData() {
         let account = Account(name: testAccountName)
         let result = StatementResult(
             name: "Test Name",

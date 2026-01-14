@@ -26,11 +26,9 @@ struct StatementValidatorErrorTests {
         #expect(description == "Could not read properties of statement files")
     }
 
-    @Test
-    func errorDescriptionNotNil() {
-        for error in [StatementValidatorError.noRootFolder, StatementValidatorError.resourceValuesMissing] {
-            #expect(error.errorDescription != nil)
-        }
+    @Test(arguments: StatementValidatorError.allCases)
+    func errorDescriptionNotNil(error: StatementValidatorError) {
+        #expect(error.errorDescription != nil)
     }
 
 }

@@ -20,7 +20,7 @@ struct LatestStatementValidatorTests {
     // MARK: - Monthly Statements Tests
 
     @Test
-    func validateMonthlyOpenAccountCurrent() {
+    func monthlyOpenAccountCurrent() {
         let calendar = Calendar.current
         // Create end date from last month
         let currentComponents = calendar.dateComponents([.year, .month], from: Date())
@@ -46,7 +46,7 @@ struct LatestStatementValidatorTests {
     }
 
     @Test
-    func validateMonthlyOpenAccountMissing() {
+    func monthlyOpenAccountMissing() {
         let calendar = Calendar.current
         // Create end date from 3 months ago to ensure it's missing
         let currentComponents = calendar.dateComponents([.year, .month], from: Date())
@@ -75,7 +75,7 @@ struct LatestStatementValidatorTests {
     }
 
     @Test
-    func validateMonthlyClosedAccount() {
+    func monthlyClosedAccount() {
         let account = Account(name: testAccountName, opening: Date(), closing: Date())
         let result = StatementResult(
             name: "Test",
@@ -92,7 +92,7 @@ struct LatestStatementValidatorTests {
     // MARK: - Quarterly Statements Tests
 
     @Test
-    func validateQuarterlyOpenAccountCurrent() {
+    func quarterlyOpenAccountCurrent() {
         let calendar = Calendar.current
         let currentDate = Date()
         let currentQuarter = Int(StatementDatesValidator.quarterDateFormatter.string(from: currentDate))!
@@ -121,7 +121,7 @@ struct LatestStatementValidatorTests {
     }
 
     @Test
-    func validateQuarterlyOpenAccountMissing() {
+    func quarterlyOpenAccountMissing() {
         // Create end date from over a year ago to ensure it's missing
         let endDate = Date(timeIntervalSince1970: 1_640_995_200) // 2022-01-01
 
@@ -142,7 +142,7 @@ struct LatestStatementValidatorTests {
     // MARK: - Yearly Statements Tests
 
     @Test
-    func validateYearlyOpenAccountCurrent() {
+    func yearlyOpenAccountCurrent() {
         let calendar = Calendar.current
         let currentYear = calendar.component(.year, from: Date())
         let lastYear = currentYear - 1
@@ -168,7 +168,7 @@ struct LatestStatementValidatorTests {
     }
 
     @Test
-    func validateYearlyOpenAccountMissing() {
+    func yearlyOpenAccountMissing() {
         // Create end date from 3 years ago to ensure it's missing
         let endDate = Date(timeIntervalSince1970: 1_609_459_200) // 2021-01-01
 
@@ -189,7 +189,7 @@ struct LatestStatementValidatorTests {
     // MARK: - Edge Cases
 
     @Test
-    func validateWithNilEndDate() {
+    func nilEndDate() {
         let account = Account(name: testAccountName, opening: Date())
         let result = StatementResult(
             name: "Test",
@@ -204,7 +204,7 @@ struct LatestStatementValidatorTests {
     }
 
     @Test
-    func validateSingleFrequency() {
+    func singleFrequency() {
         let account = Account(name: testAccountName, opening: Date())
         let result = StatementResult(
             name: "Test",
@@ -219,7 +219,7 @@ struct LatestStatementValidatorTests {
     }
 
     @Test
-    func validateUnknownFrequency() {
+    func unknownFrequency() {
         let account = Account(name: testAccountName, opening: Date())
         let result = StatementResult(
             name: "Test",
@@ -234,7 +234,7 @@ struct LatestStatementValidatorTests {
     }
 
     @Test
-    func validatePreservesExistingData() {
+    func preservesExistingData() {
         let account = Account(name: testAccountName, opening: Date())
         let result = StatementResult(
             name: "Test Name",
