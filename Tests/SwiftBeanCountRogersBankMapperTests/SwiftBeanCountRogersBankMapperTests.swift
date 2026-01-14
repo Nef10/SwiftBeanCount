@@ -173,9 +173,11 @@ struct SwiftBeanCountRogersBankMapperTests {
         #expect(result.count == 1)
         let postings = [
             Posting(accountName: accountName, amount: SwiftBeanCountModel.Amount(number: Decimal(string: "-1.13")!, commoditySymbol: "CAD", decimalDigits: 2)),
-            Posting(accountName: mapper.expenseAccountName,
-                    amount: SwiftBeanCountModel.Amount(number: Decimal(string: "2.79")!, commoditySymbol: "USD", decimalDigits: 2),
-                    price: SwiftBeanCountModel.Amount(number: Decimal(string: "1.13")!, commoditySymbol: "CAD", decimalDigits: 2))
+            // swiftlint:disable:next force_try
+            try! Posting(accountName: mapper.expenseAccountName,
+                         amount: SwiftBeanCountModel.Amount(number: Decimal(string: "2.79")!, commoditySymbol: "USD", decimalDigits: 2),
+                         price: SwiftBeanCountModel.Amount(number: Decimal(string: "1.13")!, commoditySymbol: "CAD", decimalDigits: 2),
+                         priceType: .total)
         ]
         let transactionMetaData = TransactionMetaData(date: activity.postedDate!, narration: "Test Merchant Name", metaData: [MetaDataKeys.activityId: "852741963"])
         #expect(result[0] == Transaction(metaData: transactionMetaData, postings: postings))

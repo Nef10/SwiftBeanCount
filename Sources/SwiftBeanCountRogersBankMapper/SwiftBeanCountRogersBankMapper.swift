@@ -64,7 +64,8 @@ public struct SwiftBeanCountRogersBankMapper {
         if let foreign = activity.foreign {
             let (number, decimalDigits) = foreign.originalAmount.value.amountDecimal()
             let foreignAmount = Amount(number: number, commoditySymbol: foreign.originalAmount.currency, decimalDigits: decimalDigits)
-            postings.append(Posting(accountName: expenseAccountName, amount: foreignAmount, price: amount))
+            // swiftlint:disable:next force_try
+            postings.append(try! Posting(accountName: expenseAccountName, amount: foreignAmount, price: amount, priceType: .total))
         } else {
             postings.append(Posting(accountName: expenseAccountName, amount: amount))
         }
