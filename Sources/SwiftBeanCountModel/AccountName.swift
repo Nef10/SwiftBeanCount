@@ -11,7 +11,7 @@ import Foundation
 /// Errors an AccountName can throw
 public enum AccountNameError: Error, Equatable {
     /// an invalid account name
-    case invaildName(String)
+    case invalidName(String)
 }
 
 /// Struct with represents just the name of an Account
@@ -32,10 +32,10 @@ public struct AccountName: AccountItem {
     ///
     /// - Parameters:
     ///   - name: a vaild name for the account
-    /// - Throws: AccountNameError.invaildName in case the account name is invalid
+    /// - Throws: AccountNameError.invalidName in case the account name is invalid
     public init(_ name: String) throws(AccountNameError) {
         guard Self.isNameValid(name) else {
-            throw AccountNameError.invaildName(name)
+            throw AccountNameError.invalidName(name)
         }
         self.fullName = name
         self.accountType = Self.getAccountType(for: name)
@@ -98,7 +98,7 @@ public struct AccountName: AccountItem {
 extension AccountNameError: LocalizedError {
     public var errorDescription: String? {
         switch self {
-        case let .invaildName(error):
+        case let .invalidName(error):
             return "Invalid Account name: \(error)"
         }
     }

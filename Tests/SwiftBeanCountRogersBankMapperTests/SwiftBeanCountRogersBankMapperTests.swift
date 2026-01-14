@@ -32,11 +32,69 @@ struct SwiftBeanCountRogersBankMapperTests {
         balance.currency = "USD"
         account.currentBalance = balance
         let result = try mapper.mapAccountToBalance(account: account)
-        #expect(Calendar.current.compare(result.date, to: Date(), toGranularity: .minute) == .orderedSame)
-        #expect(result.accountName == accountName)
-        #expect(result.amount.number == Decimal(string: "-\(balance.value)")!)
-        #expect(result.amount.commoditySymbol == balance.currency)
-        #expect(result.amount.decimalDigits == 2)
+        #expect(result != nil)
+        #expect(Calendar.current.compare(result!.date, to: Date(), toGranularity: .minute) == .orderedSame)
+        #expect(result!.accountName == accountName)
+        #expect(result!.amount.number == Decimal(string: "-\(balance.value)")!)
+        #expect(result!.amount.commoditySymbol == balance.currency)
+        #expect(result!.amount.decimalDigits == 2)
+    }
+
+    @Test
+    func mapAccountDuplicate() throws {
+        let accountName = try AccountName("Liabilities:CC:Rogers")
+        try ledger.add(Account(name: accountName, metaData: ["last-four": "4862", "importer-type": "rogers"]))
+        var account = TestAccount()
+        var balanceAmount = TestAmount()
+        balanceAmount.value = "205.25"
+        balanceAmount.currency = "USD"
+        account.currentBalance = balanceAmount
+
+        // First mapping should succeed
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        var result = try mapper.mapAccountToBalance(account: account)
+        #expect(result != nil)
+
+        // Add the balance to the ledger
+        ledger.add(result!)
+
+        // Create a new mapper with the updated ledger and try to map the same account again
+        let mapper2 = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        result = try mapper2.mapAccountToBalance(account: account)
+
+        // Second mapping should return nil because it's a duplicate
+        #expect(result == nil)
+    }
+
+    @Test
+    func mapAccountNonDuplicate() throws {
+        let accountName = try AccountName("Liabilities:CC:Rogers")
+        try ledger.add(Account(name: accountName, metaData: ["last-four": "4862", "importer-type": "rogers"]))
+        var account = TestAccount()
+        var balanceAmount = TestAmount()
+        balanceAmount.value = "205.25"
+        balanceAmount.currency = "USD"
+        account.currentBalance = balanceAmount
+
+        // First mapping should succeed
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        var result = try mapper.mapAccountToBalance(account: account)
+        #expect(result != nil)
+
+        // Add the balance to the ledger
+        ledger.add(result!)
+
+        // Change the balance amount
+        balanceAmount.value = "300.50"
+        account.currentBalance = balanceAmount
+
+        // Create a new mapper with the updated ledger and try to map with different amount
+        let mapper2 = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        result = try mapper2.mapAccountToBalance(account: account)
+
+        // Mapping should succeed because the balance is different
+        #expect(result != nil)
+        #expect(result!.amount.number == Decimal(string: "-300.50")!)
     }
 
     @Test

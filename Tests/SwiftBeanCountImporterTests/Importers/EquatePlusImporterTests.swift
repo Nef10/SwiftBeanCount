@@ -224,7 +224,7 @@ struct EquatePlusImporterTests {
             Settings.importerTypeKey: EquatePlusImporter.importerType, "stock": "TEST:", "purchase-currency": "USD", "contribution-currency": "EUR"
         ]))
         let importer = EquatePlusImporter(ledger: ledger, transaction: fullString, balance: "")
-        let delegate = ErrorDelegate(error: AccountNameError.invaildName("Assets:TEST:"))
+        let delegate = ErrorDelegate(error: AccountNameError.invalidName("Assets:TEST:"))
         importer.delegate = delegate
         importer.load()
         #expect(delegate.verified)
