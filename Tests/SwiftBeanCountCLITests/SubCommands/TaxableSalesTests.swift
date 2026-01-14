@@ -113,6 +113,21 @@ final class TaxableSalesTests: XCTestCase {
     }
 
     func testGroupByProvider() {
+        let url = groupByProviderLedgerURL()
+        assertSuccessfulExecutionResult(arguments: ["taxable-sales", url.path, "2022", "--format", "text", "--group-by-provider"], output: """
+                                        Taxable Sales 2022 - Broker1
+
+                                        Date        Symbol   Name       Quantity  Proceeds    Gain
+                                        2022-04-15  STOCK1   Stock One  1.0       15.00 CAD   5.00 CAD
+
+                                        Taxable Sales 2022 - Broker2
+
+                                        Date        Symbol   Name       Quantity  Proceeds    Gain
+                                        2022-04-16  STOCK2   Stock Two  2.0       50.00 CAD   10.00 CAD
+                                        """)
+    }
+
+    private func groupByProviderLedgerURL() -> URL {
         let url = temporaryFileURL()
         createFile(at: url, content: """
                                      2022-04-15 open Assets:Broker1:STOCK1
@@ -134,17 +149,7 @@ final class TaxableSalesTests: XCTestCase {
                                        Assets:Bank 50.00 CAD
                                        Income:Gain -10.00 CAD
                                      """)
-        assertSuccessfulExecutionResult(arguments: ["taxable-sales", url.path, "2022", "--format", "text", "--group-by-provider"], output: """
-                                        Taxable Sales 2022 - Broker1
-
-                                        Date        Symbol   Name       Quantity  Proceeds    Gain
-                                        2022-04-15  STOCK1   Stock One  1.0       15.00 CAD   5.00 CAD
-
-                                        Taxable Sales 2022 - Broker2
-
-                                        Date        Symbol   Name       Quantity  Proceeds    Gain
-                                        2022-04-16  STOCK2   Stock Two  2.0       50.00 CAD   10.00 CAD
-                                        """)
+        return url
     }
 
     func testGroupByProviderInvalidWithCSV() {
