@@ -31,31 +31,10 @@ struct SyncResultTests {
 
         #expect(result.mode == .download)
         #expect(result.transactions.count == 1)
+        #expect(result.transactions == transactions)
         #expect(result.parserErrors.count == 1)
-        #expect(result.ledgerSettings.commoditySymbol == "USD")
+        #expect(result.parserErrors == parserErrors)
+        #expect(result.ledgerSettings == ledgerSettings)
     }
 
-    @Test
-    func syncResultUploadMode() throws {
-        let ledgerSettings = LedgerSettings(
-            commoditySymbol: "EUR",
-            tag: Tag(name: "upload"),
-            name: "Bob",
-            accountName: try AccountName("Assets:Upload"),
-            dateTolerance: 172_800,
-            categoryAccountNames: [:],
-            accountNameCategories: [:]
-        )
-
-        let result = SyncResult(
-            mode: .upload,
-            transactions: [],
-            parserErrors: [],
-            ledgerSettings: ledgerSettings
-        )
-
-        #expect(result.mode == .upload)
-        #expect(result.transactions.isEmpty)
-        #expect(result.parserErrors.isEmpty)
-    }
 }

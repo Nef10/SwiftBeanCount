@@ -62,6 +62,10 @@ struct TransactionMapperTests {
         let ownPosting = transaction.postings.first { $0.accountName == LedgerSettings.ownAccountName }
         #expect(ownPosting != nil)
         #expect(ownPosting?.amount.number == Decimal(string: "-100.00")!)
+
+        let sharedPosting = transaction.postings.first { $0.accountName.fullName == "Assets:Shared" }
+        #expect(sharedPosting != nil)
+        #expect(sharedPosting?.amount.number == Decimal(string: "50.00")!)
     }
 
     @Test

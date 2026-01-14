@@ -22,7 +22,7 @@ enum LedgerSettingsConstants {
 }
 
 /// Settings for SwiftBeanCountSheetSync which were read from the ledger file
-public struct LedgerSettings {
+public struct LedgerSettings: Equatable {
 
     static let fallbackAccountName = try! AccountName("Expenses:TODO") // swiftlint:disable:this force_try
     static let ownAccountName = try! AccountName("Assets:TODO") // swiftlint:disable:this force_try
