@@ -13,7 +13,7 @@ final class TaxableSalesTests: XCTestCase {
         #if os(Linux)
         XCTAssertEqual(result.output, "The operation could not be completed. The file doesn't exist.")
         #else
-        XCTAssertEqual(result.output, "The file "\(url.lastPathComponent)" couldn't be opened because there is no such file.")
+        XCTAssertEqual(result.output, "The file \"\(url.lastPathComponent)\" couldn't be opened because there is no such file.")
         #endif
     }
 
