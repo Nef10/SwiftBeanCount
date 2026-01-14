@@ -9,44 +9,42 @@ import Benchmark
 import Foundation
 import SwiftBeanCountParser
 
+private func loadBigFile() -> URL {
+    guard let fileURL = Bundle.module.url(
+        forResource: "Big",
+        withExtension: "beancount",
+        subdirectory: "Resources"
+    ) else {
+        fatalError("Could not find Big.beancount file")
+    }
+    return fileURL
+}
+
 let benchmarks = {
-    Benchmark("Parse Big File",
-              configuration: Benchmark.Configuration(
-                metrics: [.wallClock, .throughput],
-                warmupIterations: 1,
-                scalingFactor: .kilo,
-                maxDuration: .seconds(10),
-                maxIterations: 10
-              )) { benchmark in
-        guard let fileURL = Bundle.module.url(forResource: "Big", withExtension: "beancount", subdirectory: "Resources") else {
-            fatalError("Could not find Big.beancount file")
-        }
-        
+    let config = Benchmark.Configuration(
+        metrics: [.wallClock, .throughput],
+        warmupIterations: 1,
+        scalingFactor: .kilo,
+        maxDuration: .seconds(10),
+        maxIterations: 10
+    )
+
+    Benchmark("Parse Big File", configuration: config) { benchmark in
+        let fileURL = loadBigFile()
         benchmark.startMeasurement()
         for _ in benchmark.scaledIterations {
             _ = try Parser.parse(contentOf: fileURL)
         }
     }
-    
-    Benchmark("Parse Big File (String)",
-              configuration: Benchmark.Configuration(
-                metrics: [.wallClock, .throughput],
-                warmupIterations: 1,
-                scalingFactor: .kilo,
-                maxDuration: .seconds(10),
-                maxIterations: 10
-              )) { benchmark in
-        guard let fileURL = Bundle.module.url(forResource: "Big", withExtension: "beancount", subdirectory: "Resources") else {
-            fatalError("Could not find Big.beancount file")
-        }
-        
+
+    Benchmark("Parse Big File (String)", configuration: config) { benchmark in
+        let fileURL = loadBigFile()
         let text: String
         if #available(macOS 15, iOS 18, *) {
             text = try String(contentsOf: fileURL, encoding: .utf8)
         } else {
             text = try String(contentsOf: fileURL)
         }
-        
         benchmark.startMeasurement()
         for _ in benchmark.scaledIterations {
             _ = Parser.parse(string: text)

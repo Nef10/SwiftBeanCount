@@ -1,0 +1,80 @@
+name: Benchmarks
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  benchmark:
+    name: Parser Performance Benchmarks
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      
+      - name: Install Swift
+        uses: swift-actions/setup-swift@v3.0.0-beta.1
+        with:
+          swift-version: "6.2.3"
+          skip-verify-signature: true
+      
+      - name: Install jemalloc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libjemalloc-dev
+      
+      - name: Run benchmarks on PR head
+        run: |
+          swift package --allow-writing-to-directory .benchmarkBaseline/ \
+            benchmark baseline update pull_request --no-progress --quiet
+        continue-on-error: true
+      
+      - name: Checkout base branch
+        run: |
+          git checkout ${{ github.event.pull_request.base.sha }}
+      
+      - name: Run benchmarks on base branch
+        run: |
+          swift package --allow-writing-to-directory .benchmarkBaseline/ \
+            benchmark baseline update main --no-progress --quiet
+        continue-on-error: true
+      
+      - name: Checkout PR branch again
+        run: |
+          git checkout ${{ github.event.pull_request.head.sha }}
+      
+      - name: Compare benchmark results
+        id: benchmark_compare
+        run: |
+          swift package benchmark baseline compare main pull_request \
+            --format markdown > benchmark_results.md 2>&1 || true
+          if [ -f benchmark_results.md ] && [ -s benchmark_results.md ]; then
+            echo "results_exist=true" >> $GITHUB_OUTPUT
+            echo "Benchmark comparison results:"
+            cat benchmark_results.md
+          else
+            echo "results_exist=false" >> $GITHUB_OUTPUT
+          fi
+        continue-on-error: true
+      
+      - name: Check for performance regression
+        run: |
+          swift package benchmark baseline check main pull_request \
+            --threshold 10.0 || {
+              echo "⚠️ Performance regression detected (>10% slower)"
+              exit 1
+            }
+        continue-on-error: false
+      
+      - name: Comment PR with results
+        if: github.event_name == 'pull_request' && steps.benchmark_compare.outputs.results_exist == 'true'
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          filePath: benchmark_results.md
+          comment_tag: benchmark_results
