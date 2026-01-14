@@ -9,7 +9,7 @@
 import Foundation
 
 /// Errors while reading the sheet
-public enum SheetParserError: LocalizedError {
+public enum SheetParserError: LocalizedError, Equatable {
     /// The specified column is missing in the sheet
     case missingHeader(String)
     /// The provided value is invalid for this column

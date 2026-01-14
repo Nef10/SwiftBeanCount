@@ -21,7 +21,7 @@ public enum SyncMode {
     case upload
 }
 
-enum SyncError: LocalizedError {
+enum SyncError: LocalizedError, Equatable {
     case unknowError
     case missingSetting(String)
     case invalidSetting(String, String)
