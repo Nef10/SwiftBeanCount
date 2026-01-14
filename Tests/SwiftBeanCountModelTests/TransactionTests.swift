@@ -6,10 +6,12 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 @testable import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class TransactionTests: XCTestCase {
+@Suite
+struct TransactionTests { // swiftlint:disable:this type_body_length
 
     private var transaction1WithoutPosting: Transaction!
     private var transaction2WithoutPosting: Transaction!
@@ -21,7 +23,7 @@ final class TransactionTests: XCTestCase {
     private var account2: Account?
     private let ledger = Ledger()
 
-    override func setUpWithError() throws {
+    init() throws {
         account1 = Account(name: TestUtils.cash, opening: TestUtils.date20170608)
         account2 = Account(name: TestUtils.chequing, opening: TestUtils.date20170608)
         try ledger.add(account1!)
@@ -57,96 +59,106 @@ final class TransactionTests: XCTestCase {
         ledger.add(transaction3WithPosting1)
         ledger.add(transaction1WithPosting1And2)
         ledger.add(transaction2WithPosting1And2)
-        try super.setUpWithError()
     }
 
-    func testDescriptionWithoutPosting() {
-        XCTAssertEqual(String(describing: transaction1WithoutPosting!), String(describing: transaction1WithoutPosting!.metaData))
+    @Test
+    func descriptionWithoutPosting() {
+        #expect(String(describing: transaction1WithoutPosting!) == String(describing: transaction1WithoutPosting!.metaData))
     }
 
-    func testDescriptionWithPostings() {
-        XCTAssertEqual(String(describing: transaction1WithPosting1And2!),
-                       String(describing: transaction1WithPosting1And2!.metaData) + "\n"
+    @Test
+    func descriptionWithPostings() {
+        #expect(String(describing: transaction1WithPosting1And2!) == String(describing: transaction1WithPosting1And2!.metaData) + "\n"
                          + String(describing: transaction1WithPosting1And2!.postings[0]) + "\n"
                          + String(describing: transaction1WithPosting1And2!.postings[1]))
     }
 
-    func testEqual() {
-        XCTAssertEqual(transaction1WithoutPosting, transaction2WithoutPosting)
-        XCTAssertFalse(transaction1WithoutPosting < transaction2WithoutPosting)
-        XCTAssertFalse(transaction2WithoutPosting < transaction1WithoutPosting)
+    @Test
+    func equal() {
+        #expect(transaction1WithoutPosting == transaction2WithoutPosting)
+        #expect(!(transaction1WithoutPosting < transaction2WithoutPosting))
+        #expect(!(transaction2WithoutPosting < transaction1WithoutPosting))
     }
 
-    func testEqualWithPostings() {
-        XCTAssertEqual(transaction1WithPosting1And2, transaction2WithPosting1And2)
-        XCTAssertFalse(transaction1WithPosting1And2 < transaction2WithPosting1And2)
-        XCTAssertFalse(transaction2WithPosting1And2 < transaction1WithPosting1And2)
+    @Test
+    func equalWithPostings() {
+        #expect(transaction1WithPosting1And2 == transaction2WithPosting1And2)
+        #expect(!(transaction1WithPosting1And2 < transaction2WithPosting1And2))
+        #expect(!(transaction2WithPosting1And2 < transaction1WithPosting1And2))
     }
 
-    func testEqualRespectsPostings() {
-        XCTAssertNotEqual(transaction1WithPosting1, transaction1WithPosting1And2)
-        XCTAssert(transaction1WithPosting1 < transaction1WithPosting1And2)
-        XCTAssertFalse(transaction1WithPosting1And2 < transaction1WithPosting1)
+    @Test
+    func equalRespectsPostings() {
+        #expect(transaction1WithPosting1 != transaction1WithPosting1And2)
+        #expect(transaction1WithPosting1 < transaction1WithPosting1And2)
+        #expect(!(transaction1WithPosting1And2 < transaction1WithPosting1))
     }
 
-    func testEqualRespectsTransactionMetaData() {
-        XCTAssertNotEqual(transaction1WithPosting1, transaction3WithPosting1)
-        XCTAssertFalse(transaction1WithPosting1 < transaction3WithPosting1)
-        XCTAssert(transaction3WithPosting1 < transaction1WithPosting1)
+    @Test
+    func equalRespectsTransactionMetaData() {
+        #expect(transaction1WithPosting1 != transaction3WithPosting1)
+        #expect(!(transaction1WithPosting1 < transaction3WithPosting1))
+        #expect(transaction3WithPosting1 < transaction1WithPosting1)
     }
 
-    func testIsValid() {
+    @Test
+    func isValid() {
         guard case .valid = transaction2WithPosting1And2!.validate(in: ledger) else {
-            XCTFail("\(transaction2WithPosting1And2!) is not valid")
+            Issue.record("\(transaction2WithPosting1And2!) is not valid")
             return
         }
     }
 
-    func testIsValidFromOutsideLedger() {
+    @Test
+    func isValidFromOutsideLedger() {
         let ledger = Ledger()
         guard case .invalid = transaction2WithPosting1And2!.validate(in: ledger) else {
-            XCTFail("\(transaction2WithPosting1And2!) is valid")
+            Issue.record("\(transaction2WithPosting1And2!) is valid")
             return
         }
     }
 
-    func testIsValidWithoutPosting() {
+    @Test
+    func isValidWithoutPosting() {
         if case .invalid(let error) = transaction1WithoutPosting!.validate(in: ledger) {
-            XCTAssertEqual(error, "2017-06-08 * \"Payee\" \"Narration\" has no postings")
+            #expect(error == "2017-06-08 * \"Payee\" \"Narration\" has no postings")
         } else {
-            XCTFail("\(transaction1WithoutPosting!) is valid")
+            Issue.record("\(transaction1WithoutPosting!) is valid")
         }
     }
 
-    func testIsValidInvalidPosting() throws {
+    @Test
+    func isValidInvalidPosting() throws {
         // Accounts are not opened
         let ledger = Ledger()
         try ledger.add(Account(name: TestUtils.cash))
         try ledger.add(Account(name: TestUtils.chequing, opening: TestUtils.date20170608))
         ledger.add(transaction1WithPosting1And2)
         if case .invalid(let error) = transaction1WithPosting1And2.validate(in: ledger) {
-            XCTAssertEqual(error, """
+            #expect(error == """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash 10 EUR
                   Assets:Chequing -10 EUR was posted while the accout Assets:Cash was closed
                 """)
         } else {
-            XCTFail("\(transaction1WithPosting1And2!) is valid")
+            Issue.record("\(transaction1WithPosting1And2!) is valid")
         }
     }
 
-    func testIsValidUnbalanced() {
+    @Test
+    func isValidUnbalanced() {
         if case .invalid(let error) = transaction1WithPosting1!.validate(in: ledger) {
-            XCTAssertEqual(error, """
+            #expect(error == """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash 10 EUR is not balanced - 10 EUR too much (0 tolerance)
                 """)
         } else {
-            XCTFail("\(transaction1WithPosting1!) is valid")
+            Issue.record("\(transaction1WithPosting1!) is valid")
         }
     }
 
-    func testIsValidUnbalancedIntegerTolerance() {
+    @Test
+    func isValidUnbalancedIntegerTolerance() {
         // Assets:Cash     -1  EUR
         // Assets:Checking 10.00000 CAD @ 0.101 EUR
 
@@ -164,17 +176,18 @@ final class TransactionTests: XCTestCase {
         // (Percision of price is irrelevant, percision of CAD is not used because no posting in CAD)
         // 0.01 > 0 -> is invalid
         if case .invalid(let error) = transaction.validate(in: ledger) {
-            XCTAssertEqual(error, """
+            #expect(error == """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash -1 EUR
                   Assets:Chequing 10.00000 CAD @ 0.101 EUR is not balanced - 0.01 EUR too much (0 tolerance)
                 """)
         } else {
-            XCTFail("\(transaction) is valid")
+            Issue.record("\(transaction) is valid")
         }
     }
 
-    func testIsValidUnbalancedTolerance() {
+    @Test
+    func isValidUnbalancedTolerance() {
         // Assets:Cash     -8.52  EUR
         // Assets:Checking 10.00000 CAD @ 0.85251 EUR
 
@@ -194,17 +207,18 @@ final class TransactionTests: XCTestCase {
         // (Percision of price is irrelevant, percision of CAD is not used because no posting in CAD)
         // 0.0051 > 0.005 -> is invalid
         if case .invalid(let error) = transaction.validate(in: ledger) {
-            XCTAssertEqual(error, """
+            #expect(error == """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash -8.52 EUR
                   Assets:Chequing 10.00000 CAD @ 0.85251 EUR is not balanced - 0.0051 EUR too much (0.005 tolerance)
                 """)
         } else {
-            XCTFail("\(transaction) is valid")
+            Issue.record("\(transaction) is valid")
         }
     }
 
-    func testIsValidUnusedCommodity() {
+    @Test
+    func isValidUnusedCommodity() {
         // Assets:Checking 10.00000 CAD @ 0.85251 EUR
 
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170608, payee: "Payee", narration: "Narration", flag: Flag.complete, tags: [])
@@ -215,16 +229,17 @@ final class TransactionTests: XCTestCase {
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting1])
 
         if case .invalid(let error) = transaction.validate(in: ledger) {
-            XCTAssertEqual(error, """
+            #expect(error == """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash 10.00000 CAD @ 0.85251 EUR is not balanced - 8.5251 EUR too much (0 tolerance)
                 """)
         } else {
-            XCTFail("\(transaction) is valid")
+            Issue.record("\(transaction) is valid")
         }
     }
 
-    func testIsValidBalancedTolerance() {
+    @Test
+    func isValidBalancedTolerance() {
         // Assets:Cash     -8.52  EUR
         // Assets:Checking 10.00000 CAD @ 0.85250 EUR
 
@@ -243,12 +258,13 @@ final class TransactionTests: XCTestCase {
         // (Percision of price is irrelevant, percision of CAD is not used because no posting in CAD)
         // 0.005 <= 0.005 -> is valid
         guard case .valid = transaction.validate(in: ledger) else {
-            XCTFail("\(transaction) is not valid")
+            Issue.record("\(transaction) is not valid")
             return
         }
     }
 
-    func testIsValidBalancedToleranceCost() throws {
+    @Test
+    func isValidBalancedToleranceCost() throws {
         // Assets:Cash     -8.52  EUR
         // Assets:Checking 10.00000 CAD { 0.85250 EUR }
 
@@ -270,12 +286,13 @@ final class TransactionTests: XCTestCase {
         // (Percision of price is irrelevant, percision of CAD is not used because no posting in CAD)
         // 0.005 <= 0.005 -> is valid
         guard case .valid = transaction.validate(in: ledger) else {
-            XCTFail("\(transaction) is not valid")
+            Issue.record("\(transaction) is not valid")
             return
         }
     }
 
-    func testIsValidUnbalancedToleranceCost() throws {
+    @Test
+    func isValidUnbalancedToleranceCost() throws {
         // Assets:Cash     -8.52  EUR
         // Assets:Checking 10.00000 CAD { 0.85251 EUR }
 
@@ -298,17 +315,18 @@ final class TransactionTests: XCTestCase {
         // (Percision of cost is irrelevant, percision of CAD is not used because no posting in CAD)
         // 0.0051 > 0.005 -> is invalid
         if case .invalid(let error) = transaction.validate(in: ledger) {
-            XCTAssertEqual(error, """
+            #expect(error == """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash -8.52 EUR
                   Assets:Chequing 10.00000 CAD {0.85251 EUR} is not balanced - 0.0051 EUR too much (0.005 tolerance)
                 """)
         } else {
-            XCTFail("\(transaction) is valid")
+            Issue.record("\(transaction) is valid")
         }
     }
 
-    func testEffectZeroPrice() throws {
+    @Test
+    func effectZeroPrice() throws {
         // Assets:Cash     -8.52  EUR
         // Assets:Checking 10.00000 CAD @ 0.85250 EUR
 
@@ -322,12 +340,13 @@ final class TransactionTests: XCTestCase {
         ledger.add(transaction)
 
         guard case .valid = try transaction.effect(in: ledger).validateZeroWithTolerance() else {
-            XCTFail("\(transaction) effect is not zero")
+            Issue.record("\(transaction) effect is not zero")
             return
         }
     }
 
-    func testEffectCost() throws {
+    @Test
+    func effectCost() throws {
         // Income:Test     -8.52  EUR
         // Assets:Checking 10.00000 CAD { 0.85250 EUR }
 
@@ -344,9 +363,9 @@ final class TransactionTests: XCTestCase {
         ledger.add(transaction)
 
         let effect = try transaction.effect(in: ledger)
-        XCTAssertEqual(effect.amounts.count, 1)
+        #expect(effect.amounts.count == 1)
         guard case .valid = effect.validateOneAmountWithTolerance(amount: amount1) else {
-            XCTFail("\(transaction) effect is not the expected value")
+            Issue.record("\(transaction) effect is not the expected value")
             return
         }
     }

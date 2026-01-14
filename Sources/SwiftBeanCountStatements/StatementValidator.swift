@@ -37,7 +37,7 @@ public enum StatementValidator {
     /// - Returns: string with the root folder. Returns nil if none found
     public static func getRootFolder(from ledger: Ledger) throws(StatementValidatorError) -> String {
         let settings = ledger.custom.filter { $0.name == StatementValidatorKeys.settings && $0.values.first == StatementValidatorKeys.rootFolder }
-        guard let result = settings.max(by: { $0.date > $1.date })?.values[1] else {
+        guard let result = settings.max(by: { $0.date < $1.date })?.values[1] else {
             throw StatementValidatorError.noRootFolder
         }
         return result
@@ -60,7 +60,7 @@ public enum StatementValidator {
     ) async throws -> [AccountName: AccountResult] {
         var result = [AccountName: AccountResult]()
         let settings = ledger.custom.filter { $0.name == StatementValidatorKeys.settings && $0.values.first == StatementValidatorKeys.fileNames }
-        let statementNames = settings.max { $0.date > $1.date }?.values[1].split(separator: " ").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) } ?? []
+        let statementNames = settings.max { $0.date < $1.date }?.values[1].split(separator: " ").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) } ?? []
         let accounts = ledger.accounts.filter {
             $0.metaData[StatementValidatorKeys.folder] != nil && $0.metaData[StatementValidatorKeys.statements] != StatementValidatorKeys.disable
         }

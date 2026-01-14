@@ -9,57 +9,54 @@
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
-import XCTest
+import Testing
 
-final class DownloadImporterTests: XCTestCase {
+@Suite
+struct DownloadImporterTests {
 
-    func testImporters() {
+    @Test
+    func importers() {
         #if canImport(UIKit) || canImport(AppKit)
-            if #available(iOS 14.5, macOS 11.3, *) {
-                #if os(macOS)
-                    XCTAssertEqual(DownloadImporterFactory.importers.count, 5)
-                #else
-                   XCTAssertEqual(DownloadImporterFactory.importers.count, 4)
-                #endif
-            } else {
-                #if os(macOS)
-                    XCTAssertEqual(DownloadImporterFactory.importers.count, 4)
-                #else
-                    XCTAssertEqual(DownloadImporterFactory.importers.count, 3)
-                #endif
-            }
+            #if os(macOS)
+                #expect(DownloadImporterFactory.importers.count == 5)
+            #else
+                #expect(DownloadImporterFactory.importers.count == 4)
+            #endif
         #else
-            XCTAssertEqual(DownloadImporterFactory.importers.count, 2)
+            #expect(DownloadImporterFactory.importers.count == 2)
         #endif
     }
 
-    func testNew() {
-        XCTAssertNil(DownloadImporterFactory.new(ledger: Ledger(), name: "This is not a valid name"))
+    @Test
+    func new() {
+        #expect(DownloadImporterFactory.new(ledger: Ledger(), name: "This is not a valid name") == nil)
 
         let importers = DownloadImporterFactory.importers
         for importer in importers {
-            XCTAssertTrue(type(of: DownloadImporterFactory.new(ledger: nil, name: importer.importerName)!) == importer) // swiftlint:disable:this xct_specific_matcher
+            #expect(type(of: DownloadImporterFactory.new(ledger: nil, name: importer.importerName)!) == importer)
         }
     }
 
-    func testNoEqualImporterTypes() {
+    @Test
+    func noEqualImporterTypes() {
         var types = [String]()
         let importers = DownloadImporterFactory.importers as! [BaseImporter.Type] // swiftlint:disable:this force_cast
         for importer in importers {
             guard !types.contains(importer.importerType) else {
-                XCTFail("Importers cannot use the same type")
+                Issue.record("Importers cannot use the same type")
                 return
             }
             types.append(importer.importerType)
         }
     }
 
-    func testNoEqualName() {
+    @Test
+    func noEqualName() {
         var names = [String]()
         let importers = DownloadImporterFactory.importers
         for importer in importers {
             guard !names.contains(importer.importerName) else {
-                XCTFail("Importers cannot use the same name")
+                Issue.record("Importers cannot use the same name")
                 return
             }
             names.append(importer.importerName)

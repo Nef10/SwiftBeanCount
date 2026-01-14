@@ -6,82 +6,102 @@
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
 
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
+
 import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
-import XCTest
+import Testing
 
 class InvalidAccountNameProvider {
 }
 
-final class BaseImporterTests: XCTestCase {
+extension TestsUsingStorage {
 
-    func testInit() {
+@Suite
+struct BaseImporterTests {
+
+    @Test
+    func initFunction() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
-        XCTAssertEqual(importer.ledger, TestUtils.ledger)
+        #expect(importer.ledger == TestUtils.ledger)
     }
 
-    func testImporterName() {
-        XCTAssertEqual(BaseImporter.importerName, "")
+    @Test
+    func importerName() {
+        #expect(BaseImporter.importerName.isEmpty)
     }
 
-    func testImporterType() {
-        XCTAssertEqual(BaseImporter.importerType, "")
+    @Test
+    func importerType() {
+        #expect(BaseImporter.importerType.isEmpty)
     }
 
-    func testHelpText() {
-        XCTAssertEqual(BaseImporter.helpText, "")
+    @Test
+    func helpText() {
+        #expect(BaseImporter.helpText.isEmpty)
     }
 
-    func testLoad() {
+    @Test
+    func load() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
         importer.load()
     }
 
-    func testImportName() {
+    @Test
+    func importName() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
-        XCTAssertEqual(importer.importName, "")
+        #expect(importer.importName.isEmpty)
     }
 
-    func testNextTransaction() {
+    @Test
+    func nextTransaction() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
-        XCTAssertNil(importer.nextTransaction())
+        #expect(importer.nextTransaction() == nil)
     }
 
-    func testBalancesToImport() {
+    @Test
+    func balancesToImport() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
-        XCTAssertTrue(importer.balancesToImport().isEmpty)
+        #expect(importer.balancesToImport().isEmpty)
     }
 
-    func testPricesToImport() {
+    @Test
+    func pricesToImport() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
-        XCTAssertTrue(importer.pricesToImport().isEmpty)
+        #expect(importer.pricesToImport().isEmpty)
     }
 
-    func testCommoditySymbol() {
+    @Test
+    func commoditySymbol() {
         var importer = BaseImporter(ledger: TestUtils.ledger)
-        XCTAssertEqual(importer.commoditySymbol, Settings.fallbackCommodity)
+        #expect(importer.commoditySymbol == Settings.fallbackCommodity)
 
         let cashAccountDelegate = InputProviderDelegate(names: ["Account"], types: [.text([])], returnValues: [TestUtils.cash.fullName])
         importer = BaseImporter(ledger: TestUtils.ledgerCashUSD)
         importer.delegate = cashAccountDelegate
-        XCTAssertEqual(importer.commoditySymbol, TestUtils.usd)
-        XCTAssert(cashAccountDelegate.verified)
+        #expect(importer.commoditySymbol == TestUtils.usd)
+        #expect(cashAccountDelegate.verified)
     }
 
-    func testConfiguredAccountName() throws {
+    @Test
+    func configuredAccountName() throws {
         let ledger = TestUtils.ledger
         var importer = BaseImporter(ledger: ledger)
         var delegate = AccountNameSuggestionVerifier(expectedValues: [])
         importer.delegate = delegate
         _ = importer.configuredAccountName
-        XCTAssert(delegate.verified)
+        #expect(delegate.verified)
 
         var account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.usd, metaData: [Settings.importerTypeKey: ""])
         try ledger.add(account)
         importer = BaseImporter(ledger: ledger)
         importer.delegate = TestUtils.noInputDelegate
-        XCTAssertEqual(importer.configuredAccountName, TestUtils.cash)
+        #expect(importer.configuredAccountName == TestUtils.cash)
 
         account = Account(name: TestUtils.chequing, commoditySymbol: TestUtils.usd, metaData: [Settings.importerTypeKey: ""])
         try ledger.add(account)
@@ -89,7 +109,7 @@ final class BaseImporterTests: XCTestCase {
         delegate = AccountNameSuggestionVerifier(expectedValues: [TestUtils.cash, TestUtils.chequing])
         importer.delegate = delegate
         _ = importer.configuredAccountName
-        XCTAssert(delegate.verified)
+        #expect(delegate.verified)
 
         // When account is set it does not ask again
         importer.delegate = TestUtils.noInputDelegate
@@ -101,7 +121,8 @@ final class BaseImporterTests: XCTestCase {
         _ = importer.configuredAccountName
     }
 
-    func testSavedPayee() {
+    @Test
+    func savedPayee() {
         let description = "abcd"
         let payeeMapping = "efg"
         Settings.storage = TestStorage()
@@ -109,10 +130,11 @@ final class BaseImporterTests: XCTestCase {
         Settings.setPayeeMapping(key: description, payee: payeeMapping)
         let importer = BaseImporter(ledger: TestUtils.ledger)
         let (_, savedPayee) = importer.savedDescriptionAndPayeeFor(description: description)
-        XCTAssertEqual(savedPayee, payeeMapping)
+        #expect(savedPayee == payeeMapping)
     }
 
-    func testSavedDescription() {
+    @Test
+    func savedDescription() {
         let description = "abcd"
         let descriptionMapping = "efg"
         Settings.storage = TestStorage()
@@ -120,19 +142,21 @@ final class BaseImporterTests: XCTestCase {
         Settings.setDescriptionMapping(key: description, description: descriptionMapping)
         let importer = BaseImporter(ledger: TestUtils.ledger)
         let (savedDescription, _) = importer.savedDescriptionAndPayeeFor(description: description)
-        XCTAssertEqual(savedDescription, descriptionMapping)
+        #expect(savedDescription == descriptionMapping)
     }
 
-    func testSavedAccount() {
+    @Test
+    func savedAccount() {
         let payee = "abcd"
         Settings.storage = TestStorage()
 
         Settings.setAccountMapping(key: payee, account: TestUtils.chequing.fullName)
         let importer = BaseImporter(ledger: TestUtils.ledger)
-        XCTAssertEqual(importer.savedAccountNameFor(payee: payee), TestUtils.chequing)
+        #expect(importer.savedAccountNameFor(payee: payee) == TestUtils.chequing)
     }
 
-    func testGetPossibleDuplicateFor() {
+    @Test
+    func getPossibleDuplicateFor() {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
         let ledger = TestUtils.lederAccounts
@@ -140,10 +164,11 @@ final class BaseImporterTests: XCTestCase {
         ledger.add(transaction)
 
         let importer = BaseImporter(ledger: ledger)
-        XCTAssertEqual(importer.getPossibleDuplicateFor(transaction), transaction)
+        #expect(importer.getPossibleDuplicateFor(transaction) == transaction)
     }
 
-    func testGetPossibleDuplicateForDateToleranceInside() {
+    @Test
+    func getPossibleDuplicateForDateToleranceInside() {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
         let ledger = TestUtils.lederAccounts
@@ -159,7 +184,7 @@ final class BaseImporterTests: XCTestCase {
                                                               tags: [])
         var importedTransaction = Transaction(metaData: importedTransactionMetaData, postings: transaction.postings)
 
-        XCTAssertEqual(importer.getPossibleDuplicateFor(importedTransaction), transaction)
+        #expect(importer.getPossibleDuplicateFor(importedTransaction) == transaction)
 
         importedTransactionMetaData = TransactionMetaData(date: transaction.metaData.date + Settings.dateTolerance,
                                                           payee: transaction.metaData.payee,
@@ -168,10 +193,11 @@ final class BaseImporterTests: XCTestCase {
                                                           tags: transaction.metaData.tags)
         importedTransaction = Transaction(metaData: importedTransactionMetaData, postings: transaction.postings)
 
-        XCTAssertEqual(importer.getPossibleDuplicateFor(importedTransaction), transaction)
+        #expect(importer.getPossibleDuplicateFor(importedTransaction) == transaction)
     }
 
-    func testGetPossibleDuplicateForDateToleranceOutside() {
+    @Test
+    func getPossibleDuplicateForDateToleranceOutside() {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
         let ledger = TestUtils.lederAccounts
@@ -187,7 +213,7 @@ final class BaseImporterTests: XCTestCase {
                                                               tags: [])
         var importedTransaction = Transaction(metaData: importedTransactionMetaData, postings: transaction.postings)
 
-        XCTAssertNil(importer.getPossibleDuplicateFor(importedTransaction))
+        #expect(importer.getPossibleDuplicateFor(importedTransaction) == nil)
 
         importedTransactionMetaData = TransactionMetaData(date: transaction.metaData.date + (Settings.dateTolerance + 1),
                                                           payee: transaction.metaData.payee,
@@ -196,74 +222,77 @@ final class BaseImporterTests: XCTestCase {
                                                           tags: transaction.metaData.tags)
         importedTransaction = Transaction(metaData: importedTransactionMetaData, postings: transaction.postings)
 
-        XCTAssertNil(importer.getPossibleDuplicateFor(importedTransaction))
+        #expect(importer.getPossibleDuplicateFor(importedTransaction) == nil)
     }
 
-    func testSanitizeDescription() {
+    @Test
+    func anitizeDescription() {
         let importer = BaseImporter(ledger: TestUtils.ledger)
-        XCTAssertEqual(importer.sanitize(description: "Shop1 C-IDP PURCHASE - 1234  BC  CA"), "Shop1")
-        XCTAssertEqual(importer.sanitize(description: "Shop1 IDP PURCHASE-1234"), "Shop1")
-        XCTAssertEqual(importer.sanitize(description: "Shop1 VISA DEBIT REF-1234"), "Shop1")
-        XCTAssertEqual(importer.sanitize(description: "Shop1 VISA DEBIT PUR-1234"), "Shop1")
-        XCTAssertEqual(importer.sanitize(description: "Shop1 INTERAC E-TRF- 1234"), "Shop1")
-        XCTAssertEqual(importer.sanitize(description: "Shop1 WWWINTERAC PUR 1234"), "Shop1")
-        XCTAssertEqual(importer.sanitize(description: "Shop1 1234 ~ Internet Withdrawal"), "Shop1")
-        XCTAssertEqual(importer.sanitize(description: "Shop1 - SAP"), "Shop1")
-        XCTAssertEqual(importer.sanitize(description: "Shop1 SAP"), "Shop1")
-        XCTAssertEqual(importer.sanitize(description: " SAP CANADA"), "SAP CANADA")
-        XCTAssertEqual(importer.sanitize(description: "Shop1 -MAY 2014"), "Shop1")
-        XCTAssertEqual(importer.sanitize(description: "Shop1 - JUNE 2016"), "Shop1")
-        XCTAssertEqual(importer.sanitize(description: "Shop1  BC  CA"), "Shop1")
-        XCTAssertEqual(importer.sanitize(description: "Shop1 #12345"), "Shop1")
-        XCTAssertEqual(importer.sanitize(description: "Shop1 # 12"), "Shop1")
+        #expect(importer.sanitize(description: "Shop1 C-IDP PURCHASE - 1234  BC  CA") == "Shop1")
+        #expect(importer.sanitize(description: "Shop1 IDP PURCHASE-1234") == "Shop1")
+        #expect(importer.sanitize(description: "Shop1 VISA DEBIT REF-1234") == "Shop1")
+        #expect(importer.sanitize(description: "Shop1 VISA DEBIT PUR-1234") == "Shop1")
+        #expect(importer.sanitize(description: "Shop1 INTERAC E-TRF- 1234") == "Shop1")
+        #expect(importer.sanitize(description: "Shop1 WWWINTERAC PUR 1234") == "Shop1")
+        #expect(importer.sanitize(description: "Shop1 1234 ~ Internet Withdrawal") == "Shop1")
+        #expect(importer.sanitize(description: "Shop1 - SAP") == "Shop1")
+        #expect(importer.sanitize(description: "Shop1 SAP") == "Shop1")
+        #expect(importer.sanitize(description: " SAP CANADA") == "SAP CANADA")
+        #expect(importer.sanitize(description: "Shop1 -MAY 2014") == "Shop1")
+        #expect(importer.sanitize(description: "Shop1 - JUNE 2016") == "Shop1")
+        #expect(importer.sanitize(description: "Shop1  BC  CA") == "Shop1")
+        #expect(importer.sanitize(description: "Shop1 #12345") == "Shop1")
+        #expect(importer.sanitize(description: "Shop1 # 12") == "Shop1")
     }
+}
+
 }
 
 extension InvalidAccountNameProvider: ImporterDelegate {
 
-    func requestInput(name _: String, type _: ImporterInputRequestType, completion: (String) -> Bool) {
+   func requestInput(name _: String, type _: ImporterInputRequestType, completion: (String) -> Bool) {
         var result = completion("Not an valid account name")
-        XCTAssertFalse(result)
+        #expect(!(result))
         result = completion(TestUtils.cash.fullName)
-        XCTAssert(result)
+        #expect(result)
     }
 
-    func saveCredential(_: String, for _: String) {
-        XCTFail("saveCredential should not be called")
+   func saveCredential(_: String, for _: String) {
+        Issue.record("saveCredential should not be called")
     }
 
-    func readCredential(_: String) -> String? {
-        XCTFail("readCredential should not be called")
+   func readCredential(_: String) -> String? {
+        Issue.record("readCredential should not be called")
         return nil
     }
 
     // swiftlint:disable:next unused_parameter
-    func error(_: Error, completion: () -> Void) {
-        XCTFail("error should not be called")
+   func error(_: Error, completion: () -> Void) {
+        Issue.record("error should not be called")
     }
 
-    #if canImport(UIKit)
+#if canImport(UIKit)
 
-    func view() -> UIView? {
-        XCTFail("view should not be called")
+   func view() -> UIView? {
+        Issue.record("view should not be called")
         return nil
     }
 
-    #elseif canImport(AppKit)
+#elseif canImport(AppKit)
 
-    func view() -> NSView? {
-        XCTFail("view should not be called")
+   func view() -> NSView? {
+        Issue.record("view should not be called")
         return nil
     }
 
-    #endif
+#endif
 
-    #if canImport(UIKit) || canImport(AppKit)
+#if canImport(UIKit) || canImport(AppKit)
 
-    func removeView() {
-        XCTFail("removeView should not be called")
+   func removeView() {
+        Issue.record("removeView should not be called")
     }
 
-    #endif
+#endif
 
 }

@@ -6,11 +6,13 @@
 //  Copyright © 2017 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 import SwiftBeanCountModel
 @testable import SwiftBeanCountParser
-import XCTest
+import Testing
 
-final class AccountParserTests: XCTestCase {
+@Suite
+struct AccountParserTests {
 
     private let basicOpeningString = "2017-06-09 open Assets:Cash"
     private let basicClosingString = "2017-06-09 close Assets:Cash"
@@ -38,91 +40,85 @@ final class AccountParserTests: XCTestCase {
     private let bookingMethodClosingString = "2017-06-09 close Assets:Cash ;gfsd"
     private let bookingMethodInClosingString = "2017-06-09 close Assets:Cash \"FIFO\" ;gfsd"
 
-    func testBasic() {
+    @Test
+    func basic() {
         testWith(openingString: basicOpeningString, closingString: basicClosingString, commoditySymbol: nil)
     }
 
-    func testInvalidName() {
+    @Test
+    func invalidName() {
         let account = AccountParser.parseFrom(line: invalidNameOpeningString)
-        XCTAssertNil(account)
+        #expect(account == nil)
     }
 
-    func testWhitespace() {
+    @Test
+    func whitespace() {
         testWith(openingString: whitespaceOpeningString, closingString: whitespaceClosingString, commoditySymbol: "CAD")
     }
 
-    func testEndOfLineComment() {
+    @Test
+    func endOfLineComment() {
         testWith(openingString: endOfLineCommentOpeningString, closingString: endOfLineCommentClosingString, commoditySymbol: "EUR")
     }
 
-    func testSpecialCharacter() {
+    @Test
+    func specialCharacter() {
         testWith(openingString: specialCharacterOpeningString, closingString: specialCharacterClosingString, commoditySymbol: "💵")
     }
 
-    func testInvalidCloseWithCommodity() {
-        XCTAssertNil(AccountParser.parseFrom(line: invalidCloseWithCommodityString))
+    @Test
+    func invalidCloseWithCommodity() {
+        #expect(AccountParser.parseFrom(line: invalidCloseWithCommodityString) == nil)
     }
 
-    func testInvalidCloseDate() {
-        XCTAssertNil(AccountParser.parseFrom(line: invalidCloseDateString))
+    @Test
+    func invalidCloseDate() {
+        #expect(AccountParser.parseFrom(line: invalidCloseDateString) == nil)
     }
 
-    func testCommodityWithSemicolon() {
+    @Test
+    func commodityWithSemicolon() {
         testWith(openingString: commodityWithSemicolonOpeningString, closingString: commodityWithSemicolonClosingString, commoditySymbol: "EUR;test")
     }
 
-    func testBookingMethodStrict() {
+    @Test
+    func bookingMethodStrict() {
         testWith(openingString: bookingMethodStrictOpeningString, closingString: bookingMethodClosingString, commoditySymbol: "EUR;test", bookingMethod: .strict)
     }
 
-    func testBookingMethodLifo() {
+    @Test
+    func bookingMethodLifo() {
         testWith(openingString: bookingMethodLifoOpeningString, closingString: bookingMethodClosingString, commoditySymbol: "EUR", bookingMethod: .lifo)
     }
 
-    func testBookingMethodFifo() {
+    @Test
+    func bookingMethodFifo() {
         testWith(openingString: bookingMethodFifoOpeningString, closingString: bookingMethodClosingString, commoditySymbol: "💵", bookingMethod: .fifo)
     }
 
-    func testBookingMethodInClosingString() {
+    @Test
+    func bookingMethodInClosing() {
         let account = AccountParser.parseFrom(line: bookingMethodInClosingString)
-        XCTAssertNil(account)
-    }
-
-    func testPerformance() {
-        self.measure {
-            for _ in 0...1_000 {
-                _ = AccountParser.parseFrom(line: basicOpeningString)
-                _ = AccountParser.parseFrom(line: basicClosingString)
-
-                _ = AccountParser.parseFrom(line: whitespaceOpeningString)
-                _ = AccountParser.parseFrom(line: whitespaceClosingString)
-
-                _ = AccountParser.parseFrom(line: endOfLineCommentOpeningString)
-                _ = AccountParser.parseFrom(line: endOfLineCommentClosingString)
-
-                _ = AccountParser.parseFrom(line: specialCharacterOpeningString)
-                _ = AccountParser.parseFrom(line: specialCharacterClosingString)
-            }
-        }
+        #expect(account == nil)
     }
 
     // Helper
     private func testWith(openingString: String, closingString: String, commoditySymbol: CommoditySymbol?, bookingMethod: BookingMethod? = nil) {
         let account1 = AccountParser.parseFrom(line: openingString)
 
-        XCTAssertNotNil(account1)
-        XCTAssertEqual(account1!.opening!, TestUtils.date20170609)
-        XCTAssertNil(account1!.closing)
-        XCTAssertEqual(account1!.commoditySymbol, commoditySymbol)
+        #expect(account1 != nil)
+        #expect(account1!.opening! == TestUtils.date20170609)
+        #expect(account1!.closing == nil)
+        #expect(account1!.commoditySymbol == commoditySymbol)
 
         if let bookingMethod {
-            XCTAssertEqual(account1!.bookingMethod, bookingMethod)
+            #expect(account1!.bookingMethod == bookingMethod)
         }
 
         let account2 = AccountParser.parseFrom(line: closingString)
-        XCTAssertNotNil(account2)
-        XCTAssertNil(account2!.opening)
-        XCTAssertEqual(account2!.closing!, TestUtils.date20170609)
+        #expect(account2 != nil)
+        #expect(account2!.opening == nil)
+        #expect(account2!.closing! == TestUtils.date20170609)
     }
 
 }

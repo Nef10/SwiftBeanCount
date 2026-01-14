@@ -6,11 +6,13 @@
 //  Copyright © 2019 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 import SwiftBeanCountModel
 @testable import SwiftBeanCountParser
-import XCTest
+import Testing
 
-final class EventParserTests: XCTestCase {
+@Suite
+struct EventParserTests {
 
     private let basicString = "2017-06-09 event \"ABC\" \"DEF\""
     private let whitespaceString = "2017-06-09 event    \"  A B C  \"       \"  D E F  \"     "
@@ -18,47 +20,41 @@ final class EventParserTests: XCTestCase {
     private let specialCharacterString = "2017-06-09 event \"ABC💵\" \"DEF💵\""
     private let invalidDateString = "2017-02-30 event \"ABC\" \"DEF\""
 
-    func testBasic() {
+    @Test
+    func basic() {
         let event = EventParser.parseFrom(line: basicString)!
-        XCTAssertEqual(event.date, TestUtils.date20170609)
-        XCTAssertEqual(event.name, "ABC")
-        XCTAssertEqual(event.value, "DEF")
+        #expect(event.date == TestUtils.date20170609)
+        #expect(event.name == "ABC")
+        #expect(event.value == "DEF")
     }
 
-    func testWhitespace() {
+    @Test
+    func whitespace() {
         let event = EventParser.parseFrom(line: whitespaceString)!
-        XCTAssertEqual(event.date, TestUtils.date20170609)
-        XCTAssertEqual(event.name, "  A B C  ")
-        XCTAssertEqual(event.value, "  D E F  ")
+        #expect(event.date == TestUtils.date20170609)
+        #expect(event.name == "  A B C  ")
+        #expect(event.value == "  D E F  ")
     }
 
-    func testEndOfLineComment() {
+    @Test
+    func endOfLineComment() {
         let event = EventParser.parseFrom(line: endOfLineCommentString)!
-        XCTAssertEqual(event.date, TestUtils.date20170609)
-        XCTAssertEqual(event.name, "ABC")
-        XCTAssertEqual(event.value, "DEF")
+        #expect(event.date == TestUtils.date20170609)
+        #expect(event.name == "ABC")
+        #expect(event.value == "DEF")
     }
 
-    func testSpecialCharacter() {
+    @Test
+    func specialCharacter() {
         let event = EventParser.parseFrom(line: specialCharacterString)!
-        XCTAssertEqual(event.date, TestUtils.date20170609)
-        XCTAssertEqual(event.name, "ABC💵")
-        XCTAssertEqual(event.value, "DEF💵")
+        #expect(event.date == TestUtils.date20170609)
+        #expect(event.name == "ABC💵")
+        #expect(event.value == "DEF💵")
     }
 
-    func testInvalidDate() {
-        XCTAssertNil(EventParser.parseFrom(line: invalidDateString))
-    }
-
-    func testPerformance() {
-        self.measure {
-            for _ in 0...1_000 {
-                _ = EventParser.parseFrom(line: basicString)
-                _ = EventParser.parseFrom(line: whitespaceString)
-                _ = EventParser.parseFrom(line: endOfLineCommentString)
-                _ = EventParser.parseFrom(line: specialCharacterString)
-            }
-        }
+    @Test
+    func invalidDate() {
+        #expect(EventParser.parseFrom(line: invalidDateString) == nil)
     }
 
 }
