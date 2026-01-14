@@ -39,6 +39,7 @@ let benchmarks = {
 
     Benchmark("Parse Big File (String)", configuration: config) { benchmark in
         let fileURL = loadBigFile()
+        // Load file content before measurement to benchmark only parsing, not I/O
         let text = try String(contentsOf: fileURL, encoding: .utf8)
         benchmark.startMeasurement()
         for _ in benchmark.scaledIterations {
