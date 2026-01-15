@@ -1,16 +1,19 @@
 #if os(macOS)
 
+import Foundation
 import Rainbow
 @testable import SwiftBeanCountCLI
-import XCTest
+import Testing
 
 struct TestColorizedCommand: ColorizedCommand {
     var colorOptions = ColorizedCommandOptions()
 }
 
-final class ColorizedCommandTests: XCTestCase {
+@Suite
+struct ColorizedCommandTests {
 
-    func testHelp() {
+    @Test
+    func help() {
         let originalValue = Rainbow.enabled
         Rainbow.enabled = true
 
@@ -18,7 +21,7 @@ final class ColorizedCommandTests: XCTestCase {
         subject.colorOptions.noColor = true
         subject.adjustColorization()
 
-        XCTAssertFalse(Rainbow.enabled)
+        #expect(!Rainbow.enabled)
 
         Rainbow.enabled = originalValue
     }

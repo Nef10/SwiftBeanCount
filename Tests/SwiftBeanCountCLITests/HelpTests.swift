@@ -1,17 +1,20 @@
 #if os(macOS)
 
+import Foundation
 @testable import SwiftBeanCountCLI
-import XCTest
+import Testing
 
-final class HelpTests: XCTestCase {
+@Suite
+struct HelpTests {
 
-   func testHelp() {
-        let result = outputFromExecutionWith(arguments: ["--help"])
-        XCTAssertEqual(result.exitCode, 0)
-        XCTAssertTrue(result.errorOutput.isEmpty)
-        XCTAssertTrue(result.output.contains("OVERVIEW: A CLI tool for SwiftBeanCount"))
-        XCTAssertTrue(result.output.contains("USAGE: swiftbeancount <subcommand>"))
-        XCTAssertTrue(result.output.contains("See 'swiftbeancount help <subcommand>' for detailed help."))
+  @Test
+  func testHelp() {
+        let result = TestUtils.outputFromExecutionWith(arguments: ["--help"])
+        #expect(result.exitCode == 0)
+        #expect(result.errorOutput.isEmpty)
+        #expect(result.output.contains("OVERVIEW: A CLI tool for SwiftBeanCount"))
+        #expect(result.output.contains("USAGE: swiftbeancount <subcommand>"))
+        #expect(result.output.contains("See 'swiftbeancount help <subcommand>' for detailed help."))
     }
 
 }

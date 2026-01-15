@@ -1,46 +1,57 @@
 #if os(macOS)
 
+import Foundation
 @testable import SwiftBeanCountCLI
-import XCTest
+import Testing
 
-final class TaxableSalesTests: XCTestCase {
+@Suite
+struct TaxableSalesTests {
 
-    func testFileDoesNotExist() {
-        let url = temporaryFileURL()
-        let result = outputFromExecutionWith(arguments: ["taxable-sales", url.path])
-        XCTAssertEqual(result.exitCode, 1)
-        XCTAssert(result.errorOutput.isEmpty)
+    @Test
+    func fileDoesNotExist() {
+        let (url, cleanup) = TestUtils.temporaryFileURL()
+        defer { cleanup() }
+        let result = TestUtils.outputFromExecutionWith(arguments: ["taxable-sales", url.path])
+        #expect(result.exitCode == 1)
+        #expect(result.errorOutput.isEmpty)
         #if os(Linux)
-        XCTAssertEqual(result.output, "The operation could not be completed. The file doesn't exist.")
+        #expect(result.output == "The operation could not be completed. The file doesn’t exist.")
         #else
-        XCTAssertEqual(result.output, "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
+        #expect(result.output == "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
         #endif
     }
 
-    func testEmptyFile() {
-        let url = emptyFileURL()
-        let result = outputFromExecutionWith(arguments: ["taxable-sales", url.path])
-        XCTAssertEqual(result.exitCode, 0)
-        XCTAssert(result.errorOutput.isEmpty)
+    @Test
+    func emptyFile() {
+        let (url, cleanup) = TestUtils.temporaryFileURL()
+        TestUtils.createFile(at: url, content: "\n")
+        defer { cleanup() }
+        let result = TestUtils.outputFromExecutionWith(arguments: ["taxable-sales", url.path])
+        #expect(result.exitCode == 0)
+        #expect(result.errorOutput.isEmpty)
     }
 
-    func testNoSales() {
-        let url = temporaryFileURL()
-        createFile(at: url, content: """
+    @Test
+    func noSales() {
+        let (url, cleanup) = TestUtils.temporaryFileURL()
+        defer { cleanup() }
+        TestUtils.createFile(at: url, content: """
                                      2020-06-13 open Assets:Bank
                                      2020-06-13 open Income:Work
                                      2020-06-13 * "" ""
                                        Assets:Bank 10.00 CAD
                                        Income:Work -10.00 CAD
                                      """)
-        assertSuccessfulExecutionResult(arguments: ["taxable-sales", url.path, "2020", "--format", "text"], output: """
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["taxable-sales", url.path, "2020", "--format", "text"], output: """
                                         No Taxable Sales for 2020
                                         """)
     }
 
-    func testSimpleSale() {
-        let url = temporaryFileURL()
-        createFile(at: url, content: """
+    @Test
+    func simpleSale() {
+        let (url, cleanup) = TestUtils.temporaryFileURL()
+        defer { cleanup() }
+        TestUtils.createFile(at: url, content: """
                                      2022-04-15 open Assets:Broker:STOCK
                                        tax-sale: "Broker"
                                      2022-04-15 open Assets:Bank
@@ -52,7 +63,7 @@ final class TaxableSalesTests: XCTestCase {
                                        Assets:Bank 7.70 CAD
                                        Income:Gain -2.20 CAD
                                      """)
-        assertSuccessfulExecutionResult(arguments: ["taxable-sales", url.path, "2022", "--format", "text"], output: """
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["taxable-sales", url.path, "2022", "--format", "text"], output: """
                                         Taxable Sales 2022
 
                                         Date        Symbol  Name        Quantity  Proceeds  Gain      Provider
@@ -61,9 +72,11 @@ final class TaxableSalesTests: XCTestCase {
                                         """)
     }
 
-    func testSaleCSV() {
-        let url = temporaryFileURL()
-        createFile(at: url, content: """
+    @Test
+    func saleCSV() {
+        let (url, cleanup) = TestUtils.temporaryFileURL()
+        defer { cleanup() }
+        TestUtils.createFile(at: url, content: """
                                      2022-04-15 open Assets:Broker:STOCK
                                        tax-sale: "Broker"
                                      2022-04-15 open Assets:Bank
@@ -75,15 +88,17 @@ final class TaxableSalesTests: XCTestCase {
                                        Assets:Bank 7.70 CAD
                                        Income:Gain -2.20 CAD
                                      """)
-        assertSuccessfulExecutionResult(arguments: ["taxable-sales", url.path, "2022", "--format", "csv"], output: """
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["taxable-sales", url.path, "2022", "--format", "csv"], output: """
                                         "Date", "Symbol", "Name", "Quantity", "Proceeds", "Gain", "Provider"
                                         "2022-04-15", "STOCK", "Stock Name", "1.1", "7.70 CAD", "2.20 CAD", "Broker"
                                         """)
     }
 
-    func testSaleTable() {
-        let url = temporaryFileURL()
-        createFile(at: url, content: """
+    @Test
+    func saleTable() {
+        let (url, cleanup) = TestUtils.temporaryFileURL()
+        defer { cleanup() }
+        TestUtils.createFile(at: url, content: """
                                      2022-04-15 open Assets:Broker:STOCK
                                        tax-sale: "Broker"
                                      2022-04-15 open Assets:Bank
@@ -95,7 +110,7 @@ final class TaxableSalesTests: XCTestCase {
                                        Assets:Bank 7.70 CAD
                                        Income:Gain -2.20 CAD
                                      """)
-        assertSuccessfulExecutionResult(arguments: ["taxable-sales", url.path, "2022"], output: """
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["taxable-sales", url.path, "2022"], output: """
                                         +-------------------------------------------------------------------------+
                                         | Taxable Sales 2022                                                      |
                                         +-------------------------------------------------------------------------+
@@ -107,9 +122,11 @@ final class TaxableSalesTests: XCTestCase {
                                         """)
     }
 
-    func testGroupByProvider() {
-        let url = groupByProviderLedgerURL()
-        assertSuccessfulExecutionResult(arguments: ["taxable-sales", url.path, "2022", "--format", "text", "--group-by-provider"], output: """
+    @Test
+    func groupByProvider() {
+        let (url, cleanup) = groupByProviderLedgerURL()
+        defer { cleanup() }
+        TestUtils.assertSuccessfulExecutionResult(arguments: ["taxable-sales", url.path, "2022", "--format", "text", "--group-by-provider"], output: """
                                         Taxable Sales 2022 - Broker1
 
                                         Date        Symbol  Name       Quantity  Proceeds   Gain
@@ -124,9 +141,9 @@ final class TaxableSalesTests: XCTestCase {
                                         """)
     }
 
-    private func groupByProviderLedgerURL() -> URL {
-        let url = temporaryFileURL()
-        createFile(at: url, content: """
+    private func groupByProviderLedgerURL() -> (URL, () -> Void) {
+        let (url, cleanup) = TestUtils.temporaryFileURL()
+        TestUtils.createFile(at: url, content: """
                                      2022-04-15 open Assets:Broker1:STOCK1
                                        tax-sale: "Broker1"
                                      2022-04-16 open Assets:Broker2:STOCK2
@@ -146,21 +163,26 @@ final class TaxableSalesTests: XCTestCase {
                                        Assets:Bank 50.00 CAD
                                        Income:Gain -10.00 CAD
                                      """)
-        return url
+        return (url, cleanup)
     }
 
-    func testGroupByProviderInvalidWithCSV() {
-        let url = emptyFileURL()
-        let result = outputFromExecutionWith(arguments: ["taxable-sales", url.path, "--group-by-provider", "--format", "csv"])
-        XCTAssertEqual(result.exitCode, 64)
-        XCTAssertEqual(result.output, "")
-        XCTAssert(result.errorOutput.hasPrefix("Error: Cannot group by provider in csv format. Please remove group-by-provider flag or specify another format."))
+    @Test
+    func groupByProviderInvalidWithCSV() {
+        let (url, cleanup) = TestUtils.temporaryFileURL()
+        TestUtils.createFile(at: url, content: "\n")
+        defer { cleanup() }
+        let result = TestUtils.outputFromExecutionWith(arguments: ["taxable-sales", url.path, "--group-by-provider", "--format", "csv"])
+        #expect(result.exitCode == 64)
+        #expect(result.output.isEmpty)
+        #expect(result.errorOutput.hasPrefix("Error: Cannot group by provider in csv format. Please remove group-by-provider flag or specify another format."))
     }
 
-    func testDefaultYear() {
-        let url = temporaryFileURL()
+    @Test
+    func defaultYear() {
+        let (url, cleanup) = TestUtils.temporaryFileURL()
+        defer { cleanup() }
         let lastYear = Calendar.current.component(.year, from: Date()) - 1
-        createFile(at: url, content: """
+        TestUtils.createFile(at: url, content: """
                                      \(lastYear)-04-15 open Assets:Broker:STOCK
                                        tax-sale: "Broker"
                                      \(lastYear)-04-15 open Assets:Bank
@@ -170,11 +192,11 @@ final class TaxableSalesTests: XCTestCase {
                                        Assets:Bank 15.00 CAD
                                        Income:Gain -5.00 CAD
                                      """)
-        let result = outputFromExecutionWith(arguments: ["taxable-sales", url.path, "--format", "csv"])
-        XCTAssertEqual(result.exitCode, 0)
-        XCTAssert(result.errorOutput.isEmpty)
-        XCTAssert(result.output.hasPrefix("\"Date\", \"Symbol\", \"Name\", \"Quantity\", \"Proceeds\", \"Gain\", \"Provider\""))
-        XCTAssert(result.output.contains("\"\(lastYear)-04-15\""))
+        let result = TestUtils.outputFromExecutionWith(arguments: ["taxable-sales", url.path, "--format", "csv"])
+        #expect(result.exitCode == 0)
+        #expect(result.errorOutput.isEmpty)
+        #expect(result.output.hasPrefix("\"Date\", \"Symbol\", \"Name\", \"Quantity\", \"Proceeds\", \"Gain\", \"Provider\""))
+        #expect(result.output.contains("\"\(lastYear)-04-15\""))
     }
 
 }
