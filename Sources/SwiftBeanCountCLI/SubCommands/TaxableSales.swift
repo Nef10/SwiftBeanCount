@@ -43,7 +43,7 @@ struct TaxableSales: FormattableLedgerCommand {
         let groupedSales = Dictionary(grouping: sales) { $0.provider }
         return groupedSales.keys.sorted().map { provider in
             let providerSales = groupedSales[provider]!.sorted { $0.date < $1.date }
-            let values = providerSales.map { sale in
+            var values = providerSales.map { sale in
                 [
                     Self.dateFormatter.string(from: sale.date),
                     sale.symbol,
@@ -53,17 +53,24 @@ struct TaxableSales: FormattableLedgerCommand {
                     sale.gain.fullString
                 ]
             }
+
+            // Add sum row (skip for CSV format, but handled by caller)
+            if formatOptions.format != .csv {
+                values.append(sumRow(from: providerSales, columnCount: 6))
+            }
+
             return FormattableResult(
                 title: "Taxable Sales \(year) - \(provider)",
                 columns: ["Date", "Symbol", "Name", "Quantity", "Proceeds", "Gain"],
-                values: values
+                values: values,
+                lastRowIsFooter: formatOptions.format != .csv
             )
         }
     }
 
     private func flatResults(from sales: [Sale]) -> [FormattableResult] {
         let sortedSales = sales.sorted { $0.date < $1.date }
-        let values = sortedSales.map { sale in
+        var values = sortedSales.map { sale in
             [
                 Self.dateFormatter.string(from: sale.date),
                 sale.symbol,
@@ -74,13 +81,37 @@ struct TaxableSales: FormattableLedgerCommand {
                 sale.provider
             ]
         }
+
+        // Add sum row (skip for CSV format)
+        if formatOptions.format != .csv {
+            values.append(sumRow(from: sortedSales, columnCount: 7))
+        }
+
         return [
             FormattableResult(
                 title: "Taxable Sales \(year)",
                 columns: ["Date", "Symbol", "Name", "Quantity", "Proceeds", "Gain", "Provider"],
-                values: values
+                values: values,
+                lastRowIsFooter: formatOptions.format != .csv
             )
         ]
+    }
+
+    private func sumRow(from sales: [Sale], columnCount: Int) -> [String] {
+        let totalProceeds = sales.reduce(MultiCurrencyAmount()) { $0 + $1.proceeds }
+        let totalGain = sales.reduce(MultiCurrencyAmount()) { $0 + $1.gain }
+
+        var row = ["Sum"]
+        // Add empty columns before proceeds (Date, Symbol, Name, Quantity)
+        row.append(contentsOf: Array(repeating: "", count: 3))
+        // Add totals
+        row.append(totalProceeds.fullString)
+        row.append(totalGain.fullString)
+        // Add empty columns after gain if needed (Provider)
+        if columnCount > 6 {
+            row.append("")
+        }
+        return row
     }
 
 }

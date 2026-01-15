@@ -59,6 +59,7 @@ final class TaxableSalesTests: XCTestCase {
 
                                         Date        Symbol  Name        Quantity  Proceeds    Gain        Provider
                                         2022-04-15  STOCK   Stock Name  1.1       7.70 CAD    2.20 CAD    Broker
+                                        Sum                             7.70 CAD    2.20 CAD
                                         """)
     }
 
@@ -103,11 +104,13 @@ final class TaxableSalesTests: XCTestCase {
                                         | Date       | Symbol | Name  |
                                         +------------+--------+-------+
                                         | 2022-04-15 | STOCK  | Stock |
+                                        | Sum        |        |       |
                                         +------------+--------+-------+
 
                                         | Quantity | Proceeds | Gain     | Provider |
                                         +----------+----------+----------+----------+
                                         | 1.1      | 7.70 CAD | 2.20 CAD | Broker   |
+                                        |          | 7.70 CAD | 2.20 CAD |          |
                                         +----------+----------+----------+----------+
                                         """)
     }
@@ -119,11 +122,13 @@ final class TaxableSalesTests: XCTestCase {
 
                                         Date        Symbol   Name       Quantity  Proceeds    Gain
                                         2022-04-15  STOCK1   Stock One  1.0       15.00 CAD   5.00 CAD
+                                        Sum                             15.00 CAD   5.00 CAD
 
                                         Taxable Sales 2022 - Broker2
 
                                         Date        Symbol   Name       Quantity  Proceeds    Gain
                                         2022-04-16  STOCK2   Stock Two  2.0       50.00 CAD   10.00 CAD
+                                        Sum                             50.00 CAD   10.00 CAD
                                         """)
     }
 
