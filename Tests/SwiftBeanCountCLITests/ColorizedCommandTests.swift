@@ -1,9 +1,9 @@
+#if os(macOS)
+
 import Foundation
 import Rainbow
 @testable import SwiftBeanCountCLI
 import Testing
-
-#if os(macOS)
 
 struct TestColorizedCommand: ColorizedCommand {
     var colorOptions = ColorizedCommandOptions()

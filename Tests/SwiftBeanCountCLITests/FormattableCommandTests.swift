@@ -1,10 +1,10 @@
+#if os(macOS)
+
 import ArgumentParser
 import Foundation
 import Rainbow
 @testable import SwiftBeanCountCLI
 import Testing
-
-#if os(macOS)
 
 struct TestFormattableCommand: FormattableCommand {
     var formatOptions = FormattableCommandOptions()

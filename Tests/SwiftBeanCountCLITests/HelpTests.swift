@@ -1,8 +1,8 @@
+#if os(macOS)
+
 import Foundation
 @testable import SwiftBeanCountCLI
 import Testing
-
-#if os(macOS)
 
 @Suite
 struct HelpTests {
