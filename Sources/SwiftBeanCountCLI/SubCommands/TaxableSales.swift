@@ -32,6 +32,15 @@ struct TaxableSales: FormattableLedgerCommand {
 
     func getResult(from ledger: Ledger, parsingDuration _: Double) throws -> [FormattableResult] {
         let sales = TaxCalculator.getTaxableSales(from: ledger, for: year)
+        guard !sales.isEmpty else {
+            return [
+                FormattableResult(
+                    title: "No Taxable Sales for \(year)",
+                    columns: [""],
+                    values: [[]]
+                )
+            ]
+        }
 
         if groupByProvider {
             return groupedResults(from: sales)
@@ -54,9 +63,9 @@ struct TaxableSales: FormattableLedgerCommand {
                 ]
             }
 
-            // Add sum row (skip for CSV format, but handled by caller)
+            // Add sum row (skip for CSV format)
             if formatOptions.format != .csv {
-                values.append(sumRow(from: providerSales, columnCount: 6))
+                values.append(sumRow(from: providerSales, addEmptyColumnAtThenEnd: false))
             }
 
             return FormattableResult(
@@ -84,7 +93,7 @@ struct TaxableSales: FormattableLedgerCommand {
 
         // Add sum row (skip for CSV format)
         if formatOptions.format != .csv {
-            values.append(sumRow(from: sortedSales, columnCount: 7))
+            values.append(sumRow(from: sortedSales, addEmptyColumnAtThenEnd: true))
         }
 
         return [
@@ -97,7 +106,7 @@ struct TaxableSales: FormattableLedgerCommand {
         ]
     }
 
-    private func sumRow(from sales: [Sale], columnCount: Int) -> [String] {
+    private func sumRow(from sales: [Sale], addEmptyColumnAtThenEnd: Bool) -> [String] {
         let totalProceeds = sales.reduce(MultiCurrencyAmount()) { $0 + $1.proceeds }
         let totalGain = sales.reduce(MultiCurrencyAmount()) { $0 + $1.gain }
 
@@ -108,7 +117,7 @@ struct TaxableSales: FormattableLedgerCommand {
         row.append(totalProceeds.fullString)
         row.append(totalGain.fullString)
         // Add empty columns after gain if needed (Provider)
-        if columnCount > 6 {
+        if addEmptyColumnAtThenEnd {
             row.append("")
         }
         return row

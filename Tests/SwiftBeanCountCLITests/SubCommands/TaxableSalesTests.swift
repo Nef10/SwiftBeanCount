@@ -13,7 +13,7 @@ final class TaxableSalesTests: XCTestCase {
         #if os(Linux)
         XCTAssertEqual(result.output, "The operation could not be completed. The file doesn't exist.")
         #else
-        XCTAssertEqual(result.output, "The file \"\(url.lastPathComponent)\" couldn't be opened because there is no such file.")
+        XCTAssertEqual(result.output, "The file “\(url.lastPathComponent)” couldn’t be opened because there is no such file.")
         #endif
     }
 
@@ -34,9 +34,7 @@ final class TaxableSalesTests: XCTestCase {
                                        Income:Work -10.00 CAD
                                      """)
         assertSuccessfulExecutionResult(arguments: ["taxable-sales", url.path, "2020", "--format", "text"], output: """
-                                        Taxable Sales 2020
-
-                                        Date  Symbol  Name  Quantity  Proceeds  Gain  Provider
+                                        No Taxable Sales for 2020
                                         """)
     }
 
@@ -50,16 +48,16 @@ final class TaxableSalesTests: XCTestCase {
                                      2022-04-15 commodity STOCK
                                        name: "Stock Name"
                                      2022-04-15 * "" ""
-                                       Assets:Broker:STOCK -1.1 STOCK {7.00 CAD}
+                                       Assets:Broker:STOCK -1.1 STOCK {}
                                        Assets:Bank 7.70 CAD
                                        Income:Gain -2.20 CAD
                                      """)
         assertSuccessfulExecutionResult(arguments: ["taxable-sales", url.path, "2022", "--format", "text"], output: """
                                         Taxable Sales 2022
 
-                                        Date        Symbol  Name        Quantity  Proceeds    Gain        Provider
-                                        2022-04-15  STOCK   Stock Name  1.1       7.70 CAD    2.20 CAD    Broker
-                                        Sum                             7.70 CAD    2.20 CAD
+                                        Date        Symbol  Name        Quantity  Proceeds  Gain      Provider
+                                        2022-04-15  STOCK   Stock Name  1.1       7.70 CAD  2.20 CAD  Broker
+                                        Sum                                       7.70 CAD  2.20 CAD
                                         """)
     }
 
@@ -73,7 +71,7 @@ final class TaxableSalesTests: XCTestCase {
                                      2022-04-15 commodity STOCK
                                        name: "Stock Name"
                                      2022-04-15 * "" ""
-                                       Assets:Broker:STOCK -1.1 STOCK {7.00 CAD}
+                                       Assets:Broker:STOCK -1.1 STOCK {}
                                        Assets:Bank 7.70 CAD
                                        Income:Gain -2.20 CAD
                                      """)
@@ -91,27 +89,21 @@ final class TaxableSalesTests: XCTestCase {
                                      2022-04-15 open Assets:Bank
                                      2022-04-15 open Income:Gain
                                      2022-04-15 commodity STOCK
-                                       name: "Stock Name"
+                                       name: "Stock"
                                      2022-04-15 * "" ""
-                                       Assets:Broker:STOCK -1.1 STOCK {7.00 CAD}
+                                       Assets:Broker:STOCK -1.1 STOCK {}
                                        Assets:Bank 7.70 CAD
                                        Income:Gain -2.20 CAD
                                      """)
         assertSuccessfulExecutionResult(arguments: ["taxable-sales", url.path, "2022"], output: """
-                                        +-----------------------------+
-                                        | Taxable Sales 2022          |
-                                        +-----------------------------+
-                                        | Date       | Symbol | Name  |
-                                        +------------+--------+-------+
-                                        | 2022-04-15 | STOCK  | Stock |
-                                        | Sum        |        |       |
-                                        +------------+--------+-------+
-
-                                        | Quantity | Proceeds | Gain     | Provider |
-                                        +----------+----------+----------+----------+
-                                        | 1.1      | 7.70 CAD | 2.20 CAD | Broker   |
-                                        |          | 7.70 CAD | 2.20 CAD |          |
-                                        +----------+----------+----------+----------+
+                                        +-------------------------------------------------------------------------+
+                                        | Taxable Sales 2022                                                      |
+                                        +-------------------------------------------------------------------------+
+                                        | Date       | Symbol | Name  | Quantity | Proceeds | Gain     | Provider |
+                                        +------------+--------+-------+----------+----------+----------+----------+
+                                        | 2022-04-15 | STOCK  | Stock | 1.1      | 7.70 CAD | 2.20 CAD | Broker   |
+                                        | Sum        |        |       |          | 7.70 CAD | 2.20 CAD |          |
+                                        +------------+--------+-------+----------+----------+----------+----------+
                                         """)
     }
 
@@ -120,15 +112,15 @@ final class TaxableSalesTests: XCTestCase {
         assertSuccessfulExecutionResult(arguments: ["taxable-sales", url.path, "2022", "--format", "text", "--group-by-provider"], output: """
                                         Taxable Sales 2022 - Broker1
 
-                                        Date        Symbol   Name       Quantity  Proceeds    Gain
-                                        2022-04-15  STOCK1   Stock One  1.0       15.00 CAD   5.00 CAD
-                                        Sum                             15.00 CAD   5.00 CAD
+                                        Date        Symbol  Name       Quantity  Proceeds   Gain
+                                        2022-04-15  STOCK1  Stock One  1         15.00 CAD  5.00 CAD
+                                        Sum                                      15.00 CAD  5.00 CAD
 
                                         Taxable Sales 2022 - Broker2
 
-                                        Date        Symbol   Name       Quantity  Proceeds    Gain
-                                        2022-04-16  STOCK2   Stock Two  2.0       50.00 CAD   10.00 CAD
-                                        Sum                             50.00 CAD   10.00 CAD
+                                        Date        Symbol  Name       Quantity  Proceeds   Gain
+                                        2022-04-16  STOCK2  Stock Two  2         50.00 CAD  10.00 CAD
+                                        Sum                                      50.00 CAD  10.00 CAD
                                         """)
     }
 
@@ -146,11 +138,11 @@ final class TaxableSalesTests: XCTestCase {
                                      2022-04-15 commodity STOCK2
                                        name: "Stock Two"
                                      2022-04-15 * "" ""
-                                       Assets:Broker1:STOCK1 -1.0 STOCK1 {10.00 CAD}
+                                       Assets:Broker1:STOCK1 -1.0 STOCK1 {}
                                        Assets:Bank 15.00 CAD
                                        Income:Gain -5.00 CAD
                                      2022-04-16 * "" ""
-                                       Assets:Broker2:STOCK2 -2.0 STOCK2 {20.00 CAD}
+                                       Assets:Broker2:STOCK2 -2.0 STOCK2 {}
                                        Assets:Bank 50.00 CAD
                                        Income:Gain -10.00 CAD
                                      """)
@@ -174,7 +166,7 @@ final class TaxableSalesTests: XCTestCase {
                                      \(lastYear)-04-15 open Assets:Bank
                                      \(lastYear)-04-15 open Income:Gain
                                      \(lastYear)-04-15 * "" ""
-                                       Assets:Broker:STOCK -1.0 STOCK {10.00 CAD}
+                                       Assets:Broker:STOCK -1.0 STOCK {}
                                        Assets:Bank 15.00 CAD
                                        Income:Gain -5.00 CAD
                                      """)
