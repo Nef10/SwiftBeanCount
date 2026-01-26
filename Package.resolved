@@ -1,5 +1,5 @@
 {
-  "originHash" : "9d3e5b48b00afa2d2ac4db7a824001f2cb1d3c6b575d6b4be16f6d111e9cac3c",
+  "originHash" : "9e5d04c3af3e075edf76d805c2e26b603341ec1e43f91d41af219f0ce1d07041",
   "pins" : [
     {
       "identity" : "brightfutures",
@@ -110,15 +110,6 @@
       }
     },
     {
-      "identity" : "swift-crypto",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-crypto.git",
-      "state" : {
-        "revision" : "ddb07e896a2a8af79512543b1c7eb9797f8898a5",
-        "version" : "1.1.7"
-      }
-    },
-    {
       "identity" : "swift-docc-plugin",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-docc-plugin",
@@ -150,8 +141,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SimplyDanny/SwiftLintPlugins",
       "state" : {
-        "revision" : "ecafb5b056cb7995324f0d310a61f30661d00cad",
-        "version" : "0.62.2"
+        "revision" : "c099f18417c53548134830b11669b96ed9801971",
+        "version" : "0.63.1"
       }
     },
     {
