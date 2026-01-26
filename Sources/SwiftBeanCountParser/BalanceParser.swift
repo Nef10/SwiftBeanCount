@@ -22,7 +22,7 @@ enum BalanceParser {
     /// - Parameter line: String of one line
     /// - Returns: balance if the line could be parsed, otherwise nil
     static func parseFrom(line: String, metaData: [String: String] = [:]) -> Balance? {
-        let balanceMatches = line.matchingStrings(regex: self.regex)
+        let balanceMatches = line.matchingStrings(regex: regex)
         guard
             let match = balanceMatches[safe: 0],
             let date = DateParser.parseFrom(string: match[1]),

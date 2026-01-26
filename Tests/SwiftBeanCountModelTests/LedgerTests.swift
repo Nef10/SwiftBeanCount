@@ -323,7 +323,7 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
     }
 
     @Test
-    func commodityValidationWithAutoCreatedCommodities() throws {
+    func commodityValidationWithAutoCreatedCommodities() {
         // Test auto-created commodities without plugin
         let ledgerWithoutPlugin = Ledger()
         let posting = Posting(accountName: TestUtils.cash, amount: Amount(number: Decimal(100), commoditySymbol: "USD"))

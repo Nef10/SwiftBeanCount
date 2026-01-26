@@ -136,7 +136,7 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
             let group = DispatchGroup()
             for error in errors {
                 group.enter()
-                self.delegate?.error(error) {
+                delegate?.error(error) {
                     group.leave()
                 }
                 group.wait()
@@ -148,19 +148,19 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
         guard !didReturnTransaction else {
             return nil
         }
-        var (transaction, prices) = convertPurchase(parsedManuLifeBuys, on: parsedTransactionDate)
-        let (balances, balancePrices) = convertBalances(parsedManuLifeBalances)
-        prices.append(contentsOf: balancePrices)
+        var (convertedTransaction, convertedPrices) = convertPurchase(parsedManuLifeBuys, on: parsedTransactionDate)
+        let (convertedBalances, convertedBalancePrices) = convertBalances(parsedManuLifeBalances)
+        convertedPrices.append(contentsOf: convertedBalancePrices)
 
-        for balance in balances where !(ledger?.accounts.flatMap(\.balances).contains(balance) ?? false) {
-            self.balances.append(balance)
+        for balance in convertedBalances where !(ledger?.accounts.flatMap(\.balances).contains(balance) ?? false) {
+            balances.append(balance)
         }
-        for price in prices where !(ledger?.prices.contains(price) ?? false) {
-            self.prices.append(price)
+        for price in convertedPrices where !(ledger?.prices.contains(price) ?? false) {
+            prices.append(price)
         }
 
         didReturnTransaction = true
-        return transaction
+        return convertedTransaction
     }
 
     override func balancesToImport() -> [Balance] {

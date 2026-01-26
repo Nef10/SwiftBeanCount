@@ -18,7 +18,7 @@ enum OptionParser {
     }()
 
     static func parseFrom(line: String) -> Option? {
-        let matches = line.matchingStrings(regex: self.regex)
+        let matches = line.matchingStrings(regex: regex)
         guard let match = matches[safe: 0] else {
             return nil
         }

@@ -47,7 +47,7 @@ class CompassCardImporter: BaseImporter, CSVImporter {
         } catch {
             let group = DispatchGroup()
             group.enter()
-            self.delegate?.error(error) {
+            delegate?.error(error) {
                 group.leave()
             }
             group.wait()

@@ -122,7 +122,7 @@ struct BalanceTests {
     }
 
     @Test
-    func validateWithAutoCreatedCommodity() throws {
+    func validateWithAutoCreatedCommodity() {
         // Test with auto-created commodity (no explicit opening date)
         let ledger = Ledger()
         ledger.plugins.append("beancount.plugins.check_commodity")

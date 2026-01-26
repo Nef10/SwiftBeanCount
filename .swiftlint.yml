@@ -1,4 +1,4 @@
-# Updated for 0.62.1
+# Updated for 0.63.1
 
 strict: true
 
@@ -102,7 +102,7 @@ opt_in_rules:
   - direct_return
   - period_spacing
   - superfluous_else
-  - redundant_self_in_closure
+  - redundant_self
   - unhandled_throwing_task
   - private_swiftui_state
   - final_test_case
@@ -110,6 +110,8 @@ opt_in_rules:
   - no_empty_block
   - unused_parameter
   - prefer_asset_symbols
+  - unneeded_throws_rethrows
+  - unneeded_escaping
 
 disabled_rules:
   - trailing_comma
@@ -126,3 +128,6 @@ type_name:
     warning: 45
 number_separator:
   minimum_fraction_length: 3
+redundant_self:
+  only_in_closures: false
+  keep_in_initializers: true
