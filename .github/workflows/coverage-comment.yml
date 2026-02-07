@@ -39,7 +39,7 @@ jobs:
       - name: Get PR number
         run: echo "PR_NUMBER=$(cat $(find . -maxdepth 1 -type f -name 'PR_NUMBER*' | head -n 1))" >> $GITHUB_ENV
       - name: Generate code coverage report
-        uses: Nef10/lcov-reporter-action@v0.5.0
+        uses: Nef10/lcov-reporter-action@v0.6.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           lcov-file: macOS.info
