@@ -9,6 +9,7 @@
 #if canImport(UIKit) || canImport(AppKit)
 
 import CompassCardDownloader
+import Foundation
 import SwiftBeanCountCompassCardMapper
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
