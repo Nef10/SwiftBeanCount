@@ -130,13 +130,18 @@ public struct WealthsimpleLedgerMapper { // swiftlint:disable:this type_body_len
         guard let account = accounts.first( where: { $0.id == firstTransaction.accountId }) else {
             throw WealthsimpleConversionError.accountNotFound(firstTransaction.accountId)
         }
-        var nrwtTransactions = wealthsimpleTransactions.filter { $0.transactionType == .nonResidentWithholdingTax }
-        let stockSplits = wealthsimpleTransactions.filter { $0.transactionType == .stockDistribution }
-        let cashbackTransactions = wealthsimpleTransactions.filter { $0.transactionType == .cashbackBonus }
-        let regularTransactions = wealthsimpleTransactions.filter {
-            $0.transactionType != .nonResidentWithholdingTax &&
-            $0.transactionType != .stockDistribution &&
-            $0.transactionType != .cashbackBonus
+        var nrwtTransactions = [WTransaction](), stockSplits = [WTransaction](), cashbackTransactions = [WTransaction](), regularTransactions = [WTransaction]()
+        for transaction in wealthsimpleTransactions {
+            switch transaction.transactionType {
+            case .nonResidentWithholdingTax:
+                nrwtTransactions.append(transaction)
+            case .stockDistribution:
+                stockSplits.append(transaction)
+            case .cashbackBonus:
+                cashbackTransactions.append(transaction)
+            default:
+                regularTransactions.append(transaction)
+            }
         }
         var prices = [Price](), transactions = [STransaction]()
         (prices, transactions) = try mapRegularTransactions(regularTransactions, nrwtTransactions: &nrwtTransactions, in: account)
@@ -174,15 +179,16 @@ public struct WealthsimpleLedgerMapper { // swiftlint:disable:this type_body_len
         return (prices, transactions)
     }
     private func mergeCashbackTransactions(_ transactions: [WTransaction], in account: WAccount) throws -> [STransaction] {
-        var processed = Set<String>()
-        return try transactions.compactMap { transaction -> STransaction? in
-            let key = "\(transaction.processDate)-\(transaction.description)"
-            guard !processed.contains(key) else {
+        struct CashbackKey: Hashable {
+            let date: Date
+            let description: String
+        }
+        let grouped = Dictionary(grouping: transactions) { CashbackKey(date: $0.processDate, description: $0.description) }
+        return try grouped.values.compactMap { group -> STransaction? in
+            guard let first = group.first else {
                 return nil
             }
-            let group = transactions.filter { "\($0.processDate)-\($0.description)" == key }
-            processed.insert(key)
-            let (_, result) = try mapTransaction(transaction, in: account)
+            let (_, result) = try mapTransaction(first, in: account)
             guard let result else {
                 return nil
             }
