@@ -587,6 +587,28 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         #expect(transactions == [expectedTransaction])
     }
 
+    @Test
+    func mapCashbackTransactionsDifferentAmounts() throws {
+        let incomeAccount = try AccountName("Income:Cashback")
+        try ledger.add(SAccount(name: incomeAccount, metaData: ["\(MetaDataKeys.prefix)cashback-bonus": accountNumber]))
+
+        let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
+        // Two transactions on same day with empty description but different amounts should not be merged
+        let transaction1 = cashbackTransaction(id: "cashback-id-1", quantity: "10.0", netCash: "10.0", date: date, description: "")
+        let transaction2 = cashbackTransaction(id: "cashback-id-2", quantity: "15.0", netCash: "15.0", date: date, description: "")
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction1, transaction2])
+
+        // Should have two separate transactions since amounts are different
+        #expect(prices.isEmpty)
+        #expect(transactions.count == 2)
+        let transaction1Id = transactions[0].metaData.metaData[MetaDataKeys.id]
+        let transaction2Id = transactions[1].metaData.metaData[MetaDataKeys.id]
+        #expect(transaction1Id == "cashback-id-1" || transaction1Id == "cashback-id-2")
+        #expect(transaction2Id == "cashback-id-1" || transaction2Id == "cashback-id-2")
+        #expect(transaction1Id != transaction2Id)
+    }
+
     private func cashbackTransaction(id: String, quantity: String, netCash: String, date: Date, description: String) -> TestTransaction {
         TestTransaction(
             id: id,
