@@ -12,122 +12,124 @@ import CompassCardDownloader
 import SwiftBeanCountCompassCardMapper
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
-import XCTest
+import Testing
 
-@available(iOS 14.5, macOS 11.3, *)
-final class CompassCardDownloadImporterTests: XCTestCase {
+private class MockDownloader: CompassCardDownloaderProvider {
+    weak var delegate: CompassCardDownloaderDelegate?
 
-    private class MockDownloader: CompassCardDownloaderProvider {
-        weak var delegate: CompassCardDownloaderDelegate?
+    var authAndBalanceLoading: ((String, String) -> Result<(String, String), Error>)?
+    var transactionsLoading: ((String, Date) -> Result<String, Error>)?
 
-        func authorizeAndGetBalance(email: String, password: String, _ completion: (Result<(String, String), Error>) -> Void) {
-            _ = delegate?.view()
-            completion(authAndBalanceLoading?(email, password) ?? .success(("123456789", "0.00")))
-        }
-
-        func downloadCardTransactions(cardNumber: String, dateToLoadFrom: Date, _ completion: (Result<String, Error>) -> Void) {
-            completion(transactionsLoading?(cardNumber, dateToLoadFrom) ?? .success(",\n"))
-        }
+    func authorizeAndGetBalance(email: String, password: String, _ completion: (Result<(String, String), Error>) -> Void) {
+        _ = delegate?.view()
+        completion(authAndBalanceLoading?(email, password) ?? .success(("123456789", "0.00")))
     }
 
-    private static var authAndBalanceLoading: ((String, String) -> Result<(String, String), Error>)?
-    private static var transactionsLoading: ((String, Date) -> Result<String, Error>)?
+    func downloadCardTransactions(cardNumber: String, dateToLoadFrom: Date, _ completion: (Result<String, Error>) -> Void) {
+        completion(transactionsLoading?(cardNumber, dateToLoadFrom) ?? .success(",\n"))
+    }
+}
 
-    private var delegate: CredentialInputAndViewDelegate? // swiftlint:disable:this weak_delegate
+@Suite
+struct CompassCardDownloadImporterTests {
 
     private let sixtyTwoDays = -60 * 60 * 24 * 62.0
     private let threeDays = -60 * 60 * 24 * 3.0
 
-    override func setUp() {
-        Self.authAndBalanceLoading = nil
-        Self.transactionsLoading = nil
-        setDefaultDelegate()
-        super.setUp()
+    @Test
+    func importerName() {
+        #expect(CompassCardDownloadImporter.importerName == "Compass Card Download")
     }
 
-    func testImporterName() {
-        XCTAssertEqual(CompassCardDownloadImporter.importerName, "Compass Card Download")
+    @Test
+    func importerType() {
+        #expect(CompassCardDownloadImporter.importerType == "compass-card-download")
     }
 
-    func testImporterType() {
-        XCTAssertEqual(CompassCardDownloadImporter.importerType, "compass-card-download")
+    @Test
+    func helpText() {
+        #expect(CompassCardDownloadImporter.helpText.starts(with: "Downloads transactions and the current balance from the Compass Card website."))
     }
 
-    func testHelpText() {
-        XCTAssert(CompassCardDownloadImporter.helpText.hasPrefix("Downloads transactions and the current balance from the Compass Card website."))
+    @Test
+    func importName() {
+        #expect(CompassCardDownloadImporter(ledger: nil).importName == "Compass Card Download")
     }
 
-    func testImportName() {
-        XCTAssertEqual(CompassCardDownloadImporter(ledger: nil).importName, "Compass Card Download")
-    }
-
-    func testSavedCredentials() throws {
-        Self.authAndBalanceLoading = {
-            XCTAssertEqual($0, "name")
-            XCTAssertEqual($1, "password123")
+    @Test
+    func savedCredentials() throws {
+        let downloader = MockDownloader()
+        downloader.authAndBalanceLoading = {
+            #expect($0 == "name")
+            #expect($1 == "password123")
             return .success(("123456789", "0.00"))
         }
-        try runImport()
+        try runImport(downloader: downloader)
     }
 
-    func testRemoveSavedCredentials() throws {
+    @Test
+    func removeSavedCredentials() throws {
         let error = TestError()
-
-        Self.authAndBalanceLoading = {
-            XCTAssertEqual($0, "name")
-            XCTAssertEqual($1, "password123")
+        let downloader = MockDownloader()
+        downloader.authAndBalanceLoading = {
+            #expect($0 == "name")
+            #expect($1 == "password123")
             return .failure(error)
         }
-        delegate = CredentialInputAndViewDelegate(inputNames: ["The login failed. Do you want to remove the saved credentials"],
-                                                  inputTypes: [.bool],
-                                                  inputReturnValues: ["true"],
-                                                  saveKeys: [
-                                                    "compass-card-download-username",
-                                                    "compass-card-download-password",
-                                                    "compass-card-download-username",
-                                                    "compass-card-download-password"
-                                                  ],
-                                                  saveValues: ["name", "password123", "", ""],
-                                                  readKeys: ["compass-card-download-username", "compass-card-download-password"],
-                                                  readReturnValues: ["name", "password123"],
-                                                  error: error)
-        try runImport(success: false)
+        let delegate = CredentialInputAndViewDelegate(inputNames: ["The login failed. Do you want to remove the saved credentials"],
+                                                      inputTypes: [.bool],
+                                                      inputReturnValues: ["true"],
+                                                      saveKeys: [
+                                                        "compass-card-download-username",
+                                                        "compass-card-download-password",
+                                                        "compass-card-download-username",
+                                                        "compass-card-download-password"
+                                                      ],
+                                                      saveValues: ["name", "password123", "", ""],
+                                                      readKeys: ["compass-card-download-username", "compass-card-download-password"],
+                                                      readReturnValues: ["name", "password123"],
+                                                      error: error)
+        try runImport(downloader: downloader, success: false, delegate: delegate)
     }
 
-    func testTransactionsDownloadFailed() throws {
+    @Test
+    func transactionsDownloadFailed() throws {
         let error = TestError()
-
-        Self.authAndBalanceLoading = {
-            XCTAssertEqual($0, "name")
-            XCTAssertEqual($1, "password123")
+        let downloader = MockDownloader()
+        downloader.authAndBalanceLoading = {
+            #expect($0 == "name")
+            #expect($1 == "password123")
             return .success(("123456789", "0.00"))
         }
-        Self.transactionsLoading = { _, date in
-            XCTAssertEqual(Calendar.current.compare(date, to: Date(timeIntervalSinceNow: self.sixtyTwoDays), toGranularity: .minute), .orderedSame)
+        let sixtyTwoDays = sixtyTwoDays
+        downloader.transactionsLoading = { _, date in
+            #expect(Calendar.current.compare(date, to: Date(timeIntervalSinceNow: sixtyTwoDays), toGranularity: .minute) == .orderedSame)
             return .failure(error)
         }
-        setDefaultDelegate(error: error)
-        try runImport()
+        try runImport(downloader: downloader, delegate: defaultDelegate(error: error))
     }
 
-    func testPastDaysToLoad() throws {
+    @Test
+    func pastDaysToLoad() throws {
         let ledger = Ledger()
         ledger.custom.append(Custom(date: Date(), name: "compass-card-download-importer", values: ["pastDaysToLoad", "3"]))
         ledger.custom.append(Custom(date: Date(timeIntervalSinceNow: sixtyTwoDays), name: "compass-card-download-importer", values: ["pastDaysToLoad", "200"]))
-
-        Self.authAndBalanceLoading = {
-            XCTAssertEqual($0, "name")
-            XCTAssertEqual($1, "password123")
+        let downloader = MockDownloader()
+        downloader.authAndBalanceLoading = {
+            #expect($0 == "name")
+            #expect($1 == "password123")
             return .success(("123456789", "0.00"))
         }
-        Self.transactionsLoading = { _, date in
-            XCTAssertEqual(Calendar.current.compare(date, to: Date(timeIntervalSinceNow: self.threeDays), toGranularity: .minute), .orderedSame)
+        let threeDays = threeDays
+        downloader.transactionsLoading = { _, date in
+            #expect(Calendar.current.compare(date, to: Date(timeIntervalSinceNow: threeDays), toGranularity: .minute) == .orderedSame)
             return .success(",\n")
         }
-        try runImport(ledger: ledger)
+        try runImport(downloader: downloader, ledger: ledger)
     }
 
-    func testDownload() throws {
+    @Test
+    func download() throws {
         let balance = Balance(date: Calendar.current.date(byAdding: .day, value: 1, to: Date())!,
                               accountName: try AccountName("Assets:CompassCard"),
                               amount: Amount(number: Decimal(20.50), commoditySymbol: "CAD", decimalDigits: 2))
@@ -140,63 +142,65 @@ final class CompassCardDownloadImporterTests: XCTestCase {
         let date = Date(timeIntervalSince1970: 1_668_746_340)
         let metaData = TransactionMetaData(date: date, payee: "TransLink", narration: "Bus Stop 60572", metaData: ["journey-id": "2022-11-18T04:39:00.0000000Z"])
         let transaction = Transaction(metaData: metaData, postings: [posting1, posting2])
-
-        Self.authAndBalanceLoading = {
-            XCTAssertEqual($0, "name")
-            XCTAssertEqual($1, "password123")
+        let downloader = MockDownloader()
+        downloader.authAndBalanceLoading = {
+            #expect($0 == "name")
+            #expect($1 == "password123")
             return .success(("123456789", "20.50"))
         }
-        Self.transactionsLoading = { cardNumber, _ in
-            XCTAssertEqual(cardNumber, "123456789")
+        downloader.transactionsLoading = { cardNumber, _ in
+            #expect(cardNumber == "123456789")
             return .success(transactions)
         }
-        try runImport { importer in
+        try runImport(downloader: downloader) { importer in
             let result = importer.nextTransaction()
-            XCTAssertEqual(result?.transaction, transaction)
-            XCTAssertEqual(result?.accountName?.fullName, "Assets:CompassCard")
-            XCTAssert(result?.shouldAllowUserToEdit ?? false)
-            XCTAssertNil(importer.nextTransaction())
-            XCTAssertEqual(importer.balancesToImport().count, 1)
-            XCTAssertEqual(importer.balancesToImport().first!.description, balance.description)
+            #expect(result?.transaction == transaction)
+            #expect(result?.accountName?.fullName == "Assets:CompassCard")
+            #expect(result?.shouldAllowUserToEdit ?? false)
+            #expect(importer.nextTransaction() == nil)
+            #expect(importer.balancesToImport().count == 1)
+            #expect(importer.balancesToImport().first!.description == balance.description)
         }
     }
 
-    private func runImport(success: Bool = true, ledger: Ledger = Ledger(), verify: ((CompassCardDownloadImporter) -> Void)? = nil) throws {
+    private func runImport(
+        downloader: MockDownloader,
+        success: Bool = true,
+        ledger: Ledger = Ledger(),
+        delegate: CredentialInputAndViewDelegate? = nil,
+        verify: ((CompassCardDownloadImporter) -> Void)? = nil
+    ) throws {
+        let delegate = delegate ?? defaultDelegate()
         let accountName = try AccountName("Assets:CompassCard")
         try ledger.add(Account(name: accountName, metaData: ["card-number": "123456789", "importer-type": "compass-card"]))
-        let expectation = expectation(description: #function)
-        let importer = CompassCardDownloadImporter(ledger: ledger, downloader: MockDownloader())
+        let importer = CompassCardDownloadImporter(ledger: ledger, downloader: downloader)
         importer.delegate = delegate
-        DispatchQueue.global(qos: .userInitiated).async {
-            importer.load()
-            XCTAssert(importer.pricesToImport().isEmpty)
-            XCTAssert(self.delegate!.verified)
-            if let verify {
-                verify(importer)
+        importer.load()
+        #expect(importer.pricesToImport().isEmpty)
+        #expect(delegate.verified)
+        if let verify {
+            verify(importer)
+        } else {
+            #expect(importer.nextTransaction() == nil)
+            if success {
+                #expect(importer.balancesToImport().count == 1)
+                #expect(importer.balancesToImport()[0].accountName == accountName)
+                #expect(importer.balancesToImport()[0].amount.description == "0.00 CAD")
             } else {
-                XCTAssertNil(importer.nextTransaction())
-                if success {
-                    XCTAssertEqual(importer.balancesToImport().count, 1)
-                    XCTAssertEqual(importer.balancesToImport()[0].accountName, accountName)
-                    XCTAssertEqual(importer.balancesToImport()[0].amount.description, "0.00 CAD")
-                } else {
-                    XCTAssert(importer.balancesToImport().isEmpty)
-                }
+                #expect(importer.balancesToImport().isEmpty)
             }
-            expectation.fulfill()
         }
-        waitForExpectations(timeout: 10)
     }
 
-    private func setDefaultDelegate(error: TestError? = nil) {
-        delegate = CredentialInputAndViewDelegate(inputNames: ["Email", "Password"],
-                                                  inputTypes: [.text([]), .secret],
-                                                  inputReturnValues: ["name", "password123"],
-                                                  saveKeys: ["compass-card-download-username", "compass-card-download-password"],
-                                                  saveValues: ["name", "password123"],
-                                                  readKeys: ["compass-card-download-username", "compass-card-download-password"],
-                                                  readReturnValues: ["", ""],
-                                                  error: error)
+    private func defaultDelegate(error: TestError? = nil) -> CredentialInputAndViewDelegate {
+        CredentialInputAndViewDelegate(inputNames: ["Email", "Password"],
+                                       inputTypes: [.text([]), .secret],
+                                       inputReturnValues: ["name", "password123"],
+                                       saveKeys: ["compass-card-download-username", "compass-card-download-password"],
+                                       saveValues: ["name", "password123"],
+                                       readKeys: ["compass-card-download-username", "compass-card-download-password"],
+                                       readReturnValues: ["", ""],
+                                       error: error)
     }
 
 }
