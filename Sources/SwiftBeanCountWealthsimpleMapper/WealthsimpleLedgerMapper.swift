@@ -167,7 +167,7 @@ public struct WealthsimpleLedgerMapper { // swiftlint:disable:this type_body_len
                 }
                 transactions.append(transaction)
             }
-            if let price, !lookup.doesTransactionExistInLedger(price) {
+            if let price, !lookup.doesPriceExistInLedger(price) {
                 prices.append(price)
             }
         }
@@ -183,7 +183,7 @@ public struct WealthsimpleLedgerMapper { // swiftlint:disable:this type_body_len
             let group = transactions.filter { "\($0.processDate)-\($0.description)" == key }
             processed.insert(key)
             let (_, result) = try mapTransaction(transaction, in: account)
-            guard var result else {
+            guard let result else {
                 return nil
             }
             if group.count > 1 {
