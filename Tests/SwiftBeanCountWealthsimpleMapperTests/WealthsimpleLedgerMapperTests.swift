@@ -539,7 +539,7 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
         let description = "Cashback credit paid at 2026-01-26 for $12.6800"
 
-        // Three transactions with same date and description, IDs should be merged
+        // Three transactions with same date and description: 2 positive (adding money) and 1 negative (removing money)
         let transaction1 = cashbackTransaction(id: "transaction-idstring1", quantity: "-12.68", netCash: "-12.68", date: date, description: description)
         let transaction2 = cashbackTransaction(id: "transaction-idstring2", quantity: "12.68", netCash: "12.68", date: date, description: description)
         let transaction3 = cashbackTransaction(id: "transaction-idstring3", quantity: "12.68", netCash: "12.68", date: date, description: description)
@@ -547,12 +547,13 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction1, transaction2, transaction3])
 
         // Should be merged into a single transaction with all three IDs space-separated
+        // The result should be the positive transaction (adding money to assets)
         let mergedId = "transaction-idstring1 transaction-idstring2 transaction-idstring3"
         let expectedTransaction = Transaction(
             metaData: TransactionMetaData(date: date, metaData: [MetaDataKeys.id: mergedId]),
             postings: [
-                try posting(number: "-12.68"),
-                Posting(accountName: incomeAccount, amount: priceAmount(number: "12.68"))
+                try posting(number: "12.68"),
+                Posting(accountName: incomeAccount, amount: priceAmount(number: "-12.68"))
             ]
         )
 
@@ -607,6 +608,31 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         #expect(transaction1Id == "cashback-id-1" || transaction1Id == "cashback-id-2")
         #expect(transaction2Id == "cashback-id-1" || transaction2Id == "cashback-id-2")
         #expect(transaction1Id != transaction2Id)
+    }
+
+    @Test
+    func mapCashbackTransactionsWrongPattern() throws {
+        let incomeAccount = try AccountName("Income:Cashback")
+        try ledger.add(SAccount(name: incomeAccount, metaData: ["\(MetaDataKeys.prefix)cashback-bonus": accountNumber]))
+
+        let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
+        let description = "Cashback credit"
+        // Three positive transactions - wrong pattern (should be 2 positive + 1 negative)
+        let transaction1 = cashbackTransaction(id: "cashback-id-1", quantity: "10.0", netCash: "10.0", date: date, description: description)
+        let transaction2 = cashbackTransaction(id: "cashback-id-2", quantity: "10.0", netCash: "10.0", date: date, description: description)
+        let transaction3 = cashbackTransaction(id: "cashback-id-3", quantity: "10.0", netCash: "10.0", date: date, description: description)
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction1, transaction2, transaction3])
+
+        // Should NOT merge since pattern is wrong (all positive instead of 2 positive + 1 negative)
+        // Should return all 3 transactions individually
+        #expect(prices.isEmpty)
+        #expect(transactions.count == 3)
+        // Each should have its own ID, not merged
+        let ids = transactions.compactMap { $0.metaData.metaData[MetaDataKeys.id] }
+        #expect(ids.contains("cashback-id-1"))
+        #expect(ids.contains("cashback-id-2"))
+        #expect(ids.contains("cashback-id-3"))
     }
 
     private func cashbackTransaction(id: String, quantity: String, netCash: String, date: Date, description: String) -> TestTransaction {

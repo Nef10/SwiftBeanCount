@@ -184,29 +184,61 @@ public struct WealthsimpleLedgerMapper {
     }
 
     /// Merges duplicate cashback transactions by date, description and amount, combining their IDs space-separated in metadata
-    private func mergeCashbackTransactions(_ transactions: [WTransaction], in account: WAccount) throws -> [STransaction] {
+    private func mergeCashbackTransactions(_ transactions: [WTransaction], in account: WAccount) throws -> [STransaction] { // swiftlint:disable:this function_body_length
         struct CashbackKey: Hashable {
             let date: Date
             let description: String
             let amount: String
         }
         let grouped = Dictionary(grouping: transactions) { CashbackKey(date: $0.processDate, description: $0.description, amount: $0.marketValueAmount) }
-        return try grouped.values.compactMap { group -> STransaction? in
+
+        var results: [STransaction] = []
+        for group in grouped.values {
             guard let first = group.first else {
-                return nil
+                continue
             }
-            let (_, result) = try mapTransaction(first, in: account)
-            guard let result else {
-                return nil
-            }
+
+            // For groups with multiple transactions, validate the pattern and use the positive transaction
             if group.count > 1 {
-                var ids = result.metaData.metaData
-                ids[MetaDataKeys.id] = group.map(\.id).joined(separator: " ")
-                let meta = TransactionMetaData(date: result.metaData.date, payee: result.metaData.payee, narration: result.metaData.narration, metaData: ids)
-                return STransaction(metaData: meta, postings: result.postings)
+                // Count positive and negative transactions
+                let positive = group.filter { !$0.netCashAmount.starts(with: "-") }
+                let negative = group.filter { $0.netCashAmount.starts(with: "-") }
+
+                // Only merge if we have 2 positive and 1 negative with the same absolute amount
+                if positive.count == 2 && negative.count == 1 {
+                    // Use one of the positive transactions as the base
+                    guard let positiveTransaction = positive.first else {
+                        continue
+                    }
+
+                    let (_, result) = try mapTransaction(positiveTransaction, in: account)
+                    guard let result else {
+                        continue
+                    }
+
+                    // Merge all IDs
+                    var ids = result.metaData.metaData
+                    ids[MetaDataKeys.id] = group.map(\.id).joined(separator: " ")
+                    let meta = TransactionMetaData(date: result.metaData.date, payee: result.metaData.payee, narration: result.metaData.narration, metaData: ids)
+                    results.append(STransaction(metaData: meta, postings: result.postings))
+                } else {
+                    // Pattern doesn't match - return transactions individually
+                    for transaction in group {
+                        let (_, result) = try mapTransaction(transaction, in: account)
+                        if let result {
+                            results.append(result)
+                        }
+                    }
+                }
+            } else {
+                // Single transaction - just map it normally
+                let (_, result) = try mapTransaction(first, in: account)
+                if let result {
+                    results.append(result)
+                }
             }
-            return result
         }
+        return results
     }
 
     /// Merges a non resident witholding tax transaction with the corresponding dividend transaction
