@@ -194,47 +194,34 @@ public struct WealthsimpleLedgerMapper {
 
         var results: [STransaction] = []
         for group in grouped.values {
-            guard let first = group.first else {
-                continue
-            }
+            // Count positive and negative transactions
+            let positive = group.filter { !$0.netCashAmount.starts(with: "-") }
+            let negative = group.filter { $0.netCashAmount.starts(with: "-") }
 
-            // For groups with multiple transactions, validate the pattern and use the positive transaction
-            if group.count > 1 {
-                // Count positive and negative transactions
-                let positive = group.filter { !$0.netCashAmount.starts(with: "-") }
-                let negative = group.filter { $0.netCashAmount.starts(with: "-") }
-
-                // Only merge if we have 2 positive and 1 negative with the same absolute amount
-                if positive.count == 2 && negative.count == 1 {
-                    // Use one of the positive transactions as the base
-                    guard let positiveTransaction = positive.first else {
-                        continue
-                    }
-
-                    let (_, result) = try mapTransaction(positiveTransaction, in: account)
-                    guard let result else {
-                        continue
-                    }
-
-                    // Merge all IDs
-                    var ids = result.metaData.metaData
-                    ids[MetaDataKeys.id] = group.map(\.id).joined(separator: " ")
-                    let meta = TransactionMetaData(date: result.metaData.date, payee: result.metaData.payee, narration: result.metaData.narration, metaData: ids)
-                    results.append(STransaction(metaData: meta, postings: result.postings))
-                } else {
-                    // Pattern doesn't match - return transactions individually
-                    for transaction in group {
-                        let (_, result) = try mapTransaction(transaction, in: account)
-                        if let result {
-                            results.append(result)
-                        }
-                    }
+            // Only merge if we have 2 positive and 1 negative with the same absolute amount
+            if positive.count == 2 && negative.count == 1 {
+                // Use one of the positive transactions as the base
+                guard let positiveTransaction = positive.first else {
+                    continue
                 }
+
+                let (_, result) = try mapTransaction(positiveTransaction, in: account)
+                guard let result else {
+                    continue
+                }
+
+                // Merge all IDs
+                var ids = result.metaData.metaData
+                ids[MetaDataKeys.id] = group.map(\.id).joined(separator: " ")
+                let meta = TransactionMetaData(date: result.metaData.date, payee: result.metaData.payee, narration: result.metaData.narration, metaData: ids)
+                results.append(STransaction(metaData: meta, postings: result.postings))
             } else {
-                // Single transaction - just map it normally
-                let (_, result) = try mapTransaction(first, in: account)
-                if let result {
-                    results.append(result)
+                // Pattern doesn't match - return transactions individually
+                for transaction in group {
+                    let (_, result) = try mapTransaction(transaction, in: account)
+                    if let result {
+                        results.append(result)
+                    }
                 }
             }
         }

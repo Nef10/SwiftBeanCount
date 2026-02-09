@@ -605,9 +605,7 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         #expect(transactions.count == 2)
         let transaction1Id = transactions[0].metaData.metaData[MetaDataKeys.id]
         let transaction2Id = transactions[1].metaData.metaData[MetaDataKeys.id]
-        #expect(transaction1Id == "cashback-id-1" || transaction1Id == "cashback-id-2")
-        #expect(transaction2Id == "cashback-id-1" || transaction2Id == "cashback-id-2")
-        #expect(transaction1Id != transaction2Id)
+        #expect((transaction1Id == "cashback-id-1" && transaction2Id == "cashback-id-2") || (transaction1Id == "cashback-id-2" && transaction2Id == "cashback-id-1"))
     }
 
     @Test
