@@ -6,14 +6,17 @@
 //  Copyright © 2021 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 import RogersBankDownloader
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
 import SwiftBeanCountRogersBankMapper
-import XCTest
+import Testing
 
 private typealias STransaction = SwiftBeanCountModel.Transaction
 private typealias RAmount = RogersBankDownloader.Amount
+
+private var loginCallback: ((String, String, String?) -> Result<User, DownloadError>)?
 
 private struct TestAmount: RogersBankDownloader.Amount {
     var value = "0.00"
@@ -104,36 +107,35 @@ private struct TestActivity: Activity, Equatable {
     }
 }
 
-final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this type_body_length
+private class TestAuthenticator: Authenticator {
+    weak var delegate: (any RogersBankDownloader.RogersAuthenticatorDelegate)?
 
-    private class TestAuthenticator: Authenticator {
-        weak var delegate: (any RogersBankDownloader.RogersAuthenticatorDelegate)?
-
-        required init() {
-            // Empty
-        }
-
-        func login(username: String, password: String, deviceId: String?, completion: (Result<any RogersBankDownloader.User, RogersBankDownloader.DownloadError>) -> Void) {
-            completion(RogersDownloadImporterTests.load?(username, password, deviceId) ?? .success(TestUser()))
-        }
-
+    required init() {
+        // Empty
     }
 
-    private struct TestUser: User {
-        var userName = "Rogers Bank Username"
-        var accounts = [RogersBankDownloader.Account]()
-        var authenticated = true
+    func login(username: String, password: String, deviceId: String?, completion: (Result<any RogersBankDownloader.User, RogersBankDownloader.DownloadError>) -> Void) {
+        completion(loginCallback?(username, password, deviceId) ?? .success(TestUser()))
     }
 
-    private static var load: ((String, String, String?) -> Result<User, DownloadError>)?
+}
 
-    private var accountName: AccountName!
-    private var ledger: Ledger!
-    private var user: TestUser!
+private struct TestUser: User {
+    var userName = "Rogers Bank Username"
+    var accounts = [RogersBankDownloader.Account]()
+    var authenticated = true
+}
 
-    private var delegate: CredentialInputDelegate! // swiftlint:disable:this weak_delegate
+@Suite(.serialized)
+struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
 
-    override func setUpWithError() throws {
+    private let accountName: AccountName
+    private let ledger: Ledger
+    private var user: TestUser
+
+    private var delegate: CredentialInputDelegate
+
+    init() throws {
         delegate = CredentialInputDelegate(inputNames: ["Username", "Password"],
                                            inputTypes: [.text([]), .secret],
                                            inputReturnValues: ["name", "password123"],
@@ -144,158 +146,183 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         accountName = try AccountName("Liabilities:CC:Rogers")
         ledger = Ledger()
         user = TestUser()
-        Self.load = { _, _, _ in .success(self.user) }
+        let defaultUser = user
+        loginCallback = { _, _, _ in .success(defaultUser) }
         try ledger.add(SwiftBeanCountModel.Account(name: accountName, metaData: ["last-four": "8520", "importer-type": "rogers"]))
-        try super.setUpWithError()
     }
 
-    func testImporterName() {
-        XCTAssertEqual(RogersDownloadImporter.importerName, "Rogers Bank Download")
+    @Test
+    func importerName() {
+        #expect(RogersDownloadImporter.importerName == "Rogers Bank Download")
     }
 
-    func testImporterType() {
-        XCTAssertEqual(RogersDownloadImporter.importerType, "rogers")
+    @Test
+    func importerType() {
+        #expect(RogersDownloadImporter.importerType == "rogers")
     }
 
-    func testHelpText() {
-        XCTAssert(RogersDownloadImporter.helpText.hasPrefix("Downloads transactions and the current balance from the Rogers Bank website."))
+    @Test
+    func helpText() {
+        #expect(RogersDownloadImporter.helpText.hasPrefix("Downloads transactions and the current balance from the Rogers Bank website."))
     }
 
-    func testImportName() {
-        XCTAssertEqual(RogersDownloadImporter(ledger: nil).importName, "Rogers Bank Download")
+    @Test
+    func importName() {
+        #expect(RogersDownloadImporter(ledger: nil).importName == "Rogers Bank Download")
     }
 
-    func testNoAccounts() {
-        Self.load = {
-            XCTAssertEqual($0, "name")
-            XCTAssertEqual($1, "password123")
-            XCTAssertEqual($2, "")
+    @Test
+    func noAccounts() {
+        loginCallback = {
+            #expect($0 == "name")
+            #expect($1 == "password123")
+            #expect(($2 ?? "").isEmpty)
             return .success(TestUser())
         }
         let importer = loadedImporter()
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssert(importer.balancesToImport().isEmpty)
+        #expect(importer.nextTransaction() == nil)
+        #expect(importer.balancesToImport().isEmpty)
     }
 
-    func testLoadAuthenticationError() {
-        Self.load = { _, _, _ in .failure(DownloadError.invalidParameters(parameters: ["a": "bc"])) }
-        delegate = ErrorDelegate(inputNames: ["Username", "Password", "The login failed. Do you want to remove the saved credentials"],
-                                 inputTypes: [.text([]), .secret, .bool],
-                                 inputReturnValues: ["name", "password123", "true"],
-                                 saveKeys: ["rogers-username", "rogers-password", "rogers-username", "rogers-password", "rogers-deviceId"],
-                                 saveValues: ["name", "password123", "", "", ""],
-                                 readKeys: ["rogers-username", "rogers-password", "rogers-deviceId"],
-                                 readReturnValues: ["", "", ""],
-                                 error: DownloadError.invalidParameters(parameters: ["a": "bc"]))
-        loadedImporter()
+    @Test
+    func loadAuthenticationError() {
+        loginCallback = { _, _, _ in .failure(DownloadError.invalidParameters(parameters: ["a": "bc"])) }
+        let delegate = ErrorDelegate(inputNames: ["Username", "Password", "The login failed. Do you want to remove the saved credentials"],
+                                     inputTypes: [.text([]), .secret, .bool],
+                                     inputReturnValues: ["name", "password123", "true"],
+                                     saveKeys: ["rogers-username", "rogers-password", "rogers-username", "rogers-password", "rogers-deviceId"],
+                                     saveValues: ["name", "password123", "", "", ""],
+                                     readKeys: ["rogers-username", "rogers-password", "rogers-deviceId"],
+                                     readReturnValues: ["", "", ""],
+                                     error: DownloadError.invalidParameters(parameters: ["a": "bc"]))
+        loadedImporter(delegate: delegate)
     }
 
-    func testDownloadActivitiesError() {
+    @Test
+    func downloadActivitiesError() {
         var receivedStatementNumbers = [false, false, false]
         var account = TestAccount {
-            XCTAssert($0 < 3)
+            #expect($0 < 3)
             receivedStatementNumbers[$0] = true
             return .failure(DownloadError.invalidParameters(parameters: ["b": "cd"]))
         }
         var amount = TestAmount()
         amount.value = "10.52"
         account.currentBalance = amount
+        var user = user
         user.accounts = [account]
-        setErrorDelegate(error: DownloadError.invalidParameters(parameters: ["b": "cd"]))
-        let importer = loadedImporter(ledger: ledger)
+        loginCallback = { _, _, _ in .success(user) }
+        let delegate = errorDelegate(error: DownloadError.invalidParameters(parameters: ["b": "cd"]))
+        let importer = loadedImporter(delegate: delegate, ledger: ledger)
         let balances = importer.balancesToImport()
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssertEqual(balances.count, 1)
-        XCTAssertEqual(Calendar.current.compare(balances[0].date, to: Date(), toGranularity: .minute), .orderedSame)
-        XCTAssertEqual(balances[0].accountName, accountName)
-        XCTAssertEqual(balances[0].amount, Amount(number: Decimal(string: "-10.52")!, commoditySymbol: "CAD", decimalDigits: 2))
-        XCTAssertEqual(receivedStatementNumbers, [true, true, true])
+        #expect(importer.nextTransaction() == nil)
+        #expect(balances.count == 1)
+        #expect(Calendar.current.compare(balances[0].date, to: Date(), toGranularity: .minute) == .orderedSame)
+        #expect(balances[0].accountName == accountName)
+        #expect(balances[0].amount == Amount(number: Decimal(string: "-10.52")!, commoditySymbol: "CAD", decimalDigits: 2))
+        #expect(receivedStatementNumbers == [true, true, true])
     }
 
-    func testNoLedgerAccount() {
+    @Test
+    func noLedgerAccount() {
+        var user = user
         user.accounts = [TestAccount()]
-        setErrorDelegate(error: RogersBankMappingError.missingAccount(lastFour: "8520"))
-        let importer = loadedImporter()
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssert(importer.balancesToImport().isEmpty)
+        loginCallback = { _, _, _ in .success(user) }
+        let delegate = errorDelegate(error: RogersBankMappingError.missingAccount(lastFour: "8520"))
+        let importer = loadedImporter(delegate: delegate)
+        #expect(importer.nextTransaction() == nil)
+        #expect(importer.balancesToImport().isEmpty)
     }
 
-    func testNoActivities() {
+    @Test
+    func noActivities() {
         var receivedStatementNumbers = [false, false, false]
         var account = TestAccount {
-            XCTAssert($0 < 3)
+            #expect($0 < 3)
             receivedStatementNumbers[$0] = true
             return .success([])
         }
         var amount = TestAmount()
         amount.value = "10.52"
         account.currentBalance = amount
+        var user = user
         user.accounts = [account]
+        loginCallback = { _, _, _ in .success(user) }
         let importer = loadedImporter(ledger: ledger)
         let balances = importer.balancesToImport()
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssertEqual(balances.count, 1)
-        XCTAssertEqual(Calendar.current.compare(balances[0].date, to: Date(), toGranularity: .minute), .orderedSame)
-        XCTAssertEqual(balances[0].accountName, accountName)
-        XCTAssertEqual(balances[0].amount, Amount(number: Decimal(string: "-10.52")!, commoditySymbol: "CAD", decimalDigits: 2))
-        XCTAssertEqual(receivedStatementNumbers, [true, true, true])
+        #expect(importer.nextTransaction() == nil)
+        #expect(balances.count == 1)
+        #expect(Calendar.current.compare(balances[0].date, to: Date(), toGranularity: .minute) == .orderedSame)
+        #expect(balances[0].accountName == accountName)
+        #expect(balances[0].amount == Amount(number: Decimal(string: "-10.52")!, commoditySymbol: "CAD", decimalDigits: 2))
+        #expect(receivedStatementNumbers == [true, true, true])
     }
 
-    func testStatementsToLoad() {
+    @Test
+    func statementsToLoad() {
         ledger.custom.append(Custom(date: Date(), name: "rogers-download-importer", values: ["statementsToLoad", "1"]))
         ledger.custom.append(Custom(date: Date(timeIntervalSinceNow: -999_999), name: "rogers-download-importer", values: ["statementsToLoad", "200"]))
         var validated = false
         let account = TestAccount {
-            XCTAssertEqual($0, 0)
+            #expect($0 == 0)
             validated = true
             return .success([])
         }
+        var user = user
         user.accounts = [account]
+        loginCallback = { _, _, _ in .success(user) }
         let importer = loadedImporter(ledger: ledger)
         let balances = importer.balancesToImport()
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssertEqual(balances.count, 1)
-        XCTAssert(validated)
+        #expect(importer.nextTransaction() == nil)
+        #expect(balances.count == 1)
+        #expect(validated)
     }
 
-    func testMultiAccount() {
+    @Test
+    func multiAccount() {
         var receivedStatementNumbers1 = [false, false, false]
         var receivedStatementNumbers2 = [false, false, false]
         let account1 = TestAccount {
-            XCTAssert($0 < 3)
+            #expect($0 < 3)
             receivedStatementNumbers1[$0] = true
             return .success([])
         }
         let account2 = TestAccount {
-            XCTAssert($0 < 3)
+            #expect($0 < 3)
             receivedStatementNumbers2[$0] = true
             return .success([])
         }
+        var user = user
         user.accounts = [account1, account2]
+        loginCallback = { _, _, _ in .success(user) }
         let importer = loadedImporter(ledger: ledger)
         let balances = importer.balancesToImport()
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssertEqual(balances.count, 2)
-        XCTAssertEqual(Calendar.current.compare(balances[0].date, to: Date(), toGranularity: .minute), .orderedSame)
-        XCTAssertEqual(balances[0].accountName, accountName)
-        XCTAssertEqual(balances[0].amount, Amount(number: Decimal(string: "0.00")!, commoditySymbol: "CAD", decimalDigits: 2))
-        XCTAssertEqual(Calendar.current.compare(balances[1].date, to: Date(), toGranularity: .minute), .orderedSame)
-        XCTAssertEqual(balances[1].accountName, accountName)
-        XCTAssertEqual(balances[1].amount, Amount(number: Decimal(string: "-0.00")!, commoditySymbol: "CAD", decimalDigits: 2))
-        XCTAssertEqual(receivedStatementNumbers1, [true, true, true])
-        XCTAssertEqual(receivedStatementNumbers2, [true, true, true])
+        #expect(importer.nextTransaction() == nil)
+        #expect(balances.count == 2)
+        #expect(Calendar.current.compare(balances[0].date, to: Date(), toGranularity: .minute) == .orderedSame)
+        #expect(balances[0].accountName == accountName)
+        #expect(balances[0].amount == Amount(number: Decimal(string: "0.00")!, commoditySymbol: "CAD", decimalDigits: 2))
+        #expect(Calendar.current.compare(balances[1].date, to: Date(), toGranularity: .minute) == .orderedSame)
+        #expect(balances[1].accountName == accountName)
+        #expect(balances[1].amount == Amount(number: Decimal(string: "-0.00")!, commoditySymbol: "CAD", decimalDigits: 2))
+        #expect(receivedStatementNumbers1 == [true, true, true])
+        #expect(receivedStatementNumbers2 == [true, true, true])
     }
 
-    func testActivityMappingError() {
+    @Test
+    func activityMappingError() {
         let activity = TestActivity()
+        var user = user
         user.accounts = [TestAccount { _ in .success([activity]) }]
-        setErrorDelegate(error: RogersBankMappingError.missingActivityData(activity: activity, key: "referenceNumber"))
-        let importer = loadedImporter(ledger: ledger)
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssertEqual(importer.balancesToImport().count, 1)
+        loginCallback = { _, _, _ in .success(user) }
+        let delegate = errorDelegate(error: RogersBankMappingError.missingActivityData(activity: activity, key: "referenceNumber"))
+        let importer = loadedImporter(delegate: delegate, ledger: ledger)
+        #expect(importer.nextTransaction() == nil)
+        #expect(importer.balancesToImport().count == 1)
     }
 
-    func testActivities() throws {
+    @Test
+    func activities() throws {
         var activity1 = TestActivity()
         var activity3 = TestActivity()
         var activity2 = TestActivity()
@@ -306,7 +333,9 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         activity2.amount = amount
         activity2.referenceNumber = "bmhouw45BH%^$W"
         activity3.activityStatus = .pending
+        var user = user
         user.accounts = [TestAccount { $0 == 0 ? .success([activity1, activity2, activity3]) : .success([]) }]
+        loginCallback = { _, _, _ in .success(user) }
         let importer = loadedImporter(ledger: ledger)
         var metaData = TransactionMetaData(date: activity1.postedDate!, narration: activity1.merchant.name, metaData: ["rogers-bank-id": activity1.referenceNumber!])
         var transaction = Transaction(metaData: metaData, postings: [
@@ -314,16 +343,113 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
             Posting(accountName: try AccountName("Expenses:TODO"), amount: Amount(number: Decimal(string: amount.value)!, commoditySymbol: "CAD", decimalDigits: 2))
         ])
         var iTransaction = ImportedTransaction(transaction, originalDescription: activity1.merchant.name, shouldAllowUserToEdit: true, accountName: accountName)
-        XCTAssertEqual(iTransaction, importer.nextTransaction())
+        #expect(iTransaction == importer.nextTransaction())
         metaData = TransactionMetaData(date: activity2.postedDate!, narration: activity2.merchant.name, metaData: ["rogers-bank-id": activity2.referenceNumber!])
         transaction = Transaction(metaData: metaData, postings: [transaction.postings[0], transaction.postings[1]])
         iTransaction = ImportedTransaction(transaction, originalDescription: activity2.merchant.name, shouldAllowUserToEdit: true, accountName: accountName)
-        XCTAssertEqual(iTransaction, importer.nextTransaction())
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssertEqual(importer.balancesToImport().count, 1)
+        #expect(iTransaction == importer.nextTransaction())
+        #expect(importer.nextTransaction() == nil)
+        #expect(importer.balancesToImport().count == 1)
     }
 
-    func testActivitySavedMapping() {
+    @Test
+    func loadSavedCredentials() {
+        loginCallback = {
+            #expect($0 == "name")
+            #expect($1 == "password123")
+            #expect($2 == "device-id")
+            return .success(TestUser())
+        }
+        // All saved
+        let delegate1 = CredentialInputDelegate(inputNames: [],
+                                                inputTypes: [],
+                                                inputReturnValues: [],
+                                                saveKeys: [],
+                                                saveValues: [],
+                                                readKeys: ["rogers-username", "rogers-password", "rogers-deviceId"],
+                                                readReturnValues: ["name", "password123", "device-id"])
+        loadedImporter(delegate: delegate1)
+
+        // All but one saved
+        let delegate2 = CredentialInputDelegate(inputNames: ["Password"],
+                                                inputTypes: [.secret],
+                                                inputReturnValues: ["password123"],
+                                                saveKeys: ["rogers-password"],
+                                                saveValues: ["password123"],
+                                                readKeys: ["rogers-username", "rogers-password", "rogers-deviceId"],
+                                                readReturnValues: ["name", "", "device-id"])
+        loadedImporter(delegate: delegate2)
+    }
+
+    @Test
+    func getTwoFactorCode() {
+        let delegate = CredentialInputDelegate(inputNames: ["One Time Password"],
+                                               inputTypes: [.otp],
+                                               inputReturnValues: ["123456"],
+                                               saveKeys: [],
+                                               saveValues: [],
+                                               readKeys: [],
+                                               readReturnValues: [])
+        let importer = RogersDownloadImporter(ledger: ledger)
+        importer.authenticatorClass = TestAuthenticator.self
+        importer.delegate = delegate
+        #expect(importer.getTwoFactorCode() == "123456")
+        #expect(delegate.verified, "\(delegate.verificationInfo)")
+    }
+
+    @Test
+    func selectTwoFactorPreferenceOneOption() throws {
+        let delegate = CredentialInputDelegate(inputNames: [],
+                                               inputTypes: [],
+                                               inputReturnValues: [],
+                                               saveKeys: [],
+                                               saveValues: [],
+                                               readKeys: [],
+                                               readReturnValues: [])
+        let importer = RogersDownloadImporter(ledger: ledger)
+        importer.authenticatorClass = TestAuthenticator.self
+        importer.delegate = delegate
+        let pref = try JSONDecoder().decode(TwoFactorPreference.self, from: Data("{\"type\":\"SMS\",\"value\":\"123456789\"}".utf8))
+        #expect(importer.selectTwoFactorPreference([pref]).type == pref.type)
+        #expect(delegate.verified, "\(delegate.verificationInfo)")
+    }
+
+    @Test
+    func selectTwoFactorPreferenceTwoOptions() throws {
+        let delegate = CredentialInputDelegate(inputNames: ["prefered One Time Password option"],
+                                               inputTypes: [.choice(["123456789", "abc@def.ge"])],
+                                               inputReturnValues: ["abc@def.ge"],
+                                               saveKeys: [],
+                                               saveValues: [],
+                                               readKeys: [],
+                                               readReturnValues: [])
+        let importer = RogersDownloadImporter(ledger: ledger)
+        importer.authenticatorClass = TestAuthenticator.self
+        importer.delegate = delegate
+        let pref1 = try JSONDecoder().decode(TwoFactorPreference.self, from: Data("{\"type\":\"SMS\",\"value\":\"123456789\"}".utf8))
+        let pref2 = try JSONDecoder().decode(TwoFactorPreference.self, from: Data("{\"type\":\"Email\",\"value\":\"abc@def.ge\"}".utf8))
+        #expect(importer.selectTwoFactorPreference([pref1, pref2]).type == pref2.type)
+        #expect(delegate.verified, "\(delegate.verificationInfo)")
+    }
+
+    @Test
+    func saveDeviceId() {
+        let delegate = CredentialInputDelegate(inputNames: [],
+                                               inputTypes: [],
+                                               inputReturnValues: [],
+                                               saveKeys: ["rogers-deviceId"],
+                                               saveValues: ["qwerty1223654"],
+                                               readKeys: [],
+                                               readReturnValues: [])
+        let importer = RogersDownloadImporter(ledger: ledger)
+        importer.authenticatorClass = TestAuthenticator.self
+        importer.delegate = delegate
+        importer.saveDeviceId("qwerty1223654")
+        #expect(delegate.verified, "\(delegate.verificationInfo)")
+    }
+
+    @Test
+    func activitySavedMapping() {
         Settings.storage = TestStorage()
         var activity = TestActivity()
         var amount = TestAmount()
@@ -337,7 +463,9 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         Settings.setPayeeMapping(key: activity.merchant.name, payee: payee)
         Settings.setAccountMapping(key: payee, account: TestUtils.chequing.fullName)
 
+        var user = user
         user.accounts = [TestAccount { $0 == 0 ? .success([activity]) : .success([]) }]
+        loginCallback = { _, _, _ in .success(user) }
         let importer = loadedImporter(ledger: ledger)
         let metaData = TransactionMetaData(date: activity.postedDate!, payee: payee, narration: description, metaData: ["rogers-bank-id": activity.referenceNumber!])
         let transaction = Transaction(metaData: metaData, postings: [
@@ -345,122 +473,37 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
             Posting(accountName: TestUtils.chequing, amount: Amount(number: Decimal(string: amount.value)!, commoditySymbol: "CAD", decimalDigits: 2))
         ])
         let iTransaction = ImportedTransaction(transaction, originalDescription: activity.merchant.name, shouldAllowUserToEdit: true, accountName: accountName)
-        XCTAssertEqual(iTransaction, importer.nextTransaction())
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssertEqual(importer.balancesToImport().count, 1)
-    }
-
-    func testLoadSavedCredentials() {
-        Self.load = {
-            XCTAssertEqual($0, "name")
-            XCTAssertEqual($1, "password123")
-            XCTAssertEqual($2, "device-id")
-            return .success(TestUser())
-        }
-        // All saved
-        delegate = CredentialInputDelegate(inputNames: [],
-                                           inputTypes: [],
-                                           inputReturnValues: [],
-                                           saveKeys: [],
-                                           saveValues: [],
-                                           readKeys: ["rogers-username", "rogers-password", "rogers-deviceId"],
-                                           readReturnValues: ["name", "password123", "device-id"])
-        loadedImporter()
-
-        // All but one saved
-        delegate = CredentialInputDelegate(inputNames: ["Password"],
-                                           inputTypes: [.secret],
-                                           inputReturnValues: ["password123"],
-                                           saveKeys: ["rogers-password"],
-                                           saveValues: ["password123"],
-                                           readKeys: ["rogers-username", "rogers-password", "rogers-deviceId"],
-                                           readReturnValues: ["name", "", "device-id"])
-        loadedImporter()
-    }
-
-    func testGetTwoFactorCode() {
-        delegate = CredentialInputDelegate(inputNames: ["One Time Password"],
-                                           inputTypes: [.otp],
-                                           inputReturnValues: ["123456"],
-                                           saveKeys: [],
-                                           saveValues: [],
-                                           readKeys: [],
-                                           readReturnValues: [])
-        let importer = RogersDownloadImporter(ledger: ledger)
-        importer.authenticatorClass = TestAuthenticator.self
-        importer.delegate = delegate
-        XCTAssertEqual(importer.getTwoFactorCode(), "123456")
-        XCTAssert(delegate.verified, delegate.verificationInfo)
-    }
-
-    func testSelectTwoFactorPreferenceOneOption() throws {
-        delegate = CredentialInputDelegate(inputNames: [],
-                                           inputTypes: [],
-                                           inputReturnValues: [],
-                                           saveKeys: [],
-                                           saveValues: [],
-                                           readKeys: [],
-                                           readReturnValues: [])
-        let importer = RogersDownloadImporter(ledger: ledger)
-        importer.authenticatorClass = TestAuthenticator.self
-        importer.delegate = delegate
-        let pref = try JSONDecoder().decode(TwoFactorPreference.self, from: Data("{\"type\":\"SMS\",\"value\":\"123456789\"}".utf8))
-        XCTAssertEqual(importer.selectTwoFactorPreference([pref]).type, pref.type)
-        XCTAssert(delegate.verified, delegate.verificationInfo)
-    }
-
-    func testSelectTwoFactorPreferenceTwoOptions() throws {
-        delegate = CredentialInputDelegate(inputNames: ["prefered One Time Password option"],
-                                           inputTypes: [.choice(["123456789", "abc@def.ge"])],
-                                           inputReturnValues: ["abc@def.ge"],
-                                           saveKeys: [],
-                                           saveValues: [],
-                                           readKeys: [],
-                                           readReturnValues: [])
-        let importer = RogersDownloadImporter(ledger: ledger)
-        importer.authenticatorClass = TestAuthenticator.self
-        importer.delegate = delegate
-        let pref1 = try JSONDecoder().decode(TwoFactorPreference.self, from: Data("{\"type\":\"SMS\",\"value\":\"123456789\"}".utf8))
-        let pref2 = try JSONDecoder().decode(TwoFactorPreference.self, from: Data("{\"type\":\"Email\",\"value\":\"abc@def.ge\"}".utf8))
-        XCTAssertEqual(importer.selectTwoFactorPreference([pref1, pref2]).type, pref2.type)
-        XCTAssert(delegate.verified, delegate.verificationInfo)
-    }
-
-    func testSaveDeviceId() {
-        delegate = CredentialInputDelegate(inputNames: [],
-                                           inputTypes: [],
-                                           inputReturnValues: [],
-                                           saveKeys: ["rogers-deviceId"],
-                                           saveValues: ["qwerty1223654"],
-                                           readKeys: [],
-                                           readReturnValues: [])
-        let importer = RogersDownloadImporter(ledger: ledger)
-        importer.authenticatorClass = TestAuthenticator.self
-        importer.delegate = delegate
-        importer.saveDeviceId("qwerty1223654")
-        XCTAssert(delegate.verified, delegate.verificationInfo)
+        #expect(iTransaction == importer.nextTransaction())
+        #expect(importer.nextTransaction() == nil)
+        #expect(importer.balancesToImport().count == 1)
+        Settings.storage = TestStorage()
     }
 
     @discardableResult
-    private func loadedImporter(ledger: Ledger? = nil) -> Importer {
+    private func loadedImporter<T: CredentialInputDelegate>(delegate: T, ledger: Ledger? = nil) -> Importer {
         let importer = RogersDownloadImporter(ledger: ledger)
         importer.authenticatorClass = TestAuthenticator.self
         importer.delegate = delegate
         importer.load()
-        XCTAssert(importer.pricesToImport().isEmpty)
-        XCTAssert(delegate.verified, delegate.verificationInfo)
+        #expect(importer.pricesToImport().isEmpty)
+        #expect(delegate.verified)
         return importer
     }
 
-    private func setErrorDelegate<T: EquatableError>(error: T) {
-        delegate = ErrorDelegate(inputNames: ["Username", "Password"],
-                                 inputTypes: [.text([]), .secret],
-                                 inputReturnValues: ["name", "password123"],
-                                 saveKeys: ["rogers-username", "rogers-password"],
-                                 saveValues: ["name", "password123"],
-                                 readKeys: ["rogers-username", "rogers-password", "rogers-deviceId"],
-                                 readReturnValues: ["", "", ""],
-                                 error: error)
+    @discardableResult
+    private func loadedImporter(ledger: Ledger? = nil) -> Importer {
+        loadedImporter(delegate: delegate, ledger: ledger)
+    }
+
+    private func errorDelegate<T: EquatableError>(error: T) -> ErrorDelegate<T> {
+        ErrorDelegate(inputNames: ["Username", "Password"],
+                      inputTypes: [.text([]), .secret],
+                      inputReturnValues: ["name", "password123"],
+                      saveKeys: ["rogers-username", "rogers-password"],
+                      saveValues: ["name", "password123"],
+                      readKeys: ["rogers-username", "rogers-password", "rogers-deviceId"],
+                      readReturnValues: ["", "", ""],
+                      error: error)
     }
 }
 
