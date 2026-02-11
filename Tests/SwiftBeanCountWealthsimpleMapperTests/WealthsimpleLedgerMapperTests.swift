@@ -664,7 +664,7 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
         let description = "Transfer from CASH_DD accountNumber to NON_REGISTERED accountNumber2"
         let transferIn = transferTransaction(
-            id: "transaction-idPlaceHolder1",
+            id: "transaction-idPlaceholder1",
             transactionType: .transferIn,
             amount: "1500.0",
             date: date,
@@ -678,7 +678,7 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
             description: description
         )
         let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transferIn, transferOut])
-        let mergedId = "transaction-idPlaceHolder1 transaction-idPlaceholder2"
+        let mergedId = "transaction-idPlaceholder1 transaction-idPlaceholder2"
         let expectedTransaction = Transaction(
             metaData: TransactionMetaData(date: date, metaData: [MetaDataKeys.id: mergedId]),
             postings: [
