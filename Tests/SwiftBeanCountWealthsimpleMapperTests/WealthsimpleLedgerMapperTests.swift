@@ -659,29 +659,9 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
 
     @Test
     func mapTransferTransactionsMerge() throws {
-        // Set up two accounts for transfer
-        let inAccountId = "account-in-id"
-        let inAccountNumber = "NON_REGISTERED_123"
-        let outAccountId = "account-out-id"
-        let outAccountNumber = "CASH_DD_456"
-        
-        var testMapper = WealthsimpleLedgerMapper(ledger: ledger)
-        testMapper.accounts = [
-            TestAccount(number: inAccountNumber, id: inAccountId, currency: "CAD"),
-            TestAccount(number: outAccountNumber, id: outAccountId, currency: "CAD")
-        ]
-        
-        let cashInAccount = try AccountName("Assets:W:Cash:In")
-        let cashOutAccount = try AccountName("Assets:W:Cash:Out")
-        try ledger.add(SAccount(name: cashInAccount, metaData: [MetaDataKeys.importerType: MetaData.importerType, MetaDataKeys.number: inAccountNumber]))
-        try ledger.add(SAccount(name: cashOutAccount, metaData: [MetaDataKeys.importerType: MetaData.importerType, MetaDataKeys.number: outAccountNumber]))
-        
-        let transferInAccount = try AccountName("Assets:Transfer:In")
-        try ledger.add(SAccount(name: transferInAccount, metaData: ["\(MetaDataKeys.prefix)transfer-in": inAccountNumber]))
-        
+        let setup = try setupCrossAccountTransfer()
         let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
-        let description = "Transfer from \(outAccountNumber) to \(inAccountNumber)"
-        
+        let description = "Transfer from \(setup.outAccountNumber) to \(setup.inAccountNumber)"
         var transferIn = transferTransaction(
             id: "transaction-idPlaceholder1",
             transactionType: .transferIn,
@@ -689,8 +669,7 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
             date: date,
             description: description
         )
-        transferIn.accountId = inAccountId
-        
+        transferIn.accountId = setup.inAccountId
         var transferOut = transferTransaction(
             id: "transaction-idPlaceholder2",
             transactionType: .transferOut,
@@ -698,15 +677,14 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
             date: date,
             description: description
         )
-        transferOut.accountId = outAccountId
-        
-        let (prices, transactions) = try testMapper.mapTransactionsToPriceAndTransactions([transferIn, transferOut])
+        transferOut.accountId = setup.outAccountId
+        let (prices, transactions) = try setup.mapper.mapTransactionsToPriceAndTransactions([transferIn, transferOut])
         let mergedId = "transaction-idPlaceholder1 transaction-idPlaceholder2"
         let expectedTransaction = Transaction(
             metaData: TransactionMetaData(date: date, metaData: [MetaDataKeys.id: mergedId]),
             postings: [
                 try posting(account: "Assets:W:Cash:In", number: "1500.0"),
-                Posting(accountName: transferInAccount, amount: priceAmount(number: "-1500.0", decimals: 2))
+                Posting(accountName: setup.transferInAccount, amount: priceAmount(number: "-1500.0", decimals: 2))
             ]
         )
         #expect(prices.isEmpty)
@@ -821,42 +799,16 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
 
     @Test
     func mapTransferTransactionsIDOrdering() throws {
-        // Set up two accounts for transfer
-        let inAccountId = "account-in-id"
-        let inAccountNumber = "NON_REGISTERED_123"
-        let outAccountId = "account-out-id"
-        let outAccountNumber = "CASH_DD_456"
-        
-        var testMapper = WealthsimpleLedgerMapper(ledger: ledger)
-        testMapper.accounts = [
-            TestAccount(number: inAccountNumber, id: inAccountId, currency: "CAD"),
-            TestAccount(number: outAccountNumber, id: outAccountId, currency: "CAD")
-        ]
-        
-        let cashInAccount = try AccountName("Assets:W:Cash:In")
-        let cashOutAccount = try AccountName("Assets:W:Cash:Out")
-        try ledger.add(SAccount(name: cashInAccount, metaData: [MetaDataKeys.importerType: MetaData.importerType, MetaDataKeys.number: inAccountNumber]))
-        try ledger.add(SAccount(name: cashOutAccount, metaData: [MetaDataKeys.importerType: MetaData.importerType, MetaDataKeys.number: outAccountNumber]))
-        
-        let transferInAccount = try AccountName("Assets:Transfer:In")
-        try ledger.add(SAccount(name: transferInAccount, metaData: ["\(MetaDataKeys.prefix)transfer-in": inAccountNumber]))
-
+        let setup = try setupCrossAccountTransfer()
         let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
-        let description = "Transfer from \(outAccountNumber) to \(inAccountNumber)"
-
-        // Two transactions with IDs in non-alphabetical order
+        let description = "Transfer from \(setup.outAccountNumber) to \(setup.inAccountNumber)"
         var transferIn = transferTransaction(id: "id-zebra", transactionType: .transferIn, amount: "500.0", date: date, description: description)
-        transferIn.accountId = inAccountId
-        
+        transferIn.accountId = setup.inAccountId
         var transferOut = transferTransaction(id: "id-alpha", transactionType: .transferOut, amount: "-500.0", date: date, description: description)
-        transferOut.accountId = outAccountId
-
-        let (prices, transactions) = try testMapper.mapTransactionsToPriceAndTransactions([transferIn, transferOut])
-
-        // Should be merged with IDs sorted alphabetically
+        transferOut.accountId = setup.outAccountId
+        let (prices, transactions) = try setup.mapper.mapTransactionsToPriceAndTransactions([transferIn, transferOut])
         #expect(prices.isEmpty)
         #expect(transactions.count == 1)
-        // IDs should be sorted: "id-alpha id-zebra"
         let mergedId = transactions.first?.metaData.metaData[MetaDataKeys.id]
         #expect(mergedId == "id-alpha id-zebra")
     }
@@ -882,6 +834,15 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         let ids = transactions.compactMap { $0.metaData.metaData[MetaDataKeys.id] }
         #expect(ids.contains("transfer-id-1"))
         #expect(ids.contains("transfer-id-2"))
+    }
+
+    private struct CrossAccountSetup {
+        let mapper: WealthsimpleLedgerMapper
+        let inAccountId: String
+        let inAccountNumber: String
+        let outAccountId: String
+        let outAccountNumber: String
+        let transferInAccount: AccountName
     }
 
     private func transferTransaction(
@@ -939,6 +900,32 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
 
     private func priceAmount(number: String = "0.50", commodity: CommoditySymbol = "CAD", decimals: Int = 2) -> Amount {
         Amount(number: Decimal(string: number)!, commoditySymbol: commodity, decimalDigits: decimals)
+    }
+
+    private func setupCrossAccountTransfer() throws -> CrossAccountSetup {
+        let inAccountId = "account-in-id"
+        let inAccountNumber = "NON_REGISTERED_123"
+        let outAccountId = "account-out-id"
+        let outAccountNumber = "CASH_DD_456"
+        var testMapper = WealthsimpleLedgerMapper(ledger: ledger)
+        testMapper.accounts = [
+            TestAccount(number: inAccountNumber, id: inAccountId, currency: "CAD"),
+            TestAccount(number: outAccountNumber, id: outAccountId, currency: "CAD")
+        ]
+        let cashInAccount = try AccountName("Assets:W:Cash:In")
+        let cashOutAccount = try AccountName("Assets:W:Cash:Out")
+        try ledger.add(SAccount(name: cashInAccount, metaData: [MetaDataKeys.importerType: MetaData.importerType, MetaDataKeys.number: inAccountNumber]))
+        try ledger.add(SAccount(name: cashOutAccount, metaData: [MetaDataKeys.importerType: MetaData.importerType, MetaDataKeys.number: outAccountNumber]))
+        let transferInAccount = try AccountName("Assets:Transfer:In")
+        try ledger.add(SAccount(name: transferInAccount, metaData: ["\(MetaDataKeys.prefix)transfer-in": inAccountNumber]))
+        return CrossAccountSetup(
+            mapper: testMapper,
+            inAccountId: inAccountId,
+            inAccountNumber: inAccountNumber,
+            outAccountId: outAccountId,
+            outAccountNumber: outAccountNumber,
+            transferInAccount: transferInAccount
+        )
     }
 
 }
