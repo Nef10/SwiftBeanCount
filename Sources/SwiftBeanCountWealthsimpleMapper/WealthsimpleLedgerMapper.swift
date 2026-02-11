@@ -11,11 +11,11 @@ import SwiftBeanCountParserUtils
 import Wealthsimple
 
 /// Functions to transform downloaded Wealthsimple data into SwiftBeanCountModel types
-public struct WealthsimpleLedgerMapper { // swiftlint:disable:this type_body_length
+public struct WealthsimpleLedgerMapper {
 
-    private typealias WTransaction = Wealthsimple.Transaction
-    private typealias STransaction = SwiftBeanCountModel.Transaction
-    private typealias WAccount = Wealthsimple.Account
+    typealias WTransaction = Wealthsimple.Transaction
+    typealias STransaction = SwiftBeanCountModel.Transaction
+    typealias WAccount = Wealthsimple.Account
 
     /// Fallback account for payments if not account with the correct meta data could be found
     ///
@@ -23,12 +23,12 @@ public struct WealthsimpleLedgerMapper { // swiftlint:disable:this type_body_len
     public static let fallbackExpenseAccountName = try! AccountName("Expenses:TODO") // swiftlint:disable:this force_try
 
     /// Payee used for fee transactions
-    private static let payee = "Wealthsimple"
+    static let payee = "Wealthsimple"
 
-    private static let renameStockSplitPattern = "at 1.00000000 per share"
+    static let renameStockSplitPattern = "at 1.00000000 per share"
 
     /// Regex to parse the amount in foreign currency and the record date on dividend transactions from the description
-    private static let dividendRegEx: NSRegularExpression = {
+    static let dividendRegEx: NSRegularExpression = {
         // swiftlint:disable:next force_try
         try! NSRegularExpression(pattern: """
              ^[^:]*:\\s+([^\\s]+)\\s+\\(record date\\)\\s+([^\\s]+)\\s+shares(,\\s+gross\\s+([-+]?[0-9]+(,[0-9]{3})*(.[0-9]+)?)\\s+([^\\s]+), convert to\\s+.*)?$
@@ -37,26 +37,26 @@ public struct WealthsimpleLedgerMapper { // swiftlint:disable:this type_body_len
     }()
 
     /// Regex to parse the amount in foreign currency on non residend tax withholding transactions from the description
-    private static let nrwtRegEx: NSRegularExpression = {
+    static let nrwtRegEx: NSRegularExpression = {
         // swiftlint:disable:next force_try
         try! NSRegularExpression(pattern: "^[^:]*: Non-resident tax withheld at source \\(([-+]?[0-9]+(,[0-9]{3})*(.[0-9]+)?)\\s+([^\\s]+), convert to\\s+.*$", options: [])
     }()
 
     /// Date formatter to parse the record date of dividends from the description of dividend transaction
-    private static let dividendDescriptionDateFormatter: DateFormatter = {
+    static let dividendDescriptionDateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MMM-yy"
         return dateFormatter
     }()
 
     /// Date formatter used to save the dividend record date into transaction meta data
-    private static let dateFormatter: DateFormatter = {
+    static let dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter
     }()
 
-    private let lookup: LedgerLookup
+    let lookup: LedgerLookup
 
     /// Downloaded Wealthsimple accounts
     ///
@@ -130,15 +130,47 @@ public struct WealthsimpleLedgerMapper { // swiftlint:disable:this type_body_len
         guard let account = accounts.first( where: { $0.id == firstTransaction.accountId }) else {
             throw WealthsimpleConversionError.accountNotFound(firstTransaction.accountId)
         }
-        var nrwtTransactions = wealthsimpleTransactions.filter { $0.transactionType == .nonResidentWithholdingTax }
-        let stockSplits = wealthsimpleTransactions.filter { $0.transactionType == .stockDistribution }
+        var nrwtTransactions = [WTransaction](), stockSplits = [WTransaction](), cashbackTransactions = [WTransaction](), regularTransactions = [WTransaction]()
+        for transaction in wealthsimpleTransactions {
+            switch transaction.transactionType {
+            case .nonResidentWithholdingTax:
+                nrwtTransactions.append(transaction)
+            case .stockDistribution:
+                stockSplits.append(transaction)
+            case .cashbackBonus:
+                cashbackTransactions.append(transaction)
+            default:
+                regularTransactions.append(transaction)
+            }
+        }
         var prices = [Price](), transactions = [STransaction]()
-        for wealthsimpleTransaction in wealthsimpleTransactions where wealthsimpleTransaction.transactionType != .nonResidentWithholdingTax
-                                                                      && wealthsimpleTransaction.transactionType != .stockDistribution {
+        (prices, transactions) = try mapRegularTransactions(regularTransactions, nrwtTransactions: &nrwtTransactions, in: account)
+        // add nrwt transactions which could not be merged
+        transactions.append(contentsOf: try nrwtTransactions.map { try mapNonResidentWithholdingTax($0, in: account) }
+            .filter { !lookup.doesTransactionExistInLedger($0) })
+
+        transactions.append(contentsOf: try mapStockSplits(stockSplits, in: account).filter { !lookup.doesTransactionExistInLedger($0) })
+
+        transactions.append(contentsOf: try mergeCashbackTransactions(cashbackTransactions, in: account)
+            .filter { !lookup.doesTransactionExistInLedger($0) })
+
+        return (prices, transactions)
+    }
+
+    /// Maps regular transactions (excluding NRWT, stock splits, and cashback), merging dividend transactions with their corresponding NRWT transactions
+    private func mapRegularTransactions(
+        _ wealthsimpleTransactions: [WTransaction],
+        nrwtTransactions: inout [WTransaction],
+        in account: WAccount
+    ) throws -> ([Price], [STransaction]) {
+        var prices = [Price](), transactions = [STransaction]()
+        for wealthsimpleTransaction in wealthsimpleTransactions {
             let (price, transaction) = try mapTransaction(wealthsimpleTransaction, in: account)
             if var transaction, !lookup.doesTransactionExistInLedger(transaction) {
                 if wealthsimpleTransaction.transactionType == .dividend,
-                   let index = nrwtTransactions.firstIndex(where: { $0.symbol == wealthsimpleTransaction.symbol && $0.processDate == wealthsimpleTransaction.processDate }) {
+                   let index = nrwtTransactions.firstIndex(where: {
+                       $0.symbol == wealthsimpleTransaction.symbol && $0.processDate == wealthsimpleTransaction.processDate
+                   }) {
                     transaction = try mergeNRWT(nrwtTransactions[index], withDividendTransaction: transaction, in: account)
                     nrwtTransactions.remove(at: index)
                 }
@@ -148,20 +180,65 @@ public struct WealthsimpleLedgerMapper { // swiftlint:disable:this type_body_len
                 prices.append(price)
             }
         }
-        // add nrwt transactions which could not be merged
-        transactions.append(contentsOf: try nrwtTransactions.map { try mapNonResidentWithholdingTax($0, in: account) }.filter { !lookup.doesTransactionExistInLedger($0) })
-
-        transactions.append(contentsOf: try mapStockSplits(stockSplits, in: account).filter { !lookup.doesTransactionExistInLedger($0) })
         return (prices, transactions)
     }
 
-    /// Merges a non resident witholding tax transaction with the corresponding dividend transaction
+    /// Merges duplicate cashback transactions by date, description and amount, combining their IDs space-separated in metadata
+    private func mergeCashbackTransactions(_ transactions: [WTransaction], in account: WAccount) throws -> [STransaction] { // swiftlint:disable:this function_body_length
+        struct CashbackKey: Hashable {
+            let date: Date
+            let description: String
+            let amount: String
+        }
+        let grouped = Dictionary(grouping: transactions) { CashbackKey(date: $0.processDate, description: $0.description, amount: $0.marketValueAmount) }
+
+        var results: [STransaction] = []
+        for group in grouped.values {
+            // Count positive and negative transactions
+            let positive = group.filter { !$0.netCashAmount.starts(with: "-") }
+            let negative = group.filter { $0.netCashAmount.starts(with: "-") }
+
+            // Only merge if we have 2 positive and 1 negative with the same absolute amount
+            if positive.count == 2 && negative.count == 1 {
+                // Use one of the positive transactions as the base
+                guard let positiveTransaction = positive.first else {
+                    continue
+                }
+
+                let (_, result) = try mapTransaction(positiveTransaction, in: account)
+                guard let result else {
+                    continue
+                }
+
+                // Merge all IDs (sorted for consistent ordering)
+                var ids = result.metaData.metaData
+                ids[MetaDataKeys.id] = group.map(\.id).sorted().joined(separator: " ")
+                let meta = TransactionMetaData(date: result.metaData.date, payee: result.metaData.payee, narration: result.metaData.narration, metaData: ids)
+                results.append(STransaction(metaData: meta, postings: result.postings))
+            } else {
+                // Pattern doesn't match - return transactions individually
+                for transaction in group {
+                    let (_, result) = try mapTransaction(transaction, in: account)
+                    if let result {
+                        results.append(result)
+                    }
+                }
+            }
+        }
+        return results
+    }
+
+    /// Merges a non-resident withholding tax (NRWT) transaction with its corresponding dividend transaction.
+    ///
+    /// This method combines the NRWT transaction and the dividend transaction into a single transaction,
+    /// updating the asset posting and adding an expense posting for the withheld tax.
+    ///
     /// - Parameters:
-    ///   - transaction: the non resident witholding tax transaction
-    ///   - dividend: the dividend transaction
-    ///   - account: account of the transactions
-    /// - Throws: WealthsimpleConversionError
-    /// - Returns: Merged transaction
+    ///   - transaction: The NRWT transaction to merge.
+    ///   - dividend: The dividend transaction to merge with.
+    ///   - account: The Wealthsimple account associated with the transactions.
+    /// - Throws: `WealthsimpleConversionError` if parsing or mapping fails.
+    /// - Returns: A new `Transaction` representing the merged result.
     private func mergeNRWT(_ transaction: WTransaction, withDividendTransaction dividend: STransaction, in account: WAccount) throws -> STransaction {
         let expenseAmount = try parseNRWTDescription(transaction.description)
         let oldAsset = dividend.postings.first { $0.accountName.accountType == .asset }!
@@ -174,198 +251,6 @@ public struct WealthsimpleLedgerMapper { // swiftlint:disable:this type_body_len
         var metaData = dividend.metaData.metaData
         metaData[MetaDataKeys.nrwtId] = transaction.id
         return STransaction(metaData: TransactionMetaData(date: dividend.metaData.date, metaData: metaData), postings: postings)
-    }
-
-    // swiftlint:disable:next cyclomatic_complexity
-    private func mapTransaction(_ transaction: WTransaction, in account: WAccount) throws -> (Price?, STransaction?) {
-        var price: Price?, result: STransaction?
-        switch transaction.transactionType {
-        case .buy:
-            (price, result) = try mapBuy(transaction, in: account)
-        case .sell:
-            (price, result) = try mapSell(transaction, in: account)
-        case .dividend, .manufacturedDividend:
-            result = try mapDividend(transaction, in: account, manufactured: transaction.transactionType == .manufacturedDividend)
-        case .contribution:
-            result = try mapContribution(transaction, in: account)
-        case .deposit, .withdrawal, .paymentTransferOut, .transferIn, .transferOut, .payment:
-            result = try mapTransfer(transaction, in: account, accountTypes: [.asset])
-        case .paymentTransferIn, .referralBonus, .giveawayBonus, .cashbackBonus:
-            result = try mapTransfer(transaction, in: account, accountTypes: [.asset, .income])
-        case .paymentSpend, .onlineBillPayment, .purchase, .refund:
-            result = try mapTransfer(transaction, in: account, accountTypes: [.expense], allowFx: true, includeDescription: true)
-        case .fee, .reimbursement, .interest:
-            result = try mapTransfer(transaction, in: account, accountTypes: [.expense, .income], payee: Self.payee)
-        case .stockDividend:
-            (price, result) = try mapStockDividend(transaction, in: account)
-        case .stockLoanBorrow, .stockLoanReturn, .returnOfCapital, .nonCashDistribution:
-            break // right now we do not track stock loans
-        default:
-            throw WealthsimpleConversionError.unsupportedTransactionType(transaction.transactionType.rawValue)
-        }
-        return (price, result)
-    }
-
-    private func mapBuy(_ transaction: WTransaction, in account: WAccount) throws -> (Price, STransaction) {
-        let result = STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [
-            Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash, price: transaction.useFx ? transaction.fxAmount : nil),
-            Posting(accountName: try lookup.ledgerAccountName(of: account, symbol: transaction.symbol),
-                    amount: Amount(for: transaction.quantity, in: try lookup.commoditySymbol(for: transaction.symbol)),
-                    cost: try Cost(amount: transaction.marketPrice, date: nil, label: nil))
-        ])
-        return (try Price(date: transaction.processDate, commoditySymbol: lookup.commoditySymbol(for: transaction.symbol), amount: transaction.marketPrice), result)
-    }
-
-    private func mapSell(_ transaction: WTransaction, in account: WAccount) throws -> (Price, STransaction) {
-        let result = STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [
-            Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash, price: transaction.useFx ? transaction.fxAmount : nil),
-            Posting(accountName: try lookup.ledgerAccountName(of: account, symbol: transaction.symbol),
-                    amount: Amount(for: transaction.quantity, in: try lookup.commoditySymbol(for: transaction.symbol)),
-                    price: transaction.marketPrice,
-                    cost: try Cost(amount: nil, date: nil, label: nil))
-        ])
-        return (try Price(date: transaction.processDate, commoditySymbol: lookup.commoditySymbol(for: transaction.symbol), amount: transaction.marketPrice), result)
-    }
-
-    private func mapTransfer(
-        _ transaction: WTransaction,
-        in account: WAccount,
-        accountTypes: [SwiftBeanCountModel.AccountType],
-        payee: String = "",
-        allowFx: Bool = false,
-        includeDescription: Bool = false
-    ) throws -> STransaction {
-        let accountName = try lookup.ledgerAccountName(for: .transactionType(transaction.transactionType), in: account, ofType: accountTypes)
-        let hasFX = allowFx && transaction.netCashCurrency != transaction.symbol
-        let amount = hasFX ? Amount(for: transaction.quantity, in: try lookup.commoditySymbol(for: transaction.symbol), negate: true) : transaction.negatedNetCash
-        let price = hasFX ? (transaction.netCash.number.isSignMinus ? transaction.negatedNetCash : transaction.netCash) : nil
-        let posting1 = Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash)
-        let posting2 = try Posting(accountName: accountName, amount: amount, price: price, priceType: hasFX ? .total : nil)
-        let narration = includeDescription ? transaction.description : ""
-        return STransaction(metaData: TransactionMetaData(date: transaction.processDate, payee: payee, narration: narration, metaData: [MetaDataKeys.id: transaction.id]),
-                            postings: [posting1, posting2])
-    }
-
-    private func mapContribution(_ transaction: WTransaction, in account: WAccount) throws -> STransaction {
-        let accountName = try lookup.ledgerAccountName(for: .transactionType(transaction.transactionType), in: account, ofType: [.asset])
-        var postings = [
-            Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash),
-            Posting(accountName: accountName, amount: transaction.negatedNetCash)
-        ]
-        if let contributionAsset = try? lookup.ledgerAccountName(for: .contributionRoom, in: account, ofType: [.asset]),
-           let contributionExpense = try? lookup.ledgerAccountName(for: .contributionRoom, in: account, ofType: [.expense]),
-           let commoditySymbol = lookup.ledgerAccountCommoditySymbol(of: contributionAsset) {
-            let amount1 = Amount(number: transaction.negatedNetCash.number, commoditySymbol: commoditySymbol, decimalDigits: transaction.negatedNetCash.decimalDigits)
-            let amount2 = Amount(number: transaction.netCash.number, commoditySymbol: commoditySymbol, decimalDigits: transaction.netCash.decimalDigits)
-            postings.append(Posting(accountName: contributionAsset, amount: amount1))
-            postings.append(Posting(accountName: contributionExpense, amount: amount2))
-        }
-        return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: postings)
-    }
-
-    private func mapDividend(_ transaction: WTransaction, in account: WAccount, manufactured: Bool = false) throws(WealthsimpleConversionError) -> STransaction {
-        let (date, shares, foreignAmount) = parseDividendDescription(transaction.description)
-        var income = transaction.negatedNetCash
-        var price: Amount?
-        if let amount = foreignAmount {
-            income = amount
-            price = Amount(number: transaction.fxAmount.number, commoditySymbol: amount.commoditySymbol, decimalDigits: transaction.fxAmount.decimalDigits)
-        }
-        let posting1 = Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash, price: price)
-        let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: .dividend(transaction.symbol), in: account, ofType: [.income]), amount: income)
-        var metaDataDict = [MetaDataKeys.id: transaction.id]
-        if let date {
-            metaDataDict[MetaDataKeys.dividendRecordDate] = date
-        }
-        if let shares {
-            metaDataDict[MetaDataKeys.dividendShares] = shares
-        }
-        return STransaction(metaData: TransactionMetaData(date: transaction.processDate, narration: manufactured ? "Manufactured Dividend" : "", metaData: metaDataDict),
-                            postings: [posting1, posting2])
-    }
-
-    private func mapStockDividend(_ transaction: WTransaction, in account: WAccount) throws -> (Price, STransaction) {
-        let result = STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [
-            Posting(accountName: try lookup.ledgerAccountName(for: .dividend(transaction.symbol), in: account, ofType: [.income]), amount: transaction.negatedMarketValue),
-            Posting(accountName: try lookup.ledgerAccountName(of: account, symbol: transaction.symbol),
-                    amount: Amount(for: transaction.quantity, in: try lookup.commoditySymbol(for: transaction.symbol)),
-                    cost: try Cost(amount: transaction.marketPrice, date: nil, label: nil))
-        ])
-        return (try Price(date: transaction.processDate, commoditySymbol: lookup.commoditySymbol(for: transaction.symbol), amount: transaction.marketPrice), result)
-    }
-
-    private func mapNonResidentWithholdingTax(_ transaction: WTransaction, in account: WAccount) throws -> STransaction {
-        let amount = try parseNRWTDescription(transaction.description)
-        let price = Amount(number: transaction.fxAmount.number, commoditySymbol: amount.commoditySymbol, decimalDigits: transaction.fxAmount.decimalDigits)
-        let posting1 = Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash, price: price)
-        let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: .transactionType(transaction.transactionType), in: account, ofType: [.expense]), amount: amount)
-        return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [posting1, posting2])
-    }
-
-    private func mapStockSplits(_ transactions: [WTransaction], in account: WAccount) throws -> [STransaction] {
-        var splitPairs = [String: [WTransaction]](), splitNonPairs = [WTransaction]()
-        for transaction in transactions {
-            if splitPairs["\(transaction.symbol)"] == nil {
-                splitPairs["\(transaction.symbol)"] = []
-            }
-            splitPairs["\(transaction.symbol)"]?.append(transaction)
-        }
-        var transactions = [STransaction]()
-        for (_, transactionPair) in splitPairs {
-            if transactionPair.count != 2 {
-                splitNonPairs.append(contentsOf: transactionPair)
-            } else {
-                transactions.append(try mapStockSplit(transactionPair, in: account))
-            }
-        }
-        if !splitNonPairs.isEmpty {
-            if splitNonPairs.count == 2 && (splitNonPairs[0].marketValueAmount == "-\(splitNonPairs[1].marketValueAmount)"
-                                            || "-\(splitNonPairs[0].marketValueAmount)" == splitNonPairs[1].marketValueAmount) {
-                transactions.append(try mapStockSplit(splitNonPairs, in: account))
-            } else {
-                // ignore renames
-                let failedMappings = splitNonPairs.filter { !$0.description.contains(Self.renameStockSplitPattern) }
-                if !failedMappings.isEmpty {
-                    throw WealthsimpleConversionError.unexpectedStockSplit(splitNonPairs.first!.description)
-                }
-            }
-        }
-        return transactions
-    }
-
-    private func mapStockSplit(_ transactions: [WTransaction], in account: WAccount) throws -> STransaction {
-        guard let buyTransaction = transactions.first(where: { !$0.quantity.starts(with: "-") }),
-              let sellTransaction = transactions.first(where: { $0.quantity.starts(with: "-") }) else {
-            throw WealthsimpleConversionError.unexpectedStockSplit(transactions.first!.description)
-        }
-        let metaData = TransactionMetaData(date: buyTransaction.processDate, narration: buyTransaction.description, metaData: [MetaDataKeys.id: buyTransaction.id])
-        return STransaction(metaData: metaData, postings: [
-            Posting(accountName: try lookup.ledgerAccountName(of: account, symbol: sellTransaction.symbol),
-                    amount: Amount(for: sellTransaction.quantity, in: try lookup.commoditySymbol(for: sellTransaction.symbol)),
-                    cost: try Cost(amount: nil, date: nil, label: nil)),
-            Posting(accountName: try lookup.ledgerAccountName(of: account, symbol: buyTransaction.symbol),
-                    amount: Amount(for: buyTransaction.quantity, in: try lookup.commoditySymbol(for: buyTransaction.symbol)),
-                    cost: try Cost(amount: buyTransaction.symbol != sellTransaction.symbol ? buyTransaction.marketPrice : nil, date: nil, label: nil))
-        ])
-    }
-
-    // swiftlint:disable:next large_tuple
-    private func parseDividendDescription(_ string: String) -> (String?, String?, Amount?) {
-        let matches = string.matchingStrings(regex: Self.dividendRegEx)
-        guard matches.count == 1, let date = Self.dividendDescriptionDateFormatter.date(from: matches[0][1]) else {
-            return (nil, nil, nil)
-        }
-        let match = matches[0]
-        let resultAmount = !match[4].isEmpty ? Amount(for: match[4], in: match[7], negate: true) : nil
-        return (Self.dateFormatter.string(from: date), match[2], resultAmount)
-    }
-
-    private func parseNRWTDescription(_ string: String) throws -> Amount {
-        let matches = string.matchingStrings(regex: Self.nrwtRegEx)
-        guard matches.count == 1 else {
-            throw WealthsimpleConversionError.unexpectedDescription(string)
-        }
-        return Amount(for: matches[0][1], in: matches[0][4])
     }
 
 }
