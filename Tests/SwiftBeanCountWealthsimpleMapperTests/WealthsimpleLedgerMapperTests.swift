@@ -531,6 +531,151 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         #expect(transactions == [resultTransaction])
     }
 
+    @Test
+    func mapCashbackTransactionsMerge() throws {
+        let incomeAccount = try AccountName("Income:Cashback")
+        try ledger.add(SAccount(name: incomeAccount, metaData: ["\(MetaDataKeys.prefix)cashback-bonus": accountNumber]))
+
+        let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
+        let description = "Cashback credit paid at 2026-01-26 for $12.6800"
+
+        // Three transactions with same date and description: 2 positive (adding money) and 1 negative (removing money)
+        let transaction1 = cashbackTransaction(id: "transaction-idstring1", quantity: "-12.68", netCash: "-12.68", date: date, description: description)
+        let transaction2 = cashbackTransaction(id: "transaction-idstring2", quantity: "12.68", netCash: "12.68", date: date, description: description)
+        let transaction3 = cashbackTransaction(id: "transaction-idstring3", quantity: "12.68", netCash: "12.68", date: date, description: description)
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction1, transaction2, transaction3])
+
+        // Should be merged into a single transaction with all three IDs space-separated
+        // The result should be the positive transaction (adding money to assets)
+        let mergedId = "transaction-idstring1 transaction-idstring2 transaction-idstring3"
+        let expectedTransaction = Transaction(
+            metaData: TransactionMetaData(date: date, metaData: [MetaDataKeys.id: mergedId]),
+            postings: [
+                try posting(number: "12.68"),
+                Posting(accountName: incomeAccount, amount: priceAmount(number: "-12.68"))
+            ]
+        )
+
+        #expect(prices.isEmpty)
+        #expect(transactions.count == 1)
+        #expect(transactions.first?.metaData.metaData[MetaDataKeys.id] == mergedId)
+        #expect(transactions == [expectedTransaction])
+    }
+
+    @Test
+    func mapCashbackTransactionsSingle() throws {
+        let incomeAccount = try AccountName("Income:Cashback")
+        try ledger.add(SAccount(name: incomeAccount, metaData: ["\(MetaDataKeys.prefix)cashback-bonus": accountNumber]))
+
+        let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
+        let transaction = cashbackTransaction(id: "single-cashback-id", quantity: "10.0", netCash: "10.0", date: date, description: "Single cashback")
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction])
+
+        // Single transaction should not be merged, just have its own ID
+        let expectedTransaction = Transaction(
+            metaData: TransactionMetaData(date: date, metaData: [MetaDataKeys.id: "single-cashback-id"]),
+            postings: [
+                try posting(number: "10.0"),
+                Posting(accountName: incomeAccount, amount: priceAmount(number: "-10.0"))
+            ]
+        )
+
+        #expect(prices.isEmpty)
+        #expect(transactions.count == 1)
+        #expect(transactions.first?.metaData.metaData[MetaDataKeys.id] == "single-cashback-id")
+        #expect(transactions == [expectedTransaction])
+    }
+
+    @Test
+    func mapCashbackTransactionsDifferentAmounts() throws {
+        let incomeAccount = try AccountName("Income:Cashback")
+        try ledger.add(SAccount(name: incomeAccount, metaData: ["\(MetaDataKeys.prefix)cashback-bonus": accountNumber]))
+
+        let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
+        // Two transactions on same day with empty description but different amounts should not be merged
+        let transaction1 = cashbackTransaction(id: "cashback-id-1", quantity: "10.0", netCash: "10.0", date: date, description: "")
+        let transaction2 = cashbackTransaction(id: "cashback-id-2", quantity: "15.0", netCash: "15.0", date: date, description: "")
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction1, transaction2])
+
+        // Should have two separate transactions since amounts are different
+        #expect(prices.isEmpty)
+        #expect(transactions.count == 2)
+        let transaction1Id = transactions[0].metaData.metaData[MetaDataKeys.id]
+        let transaction2Id = transactions[1].metaData.metaData[MetaDataKeys.id]
+        #expect((transaction1Id == "cashback-id-1" && transaction2Id == "cashback-id-2") || (transaction1Id == "cashback-id-2" && transaction2Id == "cashback-id-1"))
+    }
+
+    @Test
+    func mapCashbackTransactionsWrongPattern() throws {
+        let incomeAccount = try AccountName("Income:Cashback")
+        try ledger.add(SAccount(name: incomeAccount, metaData: ["\(MetaDataKeys.prefix)cashback-bonus": accountNumber]))
+
+        let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
+        let description = "Cashback credit"
+        // Three positive transactions - wrong pattern (should be 2 positive + 1 negative)
+        let transaction1 = cashbackTransaction(id: "cashback-id-1", quantity: "10.0", netCash: "10.0", date: date, description: description)
+        let transaction2 = cashbackTransaction(id: "cashback-id-2", quantity: "10.0", netCash: "10.0", date: date, description: description)
+        let transaction3 = cashbackTransaction(id: "cashback-id-3", quantity: "10.0", netCash: "10.0", date: date, description: description)
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction1, transaction2, transaction3])
+
+        // Should NOT merge since pattern is wrong (all positive instead of 2 positive + 1 negative)
+        // Should return all 3 transactions individually
+        #expect(prices.isEmpty)
+        #expect(transactions.count == 3)
+        // Each should have its own ID, not merged
+        let ids = transactions.compactMap { $0.metaData.metaData[MetaDataKeys.id] }
+        #expect(ids.contains("cashback-id-1"))
+        #expect(ids.contains("cashback-id-2"))
+        #expect(ids.contains("cashback-id-3"))
+    }
+
+    @Test
+    func mapCashbackTransactionsIDOrdering() throws {
+        let incomeAccount = try AccountName("Income:Cashback")
+        try ledger.add(SAccount(name: incomeAccount, metaData: ["\(MetaDataKeys.prefix)cashback-bonus": accountNumber]))
+
+        let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
+        let description = "Cashback credit paid at 2026-01-26"
+
+        // Three transactions with IDs in non-alphabetical order
+        // IDs: "id-charlie", "id-alpha", "id-bravo"
+        let transaction1 = cashbackTransaction(id: "id-charlie", quantity: "-10.0", netCash: "-10.0", date: date, description: description)
+        let transaction2 = cashbackTransaction(id: "id-alpha", quantity: "10.0", netCash: "10.0", date: date, description: description)
+        let transaction3 = cashbackTransaction(id: "id-bravo", quantity: "10.0", netCash: "10.0", date: date, description: description)
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction1, transaction2, transaction3])
+
+        // Should be merged with IDs sorted alphabetically
+        #expect(prices.isEmpty)
+        #expect(transactions.count == 1)
+        // IDs should be sorted: "id-alpha id-bravo id-charlie"
+        let mergedId = transactions.first?.metaData.metaData[MetaDataKeys.id]
+        #expect(mergedId == "id-alpha id-bravo id-charlie")
+    }
+
+    private func cashbackTransaction(id: String, quantity: String, netCash: String, date: Date, description: String) -> TestTransaction {
+        TestTransaction(
+            id: id,
+            accountId: accountId,
+            transactionType: .cashbackBonus,
+            description: description,
+            symbol: "CAD",
+            quantity: quantity,
+            marketPriceAmount: "1.0",
+            marketPriceCurrency: "CAD",
+            marketValueAmount: quantity.replacingOccurrences(of: "-", with: ""),
+            marketValueCurrency: "CAD",
+            netCashAmount: netCash,
+            netCashCurrency: "CAD",
+            fxRate: "1.0",
+            processDate: date
+        )
+    }
+
     private func posting(
         account: String = "Assets:W:Cash", number: String = "-11.76", commodity: String = "CAD", decimals: Int = 2, price: Amount? = nil, cost: Cost? = nil
     ) throws -> Posting {
