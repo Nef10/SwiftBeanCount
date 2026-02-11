@@ -17,6 +17,14 @@ public struct WealthsimpleLedgerMapper {
     typealias STransaction = SwiftBeanCountModel.Transaction
     typealias WAccount = Wealthsimple.Account
 
+    private struct CategorizedTransactions {
+        var nrwt: [WTransaction]
+        var stockSplits: [WTransaction]
+        var cashback: [WTransaction]
+        var transfers: [WTransaction]
+        var regular: [WTransaction]
+    }
+
     /// Fallback account for payments if not account with the correct meta data could be found
     ///
     /// Only used for certain transaction types
@@ -130,31 +138,38 @@ public struct WealthsimpleLedgerMapper {
         guard let account = accounts.first( where: { $0.id == firstTransaction.accountId }) else {
             throw WealthsimpleConversionError.accountNotFound(firstTransaction.accountId)
         }
-        var nrwtTransactions = [WTransaction](), stockSplits = [WTransaction](), cashbackTransactions = [WTransaction](), regularTransactions = [WTransaction]()
-        for transaction in wealthsimpleTransactions {
+        let categorized = categorizeTransactions(wealthsimpleTransactions)
+        var prices = [Price](), transactions = [STransaction]()
+        var nrwtTransactions = categorized.nrwt
+        (prices, transactions) = try mapRegularTransactions(categorized.regular, nrwtTransactions: &nrwtTransactions, in: account)
+        transactions.append(contentsOf: try nrwtTransactions.map { try mapNonResidentWithholdingTax($0, in: account) }
+            .filter { !lookup.doesTransactionExistInLedger($0) })
+        transactions.append(contentsOf: try mapStockSplits(categorized.stockSplits, in: account).filter { !lookup.doesTransactionExistInLedger($0) })
+        transactions.append(contentsOf: try mergeCashbackTransactions(categorized.cashback, in: account)
+            .filter { !lookup.doesTransactionExistInLedger($0) })
+        transactions.append(contentsOf: mergeTransferTransactions(categorized.transfers, in: account)
+            .filter { !lookup.doesTransactionExistInLedger($0) })
+        return (prices, transactions)
+    }
+
+    private func categorizeTransactions(_ transactions: [WTransaction]) -> CategorizedTransactions {
+        var nrwt = [WTransaction](), stockSplits = [WTransaction](), cashback = [WTransaction]()
+        var transfers = [WTransaction](), regular = [WTransaction]()
+        for transaction in transactions {
             switch transaction.transactionType {
             case .nonResidentWithholdingTax:
-                nrwtTransactions.append(transaction)
+                nrwt.append(transaction)
             case .stockDistribution:
                 stockSplits.append(transaction)
             case .cashbackBonus:
-                cashbackTransactions.append(transaction)
+                cashback.append(transaction)
+            case .transferIn, .transferOut:
+                transfers.append(transaction)
             default:
-                regularTransactions.append(transaction)
+                regular.append(transaction)
             }
         }
-        var prices = [Price](), transactions = [STransaction]()
-        (prices, transactions) = try mapRegularTransactions(regularTransactions, nrwtTransactions: &nrwtTransactions, in: account)
-        // add nrwt transactions which could not be merged
-        transactions.append(contentsOf: try nrwtTransactions.map { try mapNonResidentWithholdingTax($0, in: account) }
-            .filter { !lookup.doesTransactionExistInLedger($0) })
-
-        transactions.append(contentsOf: try mapStockSplits(stockSplits, in: account).filter { !lookup.doesTransactionExistInLedger($0) })
-
-        transactions.append(contentsOf: try mergeCashbackTransactions(cashbackTransactions, in: account)
-            .filter { !lookup.doesTransactionExistInLedger($0) })
-
-        return (prices, transactions)
+        return CategorizedTransactions(nrwt: nrwt, stockSplits: stockSplits, cashback: cashback, transfers: transfers, regular: regular)
     }
 
     /// Maps regular transactions (excluding NRWT, stock splits, and cashback), merging dividend transactions with their corresponding NRWT transactions
@@ -220,6 +235,39 @@ public struct WealthsimpleLedgerMapper {
                 for transaction in group {
                     let (_, result) = try mapTransaction(transaction, in: account)
                     if let result {
+                        results.append(result)
+                    }
+                }
+            }
+        }
+        return results
+    }
+
+    /// Merges transfer transactions (transferIn/transferOut) by date, description, and amount, combining their IDs space-separated in metadata
+    private func mergeTransferTransactions(_ transactions: [WTransaction], in account: WAccount) -> [STransaction] {
+        struct TransferKey: Hashable {
+            let date: Date
+            let description: String
+            let amount: String
+        }
+        let grouped = Dictionary(grouping: transactions) {
+            TransferKey(date: $0.processDate, description: $0.description, amount: $0.netCashAmount.replacingOccurrences(of: "-", with: ""))
+        }
+        var results: [STransaction] = []
+        for group in grouped.values {
+            let transferIn = group.filter { $0.transactionType == .transferIn }
+            let transferOut = group.filter { $0.transactionType == .transferOut }
+            if transferIn.count == 1 && transferOut.count == 1, let inTransaction = transferIn.first,
+               let (_, result) = try? mapTransaction(inTransaction, in: account), let result {
+                var ids = result.metaData.metaData
+                ids[MetaDataKeys.id] = group.map(\.id).sorted().joined(separator: " ")
+                let meta = TransactionMetaData(
+                    date: result.metaData.date, payee: result.metaData.payee, narration: result.metaData.narration, metaData: ids
+                )
+                results.append(STransaction(metaData: meta, postings: result.postings))
+            } else {
+                for transaction in group {
+                    if let (_, result) = try? mapTransaction(transaction, in: account), let result {
                         results.append(result)
                     }
                 }

@@ -657,6 +657,215 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         #expect(mergedId == "id-alpha id-bravo id-charlie")
     }
 
+    @Test
+    func mapTransferTransactionsMerge() throws {
+        let transferAccount = try AccountName("Assets:Transfer")
+        try ledger.add(SAccount(name: transferAccount, metaData: ["\(MetaDataKeys.prefix)transfer-in": accountNumber]))
+        let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
+        let description = "Transfer from CASH_DD accountNumber to NON_REGISTERED accountNumber2"
+        let transferIn = transferTransaction(
+            id: "transaction-idPlaceHolder1",
+            transactionType: .transferIn,
+            amount: "1500.0",
+            date: date,
+            description: description
+        )
+        let transferOut = transferTransaction(
+            id: "transaction-idPlaceholder2",
+            transactionType: .transferOut,
+            amount: "-1500.0",
+            date: date,
+            description: description
+        )
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transferIn, transferOut])
+        let mergedId = "transaction-idPlaceHolder1 transaction-idPlaceholder2"
+        let expectedTransaction = Transaction(
+            metaData: TransactionMetaData(date: date, metaData: [MetaDataKeys.id: mergedId]),
+            postings: [
+                try posting(number: "1500.0"),
+                Posting(accountName: transferAccount, amount: priceAmount(number: "-1500.0", decimals: 2))
+            ]
+        )
+        #expect(prices.isEmpty)
+        #expect(transactions.count == 1)
+        #expect(transactions.first == expectedTransaction)
+    }
+
+    @Test
+    func mapTransferTransactionsSingle() throws {
+        let transferAccount = try AccountName("Assets:Transfer")
+        try ledger.add(SAccount(name: transferAccount, metaData: ["\(MetaDataKeys.prefix)transfer-in": accountNumber]))
+
+        let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
+        let transferIn = transferTransaction(
+            id: "single-transfer-id",
+            transactionType: .transferIn,
+            amount: "500.0",
+            date: date,
+            description: "Single transfer"
+        )
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transferIn])
+
+        // Single transaction should not be merged, just have its own ID
+        let expectedTransaction = Transaction(
+            metaData: TransactionMetaData(date: date, metaData: [MetaDataKeys.id: "single-transfer-id"]),
+            postings: [
+                try posting(number: "500.0"),
+                Posting(accountName: transferAccount, amount: priceAmount(number: "-500.0", decimals: 2))
+            ]
+        )
+
+        #expect(prices.isEmpty)
+        #expect(transactions.count == 1)
+        #expect(transactions.first == expectedTransaction)
+    }
+
+    @Test
+    func mapTransferTransactionsDifferentDescriptions() throws {
+        let transferAccount = try AccountName("Assets:Transfer")
+        try ledger.add(SAccount(name: transferAccount, metaData: ["\(MetaDataKeys.prefix)transfer-in": accountNumber]))
+
+        let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
+        // Two transactions with same amount and date but different descriptions should not be merged
+        let transferIn = transferTransaction(
+            id: "transfer-id-1",
+            transactionType: .transferIn,
+            amount: "500.0",
+            date: date,
+            description: "Transfer to Account A"
+        )
+        let transferOut = transferTransaction(
+            id: "transfer-id-2",
+            transactionType: .transferOut,
+            amount: "-500.0",
+            date: date,
+            description: "Transfer to Account B"
+        )
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transferIn, transferOut])
+
+        // Should have two separate transactions since descriptions are different
+        #expect(prices.isEmpty)
+        #expect(transactions.count == 2)
+        let transaction1Id = transactions[0].metaData.metaData[MetaDataKeys.id]
+        let transaction2Id = transactions[1].metaData.metaData[MetaDataKeys.id]
+        #expect((transaction1Id == "transfer-id-1" && transaction2Id == "transfer-id-2") || (transaction1Id == "transfer-id-2" && transaction2Id == "transfer-id-1"))
+    }
+
+    @Test
+    func mapTransferTransactionsDifferentDates() throws {
+        let transferAccount = try AccountName("Assets:Transfer")
+        try ledger.add(SAccount(name: transferAccount, metaData: ["\(MetaDataKeys.prefix)transfer-in": accountNumber]))
+
+        let date1 = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
+        let date2 = Date(timeIntervalSinceReferenceDate: 5_645_145_798)
+        let description = "Transfer from CASH_DD to NON_REGISTERED"
+        // Two transactions with same description and amount but different dates should not be merged
+        let transferIn = transferTransaction(id: "transfer-id-1", transactionType: .transferIn, amount: "500.0", date: date1, description: description)
+        let transferOut = transferTransaction(id: "transfer-id-2", transactionType: .transferOut, amount: "-500.0", date: date2, description: description)
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transferIn, transferOut])
+
+        // Should have two separate transactions since dates are different
+        #expect(prices.isEmpty)
+        #expect(transactions.count == 2)
+        let transaction1Id = transactions[0].metaData.metaData[MetaDataKeys.id]
+        let transaction2Id = transactions[1].metaData.metaData[MetaDataKeys.id]
+        #expect((transaction1Id == "transfer-id-1" && transaction2Id == "transfer-id-2") || (transaction1Id == "transfer-id-2" && transaction2Id == "transfer-id-1"))
+    }
+
+    @Test
+    func mapTransferTransactionsDifferentAmounts() throws {
+        let transferAccount = try AccountName("Assets:Transfer")
+        try ledger.add(SAccount(name: transferAccount, metaData: ["\(MetaDataKeys.prefix)transfer-in": accountNumber]))
+
+        let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
+        let description = "Transfer from CASH_DD to NON_REGISTERED"
+        // Two transactions with same date and description but different amounts should not be merged
+        let transferIn = transferTransaction(id: "transfer-id-1", transactionType: .transferIn, amount: "500.0", date: date, description: description)
+        let transferOut = transferTransaction(id: "transfer-id-2", transactionType: .transferOut, amount: "-600.0", date: date, description: description)
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transferIn, transferOut])
+
+        // Should have two separate transactions since amounts are different
+        #expect(prices.isEmpty)
+        #expect(transactions.count == 2)
+        let transaction1Id = transactions[0].metaData.metaData[MetaDataKeys.id]
+        let transaction2Id = transactions[1].metaData.metaData[MetaDataKeys.id]
+        #expect((transaction1Id == "transfer-id-1" && transaction2Id == "transfer-id-2") || (transaction1Id == "transfer-id-2" && transaction2Id == "transfer-id-1"))
+    }
+
+    @Test
+    func mapTransferTransactionsIDOrdering() throws {
+        let transferAccount = try AccountName("Assets:Transfer")
+        try ledger.add(SAccount(name: transferAccount, metaData: ["\(MetaDataKeys.prefix)transfer-in": accountNumber]))
+
+        let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
+        let description = "Transfer from CASH_DD to NON_REGISTERED"
+
+        // Two transactions with IDs in non-alphabetical order
+        let transferIn = transferTransaction(id: "id-zebra", transactionType: .transferIn, amount: "500.0", date: date, description: description)
+        let transferOut = transferTransaction(id: "id-alpha", transactionType: .transferOut, amount: "-500.0", date: date, description: description)
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transferIn, transferOut])
+
+        // Should be merged with IDs sorted alphabetically
+        #expect(prices.isEmpty)
+        #expect(transactions.count == 1)
+        // IDs should be sorted: "id-alpha id-zebra"
+        let mergedId = transactions.first?.metaData.metaData[MetaDataKeys.id]
+        #expect(mergedId == "id-alpha id-zebra")
+    }
+
+    @Test
+    func mapTransferTransactionsWrongPattern() throws {
+        let transferAccount = try AccountName("Assets:Transfer")
+        try ledger.add(SAccount(name: transferAccount, metaData: ["\(MetaDataKeys.prefix)transfer-in": accountNumber]))
+
+        let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
+        let description = "Transfer from CASH_DD to NON_REGISTERED"
+        // Two transferIn transactions - wrong pattern (should be 1 transferIn + 1 transferOut)
+        let transferIn1 = transferTransaction(id: "transfer-id-1", transactionType: .transferIn, amount: "500.0", date: date, description: description)
+        let transferIn2 = transferTransaction(id: "transfer-id-2", transactionType: .transferIn, amount: "500.0", date: date, description: description)
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transferIn1, transferIn2])
+
+        // Should NOT merge since pattern is wrong (both are transferIn instead of 1 in + 1 out)
+        // Should return both transactions individually
+        #expect(prices.isEmpty)
+        #expect(transactions.count == 2)
+        // Each should have its own ID, not merged
+        let ids = transactions.compactMap { $0.metaData.metaData[MetaDataKeys.id] }
+        #expect(ids.contains("transfer-id-1"))
+        #expect(ids.contains("transfer-id-2"))
+    }
+
+    private func transferTransaction(
+        id: String,
+        transactionType: Wealthsimple.TransactionType,
+        amount: String,
+        date: Date,
+        description: String
+    ) -> TestTransaction {
+        TestTransaction(
+            id: id,
+            accountId: accountId,
+            transactionType: transactionType,
+            description: description,
+            symbol: "CAD",
+            quantity: amount,
+            marketPriceAmount: "1.0",
+            marketPriceCurrency: "CAD",
+            marketValueAmount: amount.replacingOccurrences(of: "-", with: ""),
+            marketValueCurrency: "CAD",
+            netCashAmount: amount,
+            netCashCurrency: "CAD",
+            fxRate: "1.0",
+            processDate: date
+        )
+    }
+
     private func cashbackTransaction(id: String, quantity: String, netCash: String, date: Date, description: String) -> TestTransaction {
         TestTransaction(
             id: id,
