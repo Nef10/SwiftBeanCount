@@ -244,6 +244,9 @@ public struct WealthsimpleLedgerMapper {
     }
 
     /// Merges transfer transactions (transferIn/transferOut) by date, description, and amount, combining their IDs space-separated in metadata
+    ///
+    /// Groups transactions by date, description, and absolute amount. When exactly one transferIn and one transferOut match,
+    /// they are merged into a single transaction. Transactions that don't match this pattern are returned individually.
     private func mergeTransferTransactions(_ transactions: [WTransaction], in account: WAccount) -> [STransaction] {
         struct TransferKey: Hashable {
             let date: Date
