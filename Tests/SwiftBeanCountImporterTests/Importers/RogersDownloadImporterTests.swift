@@ -450,6 +450,7 @@ struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
 
     @Test
     func activitySavedMapping() {
+        let originalStorage = Settings.storage
         Settings.storage = TestStorage()
         var activity = TestActivity()
         var amount = TestAmount()
@@ -476,7 +477,7 @@ struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
         #expect(iTransaction == importer.nextTransaction())
         #expect(importer.nextTransaction() == nil)
         #expect(importer.balancesToImport().count == 1)
-        Settings.storage = TestStorage()
+        Settings.storage = originalStorage
     }
 
     @discardableResult
