@@ -25,6 +25,12 @@ public struct WealthsimpleLedgerMapper {
         var regular: [WTransaction]
     }
 
+    struct RegularTransactionsResult {
+        let prices: [Price]
+        let transactions: [STransaction]
+        let mergedNRWTIds: Set<String>
+    }
+
     /// Fallback account for payments if not account with the correct meta data could be found
     ///
     /// Only used for certain transaction types
@@ -117,37 +123,36 @@ public struct WealthsimpleLedgerMapper {
         return (prices, balances)
     }
 
-    /// Maps downloaded wealthsimple transactions from one account to SwiftBeanCountModel transactions and prices
+    /// Maps downloaded wealthsimple transactions to SwiftBeanCountModel transactions and prices
     ///
     /// It also removes transactions and prices which are already existing in the ledger
     ///
     /// Notes:
-    ///  - Do not call with transactions from different accounts
+    ///  - Can handle transactions from different accounts
     ///  - Make sure to set accounts on this class to the Wealthsimple accounts first
     ///  - Do not assume that the count of input and transaction output is the same, as this function consolidates transactions
     ///
-    /// - Parameter wealthsimpleTransactions: downloaded transactions from one account
+    /// - Parameter wealthsimpleTransactions: downloaded transactions from all accounts
     /// - Throws: WealthsimpleConversionError
     /// - Returns: Prices and Transactions
     public func mapTransactionsToPriceAndTransactions(
         _ wealthsimpleTransactions: [Wealthsimple.Transaction]
     ) throws -> ([Price], [SwiftBeanCountModel.Transaction]) {
-        guard let firstTransaction = wealthsimpleTransactions.first else {
+        guard !wealthsimpleTransactions.isEmpty else {
             return ([], [])
-        }
-        guard let account = accounts.first( where: { $0.id == firstTransaction.accountId }) else {
-            throw WealthsimpleConversionError.accountNotFound(firstTransaction.accountId)
         }
         let categorized = categorizeTransactions(wealthsimpleTransactions)
         var prices = [Price](), transactions = [STransaction]()
-        var nrwtTransactions = categorized.nrwt
-        (prices, transactions) = try mapRegularTransactions(categorized.regular, nrwtTransactions: &nrwtTransactions, in: account)
-        transactions.append(contentsOf: try nrwtTransactions.map { try mapNonResidentWithholdingTax($0, in: account) }
-            .filter { !lookup.doesTransactionExistInLedger($0) })
-        transactions.append(contentsOf: try mapStockSplits(categorized.stockSplits, in: account).filter { !lookup.doesTransactionExistInLedger($0) })
-        transactions.append(contentsOf: try mergeCashbackTransactions(categorized.cashback, in: account)
-            .filter { !lookup.doesTransactionExistInLedger($0) })
-        transactions.append(contentsOf: mergeTransferTransactions(categorized.transfers, in: account)
+        // Process transactions by account type
+        let regularResult = try processRegularTransactions(categorized.regular, nrwt: categorized.nrwt)
+        prices.append(contentsOf: regularResult.prices)
+        transactions.append(contentsOf: regularResult.transactions)
+        // Only process NRWT transactions that weren't merged
+        let unmergedNRWT = categorized.nrwt.filter { !regularResult.mergedNRWTIds.contains($0.id) }
+        transactions.append(contentsOf: try processNRWTTransactions(unmergedNRWT))
+        transactions.append(contentsOf: try processStockSplits(categorized.stockSplits))
+        transactions.append(contentsOf: try processCashback(categorized.cashback))
+        transactions.append(contentsOf: mergeTransferTransactions(categorized.transfers)
             .filter { !lookup.doesTransactionExistInLedger($0) })
         return (prices, transactions)
     }
@@ -245,9 +250,10 @@ public struct WealthsimpleLedgerMapper {
 
     /// Merges transfer transactions (transferIn/transferOut) by date, description, and amount, combining their IDs space-separated in metadata
     ///
-    /// Groups transactions by date, description, and absolute amount. When exactly one transferIn and one transferOut match,
-    /// they are merged into a single transaction. Transactions that don't match this pattern are returned individually.
-    private func mergeTransferTransactions(_ transactions: [WTransaction], in account: WAccount) -> [STransaction] {
+    /// Groups transactions by date, description, and absolute amount. When exactly one transferIn and one transferOut match
+    /// and their account IDs correspond to the account numbers mentioned in the description, they are merged into a single transaction.
+    /// Transactions that don't match this pattern are returned individually.
+    private func mergeTransferTransactions(_ transactions: [WTransaction]) -> [STransaction] {
         struct TransferKey: Hashable {
             let date: Date
             let description: String
@@ -258,22 +264,10 @@ public struct WealthsimpleLedgerMapper {
         }
         var results: [STransaction] = []
         for group in grouped.values {
-            let transferIn = group.filter { $0.transactionType == .transferIn }
-            let transferOut = group.filter { $0.transactionType == .transferOut }
-            if transferIn.count == 1 && transferOut.count == 1, let inTransaction = transferIn.first,
-               let (_, result) = try? mapTransaction(inTransaction, in: account), let result {
-                var ids = result.metaData.metaData
-                ids[MetaDataKeys.id] = group.map(\.id).sorted().joined(separator: " ")
-                let meta = TransactionMetaData(
-                    date: result.metaData.date, payee: result.metaData.payee, narration: result.metaData.narration, metaData: ids
-                )
-                results.append(STransaction(metaData: meta, postings: result.postings))
+            if let merged = tryMergeTransferPair(group) {
+                results.append(merged)
             } else {
-                for transaction in group {
-                    if let (_, result) = try? mapTransaction(transaction, in: account), let result {
-                        results.append(result)
-                    }
-                }
+                results.append(contentsOf: mapTransfersIndividually(group))
             }
         }
         return results

@@ -659,31 +659,54 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
 
     @Test
     func mapTransferTransactionsMerge() throws {
-        let transferAccount = try AccountName("Assets:Transfer")
-        try ledger.add(SAccount(name: transferAccount, metaData: ["\(MetaDataKeys.prefix)transfer-in": accountNumber]))
+        // Set up two accounts for transfer
+        let inAccountId = "account-in-id"
+        let inAccountNumber = "NON_REGISTERED_123"
+        let outAccountId = "account-out-id"
+        let outAccountNumber = "CASH_DD_456"
+        
+        var testMapper = WealthsimpleLedgerMapper(ledger: ledger)
+        testMapper.accounts = [
+            TestAccount(number: inAccountNumber, id: inAccountId, currency: "CAD"),
+            TestAccount(number: outAccountNumber, id: outAccountId, currency: "CAD")
+        ]
+        
+        let cashInAccount = try AccountName("Assets:W:Cash:In")
+        let cashOutAccount = try AccountName("Assets:W:Cash:Out")
+        try ledger.add(SAccount(name: cashInAccount, metaData: [MetaDataKeys.importerType: MetaData.importerType, MetaDataKeys.number: inAccountNumber]))
+        try ledger.add(SAccount(name: cashOutAccount, metaData: [MetaDataKeys.importerType: MetaData.importerType, MetaDataKeys.number: outAccountNumber]))
+        
+        let transferInAccount = try AccountName("Assets:Transfer:In")
+        try ledger.add(SAccount(name: transferInAccount, metaData: ["\(MetaDataKeys.prefix)transfer-in": inAccountNumber]))
+        
         let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
-        let description = "Transfer from CASH_DD accountNumber to NON_REGISTERED accountNumber2"
-        let transferIn = transferTransaction(
+        let description = "Transfer from \(outAccountNumber) to \(inAccountNumber)"
+        
+        var transferIn = transferTransaction(
             id: "transaction-idPlaceholder1",
             transactionType: .transferIn,
             amount: "1500.0",
             date: date,
             description: description
         )
-        let transferOut = transferTransaction(
+        transferIn.accountId = inAccountId
+        
+        var transferOut = transferTransaction(
             id: "transaction-idPlaceholder2",
             transactionType: .transferOut,
             amount: "-1500.0",
             date: date,
             description: description
         )
-        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transferIn, transferOut])
+        transferOut.accountId = outAccountId
+        
+        let (prices, transactions) = try testMapper.mapTransactionsToPriceAndTransactions([transferIn, transferOut])
         let mergedId = "transaction-idPlaceholder1 transaction-idPlaceholder2"
         let expectedTransaction = Transaction(
             metaData: TransactionMetaData(date: date, metaData: [MetaDataKeys.id: mergedId]),
             postings: [
-                try posting(number: "1500.0"),
-                Posting(accountName: transferAccount, amount: priceAmount(number: "-1500.0", decimals: 2))
+                try posting(account: "Assets:W:Cash:In", number: "1500.0"),
+                Posting(accountName: transferInAccount, amount: priceAmount(number: "-1500.0", decimals: 2))
             ]
         )
         #expect(prices.isEmpty)
@@ -798,17 +821,37 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
 
     @Test
     func mapTransferTransactionsIDOrdering() throws {
-        let transferAccount = try AccountName("Assets:Transfer")
-        try ledger.add(SAccount(name: transferAccount, metaData: ["\(MetaDataKeys.prefix)transfer-in": accountNumber]))
+        // Set up two accounts for transfer
+        let inAccountId = "account-in-id"
+        let inAccountNumber = "NON_REGISTERED_123"
+        let outAccountId = "account-out-id"
+        let outAccountNumber = "CASH_DD_456"
+        
+        var testMapper = WealthsimpleLedgerMapper(ledger: ledger)
+        testMapper.accounts = [
+            TestAccount(number: inAccountNumber, id: inAccountId, currency: "CAD"),
+            TestAccount(number: outAccountNumber, id: outAccountId, currency: "CAD")
+        ]
+        
+        let cashInAccount = try AccountName("Assets:W:Cash:In")
+        let cashOutAccount = try AccountName("Assets:W:Cash:Out")
+        try ledger.add(SAccount(name: cashInAccount, metaData: [MetaDataKeys.importerType: MetaData.importerType, MetaDataKeys.number: inAccountNumber]))
+        try ledger.add(SAccount(name: cashOutAccount, metaData: [MetaDataKeys.importerType: MetaData.importerType, MetaDataKeys.number: outAccountNumber]))
+        
+        let transferInAccount = try AccountName("Assets:Transfer:In")
+        try ledger.add(SAccount(name: transferInAccount, metaData: ["\(MetaDataKeys.prefix)transfer-in": inAccountNumber]))
 
         let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
-        let description = "Transfer from CASH_DD to NON_REGISTERED"
+        let description = "Transfer from \(outAccountNumber) to \(inAccountNumber)"
 
         // Two transactions with IDs in non-alphabetical order
-        let transferIn = transferTransaction(id: "id-zebra", transactionType: .transferIn, amount: "500.0", date: date, description: description)
-        let transferOut = transferTransaction(id: "id-alpha", transactionType: .transferOut, amount: "-500.0", date: date, description: description)
+        var transferIn = transferTransaction(id: "id-zebra", transactionType: .transferIn, amount: "500.0", date: date, description: description)
+        transferIn.accountId = inAccountId
+        
+        var transferOut = transferTransaction(id: "id-alpha", transactionType: .transferOut, amount: "-500.0", date: date, description: description)
+        transferOut.accountId = outAccountId
 
-        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transferIn, transferOut])
+        let (prices, transactions) = try testMapper.mapTransactionsToPriceAndTransactions([transferIn, transferOut])
 
         // Should be merged with IDs sorted alphabetically
         #expect(prices.isEmpty)
