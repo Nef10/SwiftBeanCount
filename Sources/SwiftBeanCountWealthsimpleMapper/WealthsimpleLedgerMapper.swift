@@ -228,7 +228,17 @@ public struct WealthsimpleLedgerMapper {
         return results
     }
 
-    /// Merges a non resident witholding tax transaction with the corresponding dividend transaction
+    /// Merges a non-resident withholding tax (NRWT) transaction with its corresponding dividend transaction.
+    ///
+    /// This method combines the NRWT transaction and the dividend transaction into a single transaction,
+    /// updating the asset posting and adding an expense posting for the withheld tax.
+    ///
+    /// - Parameters:
+    ///   - transaction: The NRWT transaction to merge.
+    ///   - dividend: The dividend transaction to merge with.
+    ///   - account: The Wealthsimple account associated with the transactions.
+    /// - Throws: `WealthsimpleConversionError` if parsing or mapping fails.
+    /// - Returns: A new `Transaction` representing the merged result.
     private func mergeNRWT(_ transaction: WTransaction, withDividendTransaction dividend: STransaction, in account: WAccount) throws -> STransaction {
         let expenseAmount = try parseNRWTDescription(transaction.description)
         let oldAsset = dividend.postings.first { $0.accountName.accountType == .asset }!
