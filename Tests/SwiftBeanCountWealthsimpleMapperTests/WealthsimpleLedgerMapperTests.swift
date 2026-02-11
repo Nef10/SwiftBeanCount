@@ -633,6 +633,30 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         #expect(ids.contains("cashback-id-3"))
     }
 
+    @Test
+    func mapCashbackTransactionsIDOrdering() throws {
+        let incomeAccount = try AccountName("Income:Cashback")
+        try ledger.add(SAccount(name: incomeAccount, metaData: ["\(MetaDataKeys.prefix)cashback-bonus": accountNumber]))
+
+        let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
+        let description = "Cashback credit paid at 2026-01-26"
+
+        // Three transactions with IDs in non-alphabetical order
+        // IDs: "id-charlie", "id-alpha", "id-bravo"
+        let transaction1 = cashbackTransaction(id: "id-charlie", quantity: "-10.0", netCash: "-10.0", date: date, description: description)
+        let transaction2 = cashbackTransaction(id: "id-alpha", quantity: "10.0", netCash: "10.0", date: date, description: description)
+        let transaction3 = cashbackTransaction(id: "id-bravo", quantity: "10.0", netCash: "10.0", date: date, description: description)
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction1, transaction2, transaction3])
+
+        // Should be merged with IDs sorted alphabetically
+        #expect(prices.isEmpty)
+        #expect(transactions.count == 1)
+        // IDs should be sorted: "id-alpha id-bravo id-charlie"
+        let mergedId = transactions.first?.metaData.metaData[MetaDataKeys.id]
+        #expect(mergedId == "id-alpha id-bravo id-charlie")
+    }
+
     private func cashbackTransaction(id: String, quantity: String, netCash: String, date: Date, description: String) -> TestTransaction {
         TestTransaction(
             id: id,

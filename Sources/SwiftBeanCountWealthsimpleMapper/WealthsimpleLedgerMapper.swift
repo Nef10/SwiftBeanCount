@@ -210,9 +210,9 @@ public struct WealthsimpleLedgerMapper {
                     continue
                 }
 
-                // Merge all IDs
+                // Merge all IDs (sorted for consistent ordering)
                 var ids = result.metaData.metaData
-                ids[MetaDataKeys.id] = group.map(\.id).joined(separator: " ")
+                ids[MetaDataKeys.id] = group.map(\.id).sorted().joined(separator: " ")
                 let meta = TransactionMetaData(date: result.metaData.date, payee: result.metaData.payee, narration: result.metaData.narration, metaData: ids)
                 results.append(STransaction(metaData: meta, postings: result.postings))
             } else {
