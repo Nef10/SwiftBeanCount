@@ -31,6 +31,7 @@ private struct TestCustomer: Customer {
     var lastName = "last"
 }
 
+// swiftlint:disable:next file_types_order
 private struct TestAccount: RogersBankDownloader.Account {
     var customer: Customer = TestCustomer()
     var accountId = "abc123id"
@@ -126,7 +127,9 @@ private struct TestUser: User {
     var authenticated = true
 }
 
-@Suite(.serialized)
+extension TestsUsingStorage {
+
+@Suite
 struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
 
     private let accountName: AccountName
@@ -450,7 +453,6 @@ struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
 
     @Test
     func activitySavedMapping() {
-        let originalStorage = Settings.storage
         Settings.storage = TestStorage()
         var activity = TestActivity()
         var amount = TestAmount()
@@ -477,7 +479,6 @@ struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
         #expect(iTransaction == importer.nextTransaction())
         #expect(importer.nextTransaction() == nil)
         #expect(importer.balancesToImport().count == 1)
-        Settings.storage = originalStorage
     }
 
     @discardableResult
@@ -506,6 +507,7 @@ struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
                       readReturnValues: ["", "", ""],
                       error: error)
     }
+}
 }
 
 extension DownloadError: EquatableError {
