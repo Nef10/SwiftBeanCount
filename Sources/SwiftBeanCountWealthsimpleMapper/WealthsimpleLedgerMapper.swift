@@ -178,7 +178,7 @@ public struct WealthsimpleLedgerMapper {
     }
 
     /// Maps regular transactions (excluding NRWT, stock splits, and cashback), merging dividend transactions with their corresponding NRWT transactions
-    private func mapRegularTransactions(
+    func mapRegularTransactions(
         _ wealthsimpleTransactions: [WTransaction],
         nrwtTransactions: inout [WTransaction],
         in account: WAccount
@@ -204,7 +204,7 @@ public struct WealthsimpleLedgerMapper {
     }
 
     /// Merges duplicate cashback transactions by date, description and amount, combining their IDs space-separated in metadata
-    private func mergeCashbackTransactions(_ transactions: [WTransaction], in account: WAccount) throws -> [STransaction] { // swiftlint:disable:this function_body_length
+    func mergeCashbackTransactions(_ transactions: [WTransaction], in account: WAccount) throws -> [STransaction] { // swiftlint:disable:this function_body_length
         struct CashbackKey: Hashable {
             let date: Date
             let description: String

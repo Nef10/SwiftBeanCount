@@ -1,3 +1,4 @@
+// swiftlint:disable type_contents_order file_length
 import Foundation
 import SwiftBeanCountModel
 @testable import SwiftBeanCountWealthsimpleMapper
@@ -5,7 +6,7 @@ import Testing
 import Wealthsimple
 
 @Suite
-struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_length type_contents_order
+struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_length
 
     private typealias SAccount = SwiftBeanCountModel.Account
 
@@ -917,4 +918,4 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
     }
 
 }
-// swiftlint:disable:this file_length
+// swiftlint:enable type_contents_order file_length
