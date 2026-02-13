@@ -5,7 +5,7 @@ import Testing
 import Wealthsimple
 
 @Suite
-struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_length
+struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_length type_contents_order
 
     private typealias SAccount = SwiftBeanCountModel.Account
 
@@ -662,21 +662,9 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         let setup = try setupCrossAccountTransfer()
         let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
         let description = "Transfer from \(setup.outAccountNumber) to \(setup.inAccountNumber)"
-        var transferIn = transferTransaction(
-            id: "transaction-idPlaceholder1",
-            transactionType: .transferIn,
-            amount: "1500.0",
-            date: date,
-            description: description
-        )
+        var transferIn = transferTransaction(id: "transaction-idPlaceholder1", transactionType: .transferIn, amount: "1500.0", date: date, description: description)
         transferIn.accountId = setup.inAccountId
-        var transferOut = transferTransaction(
-            id: "transaction-idPlaceholder2",
-            transactionType: .transferOut,
-            amount: "-1500.0",
-            date: date,
-            description: description
-        )
+        var transferOut = transferTransaction(id: "transaction-idPlaceholder2", transactionType: .transferOut, amount: "-1500.0", date: date, description: description)
         transferOut.accountId = setup.outAccountId
         let (prices, transactions) = try setup.mapper.mapTransactionsToPriceAndTransactions([transferIn, transferOut])
         let mergedId = "transaction-idPlaceholder1 transaction-idPlaceholder2"
