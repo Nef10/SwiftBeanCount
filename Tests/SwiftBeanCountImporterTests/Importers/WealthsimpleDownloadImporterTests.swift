@@ -6,11 +6,21 @@
 //  Copyright © 2021 Steffen Kötte. All rights reserved.
 //
 
+import Foundation
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
 import SwiftBeanCountWealthsimpleMapper
+import Testing
 import Wealthsimple
-import XCTest
+
+private typealias STransaction = SwiftBeanCountModel.Transaction
+
+private var authenticateClosure: (() -> Error?)?
+private var getAccountsClosure: (() -> Result<[Wealthsimple.Account], Wealthsimple.AccountError>)?
+private var getPositionsClosure: ((Wealthsimple.Account, Date?) -> Result<[Position], PositionError>)?
+private var getTransactionsClosure: ((Wealthsimple.Account, Date?) -> Result<[Wealthsimple.Transaction], TransactionError>)?
+private var authenticationCallbackClosure: WealthsimpleDownloader.AuthenticationCallback?
+private var credentialStorageClosure: CredentialStorage?
 
 private struct TestAccount: Wealthsimple.Account {
     var accountType = Wealthsimple.AccountType.nonRegistered
@@ -53,180 +63,182 @@ private struct TestPosition: Wealthsimple.Position {
     var positionDate = Date()
 }
 
-final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable:this type_body_length
+private struct TestDownloader: WealthsimpleDownloaderProvider {
 
-    private typealias STransaction = SwiftBeanCountModel.Transaction
-
-    private struct TestDownloader: WealthsimpleDownloaderProvider {
-
-        init(authenticationCallback: @escaping WealthsimpleDownloader.AuthenticationCallback, credentialStorage: CredentialStorage) {
-            WealthsimpleDownloadImporterTests.authenticationCallback = authenticationCallback
-            WealthsimpleDownloadImporterTests.credentialStorage = credentialStorage
-            downloader = self
-        }
-
-        func authenticate(completion: (Error?) -> Void) {
-            completion(WealthsimpleDownloadImporterTests.authenticate?())
-        }
-
-        func getAccounts(completion: (Result<[Wealthsimple.Account], Wealthsimple.AccountError>) -> Void) {
-            completion(WealthsimpleDownloadImporterTests.getAccounts?() ?? .success([]))
-        }
-
-        func getPositions(in account: Wealthsimple.Account, date: Date?, completion: (Result<[Position], PositionError>) -> Void) {
-            completion(WealthsimpleDownloadImporterTests.getPositions?(account, date) ?? .success([]))
-        }
-
-        func getTransactions(
-            in account: Wealthsimple.Account,
-            startDate: Date,
-            completion: (Result<[Wealthsimple.Transaction], Wealthsimple.TransactionError>) -> Void
-        ) {
-            completion(WealthsimpleDownloadImporterTests.getTransactions?(account, startDate) ?? .success([]))
-        }
+    init(authenticationCallback: @escaping WealthsimpleDownloader.AuthenticationCallback, credentialStorage: CredentialStorage) {
+        authenticationCallbackClosure = authenticationCallback
+        credentialStorageClosure = credentialStorage
     }
 
-    private static var downloader: TestDownloader!
-    private static var authenticate: (() -> Error?)?
-    private static var getAccounts: (() -> Result<[Wealthsimple.Account], Wealthsimple.AccountError>)?
-    private static var getPositions: ((Wealthsimple.Account, Date?) -> Result<[Position], PositionError>)?
-    private static var getTransactions: ((Wealthsimple.Account, Date?) -> Result<[Wealthsimple.Transaction], TransactionError>)?
-    private static var authenticationCallback: WealthsimpleDownloader.AuthenticationCallback!
-    private static var credentialStorage: CredentialStorage!
+    func authenticate(completion: (Error?) -> Void) {
+        completion(authenticateClosure?())
+    }
+
+    func getAccounts(completion: (Result<[Wealthsimple.Account], Wealthsimple.AccountError>) -> Void) {
+        completion(getAccountsClosure?() ?? .success([]))
+    }
+
+    func getPositions(in account: Wealthsimple.Account, date: Date?, completion: (Result<[Position], PositionError>) -> Void) {
+        completion(getPositionsClosure?(account, date) ?? .success([]))
+    }
+
+    func getTransactions(
+        in account: Wealthsimple.Account,
+        startDate: Date,
+        completion: (Result<[Wealthsimple.Transaction], Wealthsimple.TransactionError>) -> Void
+    ) {
+        completion(getTransactionsClosure?(account, startDate) ?? .success([]))
+    }
+}
+
+extension TestsUsingStorage {
+
+@Suite
+struct WealthsimpleDownloadImporterTests { // swiftlint:disable:this type_body_length
 
     private let sixtyTwoDays = -60 * 60 * 24 * 62.0
     private let threeDays = -60 * 60 * 24 * 3.0
     private let xgroAccount = try! AccountName("Assets:W:XGRO") // swiftlint:disable:this force_try
 
-    override func setUpWithError() throws {
-        Self.downloader = nil
-        Self.authenticate = nil
-        Self.getAccounts = nil
-        Self.getPositions = nil
-        Self.getTransactions = nil
-        Self.authenticationCallback = nil
-        Self.credentialStorage = nil
-        try super.setUpWithError()
+    init() {
+        authenticateClosure = nil
+        getAccountsClosure = nil
+        getPositionsClosure = nil
+        getTransactionsClosure = nil
+        authenticationCallbackClosure = nil
+        credentialStorageClosure = nil
     }
 
-    func testImporterName() {
-        XCTAssertEqual(WealthsimpleDownloadImporter.importerName, "Wealthsimple Download")
+    @Test
+    func importerName() {
+        #expect(WealthsimpleDownloadImporter.importerName == "Wealthsimple Download")
     }
 
-    func testImporterType() {
-        XCTAssertEqual(WealthsimpleDownloadImporter.importerType, "wealthsimple")
+    @Test
+    func importerType() {
+        #expect(WealthsimpleDownloadImporter.importerType == "wealthsimple")
     }
 
-    func testHelpText() {
-        XCTAssert(WealthsimpleDownloadImporter.helpText.hasPrefix("Downloads transactions, prices and balances from Wealthsimple."))
+    @Test
+    func helpText() {
+        #expect(WealthsimpleDownloadImporter.helpText.hasPrefix("Downloads transactions, prices and balances from Wealthsimple."))
     }
 
-    func testImportName() {
-        XCTAssertEqual(WealthsimpleDownloadImporter(ledger: nil).importName, "Wealthsimple Download")
+    @Test
+    func importName() {
+        #expect(WealthsimpleDownloadImporter(ledger: nil).importName == "Wealthsimple Download")
     }
 
-    func testNoData() {
+    @Test
+    func noData() {
         let importer = WealthsimpleDownloadImporter(ledger: nil)
         importer.downloaderClass = TestDownloader.self
         importer.load()
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssert(importer.balancesToImport().isEmpty)
-        XCTAssert(importer.pricesToImport().isEmpty)
+        #expect(importer.nextTransaction() == nil)
+        #expect(importer.balancesToImport().isEmpty)
+        #expect(importer.pricesToImport().isEmpty)
     }
 
-    func testLoadAuthenticationError() {
+    @Test
+    func loadAuthenticationError() {
         let importer = WealthsimpleDownloadImporter(ledger: nil)
         let error = TestError()
         let delegate = ErrorDelegate(error: error)
-        Self.authenticate = { error }
-        Self.getAccounts = {
-            XCTFail("Accounts should not be requested if authentication fail")
+        authenticateClosure = { error }
+        getAccountsClosure = {
+            Issue.record("Accounts should not be requested if authentication fail")
             return .success([])
         }
-        Self.getPositions = { _, _ in
-            XCTFail("Positions should not be requested if authentication fail")
+        getPositionsClosure = { _, _ in
+            Issue.record("Positions should not be requested if authentication fail")
             return .success([])
         }
-        Self.getTransactions = { _, _ in
-            XCTFail("Transactions should not be requested if authentication fail")
+        getTransactionsClosure = { _, _ in
+            Issue.record("Transactions should not be requested if authentication fail")
             return .success([])
         }
         importer.delegate = delegate
         importer.downloaderClass = TestDownloader.self
         importer.load()
-        XCTAssert(delegate.verified)
+        #expect(delegate.verified)
     }
 
-    func testLoadAccountError() {
+    @Test
+    func loadAccountError() {
         let importer = WealthsimpleDownloadImporter(ledger: nil)
         let error = AccountError.httpError(error: "TESTErrorString")
         let delegate = ErrorDelegate(error: error)
-        Self.getAccounts = { .failure(error) }
-        Self.getPositions = { _, _ in
-            XCTFail("Positions should not be requested if accounts fail")
+        getAccountsClosure = { .failure(error) }
+        getPositionsClosure = { _, _ in
+            Issue.record("Positions should not be requested if accounts fail")
             return .success([])
         }
-        Self.getTransactions = { _, _ in
-            XCTFail("Transactions should not be requested if accounts fail")
+        getTransactionsClosure = { _, _ in
+            Issue.record("Transactions should not be requested if accounts fail")
             return .success([])
         }
         importer.delegate = delegate
         importer.downloaderClass = TestDownloader.self
         importer.load()
-        XCTAssert(delegate.verified)
+        #expect(delegate.verified)
     }
 
-    func testLoad() {
+    @Test
+    func load() {
         let importer = WealthsimpleDownloadImporter(ledger: nil)
         var verifiedPositions = false
         var verifiedTransactions = false
         let account = TestAccount()
-        Self.getAccounts = { .success([account]) }
-        Self.getPositions = { requestedAccount, date in
-            XCTAssertNil(date)
-            XCTAssertEqual(requestedAccount.id, account.id)
-            XCTAssertEqual(requestedAccount.number, account.number)
-            XCTAssertFalse(verifiedPositions)
+        let sixtyTwoDays = sixtyTwoDays
+        getAccountsClosure = { .success([account]) }
+        getPositionsClosure = { requestedAccount, date in
+            #expect(date == nil)
+            #expect(requestedAccount.id == account.id)
+            #expect(requestedAccount.number == account.number)
+            #expect(!verifiedPositions)
             verifiedPositions = true
             return .success([])
         }
-        Self.getTransactions = { requestedAccount, date in
-            XCTAssertEqual(Calendar.current.compare(date!, to: Date(timeIntervalSinceNow: self.sixtyTwoDays), toGranularity: .minute), .orderedSame)
-            XCTAssertEqual(requestedAccount.id, account.id)
-            XCTAssertEqual(requestedAccount.number, account.number)
-            XCTAssertFalse(verifiedTransactions)
+        getTransactionsClosure = { requestedAccount, date in
+            #expect(Calendar.current.compare(date!, to: Date(timeIntervalSinceNow: sixtyTwoDays), toGranularity: .minute) == .orderedSame)
+            #expect(requestedAccount.id == account.id)
+            #expect(requestedAccount.number == account.number)
+            #expect(!verifiedTransactions)
             verifiedTransactions = true
             return .success([])
         }
         importer.downloaderClass = TestDownloader.self
         importer.load()
-        XCTAssert(verifiedPositions)
-        XCTAssert(verifiedTransactions)
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssert(importer.balancesToImport().isEmpty)
-        XCTAssert(importer.pricesToImport().isEmpty)
+        #expect(verifiedPositions)
+        #expect(verifiedTransactions)
+        #expect(importer.nextTransaction() == nil)
+        #expect(importer.balancesToImport().isEmpty)
+        #expect(importer.pricesToImport().isEmpty)
     }
 
-    func testPastDaysToLoad() {
+    @Test
+    func pastDaysToLoad() {
         let ledger = Ledger()
         ledger.custom.append(Custom(date: Date(), name: "wealthsimple-importer", values: ["pastDaysToLoad", "3"]))
         ledger.custom.append(Custom(date: Date(timeIntervalSinceNow: sixtyTwoDays), name: "wealthsimple-importer", values: ["pastDaysToLoad", "200"]))
         let importer = WealthsimpleDownloadImporter(ledger: ledger)
         var verifiedTransactions = false
         let account = TestAccount()
-        Self.getAccounts = { .success([account]) }
-        Self.getPositions = { _, _ in .success([]) }
-        Self.getTransactions = { _, date in
-            XCTAssertEqual(Calendar.current.compare(date!, to: Date(timeIntervalSinceNow: self.threeDays), toGranularity: .minute), .orderedSame)
+        let threeDays = threeDays
+        getAccountsClosure = { .success([account]) }
+        getPositionsClosure = { _, _ in .success([]) }
+        getTransactionsClosure = { _, date in
+            #expect(Calendar.current.compare(date!, to: Date(timeIntervalSinceNow: threeDays), toGranularity: .minute) == .orderedSame)
             verifiedTransactions = true
             return .success([])
         }
         importer.downloaderClass = TestDownloader.self
         importer.load()
-        XCTAssert(verifiedTransactions)
+        #expect(verifiedTransactions)
     }
 
-    func testLoadTransactions() throws {
+    @Test
+    func loadTransactions() throws {
         let ledger = Ledger()
         try ledger.add(SwiftBeanCountModel.Account(name: try AccountName("Assets:W:Cash"), metaData: ["importer-type": "wealthsimple", "number": "A1B2"]))
         try ledger.add(Commodity(symbol: "ETF"))
@@ -235,9 +247,9 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
         var transaction2 = TestTransaction()
         transaction2.transactionType = .paymentSpend
         transaction2.quantity = "-5.25"
-        Self.getAccounts = { .success([account]) }
-        Self.getPositions = { _, _ in .success([]) }
-        Self.getTransactions = { _, _ in .success([transaction1, transaction2]) }
+        getAccountsClosure = { .success([account]) }
+        getPositionsClosure = { _, _ in .success([]) }
+        getTransactionsClosure = { _, _ in .success([transaction1, transaction2]) }
         importer.downloaderClass = TestDownloader.self
         importer.load()
         let postings = [
@@ -247,19 +259,20 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
                     cost: try Cost(amount: Amount(number: Decimal(string: "2.24")!, commoditySymbol: "CAD", decimalDigits: 2), date: nil, label: nil))
         ]
         let metaData = TransactionMetaData(date: transaction1.processDate, metaData: ["wealthsimple-id": "transID"])
-        XCTAssertEqual(importer.nextTransaction(), ImportedTransaction(STransaction(metaData: metaData, postings: postings)))
+        #expect(importer.nextTransaction() == ImportedTransaction(STransaction(metaData: metaData, postings: postings)))
         let price = Amount(number: Decimal(string: "11.76")!, commoditySymbol: "CAD", decimalDigits: 2)
         let transaction = STransaction(metaData: metaData, postings: [
             postings[0],
             try Posting(accountName: try AccountName("Expenses:TODO"), amount: postings[1].amount, price: price, priceType: .total)
         ])
-        XCTAssertEqual(importer.nextTransaction(), ImportedTransaction(transaction, shouldAllowUserToEdit: true, accountName: postings[0].accountName))
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssertEqual(importer.pricesToImport(), [try Price(date: transaction1.processDate, commoditySymbol: "ETF", amount: postings[1].cost!.amount!)])
-        XCTAssert(importer.balancesToImport().isEmpty)
+        #expect(importer.nextTransaction() == ImportedTransaction(transaction, shouldAllowUserToEdit: true, accountName: postings[0].accountName))
+        #expect(importer.nextTransaction() == nil)
+        #expect(importer.pricesToImport() == [try Price(date: transaction1.processDate, commoditySymbol: "ETF", amount: postings[1].cost!.amount!)])
+        #expect(importer.balancesToImport().isEmpty)
     }
 
-    func testLoadPositions() throws {
+    @Test
+    func loadPositions() throws {
         let ledger = Ledger()
         try ledger.add(SwiftBeanCountModel.Account(name: try AccountName("Assets:W:Cash"), metaData: ["importer-type": "wealthsimple", "number": "A1B2"]))
         try ledger.add(Commodity(symbol: "XGRO"))
@@ -270,155 +283,159 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
         var account = TestAccount()
         let position = TestPosition()
         account.id = position.accountId
-        Self.getAccounts = { .success([account]) }
-        Self.getPositions = { _, _ in .success([position]) }
-        Self.getTransactions = { _, _ in .success([]) }
+        getAccountsClosure = { .success([account]) }
+        getPositionsClosure = { _, _ in .success([position]) }
+        getTransactionsClosure = { _, _ in .success([]) }
         importer.downloaderClass = TestDownloader.self
         importer.load()
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssertEqual(
-            importer.pricesToImport(),
-            [try Price(date: position.positionDate, commoditySymbol: "XGRO", amount: Amount(number: Decimal(string: "1.11")!, commoditySymbol: "CAD", decimalDigits: 2))]
-        )
-        XCTAssertEqual(importer.balancesToImport(),
-                       [Balance(date: position.positionDate, accountName: xgroAccount, amount: Amount(number: Decimal(2), commoditySymbol: "XGRO", decimalDigits: 2))])
+        #expect(importer.nextTransaction() == nil)
+        let expectedPrice = try Price(date: position.positionDate,
+                                      commoditySymbol: "XGRO",
+                                      amount: Amount(number: Decimal(string: "1.11")!, commoditySymbol: "CAD", decimalDigits: 2))
+        #expect(importer.pricesToImport() == [expectedPrice])
+        #expect(importer.balancesToImport()
+            == [Balance(date: position.positionDate, accountName: xgroAccount, amount: Amount(number: Decimal(2), commoditySymbol: "XGRO", decimalDigits: 2))])
     }
 
-    func testLoadTransactionMappingError() {
+    @Test
+    func loadTransactionMappingError() {
         let importer = WealthsimpleDownloadImporter(ledger: nil)
-        let account = TestAccount()
         let transaction = TestTransaction()
         let error = WealthsimpleConversionError.missingWealthsimpleAccount("A1B2")
         let delegate = ErrorDelegate(error: error)
         importer.delegate = delegate
-        Self.getAccounts = { .success([account]) }
-        Self.getPositions = { _, _ in .success([]) }
-        Self.getTransactions = { _, _ in .success([transaction]) }
+        getAccountsClosure = { .success([TestAccount()]) }
+        getPositionsClosure = { _, _ in .success([]) }
+        getTransactionsClosure = { _, _ in .success([transaction]) }
         importer.downloaderClass = TestDownloader.self
         importer.load()
-        XCTAssert(delegate.verified)
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssert(importer.pricesToImport().isEmpty)
-        XCTAssert(importer.balancesToImport().isEmpty)
+        #expect(delegate.verified)
+        #expect(importer.nextTransaction() == nil)
+        #expect(importer.pricesToImport().isEmpty)
+        #expect(importer.balancesToImport().isEmpty)
     }
 
-    func testLoadPositionMappingError() {
+    @Test
+    func loadPositionMappingError() {
         let importer = WealthsimpleDownloadImporter(ledger: nil)
-        let account = TestAccount()
         let position = TestPosition()
         let error = WealthsimpleConversionError.accountNotFound("AccountIDPosition")
         let delegate = ErrorDelegate(error: error)
         importer.delegate = delegate
-        Self.getAccounts = { .success([account]) }
-        Self.getPositions = { _, _ in .success([position]) }
-        Self.getTransactions = { _, _ in
-            XCTFail("Transactions should not be requested if accounts fail")
+        getAccountsClosure = { .success([TestAccount()]) }
+        getPositionsClosure = { _, _ in .success([position]) }
+        getTransactionsClosure = { _, _ in
+            Issue.record("Transactions should not be requested if accounts fail")
             return .success([])
         }
         importer.downloaderClass = TestDownloader.self
         importer.load()
-        XCTAssert(delegate.verified)
-        XCTAssertNil(importer.nextTransaction())
-        XCTAssert(importer.pricesToImport().isEmpty)
-        XCTAssert(importer.balancesToImport().isEmpty)
+        #expect(delegate.verified)
+        #expect(importer.nextTransaction() == nil)
+        #expect(importer.pricesToImport().isEmpty)
+        #expect(importer.balancesToImport().isEmpty)
     }
 
-    func testLoadAccounts() { // swiftlint:disable:this function_body_length
+    @Test
+    func loadAccounts() { // swiftlint:disable:this function_body_length
         let importer = WealthsimpleDownloadImporter(ledger: nil)
         var verifiedPositionsOne = false, verifiedPositionsTwo = false, verifiedTransactionsOne = false, verifiedTransactionsTwo = false
         let account1 = TestAccount(), account2 = TestAccount(id: "id222", number: "C2c2")
-        Self.getAccounts = { .success([account1, account2]) }
-        Self.getPositions = { requestedAccount, _ in
+        getAccountsClosure = { .success([account1, account2]) }
+        getPositionsClosure = { requestedAccount, _ in
             if requestedAccount.id == account1.id && requestedAccount.number == account1.number {
-                XCTAssertFalse(verifiedPositionsOne)
+                #expect(!verifiedPositionsOne)
                 verifiedPositionsOne = true
             } else if requestedAccount.id == account2.id && requestedAccount.number == account2.number {
-                XCTAssertFalse(verifiedPositionsTwo)
+                #expect(!verifiedPositionsTwo)
                 verifiedPositionsTwo = true
             } else {
-                XCTFail("Called with wrong account")
+                Issue.record("Called with wrong account")
             }
             return .success([])
         }
-        Self.getTransactions = { requestedAccount, _ in
+        getTransactionsClosure = { requestedAccount, _ in
             if requestedAccount.id == account1.id && requestedAccount.number == account1.number {
-                XCTAssertFalse(verifiedTransactionsOne)
+                #expect(!verifiedTransactionsOne)
                 verifiedTransactionsOne = true
             } else if requestedAccount.id == account2.id && requestedAccount.number == account2.number {
-                XCTAssertFalse(verifiedTransactionsTwo)
+                #expect(!verifiedTransactionsTwo)
                 verifiedTransactionsTwo = true
             } else {
-                XCTFail("Called with wrong account")
+                Issue.record("Called with wrong account")
             }
             return .success([])
         }
         importer.downloaderClass = TestDownloader.self
         importer.load()
-        XCTAssert(verifiedPositionsOne)
-        XCTAssert(verifiedPositionsTwo)
-        XCTAssert(verifiedTransactionsOne)
-        XCTAssert(verifiedTransactionsTwo)
+        #expect(verifiedPositionsOne)
+        #expect(verifiedPositionsTwo)
+        #expect(verifiedTransactionsOne)
+        #expect(verifiedTransactionsTwo)
     }
 
-    func testPositionError() {
+    @Test
+    func positionError() {
         let importer = WealthsimpleDownloadImporter(ledger: nil)
-        let account = TestAccount()
         let error = PositionError.httpError(error: "TESTErrorString")
         let delegate = ErrorDelegate(error: error)
         importer.delegate = delegate
-        Self.getAccounts = { .success([account]) }
-        Self.getPositions = { _, _ in .failure(error) }
-        Self.getTransactions = { _, _ in
-            XCTFail("Transactions should not be requested if positions fail")
+        getAccountsClosure = { .success([TestAccount()]) }
+        getPositionsClosure = { _, _ in .failure(error) }
+        getTransactionsClosure = { _, _ in
+            Issue.record("Transactions should not be requested if positions fail")
             return .success([])
         }
         importer.downloaderClass = TestDownloader.self
         importer.load()
-        XCTAssert(delegate.verified)
+        #expect(delegate.verified)
     }
 
-    func testTransactionError() {
+    @Test
+    func transactionError() {
         let importer = WealthsimpleDownloadImporter(ledger: nil)
-        let account = TestAccount()
         let error = TransactionError.httpError(error: "TESTErrorString")
         let delegate = ErrorDelegate(error: error)
         importer.delegate = delegate
-        Self.getAccounts = { .success([account]) }
-        Self.getPositions = { _, _ in .success([]) }
-        Self.getTransactions = { _, _ in .failure(error) }
+        getAccountsClosure = { .success([TestAccount()]) }
+        getPositionsClosure = { _, _ in .success([]) }
+        getTransactionsClosure = { _, _ in .failure(error) }
         importer.downloaderClass = TestDownloader.self
         importer.load()
-        XCTAssert(delegate.verified)
+        #expect(delegate.verified)
     }
 
-    func testCredentialStorage() {
+    @Test
+    func credentialStorage() {
         let importer = WealthsimpleDownloadImporter(ledger: nil)
         let delegate = CredentialInputDelegate(saveKeys: ["wealthsimple-testKey2"], saveValues: ["testValue"], readKeys: ["wealthsimple-testKey"], readReturnValues: [nil])
         importer.delegate = delegate
         importer.downloaderClass = TestDownloader.self
         importer.load()
-        XCTAssertNil(Self.credentialStorage.read("testKey"))
-        Self.credentialStorage.save("testValue", for: "testKey2")
-        XCTAssert(delegate.verified)
+        #expect(credentialStorageClosure?.read("testKey") == nil)
+        credentialStorageClosure?.save("testValue", for: "testKey2")
+        #expect(delegate.verified)
     }
 
-    func testAuthenticationCallback() {
-        let expectation = XCTestExpectation(description: "authenticationCallback called")
+    @Test
+    func authenticationCallback() async {
         let importer = WealthsimpleDownloadImporter(ledger: nil)
         let delegate = InputProviderDelegate()
         importer.delegate = delegate
         importer.downloaderClass = TestDownloader.self
         importer.load()
-        Self.authenticationCallback {
-            XCTAssertEqual($0, "testUserName")
-            XCTAssertEqual($1, "testPassword")
-            XCTAssertEqual($2, "testOTP")
-            expectation.fulfill()
+        await confirmation { confirm in
+            authenticationCallbackClosure? {
+                #expect($0 == "testUserName")
+                #expect($1 == "testPassword")
+                #expect($2 == "testOTP")
+                confirm()
+            }
         }
-        wait(for: [expectation], timeout: 10.0)
-        XCTAssert(delegate.verified)
+        #expect(delegate.verified)
     }
 
+}
 }
 
 extension Wealthsimple.AccountError: EquatableError {
