@@ -85,15 +85,28 @@ extension WealthsimpleLedgerMapper {
               let outTransaction = transferOut.first,
               accountsMatchDescription(inTransaction: inTransaction, outTransaction: outTransaction),
               let inAccount = accounts.first(where: { $0.id == inTransaction.accountId }),
-              let (_, result) = try? mapTransaction(inTransaction, in: inAccount), let result else {
+              let outAccount = accounts.first(where: { $0.id == outTransaction.accountId }) else {
             return nil
         }
-        var ids = result.metaData.metaData
-        ids[MetaDataKeys.id] = group.map(\.id).sorted().joined(separator: " ")
+
+        // Get the ledger account names for both accounts
+        guard let inAccountName = try? lookup.ledgerAccountName(of: inAccount),
+              let outAccountName = try? lookup.ledgerAccountName(of: outAccount) else {
+            return nil
+        }
+
+        // Create postings directly between the two accounts
+        let postings = [
+            Posting(accountName: inAccountName, amount: inTransaction.netCash),
+            Posting(accountName: outAccountName, amount: outTransaction.netCash)
+        ]
+
+        let mergedId = group.map(\.id).sorted().joined(separator: " ")
         let meta = TransactionMetaData(
-            date: result.metaData.date, payee: result.metaData.payee, narration: result.metaData.narration, metaData: ids
+            date: inTransaction.processDate,
+            metaData: [MetaDataKeys.id: mergedId]
         )
-        return STransaction(metaData: meta, postings: result.postings)
+        return STransaction(metaData: meta, postings: postings)
     }
 
     func mapTransfersIndividually(_ group: [WTransaction]) -> [STransaction] {

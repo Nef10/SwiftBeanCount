@@ -672,8 +672,8 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         let expectedTransaction = Transaction(
             metaData: TransactionMetaData(date: date, metaData: [MetaDataKeys.id: mergedId]),
             postings: [
-                try posting(account: "Assets:W:Cash:In", number: "1500.0"),
-                Posting(accountName: setup.transferInAccount, amount: priceAmount(number: "-1500.0", decimals: 2))
+                Posting(accountName: setup.inAccountName, amount: priceAmount(number: "1500.0", decimals: 2)),
+                Posting(accountName: setup.outAccountName, amount: priceAmount(number: "-1500.0", decimals: 2))
             ]
         )
         #expect(prices.isEmpty)
@@ -831,7 +831,8 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         let inAccountNumber: String
         let outAccountId: String
         let outAccountNumber: String
-        let transferInAccount: AccountName
+        let inAccountName: AccountName
+        let outAccountName: AccountName
     }
 
     private func transferTransaction(
@@ -905,15 +906,14 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         let cashOutAccount = try AccountName("Assets:W:Cash:Out")
         try ledger.add(SAccount(name: cashInAccount, metaData: [MetaDataKeys.importerType: MetaData.importerType, MetaDataKeys.number: inAccountNumber]))
         try ledger.add(SAccount(name: cashOutAccount, metaData: [MetaDataKeys.importerType: MetaData.importerType, MetaDataKeys.number: outAccountNumber]))
-        let transferInAccount = try AccountName("Assets:Transfer:In")
-        try ledger.add(SAccount(name: transferInAccount, metaData: ["\(MetaDataKeys.prefix)transfer-in": inAccountNumber]))
         return CrossAccountSetup(
             mapper: testMapper,
             inAccountId: inAccountId,
             inAccountNumber: inAccountNumber,
             outAccountId: outAccountId,
             outAccountNumber: outAccountNumber,
-            transferInAccount: transferInAccount
+            inAccountName: cashInAccount,
+            outAccountName: cashOutAccount
         )
     }
 
