@@ -209,7 +209,7 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlin
 
     private func downloadTransactions(_ completion: @escaping () -> Void) { // swiftlint:disable:this function_body_length
         let group = DispatchGroup()
-        var downloadedTransactions = [SwiftBeanCountModel.Transaction]()
+        var allWealthsimpleTransactions = [Wealthsimple.Transaction]()
         var errorOccurred = false
 
         downloadedAccounts.forEach { account in
@@ -221,14 +221,7 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlin
                         errorOccurred = true
                         self.showError(error)
                     case let .success(transactions):
-                        do {
-                            let (accountPrices, accountTransactions) = try self.mapper.mapTransactionsToPriceAndTransactions(transactions)
-                            self.prices.append(contentsOf: accountPrices)
-                            downloadedTransactions.append(contentsOf: accountTransactions)
-                        } catch {
-                            errorOccurred = true
-                            self.showError(error)
-                        }
+                        allWealthsimpleTransactions.append(contentsOf: transactions)
                     }
                     group.leave()
                 }
@@ -237,7 +230,14 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlin
 
         group.wait()
         if !errorOccurred {
-            mapTransactions(downloadedTransactions, completion)
+            do {
+                let (mappedPrices, downloadedTransactions) = try mapper.mapTransactionsToPriceAndTransactions(allWealthsimpleTransactions)
+                prices.append(contentsOf: mappedPrices)
+                mapTransactions(downloadedTransactions, completion)
+            } catch {
+                showError(error)
+                completion()
+            }
         } else {
             completion()
         }
