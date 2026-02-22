@@ -108,6 +108,10 @@ jobs:
 
         # Combine all .lcov files into a single lcov.info
         find . -maxdepth 1 -name "*.lcov" -exec echo -a {} \; | xargs lcov -o "${OUTPUT_FILE}"
+    - name: Normalize file paths in coverage report
+      run: |
+        sed -i.bak "s|^SF:${GITHUB_WORKSPACE}/|SF:|g" "${OUTPUT_FILE}"
+        rm -f "${OUTPUT_FILE}.bak"
     - name: Read minimum test coverage threshhold
       id: read-minimum-coverage
       run: echo "MINIMUM_COVERAGE=$(cat ./.github/minimum_coverage.txt)" >> $GITHUB_ENV
