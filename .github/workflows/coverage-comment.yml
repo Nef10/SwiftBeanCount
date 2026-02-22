@@ -38,8 +38,6 @@ jobs:
         run: unzip '*.zip'
       - name: Get PR number
         run: echo "PR_NUMBER=$(cat $(find . -maxdepth 1 -type f -name 'PR_NUMBER*' | head -n 1))" >> $GITHUB_ENV
-      - name: Normalize file paths in coverage report
-        run: 'find . -maxdepth 1 -type f -name "*.info" -exec sed -i "s|^SF:${GITHUB_WORKSPACE}/|SF:|g" {} +'
       - name: Generate code coverage report
         uses: Nef10/lcov-reporter-action@v0.6.0
         with:
