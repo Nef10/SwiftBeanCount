@@ -125,7 +125,7 @@ jobs:
       if: ${{ failure() && steps.enforce-minimum-coverage.outcome == 'failure' && steps.read-minimum-coverage.outcome == 'success' }}
       run: echo "failed" > "./${{matrix.platform}}-coverage/${{matrix.platform}}-min-coverage-failed"
     - name: Upload Coverage Information
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       if: ${{ !cancelled() && steps.read-minimum-coverage.outcome == 'success' }}
       with:
         name: ${{matrix.platform}}-coverage
