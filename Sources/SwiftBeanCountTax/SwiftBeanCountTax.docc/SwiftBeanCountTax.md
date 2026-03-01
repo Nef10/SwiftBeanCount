@@ -79,7 +79,7 @@ If multiple custom directives for the same setting exist, the latest one up unti
 
 #### Special Characters
 
-Tax Slips only support letters and numbers. The only exceptions are round brackets `()`. To use them, add them into the `slip-names` meta data:
+Tax Slips only support letters, numbers and `-`. The only exceptions are round brackets `()`. To use them, add them into the `slip-names` meta data:
 
 ```
 2020-01-01 custom "tax-slip-settings" "slip-names" "t4a(p)"
@@ -91,6 +91,42 @@ At all other places used, remove the brackets, e.g. use `t4ap`:
 2020-01-01 open Income:CPP CAD
   t4ap: "Taxable CPP benefits (Box 20)"
 ```
+
+#### Example of Contribution Room tracking, e.g. RRSP
+
+To track RRSP contributions:
+
+1. **Create a currency for the room**, e.g.
+   ```
+   2022-01-01 commodity RRSP.ROOM
+   ```
+
+1. **Create Account for the room you have right now**, e.g.
+   ```
+   2022-01-01 open Assets:RRSPRoom RRSP.ROOM
+   ```
+
+1. **Configure a tax slip for RRSP contributions** using the `custom` directive, e.g.:
+   ```
+   2022-01-01 custom "tax-slip-settings" "slip-names" "rrsp-contribution"
+   2022-01-01 custom "tax-slip-settings" "slip-currency" "rrsp-contribution" "CAD"
+   ```
+
+1. **Create an account for each tax slip you want to have**, e.g. by Bank, with the proper meta data on it:
+   ```
+   2022-01-01 open Expenses:RRSPRoom:BankABC RRSP.ROOM
+    tax-slip-issuer: "ManuLife"
+    rrsp-contribution: "Contribution"
+   ```
+
+1. **When you contribute and use up room, add the room part to your transaction**:
+   ```
+   2022-03-01 * "RRSP Contribution"
+     Assets:Chequing          -1000.00 CAD
+     Assets:BankABC:RRSP       1000.00 CAD
+     Assets:RRSPRoom          -1000.00 CAD
+     Expenses:RRSPRoom:BankABC 1000.00 CAD
+   ```
 
 ### Dates
 
