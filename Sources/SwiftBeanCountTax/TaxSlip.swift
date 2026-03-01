@@ -188,13 +188,29 @@ public struct TaxSlip: Identifiable {
     }
 
     init(name: String, year: Int, issuer: String?, entries: [TaxSlipEntry]) throws(TaxErrors) {
-        self.name = name
+        self.name = Self.uppercaseSpecialWords(in: name)
         self.year = year
         self.issuer = (issuer?.isEmpty ?? true) ? nil : issuer
         self.entries = entries
         guard entries.allSatisfy({ $0.symbol == nil }) || entries.allSatisfy({ $0.symbol != nil }) else {
             throw TaxErrors.entriesWithAndWithoutSymbol(name, year, issuer)
         }
+    }
+
+    /// Uppercases RRSP and TFSA in the slip name if present as a word separated by -, (, ), or a number
+    private static func uppercaseSpecialWords(in name: String) -> String {
+        let patterns = [
+            "(?i)(?<=^|[\\-\\(\\)\\d])rrsp(?=$|[\\-\\(\\)\\d])",
+            "(?i)(?<=^|[\\-\\(\\)\\d])tfsa(?=$|[\\-\\(\\)\\d])"
+        ]
+        var result = name
+        for pattern in patterns {
+            if let regex = try? NSRegularExpression(pattern: pattern) {
+                let range = NSRange(result.startIndex..<result.endIndex, in: result)
+                result = regex.stringByReplacingMatches(in: result, options: [], range: range, withTemplate: pattern.contains("rrsp") ? "RRSP" : "TFSA")
+            }
+        }
+        return result
     }
 
     private func rowFrom(boxes: [String]) -> [TaxSlipRow] {

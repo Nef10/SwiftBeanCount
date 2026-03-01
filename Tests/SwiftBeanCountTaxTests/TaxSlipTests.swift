@@ -369,4 +369,30 @@ struct TaxSlipTests { // swiftlint:disable:this type_body_length
         #expect(taxSlip.description == expectedDescription)
     }
 
+    @Test
+    func slipNameUppercasing_rrsp_tfsa() throws {
+        let dummyEntry = TaxSlipEntry(symbol: nil, name: nil, box: "1", value: Amount(number: 1, commoditySymbol: "CAD").multiCurrencyAmount, originalValue: nil)
+        let cases: [(String, String)] = [
+            ("rrsp", "RRSP"),
+            ("tfsa", "TFSA"),
+            ("Rrsp", "RRSP"),
+            ("Tfsa", "TFSA"),
+            ("my-rrsp-slip", "my-RRSP-slip"),
+            ("my-tfsa-slip", "my-TFSA-slip"),
+            ("slip(rrsp)", "slip(RRSP)"),
+            ("slip(tfsa)", "slip(TFSA)"),
+            ("slip1rrsp2", "slip1RRSP2"),
+            ("slip1tfsa2", "slip1TFSA2"),
+            ("slip-rrsp-tfsa", "slip-RRSP-TFSA"),
+            ("slip-(rrsp)-(tfsa)", "slip-(RRSP)-(TFSA)"),
+            ("slip-rrsp-tfsax", "slip-RRSP-tfsax"),
+            ("slip-rrspx-tfsa", "slip-rrspx-TFSA"),
+            ("slip-rrspx-tfsax", "slip-rrspx-tfsax")
+        ]
+        for (input, expected) in cases {
+            let slip = try TaxSlip(name: input, year: 2_022, issuer: nil, entries: [dummyEntry])
+            #expect(slip.name == expected, "Input: \(input) → Output: \(slip.name), Expected: \(expected)")
+        }
+    }
+
 }
