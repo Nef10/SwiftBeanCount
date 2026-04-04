@@ -37,7 +37,7 @@ jobs:
         skip-verify-signature: ${{ matrix.os == 'ubuntu-latest' }}
     - name: Setup Xcode
       if : ${{ matrix.platform == 'iOS' }}
-      uses: maxim-lobanov/setup-xcode@v1.6.0
+      uses: maxim-lobanov/setup-xcode@v1.7.0
       with:
         xcode-version: ${{ matrix.xcode-version }}
     - name: Configure SwiftLint Reporter
