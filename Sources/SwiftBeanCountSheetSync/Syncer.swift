@@ -38,6 +38,24 @@ enum SyncError: LocalizedError, Equatable {
     }
 }
 
+/// Intermediate result grouping the output of downloading and parsing a sheet.
+///
+/// Avoids a three-element tuple return type and keeps the sync pipeline readable.
+struct SheetParsedData {
+    let transactionData: [SheetParser.TransactionData]
+    let runningTotal: Decimal?
+    let parserErrors: [SheetParserError]
+}
+
+/// Intermediate result grouping the converted model transactions and related metadata.
+///
+/// Avoids a three-element tuple return type and keeps the sync pipeline readable.
+struct SheetTransactionData {
+    let transactions: [Transaction]
+    let balance: Balance?
+    let parserErrors: [SheetParserError]
+}
+
 /// Result of the syncronization
 public struct SyncResult {
 
@@ -49,6 +67,8 @@ public struct SyncResult {
     public let parserErrors: [SheetParserError]
     /// Settings for the syncronization read from the ledger
     public let ledgerSettings: LedgerSettings
+    /// Balance assertion derived from the sheet's `Running Total` column, or `nil` if that column is absent.
+    public let balance: Balance?
 
     /// Creates the syncroization result
     /// - Parameters:
@@ -56,11 +76,13 @@ public struct SyncResult {
     ///   - transactions: Transactions which need to be added
     ///   - parserErrors: Errors of lines in the Sheet which could not be read
     ///   - ledgerSettings: Settings for the syncronization read from the ledger
-    public init(mode: SyncMode, transactions: [Transaction], parserErrors: [SheetParserError], ledgerSettings: LedgerSettings) {
+    ///   - balance: Balance assertion from the sheet's Running Total, if present
+    public init(mode: SyncMode, transactions: [Transaction], parserErrors: [SheetParserError], ledgerSettings: LedgerSettings, balance: Balance? = nil) {
         self.mode = mode
         self.transactions = transactions
         self.parserErrors = parserErrors
         self.ledgerSettings = ledgerSettings
+        self.balance = balance
     }
 }
 
@@ -97,13 +119,70 @@ public class GenericSyncer {
         self.ledgerInput = .ledger(ledger)
     }
 
+    /// Downloads the sheet, parses its rows, and converts them to model transactions.
+    ///
+    /// Delegates the download and parsing to `getTransactionDataFromSheet`, then maps
+    /// the parsed data through `TransactionMapper` and builds an optional `Balance`
+    /// assertion from the running total if a `Running Total` column is present.
+    /// - Parameters:
+    ///   - authentication: Authenticated Google session.
+    ///   - ledgerSettings: Sync configuration providing the owner's name, account, and commodity.
+    /// - Returns: A `SheetTransactionData` on success, or a `DownloaderError` on failure.
     func getTransactionsFromSheet(authentication: Authentication, ledgerSettings: LedgerSettings)
-            -> Result<([Transaction], [SheetParserError]), SheetDownloader.DownloaderError> {
+            -> Result<SheetTransactionData, SheetDownloader.DownloaderError> {
         getTransactionDataFromSheet(authentication: authentication, name: ledgerSettings.name)
-            .flatMap { sheetTransactionData, sheetParserErrors in
-                let sheetTransactions = TransactionMapper.mapDataToTransactions(sheetTransactionData, ledgerSettings: ledgerSettings)
-                return .success((sheetTransactions, sheetParserErrors))
+            .flatMap { parsed in
+                let sheetTransactions = TransactionMapper.mapDataToTransactions(parsed.transactionData, ledgerSettings: ledgerSettings)
+                let balance = buildBalance(runningTotal: parsed.runningTotal, transactions: sheetTransactions, ledgerSettings: ledgerSettings)
+                return .success(SheetTransactionData(transactions: sheetTransactions, balance: balance, parserErrors: parsed.parserErrors))
             }
+    }
+
+    /// Creates a `Balance` assertion from a running total if one is available.
+    ///
+    /// Uses the date of the last transaction and the configured account and commodity
+    /// to construct the assertion.
+    /// - Parameters:
+    ///   - runningTotal: The running total extracted from the sheet, or `nil` if absent.
+    ///   - transactions: The mapped sheet transactions.
+    ///   - ledgerSettings: Sync configuration providing account name and commodity symbol.
+    /// - Returns: A `Balance` if both `runningTotal` and at least one transaction exist; otherwise `nil`.
+    private func buildBalance(runningTotal: Decimal?, transactions: [Transaction], ledgerSettings: LedgerSettings) -> Balance? {
+        guard let runningTotal,
+              let lastTransaction = transactions.last
+        else {
+            return nil
+        }
+        let amount = Amount(number: runningTotal, commoditySymbol: ledgerSettings.commoditySymbol, decimalDigits: 2)
+        return Balance(date: lastTransaction.metaData.date, accountName: ledgerSettings.accountName, amount: amount)
+    }
+
+    /// Determines whether the sheet behaves as a single-month sheet for **upload** purposes.
+    ///
+    /// Returns `true` when 90% or more of the transactions fall in the same calendar
+    /// month, in which case only ledger transactions from that month are candidates for
+    /// upload. Returns `true` for empty or single-transaction sheets.
+    ///
+    /// Download is not affected by this heuristic — all sheet transactions are always
+    /// compared against the full ledger regardless of the result.
+    ///
+    /// This check is independent of the column format used in the sheet: both total amount
+    /// and share amount formats can be monthly or long-running.
+    /// - Parameter transactions: The transactions parsed from the sheet.
+    /// - Returns: `true` if the sheet is treated as monthly; `false` if it spans multiple months.
+    func isMonthlySheet(_ transactions: [Transaction]) -> Bool {
+        guard transactions.count >= 2
+        else {
+            return true
+        }
+        let calendar = Calendar.current
+        var monthCounts = [DateComponents: Int]()
+        for transaction in transactions {
+            let components = calendar.dateComponents([.year, .month], from: transaction.metaData.date)
+            monthCounts[components, default: 0] += 1
+        }
+        let maxCount = monthCounts.values.max() ?? 0
+        return Double(maxCount) / Double(transactions.count) >= 0.9
     }
 
     func readLedgerSettingsAndTransactions() -> Result<([Transaction], LedgerSettings), Error> {
@@ -160,16 +239,24 @@ public class GenericSyncer {
         return multiCurrencyAmount.amountFor(symbol: ledgerSettings.commoditySymbol)
     }
 
+    /// Downloads the raw sheet data and parses it into transaction data using `SheetParser`.
+    ///
+    /// Blocks the calling thread using a semaphore until the asynchronous download
+    /// and parse operations complete.
+    /// - Parameters:
+    ///   - authentication: Authenticated Google session.
+    ///   - name: The ledger owner's name, forwarded to `SheetParser`.
+    /// - Returns: A `SheetParsedData` on success, or a `DownloaderError` on failure.
     private func getTransactionDataFromSheet(authentication: Authentication, name: String)
-            -> Result<([SheetParser.TransactionData], [SheetParserError]), SheetDownloader.DownloaderError> {
-        var result: Result<([SheetParser.TransactionData], [SheetParserError]), SheetDownloader.DownloaderError>!
+            -> Result<SheetParsedData, SheetDownloader.DownloaderError> {
+        var result: Result<SheetParsedData, SheetDownloader.DownloaderError>!
         let semaphore = DispatchSemaphore(value: 0)
 
         SheetDownloader.download(authentication: authentication, url: sheetURL) {
             switch $0 {
             case .success(let data):
-                SheetParser.parseSheet(data, name: name) { transactionData, parserErrors in
-                    result = .success((transactionData, parserErrors))
+                SheetParser.parseSheet(data, name: name) { transactionData, runningTotal, parserErrors in
+                    result = .success(SheetParsedData(transactionData: transactionData, runningTotal: runningTotal, parserErrors: parserErrors))
                     semaphore.signal()
                 }
             case .failure(let error):
@@ -178,7 +265,7 @@ public class GenericSyncer {
             }
         }
         _ = semaphore.wait(wallTimeout: .distantFuture)
-       return result
+        return result
     }
 
 }

@@ -21,16 +21,16 @@ public class Downloader: GenericSyncer, Syncer {
                 .flatMap { ledgerTransactions, ledgerSettings -> Result<SyncResult, Error> in
                     let sheetTransactions = getTransactionsFromSheet(authentication: authentication, ledgerSettings: ledgerSettings)
                     switch sheetTransactions {
-                    case .success(let (sheetTransactions, sheetParserErrors)):
-                        let filteredLedgerTransactions = ledgerTransactionForCorrectMonth(ledgerTransactions: ledgerTransactions, sheetTransactions: sheetTransactions)
-                        let filteredSheetTransactions = removeExistingTransactions(from: sheetTransactions,
-                                                                                   existingTransactions: filteredLedgerTransactions,
+                    case .success(let sheetData):
+                        let filteredSheetTransactions = removeExistingTransactions(from: sheetData.transactions,
+                                                                                   existingTransactions: ledgerTransactions,
                                                                                    ledgerSettings: ledgerSettings)
-                        let mergedTransactions = mergeExisting(transactions: filteredSheetTransactions, into: filteredLedgerTransactions, ledgerSettings: ledgerSettings)
+                        let mergedTransactions = mergeExisting(transactions: filteredSheetTransactions, into: ledgerTransactions, ledgerSettings: ledgerSettings)
                         return .success(SyncResult(mode: .download,
                                                    transactions: mergedTransactions,
-                                                   parserErrors: sheetParserErrors,
-                                                   ledgerSettings: ledgerSettings))
+                                                   parserErrors: sheetData.parserErrors,
+                                                   ledgerSettings: ledgerSettings,
+                                                   balance: sheetData.balance))
                     case .failure(let error):
                         return .failure(error)
                     }
