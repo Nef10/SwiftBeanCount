@@ -3,7 +3,7 @@ import Foundation
 import Testing
 
 @Suite
-struct SheetParserTotalAmountFormatTests {
+struct SheetParserTotalAmountFormatTests { // swiftlint:disable:this type_body_length
 
     @Test
     func parseSheetWithValidData() {
@@ -94,7 +94,7 @@ struct SheetParserTotalAmountFormatTests {
 
         #expect(transactions.count == 1)
         #expect(errors.count == 1)
-        #expect(errors[0] == .invalidValue("Parsing Error! Invalid Date: invalid-date"))
+        #expect(errors[0] == .invalidValue("Line 2: Parsing Error! Invalid Date: invalid-date"))
     }
 
     @Test
@@ -114,7 +114,7 @@ struct SheetParserTotalAmountFormatTests {
 
         #expect(transactions.count == 1)
         #expect(errors.count == 1)
-        #expect(errors[0] == .invalidValue("Parsing Error! Invalid Number: invalid"))
+        #expect(errors[0] == .invalidValue("Line 2: Parsing Error! Invalid Number: invalid"))
     }
 
     @Test
@@ -300,6 +300,28 @@ struct SheetParserTotalAmountFormatTests {
         #expect(transactions.count == 2)
         #expect(errors.isEmpty)
         #expect(transactions[0].narration == "Weekly shopping")
+    }
+
+    @Test
+    func parseSheetTotalAmountFormatTrimsWhitespaceFromTextFields() {
+        let data = [
+            ["Date", "Paid to", "Amount", "Category", "Who paid", "Comment", "Part Alice", "Part Bob"],
+            [" 2024-01-15 ", " Store ", "100.00", " Groceries ", " Alice ", " Weekly shopping ", "50.00", "50.00"],
+            ["2024-01-16", "Restaurant", "80.00", "Dining", " Bob ", "Dinner", "40.00", "40.00"]
+        ]
+        var transactions: [SheetParser.TransactionData]!
+        var errors: [SheetParserError]!
+        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, parsedErrors in
+            transactions = parsedTransactions
+            errors = parsedErrors
+        }
+        #expect(errors.isEmpty)
+        #expect(transactions.count == 2)
+        #expect(transactions[0].payee == "Store")
+        #expect(transactions[0].narration == "Weekly shopping")
+        #expect(transactions[0].category == "Groceries")
+        #expect(transactions[0].paidBy == .one)
+        #expect(transactions[1].paidBy == .two)
     }
 
 }

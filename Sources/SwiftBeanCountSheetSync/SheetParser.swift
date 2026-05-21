@@ -137,7 +137,9 @@ enum SheetParser {
         guard let indices = totalAmountFormatIndices(headings: headings, data: data, name: name) else {
             return [.failure(.missingHeader("Missing Header! Headers: \(headings)"))]
         }
-        return data.map { parseTotalAmountFormatRow($0, indices: indices, name: name) }
+        return data.enumerated().map { index, row in
+            parseTotalAmountFormatRow(row, indices: indices, name: name, line: index + 2) // +2 to account for header row and 0-based index
+        }
     }
 
     /// Resolves column positions for a total amount format sheet.
@@ -157,7 +159,9 @@ enum SheetParser {
               let categoryIndex = headings.firstIndex(of: "Category"),
               let payerIndex = firstIndex(ofAlternatives: ["Who paid", "Payor"], in: headings),
               let narrationIndex = firstIndex(ofAlternatives: ["Comment", "Description"], in: headings),
-              let payer2 = (data.first { $0.count > payerIndex && $0[payerIndex] != name })?[payerIndex],
+              let payer2 = (data.first {
+                  $0.count > payerIndex && $0[payerIndex].trimmingCharacters(in: .whitespacesAndNewlines) != name
+              })?[payerIndex].trimmingCharacters(in: .whitespacesAndNewlines),
               let amount1Index = headings.firstIndex(of: "Part \(name)"),
               let amount2Index = headings.firstIndex(of: "Part \(payer2)")
         else {
@@ -183,24 +187,26 @@ enum SheetParser {
     ///   - indices: Pre-resolved column indices for this sheet.
     ///   - name: The ledger owner's name, used to determine who paid.
     /// - Returns: A success with the parsed data, or a failure with a `SheetParserError`.
-    private static func parseTotalAmountFormatRow(_ row: [String], indices: TotalAmountFormatIndices, name: String) -> Result<TransactionData, SheetParserError> {
+    private static func parseTotalAmountFormatRow(_ row: [String], indices: TotalAmountFormatIndices, name: String, line: Int) -> Result<TransactionData, SheetParserError> {
         guard row.count >= indices.maxIndex + 1 else {
-            return .failure(.invalidValue("Parsing Error! Missing Value(s) in row: \(row.joined(separator: " "))"))
+            return .failure(.invalidValue("Line \(line): Parsing Error! Missing Value(s) in row: \(row.joined(separator: " "))"))
         }
-        guard let date = dateFormatter.date(from: row[indices.date]) else {
-            return .failure(.invalidValue("Parsing Error! Invalid Date: \(row[indices.date])"))
+        guard let date = dateFormatter.date(from: row[indices.date].trimmingCharacters(in: .whitespacesAndNewlines)) else {
+            return .failure(.invalidValue("Line \(line): Parsing Error! Invalid Date: \(row[indices.date])"))
         }
         guard let amount = getDecimalFromString(row[indices.amount]) else {
-            return .failure(.invalidValue("Parsing Error! Invalid Number: \(row[indices.amount])"))
+            return .failure(.invalidValue("Line \(line): Parsing Error! Invalid Number: \(row[indices.amount])"))
         }
         guard let amount1 = getDecimalFromString(row[indices.amount1]) else {
-            return .failure(.invalidValue("Parsing Error! Invalid Number: \(row[indices.amount1])"))
+            return .failure(.invalidValue("Line \(line): Parsing Error! Invalid Number: \(row[indices.amount1])"))
         }
         guard let amount2 = getDecimalFromString(row[indices.amount2]) else {
-            return .failure(.invalidValue("Parsing Error! Invalid Number: \(row[indices.amount2])"))
+            return .failure(.invalidValue("Line \(line): Parsing Error! Invalid Number: \(row[indices.amount2])"))
         }
-        let payee = row[indices.payee], narration = row[indices.narration], category = row[indices.category]
-        let paidBy: Payer = row[indices.payer] == name ? .one : .two
+        let payee = row[indices.payee].trimmingCharacters(in: .whitespacesAndNewlines)
+        let narration = row[indices.narration].trimmingCharacters(in: .whitespacesAndNewlines)
+        let category = row[indices.category].trimmingCharacters(in: .whitespacesAndNewlines)
+        let paidBy: Payer = row[indices.payer].trimmingCharacters(in: .whitespacesAndNewlines) == name ? .one : .two
         return .success(TransactionData(
             date: date,
             payee: payee,
@@ -223,7 +229,9 @@ enum SheetParser {
         guard let indices = shareAmountFormatIndices(headings: headings) else {
             return [.failure(.missingHeader("Missing Header! Headers: \(headings)"))]
         }
-        return data.map { parseShareAmountFormatRow($0, indices: indices, name: name) }
+        return data.enumerated().map { index, row in
+            parseShareAmountFormatRow(row, indices: indices, name: name, line: index + 2) // +2 to account for header row and 0-based index
+        }
     }
 
     /// Resolves column positions for a share amount format sheet.
@@ -264,18 +272,20 @@ enum SheetParser {
     ///   - indices: Pre-resolved column indices for this sheet.
     ///   - name: The ledger owner's name, used to determine who paid.
     /// - Returns: A success with the parsed data, or a failure with a `SheetParserError`.
-    private static func parseShareAmountFormatRow(_ row: [String], indices: ShareAmountFormatIndices, name: String) -> Result<TransactionData, SheetParserError> {
+    private static func parseShareAmountFormatRow(_ row: [String], indices: ShareAmountFormatIndices, name: String, line: Int) -> Result<TransactionData, SheetParserError> {
         guard row.count >= indices.maxIndex + 1 else {
-            return .failure(.invalidValue("Parsing Error! Missing Value(s) in row: \(row.joined(separator: " "))"))
+            return .failure(.invalidValue("Line \(line): Parsing Error! Missing Value(s) in row: \(row.joined(separator: " "))"))
         }
-        guard let date = dateFormatter.date(from: row[indices.date]) else {
-            return .failure(.invalidValue("Parsing Error! Invalid Date: \(row[indices.date])"))
+        guard let date = dateFormatter.date(from: row[indices.date].trimmingCharacters(in: .whitespacesAndNewlines)) else {
+            return .failure(.invalidValue("Line \(line): Parsing Error! Invalid Date: \(row[indices.date])"))
         }
         guard let shareOtherPerson = getDecimalFromString(row[indices.shareOtherPerson]) else {
-            return .failure(.invalidValue("Parsing Error! Invalid Number: \(row[indices.shareOtherPerson])"))
+            return .failure(.invalidValue("Line \(line): Parsing Error! Invalid Number: \(row[indices.shareOtherPerson])"))
         }
-        let payee = row[indices.payee], narration = row[indices.narration], category = row[indices.category]
-        let paidBy: Payer = row[indices.payer] == name ? .one : .two
+        let payee = row[indices.payee].trimmingCharacters(in: .whitespacesAndNewlines)
+        let narration = row[indices.narration].trimmingCharacters(in: .whitespacesAndNewlines)
+        let category = row[indices.category].trimmingCharacters(in: .whitespacesAndNewlines)
+        let paidBy: Payer = row[indices.payer].trimmingCharacters(in: .whitespacesAndNewlines) == name ? .one : .two
         // When the name person paid, assume an equal split to derive the full amount
         let amount1 = shareOtherPerson
         let amount2: Decimal = paidBy == .one ? shareOtherPerson : 0

@@ -242,6 +242,27 @@ struct SheetParserShareAmountFormatTests {
         }
 
         #expect(errors.count == 1)
-        #expect(errors[0] == .invalidValue("Parsing Error! Invalid Number: invalid"))
+        #expect(errors[0] == .invalidValue("Line 2: Parsing Error! Invalid Number: invalid"))
+    }
+
+    @Test
+    func parseSheetShareAmountFormatTrimsWhitespaceFromTextFields() {
+        let data = [
+            ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person"],
+            [" 2025-01-01 ", " Hanbo ", " Store ", " Lunch ", " Food ", " CA$30.00 "],
+            ["2025-01-02", " Steffen ", "Cinema", "Movie", "Fun", "CA$10.00"]
+        ]
+
+        var transactions: [SheetParser.TransactionData]!
+        SheetParser.parseSheet(data, name: "Steffen") { parsedTransactions, _, _ in
+            transactions = parsedTransactions
+        }
+
+        #expect(transactions.count == 2)
+        #expect(transactions[0].payee == "Store")
+        #expect(transactions[0].narration == "Lunch")
+        #expect(transactions[0].category == "Food")
+        #expect(transactions[0].paidBy == .two)
+        #expect(transactions[1].paidBy == .one)
     }
 }

@@ -1,0 +1,131 @@
+#if os(macOS) || os(iOS)
+import Foundation
+import SwiftBeanCountModel
+@testable import SwiftBeanCountSheetSync
+import Testing
+
+@Suite
+struct SyncerTests {
+
+    private class TestSyncer: GenericSyncer {}
+
+    private func createLedgerSettings(commoditySymbol: String = "CAD") throws -> LedgerSettings {
+        LedgerSettings(
+            commoditySymbol: commoditySymbol,
+            tag: Tag(name: "shared"),
+            name: "Alice",
+            accountName: try AccountName("Assets:Shared"),
+            dateTolerance: 86_400,
+            categoryAccountNames: [:],
+            accountNameCategories: [:]
+        )
+    }
+
+    /// Builds a minimal sheet-derived transaction with the given own-account and shared-account amounts.
+    private func sheetTransaction(
+        own ownNumber: Decimal,
+        shared sharedNumber: Decimal,
+        commoditySymbol: String = "CAD"
+    ) throws -> Transaction {
+        let ownPosting = Posting(
+            accountName: LedgerSettings.ownAccountName,
+            amount: Amount(number: ownNumber, commoditySymbol: commoditySymbol, decimalDigits: 2)
+        )
+        let sharedPosting = Posting(
+            accountName: try AccountName("Assets:Shared"),
+            amount: Amount(number: sharedNumber, commoditySymbol: commoditySymbol, decimalDigits: 2)
+        )
+        let expensePosting = Posting(
+            accountName: try AccountName("Expenses:Food"),
+            amount: Amount(number: sharedNumber, commoditySymbol: commoditySymbol, decimalDigits: 2)
+        )
+        let metaData = TransactionMetaData(date: Date(), payee: "Store", narration: "", flag: .complete, tags: [])
+        return Transaction(metaData: metaData, postings: [expensePosting, ownPosting, sharedPosting])
+    }
+
+    /// Builds a minimal ledger transaction (no shared posting) with the given asset amount.
+    private func ledgerTransaction(asset assetNumber: Decimal, commoditySymbol: String = "CAD") throws -> Transaction {
+        let assetPosting = Posting(
+            accountName: LedgerSettings.ownAccountName,
+            amount: Amount(number: assetNumber, commoditySymbol: commoditySymbol, decimalDigits: 2)
+        )
+        let expensePosting = Posting(
+            accountName: try AccountName("Expenses:Food"),
+            amount: Amount(number: -assetNumber, commoditySymbol: commoditySymbol, decimalDigits: 2)
+        )
+        let metaData = TransactionMetaData(date: Date(), payee: "Store", narration: "", flag: .complete, tags: [])
+        return Transaction(metaData: metaData, postings: [expensePosting, assetPosting])
+    }
+
+    @Test
+    func paymentMatchesExactAmount() throws {
+        let settings = try createLedgerSettings()
+        let syncer = TestSyncer(sheetURL: "", ledger: Ledger())
+        // own = -100 (paid total), shared = 50 → exact match when ledger spent -100
+        let sheet = try sheetTransaction(own: -100, shared: 50)
+        let ledger = try ledgerTransaction(asset: -100)
+        #expect(syncer.paymentMatches(transaction: sheet, ledgerTransaction: ledger, ledgerSettings: settings))
+    }
+
+    @Test
+    func paymentMatchesShareFormatUnequalSplit() throws {
+        let settings = try createLedgerSettings()
+        let syncer = TestSyncer(sheetURL: "", ledger: Ledger())
+        // Share format: own = -2×30.63 = -61.26, shared = 30.63
+        // Ledger actually shows the real total: -100 (unequal split)
+        let sheet = try sheetTransaction(own: -61.26, shared: 30.63)
+        let ledger = try ledgerTransaction(asset: -100)
+        #expect(syncer.paymentMatches(transaction: sheet, ledgerTransaction: ledger, ledgerSettings: settings))
+    }
+
+    @Test
+    func paymentMatchesReturnsFalseWhenShareExceedsTotal() throws {
+        let settings = try createLedgerSettings()
+        let syncer = TestSyncer(sheetURL: "", ledger: Ledger())
+        // share (30.63) > |moneySpend| (20) → invalid, no match
+        let sheet = try sheetTransaction(own: -61.26, shared: 30.63)
+        let ledger = try ledgerTransaction(asset: -20)
+        #expect(!syncer.paymentMatches(transaction: sheet, ledgerTransaction: ledger, ledgerSettings: settings))
+    }
+
+    @Test
+    func paymentMatchesReturnsFalseForNonShareFormatMismatch() throws {
+        let settings = try createLedgerSettings()
+        let syncer = TestSyncer(sheetURL: "", ledger: Ledger())
+        // own = -61.26, shared = 20 → own ≠ -2×shared (not share format signature), and own ≠ moneySpend
+        let sheet = try sheetTransaction(own: -61.26, shared: 20)
+        let ledger = try ledgerTransaction(asset: -100)
+        #expect(!syncer.paymentMatches(transaction: sheet, ledgerTransaction: ledger, ledgerSettings: settings))
+    }
+
+    @Test
+    func paymentMatchesReturnsFalseForCommodityMismatch() throws {
+        let settings = try createLedgerSettings(commoditySymbol: "CAD")
+        let syncer = TestSyncer(sheetURL: "", ledger: Ledger())
+        // Sheet uses USD, ledger uses CAD → commodity mismatch
+        let sheet = try sheetTransaction(own: -61.26, shared: 30.63, commoditySymbol: "USD")
+        let ledger = try ledgerTransaction(asset: -100, commoditySymbol: "CAD")
+        #expect(!syncer.paymentMatches(transaction: sheet, ledgerTransaction: ledger, ledgerSettings: settings))
+    }
+
+    @Test
+    func removeExistingTransactionsMatchesCaseInsensitivePayee() throws {
+        let settings = try createLedgerSettings()
+        let syncer = TestSyncer(sheetURL: "", ledger: Ledger())
+        let date = Date()
+        let amount = Amount(number: 9.98, commoditySymbol: "CAD", decimalDigits: 2)
+        let sharedPosting = Posting(accountName: try AccountName("Assets:Shared"), amount: amount)
+        let sheetTx = Transaction(
+            metaData: TransactionMetaData(date: date, payee: "Save on Foods", narration: "Hike"),
+            postings: [sharedPosting]
+        )
+        let ledgerTx = Transaction(
+            metaData: TransactionMetaData(date: date, payee: "Save On Foods", narration: "Hike"),
+            postings: [sharedPosting]
+        )
+        let filtered = syncer.removeExistingTransactions(from: [sheetTx], existingTransactions: [ledgerTx], ledgerSettings: settings)
+        #expect(filtered.isEmpty)
+    }
+
+}
+#endif

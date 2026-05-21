@@ -77,7 +77,7 @@ Detected automatically when the `Share Other Person` header is present. Uses a s
 | `Payor` or `Who paid` | The name of the person who made the payment. Payment will be allocated based on if this name matches the `name` configured in the ledger |
 | `Share Other Person` | The share owed by the person who did **not** pay. See [Supported Number Formats](#supported-number-formats) |
 
-> Note: The share amount format does not contain a total-amount column. When the `name` person paid, the library assumes an **equal split** and derives the total as `2 × Share Other Person`. Both parties therefore always carry the same share amount in this format.
+> Note: The share amount format does not contain a total-amount column. When the `name` person paid, the library derives the total as `2 × Share Other Person` (an equal-split assumption). If a matching ledger transaction already exists — identified by payee, date, and the share amount fitting within the actual total — the actual amounts from the ledger are preserved. Only truly new transactions use the equal-split estimate.
 
 ### Supported Number Formats
 

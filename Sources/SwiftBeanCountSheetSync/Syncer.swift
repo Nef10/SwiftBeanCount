@@ -207,7 +207,7 @@ public class GenericSyncer {
     func removeExistingTransactions(from transactions: [Transaction], existingTransactions: [Transaction], ledgerSettings: LedgerSettings) -> [Transaction] {
         transactions.filter { transaction -> Bool in
             !existingTransactions.contains { existingTransaction -> Bool in
-                transaction.metaData.payee == existingTransaction.metaData.payee
+                transaction.metaData.payee.caseInsensitiveCompare(existingTransaction.metaData.payee) == .orderedSame
                     && postingsMatch(transaction: transaction, existingTransaction: existingTransaction, ledgerSettings: ledgerSettings)
                     && transaction.metaData.date + ledgerSettings.dateTolerance >= existingTransaction.metaData.date
                     && transaction.metaData.date - ledgerSettings.dateTolerance <= existingTransaction.metaData.date
