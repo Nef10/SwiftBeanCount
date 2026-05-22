@@ -127,5 +127,30 @@ struct SyncerTests {
         #expect(filtered.isEmpty)
     }
 
+    @Test
+    func removeExistingTransactionsMatchesSecondSharedPosting() throws {
+        let settings = try createLedgerSettings()
+        let syncer = TestSyncer(sheetURL: "", ledger: Ledger())
+        let date = Date()
+        let sharedAccount = try AccountName("Assets:Shared")
+        let amount1 = Amount(number: 17.34, commoditySymbol: "CAD", decimalDigits: 2)
+        let amount2 = Amount(number: 16.87, commoditySymbol: "CAD", decimalDigits: 2)
+        // Ledger transaction has TWO shared postings with different amounts
+        let ledgerTx = Transaction(
+            metaData: TransactionMetaData(date: date, payee: "T&T", narration: ""),
+            postings: [Posting(accountName: sharedAccount, amount: amount1), Posting(accountName: sharedAccount, amount: amount2)]
+        )
+        let sheetTx1 = Transaction(
+            metaData: TransactionMetaData(date: date, payee: "T&T", narration: ""),
+            postings: [Posting(accountName: sharedAccount, amount: amount1)]
+        )
+        let sheetTx2 = Transaction(
+            metaData: TransactionMetaData(date: date, payee: "T&T", narration: ""),
+            postings: [Posting(accountName: sharedAccount, amount: amount2)]
+        )
+        let filtered = syncer.removeExistingTransactions(from: [sheetTx1, sheetTx2], existingTransactions: [ledgerTx], ledgerSettings: settings)
+        #expect(filtered.isEmpty)
+    }
+
 }
 #endif

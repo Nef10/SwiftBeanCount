@@ -42,7 +42,7 @@ public class Downloader: GenericSyncer, Syncer {
     private func mergeExisting(transactions: [Transaction], into ledgerTransactions: [Transaction], ledgerSettings: LedgerSettings) -> [Transaction] {
         transactions.map { transaction -> Transaction in
             let ledgerTransactionMatch = ledgerTransactions.first { ledgerTransaction in
-                transaction.metaData.payee == ledgerTransaction.metaData.payee
+                transaction.metaData.payee.caseInsensitiveCompare(ledgerTransaction.metaData.payee) == .orderedSame
                     && transaction.metaData.date + ledgerSettings.dateTolerance >= ledgerTransaction.metaData.date
                     && transaction.metaData.date - ledgerSettings.dateTolerance <= ledgerTransaction.metaData.date
                     && sharedAccountPosting(ledgerTransaction, ledgerSettings: ledgerSettings) == nil

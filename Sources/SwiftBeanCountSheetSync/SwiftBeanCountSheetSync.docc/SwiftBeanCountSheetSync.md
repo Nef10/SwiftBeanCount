@@ -98,7 +98,8 @@ All amount columns in both column formats accept the following representations:
 
 | Column | Description |
 |--------|-------------|
-| `Running Total` | Cumulative balance (positive = first person owes second; negative = second person owes first). When present, the value from the last row is surfaced as a `Balance` assertion on `SyncResult.balance`, which can be written to the ledger as a `balance` directive |
+| `Running Total` | Cumulative balance. When present, the value from the last row is used as a `Balance` assertion on `SyncResult.balance`. The sign of the value is taken as-is unless a separate column with a directional header is also present (see below) |
+| `[Person A] owes [Person B]` | Optional direction column. Its header (e.g. `ALice owes Bob` or `Bob owes Alice`) is used solely to determine the sign of the `Running Total` balance: if the configured `name` appears first, the running total is negated before being used as the balance amount; otherwise it is used as-is. The values in this column are ignored |
 
 ## Monthly vs. Long-Running Behavior
 

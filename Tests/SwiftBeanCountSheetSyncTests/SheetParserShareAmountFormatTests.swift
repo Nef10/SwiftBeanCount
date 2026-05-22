@@ -9,16 +9,16 @@ struct SheetParserShareAmountFormatTests {
     func parseSheetShareAmountFormatWithValidData() {
         // Mirrors the sample data from the user's request
         let data = [
-            ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Steffen ows Hanbo", "Running Total"],
-            ["2025-01-01", "Hanbo", "Olympia", "Lunch after Polar Bear Swim", "", "CA$15.34", "CA$15.34", "CA$15.34"],
-            ["2025-01-10", "Hanbo", "Cineplex", "Wicked", "", "CA$4.96", "CA$4.96", "CA$20.30"],
-            ["2025-01-13", "Steffen", "Western Lake", "Lunch Suyang + Paul", "", "CA$30.63", "-CA$30.63", "-CA$10.33"],
-            ["2025-01-13", "Hanbo", "Commercial Street Cafe", "Hot Chocolate", "", "CA$4.75", "CA$4.75", "-CA$5.58"]
+            ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Alice ows Bob", "Running Total"],
+            ["2025-01-01", "Bob", "Olympia", "Lunch after Polar Bear Swim", "", "CA$15.34", "CA$15.34", "CA$15.34"],
+            ["2025-01-10", "Bob", "Cineplex", "Wicked", "", "CA$4.96", "CA$4.96", "CA$20.30"],
+            ["2025-01-13", "Alice", "Western Lake", "Lunch Suyang + Paul", "", "CA$30.63", "-CA$30.63", "-CA$10.33"],
+            ["2025-01-13", "Bob", "Commercial Street Cafe", "Hot Chocolate", "", "CA$4.75", "CA$4.75", "-CA$5.58"]
         ]
 
         var transactions: [SheetParser.TransactionData]!
         var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Steffen") { parsedTransactions, _, parsedErrors in
+        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, parsedErrors in
             transactions = parsedTransactions
             errors = parsedErrors
         }
@@ -26,13 +26,13 @@ struct SheetParserShareAmountFormatTests {
         #expect(errors.isEmpty)
         #expect(transactions.count == 4)
 
-        // Hanbo paid at Olympia: Steffen owes CA$15.34 (payer == .two)
+        // Bob paid at Olympia: Alice owes CA$15.34 (payer == .two)
         let olympia = transactions.first { $0.payee == "Olympia" }!
         #expect(olympia.paidBy == .two)
         #expect(olympia.narration == "Lunch after Polar Bear Swim")
         #expect(olympia.amount1 == Decimal(string: "15.34"))
 
-        // Steffen paid at Western Lake: equal split from CA$30.63 (payer == .one)
+        // Alice paid at Western Lake: equal split from CA$30.63 (payer == .one)
         let westernLake = transactions.first { $0.payee == "Western Lake" }!
         #expect(westernLake.paidBy == .one)
         #expect(westernLake.amount1 == Decimal(string: "30.63"))
@@ -86,24 +86,24 @@ struct SheetParserShareAmountFormatTests {
     func parseSheetShareAmountFormatCurrencyPrefixedAmounts() {
         let data = [
             ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Running Total"],
-            ["2025-02-01", "Hanbo", "Store", "Shopping", "", "CA$30.63", "CA$30.63"],
-            ["2025-02-05", "Steffen", "Restaurant", "Dinner", "", "CA$20.00", "-CA$9.37"]
+            ["2025-02-01", "Bob", "Store", "Shopping", "", "CA$30.63", "CA$30.63"],
+            ["2025-02-05", "Alice", "Restaurant", "Dinner", "", "CA$20.00", "-CA$9.37"]
         ]
 
         var transactions: [SheetParser.TransactionData]!
         var runningTotal: Decimal?
-        SheetParser.parseSheet(data, name: "Steffen") { parsedTransactions, parsedRunningTotal, _ in
+        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, parsedRunningTotal, _ in
             transactions = parsedTransactions
             runningTotal = parsedRunningTotal
         }
 
         #expect(transactions.count == 2)
-        let hanbo = transactions.first { $0.payee == "Store" }!
-        #expect(hanbo.amount1 == Decimal(string: "30.63"))
+        let bob = transactions.first { $0.payee == "Store" }!
+        #expect(bob.amount1 == Decimal(string: "30.63"))
 
-        let steffen = transactions.first { $0.payee == "Restaurant" }!
-        #expect(steffen.amount1 == Decimal(string: "20.00"))
-        #expect(steffen.amount == Decimal(string: "40.00"))
+        let alice = transactions.first { $0.payee == "Restaurant" }!
+        #expect(alice.amount1 == Decimal(string: "20.00"))
+        #expect(alice.amount == Decimal(string: "40.00"))
 
         // Running total from last row: -CA$9.37
         #expect(runningTotal == Decimal(string: "-9.37"))
@@ -113,12 +113,12 @@ struct SheetParserShareAmountFormatTests {
     func parseSheetShareAmountFormatReturnsRunningTotal() {
         let data = [
             ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Running Total"],
-            ["2025-01-01", "Hanbo", "Store A", "First", "", "CA$10.00", "CA$10.00"],
-            ["2025-01-15", "Hanbo", "Store B", "Second", "", "CA$5.00", "CA$15.00"]
+            ["2025-01-01", "Bob", "Store A", "First", "", "CA$10.00", "CA$10.00"],
+            ["2025-01-15", "Bob", "Store B", "Second", "", "CA$5.00", "CA$15.00"]
         ]
 
         var runningTotal: Decimal?
-        SheetParser.parseSheet(data, name: "Steffen") { _, parsedRunningTotal, _ in
+        SheetParser.parseSheet(data, name: "Alice") { _, parsedRunningTotal, _ in
             runningTotal = parsedRunningTotal
         }
 
@@ -129,12 +129,12 @@ struct SheetParserShareAmountFormatTests {
     func parseSheetShareAmountFormatNegativeRunningTotal() {
         let data = [
             ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Running Total"],
-            ["2025-01-01", "Hanbo", "Store A", "First", "", "CA$10.00", "CA$10.00"],
-            ["2025-01-05", "Steffen", "Store B", "Second", "", "CA$30.00", "-CA$20.00"]
+            ["2025-01-01", "Bob", "Store A", "First", "", "CA$10.00", "CA$10.00"],
+            ["2025-01-05", "Alice", "Store B", "Second", "", "CA$30.00", "-CA$20.00"]
         ]
 
         var runningTotal: Decimal?
-        SheetParser.parseSheet(data, name: "Steffen") { _, parsedRunningTotal, _ in
+        SheetParser.parseSheet(data, name: "Alice") { _, parsedRunningTotal, _ in
             runningTotal = parsedRunningTotal
         }
 
@@ -147,11 +147,11 @@ struct SheetParserShareAmountFormatTests {
         // Providing "Share Other Person" but missing "Date" triggers new-format missing-header error
         let data = [
             ["Payor", "Payee", "Description", "Category", "Share Other Person", "Running Total"],
-            ["Hanbo", "Store", "Test", "", "CA$10.00", "CA$10.00"]
+            ["Bob", "Store", "Test", "", "CA$10.00", "CA$10.00"]
         ]
 
         var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Steffen") { _, _, parsedErrors in
+        SheetParser.parseSheet(data, name: "Alice") { _, _, parsedErrors in
             errors = parsedErrors
         }
 
@@ -167,11 +167,11 @@ struct SheetParserShareAmountFormatTests {
     func parseSheetShareAmountFormatWithAlternativePayeeColumnName() {
         let data = [
             ["Date", "Payor", "Paid to", "Description", "Category", "Share Other Person", "Running Total"],
-            ["2025-01-01", "Hanbo", "Olympia", "Lunch", "", "CA$15.00", "CA$15.00"]
+            ["2025-01-01", "Bob", "Olympia", "Lunch", "", "CA$15.00", "CA$15.00"]
         ]
 
         var transactions: [SheetParser.TransactionData]!
-        SheetParser.parseSheet(data, name: "Steffen") { parsedTransactions, _, _ in
+        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, _ in
             transactions = parsedTransactions
         }
 
@@ -183,11 +183,11 @@ struct SheetParserShareAmountFormatTests {
     func parseSheetShareAmountFormatWithAlternativePayorColumnName() {
         let data = [
             ["Date", "Who paid", "Payee", "Description", "Category", "Share Other Person", "Running Total"],
-            ["2025-01-01", "Steffen", "Store", "Test", "", "CA$20.00", "-CA$20.00"]
+            ["2025-01-01", "Alice", "Store", "Test", "", "CA$20.00", "-CA$20.00"]
         ]
 
         var transactions: [SheetParser.TransactionData]!
-        SheetParser.parseSheet(data, name: "Steffen") { parsedTransactions, _, _ in
+        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, _ in
             transactions = parsedTransactions
         }
 
@@ -199,11 +199,11 @@ struct SheetParserShareAmountFormatTests {
     func parseSheetShareAmountFormatWithAlternativeNarrationColumnName() {
         let data = [
             ["Date", "Payor", "Payee", "Comment", "Category", "Share Other Person", "Running Total"],
-            ["2025-01-01", "Hanbo", "Store", "Test note", "", "CA$10.00", "CA$10.00"]
+            ["2025-01-01", "Bob", "Store", "Test note", "", "CA$10.00", "CA$10.00"]
         ]
 
         var transactions: [SheetParser.TransactionData]!
-        SheetParser.parseSheet(data, name: "Steffen") { parsedTransactions, _, _ in
+        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, _ in
             transactions = parsedTransactions
         }
 
@@ -215,12 +215,12 @@ struct SheetParserShareAmountFormatTests {
     func parseSheetShareAmountFormatSortsTransactionsByDate() {
         let data = [
             ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Running Total"],
-            ["2025-03-10", "Hanbo", "StoreB", "Later", "", "CA$5.00", "CA$15.00"],
-            ["2025-03-01", "Hanbo", "StoreA", "Earlier", "", "CA$10.00", "CA$10.00"]
+            ["2025-03-10", "Bob", "StoreB", "Later", "", "CA$5.00", "CA$15.00"],
+            ["2025-03-01", "Bob", "StoreA", "Earlier", "", "CA$10.00", "CA$10.00"]
         ]
 
         var transactions: [SheetParser.TransactionData]!
-        SheetParser.parseSheet(data, name: "Steffen") { parsedTransactions, _, _ in
+        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, _ in
             transactions = parsedTransactions
         }
 
@@ -233,11 +233,11 @@ struct SheetParserShareAmountFormatTests {
     func parseSheetShareAmountFormatInvalidShareOtherPersonAmount() {
         let data = [
             ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Running Total"],
-            ["2025-01-01", "Hanbo", "Store", "Test", "", "invalid", "CA$0.00"]
+            ["2025-01-01", "Bob", "Store", "Test", "", "invalid", "CA$0.00"]
         ]
 
         var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Steffen") { _, _, parsedErrors in
+        SheetParser.parseSheet(data, name: "Alice") { _, _, parsedErrors in
             errors = parsedErrors
         }
 
@@ -249,12 +249,12 @@ struct SheetParserShareAmountFormatTests {
     func parseSheetShareAmountFormatTrimsWhitespaceFromTextFields() {
         let data = [
             ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person"],
-            [" 2025-01-01 ", " Hanbo ", " Store ", " Lunch ", " Food ", " CA$30.00 "],
-            ["2025-01-02", " Steffen ", "Cinema", "Movie", "Fun", "CA$10.00"]
+            [" 2025-01-01 ", " Bob ", " Store ", " Lunch ", " Food ", " CA$30.00 "],
+            ["2025-01-02", " Alice ", "Cinema", "Movie", "Fun", "CA$10.00"]
         ]
 
         var transactions: [SheetParser.TransactionData]!
-        SheetParser.parseSheet(data, name: "Steffen") { parsedTransactions, _, _ in
+        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, _ in
             transactions = parsedTransactions
         }
 
@@ -264,5 +264,51 @@ struct SheetParserShareAmountFormatTests {
         #expect(transactions[0].category == "Food")
         #expect(transactions[0].paidBy == .two)
         #expect(transactions[1].paidBy == .one)
+    }
+
+    private func parseRunningTotal(_ data: [[String]], name: String = "Alice") -> Decimal? {
+        var result: Decimal?
+        SheetParser.parseSheet(data, name: name) { _, runningTotal, _ in result = runningTotal }
+        return result
+    }
+
+    @Test
+    func parseSheetRunningTotalNegatedWhenNameIsDebtorInOwesColumn() {
+        // "Running Total" has the value; "Alice owes Bob" heading determines sign → negate
+        let data = [
+            ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Alice owes Bob", "Running Total"],
+            ["2025-01-01", "Bob", "Store", "Test", "", "CA$36.75", "CA$36.75", "CA$36.75"]
+        ]
+        #expect(parseRunningTotal(data) == Decimal(string: "-36.75"))
+    }
+
+    @Test
+    func parseSheetRunningTotalNotNegatedWhenOtherIsDebtorInOwesColumn() {
+        // "Running Total" has the value; "Bob owes Alice" heading → no negation
+        let data = [
+            ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Bob owes Alice", "Running Total"],
+            ["2025-01-01", "Alice", "Store", "Test", "", "CA$36.75", "CA$36.75", "CA$36.75"]
+        ]
+        #expect(parseRunningTotal(data) == Decimal(string: "36.75"))
+    }
+
+    @Test
+    func parseSheetRunningTotalNegatesNegativeCellValueCorrectly() {
+        // "Running Total" value is negative; "Alice owes Bob" heading → negated to positive
+        let data = [
+            ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Alice owes Bob", "Running Total"],
+            ["2025-01-01", "Alice", "Store", "Test", "", "CA$36.75", "CA$36.75", "-CA$36.75"]
+        ]
+        #expect(parseRunningTotal(data) == Decimal(string: "36.75"))
+    }
+
+    @Test
+    func parseSheetRunningTotalIgnoresOwesColumnValuesAndUsesRunningTotalColumnOnly() {
+        // "Running Total" column value (10.00) is used, not the "owes" column value (36.75)
+        let data = [
+            ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Bob owes Alice", "Running Total"],
+            ["2025-01-01", "Alice", "Store", "Test", "", "CA$36.75", "CA$36.75", "CA$10.00"]
+        ]
+        #expect(parseRunningTotal(data) == Decimal(string: "10.00"))
     }
 }

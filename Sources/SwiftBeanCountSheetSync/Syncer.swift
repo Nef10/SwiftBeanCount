@@ -220,7 +220,10 @@ public class GenericSyncer {
             existingTransaction: SwiftBeanCountModel.Transaction,
             ledgerSettings: LedgerSettings
     ) -> Bool {
-        sharedAccountPosting(transaction, ledgerSettings: ledgerSettings)?.amount == sharedAccountPosting(existingTransaction, ledgerSettings: ledgerSettings)?.amount
+        guard let sharedAmount = sharedAccountPosting(transaction, ledgerSettings: ledgerSettings)?.amount else {
+            return false
+        }
+        return existingTransaction.postings.contains { $0.accountName == ledgerSettings.accountName && $0.amount == sharedAmount }
     }
 
     func sharedAccountPosting(_ transaction: SwiftBeanCountModel.Transaction, ledgerSettings: LedgerSettings) -> Posting? {

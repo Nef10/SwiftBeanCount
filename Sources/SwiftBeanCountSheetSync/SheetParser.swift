@@ -105,7 +105,7 @@ enum SheetParser {
         transactionData = transactionData.sorted {
             $0.date < $1.date
         }
-        let runningTotal = extractRunningTotal(headings: headings, data: lines)
+        let runningTotal = extractRunningTotal(headings: headings, data: lines, name: name)
         completion(transactionData, runningTotal, errors)
     }
 
@@ -302,26 +302,22 @@ enum SheetParser {
         ))
     }
 
-    /// Extracts the most recent running total from a `Running Total` column, if present.
+    /// Extracts the most recent running total from a `Running Total` column.
     ///
-    /// Scans the data rows in reverse order and returns the first parseable value found.
-    /// This handles sheets where the last row(s) may be empty or contain non-numeric values.
-    /// The `Running Total` column is supported in both total amount and share amount formats.
+    /// When the column header uses the pattern `[X] owes [Y]` and `name` appears first
+    /// in a `"[A] owes [B]]"` column, the running total value is negated so that the returned
+    /// `Decimal` represents the receivable-account balance (positive = other person owes owner).
     /// - Parameters:
     ///   - headings: Column header row.
     ///   - data: Data rows (excluding the header row).
-    /// - Returns: The running total as a `Decimal`, or `nil` if the column is absent or all values are unparseable.
-    private static func extractRunningTotal(headings: [String], data: [[String]]) -> Decimal? {
-        guard let runningTotalIndex = headings.firstIndex(of: "Running Total") else {
+    ///   - name: The ledger owner's name, used to determine the sign via a `[X] owes [Y]` heading.
+    /// - Returns: The sign-adjusted running total, or `nil` if absent or unparseable.
+    private static func extractRunningTotal(headings: [String], data: [[String]], name: String) -> Decimal? {
+        guard let index = headings.firstIndex(of: "Running Total") else {
             return nil
         }
-        for row in data.reversed() {
-            guard row.count > runningTotalIndex else { continue }
-            if let value = getDecimalFromString(row[runningTotalIndex]) {
-                return value
-            }
-        }
-        return nil
+        let negate = headings.first { $0.contains(" owes ") }?.lowercased().hasPrefix(name.lowercased() + " owes ") ?? false
+        return data.reversed().compactMap { $0.count > index ? getDecimalFromString($0[index]) : nil }.first.map { negate ? -$0 : $0 }
     }
 
     /// Returns the index of the first alternative column name found in the headings.

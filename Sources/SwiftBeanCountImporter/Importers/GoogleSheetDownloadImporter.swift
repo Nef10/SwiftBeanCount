@@ -141,7 +141,12 @@ class GoogleSheetDownloadImporter: BaseImporter, DownloadImporter {
     }
 
     override func balancesToImport() -> [Balance] {
-        [balance].compactMap(\.self)
+        guard let balance else {
+            return []
+        }
+        let exists = existingLedger.accounts.first { $0.name == balance.accountName }?
+            .balances.contains { $0.date == balance.date && $0.amount == balance.amount } ?? false
+        return exists ? [] : [balance]
     }
 
 }
