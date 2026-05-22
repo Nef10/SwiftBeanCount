@@ -266,49 +266,46 @@ struct SheetParserShareAmountFormatTests {
         #expect(transactions[1].paidBy == .one)
     }
 
-    private func parseRunningTotal(_ data: [[String]], name: String = "Alice") -> Decimal? {
+    private func parseRunningTotal(_ data: [[String]], name: String = "Alice", negateRunningTotal: Bool = false) -> Decimal? {
         var result: Decimal?
-        SheetParser.parseSheet(data, name: name) { _, runningTotal, _ in result = runningTotal }
+        SheetParser.parseSheet(data, name: name, negateRunningTotal: negateRunningTotal) { _, runningTotal, _ in result = runningTotal }
         return result
     }
 
     @Test
-    func parseSheetRunningTotalNegatedWhenNameIsDebtorInOwesColumn() {
-        // "Running Total" has the value; "Alice owes Bob" heading determines sign → negate
+    func parseSheetRunningTotalNegatedWhenFlagIsTrue() {
         let data = [
-            ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Alice owes Bob", "Running Total"],
-            ["2025-01-01", "Bob", "Store", "Test", "", "CA$36.75", "CA$36.75", "CA$36.75"]
+            ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Running Total"],
+            ["2025-01-01", "Bob", "Store", "Test", "", "CA$36.75", "CA$36.75"]
         ]
-        #expect(parseRunningTotal(data) == Decimal(string: "-36.75"))
+        #expect(parseRunningTotal(data, negateRunningTotal: true) == Decimal(string: "-36.75"))
     }
 
     @Test
-    func parseSheetRunningTotalNotNegatedWhenOtherIsDebtorInOwesColumn() {
-        // "Running Total" has the value; "Bob owes Alice" heading → no negation
+    func parseSheetRunningTotalNotNegatedWhenFlagIsFalse() {
         let data = [
-            ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Bob owes Alice", "Running Total"],
-            ["2025-01-01", "Alice", "Store", "Test", "", "CA$36.75", "CA$36.75", "CA$36.75"]
+            ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Running Total"],
+            ["2025-01-01", "Bob", "Store", "Test", "", "CA$36.75", "CA$36.75"]
         ]
-        #expect(parseRunningTotal(data) == Decimal(string: "36.75"))
+        #expect(parseRunningTotal(data, negateRunningTotal: false) == Decimal(string: "36.75"))
     }
 
     @Test
     func parseSheetRunningTotalNegatesNegativeCellValueCorrectly() {
-        // "Running Total" value is negative; "Alice owes Bob" heading → negated to positive
+        // negateRunningTotal: true applied to a negative cell value → positive result
         let data = [
-            ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Alice owes Bob", "Running Total"],
-            ["2025-01-01", "Alice", "Store", "Test", "", "CA$36.75", "CA$36.75", "-CA$36.75"]
+            ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Running Total"],
+            ["2025-01-01", "Alice", "Store", "Test", "", "CA$36.75", "-CA$36.75"]
         ]
-        #expect(parseRunningTotal(data) == Decimal(string: "36.75"))
+        #expect(parseRunningTotal(data, negateRunningTotal: true) == Decimal(string: "36.75"))
     }
 
     @Test
-    func parseSheetRunningTotalIgnoresOwesColumnValuesAndUsesRunningTotalColumnOnly() {
-        // "Running Total" column value (10.00) is used, not the "owes" column value (36.75)
+    func parseSheetRunningTotalDefaultsToNotNegating() {
         let data = [
-            ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Bob owes Alice", "Running Total"],
-            ["2025-01-01", "Alice", "Store", "Test", "", "CA$36.75", "CA$36.75", "CA$10.00"]
+            ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Running Total"],
+            ["2025-01-01", "Bob", "Store", "Test", "", "CA$36.75", "CA$36.75"]
         ]
-        #expect(parseRunningTotal(data) == Decimal(string: "10.00"))
+        #expect(parseRunningTotal(data) == Decimal(string: "36.75"))
     }
 }

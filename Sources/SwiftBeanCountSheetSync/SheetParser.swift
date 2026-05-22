@@ -83,7 +83,7 @@ enum SheetParser {
         return dateFormatter
     }()
 
-    static func parseSheet(_ data: ([[String]]), name: String, completion: ([TransactionData], Decimal?, [SheetParserError]) -> Void) {
+    static func parseSheet(_ data: ([[String]]), name: String, negateRunningTotal: Bool = false, completion: ([TransactionData], Decimal?, [SheetParserError]) -> Void) {
         var lines = removeEmptyRows(data)
         guard !lines.isEmpty else {
             completion([], nil, [])
@@ -105,7 +105,7 @@ enum SheetParser {
         transactionData = transactionData.sorted {
             $0.date < $1.date
         }
-        let runningTotal = extractRunningTotal(headings: headings, data: lines, name: name)
+        let runningTotal = extractRunningTotal(headings: headings, data: lines, negate: negateRunningTotal)
         completion(transactionData, runningTotal, errors)
     }
 
@@ -304,19 +304,16 @@ enum SheetParser {
 
     /// Extracts the most recent running total from a `Running Total` column.
     ///
-    /// When the column header uses the pattern `[X] owes [Y]` and `name` appears first
-    /// in a `"[A] owes [B]]"` column, the running total value is negated so that the returned
-    /// `Decimal` represents the receivable-account balance (positive = other person owes owner).
+    /// When `negate` is `true` the extracted value is negated before being returned.
     /// - Parameters:
     ///   - headings: Column header row.
     ///   - data: Data rows (excluding the header row).
-    ///   - name: The ledger owner's name, used to determine the sign via a `[X] owes [Y]` heading.
-    /// - Returns: The sign-adjusted running total, or `nil` if absent or unparseable.
-    private static func extractRunningTotal(headings: [String], data: [[String]], name: String) -> Decimal? {
+    ///   - negate: When `true`, the running total value is negated.
+    /// - Returns: The running total (optionally negated), or `nil` if absent or unparseable.
+    private static func extractRunningTotal(headings: [String], data: [[String]], negate: Bool) -> Decimal? {
         guard let index = headings.firstIndex(of: "Running Total") else {
             return nil
         }
-        let negate = headings.first { $0.contains(" owes ") }?.lowercased().hasPrefix(name.lowercased() + " owes ") ?? false
         return data.reversed().compactMap { $0.count > index ? getDecimalFromString($0[index]) : nil }.first.map { negate ? -$0 : $0 }
     }
 

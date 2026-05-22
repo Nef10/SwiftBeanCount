@@ -130,7 +130,7 @@ public class GenericSyncer {
     /// - Returns: A `SheetTransactionData` on success, or a `DownloaderError` on failure.
     func getTransactionsFromSheet(authentication: Authentication, ledgerSettings: LedgerSettings)
             -> Result<SheetTransactionData, SheetDownloader.DownloaderError> {
-        getTransactionDataFromSheet(authentication: authentication, name: ledgerSettings.name)
+        getTransactionDataFromSheet(authentication: authentication, name: ledgerSettings.name, negateRunningTotal: ledgerSettings.negateRunningTotal)
             .flatMap { parsed in
                 let sheetTransactions = TransactionMapper.mapDataToTransactions(parsed.transactionData, ledgerSettings: ledgerSettings)
                 let balance = buildBalance(runningTotal: parsed.runningTotal, transactions: sheetTransactions, ledgerSettings: ledgerSettings)
@@ -249,8 +249,9 @@ public class GenericSyncer {
     /// - Parameters:
     ///   - authentication: Authenticated Google session.
     ///   - name: The ledger owner's name, forwarded to `SheetParser`.
+    ///   - negateRunningTotal: Whether to negate the running total, forwarded to `SheetParser`.
     /// - Returns: A `SheetParsedData` on success, or a `DownloaderError` on failure.
-    private func getTransactionDataFromSheet(authentication: Authentication, name: String)
+    private func getTransactionDataFromSheet(authentication: Authentication, name: String, negateRunningTotal: Bool)
             -> Result<SheetParsedData, SheetDownloader.DownloaderError> {
         var result: Result<SheetParsedData, SheetDownloader.DownloaderError>!
         let semaphore = DispatchSemaphore(value: 0)
@@ -258,7 +259,7 @@ public class GenericSyncer {
         SheetDownloader.download(authentication: authentication, url: sheetURL) {
             switch $0 {
             case .success(let data):
-                SheetParser.parseSheet(data, name: name) { transactionData, runningTotal, parserErrors in
+                SheetParser.parseSheet(data, name: name, negateRunningTotal: negateRunningTotal) { transactionData, runningTotal, parserErrors in
                     result = .success(SheetParsedData(transactionData: transactionData, runningTotal: runningTotal, parserErrors: parserErrors))
                     semaphore.signal()
                 }

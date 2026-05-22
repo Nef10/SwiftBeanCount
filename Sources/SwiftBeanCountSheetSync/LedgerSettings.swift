@@ -18,6 +18,7 @@ enum LedgerSettingsConstants {
     static let tagKey = "tag"
     static let nameKey = "name"
     static let dateToleranceKey = "dateTolerance"
+    static let negateRunningTotalKey = "negateRunningTotal"
 
 }
 
@@ -37,6 +38,8 @@ public struct LedgerSettings: Equatable {
     public let accountName: AccountName
     /// tolerance used to detect already existing transactions
     public let dateTolerance: TimeInterval
+    /// Whether the running total from the sheet should be negated before being used as a balance assertion
+    public let negateRunningTotal: Bool
     /// Mapping from sheet categories to the corresponding account names in the ledger
     public let categoryAccountNames: [String: AccountName]
     /// Mapping from account names in the ledger to the corresponding categories in the sheet
@@ -51,6 +54,7 @@ public struct LedgerSettings: Equatable {
     ///   - dateTolerance: tolerance used to detect already existing transactions
     ///   - categoryAccountNames: Mapping from sheet categories to the corresponding account names in the ledger
     ///   - accountNameCategories: Mapping from account names in the ledger to the corresponding categories in the sheet
+    ///   - negateRunningTotal: Whether to negate the running total when building the balance assertion; defaults to `false`
     public init(
         commoditySymbol: String,
         tag: Tag,
@@ -58,7 +62,8 @@ public struct LedgerSettings: Equatable {
         accountName: AccountName,
         dateTolerance: TimeInterval,
         categoryAccountNames: [String: AccountName],
-        accountNameCategories: [String: String]
+        accountNameCategories: [String: String],
+        negateRunningTotal: Bool = false
     ) {
         self.commoditySymbol = commoditySymbol
         self.tag = tag
@@ -67,5 +72,6 @@ public struct LedgerSettings: Equatable {
         self.dateTolerance = dateTolerance
         self.categoryAccountNames = categoryAccountNames
         self.accountNameCategories = accountNameCategories
+        self.negateRunningTotal = negateRunningTotal
     }
 }

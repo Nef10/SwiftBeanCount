@@ -47,6 +47,7 @@ enum LedgerReader {
         }
 
         let accounts = ledger.accounts.filter { $0.metaData[LedgerSettingsConstants.categoryKey] != nil }
+        let negateRunningTotal = settings.first { $0.values.count == 2 && $0.values[0] == LedgerSettingsConstants.negateRunningTotalKey }?.values[1] == "true"
 
         return .success((ledger.transactions.filter { $0.metaData.tags.contains(Tag(name: tagValue)) }, LedgerSettings(
             commoditySymbol: commoditySymbol,
@@ -55,7 +56,8 @@ enum LedgerReader {
             accountName: accountName,
             dateTolerance: TimeInterval(dateToleranceDays * 60 * 60 * 24),
             categoryAccountNames: Dictionary(accounts.map { ($0.metaData[LedgerSettingsConstants.categoryKey]!, $0.name) }) { first, _ in first },
-            accountNameCategories: Dictionary(accounts.map { ($0.name.fullName, $0.metaData[LedgerSettingsConstants.categoryKey]! ) }) { first, _ in first }))
+            accountNameCategories: Dictionary(accounts.map { ($0.name.fullName, $0.metaData[LedgerSettingsConstants.categoryKey]! ) }) { first, _ in first },
+            negateRunningTotal: negateRunningTotal))
         )
 
     }
