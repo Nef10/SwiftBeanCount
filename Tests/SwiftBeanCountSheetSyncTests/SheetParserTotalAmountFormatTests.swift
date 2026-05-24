@@ -3,7 +3,7 @@ import Foundation
 import Testing
 
 @Suite
-struct SheetParserTotalAmountFormatTests { // swiftlint:disable:this type_body_length
+struct SheetParserTotalAmountFormatTests {
 
     @Test
     func parseSheetWithValidData() {
@@ -13,12 +13,9 @@ struct SheetParserTotalAmountFormatTests { // swiftlint:disable:this type_body_l
             ["2024-01-16", "Restaurant", "80.00", "Dining", "Bob", "Dinner out", "40.00", "40.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.count == 2)
         #expect(errors.isEmpty)
@@ -46,12 +43,9 @@ struct SheetParserTotalAmountFormatTests { // swiftlint:disable:this type_body_l
             ["Date", "Paid to", "Amount", "Category", "Who paid", "Comment", "Part Alice", "Part Bob"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.isEmpty)
         // Parser requires at least one row to determine payer2, so this will have an error
@@ -65,12 +59,9 @@ struct SheetParserTotalAmountFormatTests { // swiftlint:disable:this type_body_l
             ["2024-01-15", "100.00", "Groceries"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.isEmpty)
         #expect(errors.count == 1)
@@ -85,12 +76,9 @@ struct SheetParserTotalAmountFormatTests { // swiftlint:disable:this type_body_l
             ["2024-01-16", "Restaurant", "80.00", "Dining", "Bob", "Dinner", "40.00", "40.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.count == 1)
         #expect(errors.count == 1)
@@ -105,12 +93,9 @@ struct SheetParserTotalAmountFormatTests { // swiftlint:disable:this type_body_l
             ["2024-01-16", "Restaurant", "80.00", "Dining", "Bob", "Dinner", "40.00", "40.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.count == 1)
         #expect(errors.count == 1)
@@ -125,12 +110,9 @@ struct SheetParserTotalAmountFormatTests { // swiftlint:disable:this type_body_l
             ["2024-01-15", "Store1", "100.00", "Groceries", "Alice", "Earlier", "50.00", "50.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.count == 2)
         #expect(transactions[0].payee == "Store1")
@@ -146,12 +128,9 @@ struct SheetParserTotalAmountFormatTests { // swiftlint:disable:this type_body_l
             ["2024-01-16", "Store2", "200.00", "Food", "Bob", "Paid by Bob", "100.00", "100.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.count == 2)
         #expect(transactions[0].paidBy == .one)
@@ -169,12 +148,9 @@ struct SheetParserTotalAmountFormatTests { // swiftlint:disable:this type_body_l
             ["-", "-", "-", "-", "-", "-", "-", "-"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.count == 2)
         #expect(errors.isEmpty)
@@ -188,12 +164,9 @@ struct SheetParserTotalAmountFormatTests { // swiftlint:disable:this type_body_l
             ["2024-01-16", "Restaurant", "80.00", "Dining", "Bob", "Dinner", "40.00", "40.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.count == 2)
         #expect(errors.isEmpty)
@@ -212,12 +185,9 @@ struct SheetParserTotalAmountFormatTests { // swiftlint:disable:this type_body_l
             ["2024-01-16", "Restaurant", "80.00", "Dining", "Bob", "Dinner", "40.00", "40.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.count == 2)
         #expect(errors.isEmpty)
@@ -233,10 +203,7 @@ struct SheetParserTotalAmountFormatTests { // swiftlint:disable:this type_body_l
             ["2024-01-15", "Store", "100.00", "Groceries", "Alice", "Test", "50.00", "50.00"]
         ]
 
-        var runningTotal: Decimal?
-        SheetParser.parseSheet(data, name: "Alice") { _, parsedRunningTotal, _ in
-            runningTotal = parsedRunningTotal
-        }
+        let runningTotal = SheetParser.parseSheetData(data, name: "Alice").runningTotal
 
         #expect(runningTotal == nil)
     }
@@ -249,12 +216,9 @@ struct SheetParserTotalAmountFormatTests { // swiftlint:disable:this type_body_l
             ["2024-01-16", "Restaurant", "80.00", "Dining", "Bob", "Dinner", "40.00", "40.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.count == 2)
         #expect(errors.isEmpty)
@@ -269,12 +233,9 @@ struct SheetParserTotalAmountFormatTests { // swiftlint:disable:this type_body_l
             ["2024-01-16", "Restaurant", "80.00", "Dining", "Bob", "Paid by Bob", "100.00", "100.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.count == 2)
         #expect(errors.isEmpty)
@@ -290,12 +251,9 @@ struct SheetParserTotalAmountFormatTests { // swiftlint:disable:this type_body_l
             ["2024-01-16", "Restaurant", "80.00", "Dining", "Bob", "Dinner out", "40.00", "40.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.count == 2)
         #expect(errors.isEmpty)
@@ -309,12 +267,9 @@ struct SheetParserTotalAmountFormatTests { // swiftlint:disable:this type_body_l
             [" 2024-01-15 ", " Store ", "100.00", " Groceries ", " Alice ", " Weekly shopping ", "50.00", "50.00"],
             ["2024-01-16", "Restaurant", "80.00", "Dining", " Bob ", "Dinner", "40.00", "40.00"]
         ]
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
         #expect(errors.isEmpty)
         #expect(transactions.count == 2)
         #expect(transactions[0].payee == "Store")

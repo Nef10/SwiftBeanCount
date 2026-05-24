@@ -25,6 +25,9 @@ enum SyncError: LocalizedError, Equatable {
     case unknowError
     case missingSetting(String)
     case invalidSetting(String, String)
+    case missingSheetLayout
+    case missingOtherPersonName
+    case unableToFormatTransaction(String)
 
     public var errorDescription: String? {
         switch self {
@@ -32,6 +35,12 @@ enum SyncError: LocalizedError, Equatable {
             return "Missing setting in your ledger: \(settingsName)"
         case let .invalidSetting(settingsName, settingsValue):
             return "Invalid setting in your ledger: \(settingsValue) is invalid for \(settingsName)"
+        case .missingSheetLayout:
+            return "Unable to determine the sheet format from the downloaded sheet"
+        case .missingOtherPersonName:
+            return "Unable to determine the other person's name from the sheet"
+        case .unableToFormatTransaction(let message):
+            return "Unable to format transaction for the sheet: \(message)"
         case .unknowError:
             return "An unknown Error occured"
         }
@@ -42,9 +51,10 @@ enum SyncError: LocalizedError, Equatable {
 ///
 /// Avoids a three-element tuple return type and keeps the sync pipeline readable.
 struct SheetParsedData {
-    let transactionData: [SheetParser.TransactionData]
+    let rows: [SheetCellsFormatter.ParsedRow]
     let runningTotal: Decimal?
     let parserErrors: [SheetParserError]
+    let layout: SheetCellsFormatter.Layout?
 }
 
 /// Intermediate result grouping the converted model transactions and related metadata.
@@ -52,8 +62,10 @@ struct SheetParsedData {
 /// Avoids a three-element tuple return type and keeps the sync pipeline readable.
 struct SheetTransactionData {
     let transactions: [Transaction]
+    let rows: [SheetCellsFormatter.MappedRow]
     let balance: Balance?
     let parserErrors: [SheetParserError]
+    let layout: SheetCellsFormatter.Layout?
 }
 
 /// Result of the syncronization
@@ -63,26 +75,37 @@ public struct SyncResult {
     public let mode: SyncMode
     /// Transactions which need to be added
     public let transactions: [Transaction]
-    /// Errors of lines in the Sheet which could not be read
+    /// Errors collected while preparing the sync result, including unreadable sheet rows and unformattable upload rows
     public let parserErrors: [SheetParserError]
     /// Settings for the syncronization read from the ledger
     public let ledgerSettings: LedgerSettings
     /// Balance assertion derived from the sheet's `Running Total` column, or `nil` if that column is absent.
     public let balance: Balance?
+    /// Sheet-shaped cells representing the synced rows, including the header row as the first entry.
+    public let sheetCells: [[String]]
 
     /// Creates the syncroization result
     /// - Parameters:
     ///   - mode: Mode in which the syncronization was performed
     ///   - transactions: Transactions which need to be added
-    ///   - parserErrors: Errors of lines in the Sheet which could not be read
+    ///   - parserErrors: Errors collected while preparing the sync result, including unreadable sheet rows and unformattable upload rows
     ///   - ledgerSettings: Settings for the syncronization read from the ledger
     ///   - balance: Balance assertion from the sheet's Running Total, if present
-    public init(mode: SyncMode, transactions: [Transaction], parserErrors: [SheetParserError], ledgerSettings: LedgerSettings, balance: Balance? = nil) {
+    ///   - sheetCells: Sheet-shaped rows representing the synced transactions, with the header row first
+    public init(
+        mode: SyncMode,
+        transactions: [Transaction],
+        parserErrors: [SheetParserError],
+        ledgerSettings: LedgerSettings,
+        balance: Balance? = nil,
+        sheetCells: [[String]] = []
+    ) {
         self.mode = mode
         self.transactions = transactions
         self.parserErrors = parserErrors
         self.ledgerSettings = ledgerSettings
         self.balance = balance
+        self.sheetCells = sheetCells
     }
 }
 
@@ -132,9 +155,19 @@ public class GenericSyncer {
             -> Result<SheetTransactionData, SheetDownloader.DownloaderError> {
         getTransactionDataFromSheet(authentication: authentication, name: ledgerSettings.name, negateRunningTotal: ledgerSettings.negateRunningTotal)
             .flatMap { parsed in
-                let sheetTransactions = TransactionMapper.mapDataToTransactions(parsed.transactionData, ledgerSettings: ledgerSettings)
+                let transactionData = parsed.rows.map(\.transactionData)
+                let sheetTransactions = TransactionMapper.mapDataToTransactions(transactionData, ledgerSettings: ledgerSettings)
+                let mappedRows = Array(zip(sheetTransactions, parsed.rows).map {
+                    SheetCellsFormatter.MappedRow(transaction: $0.0, rawRow: $0.1.rawRow)
+                })
                 let balance = buildBalance(runningTotal: parsed.runningTotal, transactions: sheetTransactions, ledgerSettings: ledgerSettings)
-                return .success(SheetTransactionData(transactions: sheetTransactions, balance: balance, parserErrors: parsed.parserErrors))
+                return .success(SheetTransactionData(
+                    transactions: sheetTransactions,
+                    rows: mappedRows,
+                    balance: balance,
+                    parserErrors: parsed.parserErrors,
+                    layout: parsed.layout
+                ))
             }
     }
 
@@ -205,13 +238,18 @@ public class GenericSyncer {
     }
 
     func removeExistingTransactions(from transactions: [Transaction], existingTransactions: [Transaction], ledgerSettings: LedgerSettings) -> [Transaction] {
-        transactions.filter { transaction -> Bool in
-            !existingTransactions.contains { existingTransaction -> Bool in
-                transaction.metaData.payee.caseInsensitiveCompare(existingTransaction.metaData.payee) == .orderedSame
-                    && postingsMatch(transaction: transaction, existingTransaction: existingTransaction, ledgerSettings: ledgerSettings)
-                    && transaction.metaData.date + ledgerSettings.dateTolerance >= existingTransaction.metaData.date
-                    && transaction.metaData.date - ledgerSettings.dateTolerance <= existingTransaction.metaData.date
-            }
+        transactions.filter { transaction in
+            !matchesExistingTransaction(transaction, existingTransactions: existingTransactions, ledgerSettings: ledgerSettings)
+        }
+    }
+
+    func removeExistingRows(
+        from rows: [SheetCellsFormatter.MappedRow],
+        existingTransactions: [Transaction],
+        ledgerSettings: LedgerSettings
+    ) -> [SheetCellsFormatter.MappedRow] {
+        rows.filter { row in
+            !matchesExistingTransaction(row.transaction, existingTransactions: existingTransactions, ledgerSettings: ledgerSettings)
         }
     }
 
@@ -242,6 +280,19 @@ public class GenericSyncer {
         return multiCurrencyAmount.amountFor(symbol: ledgerSettings.commoditySymbol)
     }
 
+    private func matchesExistingTransaction(
+        _ transaction: Transaction,
+        existingTransactions: [Transaction],
+        ledgerSettings: LedgerSettings
+    ) -> Bool {
+        existingTransactions.contains { existingTransaction in
+            transaction.metaData.payee.caseInsensitiveCompare(existingTransaction.metaData.payee) == .orderedSame
+                && postingsMatch(transaction: transaction, existingTransaction: existingTransaction, ledgerSettings: ledgerSettings)
+                && transaction.metaData.date + ledgerSettings.dateTolerance >= existingTransaction.metaData.date
+                && transaction.metaData.date - ledgerSettings.dateTolerance <= existingTransaction.metaData.date
+        }
+    }
+
     /// Downloads the raw sheet data and parses it into transaction data using `SheetParser`.
     ///
     /// Blocks the calling thread using a semaphore until the asynchronous download
@@ -259,10 +310,9 @@ public class GenericSyncer {
         SheetDownloader.download(authentication: authentication, url: sheetURL) {
             switch $0 {
             case .success(let data):
-                SheetParser.parseSheet(data, name: name, negateRunningTotal: negateRunningTotal) { transactionData, runningTotal, parserErrors in
-                    result = .success(SheetParsedData(transactionData: transactionData, runningTotal: runningTotal, parserErrors: parserErrors))
-                    semaphore.signal()
-                }
+                let parsed = SheetParser.parseSheetData(data, name: name, negateRunningTotal: negateRunningTotal)
+                result = .success(SheetParsedData(rows: parsed.rows, runningTotal: parsed.runningTotal, parserErrors: parsed.errors, layout: parsed.layout))
+                semaphore.signal()
             case .failure(let error):
                 result = .failure(error)
                 semaphore.signal()

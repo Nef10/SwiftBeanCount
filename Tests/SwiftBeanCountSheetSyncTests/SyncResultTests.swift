@@ -40,6 +40,7 @@ struct SyncResultTests {
         #expect(result.parserErrors == parserErrors)
         #expect(result.ledgerSettings == ledgerSettings)
         #expect(result.balance == nil)
+        #expect(result.sheetCells.isEmpty)
     }
 
     @Test
@@ -61,6 +62,7 @@ struct SyncResultTests {
         #expect(result.balance?.amount.number == Decimal(string: "42.50")!)
         #expect(result.balance?.amount.commoditySymbol == "USD")
         #expect(result.balance?.date == balanceDate)
+        #expect(result.sheetCells.isEmpty)
     }
 
     @Test
@@ -71,11 +73,13 @@ struct SyncResultTests {
             mode: .upload,
             transactions: [],
             parserErrors: [],
-            ledgerSettings: ledgerSettings
+            ledgerSettings: ledgerSettings,
+            sheetCells: [["Date", "Payee"], ["2025-01-01", "Store"]]
         )
 
         #expect(result.mode == .upload)
         #expect(result.balance == nil)
+        #expect(result.sheetCells == [["Date", "Payee"], ["2025-01-01", "Store"]])
     }
 
 }

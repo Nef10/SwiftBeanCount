@@ -16,12 +16,9 @@ struct SheetParserShareAmountFormatTests {
             ["2025-01-13", "Bob", "Commercial Street Cafe", "Hot Chocolate", "", "CA$4.75", "CA$4.75", "-CA$5.58"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(errors.isEmpty)
         #expect(transactions.count == 4)
@@ -47,10 +44,7 @@ struct SheetParserShareAmountFormatTests {
             ["2025-03-01", "Alice", "Supermarket", "Groceries", "", "CA$25.00", "CA$25.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, _ in
-            transactions = parsedTransactions
-        }
+        let transactions = SheetParser.parseSheetData(data, name: "Alice").rows.map(\.transactionData)
 
         #expect(transactions.count == 1)
         let transaction = transactions[0]
@@ -68,10 +62,7 @@ struct SheetParserShareAmountFormatTests {
             ["2025-03-01", "Bob", "Cinema", "Movie", "", "CA$12.00", "CA$12.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, _ in
-            transactions = parsedTransactions
-        }
+        let transactions = SheetParser.parseSheetData(data, name: "Alice").rows.map(\.transactionData)
 
         #expect(transactions.count == 1)
         let transaction = transactions[0]
@@ -90,12 +81,9 @@ struct SheetParserShareAmountFormatTests {
             ["2025-02-05", "Alice", "Restaurant", "Dinner", "", "CA$20.00", "-CA$9.37"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var runningTotal: Decimal?
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, parsedRunningTotal, _ in
-            transactions = parsedTransactions
-            runningTotal = parsedRunningTotal
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let runningTotal = parsed.runningTotal
 
         #expect(transactions.count == 2)
         let bob = transactions.first { $0.payee == "Store" }!
@@ -117,10 +105,7 @@ struct SheetParserShareAmountFormatTests {
             ["2025-01-15", "Bob", "Store B", "Second", "", "CA$5.00", "CA$15.00"]
         ]
 
-        var runningTotal: Decimal?
-        SheetParser.parseSheet(data, name: "Alice") { _, parsedRunningTotal, _ in
-            runningTotal = parsedRunningTotal
-        }
+        let runningTotal = SheetParser.parseSheetData(data, name: "Alice").runningTotal
 
         #expect(runningTotal == Decimal(string: "15.00"))
     }
@@ -133,10 +118,7 @@ struct SheetParserShareAmountFormatTests {
             ["2025-01-05", "Alice", "Store B", "Second", "", "CA$30.00", "-CA$20.00"]
         ]
 
-        var runningTotal: Decimal?
-        SheetParser.parseSheet(data, name: "Alice") { _, parsedRunningTotal, _ in
-            runningTotal = parsedRunningTotal
-        }
+        let runningTotal = SheetParser.parseSheetData(data, name: "Alice").runningTotal
 
         #expect(runningTotal == Decimal(string: "-20.00"))
     }
@@ -150,10 +132,7 @@ struct SheetParserShareAmountFormatTests {
             ["Bob", "Store", "Test", "", "CA$10.00", "CA$10.00"]
         ]
 
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { _, _, parsedErrors in
-            errors = parsedErrors
-        }
+        let errors = SheetParser.parseSheetData(data, name: "Alice").errors
 
         #expect(errors.count == 1)
         if case .missingHeader = errors[0] {
@@ -170,10 +149,7 @@ struct SheetParserShareAmountFormatTests {
             ["2025-01-01", "Bob", "Olympia", "Lunch", "", "CA$15.00", "CA$15.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, _ in
-            transactions = parsedTransactions
-        }
+        let transactions = SheetParser.parseSheetData(data, name: "Alice").rows.map(\.transactionData)
 
         #expect(transactions.count == 1)
         #expect(transactions[0].payee == "Olympia")
@@ -186,10 +162,7 @@ struct SheetParserShareAmountFormatTests {
             ["2025-01-01", "Alice", "Store", "Test", "", "CA$20.00", "-CA$20.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, _ in
-            transactions = parsedTransactions
-        }
+        let transactions = SheetParser.parseSheetData(data, name: "Alice").rows.map(\.transactionData)
 
         #expect(transactions.count == 1)
         #expect(transactions[0].paidBy == .one)
@@ -202,10 +175,7 @@ struct SheetParserShareAmountFormatTests {
             ["2025-01-01", "Bob", "Store", "Test note", "", "CA$10.00", "CA$10.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, _ in
-            transactions = parsedTransactions
-        }
+        let transactions = SheetParser.parseSheetData(data, name: "Alice").rows.map(\.transactionData)
 
         #expect(transactions.count == 1)
         #expect(transactions[0].narration == "Test note")
@@ -219,10 +189,7 @@ struct SheetParserShareAmountFormatTests {
             ["2025-03-01", "Bob", "StoreA", "Earlier", "", "CA$10.00", "CA$10.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, _ in
-            transactions = parsedTransactions
-        }
+        let transactions = SheetParser.parseSheetData(data, name: "Alice").rows.map(\.transactionData)
 
         #expect(transactions.count == 2)
         #expect(transactions[0].payee == "StoreA")
@@ -236,10 +203,7 @@ struct SheetParserShareAmountFormatTests {
             ["2025-01-01", "Bob", "Store", "Test", "", "invalid", "CA$0.00"]
         ]
 
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { _, _, parsedErrors in
-            errors = parsedErrors
-        }
+        let errors = SheetParser.parseSheetData(data, name: "Alice").errors
 
         #expect(errors.count == 1)
         #expect(errors[0] == .invalidValue("Line 2: Parsing Error! Invalid Number: invalid"))
@@ -253,10 +217,7 @@ struct SheetParserShareAmountFormatTests {
             ["2025-01-02", " Alice ", "Cinema", "Movie", "Fun", "CA$10.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, _ in
-            transactions = parsedTransactions
-        }
+        let transactions = SheetParser.parseSheetData(data, name: "Alice").rows.map(\.transactionData)
 
         #expect(transactions.count == 2)
         #expect(transactions[0].payee == "Store")
@@ -267,9 +228,7 @@ struct SheetParserShareAmountFormatTests {
     }
 
     private func parseRunningTotal(_ data: [[String]], name: String = "Alice", negateRunningTotal: Bool = false) -> Decimal? {
-        var result: Decimal?
-        SheetParser.parseSheet(data, name: name, negateRunningTotal: negateRunningTotal) { _, runningTotal, _ in result = runningTotal }
-        return result
+        SheetParser.parseSheetData(data, name: name, negateRunningTotal: negateRunningTotal).runningTotal
     }
 
     @Test

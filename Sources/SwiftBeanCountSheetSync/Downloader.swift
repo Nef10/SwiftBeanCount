@@ -22,15 +22,18 @@ public class Downloader: GenericSyncer, Syncer {
                     let sheetTransactions = getTransactionsFromSheet(authentication: authentication, ledgerSettings: ledgerSettings)
                     switch sheetTransactions {
                     case .success(let sheetData):
-                        let filteredSheetTransactions = removeExistingTransactions(from: sheetData.transactions,
-                                                                                   existingTransactions: ledgerTransactions,
-                                                                                   ledgerSettings: ledgerSettings)
+                        let filteredSheetRows = removeExistingRows(from: sheetData.rows,
+                                                                   existingTransactions: ledgerTransactions,
+                                                                   ledgerSettings: ledgerSettings)
+                        let filteredSheetTransactions = filteredSheetRows.map(\.transaction)
                         let mergedTransactions = mergeExisting(transactions: filteredSheetTransactions, into: ledgerTransactions, ledgerSettings: ledgerSettings)
+                        let sheetCells = SheetCellsFormatter.buildDownloadSheetCells(layout: sheetData.layout, rows: filteredSheetRows)
                         return .success(SyncResult(mode: .download,
                                                    transactions: mergedTransactions,
                                                    parserErrors: sheetData.parserErrors,
                                                    ledgerSettings: ledgerSettings,
-                                                   balance: sheetData.balance))
+                                                   balance: sheetData.balance,
+                                                   sheetCells: sheetCells))
                     case .failure(let error):
                         return .failure(error)
                     }

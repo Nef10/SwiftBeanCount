@@ -5,6 +5,7 @@
 //  Created by Steffen Koette on 2020-12-05.
 //  Copyright © 2020 Steffen Kötte. All rights reserved.
 //
+// swiftlint:disable file_length
 
 import Foundation
 
@@ -60,6 +61,7 @@ enum SheetParser {
         let narration: Int
         let amount1: Int
         let amount2: Int
+        let otherPersonName: String
         let maxIndex: Int
     }
 
@@ -177,6 +179,7 @@ enum SheetParser {
             narration: narrationIndex,
             amount1: amount1Index,
             amount2: amount2Index,
+            otherPersonName: payer2,
             maxIndex: maxIndex
         )
     }

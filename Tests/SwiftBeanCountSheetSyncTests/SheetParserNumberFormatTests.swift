@@ -17,10 +17,7 @@ struct SheetParserNumberFormatTests {
             ["2024-01-16", "B", "$1,030.63", "G", "Bob", "N", "$515.00", "$515.63"],
             ["2024-01-17", "C", "CA$1,030.63", "G", "Alice", "N", "CA$500.00", "CA$530.63"]
         ]
-        var transactions: [SheetParser.TransactionData]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, _ in
-            transactions = parsedTransactions
-        }
+        let transactions = SheetParser.parseSheetData(data, name: "Alice").rows.map(\.transactionData)
         #expect(transactions.count == 3)
         #expect(transactions[0].amount == Decimal(string: "30.63"))
         #expect(transactions[0].amount1 == Decimal(string: "15.00"))
@@ -40,10 +37,7 @@ struct SheetParserNumberFormatTests {
             ["2024-01-16", "B", "-$30.63", "G", "Bob", "N", "-15.00", "-15.63"],
             ["2024-01-17", "C", "-CA$30.63", "G", "Alice", "N", "-15.00", "-15.63"]
         ]
-        var transactions: [SheetParser.TransactionData]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, _ in
-            transactions = parsedTransactions
-        }
+        let transactions = SheetParser.parseSheetData(data, name: "Alice").rows.map(\.transactionData)
         #expect(transactions.count == 3)
         #expect(transactions[0].amount == Decimal(string: "-30.63"))
         #expect(transactions[1].amount == Decimal(string: "-30.63"))
@@ -59,10 +53,7 @@ struct SheetParserNumberFormatTests {
             ["2024-01-16", "B", "-$1,030.63", "G", "Bob", "N", "-500.00", "-530.63"],
             ["2024-01-17", "C", "-CA$1,030.63", "G", "Alice", "N", "-500.00", "-530.63"]
         ]
-        var transactions: [SheetParser.TransactionData]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, _ in
-            transactions = parsedTransactions
-        }
+        let transactions = SheetParser.parseSheetData(data, name: "Alice").rows.map(\.transactionData)
         #expect(transactions.count == 3)
         #expect(transactions[0].amount == Decimal(string: "-1030.63"))
         #expect(transactions[1].amount == Decimal(string: "-1030.63"))
@@ -79,10 +70,7 @@ struct SheetParserNumberFormatTests {
             ["2024-01-15", "A", "($30.63)", "G", "Alice", "N", "($15.00)", "($15.63)"],
             ["2024-01-16", "B", "(CA$30.63)", "G", "Bob", "N", "(CA$15.00)", "(CA$15.63)"]
         ]
-        var transactions: [SheetParser.TransactionData]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, _ in
-            transactions = parsedTransactions
-        }
+        let transactions = SheetParser.parseSheetData(data, name: "Alice").rows.map(\.transactionData)
         #expect(transactions.count == 2)
         #expect(transactions[0].amount == Decimal(string: "-30.63"))
         #expect(transactions[0].amount1 == Decimal(string: "-15.00"))
@@ -99,10 +87,7 @@ struct SheetParserNumberFormatTests {
             ["2024-01-16", "B", "($1,030.63)", "G", "Bob", "N", "($500.00)", "($530.63)"],
             ["2024-01-17", "C", "(CA$1,030.63)", "G", "Alice", "N", "(CA$500.00)", "(CA$530.63)"]
         ]
-        var transactions: [SheetParser.TransactionData]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, _, _ in
-            transactions = parsedTransactions
-        }
+        let transactions = SheetParser.parseSheetData(data, name: "Alice").rows.map(\.transactionData)
         #expect(transactions.count == 3)
         #expect(transactions[0].amount == Decimal(string: "-1030.63"))
         #expect(transactions[1].amount == Decimal(string: "-1030.63"))

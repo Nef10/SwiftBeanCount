@@ -16,6 +16,7 @@ This library synchronizes transactions from Beancount files to a Google Sheets w
     - parsing errors occurred while reading the sheet
     - configuration which was used for syncing
     - an optional `balance` assertion derived from the sheet's `Running Total` column, if that column is present
+    - `sheetCells`: sheet-shaped `[[String]]` data with the column headers as the first row. For downloads this contains the kept rows from the live sheet after filtering; for uploads this contains the rows as they should appear in the live sheet format
 
 ## Beancount Meta Data
 
