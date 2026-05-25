@@ -25,17 +25,14 @@ struct SheetCellsFormatterTests {
         Transaction(
             metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_735_689_600), payee: "Store", narration: "Weekly shop"),
             postings: [
-                Posting(
-                    accountName: try AccountName("Expenses:Groceries"),
-                    amount: Amount(number: Decimal(string: "30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
+                Posting(accountName: try AccountName("Expenses:Groceries"),
+                        amount: Amount(number: Decimal(string: "30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
                 ),
-                Posting(
-                    accountName: LedgerSettings.ownAccountName,
-                    amount: Amount(number: Decimal(string: "-61.26")!, commoditySymbol: "CAD", decimalDigits: 2)
+                Posting(accountName: LedgerSettings.ownAccountName,
+                        amount: Amount(number: Decimal(string: "-61.26")!, commoditySymbol: "CAD", decimalDigits: 2)
                 ),
-                Posting(
-                    accountName: try AccountName("Assets:Shared"),
-                    amount: Amount(number: Decimal(string: "30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
+                Posting(accountName: try AccountName("Assets:Shared"),
+                        amount: Amount(number: Decimal(string: "30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
                 )
             ]
         )
@@ -45,13 +42,11 @@ struct SheetCellsFormatterTests {
         Transaction(
             metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_735_689_600), payee: "Store", narration: "Weekly shop"),
             postings: [
-                Posting(
-                    accountName: try AccountName("Expenses:Groceries"),
-                    amount: Amount(number: Decimal(string: "30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
+                Posting(accountName: try AccountName("Expenses:Groceries"),
+                        amount: Amount(number: Decimal(string: "30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
                 ),
-                Posting(
-                    accountName: try AccountName("Assets:Shared"),
-                    amount: Amount(number: Decimal(string: "-30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
+                Posting(accountName: try AccountName("Assets:Shared"),
+                        amount: Amount(number: Decimal(string: "-30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
                 )
             ]
         )
@@ -61,13 +56,11 @@ struct SheetCellsFormatterTests {
         Transaction(
             metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_735_689_600), payee: "Store", narration: "Weekly shop"),
             postings: [
-                Posting(
-                    accountName: try AccountName("Expenses:Groceries"),
-                    amount: Amount(number: Decimal(string: "61.26")!, commoditySymbol: "CAD", decimalDigits: 2)
+                Posting(accountName: try AccountName("Expenses:Groceries"),
+                        amount: Amount(number: Decimal(string: "61.26")!, commoditySymbol: "CAD", decimalDigits: 2)
                 ),
-                Posting(
-                    accountName: LedgerSettings.ownAccountName,
-                    amount: Amount(number: Decimal(string: "-61.26")!, commoditySymbol: "CAD", decimalDigits: 2)
+                Posting(accountName: LedgerSettings.ownAccountName,
+                        amount: Amount(number: Decimal(string: "-61.26")!, commoditySymbol: "CAD", decimalDigits: 2)
                 )
             ]
         )
@@ -77,13 +70,11 @@ struct SheetCellsFormatterTests {
         Transaction(
             metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_735_689_600), payee: "Store", narration: "Weekly shop"),
             postings: [
-                Posting(
-                    accountName: try AccountName("Expenses:Groceries"),
-                    amount: Amount(number: Decimal(string: "30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
+                Posting(accountName: try AccountName("Expenses:Groceries"),
+                        amount: Amount(number: Decimal(string: "30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
                 ),
-                Posting(
-                    accountName: try AccountName("Assets:Shared"),
-                    amount: Amount(number: Decimal(string: "30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
+                Posting(accountName: try AccountName("Assets:Shared"),
+                        amount: Amount(number: Decimal(string: "30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
                 )
             ]
         )
@@ -93,13 +84,11 @@ struct SheetCellsFormatterTests {
         Transaction(
             metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_747_347_200), payee: "City of Vancouver", narration: "PayByPhone - Fountainhead Ash"),
             postings: [
-                Posting(
-                    accountName: try AccountName("Liabilities:CreditCard:Wealthsimple"),
-                    amount: Amount(number: Decimal(string: "-2.00")!, commoditySymbol: "CAD", decimalDigits: 2)
+                Posting(accountName: try AccountName("Liabilities:CreditCard:Wealthsimple"),
+                        amount: Amount(number: Decimal(string: "-2.00")!, commoditySymbol: "CAD", decimalDigits: 2)
                 ),
-                Posting(
-                    accountName: try AccountName("Expenses:Transportation:Car:Parking"),
-                    amount: Amount(number: Decimal(string: "2.00")!, commoditySymbol: "CAD", decimalDigits: 2)
+                Posting(accountName: try AccountName("Expenses:Transportation:Car:Parking"),
+                        amount: Amount(number: Decimal(string: "2.00")!, commoditySymbol: "CAD", decimalDigits: 2)
                 )
             ]
         )
@@ -281,7 +270,8 @@ struct SheetCellsFormatterTests {
         ])
         #expect(result.errors == [
             .invalidValue(
-                "Upload transaction 2025-01-01 Store failed: Unable to format transaction for the sheet: Cannot derive the total amount for a total-amount sheet when the owner did not pay"
+                "Upload transaction 2025-01-01 Store failed: Unable to format transaction for the sheet: " +
+                "Cannot derive the total amount for a total-amount sheet when the owner did not pay"
             )
         ])
     }

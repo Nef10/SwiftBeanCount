@@ -30,7 +30,7 @@ public enum SheetParserError: LocalizedError, Equatable {
     }
 }
 
-enum SheetParser {
+enum SheetParser { // swiftlint:disable:this type_body_length
 
     enum Payer {
         case one
@@ -46,6 +46,18 @@ enum SheetParser {
         let amount1: Decimal
         let amount2: Decimal
         let paidBy: Payer
+    }
+
+     struct ParsedData {
+        let rows: [SheetCellsFormatter.ParsedRow]
+        let runningTotal: Decimal?
+        let errors: [SheetParserError]
+        let layout: SheetCellsFormatter.Layout?
+    }
+
+    private struct ParsedRowsResult {
+        let rows: [Result<SheetCellsFormatter.ParsedRow, SheetParserError>]
+        let layout: SheetCellsFormatter.Layout?
     }
 
     /// Resolved column indices for a total amount format sheet.
@@ -85,63 +97,81 @@ enum SheetParser {
         return dateFormatter
     }()
 
-    static func parseSheet(_ data: ([[String]]), name: String, negateRunningTotal: Bool = false, completion: ([TransactionData], Decimal?, [SheetParserError]) -> Void) {
+    static func parseSheetData(_ data: [[String]], name: String, negateRunningTotal: Bool = false) -> ParsedData {
         var lines = removeEmptyRows(data)
         guard !lines.isEmpty else {
-            completion([], nil, [])
-            return
+            return ParsedData(rows: [], runningTotal: nil, errors: [], layout: nil)
         }
-        let headings = lines.removeFirst().map {
+        let rawHeadings = lines.removeFirst()
+        let headings = rawHeadings.map {
             $0.trimmingCharacters(in: .whitespacesAndNewlines)
         }
-        var transactionData = [TransactionData]()
+        let parsedRows = convertToParsedRows(headings: headings, rawHeadings: rawHeadings, data: lines, name: name)
+        var rows = [SheetCellsFormatter.ParsedRow]()
         var errors = [SheetParserError]()
-        convertToTransactionData(headings: headings, data: lines, name: name).forEach {
+        parsedRows.rows.forEach {
             switch $0 {
-            case .success(let transaction):
-                transactionData.append(transaction)
+            case .success(let row):
+                rows.append(row)
             case .failure(let error):
                 errors.append(error)
             }
         }
-        transactionData = transactionData.sorted {
-            $0.date < $1.date
+        rows = rows.sorted {
+            $0.transactionData.date < $1.transactionData.date
         }
         let runningTotal = extractRunningTotal(headings: headings, data: lines, negate: negateRunningTotal)
-        completion(transactionData, runningTotal, errors)
+        return ParsedData(rows: rows, runningTotal: runningTotal, errors: errors, layout: parsedRows.layout)
     }
 
     /// Dispatches sheet rows to the appropriate column-format parser.
     ///
     /// Detects the column format by checking for the presence of the `Share Other Person`
     /// header. If found, the share amount format parser is used; otherwise the total amount format
-    /// parser is used. This detection is independent of whether the sheet covers one month
-    /// or many months.
+    /// parser is used.
     /// - Parameters:
     ///   - headings: The first row of the sheet, used as column headers.
+    ///   - rawHeadings: The original, untrimmed column headers
     ///   - data: The remaining rows of the sheet.
     ///   - name: The ledger owner's name, used to identify which columns belong to which person.
-    /// - Returns: One result per row; failures carry a `SheetParserError`.
-    private static func convertToTransactionData(headings: [String], data: [[String]], name: String) -> [Result<TransactionData, SheetParserError>] {
+    /// - Returns: ParsedRowsResult containing the parsed rows and the detected layout, or errors if the required headers are missing or any row contains invalid data.
+    private static func convertToParsedRows(headings: [String], rawHeadings: [String], data: [[String]], name: String) -> ParsedRowsResult {
         if headings.contains("Share Other Person") {
-            return convertToTransactionDataShareAmountFormat(headings: headings, data: data, name: name)
+            return parseRowsShareAmountFormat(headings: headings, rawHeadings: rawHeadings, data: data, name: name)
         }
-        return convertToTransactionDataTotalAmountFormat(headings: headings, data: data, name: name)
+        return parseRowsTotalAmountFormat(headings: headings, rawHeadings: rawHeadings, data: data, name: name)
     }
 
-    /// Parses all rows of a total amount format sheet into `TransactionData` values.
+    /// Parses all rows of a total amount format sheet into a `ParsedRowsResult`.
     /// - Parameters:
     ///   - headings: Column header row.
+    ///   - rawHeadings: The original, untrimmed column headers as they appear in the sheet, used for error messages and layout metadata.
     ///   - data: Data rows (excluding the header row).
     ///   - name: The ledger owner's name.
-    /// - Returns: One result per row.
-    private static func convertToTransactionDataTotalAmountFormat(headings: [String], data: [[String]], name: String) -> [Result<TransactionData, SheetParserError>] {
+    /// - Returns: ParsedRowsResult containing the parsed rows and the detected layout, or errors if the required headers are missing or any row contains invalid data.
+    private static func parseRowsTotalAmountFormat(headings: [String], rawHeadings: [String], data: [[String]], name: String) -> ParsedRowsResult {
         guard let indices = totalAmountFormatIndices(headings: headings, data: data, name: name) else {
-            return [.failure(.missingHeader("Missing Header! Headers: \(headings)"))]
+            return ParsedRowsResult(
+                rows: [.failure(.missingHeader("Missing Header! Headers: \(headings)"))],
+                layout: nil
+            )
         }
-        return data.enumerated().map { index, row in
-            parseTotalAmountFormatRow(row, indices: indices, name: name, line: index + 2) // +2 to account for header row and 0-based index
+        let layout = SheetCellsFormatter.Layout(
+            format: .totalAmount,
+            columns: [
+                SheetCellsFormatter.Column(header: rawHeadings[indices.date], index: indices.date, role: .date),
+                SheetCellsFormatter.Column(header: rawHeadings[indices.payee], index: indices.payee, role: .payee),
+                SheetCellsFormatter.Column(header: rawHeadings[indices.amount], index: indices.amount, role: .amount),
+                SheetCellsFormatter.Column(header: rawHeadings[indices.category], index: indices.category, role: .category),
+                SheetCellsFormatter.Column(header: rawHeadings[indices.payer], index: indices.payer, role: .payer),
+                SheetCellsFormatter.Column(header: rawHeadings[indices.narration], index: indices.narration, role: .narration)
+            ].sorted { $0.index < $1.index },
+            otherPersonName: indices.otherPersonName
+        )
+        let rows = data.enumerated().map { index, row in
+            parseTotalAmountRow(row, indices: indices, name: name, line: index + 2) // +2 to account for header row and 0-based index
         }
+        return ParsedRowsResult(rows: rows, layout: layout)
     }
 
     /// Resolves column positions for a total amount format sheet.
@@ -189,8 +219,10 @@ enum SheetParser {
     ///   - row: The raw string values for one sheet row.
     ///   - indices: Pre-resolved column indices for this sheet.
     ///   - name: The ledger owner's name, used to determine who paid.
-    /// - Returns: A success with the parsed data, or a failure with a `SheetParserError`.
-    private static func parseTotalAmountFormatRow(_ row: [String], indices: TotalAmountFormatIndices, name: String, line: Int) -> Result<TransactionData, SheetParserError> {
+    ///   - line: The line number in the sheet (for error reporting).
+    /// - Returns: A success with the parsed row, or a failure with a `SheetParserError`
+    private static func parseTotalAmountRow(_ row: [String], indices: TotalAmountFormatIndices, name: String, line: Int)
+        -> Result<SheetCellsFormatter.ParsedRow, SheetParserError> {
         guard row.count >= indices.maxIndex + 1 else {
             return .failure(.invalidValue("Line \(line): Parsing Error! Missing Value(s) in row: \(row.joined(separator: " "))"))
         }
@@ -210,7 +242,7 @@ enum SheetParser {
         let narration = row[indices.narration].trimmingCharacters(in: .whitespacesAndNewlines)
         let category = row[indices.category].trimmingCharacters(in: .whitespacesAndNewlines)
         let paidBy: Payer = row[indices.payer].trimmingCharacters(in: .whitespacesAndNewlines) == name ? .one : .two
-        return .success(TransactionData(
+        let transactionData = TransactionData(
             date: date,
             payee: payee,
             narration: narration,
@@ -219,22 +251,40 @@ enum SheetParser {
             amount1: amount1,
             amount2: amount2,
             paidBy: paidBy
-        ))
+        )
+        return .success(SheetCellsFormatter.ParsedRow(transactionData: transactionData, rawRow: row))
     }
 
-    /// Parses all rows of a share amount format sheet into `TransactionData` values.
+    /// Parses all rows of a share amount format sheet into a `ParsedRowsResult`.
     /// - Parameters:
     ///   - headings: Column header row.
+    ///   - rawHeadings: Original column header row as it appears in the sheet.
     ///   - data: Data rows (excluding the header row).
     ///   - name: The ledger owner's name.
     /// - Returns: One result per row.
-    private static func convertToTransactionDataShareAmountFormat(headings: [String], data: [[String]], name: String) -> [Result<TransactionData, SheetParserError>] {
+    private static func parseRowsShareAmountFormat(headings: [String], rawHeadings: [String], data: [[String]], name: String) -> ParsedRowsResult {
         guard let indices = shareAmountFormatIndices(headings: headings) else {
-            return [.failure(.missingHeader("Missing Header! Headers: \(headings)"))]
+            return ParsedRowsResult(
+                rows: [.failure(.missingHeader("Missing Header! Headers: \(headings)"))],
+                layout: nil
+            )
         }
-        return data.enumerated().map { index, row in
-            parseShareAmountFormatRow(row, indices: indices, name: name, line: index + 2) // +2 to account for header row and 0-based index
+        let layout = SheetCellsFormatter.Layout(
+            format: .shareAmount,
+            columns: [
+                SheetCellsFormatter.Column(header: rawHeadings[indices.date], index: indices.date, role: .date),
+                SheetCellsFormatter.Column(header: rawHeadings[indices.payee], index: indices.payee, role: .payee),
+                SheetCellsFormatter.Column(header: rawHeadings[indices.category], index: indices.category, role: .category),
+                SheetCellsFormatter.Column(header: rawHeadings[indices.payer], index: indices.payer, role: .payer),
+                SheetCellsFormatter.Column(header: rawHeadings[indices.narration], index: indices.narration, role: .narration),
+                SheetCellsFormatter.Column(header: rawHeadings[indices.shareOtherPerson], index: indices.shareOtherPerson, role: .shareOtherPerson)
+            ].sorted { $0.index < $1.index },
+            otherPersonName: otherPersonName(data: data, payerIndex: indices.payer, name: name)
+        )
+        let rows = data.enumerated().map { index, row in
+            parseShareAmountRow(row, indices: indices, name: name, line: index + 2) // +2 to account for header row and 0-based index
         }
+        return ParsedRowsResult(rows: rows, layout: layout)
     }
 
     /// Resolves column positions for a share amount format sheet.
@@ -266,7 +316,7 @@ enum SheetParser {
         )
     }
 
-    /// Parses a single share amount format row into a `TransactionData` value.
+    /// Parses a single share amount format row into a `ParsedRow` value.
     ///
     /// When the owner paid, the total amount is derived from the equal-split assumption:
     /// `total = 2 × shareOtherPerson`.
@@ -274,8 +324,9 @@ enum SheetParser {
     ///   - row: The raw string values for one sheet row.
     ///   - indices: Pre-resolved column indices for this sheet.
     ///   - name: The ledger owner's name, used to determine who paid.
-    /// - Returns: A success with the parsed data, or a failure with a `SheetParserError`.
-    private static func parseShareAmountFormatRow(_ row: [String], indices: ShareAmountFormatIndices, name: String, line: Int) -> Result<TransactionData, SheetParserError> {
+    ///   - line: The line number in the sheet (for error reporting).
+    /// - Returns: A success with the parsed row, or a failure with a `SheetParserError`.
+    private static func parseShareAmountRow(_ row: [String], indices: ShareAmountFormatIndices, name: String, line: Int) -> Result<SheetCellsFormatter.ParsedRow, SheetParserError> {
         guard row.count >= indices.maxIndex + 1 else {
             return .failure(.invalidValue("Line \(line): Parsing Error! Missing Value(s) in row: \(row.joined(separator: " "))"))
         }
@@ -293,7 +344,7 @@ enum SheetParser {
         let amount1 = shareOtherPerson
         let amount2: Decimal = paidBy == .one ? shareOtherPerson : 0
         let amount: Decimal = paidBy == .one ? shareOtherPerson * 2 : 0
-        return .success(TransactionData(
+        let transactionData = TransactionData(
             date: date,
             payee: payee,
             narration: narration,
@@ -302,7 +353,8 @@ enum SheetParser {
             amount1: amount1,
             amount2: amount2,
             paidBy: paidBy
-        ))
+        )
+        return .success(SheetCellsFormatter.ParsedRow(transactionData: transactionData, rawRow: row))
     }
 
     /// Extracts the most recent running total from a `Running Total` column.
@@ -375,6 +427,17 @@ enum SheetParser {
             return nil
         }
         return Decimal(sign: sign, exponent: -exponent, significand: Decimal(int))
+    }
+
+    private static func otherPersonName(data: [[String]], payerIndex: Int, name: String) -> String? {
+        let row = data.first { row in
+            guard row.count > payerIndex else {
+                return false
+            }
+            let payer = row[payerIndex].trimmingCharacters(in: .whitespacesAndNewlines)
+            return !payer.isEmpty && payer != name
+        }
+        return row?[payerIndex].trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
 }
