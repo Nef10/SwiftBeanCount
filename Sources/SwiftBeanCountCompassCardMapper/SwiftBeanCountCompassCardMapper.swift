@@ -213,10 +213,11 @@ public struct SwiftBeanCountCompassCardMapper {
     }
 
     private func createLoadTransaction(_ transaction: TransactionRow, cardNumber: String?, account: AccountName) -> Transaction {
-        let expenseAccount = ledgerLoadAccountName(cardNumber: cardNumber)
         let balanceString = transaction.amount.replacingOccurrences(of: "$", with: "").components(separatedBy: .whitespacesAndNewlines).joined()
         let (decimal, _) = balanceString.amountDecimal()
-        let posting = Posting(accountName: account, amount: Amount(number: decimal, commoditySymbol: commodity, decimalDigits: 2))
+        let amount = Amount(number: decimal, commoditySymbol: commodity, decimalDigits: 2)
+        let expenseAccount = ledgerLoadAccountName(cardNumber: cardNumber, transactionDate: transaction.date, account: account, amount: amount)
+        let posting = Posting(accountName: account, amount: amount)
         let posting2 = Posting(accountName: expenseAccount, amount: Amount(number: -decimal, commoditySymbol: commodity, decimalDigits: 2))
         let id = "\(MetaDataKey.load)-\(transaction.orderNumber.flatMap(String.init) ?? Self.dateFormatterLoadId.string(from: transaction.date))"
         let metaData = TransactionMetaData(date: transaction.date, narration: "", metaData: [MetaDataKey.journeyId: id])
@@ -241,7 +242,10 @@ public struct SwiftBeanCountCompassCardMapper {
     /// Gets the correct account from the ledger for a load of the card, based on the card number
     /// - Parameter cardNumber: Compass Card Number
     /// - Returns: AccountName from the ledger, or fallback if not found
-    private func ledgerLoadAccountName(cardNumber: String?) -> AccountName {
+    private func ledgerLoadAccountName(cardNumber: String?, transactionDate: Date, account: AccountName, amount: Amount) -> AccountName {
+        if let accountName = existingLoadAccountName(transactionDate: transactionDate, account: account, amount: amount) {
+            return accountName
+        }
         guard let cardNumber else {
             return defaultAssetAccountName
         }
@@ -251,6 +255,19 @@ public struct SwiftBeanCountCompassCardMapper {
             return defaultAssetAccountName
         }
         return accountName
+    }
+
+    private func existingLoadAccountName(transactionDate: Date, account: AccountName, amount: Amount) -> AccountName? {
+        ledger.transactions
+            .filter {
+                Calendar.current.isDate($0.metaData.date, equalTo: transactionDate, toGranularity: .day)
+                    && $0.postings.contains { $0.accountName == account && $0.amount == amount }
+                    && $0.postings.filter { $0.accountName != account }.count == 1
+            }
+            .min { abs($0.metaData.date.timeIntervalSince(transactionDate)) < abs($1.metaData.date.timeIntervalSince(transactionDate)) }?
+            .postings
+            .first { $0.accountName != account }?
+            .accountName
     }
 
     /// Checks if a transaction is already in the ledger

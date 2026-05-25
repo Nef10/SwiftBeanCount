@@ -162,6 +162,29 @@ struct SwiftBeanCountCompassCardMapperTests {
     }
 
     @Test
+    func autoLoadTransactionExistingTransactionInLedger() throws {
+        let loadAccountName = "Liabilities:MasterCard"
+        let ledger = Ledger()
+        try ledger.add(Account(name: try AccountName(accountName), metaData: ["card-number": cardNumber, "importer-type": "compass-card"]))
+        try ledger.add(Account(name: try AccountName(loadAccountName)))
+
+        let posting = Posting(accountName: try AccountName(accountName), amount: Amount(number: Decimal(20), commoditySymbol: "CAD", decimalDigits: 2))
+        let posting2 = Posting(accountName: try AccountName(loadAccountName), amount: Amount(number: Decimal(-20), commoditySymbol: "CAD", decimalDigits: 2))
+        let metaData = TransactionMetaData(date: Date(timeIntervalSince1970: 1_669_915_560), payee: "Existing", narration: "Transaction")
+        ledger.add(Transaction(metaData: metaData, postings: [posting, posting2]))
+
+        let mapper = SwiftBeanCountCompassCardMapper(ledger: ledger)
+        let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.autoLoad)")
+        #expect(result.count == 1)
+        #expect(result.first!.postings.contains {
+            $0.accountName.fullName == accountName && $0.amount.description == "20.00 CAD"
+        })
+        #expect(result.first!.postings.contains {
+            $0.accountName.fullName == loadAccountName && $0.amount.description == "-20.00 CAD"
+        })
+    }
+
+    @Test
     func createTransaction() throws {
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.transaction1)")
         #expect(result.count == 1)
