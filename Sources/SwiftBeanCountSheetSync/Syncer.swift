@@ -295,6 +295,33 @@ public class GenericSyncer {
         return multiCurrencyAmount.amountFor(symbol: ledgerSettings.commoditySymbol)
     }
 
+    /// Returns `true` when the sheet transaction's payment amount matches the ledger transaction.
+    ///
+    /// Accepts an exact match (total amount format) or a share amount format match, where the
+    /// sheet derives the total as `2 × shareOtherPerson` but the actual ledger total may differ.
+    /// In the share format case the method verifies that the share amount is covered by the actual
+    /// total and that the commodities agree.
+    /// - Parameters:
+    ///   - transaction: The sheet-derived transaction being merged.
+    ///   - ledgerTransaction: The unreconciled ledger transaction to match against.
+    ///   - ledgerSettings: Sync configuration providing account names and commodity.
+    /// - Returns: `true` if the transactions are a payment match; `false` otherwise.
+    func paymentMatches(transaction: Transaction, ledgerTransaction: Transaction, ledgerSettings: LedgerSettings) -> Bool {
+        if ownAccountPosting(transaction)?.amount == moneySpend(ledgerTransaction, ledgerSettings: ledgerSettings) {
+            return true
+        }
+        guard let sharedPosting = sharedAccountPosting(transaction, ledgerSettings: ledgerSettings),
+              let ownPosting = ownAccountPosting(transaction),
+              let spend = moneySpend(ledgerTransaction, ledgerSettings: ledgerSettings),
+              ownPosting.amount.number == -(sharedPosting.amount.number * 2),
+              sharedPosting.amount.number > 0,
+              sharedPosting.amount.commoditySymbol == spend.commoditySymbol
+        else {
+            return false
+        }
+        return sharedPosting.amount.number <= abs(spend.number)
+    }
+
     private func matchesExistingTransaction(
         _ transaction: Transaction,
         existingTransactions: [Transaction],

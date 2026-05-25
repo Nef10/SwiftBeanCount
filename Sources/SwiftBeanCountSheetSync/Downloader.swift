@@ -49,7 +49,7 @@ public class Downloader: GenericSyncer, Syncer {
                     && transaction.metaData.date + ledgerSettings.dateTolerance >= ledgerTransaction.metaData.date
                     && transaction.metaData.date - ledgerSettings.dateTolerance <= ledgerTransaction.metaData.date
                     && sharedAccountPosting(ledgerTransaction, ledgerSettings: ledgerSettings) == nil
-                    && ownAccountPosting(transaction)?.amount == moneySpend(ledgerTransaction, ledgerSettings: ledgerSettings)
+                    && paymentMatches(transaction: transaction, ledgerTransaction: ledgerTransaction, ledgerSettings: ledgerSettings)
             }
             guard let ledgerTransaction = ledgerTransactionMatch else {
                 return transaction
