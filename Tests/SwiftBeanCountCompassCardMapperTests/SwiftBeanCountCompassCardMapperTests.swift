@@ -180,7 +180,7 @@ struct SwiftBeanCountCompassCardMapperTests {
         let ledger = try loadTransactionLedger(accountName: accountName,
                                                cardNumber: cardNumber,
                                                loadAccountName: loadAccountName,
-                                               date: Date(timeIntervalSince1970: 1_669_915_560 - 86_400))
+                                               date: Date(timeIntervalSince1970: 1_669_915_560 - 345_600))
         let mapper = SwiftBeanCountCompassCardMapper(ledger: ledger)
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.autoLoad)")
         #expect(result.count == 1)
@@ -193,7 +193,7 @@ struct SwiftBeanCountCompassCardMapperTests {
         let ledger = try loadTransactionLedger(accountName: accountName,
                                                cardNumber: cardNumber,
                                                loadAccountName: loadAccountName,
-                                               date: Date(timeIntervalSince1970: 1_669_915_560 - 86_401))
+                                               date: Date(timeIntervalSince1970: 1_669_915_560 - 345_601))
         let mapper = SwiftBeanCountCompassCardMapper(ledger: ledger)
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.autoLoad)")
         #expect(result.count == 1)

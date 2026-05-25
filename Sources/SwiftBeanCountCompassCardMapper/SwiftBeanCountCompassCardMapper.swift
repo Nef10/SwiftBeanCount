@@ -62,7 +62,7 @@ public struct SwiftBeanCountCompassCardMapper {
 
     private let payee = "TransLink"
     private let commodity = "CAD"
-    private let loadTransactionDateTolerance: TimeInterval = 60 * 60 * 24
+    private let loadTransactionDateTolerance: TimeInterval = 4 * 60 * 60 * 24
 
     private let ledger: Ledger
 
