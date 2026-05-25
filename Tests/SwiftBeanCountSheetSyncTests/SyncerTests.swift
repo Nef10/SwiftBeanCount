@@ -57,6 +57,10 @@ struct SyncerTests {
         return Transaction(metaData: metaData, postings: [expensePosting, assetPosting])
     }
 
+    private func transaction(on date: Date, payee: String) -> Transaction {
+        Transaction(metaData: TransactionMetaData(date: date, payee: payee, narration: "", flag: .complete, tags: []), postings: [])
+    }
+
     @Test
     func paymentMatchesExactAmount() throws {
         let settings = try createLedgerSettings()
@@ -150,6 +154,26 @@ struct SyncerTests {
         )
         let filtered = syncer.removeExistingTransactions(from: [sheetTx1, sheetTx2], existingTransactions: [ledgerTx], ledgerSettings: settings)
         #expect(filtered.isEmpty)
+    }
+
+    @Test
+    func ledgerTransactionForCorrectMonthUsesDominantMonth() {
+        let syncer = TestSyncer(sheetURL: "", ledger: Ledger())
+        let calendar = Calendar(identifier: .gregorian)
+        let januaryTransactions = [
+            transaction(on: calendar.date(from: DateComponents(year: 2_024, month: 1, day: 3))!, payee: "January 1"),
+            transaction(on: calendar.date(from: DateComponents(year: 2_024, month: 1, day: 12))!, payee: "January 2"),
+            transaction(on: calendar.date(from: DateComponents(year: 2_024, month: 1, day: 27))!, payee: "January 3")
+        ]
+        let februaryTransaction = transaction(on: calendar.date(from: DateComponents(year: 2_024, month: 2, day: 2))!, payee: "February")
+
+        let filtered = syncer.ledgerTransactionForCorrectMonth(
+            ledgerTransactions: januaryTransactions + [februaryTransaction],
+            sheetTransactions: januaryTransactions + [februaryTransaction]
+        )
+
+        #expect(filtered.count == 3)
+        #expect(filtered.allSatisfy { calendar.component(.month, from: $0.metaData.date) == 1 })
     }
 
 }

@@ -326,7 +326,8 @@ enum SheetParser { // swiftlint:disable:this type_body_length
     ///   - name: The ledger owner's name, used to determine who paid.
     ///   - line: The line number in the sheet (for error reporting).
     /// - Returns: A success with the parsed row, or a failure with a `SheetParserError`.
-    private static func parseShareAmountRow(_ row: [String], indices: ShareAmountFormatIndices, name: String, line: Int) -> Result<SheetCellsFormatter.ParsedRow, SheetParserError> {
+    private static func parseShareAmountRow(_ row: [String], indices: ShareAmountFormatIndices, name: String, line: Int)
+        -> Result<SheetCellsFormatter.ParsedRow, SheetParserError> {
         guard row.count >= indices.maxIndex + 1 else {
             return .failure(.invalidValue("Line \(line): Parsing Error! Missing Value(s) in row: \(row.joined(separator: " "))"))
         }

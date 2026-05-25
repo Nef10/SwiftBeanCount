@@ -231,9 +231,16 @@ public class GenericSyncer {
     }
 
     func ledgerTransactionForCorrectMonth(ledgerTransactions: [Transaction], sheetTransactions: [Transaction]) -> [Transaction] {
-        let date = sheetTransactions.last?.metaData.date ?? Date()
+        let calendar = Calendar.current
+        var monthCounts = [DateComponents: Int]()
+        for transaction in sheetTransactions {
+            let components = calendar.dateComponents([.year, .month], from: transaction.metaData.date)
+            monthCounts[components, default: 0] += 1
+        }
+        let month = monthCounts.max { $0.value < $1.value }?.key
+        let date = month.flatMap(calendar.date(from:)) ?? Date()
         return ledgerTransactions.filter {
-            Calendar.current.isDate(date, equalTo: $0.metaData.date, toGranularity: .month)
+            calendar.isDate(date, equalTo: $0.metaData.date, toGranularity: .month)
         }
     }
 
