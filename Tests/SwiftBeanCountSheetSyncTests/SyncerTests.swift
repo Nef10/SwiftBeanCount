@@ -176,5 +176,16 @@ struct SyncerTests {
         #expect(filtered.allSatisfy { calendar.component(.month, from: $0.metaData.date) == 1 })
     }
 
+    @Test
+    func balanceDateReturnsNextDay() {
+        let syncer = TestSyncer(sheetURL: "", ledger: Ledger())
+        let calendar = Calendar(identifier: .gregorian)
+        let transactionDate = calendar.date(from: DateComponents(year: 2_024, month: 5, day: 24))!
+
+        let balanceDate = syncer.balanceDate(after: transactionDate)
+
+        #expect(balanceDate == calendar.date(from: DateComponents(year: 2_024, month: 5, day: 25))!)
+    }
+
 }
 #endif

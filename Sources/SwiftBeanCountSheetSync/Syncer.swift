@@ -173,8 +173,8 @@ public class GenericSyncer {
 
     /// Creates a `Balance` assertion from a running total if one is available.
     ///
-    /// Uses the date of the last transaction and the configured account and commodity
-    /// to construct the assertion.
+    /// Uses the day after the last transaction and the configured account and commodity
+    /// to construct the assertion so the balance applies after same-day transactions.
     /// - Parameters:
     ///   - runningTotal: The running total extracted from the sheet, or `nil` if absent.
     ///   - transactions: The mapped sheet transactions.
@@ -187,7 +187,15 @@ public class GenericSyncer {
             return nil
         }
         let amount = Amount(number: runningTotal, commoditySymbol: ledgerSettings.commoditySymbol, decimalDigits: 2)
-        return Balance(date: lastTransaction.metaData.date, accountName: ledgerSettings.accountName, amount: amount)
+        return Balance(
+            date: balanceDate(after: lastTransaction.metaData.date),
+            accountName: ledgerSettings.accountName,
+            amount: amount
+        )
+    }
+
+    func balanceDate(after transactionDate: Date) -> Date {
+        Calendar.current.date(byAdding: .day, value: 1, to: transactionDate) ?? transactionDate
     }
 
     /// Determines whether the sheet behaves as a single-month sheet for **upload** purposes.
