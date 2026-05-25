@@ -4,20 +4,20 @@ import Foundation
 import SwiftBeanCountModel
 import Testing
 
+// swiftlint:disable line_length
+private enum CSV {
+    static let header = "DateTime,Transaction,Product,LineItem,Amount,BalanceDetails,JourneyId,LocationDisplay,TransactonTime,OrderDate,Payment,OrderNumber,AuthCode,Total\n"
+    static let autoLoad = "Dec-01-2022 09:26 AM,AutoLoaded,Stored Value,,$20.00,$22.00,,\"AutoLoaded\nStored Value\",09:26 AM,,,,,\n"
+    static let transaction1 = "Nov-17-2022 08:39 PM,Tap in at Bus Stop 60572,Stored Value,,-$2.50,$7.45,2022-11-18T04:39:00.0000000Z,\"Tap in at Bus Stop 60572 Stored Value\",08:39 PM,,,,,\n"
+    static let transaction2 = "Dec-06-2022 05:22 PM,Tap out at Edmonds Stn,Stored Value,,$1.05,$12.10,2022-12-07T00:59:00.0000000Z,\"Tap out at Edmonds Stn\nStored Value\",05:22 PM,,,,,\nDec-06-2022 05:11 PM,Transfer at Waterfront Stn,Stored Value,,-$1.05,$22.90,2022-12-07T00:59:00.0000000Z,\"Transfer at Waterfront Stn\nStored Value\",08:44 AM,,,,,\nDec-06-2022 05:09 PM,Tap out at Waterfront Stn,Stored Value,,$1.05,$23.95,2022-12-07T00:59:00.0000000Z,\"Tap out at Waterfront Stn\nStored Value\",08:43 AM,,,,,\nDec-06-2022 04:59 PM,Tap in at Stadium Stn,Stored Value,,-$4.70,$11.05,2022-12-07T00:59:00.0000000Z,\"Tap in at Stadium Stn\nStored Value\",04:59 PM,,,,,\n"
+    static let refund = "Dec-01-2022 06:07 PM,Refund at Stadium Stn,Stored Value,,$4.70,$23.05,2022-12-02T02:05:00.0000000Z,\"Refund at Stadium Stn\nStored Value\",06:07 PM,,,,,\nDec-01-2022 06:05 PM,Tap in at Stadium Stn,Stored Value,,-$4.70,$18.35,2022-12-02T02:05:00.0000000Z,\"Tap in at Stadium Stn\nStored Value\",06:05 PM,,,,,\n"
+    static let webLoad = "Dec-01-2022 09:26 AM,\"#43926965\nWeb Order\",Transit value or product load,Add Stored Value,$20.00,,,\"#43926965 Transit value or product load\",02:48 PM,Aug-30-2024 02:48 PM,MasterCard,43926965,05724E,$20.00\n"
+    static let load = "Dec-01-2022 09:26 AM,Loaded at Edmonds Stn,Stored Value,,$20.00,$30.70,,\"Loaded at Edmonds Stn\nStored Value\",09:15 AM,,,,,\n"
+}
+// swiftlint:enable line_length
+
 @Suite
 struct SwiftBeanCountCompassCardMapperTests {
-
-    // swiftlint:disable line_length
-    private enum CSV {
-        static let header = "DateTime,Transaction,Product,LineItem,Amount,BalanceDetails,JourneyId,LocationDisplay,TransactonTime,OrderDate,Payment,OrderNumber,AuthCode,Total\n"
-        static let autoLoad = "Dec-01-2022 09:26 AM,AutoLoaded,Stored Value,,$20.00,$22.00,,\"AutoLoaded\nStored Value\",09:26 AM,,,,,\n"
-        static let transaction1 = "Nov-17-2022 08:39 PM,Tap in at Bus Stop 60572,Stored Value,,-$2.50,$7.45,2022-11-18T04:39:00.0000000Z,\"Tap in at Bus Stop 60572 Stored Value\",08:39 PM,,,,,\n"
-        static let transaction2 = "Dec-06-2022 05:22 PM,Tap out at Edmonds Stn,Stored Value,,$1.05,$12.10,2022-12-07T00:59:00.0000000Z,\"Tap out at Edmonds Stn\nStored Value\",05:22 PM,,,,,\nDec-06-2022 05:11 PM,Transfer at Waterfront Stn,Stored Value,,-$1.05,$22.90,2022-12-07T00:59:00.0000000Z,\"Transfer at Waterfront Stn\nStored Value\",08:44 AM,,,,,\nDec-06-2022 05:09 PM,Tap out at Waterfront Stn,Stored Value,,$1.05,$23.95,2022-12-07T00:59:00.0000000Z,\"Tap out at Waterfront Stn\nStored Value\",08:43 AM,,,,,\nDec-06-2022 04:59 PM,Tap in at Stadium Stn,Stored Value,,-$4.70,$11.05,2022-12-07T00:59:00.0000000Z,\"Tap in at Stadium Stn\nStored Value\",04:59 PM,,,,,\n"
-        static let refund = "Dec-01-2022 06:07 PM,Refund at Stadium Stn,Stored Value,,$4.70,$23.05,2022-12-02T02:05:00.0000000Z,\"Refund at Stadium Stn\nStored Value\",06:07 PM,,,,,\nDec-01-2022 06:05 PM,Tap in at Stadium Stn,Stored Value,,-$4.70,$18.35,2022-12-02T02:05:00.0000000Z,\"Tap in at Stadium Stn\nStored Value\",06:05 PM,,,,,\n"
-        static let webLoad = "Dec-01-2022 09:26 AM,\"#43926965\nWeb Order\",Transit value or product load,Add Stored Value,$20.00,,,\"#43926965 Transit value or product load\",02:48 PM,Aug-30-2024 02:48 PM,MasterCard,43926965,05724E,$20.00\n"
-        static let load = "Dec-01-2022 09:26 AM,Loaded at Edmonds Stn,Stored Value,,$20.00,$30.70,,\"Loaded at Edmonds Stn\nStored Value\",09:15 AM,,,,,\n"
-    }
-    // swiftlint:enable line_length
 
     private let emptyMapper = SwiftBeanCountCompassCardMapper(ledger: Ledger())
     private let accountName = "Assets:CompassCard"
@@ -164,23 +164,41 @@ struct SwiftBeanCountCompassCardMapperTests {
     @Test
     func autoLoadTransactionExistingTransactionInLedger() throws {
         let loadAccountName = "Liabilities:MasterCard"
-        let ledger = Ledger()
-        try ledger.add(Account(name: try AccountName(accountName), metaData: ["card-number": cardNumber, "importer-type": "compass-card"]))
-        try ledger.add(Account(name: try AccountName(loadAccountName)))
+        let ledger = try loadTransactionLedger(accountName: accountName,
+                                               cardNumber: cardNumber,
+                                               loadAccountName: loadAccountName,
+                                               date: Date(timeIntervalSince1970: 1_669_915_560))
+        let mapper = SwiftBeanCountCompassCardMapper(ledger: ledger)
+        let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.autoLoad)")
+        #expect(result.count == 1)
+        expectLoadTransaction(result.first!, accountName: accountName, loadAccountName: loadAccountName)
+    }
 
-        let posting = Posting(accountName: try AccountName(accountName), amount: Amount(number: Decimal(20), commoditySymbol: "CAD", decimalDigits: 2))
-        let posting2 = Posting(accountName: try AccountName(loadAccountName), amount: Amount(number: Decimal(-20), commoditySymbol: "CAD", decimalDigits: 2))
-        let metaData = TransactionMetaData(date: Date(timeIntervalSince1970: 1_669_915_560), payee: "Existing", narration: "Transaction")
-        ledger.add(Transaction(metaData: metaData, postings: [posting, posting2]))
+    @Test
+    func autoLoadTransactionExistingTransactionInLedgerWithinDateTolerance() throws {
+        let loadAccountName = "Liabilities:MasterCard"
+        let ledger = try loadTransactionLedger(accountName: accountName,
+                                               cardNumber: cardNumber,
+                                               loadAccountName: loadAccountName,
+                                               date: Date(timeIntervalSince1970: 1_669_915_560 - 86_400))
+        let mapper = SwiftBeanCountCompassCardMapper(ledger: ledger)
+        let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.autoLoad)")
+        #expect(result.count == 1)
+        expectLoadTransaction(result.first!, accountName: accountName, loadAccountName: loadAccountName)
+    }
 
+    @Test
+    func autoLoadTransactionExistingTransactionInLedgerOutsideDateTolerance() throws {
+        let loadAccountName = "Liabilities:MasterCard"
+        let ledger = try loadTransactionLedger(accountName: accountName,
+                                               cardNumber: cardNumber,
+                                               loadAccountName: loadAccountName,
+                                               date: Date(timeIntervalSince1970: 1_669_915_560 - 86_401))
         let mapper = SwiftBeanCountCompassCardMapper(ledger: ledger)
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.autoLoad)")
         #expect(result.count == 1)
         #expect(result.first!.postings.contains {
-            $0.accountName.fullName == accountName && $0.amount.description == "20.00 CAD"
-        })
-        #expect(result.first!.postings.contains {
-            $0.accountName.fullName == loadAccountName && $0.amount.description == "-20.00 CAD"
+            $0.accountName == mapper.defaultAssetAccountName && $0.amount.description == "-20.00 CAD"
         })
     }
 
@@ -281,4 +299,25 @@ struct SwiftBeanCountCompassCardMapperTests {
         #expect(result.isEmpty)
     }
 
+}
+
+private func loadTransactionLedger(accountName: String, cardNumber: String, loadAccountName: String, date: Date) throws -> Ledger {
+    let ledger = Ledger()
+    try ledger.add(Account(name: try AccountName(accountName), metaData: ["card-number": cardNumber, "importer-type": "compass-card"]))
+    try ledger.add(Account(name: try AccountName(loadAccountName)))
+
+    let posting = Posting(accountName: try AccountName(accountName), amount: Amount(number: Decimal(20), commoditySymbol: "CAD", decimalDigits: 2))
+    let posting2 = Posting(accountName: try AccountName(loadAccountName), amount: Amount(number: Decimal(-20), commoditySymbol: "CAD", decimalDigits: 2))
+    let metaData = TransactionMetaData(date: date, payee: "Existing", narration: "Transaction")
+    ledger.add(Transaction(metaData: metaData, postings: [posting, posting2]))
+    return ledger
+}
+
+private func expectLoadTransaction(_ transaction: Transaction, accountName: String, loadAccountName: String) {
+    #expect(transaction.postings.contains {
+        $0.accountName.fullName == accountName && $0.amount.description == "20.00 CAD"
+    })
+    #expect(transaction.postings.contains {
+        $0.accountName.fullName == loadAccountName && $0.amount.description == "-20.00 CAD"
+    })
 }

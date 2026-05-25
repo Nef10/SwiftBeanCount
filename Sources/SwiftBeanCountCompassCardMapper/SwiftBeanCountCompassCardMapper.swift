@@ -62,6 +62,7 @@ public struct SwiftBeanCountCompassCardMapper {
 
     private let payee = "TransLink"
     private let commodity = "CAD"
+    private let loadTransactionDateTolerance: TimeInterval = 60 * 60 * 24
 
     private let ledger: Ledger
 
@@ -260,7 +261,8 @@ public struct SwiftBeanCountCompassCardMapper {
     private func existingLoadAccountName(transactionDate: Date, account: AccountName, amount: Amount) -> AccountName? {
         ledger.transactions
             .filter {
-                Calendar.current.isDate($0.metaData.date, equalTo: transactionDate, toGranularity: .day)
+                $0.metaData.date + loadTransactionDateTolerance >= transactionDate
+                    && $0.metaData.date - loadTransactionDateTolerance <= transactionDate
                     && $0.postings.contains { $0.accountName == account && $0.amount == amount }
                     && $0.postings.filter { $0.accountName != account }.count == 1
             }
