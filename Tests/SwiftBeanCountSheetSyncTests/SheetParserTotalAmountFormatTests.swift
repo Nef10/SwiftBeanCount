@@ -3,29 +3,7 @@ import Foundation
 import Testing
 
 @Suite
-struct SheetParserErrorTests {
-
-    @Test
-    func missingHeaderErrorDescription() {
-        let error = SheetParserError.missingHeader("Test header missing")
-        #expect(error.localizedDescription == "Test header missing")
-    }
-
-    @Test
-    func invalidValueErrorDescription() {
-        let error = SheetParserError.invalidValue("Invalid value provided")
-        #expect(error.localizedDescription == "Invalid value provided")
-    }
-
-    @Test
-    func missingValueErrorDescription() {
-        let error = SheetParserError.missingValue("Value is missing")
-        #expect(error.localizedDescription == "Value is missing")
-    }
-}
-
-@Suite
-struct SheetParserTests {
+struct SheetParserTotalAmountFormatTests {
 
     @Test
     func parseSheetWithValidData() {
@@ -35,12 +13,9 @@ struct SheetParserTests {
             ["2024-01-16", "Restaurant", "80.00", "Dining", "Bob", "Dinner out", "40.00", "40.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.count == 2)
         #expect(errors.isEmpty)
@@ -68,12 +43,9 @@ struct SheetParserTests {
             ["Date", "Paid to", "Amount", "Category", "Who paid", "Comment", "Part Alice", "Part Bob"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.isEmpty)
         // Parser requires at least one row to determine payer2, so this will have an error
@@ -87,12 +59,9 @@ struct SheetParserTests {
             ["2024-01-15", "100.00", "Groceries"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.isEmpty)
         #expect(errors.count == 1)
@@ -107,16 +76,13 @@ struct SheetParserTests {
             ["2024-01-16", "Restaurant", "80.00", "Dining", "Bob", "Dinner", "40.00", "40.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.count == 1)
         #expect(errors.count == 1)
-        #expect(errors[0] == .invalidValue("Parsing Error! Invalid Date: invalid-date"))
+        #expect(errors[0] == .invalidValue("Line 2: Parsing Error! Invalid Date: invalid-date"))
     }
 
     @Test
@@ -127,16 +93,13 @@ struct SheetParserTests {
             ["2024-01-16", "Restaurant", "80.00", "Dining", "Bob", "Dinner", "40.00", "40.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.count == 1)
         #expect(errors.count == 1)
-        #expect(errors[0] == .invalidValue("Parsing Error! Invalid Number: invalid"))
+        #expect(errors[0] == .invalidValue("Line 2: Parsing Error! Invalid Number: invalid"))
     }
 
     @Test
@@ -147,12 +110,9 @@ struct SheetParserTests {
             ["2024-01-15", "Store1", "100.00", "Groceries", "Alice", "Earlier", "50.00", "50.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.count == 2)
         #expect(transactions[0].payee == "Store1")
@@ -168,12 +128,9 @@ struct SheetParserTests {
             ["2024-01-16", "Store2", "200.00", "Food", "Bob", "Paid by Bob", "100.00", "100.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.count == 2)
         #expect(transactions[0].paidBy == .one)
@@ -191,12 +148,9 @@ struct SheetParserTests {
             ["-", "-", "-", "-", "-", "-", "-", "-"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.count == 2)
         #expect(errors.isEmpty)
@@ -210,12 +164,9 @@ struct SheetParserTests {
             ["2024-01-16", "Restaurant", "80.00", "Dining", "Bob", "Dinner", "40.00", "40.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.count == 2)
         #expect(errors.isEmpty)
@@ -234,12 +185,9 @@ struct SheetParserTests {
             ["2024-01-16", "Restaurant", "80.00", "Dining", "Bob", "Dinner", "40.00", "40.00"]
         ]
 
-        var transactions: [SheetParser.TransactionData]!
-        var errors: [SheetParserError]!
-        SheetParser.parseSheet(data, name: "Alice") { parsedTransactions, parsedErrors in
-            transactions = parsedTransactions
-            errors = parsedErrors
-        }
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
 
         #expect(transactions.count == 2)
         #expect(errors.isEmpty)
@@ -247,4 +195,88 @@ struct SheetParserTests {
         let transaction = transactions[0]
         #expect(transaction.amount == Decimal(string: "1234.56"))
     }
+
+    @Test
+    func parseSheetTotalAmountFormatReturnsNilRunningTotal() {
+        let data = [
+            ["Date", "Paid to", "Amount", "Category", "Who paid", "Comment", "Part Alice", "Part Bob"],
+            ["2024-01-15", "Store", "100.00", "Groceries", "Alice", "Test", "50.00", "50.00"]
+        ]
+
+        let runningTotal = SheetParser.parseSheetData(data, name: "Alice").runningTotal
+
+        #expect(runningTotal == nil)
+    }
+
+    @Test
+    func parseSheetTotalAmountFormatWithAlternativePayeeColumnName() {
+        let data = [
+            ["Date", "Payee", "Amount", "Category", "Who paid", "Comment", "Part Alice", "Part Bob"],
+            ["2024-01-15", "Store", "100.00", "Groceries", "Alice", "Test", "50.00", "50.00"],
+            ["2024-01-16", "Restaurant", "80.00", "Dining", "Bob", "Dinner", "40.00", "40.00"]
+        ]
+
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
+
+        #expect(transactions.count == 2)
+        #expect(errors.isEmpty)
+        #expect(transactions[0].payee == "Store")
+    }
+
+    @Test
+    func parseSheetTotalAmountFormatWithAlternativePayorColumnName() {
+        let data = [
+            ["Date", "Paid to", "Amount", "Category", "Payor", "Comment", "Part Alice", "Part Bob"],
+            ["2024-01-15", "Store", "100.00", "Groceries", "Alice", "Paid by Alice", "50.00", "50.00"],
+            ["2024-01-16", "Restaurant", "80.00", "Dining", "Bob", "Paid by Bob", "100.00", "100.00"]
+        ]
+
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
+
+        #expect(transactions.count == 2)
+        #expect(errors.isEmpty)
+        #expect(transactions[0].paidBy == .one)
+        #expect(transactions[1].paidBy == .two)
+    }
+
+    @Test
+    func parseSheetTotalAmountFormatWithAlternativeNarrationColumnName() {
+        let data = [
+            ["Date", "Paid to", "Amount", "Category", "Who paid", "Description", "Part Alice", "Part Bob"],
+            ["2024-01-15", "Store", "100.00", "Groceries", "Alice", "Weekly shopping", "50.00", "50.00"],
+            ["2024-01-16", "Restaurant", "80.00", "Dining", "Bob", "Dinner out", "40.00", "40.00"]
+        ]
+
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
+
+        #expect(transactions.count == 2)
+        #expect(errors.isEmpty)
+        #expect(transactions[0].narration == "Weekly shopping")
+    }
+
+    @Test
+    func parseSheetTotalAmountFormatTrimsWhitespaceFromTextFields() {
+        let data = [
+            ["Date", "Paid to", "Amount", "Category", "Who paid", "Comment", "Part Alice", "Part Bob"],
+            [" 2024-01-15 ", " Store ", "100.00", " Groceries ", " Alice ", " Weekly shopping ", "50.00", "50.00"],
+            ["2024-01-16", "Restaurant", "80.00", "Dining", " Bob ", "Dinner", "40.00", "40.00"]
+        ]
+        let parsed = SheetParser.parseSheetData(data, name: "Alice")
+        let transactions = parsed.rows.map(\.transactionData)
+        let errors = parsed.errors
+        #expect(errors.isEmpty)
+        #expect(transactions.count == 2)
+        #expect(transactions[0].payee == "Store")
+        #expect(transactions[0].narration == "Weekly shopping")
+        #expect(transactions[0].category == "Groceries")
+        #expect(transactions[0].paidBy == .one)
+        #expect(transactions[1].paidBy == .two)
+    }
+
 }

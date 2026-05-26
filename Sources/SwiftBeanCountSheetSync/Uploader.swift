@@ -18,23 +18,49 @@ public class Uploader: GenericSyncer, Syncer {
     public func start(authentication: Authentication, completion: @escaping (Result<SyncResult, Error>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async { [self] in
             let result = readLedgerSettingsAndTransactions()
-                .flatMap { ledgerTransactions, ledgerSettings -> Result<SyncResult, Error> in
-                    let sheetTransactions = getTransactionsFromSheet(authentication: authentication, ledgerSettings: ledgerSettings)
-                    switch sheetTransactions {
-                    case .success(let (sheetTransactions, sheetParserErrors)):
-                        var filteredLedgerTransactions = ledgerTransactionForCorrectMonth(ledgerTransactions: ledgerTransactions, sheetTransactions: sheetTransactions)
-                        filteredLedgerTransactions = removeExistingTransactions(from: filteredLedgerTransactions,
-                                                                                existingTransactions: sheetTransactions,
-                                                                                ledgerSettings: ledgerSettings)
-                        return .success(SyncResult(mode: .upload,
-                                                   transactions: filteredLedgerTransactions,
-                                                   parserErrors: sheetParserErrors,
-                                                   ledgerSettings: ledgerSettings))
-                    case .failure(let error):
-                        return .failure(error)
-                    }
+                .flatMap { ledgerTransactions, ledgerSettings in
+                    self.uploadResult(
+                        authentication: authentication,
+                        ledgerTransactions: ledgerTransactions,
+                        ledgerSettings: ledgerSettings
+                    )
                 }
             completion(result)
+        }
+    }
+
+    private func uploadResult(
+        authentication: Authentication,
+        ledgerTransactions: [Transaction],
+        ledgerSettings: LedgerSettings
+    ) -> Result<SyncResult, Error> {
+        let sheetTransactions = getTransactionsFromSheet(authentication: authentication, ledgerSettings: ledgerSettings)
+        switch sheetTransactions {
+        case .success(let sheetData):
+            let scopedLedgerTransactions = isMonthlySheet(sheetData.transactions)
+                ? ledgerTransactionForCorrectMonth(ledgerTransactions: ledgerTransactions, sheetTransactions: sheetData.transactions)
+                : ledgerTransactions
+            let filteredLedgerTransactions = removeExistingTransactions(from: scopedLedgerTransactions,
+                                                                        existingTransactions: sheetData.transactions,
+                                                                        ledgerSettings: ledgerSettings)
+            do {
+                let uploadData = try SheetCellsFormatter.buildUploadSheetCells(
+                    syncer: self,
+                    layout: sheetData.layout,
+                    transactions: filteredLedgerTransactions,
+                    ledgerSettings: ledgerSettings
+                )
+                return .success(SyncResult(mode: .upload,
+                                           transactions: uploadData.transactions,
+                                           parserErrors: sheetData.parserErrors + uploadData.errors,
+                                           ledgerSettings: ledgerSettings,
+                                           balance: sheetData.balance,
+                                           sheetCells: uploadData.sheetCells))
+            } catch {
+                return .failure(error)
+            }
+        case .failure(let error):
+            return .failure(error)
         }
     }
 
