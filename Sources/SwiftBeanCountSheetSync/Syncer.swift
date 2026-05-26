@@ -195,7 +195,10 @@ public class GenericSyncer {
     }
 
     func balanceDate(after transactionDate: Date) -> Date {
-        Calendar.current.date(byAdding: .day, value: 1, to: transactionDate) ?? transactionDate
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = Locale(identifier: "en_US_POSIX")
+        calendar.timeZone = TimeZone(secondsFromGMT: 0) ?? .current
+        return calendar.date(byAdding: .day, value: 1, to: transactionDate) ?? transactionDate
     }
 
     /// Determines whether the sheet behaves as a single-month sheet for **upload** purposes.
@@ -216,7 +219,9 @@ public class GenericSyncer {
         else {
             return true
         }
-        let calendar = Calendar.current
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = Locale(identifier: "en_US_POSIX")
+        calendar.timeZone = TimeZone(secondsFromGMT: 0) ?? .current
         var monthCounts = [DateComponents: Int]()
         for transaction in transactions {
             let components = calendar.dateComponents([.year, .month], from: transaction.metaData.date)
@@ -239,7 +244,9 @@ public class GenericSyncer {
     }
 
     func ledgerTransactionForCorrectMonth(ledgerTransactions: [Transaction], sheetTransactions: [Transaction]) -> [Transaction] {
-        let calendar = Calendar.current
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = Locale(identifier: "en_US_POSIX")
+        calendar.timeZone = TimeZone(secondsFromGMT: 0) ?? .current
         var monthCounts = [DateComponents: Int]()
         for transaction in sheetTransactions {
             let components = calendar.dateComponents([.year, .month], from: transaction.metaData.date)

@@ -48,7 +48,7 @@ enum SheetParser { // swiftlint:disable:this type_body_length
         let paidBy: Payer
     }
 
-     struct ParsedData {
+    struct ParsedData {
         let rows: [SheetCellsFormatter.ParsedRow]
         let runningTotal: Decimal?
         let errors: [SheetParserError]
@@ -92,7 +92,10 @@ enum SheetParser { // swiftlint:disable:this type_body_length
     }
 
     private static var dateFormatter: DateFormatter = {
-        var dateFormatter = DateFormatter()
+        let dateFormatter = DateFormatter()
+        dateFormatter.calendar = Calendar(identifier: .gregorian)
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter
     }()
