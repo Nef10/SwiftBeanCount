@@ -61,6 +61,13 @@ struct SyncerTests {
         Transaction(metaData: TransactionMetaData(date: date, payee: payee, narration: "", flag: .complete, tags: []), postings: [])
     }
 
+    private func date(year: Int, month: Int, day: Int) -> Date {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = Locale(identifier: "en_US_POSIX")
+        calendar.timeZone = TimeZone(secondsFromGMT: 0) ?? .current
+        return calendar.date(from: DateComponents(year: year, month: month, day: day))!
+    }
+
     @Test
     func paymentMatchesExactAmount() throws {
         let settings = try createLedgerSettings()
@@ -185,6 +192,26 @@ struct SyncerTests {
         let balanceDate = syncer.balanceDate(after: transactionDate)
 
         #expect(balanceDate == calendar.date(from: DateComponents(year: 2_024, month: 5, day: 25))!)
+    }
+
+    @Test
+    func isMonthlySheetReturnsTrueAtNinetyPercentThreshold() {
+        let syncer = TestSyncer(sheetURL: "", ledger: Ledger())
+        let transactions = (1 ... 9).map { day in
+            transaction(on: date(year: 2_024, month: 1, day: day), payee: "January \(day)")
+        } + [transaction(on: date(year: 2_024, month: 2, day: 1), payee: "February")]
+
+        #expect(syncer.isMonthlySheet(transactions))
+    }
+
+    @Test
+    func isMonthlySheetReturnsFalseBelowNinetyPercentThreshold() {
+        let syncer = TestSyncer(sheetURL: "", ledger: Ledger())
+        let transactions = (1 ... 8).map { day in
+            transaction(on: date(year: 2_024, month: 1, day: day), payee: "January \(day)")
+        } + [transaction(on: date(year: 2_024, month: 2, day: 1), payee: "February")]
+
+        #expect(!syncer.isMonthlySheet(transactions))
     }
 
 }

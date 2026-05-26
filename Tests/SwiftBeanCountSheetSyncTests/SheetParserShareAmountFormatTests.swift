@@ -260,6 +260,15 @@ struct SheetParserShareAmountFormatTests {
     }
 
     @Test
+    func parseSheetRunningTotalPreservesNegativeCellValueWhenFlagIsFalse() {
+        let data = [
+            ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Running Total"],
+            ["2025-01-01", "Alice", "Store", "Test", "", "CA$36.75", "-CA$36.75"]
+        ]
+        #expect(parseRunningTotal(data, negateRunningTotal: false) == Decimal(string: "-36.75"))
+    }
+
+    @Test
     func parseSheetRunningTotalDefaultsToNotNegating() {
         let data = [
             ["Date", "Payor", "Payee", "Description", "Category", "Share Other Person", "Running Total"],
