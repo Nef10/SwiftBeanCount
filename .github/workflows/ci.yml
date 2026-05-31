@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         platform: ["macOS", "ubuntu", "iOS"]
-        swift: ["6.2.3"]
+        swift: ["6.3.2"]
         include:
           - platform: macOS
             os: macOS-latest
@@ -23,8 +23,8 @@ jobs:
             os: ubuntu-latest
           - platform: iOS
             os: macos-26
-            destination: 'platform=iOS Simulator,OS=26.2,name=iPhone 17 Pro'
-            xcode-version: '26.2' # Need to match Xcode version to iOS + Swift version
+            destination: 'platform=iOS Simulator,OS=26.5,name=iPhone 17 Pro'
+            xcode-version: '26.4' # Need to match Xcode version to iOS + Swift version
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout code
