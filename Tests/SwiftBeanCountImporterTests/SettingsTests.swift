@@ -96,6 +96,29 @@ struct SettingsTests {
         #expect(Settings.dateTolerance == Double(4 * 60 * 60 * 24))
     }
 
+    @Test
+    func recentGoogleSheetURLs() {
+        Settings.storage = TestStorage()
+
+        #expect(Settings.recentGoogleSheetURLs.isEmpty)
+
+        Settings.addRecentGoogleSheetURL("https://example.com/1")
+        #expect(Settings.recentGoogleSheetURLs == ["https://example.com/1"])
+
+        Settings.addRecentGoogleSheetURL("https://example.com/2")
+        Settings.addRecentGoogleSheetURL("https://example.com/3")
+        #expect(Settings.recentGoogleSheetURLs == ["https://example.com/3", "https://example.com/2", "https://example.com/1"])
+
+        Settings.addRecentGoogleSheetURL("https://example.com/2")
+        #expect(Settings.recentGoogleSheetURLs == ["https://example.com/2", "https://example.com/3", "https://example.com/1"])
+
+        Settings.addRecentGoogleSheetURL(" https://example.com/4 ")
+        #expect(Settings.recentGoogleSheetURLs == ["https://example.com/4", "https://example.com/2", "https://example.com/3"])
+
+        Settings.addRecentGoogleSheetURL("   ")
+        #expect(Settings.recentGoogleSheetURLs == ["https://example.com/4", "https://example.com/2", "https://example.com/3"])
+    }
+
 }
 
 }
