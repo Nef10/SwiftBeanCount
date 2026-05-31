@@ -62,6 +62,12 @@ enum SheetCellsFormatter {
 
 extension SheetCellsFormatter {
 
+    private struct UploadRenderingContext {
+        let expenseAmount: Amount
+        let category: String
+        let totalExpenseAmount: Decimal
+    }
+
     private static let sheetDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .gregorian)
@@ -95,7 +101,16 @@ extension SheetCellsFormatter {
         rows.append(layout.headers)
         for transaction in transactions {
             do {
-                rows.append(try renderedRow(syncer: syncer, for: transaction, layout: layout, ledgerSettings: ledgerSettings))
+                let renderedRows = try renderedRows(
+                    syncer: syncer,
+                    for: transaction,
+                    layout: layout,
+                    ledgerSettings: ledgerSettings
+                )
+                guard !renderedRows.isEmpty else {
+                    continue
+                }
+                rows += renderedRows
                 formattedTransactions.append(transaction)
             } catch {
                 errors.append(uploadError(for: transaction, error: error))
@@ -116,39 +131,61 @@ extension SheetCellsFormatter {
         return .invalidValue("Upload transaction \(transactionIdentifier) failed: \(message)")
     }
 
-    private static func renderedRow(
+    private static func renderedRows(
         syncer: GenericSyncer,
         for transaction: Transaction,
         layout: Layout,
         ledgerSettings: LedgerSettings
-    ) throws -> [String] {
-        let values = try renderedValues(syncer: syncer, for: transaction, layout: layout, ledgerSettings: ledgerSettings)
-        return layout.columns.map { values[$0.role, default: ""] }
+    ) throws -> [[String]] {
+        let contexts = try uploadRenderingContexts(for: transaction, ledgerSettings: ledgerSettings)
+        return try contexts.map { context in
+            let values = try renderedValues(
+                syncer: syncer,
+                for: transaction,
+                context: context,
+                layout: layout,
+                ledgerSettings: ledgerSettings
+            )
+            return layout.columns.map { values[$0.role, default: ""] }
+        }
     }
 
     private static func renderedValues(
         syncer: GenericSyncer,
         for transaction: Transaction,
+        context: UploadRenderingContext,
         layout: Layout,
         ledgerSettings: LedgerSettings
     ) throws -> [ColumnRole: String] {
-        let baseValues = try baseValues(syncer: syncer, for: transaction, layout: layout, ledgerSettings: ledgerSettings)
-        let specificValues = try formatSpecificValues(syncer: syncer, for: transaction, layout: layout, ledgerSettings: ledgerSettings)
+        let baseValues = try baseValues(
+            syncer: syncer,
+            for: transaction,
+            context: context,
+            layout: layout,
+            ledgerSettings: ledgerSettings
+        )
+        let specificValues = try formatSpecificValues(
+            syncer: syncer,
+            for: transaction,
+            context: context,
+            layout: layout,
+            ledgerSettings: ledgerSettings
+        )
         return baseValues.merging(specificValues) { current, _ in current }
     }
 
     private static func baseValues(
         syncer: GenericSyncer,
         for transaction: Transaction,
+        context: UploadRenderingContext,
         layout: Layout,
         ledgerSettings: LedgerSettings
     ) throws -> [ColumnRole: String] {
-        let category = try categoryValue(for: transaction, ledgerSettings: ledgerSettings)
         let payer = try payerValue(syncer: syncer, for: transaction, layout: layout, ledgerSettings: ledgerSettings)
         return [
             .date: sheetDateFormatter.string(from: transaction.metaData.date),
             .payee: transaction.metaData.payee,
-            .category: category,
+            .category: context.category,
             .payer: payer,
             .narration: transaction.metaData.narration
         ]
@@ -157,28 +194,63 @@ extension SheetCellsFormatter {
     private static func formatSpecificValues(
         syncer: GenericSyncer,
         for transaction: Transaction,
+        context: UploadRenderingContext,
         layout: Layout,
         ledgerSettings: LedgerSettings
     ) throws -> [ColumnRole: String] {
         switch layout.format {
         case .totalAmount:
-            return [.amount: try totalAmountValue(syncer: syncer, for: transaction, ledgerSettings: ledgerSettings)]
+            return [
+                .amount: try totalAmountValue(
+                    syncer: syncer,
+                    for: transaction,
+                    expenseAmount: context.expenseAmount,
+                    totalExpenseAmount: context.totalExpenseAmount,
+                    ledgerSettings: ledgerSettings
+                )
+            ]
         case .shareAmount:
-            return [.shareOtherPerson: try shareAmountValue(syncer: syncer, for: transaction, ledgerSettings: ledgerSettings)]
+            return [
+                .shareOtherPerson: try shareAmountValue(
+                    syncer: syncer,
+                    for: transaction,
+                    expenseAmount: context.expenseAmount,
+                    totalExpenseAmount: context.totalExpenseAmount,
+                    ledgerSettings: ledgerSettings
+                )
+            ]
         }
     }
 
-    private static func categoryValue(
+    private static func uploadRenderingContexts(
         for transaction: Transaction,
         ledgerSettings: LedgerSettings
-    ) throws -> String {
+    ) throws -> [UploadRenderingContext] {
         let expensePostings = transaction.postings.filter { $0.accountName.accountType == .expense }
-        guard expensePostings.count == 1,
-              let expensePosting = expensePostings.first
-        else {
-            throw SyncError.unableToFormatTransaction("Transactions must have exactly one expense posting")
+        guard !expensePostings.isEmpty else {
+            throw SyncError.unableToFormatTransaction("Transactions must have at least one expense posting")
         }
-        return ledgerSettings.accountNameCategories[expensePosting.accountName.fullName] ?? ""
+        let totalExpenseAmount = expensePostings.reduce(Decimal.zero) { $0 + $1.amount.number }
+        if expensePostings.count == 1, let posting = expensePostings.first {
+            return [
+                UploadRenderingContext(
+                    expenseAmount: posting.amount,
+                    category: ledgerSettings.accountNameCategories[posting.accountName.fullName, default: ""],
+                    totalExpenseAmount: totalExpenseAmount
+                )
+            ]
+        }
+
+        return expensePostings.compactMap { posting in
+            if let category = ledgerSettings.accountNameCategories[posting.accountName.fullName] {
+                return UploadRenderingContext(
+                    expenseAmount: posting.amount,
+                    category: category,
+                    totalExpenseAmount: totalExpenseAmount
+                )
+            }
+            return nil
+        }
     }
 
     private static func payerValue(
@@ -217,6 +289,8 @@ extension SheetCellsFormatter {
     private static func totalAmountValue(
         syncer: GenericSyncer,
         for transaction: Transaction,
+        expenseAmount: Amount,
+        totalExpenseAmount: Decimal,
         ledgerSettings: LedgerSettings
     ) throws -> String {
         guard let ownPosting = syncer.ownAccountPosting(transaction),
@@ -226,17 +300,18 @@ extension SheetCellsFormatter {
                 "Cannot derive the total amount for a total-amount sheet when the owner did not pay"
             )
         }
-        let totalAmount = Amount(
-            number: abs(amount.number),
-            commoditySymbol: amount.commoditySymbol,
-            decimalDigits: amount.decimalDigits
+        return proportionalAmountString(
+            sourceAmount: amount,
+            expenseAmount: expenseAmount,
+            totalExpenseAmount: totalExpenseAmount
         )
-        return totalAmount.amountString
     }
 
     private static func shareAmountValue(
         syncer: GenericSyncer,
         for transaction: Transaction,
+        expenseAmount: Amount,
+        totalExpenseAmount: Decimal,
         ledgerSettings: LedgerSettings
     ) throws -> String {
         if let sharedPosting = syncer.sharedAccountPosting(transaction, ledgerSettings: ledgerSettings) {
@@ -245,12 +320,11 @@ extension SheetCellsFormatter {
                     "Cannot derive the shared amount for a share-amount sheet in the sheet currency"
                 )
             }
-            let sharedAmount = Amount(
-                number: abs(amount.number),
-                commoditySymbol: amount.commoditySymbol,
-                decimalDigits: amount.decimalDigits
+            return proportionalAmountString(
+                sourceAmount: amount,
+                expenseAmount: expenseAmount,
+                totalExpenseAmount: totalExpenseAmount
             )
-            return sharedAmount.amountString
         }
 
         guard let spend = syncer.moneySpend(transaction, ledgerSettings: ledgerSettings) else {
@@ -260,11 +334,43 @@ extension SheetCellsFormatter {
         }
 
         let amount = Amount(
-            number: abs(spend.number) / 2,
+            number: proportionalAmount(
+                sourceNumber: spend.number,
+                expenseNumber: expenseAmount.number,
+                totalExpenseAmount: totalExpenseAmount
+            ) / 2,
             commoditySymbol: spend.commoditySymbol,
             decimalDigits: spend.decimalDigits
         )
         return amount.amountString
+    }
+
+    private static func proportionalAmountString(
+        sourceAmount: Amount,
+        expenseAmount: Amount,
+        totalExpenseAmount: Decimal
+    ) -> String {
+        let amount = Amount(
+            number: proportionalAmount(
+                sourceNumber: sourceAmount.number,
+                expenseNumber: expenseAmount.number,
+                totalExpenseAmount: totalExpenseAmount
+            ),
+            commoditySymbol: sourceAmount.commoditySymbol,
+            decimalDigits: sourceAmount.decimalDigits
+        )
+        return amount.amountString
+    }
+
+    private static func proportionalAmount(
+        sourceNumber: Decimal,
+        expenseNumber: Decimal,
+        totalExpenseAmount: Decimal
+    ) -> Decimal {
+        guard totalExpenseAmount != .zero else {
+            return abs(sourceNumber)
+        }
+        return abs(sourceNumber) * expenseNumber / totalExpenseAmount
     }
 
 }
