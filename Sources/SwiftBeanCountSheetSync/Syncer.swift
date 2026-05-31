@@ -294,9 +294,22 @@ public class GenericSyncer {
         transaction.postings.first { $0.accountName == LedgerSettings.ownAccountName }
     }
 
+    func amountInSheetCurrency(_ posting: Posting, ledgerSettings: LedgerSettings) -> Amount? {
+        if posting.amount.commoditySymbol == ledgerSettings.commoditySymbol {
+            return posting.amount
+        }
+        if let totalPrice = posting.totalPrice, totalPrice.commoditySymbol == ledgerSettings.commoditySymbol {
+            return totalPrice
+        }
+        return nil
+    }
+
     func moneySpend(_ transaction: SwiftBeanCountModel.Transaction, ledgerSettings: LedgerSettings) -> Amount? {
         let multiCurrencyAmount: MultiCurrencyAmount = transaction.postings.compactMap {
-            ($0.accountName.accountType == .asset || $0.accountName.accountType == .liability) ? $0.amount.multiCurrencyAmount : nil
+            guard $0.accountName.accountType == .asset || $0.accountName.accountType == .liability else {
+                return nil
+            }
+            return amountInSheetCurrency($0, ledgerSettings: ledgerSettings)?.multiCurrencyAmount
         }
         .reduce(MultiCurrencyAmount(), +)
         return multiCurrencyAmount.amountFor(symbol: ledgerSettings.commoditySymbol)
