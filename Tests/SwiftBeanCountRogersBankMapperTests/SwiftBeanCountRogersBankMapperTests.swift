@@ -201,6 +201,25 @@ struct SwiftBeanCountRogersBankMapperTests {
     }
 
     @Test
+    func mapActivitiesPaymentConfiguredAccount() throws {
+        let liabilityAccountName = try AccountName("Liabilities:CC:Rogers")
+        let paymentAccountName = try AccountName("Assets:Checking")
+        try ledger.add(Account(name: liabilityAccountName, metaData: [
+            "last-four": "1234",
+            "importer-type": "rogers",
+        ]))
+        try ledger.add(Account(name: paymentAccountName, metaData: [
+            "rogers-payment": "1234",
+        ]))
+        var activity = TestActivity()
+        activity.activityStatus = .approved
+        activity.postedDate = Date()
+        let result = try mapper.mapActivitiesToTransactions(activities: [activity])
+        #expect(result.count == 1)
+        #expect(result[0].postings[1].accountName == paymentAccountName)
+    }
+
+    @Test
     func mapActivitiesOverLimitFee() throws {
         let accountName = try AccountName("Liabilities:CC:Rogers")
         try ledger.add(Account(name: accountName, metaData: ["last-four": "1234", "importer-type": "rogers"]))
@@ -217,6 +236,26 @@ struct SwiftBeanCountRogersBankMapperTests {
         ]
         let metaData: [String: String] = [MetaDataKeys.activityId: "overlimit-fee-\(Self.dateFormatter.string(from: activity.postedDate!))"]
         #expect(result[0] == Transaction(metaData: TransactionMetaData(date: activity.postedDate!, narration: "Test Merchant Name", metaData: metaData), postings: postings))
+    }
+
+    @Test
+    func mapActivitiesOverLimitFeeConfiguredAccount() throws {
+        let liabilityAccountName = try AccountName("Liabilities:CC:Rogers")
+        let feeAccountName = try AccountName("Expenses:Fees:OverLimit")
+        try ledger.add(Account(name: liabilityAccountName, metaData: [
+            "last-four": "1234",
+            "importer-type": "rogers",
+        ]))
+        try ledger.add(Account(name: feeAccountName, metaData: [
+            "rogers-overlimit-fee": "1234",
+        ]))
+        var activity = TestActivity()
+        activity.activityStatus = .approved
+        activity.activityCategory = .overlimitFee
+        activity.postedDate = Date()
+        let result = try mapper.mapActivitiesToTransactions(activities: [activity])
+        #expect(result.count == 1)
+        #expect(result[0].postings[1].accountName == feeAccountName)
     }
 
     @Test

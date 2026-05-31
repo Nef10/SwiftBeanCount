@@ -8,4 +8,8 @@ enum MetaDataKeys {
     static let lastFour = "last-four"
     /// Key used to mark and find transactions
     static let activityId = "rogers-bank-id"
+    /// Optional metadata key on the destination account for Rogers payments
+    static let payment = "rogers-payment"
+    /// Optional metadata key on the destination account for Rogers over limit fees
+    static let overlimitFee = "rogers-overlimit-fee"
 }
