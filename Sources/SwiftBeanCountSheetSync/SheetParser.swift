@@ -91,7 +91,9 @@ enum SheetParser { // swiftlint:disable:this type_body_length
         let maxIndex: Int
     }
 
-    static func parseSheetData(_ data: [[String]], name: String, negateRunningTotal: Bool = false, timeZone: TimeZone? = nil) -> ParsedData {
+    static var dateParsingTimeZoneOverride: TimeZone?
+
+    static func parseSheetData(_ data: [[String]], name: String, negateRunningTotal: Bool = false) -> ParsedData {
         var lines = removeEmptyRows(data)
         guard !lines.isEmpty else {
             return ParsedData(rows: [], runningTotal: nil, errors: [], layout: nil)
@@ -100,7 +102,7 @@ enum SheetParser { // swiftlint:disable:this type_body_length
         let headings = rawHeadings.map {
             $0.trimmingCharacters(in: .whitespacesAndNewlines)
         }
-        let parsedRows = convertToParsedRows(headings: headings, rawHeadings: rawHeadings, data: lines, name: name, timeZone: timeZone)
+        let parsedRows = convertToParsedRows(headings: headings, rawHeadings: rawHeadings, data: lines, name: name)
         var rows = [SheetCellsFormatter.ParsedRow]()
         var errors = [SheetParserError]()
         parsedRows.rows.forEach {
@@ -129,11 +131,11 @@ enum SheetParser { // swiftlint:disable:this type_body_length
     ///   - data: The remaining rows of the sheet.
     ///   - name: The ledger owner's name, used to identify which columns belong to which person.
     /// - Returns: ParsedRowsResult containing the parsed rows and the detected layout, or errors if the required headers are missing or any row contains invalid data.
-    private static func convertToParsedRows(headings: [String], rawHeadings: [String], data: [[String]], name: String, timeZone: TimeZone?) -> ParsedRowsResult {
+    private static func convertToParsedRows(headings: [String], rawHeadings: [String], data: [[String]], name: String) -> ParsedRowsResult {
         if headings.contains("Share Other Person") {
-            return parseRowsShareAmountFormat(headings: headings, rawHeadings: rawHeadings, data: data, name: name, timeZone: timeZone)
+            return parseRowsShareAmountFormat(headings: headings, rawHeadings: rawHeadings, data: data, name: name)
         }
-        return parseRowsTotalAmountFormat(headings: headings, rawHeadings: rawHeadings, data: data, name: name, timeZone: timeZone)
+        return parseRowsTotalAmountFormat(headings: headings, rawHeadings: rawHeadings, data: data, name: name)
     }
 
     /// Parses all rows of a total amount format sheet into a `ParsedRowsResult`.
@@ -143,7 +145,7 @@ enum SheetParser { // swiftlint:disable:this type_body_length
     ///   - data: Data rows (excluding the header row).
     ///   - name: The ledger owner's name.
     /// - Returns: ParsedRowsResult containing the parsed rows and the detected layout, or errors if the required headers are missing or any row contains invalid data.
-    private static func parseRowsTotalAmountFormat(headings: [String], rawHeadings: [String], data: [[String]], name: String, timeZone: TimeZone?) -> ParsedRowsResult {
+    private static func parseRowsTotalAmountFormat(headings: [String], rawHeadings: [String], data: [[String]], name: String) -> ParsedRowsResult {
         guard let indices = totalAmountFormatIndices(headings: headings, data: data, name: name) else {
             return ParsedRowsResult(
                 rows: [.failure(.missingHeader("Missing Header! Headers: \(headings)"))],
@@ -163,7 +165,7 @@ enum SheetParser { // swiftlint:disable:this type_body_length
             otherPersonName: indices.otherPersonName
         )
         let rows = data.enumerated().map { index, row in
-            parseTotalAmountRow(row, indices: indices, name: name, line: index + 2, timeZone: timeZone) // +2 to account for header row and 0-based index
+            parseTotalAmountRow(row, indices: indices, name: name, line: index + 2) // +2 to account for header row and 0-based index
         }
         return ParsedRowsResult(rows: rows, layout: layout)
     }
@@ -215,12 +217,12 @@ enum SheetParser { // swiftlint:disable:this type_body_length
     ///   - name: The ledger owner's name, used to determine who paid.
     ///   - line: The line number in the sheet (for error reporting).
     /// - Returns: A success with the parsed row, or a failure with a `SheetParserError`
-    private static func parseTotalAmountRow(_ row: [String], indices: TotalAmountFormatIndices, name: String, line: Int, timeZone: TimeZone?)
+    private static func parseTotalAmountRow(_ row: [String], indices: TotalAmountFormatIndices, name: String, line: Int)
         -> Result<SheetCellsFormatter.ParsedRow, SheetParserError> {
         guard row.count >= indices.maxIndex + 1 else {
             return .failure(.invalidValue("Line \(line): Parsing Error! Missing Value(s) in row: \(row.joined(separator: " "))"))
         }
-        guard let date = parseDate(row[indices.date], timeZone: timeZone) else {
+        guard let date = parseDate(row[indices.date]) else {
             return .failure(.invalidValue("Line \(line): Parsing Error! Invalid Date: \(row[indices.date])"))
         }
         guard let amount = getDecimalFromString(row[indices.amount]) else {
@@ -256,7 +258,7 @@ enum SheetParser { // swiftlint:disable:this type_body_length
     ///   - data: Data rows (excluding the header row).
     ///   - name: The ledger owner's name.
     /// - Returns: One result per row.
-    private static func parseRowsShareAmountFormat(headings: [String], rawHeadings: [String], data: [[String]], name: String, timeZone: TimeZone?) -> ParsedRowsResult {
+    private static func parseRowsShareAmountFormat(headings: [String], rawHeadings: [String], data: [[String]], name: String) -> ParsedRowsResult {
         guard let indices = shareAmountFormatIndices(headings: headings) else {
             return ParsedRowsResult(
                 rows: [.failure(.missingHeader("Missing Header! Headers: \(headings)"))],
@@ -276,7 +278,7 @@ enum SheetParser { // swiftlint:disable:this type_body_length
             otherPersonName: otherPersonName(data: data, payerIndex: indices.payer, name: name)
         )
         let rows = data.enumerated().map { index, row in
-            parseShareAmountRow(row, indices: indices, name: name, line: index + 2, timeZone: timeZone) // +2 to account for header row and 0-based index
+            parseShareAmountRow(row, indices: indices, name: name, line: index + 2) // +2 to account for header row and 0-based index
         }
         return ParsedRowsResult(rows: rows, layout: layout)
     }
@@ -320,12 +322,12 @@ enum SheetParser { // swiftlint:disable:this type_body_length
     ///   - name: The ledger owner's name, used to determine who paid.
     ///   - line: The line number in the sheet (for error reporting).
     /// - Returns: A success with the parsed row, or a failure with a `SheetParserError`.
-    private static func parseShareAmountRow(_ row: [String], indices: ShareAmountFormatIndices, name: String, line: Int, timeZone: TimeZone?)
+    private static func parseShareAmountRow(_ row: [String], indices: ShareAmountFormatIndices, name: String, line: Int)
         -> Result<SheetCellsFormatter.ParsedRow, SheetParserError> {
         guard row.count >= indices.maxIndex + 1 else {
             return .failure(.invalidValue("Line \(line): Parsing Error! Missing Value(s) in row: \(row.joined(separator: " "))"))
         }
-        guard let date = parseDate(row[indices.date], timeZone: timeZone) else {
+        guard let date = parseDate(row[indices.date]) else {
             return .failure(.invalidValue("Line \(line): Parsing Error! Invalid Date: \(row[indices.date])"))
         }
         guard let shareOtherPerson = getDecimalFromString(row[indices.shareOtherPerson]) else {
@@ -383,13 +385,20 @@ enum SheetParser { // swiftlint:disable:this type_body_length
         return nil
     }
 
-    private static func parseDate(_ string: String, timeZone: TimeZone?) -> Date? {
-        let formatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .gregorian)
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = timeZone
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.date(from: string.trimmingCharacters(in: .whitespacesAndNewlines))
+    private static func parseDate(_ string: String) -> Date? {
+        let parts = string.trimmingCharacters(in: .whitespacesAndNewlines).split(separator: "-")
+        guard parts.count == 3,
+              let year = Int(parts[0]),
+              let month = Int(parts[1]),
+              let day = Int(parts[2])
+        else {
+            return nil
+        }
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = Locale(identifier: "en_US_POSIX")
+        calendar.timeZone = dateParsingTimeZoneOverride ?? .current
+        let dateComponents = DateComponents(timeZone: calendar.timeZone, year: year, month: month, day: day, hour: 0, minute: 0, second: 0)
+        return calendar.date(from: dateComponents)
     }
 
     private static func removeEmptyRows(_ values: [[String]]) -> [[String]] {
