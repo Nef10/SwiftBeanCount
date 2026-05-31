@@ -56,13 +56,13 @@ public struct SwiftBeanCountRogersBankMapper {
     /// - Returns: Transactions
     private func mapActivity(_ activity: Activity, date: Date, referenceNumber: String) throws(RogersBankMappingError) -> Transaction {
         let account = try ledgerAccount(lastFour: String(activity.cardNumber.suffix(4)))
-        let accountName = account.name
-        let otherAccountName = accountName(for: activity.activityCategory, account: account)
+        let liabilityAccountName = account.name
+        let otherAccountName = postingAccountName(for: activity.activityCategory, account: account)
         let metaData = TransactionMetaData(date: date, narration: activity.merchant.name, metaData: [MetaDataKeys.activityId: referenceNumber])
         let (number, decimalDigits) = activity.amount.value.amountDecimal()
         let amount = Amount(number: number, commoditySymbol: activity.amount.currency, decimalDigits: decimalDigits)
         let negatedAmount = Amount(number: -number, commoditySymbol: activity.amount.currency, decimalDigits: decimalDigits)
-        var postings = [Posting(accountName: accountName, amount: negatedAmount)]
+        var postings = [Posting(accountName: liabilityAccountName, amount: negatedAmount)]
         if let foreign = activity.foreign {
             let (number, decimalDigits) = foreign.originalAmount.value.amountDecimal()
             let foreignAmount = Amount(number: number, commoditySymbol: foreign.originalAmount.currency, decimalDigits: decimalDigits)
@@ -122,7 +122,7 @@ public struct SwiftBeanCountRogersBankMapper {
         try ledgerAccount(lastFour: lastFour).name
     }
 
-    private func accountName(for activityCategory: ActivityCategory, account: SwiftBeanCountModel.Account) -> AccountName {
+    private func postingAccountName(for activityCategory: ActivityCategory, account: SwiftBeanCountModel.Account) -> AccountName {
         let key = "\(MetaDataKeys.accountOverridePrefix)\(activityCategory.rawValue.replacingOccurrences(of: " ", with: "-"))\(MetaDataKeys.accountOverrideSuffix)"
         guard let configuredAccount = account.metaData[key], let accountName = try? AccountName(configuredAccount) else {
             return expenseAccountName
