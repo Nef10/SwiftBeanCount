@@ -30,7 +30,7 @@ The synchronization relies on meta data in your beancount file for configuration
 - `name`: Your name - this will be used to identify the columns of the sheet
 - `dateTolerance`: Tolerance in days which will be used when checking if a transactions already exists
 
-These options are specified via `customs` like this. When the same setting appears multiple times, the returned `LedgerSettings` uses the newest value overall. When deciding whether a ledger transaction is part of the sync, the `tag` setting is resolved per transaction using the most recent tag on or before that transaction date:
+These options are specified via `customs` like this. When the same setting appears multiple times, it uses the value defined with the newest date. However, when deciding whether a ledger transaction is part of the sync, the `tag` setting is resolved per transaction using the most recent tag on or before that transaction date:
 
 ```
 YYYY-MM-DD custom "sheet-sync-settings" "commoditySymbol" "CAD"
