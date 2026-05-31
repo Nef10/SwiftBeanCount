@@ -69,6 +69,7 @@ class GoogleSheetDownloadImporter: BaseImporter, DownloadImporter {
 
     /// Results
     private var transactions = [ImportedTransaction]()
+    private var balance: Balance?
 
     override required init(ledger: Ledger?) {
         existingLedger = ledger ?? Ledger()
@@ -108,6 +109,7 @@ class GoogleSheetDownloadImporter: BaseImporter, DownloadImporter {
     private func process(_ result: Result<SyncResult, Error>) {
         if case let .success(result) = result {
             transactions = result.transactions.map { ImportedTransaction($0) }
+            balance = result.balance
         }
         guard let delegate else {
             return
@@ -136,6 +138,15 @@ class GoogleSheetDownloadImporter: BaseImporter, DownloadImporter {
             return nil
         }
         return transactions.removeFirst()
+    }
+
+    override func balancesToImport() -> [Balance] {
+        guard let balance else {
+            return []
+        }
+        let exists = existingLedger.accounts.first { $0.name == balance.accountName }?
+            .balances.contains { $0.date == balance.date && $0.amount == balance.amount } ?? false
+        return exists ? [] : [balance]
     }
 
 }

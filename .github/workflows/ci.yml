@@ -23,7 +23,7 @@ jobs:
             os: ubuntu-latest
           - platform: iOS
             os: macos-26
-            destination: 'platform=iOS Simulator,OS=26.1,name=iPhone 17 Pro'
+            destination: 'platform=iOS Simulator,OS=26.2,name=iPhone 17 Pro'
             xcode-version: '26.2' # Need to match Xcode version to iOS + Swift version
     runs-on: ${{ matrix.os }}
     steps:
