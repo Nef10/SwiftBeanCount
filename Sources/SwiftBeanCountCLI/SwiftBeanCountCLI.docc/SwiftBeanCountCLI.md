@@ -16,7 +16,7 @@ As this is currently an alpha version, it supports the following commands:
 * `tax-slips` - Outputs expected tax slips
 * `taxable-sales` - Outputs capital gains from taxable sales
 
-For detailed information about the available commands and options, use the generated CLI reference pages or run `swiftbeancount help <subcommand>`.
+For detailed information about the available commands and options, run `swiftbeancount help <subcommand>`, or view the full reference: <doc:swiftbeancount>
 
 ## Installation
 
