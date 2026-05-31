@@ -245,12 +245,12 @@ extension SheetCellsFormatter {
                     "Cannot derive the shared amount for a share-amount sheet in the sheet currency"
                 )
             }
-            let amount = Amount(
+            let sharedAmount = Amount(
                 number: abs(amount.number),
                 commoditySymbol: amount.commoditySymbol,
                 decimalDigits: amount.decimalDigits
             )
-            return amount.amountString
+            return sharedAmount.amountString
         }
 
         guard let spend = syncer.moneySpend(transaction, ledgerSettings: ledgerSettings) else {
