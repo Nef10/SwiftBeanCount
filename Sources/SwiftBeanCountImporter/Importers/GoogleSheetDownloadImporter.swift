@@ -27,35 +27,52 @@ class GoogleSheetDownloadImporter: BaseImporter, DownloadImporter {
         """
         Downloads transactions from a Google Sheet.
 
-        The download relies on meta data in your Beancount file to find for configuration.
+        The download relies on meta data in your Beancount file for configuration.
 
         - commoditySymbol: The synchronization only works with one commodity which needs to be specified here
         - account: Account which is used to keep track of the balance between the people
         - tag: Tag which is appended to all transactions which are or should be synchronized
-        - name: Your name - this will be used to identify the colunms of the sheet
+        - name: Your name - this will be used to identify the columns of the sheet
         - dateTolerance: Tolerance in days which will be used when checking if a transactions already exists
+        - negateRunningTotal: Set to "true" to negate an optional Running Total column before it is used for a balance assertion
 
-        These options are specified globally via customs like this (the date does not matter and will be ignored):
+        These options are specified via customs like this:
         YYYY-MM-DD custom "sheet-sync-settings" "commoditySymbol" "CAD"
 
-        You can attatch sheet-sync-category metadata to accounts to map categories from the sheet to accounts and vice-versa in a 1-1 relationship. This is optional, in case no mapping could be found a fallback account / an empty category will be used.
+        When the same setting appears multiple times, the newest dated one is used. The tag is resolved per transaction using the most recent value on or before the transaction date.
+
+        You can attach sheet-sync-category metadata to accounts to map categories from the sheet to accounts and vice-versa in a 1-1 relationship. This is optional, in case no mapping could be found a fallback account / an empty category will be used.
 
         Example:
 
         2020-12-26 open Expenses:Communication:Internet
           sheet-sync-category: "Internet"
 
-        The Google sheet need to be in a specifc format in order to be read. The tab must be named Expenses.
+        The Google Sheet tab must be named Expenses. Two column formats are supported and detected automatically.
 
-        The following columns are required to be within colunms A-I, other columns are ignored:
-
+        Total amount format:
         - Date: in yyyy-MM-dd format
-        - Paid to: e.g. Store name, can be an empty string
-        - Amount: Use . as decimal point. , to separate thousand is ok, accouting style with brackets for negative values is supported
+        - Paid to or Payee: e.g. store name, can be an empty string
+        - Amount: Total amount paid
         - Category: See account configuration above
-        - Part Name1 and Part Name2: Name1 and Name2 should be the name of the people (e.g. replace them). One of them must be the same as configured as name in the ledger (see above). Each column must contain a number which represents the amount this party is paying for the purchase. Same formatting rules as for amount apply.
-        - Who paid: One of the two names
-        - Comment: While the column is required, it can be an empty string
+        - Part Name1 and Part Name2: Name1 and Name2 should be the name of the people. One of them must be the same as configured as name in the ledger. Each column must contain a number which represents the amount this party is paying for the purchase
+        - Who paid or Payor: One of the two names
+        - Comment or Description: The column is required, but it can be an empty string
+
+        Share amount format (detected when Share Other Person is present):
+        - Date: in yyyy-MM-dd format
+        - Paid to or Payee: e.g. store name, can be an empty string
+        - Comment or Description: Can be an empty string
+        - Category: See account configuration above
+        - Who paid or Payor: Name of the person who paid
+        - Share Other Person: Share owed by the person who did not pay
+
+        In both formats, amount columns support . as decimal point, optional , as thousands separator, optional currency symbols / prefixes, and negative values with either a leading minus or accounting brackets.
+
+        Optional columns:
+        - Running Total: Uses the last row as a balance assertion. negateRunningTotal can be used to flip the sign before importing.
+
+        In the share amount format there is no total amount column. If the configured name is the person who paid, new transactions assume an equal split and derive the total as 2 × Share Other Person. When a matching ledger transaction already exists, its actual amounts are preserved.
         """
     }
 
