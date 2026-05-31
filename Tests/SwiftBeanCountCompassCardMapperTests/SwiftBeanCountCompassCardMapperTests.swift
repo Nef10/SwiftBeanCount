@@ -308,7 +308,7 @@ private func loadTransactionLedger(accountName: String, cardNumber: String, load
 
     let posting = Posting(accountName: try AccountName(accountName), amount: Amount(number: Decimal(20), commoditySymbol: "CAD", decimalDigits: 2))
     let posting2 = Posting(accountName: try AccountName(loadAccountName), amount: Amount(number: Decimal(-20), commoditySymbol: "CAD", decimalDigits: 2))
-    let metaData = TransactionMetaData(date: date, payee: "Existing", narration: "Transaction")
+    let metaData = TransactionMetaData(date: date, payee: "Existing", narration: "Transaction", metaData: ["source": "credit-card"])
     ledger.add(Transaction(metaData: metaData, postings: [posting, posting2]))
     return ledger
 }
@@ -320,4 +320,8 @@ private func expectLoadTransaction(_ transaction: Transaction, accountName: Stri
     #expect(transaction.postings.contains {
         $0.accountName.fullName == loadAccountName && $0.amount.description == "-20.00 CAD"
     })
+    #expect(transaction.metaData.payee == "Existing")
+    #expect(transaction.metaData.narration == "Transaction")
+    #expect(transaction.metaData.metaData["source"] == "credit-card")
+    #expect(transaction.metaData.metaData["journey-id"] == "compass-card-load-2022-12-01-09-26")
 }

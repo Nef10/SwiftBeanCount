@@ -217,11 +217,12 @@ public struct SwiftBeanCountCompassCardMapper {
         let balanceString = transaction.amount.replacingOccurrences(of: "$", with: "").components(separatedBy: .whitespacesAndNewlines).joined()
         let (decimal, _) = balanceString.amountDecimal()
         let amount = Amount(number: decimal, commoditySymbol: commodity, decimalDigits: 2)
-        let expenseAccount = ledgerLoadAccountName(cardNumber: cardNumber, transactionDate: transaction.date, account: account, amount: amount)
+        let existingTransaction = existingLoadTransaction(transactionDate: transaction.date, account: account, amount: amount)
+        let expenseAccount = ledgerLoadAccountName(cardNumber: cardNumber, account: account, existingTransaction: existingTransaction)
         let posting = Posting(accountName: account, amount: amount)
         let posting2 = Posting(accountName: expenseAccount, amount: Amount(number: -decimal, commoditySymbol: commodity, decimalDigits: 2))
         let id = "\(MetaDataKey.load)-\(transaction.orderNumber.flatMap(String.init) ?? Self.dateFormatterLoadId.string(from: transaction.date))"
-        let metaData = TransactionMetaData(date: transaction.date, narration: "", metaData: [MetaDataKey.journeyId: id])
+        let metaData = loadTransactionMetaData(for: transaction, journeyId: id, existingTransaction: existingTransaction)
         return Transaction(metaData: metaData, postings: [posting, posting2])
     }
 
@@ -243,8 +244,8 @@ public struct SwiftBeanCountCompassCardMapper {
     /// Gets the correct account from the ledger for a load of the card, based on the card number
     /// - Parameter cardNumber: Compass Card Number
     /// - Returns: AccountName from the ledger, or fallback if not found
-    private func ledgerLoadAccountName(cardNumber: String?, transactionDate: Date, account: AccountName, amount: Amount) -> AccountName {
-        if let accountName = existingLoadAccountName(transactionDate: transactionDate, account: account, amount: amount) {
+    private func ledgerLoadAccountName(cardNumber: String?, account: AccountName, existingTransaction: Transaction?) -> AccountName {
+        if let accountName = existingTransaction?.postings.first(where: { $0.accountName != account })?.accountName {
             return accountName
         }
         guard let cardNumber else {
@@ -258,7 +259,21 @@ public struct SwiftBeanCountCompassCardMapper {
         return accountName
     }
 
-    private func existingLoadAccountName(transactionDate: Date, account: AccountName, amount: Amount) -> AccountName? {
+    private func loadTransactionMetaData(for transaction: TransactionRow, journeyId: String, existingTransaction: Transaction?) -> TransactionMetaData {
+        guard let existingTransaction else {
+            return TransactionMetaData(date: transaction.date, narration: "", metaData: [MetaDataKey.journeyId: journeyId])
+        }
+        var metaData = existingTransaction.metaData.metaData
+        metaData[MetaDataKey.journeyId] = journeyId
+        return TransactionMetaData(date: transaction.date,
+                                   payee: existingTransaction.metaData.payee,
+                                   narration: existingTransaction.metaData.narration,
+                                   flag: existingTransaction.metaData.flag,
+                                   tags: existingTransaction.metaData.tags,
+                                   metaData: metaData)
+    }
+
+    private func existingLoadTransaction(transactionDate: Date, account: AccountName, amount: Amount) -> Transaction? {
         ledger.transactions
             .filter {
                 $0.metaData.date + loadTransactionDateTolerance >= transactionDate
@@ -266,10 +281,7 @@ public struct SwiftBeanCountCompassCardMapper {
                     && $0.postings.contains { $0.accountName == account && $0.amount == amount }
                     && $0.postings.filter { $0.accountName != account }.count == 1
             }
-            .min { abs($0.metaData.date.timeIntervalSince(transactionDate)) < abs($1.metaData.date.timeIntervalSince(transactionDate)) }?
-            .postings
-            .first { $0.accountName != account }?
-            .accountName
+            .min { abs($0.metaData.date.timeIntervalSince(transactionDate)) < abs($1.metaData.date.timeIntervalSince(transactionDate)) }
     }
 
     /// Checks if a transaction is already in the ledger
