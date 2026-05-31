@@ -260,7 +260,7 @@ struct LedgerReaderTests {
     }
 
     @Test
-    func readLedgerSettingsAndTransactionsUsesLatestSettingsForTransactionDate() {
+    func readLedgerSettingsAndTransactionsUsesLatestSettingsForTransactionDate() { // swiftlint:disable:this function_body_length
         let ledger = Ledger()
         let calendar = Calendar(identifier: .gregorian)
         let initialDate = calendar.date(from: DateComponents(year: 2_024, month: 1, day: 1))!

@@ -74,7 +74,7 @@ enum LedgerReader {
                     && setting.values[0] == key
                     && date.map { setting.date <= $0 } != false
             }
-            .min(by: { $0.date > $1.date })?
+            .min { $0.date > $1.date }?
             .values[1]
     }
 
