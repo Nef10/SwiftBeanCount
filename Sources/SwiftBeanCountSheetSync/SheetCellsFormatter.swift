@@ -198,7 +198,8 @@ extension SheetCellsFormatter {
                     syncer: syncer,
                     for: transaction,
                     expensePosting: context.expensePosting,
-                    totalExpenseAmount: context.totalExpenseAmount
+                    totalExpenseAmount: context.totalExpenseAmount,
+                    ledgerSettings: ledgerSettings
                 )
             ]
         case .shareAmount:
@@ -263,15 +264,18 @@ extension SheetCellsFormatter {
         syncer: GenericSyncer,
         for transaction: Transaction,
         expensePosting: Posting,
-        totalExpenseAmount: Decimal
+        totalExpenseAmount: Decimal,
+        ledgerSettings: LedgerSettings
     ) throws -> String {
-        guard let ownPosting = syncer.ownAccountPosting(transaction) else {
+        guard let ownPosting = syncer.ownAccountPosting(transaction),
+              let amount = syncer.amountInSheetCurrency(ownPosting, ledgerSettings: ledgerSettings)
+        else {
             throw SyncError.unableToFormatTransaction(
                 "Cannot derive the total amount for a total-amount sheet when the owner did not pay"
             )
         }
         return proportionalAmountString(
-            sourceAmount: ownPosting.amount,
+            sourceAmount: amount,
             expensePosting: expensePosting,
             totalExpenseAmount: totalExpenseAmount
         )
@@ -285,8 +289,13 @@ extension SheetCellsFormatter {
         ledgerSettings: LedgerSettings
     ) throws -> String {
         if let sharedPosting = syncer.sharedAccountPosting(transaction, ledgerSettings: ledgerSettings) {
+            guard let amount = syncer.amountInSheetCurrency(sharedPosting, ledgerSettings: ledgerSettings) else {
+                throw SyncError.unableToFormatTransaction(
+                    "Cannot derive the shared amount for a share-amount sheet in the sheet currency"
+                )
+            }
             return proportionalAmountString(
-                sourceAmount: sharedPosting.amount,
+                sourceAmount: amount,
                 expensePosting: expensePosting,
                 totalExpenseAmount: totalExpenseAmount
             )

@@ -15,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
       - name: Download Artifacts
-        uses: actions/github-script@v8.0.0
+        uses: actions/github-script@v9.0.0
         with:
           script: |
             var fs = require('fs');
@@ -56,7 +56,7 @@ jobs:
             sed -i "1i❌ <b>Minimum coverage check failed on: ${list}!</b>\n<br />\n" comment.html
           fi
       - name: Post code coverage report
-        uses: marocchino/sticky-pull-request-comment@v3.0.2
+        uses: marocchino/sticky-pull-request-comment@v3.0.4
         with:
           path: comment.html
           number: ${{ env.PR_NUMBER }}

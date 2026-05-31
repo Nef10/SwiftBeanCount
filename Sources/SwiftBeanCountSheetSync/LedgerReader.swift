@@ -23,33 +23,38 @@ enum LedgerReader {
 
     static func readLedgerSettingsAndTransactions(ledger: Ledger) -> Result<([Transaction], LedgerSettings), Error> { // swiftlint:disable:this function_body_length
         let settings = ledger.custom.filter { $0.name == LedgerSettingsConstants.settingsKey }
+        let accounts = ledger.accounts.filter { $0.metaData[LedgerSettingsConstants.categoryKey] != nil }
 
-        guard let commoditySymbol = settings.first(where: { $0.values.count == 2 && $0.values[0] == LedgerSettingsConstants.commoditySymbolKey })?.values[1] else {
+        guard let commoditySymbol = latestSettingValue(for: LedgerSettingsConstants.commoditySymbolKey, in: settings) else {
             return .failure(SyncError.missingSetting(LedgerSettingsConstants.commoditySymbolKey))
         }
-        guard let tagValue = settings.first(where: { $0.values.count == 2 && $0.values[0] == LedgerSettingsConstants.tagKey })?.values[1] else {
+        guard let tagValue = latestSettingValue(for: LedgerSettingsConstants.tagKey, in: settings) else {
             return .failure(SyncError.missingSetting(LedgerSettingsConstants.commoditySymbolKey))
         }
-        guard let accountNameValue = settings.first(where: { $0.values.count == 2 && $0.values[0] == LedgerSettingsConstants.accountKey })?.values[1] else {
+        guard let accountNameValue = latestSettingValue(for: LedgerSettingsConstants.accountKey, in: settings) else {
             return .failure(SyncError.missingSetting(LedgerSettingsConstants.accountKey))
         }
         guard let accountName = try? AccountName(accountNameValue) else {
             return .failure(SyncError.invalidSetting(LedgerSettingsConstants.accountKey, accountNameValue))
         }
-        guard let name = settings.first(where: { $0.values.count == 2 && $0.values[0] == LedgerSettingsConstants.nameKey })?.values[1] else {
+        guard let name = latestSettingValue(for: LedgerSettingsConstants.nameKey, in: settings) else {
             return .failure(SyncError.missingSetting(LedgerSettingsConstants.commoditySymbolKey))
         }
-        guard let dateToleranceValue = settings.first(where: { $0.values.count == 2 && $0.values[0] == LedgerSettingsConstants.dateToleranceKey })?.values[1] else {
+        guard let dateToleranceValue = latestSettingValue(for: LedgerSettingsConstants.dateToleranceKey, in: settings) else {
             return .failure(SyncError.missingSetting(LedgerSettingsConstants.dateToleranceKey))
         }
         guard let dateToleranceDays = Int(dateToleranceValue) else {
             return .failure(SyncError.invalidSetting(LedgerSettingsConstants.dateToleranceKey, dateToleranceValue))
         }
 
-        let accounts = ledger.accounts.filter { $0.metaData[LedgerSettingsConstants.categoryKey] != nil }
-        let negateRunningTotal = settings.first { $0.values.count == 2 && $0.values[0] == LedgerSettingsConstants.negateRunningTotalKey }?.values[1] == "true"
+        let negateRunningTotal = latestSettingValue(for: LedgerSettingsConstants.negateRunningTotalKey, in: settings) == "true"
 
-        return .success((ledger.transactions.filter { $0.metaData.tags.contains(Tag(name: tagValue)) }, LedgerSettings(
+        return .success((ledger.transactions.filter { transaction in
+            guard let applicableTagValue = latestSettingValue(for: LedgerSettingsConstants.tagKey, in: settings, on: transaction.metaData.date) else {
+                return false
+            }
+            return transaction.metaData.tags.contains(Tag(name: applicableTagValue))
+        }, LedgerSettings(
             commoditySymbol: commoditySymbol,
             tag: Tag(name: tagValue),
             name: name,
@@ -60,6 +65,17 @@ enum LedgerReader {
             negateRunningTotal: negateRunningTotal))
         )
 
+    }
+
+    private static func latestSettingValue(for key: String, in settings: [Custom], on date: Date? = nil) -> String? {
+        settings
+            .filter { setting in
+                setting.values.count == 2
+                    && setting.values[0] == key
+                    && date.map { setting.date <= $0 } != false
+            }
+            .min { $0.date > $1.date }?
+            .values[1]
     }
 
 }
