@@ -91,15 +91,6 @@ enum SheetParser { // swiftlint:disable:this type_body_length
         let maxIndex: Int
     }
 
-    private static var dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.calendar = Calendar(identifier: .gregorian)
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter
-    }()
-
     static func parseSheetData(_ data: [[String]], name: String, negateRunningTotal: Bool = false) -> ParsedData {
         var lines = removeEmptyRows(data)
         guard !lines.isEmpty else {
@@ -229,7 +220,7 @@ enum SheetParser { // swiftlint:disable:this type_body_length
         guard row.count >= indices.maxIndex + 1 else {
             return .failure(.invalidValue("Line \(line): Parsing Error! Missing Value(s) in row: \(row.joined(separator: " "))"))
         }
-        guard let date = dateFormatter.date(from: row[indices.date].trimmingCharacters(in: .whitespacesAndNewlines)) else {
+        guard let date = parseDate(row[indices.date]) else {
             return .failure(.invalidValue("Line \(line): Parsing Error! Invalid Date: \(row[indices.date])"))
         }
         guard let amount = getDecimalFromString(row[indices.amount]) else {
@@ -334,7 +325,7 @@ enum SheetParser { // swiftlint:disable:this type_body_length
         guard row.count >= indices.maxIndex + 1 else {
             return .failure(.invalidValue("Line \(line): Parsing Error! Missing Value(s) in row: \(row.joined(separator: " "))"))
         }
-        guard let date = dateFormatter.date(from: row[indices.date].trimmingCharacters(in: .whitespacesAndNewlines)) else {
+        guard let date = parseDate(row[indices.date]) else {
             return .failure(.invalidValue("Line \(line): Parsing Error! Invalid Date: \(row[indices.date])"))
         }
         guard let shareOtherPerson = getDecimalFromString(row[indices.shareOtherPerson]) else {
@@ -390,6 +381,22 @@ enum SheetParser { // swiftlint:disable:this type_body_length
             }
         }
         return nil
+    }
+
+    private static func parseDate(_ string: String) -> Date? {
+        let parts = string.trimmingCharacters(in: .whitespacesAndNewlines).split(separator: "-")
+        guard parts.count == 3,
+              let year = Int(parts[0]),
+              let month = Int(parts[1]),
+              let day = Int(parts[2])
+        else {
+            return nil
+        }
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = Locale(identifier: "en_US_POSIX")
+        calendar.timeZone = .current
+        let dateComponents = DateComponents(timeZone: calendar.timeZone, year: year, month: month, day: day, hour: 0, minute: 0, second: 0)
+        return calendar.date(from: dateComponents)
     }
 
     private static func removeEmptyRows(_ values: [[String]]) -> [[String]] {
