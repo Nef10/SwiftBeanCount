@@ -41,6 +41,29 @@ struct LedgerReaderTests {
             #expect(settings.dateTolerance == 86_400)
             #expect(settings.categoryAccountNames["Food"] == groceryAccount)
             #expect(settings.accountNameCategories[groceryAccount.fullName] == "Food")
+            #expect(settings.negateRunningTotal == false)
+        case .failure:
+            Issue.record("Expected success but got failure")
+        }
+    }
+
+    @Test
+    func readLedgerSettingsAndTransactionsWithNegateRunningTotalEnabled() {
+        let ledger = Ledger()
+        let date = Date()
+
+        ledger.custom.append(Custom(date: date, name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.commoditySymbolKey, "USD"]))
+        ledger.custom.append(Custom(date: date, name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.tagKey, "shared"]))
+        ledger.custom.append(Custom(date: date, name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.accountKey, "Assets:SharedAccount"]))
+        ledger.custom.append(Custom(date: date, name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.nameKey, "Alice"]))
+        ledger.custom.append(Custom(date: date, name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.dateToleranceKey, "1"]))
+        ledger.custom.append(Custom(date: date, name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.negateRunningTotalKey, "true"]))
+
+        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger)
+
+        switch result {
+        case .success(let (_, settings)):
+            #expect(settings.negateRunningTotal == true)
         case .failure:
             Issue.record("Expected success but got failure")
         }
