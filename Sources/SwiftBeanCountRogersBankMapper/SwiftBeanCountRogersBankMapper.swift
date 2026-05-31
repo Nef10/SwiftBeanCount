@@ -55,7 +55,9 @@ public struct SwiftBeanCountRogersBankMapper {
     /// - Throws: RogersBankMappingError
     /// - Returns: Transactions
     private func mapActivity(_ activity: Activity, date: Date, referenceNumber: String) throws(RogersBankMappingError) -> Transaction {
-        let accountName = try ledgerAccountName(lastFour: String(activity.cardNumber.suffix(4)))
+        let account = try ledgerAccount(lastFour: String(activity.cardNumber.suffix(4)))
+        let accountName = account.name
+        let otherAccountName = accountName(for: activity.activityCategory, account: account)
         let metaData = TransactionMetaData(date: date, narration: activity.merchant.name, metaData: [MetaDataKeys.activityId: referenceNumber])
         let (number, decimalDigits) = activity.amount.value.amountDecimal()
         let amount = Amount(number: number, commoditySymbol: activity.amount.currency, decimalDigits: decimalDigits)
@@ -65,13 +67,13 @@ public struct SwiftBeanCountRogersBankMapper {
             let (number, decimalDigits) = foreign.originalAmount.value.amountDecimal()
             let foreignAmount = Amount(number: number, commoditySymbol: foreign.originalAmount.currency, decimalDigits: decimalDigits)
             do {
-                let posting = try Posting(accountName: expenseAccountName, amount: foreignAmount, price: amount, priceType: .total)
+                let posting = try Posting(accountName: otherAccountName, amount: foreignAmount, price: amount, priceType: .total)
                 postings.append(posting)
             } catch {
                 throw RogersBankMappingError.postingCreationFailed("Failed to create foreign currency posting: \(error)")
             }
         } else {
-            postings.append(Posting(accountName: expenseAccountName, amount: amount))
+            postings.append(Posting(accountName: otherAccountName, amount: amount))
         }
         return Transaction(metaData: metaData, postings: postings)
     }
@@ -107,11 +109,23 @@ public struct SwiftBeanCountRogersBankMapper {
         return transactions
     }
 
-    private func ledgerAccountName(lastFour: String) throws(RogersBankMappingError) -> AccountName {
-        guard let accountName = ledger.accounts.first(where: {
+    private func ledgerAccount(lastFour: String) throws(RogersBankMappingError) -> SwiftBeanCountModel.Account {
+        guard let account = ledger.accounts.first(where: {
             $0.name.accountType == .liability && $0.metaData[MetaDataKeys.lastFour] == lastFour && $0.metaData[MetaDataKeys.importerType] == MetaDataKeys.importerTypeValue
-        })?.name else {
+        }) else {
             throw RogersBankMappingError.missingAccount(lastFour: lastFour)
+        }
+        return account
+    }
+
+    private func ledgerAccountName(lastFour: String) throws(RogersBankMappingError) -> AccountName {
+        try ledgerAccount(lastFour: lastFour).name
+    }
+
+    private func accountName(for activityCategory: ActivityCategory, account: SwiftBeanCountModel.Account) -> AccountName {
+        let key = "\(MetaDataKeys.accountOverridePrefix)\(activityCategory.rawValue.replacingOccurrences(of: " ", with: "-"))\(MetaDataKeys.accountOverrideSuffix)"
+        guard let configuredAccount = account.metaData[key], let accountName = try? AccountName(configuredAccount) else {
+            return expenseAccountName
         }
         return accountName
     }

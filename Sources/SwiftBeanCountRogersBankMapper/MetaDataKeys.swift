@@ -8,4 +8,8 @@ enum MetaDataKeys {
     static let lastFour = "last-four"
     /// Key used to mark and find transactions
     static let activityId = "rogers-bank-id"
+    /// Prefix for optional account override metadata on the Rogers liability account
+    static let accountOverridePrefix = "rogers-"
+    /// Suffix for optional account override metadata on the Rogers liability account
+    static let accountOverrideSuffix = "-account"
 }

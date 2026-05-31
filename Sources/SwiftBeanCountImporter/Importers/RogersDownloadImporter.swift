@@ -34,6 +34,10 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
         * importer-type: "rogers"
         * last-four: "XXXX" with the last four digits of your Credit Card number
         to your Credit Card Liability account.
+        Optionally, you can override the default offset account for a specific activity category on that same liability account with metadata like:
+        * rogers-payment-account: "Assets:Checking"
+        * rogers-overlimit-fee-account: "Expenses:Fees:OverLimit"
+        Category names use lowercase and replace spaces with dashes.
 
         By default transaction from the current and the last two statements are loaded. To control this, and for example only load the current statement, add a custom option to your file: YYYY-MM-DD custom "\(MetaDataKey.customsKey)" "\(MetaDataKey.customStatementsToLoad)" "1".
 
