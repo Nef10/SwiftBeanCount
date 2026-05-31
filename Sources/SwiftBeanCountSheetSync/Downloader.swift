@@ -21,16 +21,19 @@ public class Downloader: GenericSyncer, Syncer {
                 .flatMap { ledgerTransactions, ledgerSettings -> Result<SyncResult, Error> in
                     let sheetTransactions = getTransactionsFromSheet(authentication: authentication, ledgerSettings: ledgerSettings)
                     switch sheetTransactions {
-                    case .success(let (sheetTransactions, sheetParserErrors)):
-                        let filteredLedgerTransactions = ledgerTransactionForCorrectMonth(ledgerTransactions: ledgerTransactions, sheetTransactions: sheetTransactions)
-                        let filteredSheetTransactions = removeExistingTransactions(from: sheetTransactions,
-                                                                                   existingTransactions: filteredLedgerTransactions,
-                                                                                   ledgerSettings: ledgerSettings)
-                        let mergedTransactions = mergeExisting(transactions: filteredSheetTransactions, into: filteredLedgerTransactions, ledgerSettings: ledgerSettings)
+                    case .success(let sheetData):
+                        let filteredSheetRows = removeExistingRows(from: sheetData.rows,
+                                                                   existingTransactions: ledgerTransactions,
+                                                                   ledgerSettings: ledgerSettings)
+                        let filteredSheetTransactions = filteredSheetRows.map(\.transaction)
+                        let mergedTransactions = mergeExisting(transactions: filteredSheetTransactions, into: ledgerTransactions, ledgerSettings: ledgerSettings)
+                        let sheetCells = SheetCellsFormatter.buildDownloadSheetCells(layout: sheetData.layout, rows: filteredSheetRows)
                         return .success(SyncResult(mode: .download,
                                                    transactions: mergedTransactions,
-                                                   parserErrors: sheetParserErrors,
-                                                   ledgerSettings: ledgerSettings))
+                                                   parserErrors: sheetData.parserErrors,
+                                                   ledgerSettings: ledgerSettings,
+                                                   balance: sheetData.balance,
+                                                   sheetCells: sheetCells))
                     case .failure(let error):
                         return .failure(error)
                     }
@@ -42,11 +45,11 @@ public class Downloader: GenericSyncer, Syncer {
     private func mergeExisting(transactions: [Transaction], into ledgerTransactions: [Transaction], ledgerSettings: LedgerSettings) -> [Transaction] {
         transactions.map { transaction -> Transaction in
             let ledgerTransactionMatch = ledgerTransactions.first { ledgerTransaction in
-                transaction.metaData.payee == ledgerTransaction.metaData.payee
+                transaction.metaData.payee.caseInsensitiveCompare(ledgerTransaction.metaData.payee) == .orderedSame
                     && transaction.metaData.date + ledgerSettings.dateTolerance >= ledgerTransaction.metaData.date
                     && transaction.metaData.date - ledgerSettings.dateTolerance <= ledgerTransaction.metaData.date
                     && sharedAccountPosting(ledgerTransaction, ledgerSettings: ledgerSettings) == nil
-                    && ownAccountPosting(transaction)?.amount == moneySpend(ledgerTransaction, ledgerSettings: ledgerSettings)
+                    && paymentMatches(transaction: transaction, ledgerTransaction: ledgerTransaction, ledgerSettings: ledgerSettings)
             }
             guard let ledgerTransaction = ledgerTransactionMatch else {
                 return transaction
