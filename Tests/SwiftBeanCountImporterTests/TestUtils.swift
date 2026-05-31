@@ -34,6 +34,10 @@ class TestStorage: SettingsStorage {
     func dictionary(forKey defaultName: String) -> [String: Any]? { // swiftlint:disable:this discouraged_optional_collection
         storage[defaultName] as? [String: Any]
     }
+
+    func stringArray(forKey defaultName: String) -> [String]? { // swiftlint:disable:this discouraged_optional_collection
+        storage[defaultName] as? [String]
+    }
 }
 
 protocol EquatableError: Error, Equatable {
