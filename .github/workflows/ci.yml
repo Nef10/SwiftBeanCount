@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    name: ${{ matrix.platform }} Tests with Swift ${{ matrix.swift }}
+    name: ${{ matrix.platform }} Tests
     strategy:
       fail-fast: false
       matrix:
