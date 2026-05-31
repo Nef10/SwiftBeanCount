@@ -1,5 +1,6 @@
 import ArgumentParser
 
+@_documentation(visibility: internal)
 @main
 public struct SwiftBeanCountCLI: ParsableCommand {
 
