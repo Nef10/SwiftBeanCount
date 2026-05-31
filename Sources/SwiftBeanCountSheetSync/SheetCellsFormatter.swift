@@ -101,7 +101,16 @@ extension SheetCellsFormatter {
         rows.append(layout.headers)
         for transaction in transactions {
             do {
-                rows += try renderedRows(syncer: syncer, for: transaction, layout: layout, ledgerSettings: ledgerSettings)
+                let renderedRows = try renderedRows(
+                    syncer: syncer,
+                    for: transaction,
+                    layout: layout,
+                    ledgerSettings: ledgerSettings
+                )
+                guard !renderedRows.isEmpty else {
+                    continue
+                }
+                rows += renderedRows
                 formattedTransactions.append(transaction)
             } catch {
                 errors.append(uploadError(for: transaction, error: error))
@@ -222,8 +231,16 @@ extension SheetCellsFormatter {
             throw SyncError.unableToFormatTransaction("Transactions must have at least one expense posting")
         }
         let totalExpenseAmount = expensePostings.reduce(Decimal.zero) { $0 + $1.amount.number }
-        let unmatchedAmount = unmatchedExpenseAmount(for: expensePostings, ledgerSettings: ledgerSettings)
-        var includedUnmatchedPostings = false
+        if expensePostings.count == 1, let posting = expensePostings.first {
+            return [
+                UploadRenderingContext(
+                    expenseAmount: posting.amount,
+                    category: ledgerSettings.accountNameCategories[posting.accountName.fullName, default: ""],
+                    totalExpenseAmount: totalExpenseAmount
+                )
+            ]
+        }
+
         return expensePostings.compactMap { posting in
             if let category = ledgerSettings.accountNameCategories[posting.accountName.fullName] {
                 return UploadRenderingContext(
@@ -232,32 +249,7 @@ extension SheetCellsFormatter {
                     totalExpenseAmount: totalExpenseAmount
                 )
             }
-
-            guard !includedUnmatchedPostings else {
-                return nil
-            }
-            includedUnmatchedPostings = true
-            return UploadRenderingContext(
-                expenseAmount: Amount(
-                    number: unmatchedAmount,
-                    commoditySymbol: posting.amount.commoditySymbol,
-                    decimalDigits: posting.amount.decimalDigits
-                ),
-                category: "",
-                totalExpenseAmount: totalExpenseAmount
-            )
-        }
-    }
-
-    private static func unmatchedExpenseAmount(
-        for expensePostings: [Posting],
-        ledgerSettings: LedgerSettings
-    ) -> Decimal {
-        expensePostings.reduce(Decimal.zero) { partialResult, posting in
-            guard ledgerSettings.accountNameCategories[posting.accountName.fullName] == nil else {
-                return partialResult
-            }
-            return partialResult + posting.amount.number
+            return nil
         }
     }
 
