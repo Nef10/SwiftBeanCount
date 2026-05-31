@@ -20,7 +20,7 @@ For detailed information about the available commands and options, use the gener
 
 ## Installation
 
-This executable is built using the Swift Package Manager, so it can be installed via [Mint](https://github.com/yonaskolb/Mint). Optionally, you can specific a version to use with @version, or use the latest dev with `@main`. By default the latest tagged version is used.
+This executable is built using the Swift Package Manager, so it can be installed via [Mint](https://github.com/yonaskolb/Mint). Optionally, you can specify a version to use with @version, or use the latest dev with `@main`. By default the latest tagged version is used.
 
 ```bash
 mint install Nef10/SwiftBeanCount
