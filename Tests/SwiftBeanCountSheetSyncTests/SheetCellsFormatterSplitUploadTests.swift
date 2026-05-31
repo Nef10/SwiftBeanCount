@@ -4,109 +4,108 @@ import SwiftBeanCountModel
 @testable import SwiftBeanCountSheetSync
 import Testing
 
+private class TestSyncer: GenericSyncer {}
+
+private func makeLedgerSettings() throws -> LedgerSettings {
+    LedgerSettings(
+        commoditySymbol: "CAD",
+        tag: Tag(name: "shared"),
+        name: "Alice",
+        accountName: try AccountName("Assets:Shared"),
+        dateTolerance: 86_400,
+        categoryAccountNames: [
+            "Groceries": try AccountName("Expenses:Groceries"),
+            "Dining": try AccountName("Expenses:Dining")
+        ],
+        accountNameCategories: [
+            "Expenses:Groceries": "Groceries",
+            "Expenses:Dining": "Dining"
+        ]
+    )
+}
+
+private func ownerPaidSplitTransaction() throws -> Transaction {
+    Transaction(
+        metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_735_689_600), payee: "Store", narration: "Weekly shop"),
+        postings: [
+            Posting(accountName: try AccountName("Expenses:Groceries"),
+                    amount: Amount(number: Decimal(string: "30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
+            ),
+            Posting(accountName: try AccountName("Expenses:Dining"),
+                    amount: Amount(number: Decimal(string: "10.00")!, commoditySymbol: "CAD", decimalDigits: 2)
+            ),
+            Posting(accountName: LedgerSettings.ownAccountName,
+                    amount: Amount(number: Decimal(string: "-81.26")!, commoditySymbol: "CAD", decimalDigits: 2)
+            ),
+            Posting(accountName: try AccountName("Assets:Shared"),
+                    amount: Amount(number: Decimal(string: "40.63")!, commoditySymbol: "CAD", decimalDigits: 2)
+            )
+        ]
+    )
+}
+
+private func ownerPaidSplitTransactionWithUnconfiguredExpenses() throws -> Transaction {
+    Transaction(
+        metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_735_689_600), payee: "Store", narration: "Weekly shop"),
+        postings: [
+            Posting(accountName: try AccountName("Expenses:Groceries"),
+                    amount: Amount(number: Decimal(string: "30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
+            ),
+            Posting(accountName: try AccountName("Expenses:Household"),
+                    amount: Amount(number: Decimal(string: "4.00")!, commoditySymbol: "CAD", decimalDigits: 2)
+            ),
+            Posting(accountName: try AccountName("Expenses:Fees"),
+                    amount: Amount(number: Decimal(string: "6.00")!, commoditySymbol: "CAD", decimalDigits: 2)
+            ),
+            Posting(accountName: LedgerSettings.ownAccountName,
+                    amount: Amount(number: Decimal(string: "-81.26")!, commoditySymbol: "CAD", decimalDigits: 2)
+            ),
+            Posting(accountName: try AccountName("Assets:Shared"),
+                    amount: Amount(number: Decimal(string: "40.63")!, commoditySymbol: "CAD", decimalDigits: 2)
+            )
+        ]
+    )
+}
+
+private func ownerPaidTransactionWithSingleUnconfiguredExpense() throws -> Transaction {
+    Transaction(
+        metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_735_689_600), payee: "Store", narration: "Weekly shop"),
+        postings: [
+            Posting(accountName: try AccountName("Expenses:Household"),
+                    amount: Amount(number: Decimal(string: "30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
+            ),
+            Posting(accountName: LedgerSettings.ownAccountName,
+                    amount: Amount(number: Decimal(string: "-61.26")!, commoditySymbol: "CAD", decimalDigits: 2)
+            ),
+            Posting(accountName: try AccountName("Assets:Shared"),
+                    amount: Amount(number: Decimal(string: "30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
+            )
+        ]
+    )
+}
+
+private func ownerPaidSplitTransactionWithOnlyUnconfiguredExpenses() throws -> Transaction {
+    Transaction(
+        metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_735_689_600), payee: "Store", narration: "Weekly shop"),
+        postings: [
+            Posting(accountName: try AccountName("Expenses:Household"),
+                    amount: Amount(number: Decimal(string: "24.63")!, commoditySymbol: "CAD", decimalDigits: 2)
+            ),
+            Posting(accountName: try AccountName("Expenses:Fees"),
+                    amount: Amount(number: Decimal(string: "6.00")!, commoditySymbol: "CAD", decimalDigits: 2)
+            ),
+            Posting(accountName: LedgerSettings.ownAccountName,
+                    amount: Amount(number: Decimal(string: "-61.26")!, commoditySymbol: "CAD", decimalDigits: 2)
+            ),
+            Posting(accountName: try AccountName("Assets:Shared"),
+                    amount: Amount(number: Decimal(string: "30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
+            )
+        ]
+    )
+}
+
 @Suite
 struct SheetCellsFormatterSplitUploadTests {
-
-    private class TestSyncer: GenericSyncer {}
-
-    private func makeLedgerSettings() throws -> LedgerSettings {
-        LedgerSettings(
-            commoditySymbol: "CAD",
-            tag: Tag(name: "shared"),
-            name: "Alice",
-            accountName: try AccountName("Assets:Shared"),
-            dateTolerance: 86_400,
-            categoryAccountNames: [
-                "Groceries": try AccountName("Expenses:Groceries"),
-                "Dining": try AccountName("Expenses:Dining")
-            ],
-            accountNameCategories: [
-                "Expenses:Groceries": "Groceries",
-                "Expenses:Dining": "Dining"
-            ]
-        )
-    }
-
-    private func ownerPaidSplitTransaction() throws -> Transaction {
-        Transaction(
-            metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_735_689_600), payee: "Store", narration: "Weekly shop"),
-            postings: [
-                Posting(accountName: try AccountName("Expenses:Groceries"),
-                        amount: Amount(number: Decimal(string: "30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
-                ),
-                Posting(accountName: try AccountName("Expenses:Dining"),
-                        amount: Amount(number: Decimal(string: "10.00")!, commoditySymbol: "CAD", decimalDigits: 2)
-                ),
-                Posting(accountName: LedgerSettings.ownAccountName,
-                        amount: Amount(number: Decimal(string: "-81.26")!, commoditySymbol: "CAD", decimalDigits: 2)
-                ),
-                Posting(accountName: try AccountName("Assets:Shared"),
-                        amount: Amount(number: Decimal(string: "40.63")!, commoditySymbol: "CAD", decimalDigits: 2)
-                )
-            ]
-        )
-    }
-
-    private func ownerPaidSplitTransactionWithUnconfiguredExpenses() throws -> Transaction {
-        Transaction(
-            metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_735_689_600), payee: "Store", narration: "Weekly shop"),
-            postings: [
-                Posting(accountName: try AccountName("Expenses:Groceries"),
-                        amount: Amount(number: Decimal(string: "30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
-                ),
-                Posting(accountName: try AccountName("Expenses:Household"),
-                        amount: Amount(number: Decimal(string: "4.00")!, commoditySymbol: "CAD", decimalDigits: 2)
-                ),
-                Posting(accountName: try AccountName("Expenses:Fees"),
-                        amount: Amount(number: Decimal(string: "6.00")!, commoditySymbol: "CAD", decimalDigits: 2)
-                ),
-                Posting(accountName: LedgerSettings.ownAccountName,
-                        amount: Amount(number: Decimal(string: "-81.26")!, commoditySymbol: "CAD", decimalDigits: 2)
-                ),
-                Posting(accountName: try AccountName("Assets:Shared"),
-                        amount: Amount(number: Decimal(string: "40.63")!, commoditySymbol: "CAD", decimalDigits: 2)
-                )
-            ]
-        )
-    }
-
-    private func ownerPaidTransactionWithSingleUnconfiguredExpense() throws -> Transaction {
-        Transaction(
-            metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_735_689_600), payee: "Store", narration: "Weekly shop"),
-            postings: [
-                Posting(accountName: try AccountName("Expenses:Household"),
-                        amount: Amount(number: Decimal(string: "30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
-                ),
-                Posting(accountName: LedgerSettings.ownAccountName,
-                        amount: Amount(number: Decimal(string: "-61.26")!, commoditySymbol: "CAD", decimalDigits: 2)
-                ),
-                Posting(accountName: try AccountName("Assets:Shared"),
-                        amount: Amount(number: Decimal(string: "30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
-                )
-            ]
-        )
-    }
-
-    private func ownerPaidSplitTransactionWithOnlyUnconfiguredExpenses() throws -> Transaction {
-        Transaction(
-            metaData: TransactionMetaData(date: Date(timeIntervalSince1970: 1_735_689_600), payee: "Store", narration: "Weekly shop"),
-            postings: [
-                Posting(accountName: try AccountName("Expenses:Household"),
-                        amount: Amount(number: Decimal(string: "24.63")!, commoditySymbol: "CAD", decimalDigits: 2)
-                ),
-                Posting(accountName: try AccountName("Expenses:Fees"),
-                        amount: Amount(number: Decimal(string: "6.00")!, commoditySymbol: "CAD", decimalDigits: 2)
-                ),
-                Posting(accountName: LedgerSettings.ownAccountName,
-                        amount: Amount(number: Decimal(string: "-61.26")!, commoditySymbol: "CAD", decimalDigits: 2)
-                ),
-                Posting(accountName: try AccountName("Assets:Shared"),
-                        amount: Amount(number: Decimal(string: "30.63")!, commoditySymbol: "CAD", decimalDigits: 2)
-                )
-            ]
-        )
-    }
-
     @Test
     func buildUploadSheetCellsSplitsShareFormatRowsForMultipleExpensePostings() throws {
         let syncer = TestSyncer(sheetURL: "", ledger: Ledger())
