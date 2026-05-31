@@ -258,4 +258,54 @@ struct LedgerReaderTests {
             Issue.record("Expected success but got failure")
         }
     }
+
+    @Test
+    func readLedgerSettingsAndTransactionsUsesLatestSettingsForTransactionDate() {
+        let ledger = Ledger()
+        let calendar = Calendar(identifier: .gregorian)
+        let initialDate = calendar.date(from: DateComponents(year: 2_024, month: 1, day: 1))!
+        let updatedDate = calendar.date(from: DateComponents(year: 2_024, month: 2, day: 1))!
+        let januaryTransactionDate = calendar.date(from: DateComponents(year: 2_024, month: 1, day: 15))!
+        let februaryTransactionDate = calendar.date(from: DateComponents(year: 2_024, month: 2, day: 15))!
+
+        ledger.custom.append(Custom(date: initialDate, name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.commoditySymbolKey, "USD"]))
+        ledger.custom.append(Custom(date: initialDate, name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.tagKey, "shared-old"]))
+        ledger.custom.append(Custom(date: initialDate, name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.accountKey, "Assets:SharedOld"]))
+        ledger.custom.append(Custom(date: initialDate, name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.nameKey, "Alice"]))
+        ledger.custom.append(Custom(date: initialDate, name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.dateToleranceKey, "1"]))
+
+        ledger.custom.append(Custom(date: updatedDate, name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.commoditySymbolKey, "CAD"]))
+        ledger.custom.append(Custom(date: updatedDate, name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.tagKey, "shared-new"]))
+        ledger.custom.append(Custom(date: updatedDate, name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.accountKey, "Assets:SharedNew"]))
+        ledger.custom.append(Custom(date: updatedDate, name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.nameKey, "Bob"]))
+        ledger.custom.append(Custom(date: updatedDate, name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.dateToleranceKey, "2"]))
+
+        ledger.add(Transaction(
+            metaData: TransactionMetaData(date: januaryTransactionDate, payee: "January store", narration: "Old tag", tags: [Tag(name: "shared-old")]),
+            postings: []
+        ))
+        ledger.add(Transaction(
+            metaData: TransactionMetaData(date: januaryTransactionDate, payee: "Wrong January store", narration: "Wrong tag", tags: [Tag(name: "shared-new")]),
+            postings: []
+        ))
+        ledger.add(Transaction(
+            metaData: TransactionMetaData(date: februaryTransactionDate, payee: "February store", narration: "New tag", tags: [Tag(name: "shared-new")]),
+            postings: []
+        ))
+
+        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger)
+
+        switch result {
+        case .success(let (transactions, settings)):
+            #expect(transactions.count == 2)
+            #expect(transactions.map(\.metaData.payee) == ["January store", "February store"])
+            #expect(settings.commoditySymbol == "CAD")
+            #expect(settings.tag == Tag(name: "shared-new"))
+            #expect(settings.name == "Bob")
+            #expect(settings.accountName.fullName == "Assets:SharedNew")
+            #expect(settings.dateTolerance == 172_800)
+        case .failure:
+            Issue.record("Expected success but got failure")
+        }
+    }
 }

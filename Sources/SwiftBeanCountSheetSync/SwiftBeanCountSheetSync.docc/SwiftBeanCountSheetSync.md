@@ -30,7 +30,7 @@ The synchronization relies on meta data in your beancount file for configuration
 - `name`: Your name - this will be used to identify the columns of the sheet
 - `dateTolerance`: Tolerance in days which will be used when checking if a transactions already exists
 
-These options are specified globally via `customs` like this (the date does not matter and will be ignored):
+These options are specified via `customs` like this. When multiple settings exist, the most recent one on or before the transaction date is used:
 
 ```
 YYYY-MM-DD custom "sheet-sync-settings" "commoditySymbol" "CAD"
