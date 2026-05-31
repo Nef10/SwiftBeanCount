@@ -162,7 +162,7 @@ extension SheetCellsFormatter {
     ) throws -> [ColumnRole: String] {
         switch layout.format {
         case .totalAmount:
-            return [.amount: try totalAmountValue(syncer: syncer, for: transaction)]
+            return [.amount: try totalAmountValue(syncer: syncer, for: transaction, ledgerSettings: ledgerSettings)]
         case .shareAmount:
             return [.shareOtherPerson: try shareAmountValue(syncer: syncer, for: transaction, ledgerSettings: ledgerSettings)]
         }
@@ -216,19 +216,22 @@ extension SheetCellsFormatter {
 
     private static func totalAmountValue(
         syncer: GenericSyncer,
-        for transaction: Transaction
+        for transaction: Transaction,
+        ledgerSettings: LedgerSettings
     ) throws -> String {
-        guard let ownPosting = syncer.ownAccountPosting(transaction) else {
+        guard let ownPosting = syncer.ownAccountPosting(transaction),
+              let amount = syncer.amountInSheetCurrency(ownPosting, ledgerSettings: ledgerSettings)
+        else {
             throw SyncError.unableToFormatTransaction(
                 "Cannot derive the total amount for a total-amount sheet when the owner did not pay"
             )
         }
-        let amount = Amount(
-            number: abs(ownPosting.amount.number),
-            commoditySymbol: ownPosting.amount.commoditySymbol,
-            decimalDigits: ownPosting.amount.decimalDigits
+        let totalAmount = Amount(
+            number: abs(amount.number),
+            commoditySymbol: amount.commoditySymbol,
+            decimalDigits: amount.decimalDigits
         )
-        return amount.amountString
+        return totalAmount.amountString
     }
 
     private static func shareAmountValue(
@@ -237,10 +240,15 @@ extension SheetCellsFormatter {
         ledgerSettings: LedgerSettings
     ) throws -> String {
         if let sharedPosting = syncer.sharedAccountPosting(transaction, ledgerSettings: ledgerSettings) {
+            guard let amount = syncer.amountInSheetCurrency(sharedPosting, ledgerSettings: ledgerSettings) else {
+                throw SyncError.unableToFormatTransaction(
+                    "Cannot derive the shared amount for a share-amount sheet in the sheet currency"
+                )
+            }
             let amount = Amount(
-                number: abs(sharedPosting.amount.number),
-                commoditySymbol: sharedPosting.amount.commoditySymbol,
-                decimalDigits: sharedPosting.amount.decimalDigits
+                number: abs(amount.number),
+                commoditySymbol: amount.commoditySymbol,
+                decimalDigits: amount.decimalDigits
             )
             return amount.amountString
         }
