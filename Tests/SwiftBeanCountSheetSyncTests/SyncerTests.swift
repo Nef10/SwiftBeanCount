@@ -57,6 +57,21 @@ struct SyncerTests {
         return Transaction(metaData: metaData, postings: [expensePosting, assetPosting])
     }
 
+    private func foreignCurrencyLedgerTransaction(asset assetNumber: Decimal, assetCommodity: String, totalPrice: Decimal, totalPriceCommodity: String) throws -> Transaction {
+        let assetPosting = try Posting(
+            accountName: LedgerSettings.ownAccountName,
+            amount: Amount(number: assetNumber, commoditySymbol: assetCommodity, decimalDigits: 2),
+            price: Amount(number: totalPrice, commoditySymbol: totalPriceCommodity, decimalDigits: 2),
+            priceType: .total
+        )
+        let expensePosting = Posting(
+            accountName: try AccountName("Expenses:Food"),
+            amount: Amount(number: -totalPrice, commoditySymbol: totalPriceCommodity, decimalDigits: 2)
+        )
+        let metaData = TransactionMetaData(date: Date(), payee: "Store", narration: "", flag: .complete, tags: [])
+        return Transaction(metaData: metaData, postings: [expensePosting, assetPosting])
+    }
+
     private func transaction(on date: Date, payee: String) -> Transaction {
         Transaction(metaData: TransactionMetaData(date: date, payee: payee, narration: "", flag: .complete, tags: []), postings: [])
     }
@@ -117,6 +132,15 @@ struct SyncerTests {
         let sheet = try sheetTransaction(own: -61.26, shared: 30.63, commoditySymbol: "USD")
         let ledger = try ledgerTransaction(asset: -100, commoditySymbol: "CAD")
         #expect(!syncer.paymentMatches(transaction: sheet, ledgerTransaction: ledger, ledgerSettings: settings))
+    }
+
+    @Test
+    func paymentMatchesUsesTotalPriceWhenLedgerPostingAmountIsForeignCurrency() throws {
+        let settings = try createLedgerSettings(commoditySymbol: "CAD")
+        let syncer = TestSyncer(sheetURL: "", ledger: Ledger())
+        let sheet = try sheetTransaction(own: -13, shared: 6.5, commoditySymbol: "CAD")
+        let ledger = try foreignCurrencyLedgerTransaction(asset: -10, assetCommodity: "USD", totalPrice: -13, totalPriceCommodity: "CAD")
+        #expect(syncer.paymentMatches(transaction: sheet, ledgerTransaction: ledger, ledgerSettings: settings))
     }
 
     @Test
