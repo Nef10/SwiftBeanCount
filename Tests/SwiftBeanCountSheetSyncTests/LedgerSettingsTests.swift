@@ -33,6 +33,22 @@ struct LedgerSettingsTests {
         #expect(settings.dateTolerance == dateTolerance)
         #expect(settings.categoryAccountNames == categoryAccountNames)
         #expect(settings.accountNameCategories == accountNameCategories)
+        #expect(settings.negateRunningTotal == false)
+    }
+
+    @Test
+    func ledgerSettingsNegateRunningTotalFlag() throws {
+        let settings = LedgerSettings(
+            commoditySymbol: "CAD",
+            tag: Tag(name: "tag"),
+            name: "User",
+            accountName: try AccountName("Assets:Account"),
+            dateTolerance: 0,
+            categoryAccountNames: [:],
+            accountNameCategories: [:],
+            negateRunningTotal: true
+        )
+        #expect(settings.negateRunningTotal == true)
     }
 
     @Test
@@ -44,6 +60,7 @@ struct LedgerSettingsTests {
         #expect(LedgerSettingsConstants.tagKey == "tag")
         #expect(LedgerSettingsConstants.nameKey == "name")
         #expect(LedgerSettingsConstants.dateToleranceKey == "dateTolerance")
+        #expect(LedgerSettingsConstants.negateRunningTotalKey == "negateRunningTotal")
     }
 
     @Test
