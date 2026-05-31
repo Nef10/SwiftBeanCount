@@ -93,17 +93,24 @@ class GoogleSheetDownloadImporter: BaseImporter, DownloadImporter {
         super.init(ledger: ledger)
     }
 
-    override func load() {
+    func requestSheetURL() -> String {
         var sheet = ""
         let group = DispatchGroup()
         group.enter()
-        delegate?.requestInput(name: "URL", type: .text([])) {
+        delegate?.requestInput(name: "URL", type: .text(Settings.recentGoogleSheetURLs)) {
             sheet = $0
+            Settings.addRecentGoogleSheetURL($0)
             group.leave()
             return true
         }
         group.wait()
+        return sheet
+    }
+
+    override func load() {
+        let sheet = requestSheetURL()
         let downloader = Downloader(sheetURL: sheet, ledger: existingLedger)
+        let group = DispatchGroup()
         group.enter()
         DispatchQueue.main.async { [self] in
             authentication.authenticate(authenticationPresentationContextProvider: AuthenticationPresentationContextProvider()) { [self] in

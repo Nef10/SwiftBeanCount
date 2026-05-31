@@ -19,6 +19,9 @@ public protocol SettingsStorage {
 
     /// Gets a saved dictionary for a given key
     func dictionary(forKey defaultName: String) -> [String: Any]? // swiftlint:disable:this discouraged_optional_collection
+
+    /// Gets a saved array of strings for a given key
+    func stringArray(forKey defaultName: String) -> [String]? // swiftlint:disable:this discouraged_optional_collection
 }
 
 /// Constants releated to settings of the importer
@@ -32,6 +35,8 @@ public enum Settings {
     private static let descriptionKey = "description"
     /// Storage key for the date tolerance to detect duplicate transactions
     private static let dateToleranceKey = "date_tolerance"
+    /// Storage key for recently used Google Sheet URLs
+    private static let googleSheetURLsKey = "google_sheet_urls"
 
     /// Default date tolerance to detect duplicate transactions
     static let defaultDateTolerance = 2 // days
@@ -100,6 +105,22 @@ public enum Settings {
             // the string conversion is a workaround for https://bugs.swift.org/plugins/servlet/mobile#issue/SR-15124
             storage.set("\(newValue)", forKey: dateToleranceKey)
         }
+    }
+
+    /// Recently used Google Sheet URLs, newest first
+    static var recentGoogleSheetURLs: [String] {
+        storage.stringArray(forKey: googleSheetURLsKey) ?? []
+    }
+
+    static func addRecentGoogleSheetURL(_ url: String) {
+        let normalizedURL = url.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !normalizedURL.isEmpty else {
+            return
+        }
+
+        var urls = recentGoogleSheetURLs.filter { $0 != normalizedURL }
+        urls.insert(normalizedURL, at: 0)
+        storage.set(Array(urls.prefix(3)), forKey: googleSheetURLsKey)
     }
 
     /// Save a new mapping of a description the user wants to automatically apply to
