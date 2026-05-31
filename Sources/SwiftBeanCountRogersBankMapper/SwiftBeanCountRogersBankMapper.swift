@@ -55,9 +55,10 @@ public struct SwiftBeanCountRogersBankMapper {
     /// - Throws: RogersBankMappingError
     /// - Returns: Transactions
     private func mapActivity(_ activity: Activity, date: Date, referenceNumber: String) throws(RogersBankMappingError) -> Transaction {
-        let account = try ledgerAccount(lastFour: String(activity.cardNumber.suffix(4)))
+        let lastFour = String(activity.cardNumber.suffix(4))
+        let account = try ledgerAccount(lastFour: lastFour)
         let liabilityAccountName = account.name
-        let otherAccountName = postingAccountName(for: activity.activityCategory, account: account)
+        let otherAccountName = postingAccountName(for: activity.activityCategory, lastFour: lastFour)
         let metaData = TransactionMetaData(date: date, narration: activity.merchant.name, metaData: [MetaDataKeys.activityId: referenceNumber])
         let (number, decimalDigits) = activity.amount.value.amountDecimal()
         let amount = Amount(number: number, commoditySymbol: activity.amount.currency, decimalDigits: decimalDigits)
@@ -122,12 +123,17 @@ public struct SwiftBeanCountRogersBankMapper {
         try ledgerAccount(lastFour: lastFour).name
     }
 
-    private func postingAccountName(for activityCategory: ActivityCategory, account: SwiftBeanCountModel.Account) -> AccountName {
-        let key = "\(MetaDataKeys.accountOverridePrefix)\(activityCategory.rawValue.replacingOccurrences(of: " ", with: "-"))\(MetaDataKeys.accountOverrideSuffix)"
-        guard let configuredAccount = account.metaData[key], let accountName = try? AccountName(configuredAccount) else {
+    private func postingAccountName(for activityCategory: ActivityCategory, lastFour: String) -> AccountName {
+        let key: String
+        switch activityCategory {
+        case .payment:
+            key = MetaDataKeys.payment
+        case .overlimitFee:
+            key = MetaDataKeys.overlimitFee
+        default:
             return expenseAccountName
         }
-        return accountName
+        return ledger.accounts.first { $0.metaData[key] == lastFour }?.name ?? expenseAccountName
     }
 
 }

@@ -202,12 +202,14 @@ struct SwiftBeanCountRogersBankMapperTests {
 
     @Test
     func mapActivitiesPaymentConfiguredAccount() throws {
-        let accountName = try AccountName("Liabilities:CC:Rogers")
+        let liabilityAccountName = try AccountName("Liabilities:CC:Rogers")
         let paymentAccountName = try AccountName("Assets:Checking")
-        try ledger.add(Account(name: accountName, metaData: [
+        try ledger.add(Account(name: liabilityAccountName, metaData: [
             "last-four": "1234",
             "importer-type": "rogers",
-            "rogers-payment-account": paymentAccountName.fullName,
+        ]))
+        try ledger.add(Account(name: paymentAccountName, metaData: [
+            "rogers-payment": "1234",
         ]))
         var activity = TestActivity()
         activity.activityStatus = .approved
@@ -238,12 +240,14 @@ struct SwiftBeanCountRogersBankMapperTests {
 
     @Test
     func mapActivitiesOverLimitFeeConfiguredAccount() throws {
-        let accountName = try AccountName("Liabilities:CC:Rogers")
+        let liabilityAccountName = try AccountName("Liabilities:CC:Rogers")
         let feeAccountName = try AccountName("Expenses:Fees:OverLimit")
-        try ledger.add(Account(name: accountName, metaData: [
+        try ledger.add(Account(name: liabilityAccountName, metaData: [
             "last-four": "1234",
             "importer-type": "rogers",
-            "rogers-overlimit-fee-account": feeAccountName.fullName,
+        ]))
+        try ledger.add(Account(name: feeAccountName, metaData: [
+            "rogers-overlimit-fee": "1234",
         ]))
         var activity = TestActivity()
         activity.activityStatus = .approved
