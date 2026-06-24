@@ -28,7 +28,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout code
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
     - name: Install Swift
       if : ${{ matrix.platform != 'iOS' }}
       uses: swift-actions/setup-swift@v3.0.0-beta.1
