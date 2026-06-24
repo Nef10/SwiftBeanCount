@@ -20,7 +20,7 @@ jobs:
         app_id: ${{ secrets.APP_ID }} # These two secrets need to be added
         private_key: ${{ secrets.APP_PRIVATE_KEY }} # to your repository settings
     - name: Checkout code
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         path: repo
         fetch-depth: 0 # Fetching the whole repo is required to check if branches already exist
@@ -30,7 +30,7 @@ jobs:
       with:
         skip-verify-signature: true
     - name: Checkout swift-dependency-updater
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         repository: Nef10/swift-dependency-updater
         path: swift-dependency-updater
