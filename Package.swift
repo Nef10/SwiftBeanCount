@@ -37,7 +37,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/Nef10/RogersBankDownloader.git", exact: "0.3.0"),
-        .package(url: "https://github.com/Nef10/WealthsimpleDownloader.git", from: "3.0.0"),
+        .package(url: "https://github.com/Nef10/WealthsimpleDownloader.git", from: "3.1.1"),
         .package(url: "https://github.com/Nef10/GoogleAuthentication.git", from: "1.1.0"),
         .package(url: "https://github.com/Nef10/TangerineDownloader.git", exact: "0.1.0"),
         .package(url: "https://github.com/Nef10/CompassCardDownloader.git", exact: "0.0.2"),
