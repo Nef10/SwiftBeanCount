@@ -682,6 +682,45 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
     }
 
     @Test
+    func mapCurrencyConversionTransactionsMerge() throws {
+        try ledger.add(Commodity(symbol: "USD"))
+
+        let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
+        let description = "Convert 500.00 CAD to 351.70 USD @ 1.4216860000 in ACCOUNT-NUMBER"
+        let pair = currencyConversionPair(date: date, description: description)
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([pair.buy, pair.sell])
+
+        let expectedTransaction = try Transaction(
+            metaData: TransactionMetaData(date: date, metaData: [MetaDataKeys.id: "currency-buy-id currency-sell-id"]),
+            postings: [
+                posting(number: "-500.0"),
+                Posting(accountName: try AccountName("Assets:W:USD"),
+                        amount: priceAmount(number: "351.7", commodity: "USD"),
+                        price: priceAmount(number: "500.0"),
+                        priceType: .total)
+            ]
+        )
+
+        #expect(prices.isEmpty)
+        #expect(transactions == [expectedTransaction])
+    }
+
+    @Test
+    func mapCurrencyConversionTransactionsRequirePair() throws {
+        try ledger.add(Commodity(symbol: "USD"))
+
+        let transaction = currencyConversionPair(
+            date: Date(timeIntervalSinceReferenceDate: 5_645_145_697),
+            description: "Convert 500.00 CAD to 351.70 USD @ 1.4216860000 in ACCOUNT-NUMBER"
+        ).buy
+
+        #expect(throws: WealthsimpleConversionError.unsupportedTransactionType(transaction.transactionType.rawValue)) {
+            try mapper.mapTransactionsToPriceAndTransactions([transaction])
+        }
+    }
+
+    @Test
     func mapTransferTransactionsSingle() throws {
         let transferAccount = try AccountName("Assets:Transfer")
         try ledger.add(SAccount(name: transferAccount, metaData: ["\(MetaDataKeys.prefix)transfer-in": accountNumber]))
@@ -877,6 +916,48 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
             fxRate: "1.0",
             processDate: date
         )
+    }
+
+    // swiftlint:disable:next function_body_length
+    private func currencyConversionPair(
+        date: Date,
+        description: String,
+        buyId: String = "currency-buy-id",
+        sellId: String = "currency-sell-id"
+    ) -> (buy: TestTransaction, sell: TestTransaction) {
+        let buy = TestTransaction(
+            id: buyId,
+            accountId: accountId,
+            transactionType: .currencyConversionBuy,
+            description: description,
+            symbol: "USD",
+            quantity: "351.7",
+            marketPriceAmount: "1.0",
+            marketPriceCurrency: "USD",
+            marketValueAmount: "351.7",
+            marketValueCurrency: "USD",
+            netCashAmount: "351.7",
+            netCashCurrency: "CAD",
+            fxRate: "1.421686",
+            processDate: date
+        )
+        let sell = TestTransaction(
+            id: sellId,
+            accountId: accountId,
+            transactionType: .currencyConversionSell,
+            description: description,
+            symbol: "CAD",
+            quantity: "-500.0",
+            marketPriceAmount: "1.0",
+            marketPriceCurrency: "CAD",
+            marketValueAmount: "500.0",
+            marketValueCurrency: "CAD",
+            netCashAmount: "-500.0",
+            netCashCurrency: "CAD",
+            fxRate: "1.421686",
+            processDate: date
+        )
+        return (buy, sell)
     }
 
     private func posting(

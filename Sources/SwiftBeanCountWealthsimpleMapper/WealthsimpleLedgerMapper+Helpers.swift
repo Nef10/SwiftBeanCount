@@ -39,6 +39,19 @@ extension WealthsimpleLedgerMapper {
         return RegularTransactionsResult(prices: prices, transactions: transactions, mergedNRWTIds: mergedNRWTIds)
     }
 
+    func processCurrencyConversions(_ currencyConversions: [WTransaction]) throws -> [STransaction] {
+        var transactions = [STransaction]()
+        let conversionsByAccount = Dictionary(grouping: currencyConversions) { $0.accountId }
+        for (accountId, accountConversions) in conversionsByAccount {
+            guard let account = accounts.first(where: { $0.id == accountId }) else {
+                throw WealthsimpleConversionError.accountNotFound(accountId)
+            }
+            transactions.append(contentsOf: try mergeCurrencyConversionTransactions(accountConversions, in: account)
+                .filter { !lookup.doesTransactionExistInLedger($0) })
+        }
+        return transactions
+    }
+
     func processNRWTTransactions(_ nrwt: [WTransaction]) throws -> [STransaction] {
         var transactions = [STransaction]()
         let nrwtByAccount = Dictionary(grouping: nrwt) { $0.accountId }
@@ -77,6 +90,18 @@ extension WealthsimpleLedgerMapper {
         return transactions
     }
 
+    func mergeCurrencyConversionTransactions(_ transactions: [WTransaction], in account: WAccount) throws -> [STransaction] {
+        struct CurrencyConversionKey: Hashable {
+            let date: Date
+            let description: String
+            let fxRate: String
+        }
+        let grouped = Dictionary(grouping: transactions) {
+            CurrencyConversionKey(date: $0.processDate, description: $0.description, fxRate: $0.fxRate)
+        }
+        return try grouped.values.map { try mergeCurrencyConversionPair($0, in: account) }
+    }
+
     func tryMergeTransferPair(_ group: [WTransaction]) -> STransaction? {
         let transferIn = group.filter { $0.transactionType == .transferIn }
         let transferOut = group.filter { $0.transactionType == .transferOut }
@@ -107,6 +132,30 @@ extension WealthsimpleLedgerMapper {
             metaData: [MetaDataKeys.id: mergedId]
         )
         return STransaction(metaData: meta, postings: postings)
+    }
+
+    func mergeCurrencyConversionPair(_ group: [WTransaction], in account: WAccount) throws -> STransaction {
+        guard group.count == 2,
+              let buyTransaction = group.first(where: { $0.transactionType == .currencyConversionBuy }),
+              let sellTransaction = group.first(where: { $0.transactionType == .currencyConversionSell }),
+              buyTransaction.netCashCurrency == sellTransaction.symbol else {
+            throw WealthsimpleConversionError.unsupportedTransactionType(group.first?.transactionType.rawValue ?? "")
+        }
+
+        let sourceAccountName = try lookup.ledgerAccountName(of: account, symbol: account.currency == sellTransaction.symbol ? nil : sellTransaction.symbol)
+        let targetAccountName = try lookup.ledgerAccountName(of: account, symbol: account.currency == buyTransaction.symbol ? nil : buyTransaction.symbol)
+        let sourceAmount = Amount(for: sellTransaction.quantity, in: try lookup.commoditySymbol(for: sellTransaction.symbol))
+        let targetAmount = Amount(for: buyTransaction.quantity, in: try lookup.commoditySymbol(for: buyTransaction.symbol))
+        let totalPrice = Amount(for: sellTransaction.marketValueAmount, in: try lookup.commoditySymbol(for: sellTransaction.symbol))
+        let mergedId = group.map(\.id).sorted().joined(separator: " ")
+
+        return try STransaction(
+            metaData: TransactionMetaData(date: buyTransaction.processDate, metaData: [MetaDataKeys.id: mergedId]),
+            postings: [
+                Posting(accountName: sourceAccountName, amount: sourceAmount),
+                Posting(accountName: targetAccountName, amount: targetAmount, price: totalPrice, priceType: .total)
+            ]
+        )
     }
 
     func mapTransfersIndividually(_ group: [WTransaction]) -> [STransaction] {
