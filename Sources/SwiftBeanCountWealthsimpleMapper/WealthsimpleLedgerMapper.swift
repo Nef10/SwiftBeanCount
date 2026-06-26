@@ -18,6 +18,7 @@ public struct WealthsimpleLedgerMapper {
     typealias WAccount = Wealthsimple.Account
 
     private struct CategorizedTransactions {
+        var currencyConversions: [WTransaction]
         var nrwt: [WTransaction]
         var stockSplits: [WTransaction]
         var cashback: [WTransaction]
@@ -147,6 +148,7 @@ public struct WealthsimpleLedgerMapper {
         let regularResult = try processRegularTransactions(categorized.regular, nrwt: categorized.nrwt)
         prices.append(contentsOf: regularResult.prices)
         transactions.append(contentsOf: regularResult.transactions)
+        transactions.append(contentsOf: try processCurrencyConversions(categorized.currencyConversions))
         // Only process NRWT transactions that weren't merged
         let unmergedNRWT = categorized.nrwt.filter { !regularResult.mergedNRWTIds.contains($0.id) }
         transactions.append(contentsOf: try processNRWTTransactions(unmergedNRWT))
@@ -158,10 +160,12 @@ public struct WealthsimpleLedgerMapper {
     }
 
     private func categorizeTransactions(_ transactions: [WTransaction]) -> CategorizedTransactions {
-        var nrwt = [WTransaction](), stockSplits = [WTransaction](), cashback = [WTransaction]()
+        var currencyConversions = [WTransaction](), nrwt = [WTransaction](), stockSplits = [WTransaction](), cashback = [WTransaction]()
         var transfers = [WTransaction](), regular = [WTransaction]()
         for transaction in transactions {
             switch transaction.transactionType {
+            case .currencyConversionBuy, .currencyConversionSell:
+                currencyConversions.append(transaction)
             case .nonResidentWithholdingTax:
                 nrwt.append(transaction)
             case .stockDistribution:
@@ -174,7 +178,14 @@ public struct WealthsimpleLedgerMapper {
                 regular.append(transaction)
             }
         }
-        return CategorizedTransactions(nrwt: nrwt, stockSplits: stockSplits, cashback: cashback, transfers: transfers, regular: regular)
+        return CategorizedTransactions(
+            currencyConversions: currencyConversions,
+            nrwt: nrwt,
+            stockSplits: stockSplits,
+            cashback: cashback,
+            transfers: transfers,
+            regular: regular
+        )
     }
 
     /// Maps regular transactions (excluding NRWT, stock splits, and cashback), merging dividend transactions with their corresponding NRWT transactions
