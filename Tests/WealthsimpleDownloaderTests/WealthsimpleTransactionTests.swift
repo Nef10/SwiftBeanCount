@@ -10,8 +10,8 @@ import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
-@testable import WealthsimpleDownloader
 import Testing
+@testable import WealthsimpleDownloader
 
 @Suite
 final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disable:this type_body_length
@@ -282,7 +282,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
 
     // MARK: - Successful REST Tests
 
-    // swiftlint:disable:next function_body_length
+    // swiftlint:disable function_body_length
     @Test
     func testGetTransactionsSuccess() throws {
         let expectation = XCTestExpectation(description: "getTransactions completion")
@@ -423,13 +423,14 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         wait(for: [expectation, mockExpectation], timeout: 10.0)
 
     }
+    // swiftlint:enable function_body_length
 
     // MARK: - Successful GraphQL Tests
 
 #if canImport(FoundationNetworking)
 // see https://github.com/swiftlang/swift-corelibs-foundation/issues/3199
 #else
-    // swiftlint:disable:next function_body_length
+    // swiftlint:disable function_body_length
     @Test
     func testGraphQLTransactionsSuccess() throws {
         let expectation = XCTestExpectation(description: "getTransactions completion")
@@ -477,6 +478,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
 
         wait(for: [expectation, mockExpectation], timeout: 10.0)
     }
+    // swiftlint:enable function_body_length
 
     @Test
     func testGraphQLPaginationSuccess() throws {

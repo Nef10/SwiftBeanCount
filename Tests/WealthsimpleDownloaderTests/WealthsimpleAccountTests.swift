@@ -9,11 +9,11 @@ import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
-@testable import WealthsimpleDownloader
 import Testing
+@testable import WealthsimpleDownloader
 
 @Suite
-final class WealthsimpleAccountTests: DownloaderTestCase {
+final class WealthsimpleAccountTests: DownloaderTestCase { // swiftlint:disable:this type_body_length
 
     // MARK: - Helper Methods
 

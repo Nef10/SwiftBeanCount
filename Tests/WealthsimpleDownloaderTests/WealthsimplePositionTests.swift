@@ -9,8 +9,8 @@ import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
-@testable import WealthsimpleDownloader
 import Testing
+@testable import WealthsimpleDownloader
 
 @Suite
 final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable:this type_body_length

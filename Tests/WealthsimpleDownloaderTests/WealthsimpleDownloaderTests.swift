@@ -10,8 +10,8 @@ import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
-@testable import WealthsimpleDownloader
 import Testing
+@testable import WealthsimpleDownloader
 
 @Suite
 final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disable:this type_body_length
@@ -250,10 +250,8 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
         wait(for: [expectation, mockExpectation], timeout: 10.0)
     }
 
-    // https://github.com/realm/SwiftLint/issues/6491
-    // swiftlint:disable:next unneeded_throws_rethrows
     @Test
-    func testGetAccountsWithHttpError() throws {
+    func testGetAccountsWithHttpError() {
         let expectation = XCTestExpectation(description: "getAccounts completion")
         let mockExpectation = XCTestExpectation(description: "mock server called")
 

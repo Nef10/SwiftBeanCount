@@ -9,8 +9,8 @@ import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
-@testable import WealthsimpleDownloader
 import Testing
+@testable import WealthsimpleDownloader
 
 /// A mock URLProtocol implementation for intercepting HTTP requests during testing.
 class MockURLProtocol: URLProtocol {
@@ -77,9 +77,7 @@ class MockURLProtocol: URLProtocol {
         throw URLError(.unsupportedURL)
     }
 
-    // https://github.com/realm/SwiftLint/issues/6491
-    // swiftlint:disable:next unneeded_throws_rethrows
-    static func failTest(url: URL, _: URLRequest) throws -> (HTTPURLResponse, Data) {
+    static func failTest(url: URL, _: URLRequest) -> (HTTPURLResponse, Data) {
         XCTFail("Call network request which should not have been called")
         let response = HTTPURLResponse(url: url, statusCode: 500, httpVersion: nil, headerFields: nil)!
         return (response, Data())
