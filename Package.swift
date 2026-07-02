@@ -36,11 +36,11 @@ let package = Package(
         .library(name: "SwiftBeanCountImporter", targets: ["SwiftBeanCountImporter"]),
         .library(name: "RogersBankDownloader", targets: ["RogersBankDownloader"]),
         .library(name: "WealthsimpleDownloader", targets: ["WealthsimpleDownloader"]),
-        .library(name: "CompassCardDownloader", targets: ["CompassCardDownloader"])
+        .library(name: "CompassCardDownloader", targets: ["CompassCardDownloader"]),
+        .library(name: "TangerineDownloader", targets: ["TangerineDownloader"]),
     ],
     dependencies: [
         .package(url: "https://github.com/Nef10/GoogleAuthentication.git", from: "1.1.0"),
-        .package(url: "https://github.com/Nef10/TangerineDownloader.git", exact: "0.1.0"),
         .package(url: "https://github.com/yaslab/CSV.swift.git", from: "2.5.2"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.7.0"),
         .package(url: "https://github.com/onevcat/Rainbow", from: "4.2.1"),
@@ -155,7 +155,7 @@ let package = Package(
                 "WealthsimpleDownloader",
                 .byName(name: "SwiftBeanCountSheetSync", condition: .when(platforms: [.macOS, .iOS])),
                 .byName(name: "CompassCardDownloader", condition: .when(platforms: [.macOS, .iOS])),
-                .product(name: "TangerineDownloader", package: "TangerineDownloader", condition: .when(platforms: [.macOS, .iOS])),
+                .byName(name: "TangerineDownloader", condition: .when(platforms: [.macOS, .iOS])),
             ],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
@@ -177,6 +177,17 @@ let package = Package(
             ],
             resources: [
                 .process("Resources/CompassCardDownload.js")
+            ],
+            swiftSettings: swiftSettings,
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .target(
+            name: "TangerineDownloader",
+            dependencies: [
+                .product(name: "SwiftScraper", package: "SwiftScraper", condition: .when(platforms: [.macOS, .iOS])),
+            ],
+            resources: [
+                .process("Resources/TangerineDownload.js")
             ],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
@@ -272,6 +283,12 @@ let package = Package(
             dependencies: ["CompassCardDownloader"],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
-        )
+        ),
+        .testTarget(
+            name: "TangerineDownloaderTests",
+            dependencies: ["TangerineDownloader"],
+            swiftSettings: swiftSettings,
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
     ]
 )
