@@ -1,5 +1,5 @@
 {
-  "originHash" : "b369b0743e1d353bb5658c4dd144680bbca275465c6ac95734de3eeb81b15f8d",
+  "originHash" : "dc9165b53f6c2bbb4d86bb13e04d8c2026ee7c3e3fed44c5300e84cfe7bf0ba3",
   "pins" : [
     {
       "identity" : "brightfutures",
@@ -89,15 +89,6 @@
       "state" : {
         "revision" : "cdf146ae671b2624917648b61c908d1244b98ca1",
         "version" : "4.2.1"
-      }
-    },
-    {
-      "identity" : "rogersbankdownloader",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Nef10/RogersBankDownloader.git",
-      "state" : {
-        "revision" : "8719750b0e1200604d1424f832fc02e1170dc887",
-        "version" : "0.3.0"
       }
     },
     {
