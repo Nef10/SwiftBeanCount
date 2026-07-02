@@ -13,7 +13,7 @@ public protocol CompassCardDownloaderDelegate: AnyObject {
     /// Requests a view to add the webview to
     /// - Returns: UIView
     func view() -> UIView?
-    
+
     #endif
     #if canImport(AppKit)
 
