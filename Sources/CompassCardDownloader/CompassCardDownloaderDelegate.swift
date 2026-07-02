@@ -1,6 +1,7 @@
 #if canImport(UIKit)
 import UIKit
-#else
+#endif
+#if canImport(AppKit)
 import AppKit
 #endif
 
@@ -12,8 +13,9 @@ public protocol CompassCardDownloaderDelegate: AnyObject {
     /// Requests a view to add the webview to
     /// - Returns: UIView
     func view() -> UIView?
-
-    #else
+    
+    #endif
+    #if canImport(AppKit)
 
     /// Requests a view to add the webview to
     /// - Returns: NSView
