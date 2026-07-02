@@ -45,7 +45,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.7.0"),
         .package(url: "https://github.com/onevcat/Rainbow", from: "4.2.1"),
         .package(url: "https://github.com/scottrhoyt/SwiftyTextTable.git", exact: "0.9.0"),
-        .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", exact: "0.64.1"),
+        .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", exact: "0.65.0"),
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.4.5"),
         .package(url: "https://github.com/Nef10/SwiftScraper.git", exact: "0.7.0"),
         .package(url: "https://github.com/OAuthSwift/OAuthSwift.git", .upToNextMajor(from: "2.2.0")),
