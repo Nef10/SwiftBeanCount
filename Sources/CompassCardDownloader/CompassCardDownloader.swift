@@ -1,13 +1,12 @@
-import Foundation
 #if canImport(SwiftScraper)
+
+import Foundation
 import SwiftScraper
-#endif
 
 /// Class to download the current balance and transactions from your CompassCard
 ///
 /// This class uses a webscraper to login.
 /// Your delegate needs to provide a view to add the webview to
-@available(iOS 14.5, macOS 11.3, *)
 public class CompassCardDownloader {
 
     private static var dateFormatterURL: DateFormatter = {
@@ -120,3 +119,5 @@ public class CompassCardDownloader {
     }
 
 }
+
+#endif
