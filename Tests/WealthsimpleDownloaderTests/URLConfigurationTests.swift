@@ -9,7 +9,7 @@ import Foundation
 import Testing
 @testable import WealthsimpleDownloader
 
-@Suite
+@Suite(.serialized)
 final class URLConfigurationTests {
 
     init() {
@@ -21,8 +21,8 @@ final class URLConfigurationTests {
     @Test
     func testDefaultBaseURL() {
         let config = URLConfiguration.shared
-        XCTAssertEqual(config.base, "https://api.production.wealthsimple.com/v1/")
-        XCTAssertEqual(config.graphQL, "https://my.wealthsimple.com/graphql")
+        expectEqual(config.base, "https://api.production.wealthsimple.com/v1/")
+        expectEqual(config.graphQL, "https://my.wealthsimple.com/graphql")
     }
 
     @Test
@@ -32,7 +32,7 @@ final class URLConfigurationTests {
 
         config.setBaseURL(testURL)
 
-        XCTAssertEqual(config.base, testURL)
+        expectEqual(config.base, testURL)
     }
 
     @Test
@@ -42,7 +42,7 @@ final class URLConfigurationTests {
 
         config.setGraphQLURL(testURL)
 
-        XCTAssertEqual(config.graphQL, testURL)
+        expectEqual(config.graphQL, testURL)
     }
 
     @Test
@@ -50,7 +50,7 @@ final class URLConfigurationTests {
         let config = URLConfiguration.shared
         let result = config.url(for: "accounts")
 
-        XCTAssertEqual(result, "https://api.production.wealthsimple.com/v1/accounts")
+        expectEqual(result, "https://api.production.wealthsimple.com/v1/accounts")
     }
 
     @Test
@@ -60,7 +60,7 @@ final class URLConfigurationTests {
 
         let result = config.url(for: "positions")
 
-        XCTAssertEqual(result, "https://test.example.com/api/v2/positions")
+        expectEqual(result, "https://test.example.com/api/v2/positions")
     }
 
     @Test
@@ -68,8 +68,8 @@ final class URLConfigurationTests {
         let config = URLConfiguration.shared
         let result = config.urlObject(for: "transactions")
 
-        XCTAssertNotNil(result)
-        XCTAssertEqual(result?.absoluteString, "https://api.production.wealthsimple.com/v1/transactions")
+        expectNotNil(result)
+        expectEqual(result?.absoluteString, "https://api.production.wealthsimple.com/v1/transactions")
     }
 
     @Test
@@ -77,8 +77,8 @@ final class URLConfigurationTests {
         let config = URLConfiguration.shared
         let result = config.urlComponents(for: "oauth/v2/token")
 
-        XCTAssertNotNil(result)
-        XCTAssertEqual(result?.string, "https://api.production.wealthsimple.com/v1/oauth/v2/token")
+        expectNotNil(result)
+        expectEqual(result?.string, "https://api.production.wealthsimple.com/v1/oauth/v2/token")
     }
 
     @Test
@@ -86,7 +86,7 @@ final class URLConfigurationTests {
         let config1 = URLConfiguration.shared
         let config2 = URLConfiguration.shared
 
-        XCTAssertIdentical(config1, config2)
+        expectIdentical(config1, config2)
     }
 
     @Test
@@ -98,7 +98,7 @@ final class URLConfigurationTests {
 
         // Access through different references
         let newConfig = URLConfiguration.shared
-        XCTAssertEqual(newConfig.base, testURL)
+        expectEqual(newConfig.base, testURL)
     }
 
     @Test
@@ -108,14 +108,14 @@ final class URLConfigurationTests {
         let testGraphQLURL = "https://mock.server.test/graphql"
 
         config.setBaseURL(testURL)
-        XCTAssertEqual(config.base, testURL)
+        expectEqual(config.base, testURL)
 
         config.setGraphQLURL(testGraphQLURL)
-        XCTAssertEqual(config.graphQL, testGraphQLURL)
+        expectEqual(config.graphQL, testGraphQLURL)
 
         config.reset()
-        XCTAssertEqual(config.base, "https://api.production.wealthsimple.com/v1/")
-        XCTAssertEqual(config.graphQL, "https://my.wealthsimple.com/graphql")
+        expectEqual(config.base, "https://api.production.wealthsimple.com/v1/")
+        expectEqual(config.graphQL, "https://my.wealthsimple.com/graphql")
     }
 
     @Test
@@ -125,13 +125,13 @@ final class URLConfigurationTests {
         config.setGraphQLURL(testGraphQLURL)
 
         guard let request = config.graphQLURLRequest() else {
-            XCTFail("Expected valid URLRequest")
+            recordFailure("Expected valid URLRequest")
             return
         }
 
-        XCTAssertEqual(request.url?.absoluteString, testGraphQLURL)
-        XCTAssertEqual(request.httpMethod, "POST")
-        XCTAssertEqual(request.allHTTPHeaderFields?["Content-Type"], "application/json")
+        expectEqual(request.url?.absoluteString, testGraphQLURL)
+        expectEqual(request.httpMethod, "POST")
+        expectEqual(request.allHTTPHeaderFields?["Content-Type"], "application/json")
     }
 
     @Test
@@ -140,7 +140,7 @@ final class URLConfigurationTests {
         let testGraphQLURL = "Not a valid URL::::////"
         config.setGraphQLURL(testGraphQLURL)
 
-        XCTAssertNil(config.graphQLURLRequest())
+        expectNil(config.graphQLURLRequest())
     }
 
 }

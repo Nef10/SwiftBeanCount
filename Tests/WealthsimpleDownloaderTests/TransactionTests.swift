@@ -10,26 +10,26 @@ import Foundation
 import Testing
 @testable import WealthsimpleDownloader
 
-@Suite
+@Suite(.serialized)
 final class TransactionTests {
 
     @Test
     func testTransactionErrorEqualitySimpleCases() {
         // Test .noDataReceived
-        XCTAssertEqual(TransactionError.noDataReceived, TransactionError.noDataReceived)
-        XCTAssertNotEqual(TransactionError.noDataReceived, TransactionError.invalidParameter)
+        expectEqual(TransactionError.noDataReceived, TransactionError.noDataReceived)
+        expectNotEqual(TransactionError.noDataReceived, TransactionError.invalidParameter)
 
         // Test .httpError
-        XCTAssertEqual(TransactionError.httpError(error: "test"), TransactionError.httpError(error: "test"))
-        XCTAssertNotEqual(TransactionError.httpError(error: "test"), TransactionError.httpError(error: "different"))
-        XCTAssertNotEqual(TransactionError.httpError(error: "test"), TransactionError.noDataReceived)
+        expectEqual(TransactionError.httpError(error: "test"), TransactionError.httpError(error: "test"))
+        expectNotEqual(TransactionError.httpError(error: "test"), TransactionError.httpError(error: "different"))
+        expectNotEqual(TransactionError.httpError(error: "test"), TransactionError.noDataReceived)
 
         // Test .invalidJson
         let data1 = Data("test1".utf8)
         let data2 = Data("test2".utf8)
-        XCTAssertEqual(TransactionError.invalidJson(json: data1), TransactionError.invalidJson(json: data1))
-        XCTAssertNotEqual(TransactionError.invalidJson(json: data1), TransactionError.invalidJson(json: data2))
-        XCTAssertNotEqual(TransactionError.invalidJson(json: data1), TransactionError.noDataReceived)
+        expectEqual(TransactionError.invalidJson(json: data1), TransactionError.invalidJson(json: data1))
+        expectNotEqual(TransactionError.invalidJson(json: data1), TransactionError.invalidJson(json: data2))
+        expectNotEqual(TransactionError.invalidJson(json: data1), TransactionError.noDataReceived)
     }
 
     @Test
@@ -38,39 +38,39 @@ final class TransactionTests {
         let json2 = ["key": "other" as Any]
 
         // Test .missingResultParameter
-        XCTAssertEqual(TransactionError.missingResultParameter(json: json1), TransactionError.missingResultParameter(json: json1))
-        XCTAssertNotEqual(TransactionError.missingResultParameter(json: json1), TransactionError.missingResultParameter(json: json2))
-        XCTAssertNotEqual(TransactionError.missingResultParameter(json: json1), TransactionError.noDataReceived)
+        expectEqual(TransactionError.missingResultParameter(json: json1), TransactionError.missingResultParameter(json: json1))
+        expectNotEqual(TransactionError.missingResultParameter(json: json1), TransactionError.missingResultParameter(json: json2))
+        expectNotEqual(TransactionError.missingResultParameter(json: json1), TransactionError.noDataReceived)
 
         // Test .invalidResultParameter
-        XCTAssertEqual(TransactionError.invalidResultParameter(json: json1), TransactionError.invalidResultParameter(json: json1))
-        XCTAssertNotEqual(TransactionError.invalidResultParameter(json: json1), TransactionError.invalidResultParameter(json: json2))
-        XCTAssertNotEqual(TransactionError.invalidResultParameter(json: json1), TransactionError.noDataReceived)
+        expectEqual(TransactionError.invalidResultParameter(json: json1), TransactionError.invalidResultParameter(json: json1))
+        expectNotEqual(TransactionError.invalidResultParameter(json: json1), TransactionError.invalidResultParameter(json: json2))
+        expectNotEqual(TransactionError.invalidResultParameter(json: json1), TransactionError.noDataReceived)
     }
 
     @Test
     func testTransactionErrorEqualityTokenAndOthers() {
         // Test .tokenError
-        XCTAssertEqual(TransactionError.tokenError(.noToken), TransactionError.tokenError(.noToken))
-        XCTAssertNotEqual(
+        expectEqual(TransactionError.tokenError(.noToken), TransactionError.tokenError(.noToken))
+        expectNotEqual(
             TransactionError.tokenError(.noToken),
             TransactionError.tokenError(.invalidJson(error: "test"))
         )
-        XCTAssertNotEqual(TransactionError.tokenError(.noToken), TransactionError.noDataReceived)
+        expectNotEqual(TransactionError.tokenError(.noToken), TransactionError.noDataReceived)
 
         // Test .invalidParameter
-        XCTAssertEqual(TransactionError.invalidParameter, TransactionError.invalidParameter)
-        XCTAssertNotEqual(TransactionError.invalidParameter, TransactionError.noDataReceived)
+        expectEqual(TransactionError.invalidParameter, TransactionError.invalidParameter)
+        expectNotEqual(TransactionError.invalidParameter, TransactionError.noDataReceived)
     }
 
     @Test
     func testTransactionErrorEqualityInvalidJSON() {
         let invalidJson: [String: Any] = ["invalid": NSObject()]
-        XCTAssertNotEqual(
+        expectNotEqual(
             TransactionError.missingResultParameter(json: invalidJson),
             TransactionError.missingResultParameter(json: invalidJson)
         )
-        XCTAssertNotEqual(
+        expectNotEqual(
             TransactionError.invalidResultParameter(json: invalidJson),
             TransactionError.invalidResultParameter(json: invalidJson)
         )
@@ -78,27 +78,27 @@ final class TransactionTests {
 
     @Test
     func testTransactionErrorLocalizedDescription() {
-        XCTAssertEqual(TransactionError.noDataReceived.errorDescription, "No Data was received from the server")
-        XCTAssertEqual(TransactionError.httpError(error: "Test HTTP Error").errorDescription, "An HTTP error occurred: Test HTTP Error")
+        expectEqual(TransactionError.noDataReceived.errorDescription, "No Data was received from the server")
+        expectEqual(TransactionError.httpError(error: "Test HTTP Error").errorDescription, "An HTTP error occurred: Test HTTP Error")
         let invalidJsonData = Data("invalid".utf8)
-        XCTAssertEqual(TransactionError.invalidJson(json: invalidJsonData).errorDescription, "The server response contained invalid JSON: \(invalidJsonData)")
+        expectEqual(TransactionError.invalidJson(json: invalidJsonData).errorDescription, "The server response contained invalid JSON: \(invalidJsonData)")
         let missingJson = ["missing": true as Any]
-        XCTAssertNoThrow(try {
+        expectNoThrow(try {
             let missingJsonStr = try String(data: JSONSerialization.data(withJSONObject: missingJson), encoding: .utf8)!
-            XCTAssertEqual(
+            expectEqual(
                 TransactionError.missingResultParameter(json: missingJson).errorDescription,
                 "The server response JSON was missing expected parameters: \(missingJsonStr)"
             )
             let invalidJson = ["invalid": true as Any]
             let invalidJsonStr = try String(data: JSONSerialization.data(withJSONObject: invalidJson), encoding: .utf8)!
-            XCTAssertEqual(
+            expectEqual(
                 TransactionError.invalidResultParameter(json: invalidJson).errorDescription,
                 "The server response JSON contained invalid parameters: \(invalidJsonStr)"
             )
         }())
         let tokenError = TokenError.noToken
-        XCTAssertEqual(TransactionError.tokenError(tokenError).errorDescription, tokenError.localizedDescription)
-        XCTAssertEqual(TransactionError.invalidParameter.errorDescription, "Invalid paramter passed in")
+        expectEqual(TransactionError.tokenError(tokenError).errorDescription, tokenError.localizedDescription)
+        expectEqual(TransactionError.invalidParameter.errorDescription, "Invalid paramter passed in")
     }
 
 }

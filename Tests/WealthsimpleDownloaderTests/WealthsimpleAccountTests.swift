@@ -12,13 +12,13 @@ import FoundationNetworking
 import Testing
 @testable import WealthsimpleDownloader
 
-@Suite
+@Suite(.serialized)
 final class WealthsimpleAccountTests: DownloaderTestCase { // swiftlint:disable:this type_body_length
 
     // MARK: - Helper Methods
 
     private func createValidToken() throws -> Token {
-        let expectation = XCTestExpectation(description: "createValidToken completion")
+        let expectation = TestExpectation(description: "createValidToken completion")
         var resultToken: Token?
 
         MockURLProtocol.tokenValidationRequestHandler = { url, _ in
@@ -37,16 +37,16 @@ final class WealthsimpleAccountTests: DownloaderTestCase { // swiftlint:disable:
 
         wait(for: [expectation], timeout: 10.0)
         guard let resultToken else {
-            XCTFail("Did not get valid token")
+            recordFailure("Did not get valid token")
             throw TokenError.noToken
         }
         return resultToken
     }
 
-    private func setupMockForSuccess(accounts: [[String: Any]], expectation: XCTestExpectation) {
+    private func setupMockForSuccess(accounts: [[String: Any]], expectation: TestExpectation) {
         MockURLProtocol.accountsRequestHandler = { url, request in
-            XCTAssertEqual(request.value(forHTTPHeaderField: "Content-Type"), "application/json")
-            XCTAssertEqual(request.value(forHTTPHeaderField: "Authorization"), "Bearer valid_access_token1")
+            expectEqual(request.value(forHTTPHeaderField: "Content-Type"), "application/json")
+            expectEqual(request.value(forHTTPHeaderField: "Authorization"), "Bearer valid_access_token1")
 
             let jsonResponse = [
                 "object": "account",
@@ -59,7 +59,7 @@ final class WealthsimpleAccountTests: DownloaderTestCase { // swiftlint:disable:
     }
 
     private func testAccountsFailure(response: (URLResponse, Data), expectedError: AccountError, file: StaticString = #file, line: UInt = #line) throws {
-        let mockExpectation = XCTestExpectation(description: "mock server called")
+        let mockExpectation = TestExpectation(description: "mock server called")
 
         try testAccountsFailure(
             response: { _, _ in
@@ -81,16 +81,16 @@ final class WealthsimpleAccountTests: DownloaderTestCase { // swiftlint:disable:
         file: StaticString = #file,
         line: UInt = #line
     ) throws {
-        let expectation = XCTestExpectation(description: "getAccounts completion")
+        let expectation = TestExpectation(description: "getAccounts completion")
 
         MockURLProtocol.accountsRequestHandler = response
 
         WealthsimpleAccount.getAccounts(token: try createValidToken()) { result in
             switch result {
             case .success:
-                XCTFail("Expected failure", file: file, line: line)
+                recordFailure("Expected failure", file: file, line: line)
             case .failure(let error):
-                XCTAssertEqual(error, expectedError, file: file, line: line)
+                expectEqual(error, expectedError, file: file, line: line)
             }
             expectation.fulfill()
         }
@@ -110,7 +110,7 @@ final class WealthsimpleAccountTests: DownloaderTestCase { // swiftlint:disable:
 
     private func testJSONParsingFailure(jsonObject: [String: Any], expectedError: AccountError, file: StaticString = #file, line: UInt = #line) throws {
         guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: []) else {
-            XCTFail("Failed to create JSON data", file: file, line: line)
+            recordFailure("Failed to create JSON data", file: file, line: line)
             return
         }
         try testJSONParsingFailure(jsonData: jsonData, expectedError: expectedError, file: file, line: line)
@@ -120,8 +120,8 @@ final class WealthsimpleAccountTests: DownloaderTestCase { // swiftlint:disable:
 
     @Test
     func testGetAccountsSuccess() throws {
-        let expectation = XCTestExpectation(description: "getAccounts completion")
-        let mockExpectation = XCTestExpectation(description: "mock server called")
+        let expectation = TestExpectation(description: "getAccounts completion")
+        let mockExpectation = TestExpectation(description: "mock server called")
 
         setupMockForSuccess(accounts:
             [
@@ -134,22 +134,22 @@ final class WealthsimpleAccountTests: DownloaderTestCase { // swiftlint:disable:
         WealthsimpleAccount.getAccounts(token: try createValidToken()) { result in
             switch result {
             case .success(let accounts):
-                XCTAssertEqual(accounts.count, 2)
+                expectEqual(accounts.count, 2)
 
                 let firstAccount = accounts[0]
-                XCTAssertEqual(firstAccount.id, "account-123")
-                XCTAssertEqual(firstAccount.accountType, .tfsa)
-                XCTAssertEqual(firstAccount.currency, "CAD")
-                XCTAssertEqual(firstAccount.number, "12345-67890")
+                expectEqual(firstAccount.id, "account-123")
+                expectEqual(firstAccount.accountType, .tfsa)
+                expectEqual(firstAccount.currency, "CAD")
+                expectEqual(firstAccount.number, "12345-67890")
 
                 let secondAccount = accounts[1]
-                XCTAssertEqual(secondAccount.id, "account-456")
-                XCTAssertEqual(secondAccount.accountType, .rrsp)
-                XCTAssertEqual(secondAccount.currency, "USD")
-                XCTAssertEqual(secondAccount.number, "98765-43210")
+                expectEqual(secondAccount.id, "account-456")
+                expectEqual(secondAccount.accountType, .rrsp)
+                expectEqual(secondAccount.currency, "USD")
+                expectEqual(secondAccount.number, "98765-43210")
 
             case .failure(let error):
-                XCTFail("Expected success but got error: \(error)")
+                recordFailure("Expected success but got error: \(error)")
             }
             expectation.fulfill()
         }
@@ -159,17 +159,17 @@ final class WealthsimpleAccountTests: DownloaderTestCase { // swiftlint:disable:
 
     @Test
     func testGetAccountsEmptyResults() throws {
-        let expectation = XCTestExpectation(description: "getAccounts completion")
-        let mockExpectation = XCTestExpectation(description: "mock server called")
+        let expectation = TestExpectation(description: "getAccounts completion")
+        let mockExpectation = TestExpectation(description: "mock server called")
 
         setupMockForSuccess(accounts: [], expectation: mockExpectation)
 
         WealthsimpleAccount.getAccounts(token: try createValidToken()) { result in
             switch result {
             case .success(let accounts):
-                XCTAssertEqual(accounts.count, 0)
+                expectEqual(accounts.count, 0)
             case .failure(let error):
-                XCTFail("Expected success but got error: \(error)")
+                recordFailure("Expected success but got error: \(error)")
             }
             expectation.fulfill()
         }
@@ -238,7 +238,7 @@ final class WealthsimpleAccountTests: DownloaderTestCase { // swiftlint:disable:
     @Test
     func testGetAccountsInvalidJSONType() throws {
         guard let jsonData = try? JSONSerialization.data(withJSONObject: ["not", "a", "dictionary"], options: []) else {
-            XCTFail("Failed to create test JSON data")
+            recordFailure("Failed to create test JSON data")
             return
         }
         try testJSONParsingFailure(

@@ -13,7 +13,7 @@ import FoundationNetworking
 import Testing
 @testable import WealthsimpleDownloader
 
-@Suite
+@Suite(.serialized)
 final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disable:this type_body_length
 
     private let mockAccount = MockAccount(id: "account-123", accountType: .tfsa, currency: "CAD", number: "12345")
@@ -27,7 +27,7 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
     }
 
     private func authenticateDownloader() {
-        let expectation = XCTestExpectation(description: "authenticate finished")
+        let expectation = TestExpectation(description: "authenticate finished")
 
         MockURLProtocol.tokenValidationRequestHandler = { url, _ in
             let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
@@ -40,12 +40,12 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
         mockCredentialStorage.storage["expiry"] = String(Date().addingTimeInterval(3_600).timeIntervalSince1970)
 
         downloader = createDownloader { _ in
-            XCTFail("Auth callback should not be called when credential storage has valid token")
+            recordFailure("Auth callback should not be called when credential storage has valid token")
         }
 
         // Authenticate first to get token into downloader
         downloader.authenticate { error in
-            XCTAssertNil(error)
+            expectNil(error)
             expectation.fulfill()
         }
 
@@ -57,9 +57,9 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
     @Test
     func testInit() {
         let downloader = createDownloader { _ in
-            XCTFail("Auth callback should not be called")
+            recordFailure("Auth callback should not be called")
         }
-        XCTAssertNotNil(downloader)
+        expectNotNil(downloader)
     }
 
     // MARK: - Authenticate Tests
@@ -71,12 +71,12 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
 
     @Test
     func testAuthenticateTwice() {
-        let expectation = XCTestExpectation(description: "authenticate completion")
+        let expectation = TestExpectation(description: "authenticate completion")
 
         authenticateDownloader()
 
         downloader.authenticate { error in
-            XCTAssertNil(error)
+            expectNil(error)
             expectation.fulfill()
         }
 
@@ -85,9 +85,9 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
 
     @Test
     func testAuthenticateWithExistingTokenRefreshRequired() {
-        let expectation = XCTestExpectation(description: "authenticate completion")
+        let expectation = TestExpectation(description: "authenticate completion")
 
-        downloader = createDownloader { _ in XCTFail("Should not request credentials for refresh") }
+        downloader = createDownloader { _ in recordFailure("Should not request credentials for refresh") }
 
         MockURLProtocol.tokenValidationRequestHandler = { url, _ in
             let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
@@ -99,8 +99,8 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
             // body seems to be missing?
             #else
             let inputData = try Data(reading: request.httpBodyStream!), json = try JSONSerialization.jsonObject(with: inputData, options: []) as? [String: Any]
-            XCTAssertEqual(json?["grant_type"] as? String, "refresh_token")
-            XCTAssertEqual(json?["refresh_token"] as? String, "valid_refresh_token3")
+            expectEqual(json?["grant_type"] as? String, "refresh_token")
+            expectEqual(json?["refresh_token"] as? String, "valid_refresh_token3")
             #endif
             let jsonResponse = [
                 "access_token": "new_access_token",
@@ -118,7 +118,7 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
         mockCredentialStorage.storage["expiry"] = String(Date().addingTimeInterval(-3_600).timeIntervalSince1970)
 
         downloader.authenticate { error in
-            XCTAssertNil(error)
+            expectNil(error)
             expectation.fulfill()
         }
 
@@ -127,8 +127,8 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
 
     @Test
     func testAuthenticateWithoutToken() {
-        let expectation = XCTestExpectation(description: "authenticate completion")
-        let authExpectation = XCTestExpectation(description: "auth callback called")
+        let expectation = TestExpectation(description: "authenticate completion")
+        let authExpectation = TestExpectation(description: "auth callback called")
 
         downloader = createDownloader { completion in
             authExpectation.fulfill()
@@ -136,14 +136,14 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
         }
 
         MockURLProtocol.newTokenRequestHandler = { url, request in
-            XCTAssertEqual(request.value(forHTTPHeaderField: "x-wealthsimple-otp"), "654321")
+            expectEqual(request.value(forHTTPHeaderField: "x-wealthsimple-otp"), "654321")
             #if canImport(FoundationNetworking)
             // body seems to be missing?
             #else
             let inputData = try Data(reading: request.httpBodyStream!), json = try JSONSerialization.jsonObject(with: inputData, options: []) as? [String: Any]
-            XCTAssertEqual(json?["grant_type"] as? String, "password")
-            XCTAssertEqual(json?["username"] as? String, "testuser")
-            XCTAssertEqual(json?["password"] as? String, "testpass")
+            expectEqual(json?["grant_type"] as? String, "password")
+            expectEqual(json?["username"] as? String, "testuser")
+            expectEqual(json?["password"] as? String, "testpass")
             #endif
             let jsonResponse = [
                 "access_token": "new_access_token7",
@@ -156,7 +156,7 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
         }
 
         downloader.authenticate { error in
-            XCTAssertNil(error)
+            expectNil(error)
             expectation.fulfill()
         }
 
@@ -165,8 +165,8 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
 
     @Test
     func testAuthenticateWithNewTokenFailure() {
-        let expectation = XCTestExpectation(description: "authenticate completion")
-        let authExpectation = XCTestExpectation(description: "auth callback called")
+        let expectation = TestExpectation(description: "authenticate completion")
+        let authExpectation = TestExpectation(description: "auth callback called")
 
         let authCallback: WealthsimpleAPI.AuthenticationCallback = { completion in
             authExpectation.fulfill()
@@ -180,7 +180,7 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
         }
 
         downloader.authenticate { error in
-            XCTAssertNotNil(error)
+            expectNotNil(error)
             expectation.fulfill()
         }
 
@@ -191,21 +191,21 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
 
     @Test
     func testGetAccountsWithoutToken() {
-        let expectation = XCTestExpectation(description: "getAccounts completion")
+        let expectation = TestExpectation(description: "getAccounts completion")
 
         downloader = createDownloader { _ in
-            XCTFail("Auth callback should not be called without a call to authenticate")
+            recordFailure("Auth callback should not be called without a call to authenticate")
         }
 
         downloader.getAccounts { result in
             switch result {
             case .success:
-                XCTFail("Expected failure due to no token")
+                recordFailure("Expected failure due to no token")
             case .failure(let error):
                 if case .tokenError(let tokenError) = error {
-                    XCTAssertEqual(tokenError, .noToken)
+                    expectEqual(tokenError, .noToken)
                 } else {
-                    XCTFail("Expected tokenError(.noToken)")
+                    recordFailure("Expected tokenError(.noToken)")
                 }
             }
             expectation.fulfill()
@@ -216,15 +216,15 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
 
     @Test
     func testGetAccountsWithTokenSuccess() throws {
-        let expectation = XCTestExpectation(description: "getAccounts completion")
-        let mockExpectation = XCTestExpectation(description: "mock server called")
+        let expectation = TestExpectation(description: "getAccounts completion")
+        let mockExpectation = TestExpectation(description: "mock server called")
 
         authenticateDownloader()
 
         // Setup mock for successful accounts response
         MockURLProtocol.accountsRequestHandler = { url, request in
-            XCTAssertEqual(request.value(forHTTPHeaderField: "Content-Type"), "application/json")
-            XCTAssertEqual(request.value(forHTTPHeaderField: "Authorization"), "Bearer valid_access_token")
+            expectEqual(request.value(forHTTPHeaderField: "Content-Type"), "application/json")
+            expectEqual(request.value(forHTTPHeaderField: "Authorization"), "Bearer valid_access_token")
 
             let jsonResponse = [
                 "object": "account",
@@ -239,10 +239,10 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
         downloader.getAccounts { result in
             switch result {
             case .success(let accounts):
-                XCTAssertEqual(accounts.count, 1)
-                XCTAssertEqual(accounts[0].id, "account-123")
+                expectEqual(accounts.count, 1)
+                expectEqual(accounts[0].id, "account-123")
             case .failure:
-                XCTFail("Expected success")
+                recordFailure("Expected success")
             }
             expectation.fulfill()
         }
@@ -252,8 +252,8 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
 
     @Test
     func testGetAccountsWithHttpError() {
-        let expectation = XCTestExpectation(description: "getAccounts completion")
-        let mockExpectation = XCTestExpectation(description: "mock server called")
+        let expectation = TestExpectation(description: "getAccounts completion")
+        let mockExpectation = TestExpectation(description: "mock server called")
 
         authenticateDownloader()
 
@@ -266,12 +266,12 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
         downloader.getAccounts { result in
             switch result {
             case .success:
-                XCTFail("Expected failure")
+                recordFailure("Expected failure")
             case .failure(let error):
                 if case .httpError = error {
                     // This is expected
                 } else {
-                    XCTFail("Expected httpError but got \(error)")
+                    recordFailure("Expected httpError but got \(error)")
                 }
             }
             expectation.fulfill()
@@ -284,21 +284,21 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
 
     @Test
     func testGetPositionsWithoutToken() {
-        let expectation = XCTestExpectation(description: "getPositions completion")
+        let expectation = TestExpectation(description: "getPositions completion")
 
         downloader = createDownloader { _ in
-            XCTFail("Auth callback should not be called without a call to authenticate")
+            recordFailure("Auth callback should not be called without a call to authenticate")
         }
 
         downloader.getPositions(in: mockAccount, date: nil) { result in
             switch result {
             case .success:
-                XCTFail("Expected failure due to no token")
+                recordFailure("Expected failure due to no token")
             case .failure(let error):
                 if case .tokenError(let tokenError) = error {
-                    XCTAssertEqual(tokenError, .noToken)
+                    expectEqual(tokenError, .noToken)
                 } else {
-                    XCTFail("Expected tokenError(.noToken)")
+                    recordFailure("Expected tokenError(.noToken)")
                 }
             }
             expectation.fulfill()
@@ -309,13 +309,13 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
 
     @Test
     func testGetPositionsWithTokenSuccess() throws {
-        let expectation = XCTestExpectation(description: "getPositions completion"), mockExpectation = XCTestExpectation(description: "mock server called")
+        let expectation = TestExpectation(description: "getPositions completion"), mockExpectation = TestExpectation(description: "mock server called")
 
         authenticateDownloader()
 
         // Setup mock for successful positions response
         MockURLProtocol.positionsRequestHandler = { url, _ in
-            XCTAssert((url.query ?? "").contains("account_id=\(self.mockAccount.id)"))
+            expect((url.query ?? "").contains("account_id=\(self.mockAccount.id)"))
             let jsonResponse = [
                 "object": "position",
                 "results": [
@@ -336,9 +336,9 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
 
         downloader.getPositions(in: mockAccount, date: nil) { result in
             if case .success(let positions) = result {
-                XCTAssertEqual(positions.count, 1)
+                expectEqual(positions.count, 1)
             } else {
-                XCTFail("Expected success")
+                recordFailure("Expected success")
             }
             expectation.fulfill()
         }
@@ -350,22 +350,22 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
 
     @Test
     func testGetTransactionsWithoutToken() {
-        let expectation = XCTestExpectation(description: "getTransactions completion")
+        let expectation = TestExpectation(description: "getTransactions completion")
 
         downloader = createDownloader { _ in
-            XCTFail("Auth callback should not be called without a call to authenticate")
+            recordFailure("Auth callback should not be called without a call to authenticate")
         }
 
         let defaultDate = Date(timeIntervalSince1970: 0)
         downloader.getTransactions(in: mockAccount, startDate: defaultDate) { result in
             switch result {
             case .success:
-                XCTFail("Expected failure due to no token")
+                recordFailure("Expected failure due to no token")
             case .failure(let error):
                 if case .tokenError(let tokenError) = error {
-                    XCTAssertEqual(tokenError, .noToken)
+                    expectEqual(tokenError, .noToken)
                 } else {
-                    XCTFail("Expected tokenError(.noToken)")
+                    recordFailure("Expected tokenError(.noToken)")
                 }
             }
             expectation.fulfill()
@@ -376,15 +376,15 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
 
     @Test
     func testGetTransactionsWithTokenSuccess() throws { // swiftlint:disable:this function_body_length
-        let expectation = XCTestExpectation(description: "getTransactions completion")
-        let mockExpectation = XCTestExpectation(description: "mock server called")
+        let expectation = TestExpectation(description: "getTransactions completion")
+        let mockExpectation = TestExpectation(description: "mock server called")
 
         authenticateDownloader()
 
         // Setup mock for successful transactions response
         MockURLProtocol.transactionsRequestHandler = { url, request in
-            XCTAssertEqual(request.value(forHTTPHeaderField: "Content-Type"), "application/json")
-            XCTAssertEqual(request.value(forHTTPHeaderField: "Authorization"), "Bearer valid_access_token")
+            expectEqual(request.value(forHTTPHeaderField: "Content-Type"), "application/json")
+            expectEqual(request.value(forHTTPHeaderField: "Authorization"), "Bearer valid_access_token")
 
             let jsonResponse = [
                 "object": "transaction",
@@ -414,9 +414,9 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
         downloader.getTransactions(in: mockAccount, startDate: defaultDate) { result in
             switch result {
             case .success(let transactions):
-                XCTAssertEqual(transactions.count, 1)
+                expectEqual(transactions.count, 1)
             case .failure:
-                XCTFail("Expected success")
+                recordFailure("Expected success")
             }
             expectation.fulfill()
         }
@@ -426,8 +426,8 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
 
     @Test
     func testGetTransactionsWithNetworkError() throws {
-        let expectation = XCTestExpectation(description: "getTransactions completion")
-        let mockExpectation = XCTestExpectation(description: "mock server called")
+        let expectation = TestExpectation(description: "getTransactions completion")
+        let mockExpectation = TestExpectation(description: "mock server called")
 
         authenticateDownloader()
 
@@ -441,12 +441,12 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
         downloader.getTransactions(in: mockAccount, startDate: defaultDate) { result in
             switch result {
             case .success:
-                XCTFail("Expected failure")
+                recordFailure("Expected failure")
             case .failure(let error):
                 if case .httpError = error {
                     // This is expected
                 } else {
-                    XCTFail("Expected httpError but got \(error)")
+                    recordFailure("Expected httpError but got \(error)")
                 }
             }
             expectation.fulfill()

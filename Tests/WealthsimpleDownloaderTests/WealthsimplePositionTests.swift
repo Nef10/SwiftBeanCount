@@ -12,7 +12,7 @@ import FoundationNetworking
 import Testing
 @testable import WealthsimpleDownloader
 
-@Suite
+@Suite(.serialized)
 final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable:this type_body_length
 
     private static let mockAccount = MockAccount(id: "account-123", accountType: .tfsa, currency: "CAD", number: "12345-67890")
@@ -54,7 +54,7 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
     // MARK: - Helper Methods
 
     private func createValidToken() throws -> Token {
-        let expectation = XCTestExpectation(description: "createValidToken completion")
+        let expectation = TestExpectation(description: "createValidToken completion")
         var resultToken: Token?
 
         MockURLProtocol.tokenValidationRequestHandler = { url, _ in
@@ -72,15 +72,15 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
         }
 
         wait(for: [expectation], timeout: 10.0)
-        return try XCTUnwrap(resultToken)
+        return try requireUnwrap(resultToken)
     }
 
-    private func setupMockForSuccess(positions: [[String: Any]], expectation: XCTestExpectation) {
+    private func setupMockForSuccess(positions: [[String: Any]], expectation: TestExpectation) {
         MockURLProtocol.positionsRequestHandler = { url, request in
-            XCTAssertEqual(request.value(forHTTPHeaderField: "Authorization"), "Bearer valid_access_token3")
-            XCTAssertFalse((url.query ?? "").contains("date"))
-            XCTAssert((url.query ?? "").contains("account_id=\(Self.mockAccount.id)"))
-            XCTAssert((url.query ?? "").contains("limit=250"))
+            expectEqual(request.value(forHTTPHeaderField: "Authorization"), "Bearer valid_access_token3")
+            expectFalse((url.query ?? "").contains("date"))
+            expect((url.query ?? "").contains("account_id=\(Self.mockAccount.id)"))
+            expect((url.query ?? "").contains("limit=250"))
             expectation.fulfill()
             let responseJSON: [String: Any] = ["object": "position", "results": positions]
             return (HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!, try JSONSerialization.data(withJSONObject: responseJSON, options: []))
@@ -93,16 +93,16 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
         file: StaticString = #file,
         line: UInt = #line
     ) throws {
-        let expectation = XCTestExpectation(description: "getPositions completion")
+        let expectation = TestExpectation(description: "getPositions completion")
 
         MockURLProtocol.positionsRequestHandler = response
 
         WealthsimplePosition.getPositions(token: try createValidToken(), account: Self.mockAccount, date: nil) { result in
             switch result {
             case .success:
-                XCTFail("Expected failure", file: file, line: line)
+                recordFailure("Expected failure", file: file, line: line)
             case .failure(let error):
-                XCTAssertEqual(error, expectedError, file: file, line: line)
+                expectEqual(error, expectedError, file: file, line: line)
             }
             expectation.fulfill()
         }
@@ -133,7 +133,7 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
         line: UInt = #line
     ) throws {
         guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: []) else {
-            XCTFail("Failed to create JSON data", file: file, line: line)
+            recordFailure("Failed to create JSON data", file: file, line: line)
             return
         }
         try testJSONParsingFailure(jsonData: jsonData, expectedError: expectedError, file: file, line: line)
@@ -143,33 +143,33 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
 
     @Test
     func testGetPositionsSuccess() throws {
-        let expectation = XCTestExpectation(description: "getPositions completion")
-        let mockExpectation = XCTestExpectation(description: "mock server called")
+        let expectation = TestExpectation(description: "getPositions completion")
+        let mockExpectation = TestExpectation(description: "mock server called")
 
         setupMockForSuccess(positions: [Self.positionJSON], expectation: mockExpectation)
 
         WealthsimplePosition.getPositions(token: try createValidToken(), account: Self.mockAccount, date: nil) { result in
             switch result {
             case .success(let positions):
-                XCTAssertEqual(positions.count, 1)
+                expectEqual(positions.count, 1)
                 let position = positions[0]
-                XCTAssertEqual(position.accountId, "account-123")
-                XCTAssertEqual(position.quantity, "100.0")
-                XCTAssertEqual(position.priceAmount, "150.25")
-                XCTAssertEqual(position.priceCurrency, "USD")
-                XCTAssertEqual(position.asset.symbol, "AAPL")
-                XCTAssertEqual(position.asset.name, "Apple Inc.")
-                XCTAssertEqual(position.asset.currency, "USD")
-                XCTAssertEqual(position.asset.type, .equity)
+                expectEqual(position.accountId, "account-123")
+                expectEqual(position.quantity, "100.0")
+                expectEqual(position.priceAmount, "150.25")
+                expectEqual(position.priceCurrency, "USD")
+                expectEqual(position.asset.symbol, "AAPL")
+                expectEqual(position.asset.name, "Apple Inc.")
+                expectEqual(position.asset.currency, "USD")
+                expectEqual(position.asset.type, .equity)
 
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd"
                 let expectedDate = dateFormatter.date(from: "2023-12-01")!
-                XCTAssertEqual(position.positionDate, expectedDate)
+                expectEqual(position.positionDate, expectedDate)
 
                 expectation.fulfill()
             case .failure(let error):
-                XCTFail("Expected success but got error: \(error)")
+                recordFailure("Expected success but got error: \(error)")
             }
         }
 
@@ -178,12 +178,12 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
 
     @Test
     func testGetPositionsSuccessWithDate() throws {
-        let expectation = XCTestExpectation(description: "getPositions completion")
-        let mockExpectation = XCTestExpectation(description: "mock server called")
+        let expectation = TestExpectation(description: "getPositions completion")
+        let mockExpectation = TestExpectation(description: "mock server called")
 
         MockURLProtocol.positionsRequestHandler = { url, _ in
             // Verify that the date parameter is included in the request
-            XCTAssertEqual(url.query?.contains("date=2023-12-01"), true)
+            expectEqual(url.query?.contains("date=2023-12-01"), true)
             mockExpectation.fulfill()
             let json = ["object": "position", "results": [Self.positionJSON, Self.positionJSON2]]
             return (HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!, try JSONSerialization.data(withJSONObject: json, options: []))
@@ -196,10 +196,10 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
         WealthsimplePosition.getPositions(token: try createValidToken(), account: Self.mockAccount, date: testDate) { result in
             switch result {
             case .success(let positions):
-                XCTAssertEqual(positions.count, 2)
+                expectEqual(positions.count, 2)
                 expectation.fulfill()
             case .failure(let error):
-                XCTFail("Expected success but got error: \(error)")
+                recordFailure("Expected success but got error: \(error)")
             }
         }
 
@@ -208,28 +208,28 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
 
     @Test
     func testGetPositionsSuccessMultiplePositions() throws {
-        let expectation = XCTestExpectation(description: "getPositions completion")
-        let mockExpectation = XCTestExpectation(description: "mock server called")
+        let expectation = TestExpectation(description: "getPositions completion")
+        let mockExpectation = TestExpectation(description: "mock server called")
 
         setupMockForSuccess(positions: [Self.positionJSON, Self.positionJSON2], expectation: mockExpectation)
 
         WealthsimplePosition.getPositions(token: try createValidToken(), account: Self.mockAccount, date: nil) { result in
             switch result {
             case .success(let positions):
-                XCTAssertEqual(positions.count, 2)
+                expectEqual(positions.count, 2)
 
                 let firstPosition = positions[0]
-                XCTAssertEqual(firstPosition.accountId, "account-123")
-                XCTAssertEqual(firstPosition.quantity, "100.0")
-                XCTAssertEqual(firstPosition.asset.symbol, "AAPL")
+                expectEqual(firstPosition.accountId, "account-123")
+                expectEqual(firstPosition.quantity, "100.0")
+                expectEqual(firstPosition.asset.symbol, "AAPL")
 
                 let secondPosition = positions[1]
-                XCTAssertEqual(secondPosition.accountId, "account-123")
-                XCTAssertEqual(secondPosition.quantity, "50.0")
-                XCTAssertEqual(secondPosition.asset.symbol, "GOOGL")
+                expectEqual(secondPosition.accountId, "account-123")
+                expectEqual(secondPosition.quantity, "50.0")
+                expectEqual(secondPosition.asset.symbol, "GOOGL")
                 expectation.fulfill()
             case .failure(let error):
-                XCTFail("Expected success but got error: \(error)")
+                recordFailure("Expected success but got error: \(error)")
             }
         }
 
@@ -290,7 +290,7 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
     @Test
     func testGetPositionsInvalidJSONType() throws {
         guard let jsonData = try? JSONSerialization.data(withJSONObject: ["not", "a", "dictionary"], options: []) else {
-            XCTFail("Failed to create test JSON data")
+            recordFailure("Failed to create test JSON data")
             return
         }
         try testJSONParsingFailure(

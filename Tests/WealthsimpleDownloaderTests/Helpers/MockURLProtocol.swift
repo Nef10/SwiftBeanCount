@@ -14,6 +14,7 @@ import Testing
 
 /// A mock URLProtocol implementation for intercepting HTTP requests during testing.
 class MockURLProtocol: URLProtocol {
+    private static let stateLock = NSLock()
     static var newTokenRequestHandler: ((URL, URLRequest) throws -> (URLResponse, Data)) = failTest
     static var tokenValidationRequestHandler: ((URL, URLRequest) throws -> (URLResponse, Data)) = failTest
     static var accountsRequestHandler: ((URL, URLRequest) throws -> (URLResponse, Data)) = failTest
@@ -24,8 +25,10 @@ class MockURLProtocol: URLProtocol {
     // MARK: - Static Methods
 
     override class func canInit(with request: URLRequest) -> Bool {
-        // Only handle requests to localhost
-        request.url?.host == "localhost"
+        guard let scheme = request.url?.scheme else {
+            return false
+        }
+        return scheme == "http" || scheme == "https"
     }
 
     override class func canonicalRequest(for request: URLRequest) -> URLRequest {
@@ -33,13 +36,14 @@ class MockURLProtocol: URLProtocol {
     }
 
     static func setup() {
-        URLConfiguration.shared.setBaseURL("http://localhost:8080/v1/")
-        URLConfiguration.shared.setGraphQLURL("http://localhost:8080/graphql")
+        stateLock.lock()
+        defer { stateLock.unlock() }
         _ = URLProtocol.registerClass(Self.self)
     }
 
     static func reset() {
-        URLConfiguration.shared.reset()
+        stateLock.lock()
+        defer { stateLock.unlock() }
         newTokenRequestHandler = failTest
         tokenValidationRequestHandler = failTest
         accountsRequestHandler = failTest
@@ -73,12 +77,12 @@ class MockURLProtocol: URLProtocol {
             return try graphQLRequestHandler(url, request)
         }
 
-        XCTFail("Unexpected request: \(url)")
+        recordFailure("Unexpected request: \(url)")
         throw URLError(.unsupportedURL)
     }
 
     static func failTest(url: URL, _: URLRequest) -> (HTTPURLResponse, Data) {
-        XCTFail("Call network request which should not have been called")
+        recordFailure("Call network request which should not have been called")
         let response = HTTPURLResponse(url: url, statusCode: 500, httpVersion: nil, headerFields: nil)!
         return (response, Data())
     }
