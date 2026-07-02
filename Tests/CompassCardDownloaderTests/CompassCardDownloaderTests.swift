@@ -1,6 +1,7 @@
 @testable import CompassCardDownloader
-import XCTest
+import Testing
 
-final class CompassCardDownloaderTests: XCTestCase {
+@Suite
+struct CompassCardDownloaderTests {
 
 }

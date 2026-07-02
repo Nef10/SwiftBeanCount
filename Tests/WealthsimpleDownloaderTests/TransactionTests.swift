@@ -8,10 +8,12 @@
 
 import Foundation
 @testable import WealthsimpleDownloader
-import XCTest
+import Testing
 
-final class TransactionTests: XCTestCase {
+@Suite
+final class TransactionTests {
 
+    @Test
     func testTransactionErrorEqualitySimpleCases() {
         // Test .noDataReceived
         XCTAssertEqual(TransactionError.noDataReceived, TransactionError.noDataReceived)
@@ -30,6 +32,7 @@ final class TransactionTests: XCTestCase {
         XCTAssertNotEqual(TransactionError.invalidJson(json: data1), TransactionError.noDataReceived)
     }
 
+    @Test
     func testTransactionErrorEqualityJSONParameters() {
         let json1 = ["key": "value" as Any]
         let json2 = ["key": "other" as Any]
@@ -45,6 +48,7 @@ final class TransactionTests: XCTestCase {
         XCTAssertNotEqual(TransactionError.invalidResultParameter(json: json1), TransactionError.noDataReceived)
     }
 
+    @Test
     func testTransactionErrorEqualityTokenAndOthers() {
         // Test .tokenError
         XCTAssertEqual(TransactionError.tokenError(.noToken), TransactionError.tokenError(.noToken))
@@ -59,6 +63,7 @@ final class TransactionTests: XCTestCase {
         XCTAssertNotEqual(TransactionError.invalidParameter, TransactionError.noDataReceived)
     }
 
+    @Test
     func testTransactionErrorEqualityInvalidJSON() {
         let invalidJson: [String: Any] = ["invalid": NSObject()]
         XCTAssertNotEqual(
@@ -71,6 +76,7 @@ final class TransactionTests: XCTestCase {
         )
     }
 
+    @Test
     func testTransactionErrorLocalizedDescription() {
         XCTAssertEqual(TransactionError.noDataReceived.errorDescription, "No Data was received from the server")
         XCTAssertEqual(TransactionError.httpError(error: "Test HTTP Error").errorDescription, "An HTTP error occurred: Test HTTP Error")

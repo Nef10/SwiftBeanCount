@@ -10,8 +10,9 @@ import Foundation
 import FoundationNetworking
 #endif
 @testable import WealthsimpleDownloader
-import XCTest
+import Testing
 
+@Suite
 final class CreditCardPositionTests: DownloaderTestCase {
 
     private static let creditCardAccount = MockAccount(
@@ -98,6 +99,7 @@ final class CreditCardPositionTests: DownloaderTestCase {
 
     // MARK: - Successful Tests
 
+    @Test
     func testGetCreditCardPositionSuccess() throws {
         let expectation = XCTestExpectation(description: "getPositions completion")
         let mockExpectation = XCTestExpectation(description: "mock GraphQL server called")
@@ -118,6 +120,7 @@ final class CreditCardPositionTests: DownloaderTestCase {
         wait(for: [expectation, mockExpectation], timeout: 10.0)
     }
 
+    @Test
     func testGetCreditCardPositionVerifiesRequestBody() throws {
         let expectation = XCTestExpectation(description: "getPositions completion")
         let mockExpectation = XCTestExpectation(description: "mock GraphQL server called")
@@ -155,6 +158,7 @@ final class CreditCardPositionTests: DownloaderTestCase {
 
     // MARK: - Failure Tests
 
+    @Test
     func testGetCreditCardPositionNetworkError() throws {
         try testCreditCardFailure(
             handler: { _, _ in throw URLError(.networkConnectionLost) },
@@ -166,6 +170,7 @@ final class CreditCardPositionTests: DownloaderTestCase {
         )
     }
 
+    @Test
     func testGetCreditCardPositionHTTPError() throws {
         try testCreditCardFailure(
             handler: { url, _ in
@@ -175,6 +180,7 @@ final class CreditCardPositionTests: DownloaderTestCase {
         )
     }
 
+    @Test
     func testGetCreditCardPositionWrongResponseType() throws {
         try testCreditCardFailure(
             handler: { url, _ in
@@ -184,6 +190,7 @@ final class CreditCardPositionTests: DownloaderTestCase {
         )
     }
 
+    @Test
     func testGetCreditCardPositionInvalidJSON() throws {
         let data = Data("NOT VALID JSON".utf8)
         try testCreditCardFailure(
@@ -194,6 +201,7 @@ final class CreditCardPositionTests: DownloaderTestCase {
         )
     }
 
+    @Test
     func testGetCreditCardPositionMissingData() throws {
         try testCreditCardFailure(
             handler: { url, _ in
@@ -209,6 +217,7 @@ final class CreditCardPositionTests: DownloaderTestCase {
         )
     }
 
+    @Test
     func testGetCreditCardPositionDate() throws {
         let expectation = XCTestExpectation(description: "getPositions completion")
 
@@ -229,6 +238,7 @@ final class CreditCardPositionTests: DownloaderTestCase {
         wait(for: [expectation], timeout: 10.0)
     }
 
+    @Test
     func testGetCreditCardPositionMissingBalance() throws {
         try testCreditCardFailure(
             handler: { url, _ in
@@ -248,6 +258,7 @@ final class CreditCardPositionTests: DownloaderTestCase {
         )
     }
 
+    @Test
     func testGetCreditCardPositionEmptyData() throws {
         try testCreditCardFailure(
             handler: { url, _ in

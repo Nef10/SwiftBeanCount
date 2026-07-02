@@ -11,8 +11,9 @@ import Foundation
 import FoundationNetworking
 #endif
 @testable import WealthsimpleDownloader
-import XCTest
+import Testing
 
+@Suite
 final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disable:this type_body_length
 
     private let mockAccount = MockAccount(id: "account-123", accountType: .tfsa, currency: "CAD", number: "12345")
@@ -53,6 +54,7 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
 
     // MARK: - Constructor Tests
 
+    @Test
     func testInit() {
         let downloader = createDownloader { _ in
             XCTFail("Auth callback should not be called")
@@ -62,10 +64,12 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
 
     // MARK: - Authenticate Tests
 
+    @Test
     func testAuthenticateWithExistingTokenSuccess() {
         authenticateDownloader()
     }
 
+    @Test
     func testAuthenticateTwice() {
         let expectation = XCTestExpectation(description: "authenticate completion")
 
@@ -79,6 +83,7 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
         wait(for: [expectation], timeout: 10.0)
     }
 
+    @Test
     func testAuthenticateWithExistingTokenRefreshRequired() {
         let expectation = XCTestExpectation(description: "authenticate completion")
 
@@ -120,6 +125,7 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
         wait(for: [expectation], timeout: 10.0)
     }
 
+    @Test
     func testAuthenticateWithoutToken() {
         let expectation = XCTestExpectation(description: "authenticate completion")
         let authExpectation = XCTestExpectation(description: "auth callback called")
@@ -157,6 +163,7 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
         wait(for: [expectation, authExpectation], timeout: 10.0)
     }
 
+    @Test
     func testAuthenticateWithNewTokenFailure() {
         let expectation = XCTestExpectation(description: "authenticate completion")
         let authExpectation = XCTestExpectation(description: "auth callback called")
@@ -182,6 +189,7 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
 
     // MARK: - getAccounts Tests
 
+    @Test
     func testGetAccountsWithoutToken() {
         let expectation = XCTestExpectation(description: "getAccounts completion")
 
@@ -206,6 +214,7 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
         wait(for: [expectation], timeout: 10.0)
     }
 
+    @Test
     func testGetAccountsWithTokenSuccess() throws {
         let expectation = XCTestExpectation(description: "getAccounts completion")
         let mockExpectation = XCTestExpectation(description: "mock server called")
@@ -243,6 +252,7 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
 
     // https://github.com/realm/SwiftLint/issues/6491
     // swiftlint:disable:next unneeded_throws_rethrows
+    @Test
     func testGetAccountsWithHttpError() throws {
         let expectation = XCTestExpectation(description: "getAccounts completion")
         let mockExpectation = XCTestExpectation(description: "mock server called")
@@ -274,6 +284,7 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
 
     // MARK: - getPositions Tests
 
+    @Test
     func testGetPositionsWithoutToken() {
         let expectation = XCTestExpectation(description: "getPositions completion")
 
@@ -298,6 +309,7 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
         wait(for: [expectation], timeout: 10.0)
     }
 
+    @Test
     func testGetPositionsWithTokenSuccess() throws {
         let expectation = XCTestExpectation(description: "getPositions completion"), mockExpectation = XCTestExpectation(description: "mock server called")
 
@@ -338,6 +350,7 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
 
     // MARK: - getTransactions Tests
 
+    @Test
     func testGetTransactionsWithoutToken() {
         let expectation = XCTestExpectation(description: "getTransactions completion")
 
@@ -363,6 +376,7 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
         wait(for: [expectation], timeout: 10.0)
     }
 
+    @Test
     func testGetTransactionsWithTokenSuccess() throws { // swiftlint:disable:this function_body_length
         let expectation = XCTestExpectation(description: "getTransactions completion")
         let mockExpectation = XCTestExpectation(description: "mock server called")
@@ -412,6 +426,7 @@ final class WealthsimpleDownloaderTests: DownloaderTestCase { // swiftlint:disab
         wait(for: [expectation, mockExpectation], timeout: 10.0)
     }
 
+    @Test
     func testGetTransactionsWithNetworkError() throws {
         let expectation = XCTestExpectation(description: "getTransactions completion")
         let mockExpectation = XCTestExpectation(description: "mock server called")

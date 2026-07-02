@@ -1,7 +1,9 @@
 @testable import WealthsimpleDownloader
-import XCTest
+import Testing
 
-final class WealthsimpleAssetTests: XCTestCase {
+@Suite
+final class WealthsimpleAssetTests {
+    @Test
     func testInitWithValidJSON() throws {
         let json: [String: Any] = [
             "security_id": "asset-123",
@@ -18,6 +20,7 @@ final class WealthsimpleAssetTests: XCTestCase {
         XCTAssertEqual(asset.type, .equity)
     }
 
+    @Test
     func testInitWithCurrency() {
         let asset = WealthsimpleAsset(currency: "CAD")
         XCTAssertEqual(asset.id, "CAD")
@@ -27,6 +30,7 @@ final class WealthsimpleAssetTests: XCTestCase {
         XCTAssertEqual(asset.type, .currency)
     }
 
+    @Test
     func testInitWithCurrencyDifferentValue() {
         let asset = WealthsimpleAsset(currency: "USD")
         XCTAssertEqual(asset.id, "USD")
@@ -36,6 +40,7 @@ final class WealthsimpleAssetTests: XCTestCase {
         XCTAssertEqual(asset.type, .currency)
     }
 
+    @Test
     func testInitWithMissingParameterThrows() {
         let json: [String: Any] = [
             "security_id": "asset-123",
@@ -50,6 +55,7 @@ final class WealthsimpleAssetTests: XCTestCase {
         )
     }
 
+    @Test
     func testInitWithInvalidTypeThrows() {
         let json: [String: Any] = [
             "security_id": "asset-123",

@@ -10,12 +10,14 @@ import Foundation
 import FoundationNetworking
 #endif
 @testable import WealthsimpleDownloader
-import XCTest
+import Testing
 
+@Suite
 final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body_length
 
     // MARK: - getToken with Credential Storage
 
+    @Test
     func testGetTokenFromCredentialStorageWithValidToken() {
         let expectation = XCTestExpectation(description: "getToken completion")
 
@@ -38,6 +40,7 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
         wait(for: [expectation], timeout: 10.0)
     }
 
+    @Test
     func testGetTokenFromCredentialStorageWithMissingAccessToken() {
         let expectation = XCTestExpectation(description: "getToken completion")
 
@@ -52,6 +55,7 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
         wait(for: [expectation], timeout: 1.0)
     }
 
+    @Test
     func testGetTokenFromCredentialStorageWithMissingRefreshToken() {
         let expectation = XCTestExpectation(description: "getToken completion")
 
@@ -66,6 +70,7 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
         wait(for: [expectation], timeout: 1.0)
     }
 
+    @Test
     func testGetTokenFromCredentialStorageWithMissingExpiry() {
         let expectation = XCTestExpectation(description: "getToken completion")
 
@@ -80,6 +85,7 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
         wait(for: [expectation], timeout: 1.0)
     }
 
+    @Test
     func testGetTokenFromCredentialStorageWithInvalidExpiry() {
         let expectation = XCTestExpectation(description: "getToken completion")
 
@@ -95,6 +101,7 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
         wait(for: [expectation], timeout: 1.0)
     }
 
+    @Test
     func testExpiredTokenFailsRefresh() {
         let requestExpectation = XCTestExpectation(description: "mock server called")
         let getTokenExpectation = XCTestExpectation(description: "getToken completion")
@@ -117,6 +124,7 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
         wait(for: [getTokenExpectation, requestExpectation], timeout: 10.0)
     }
 
+    @Test
     func testExpiredTokenRefreshFailsValidation() {
         let refreshExpectation = XCTestExpectation(description: "mock server called")
         let validateExpectation = XCTestExpectation(description: "mock server called")
@@ -146,6 +154,7 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
         wait(for: [getTokenExpectation, refreshExpectation, validateExpectation], timeout: 10.0)
     }
 
+    @Test
     func testExpiredTokenRefreshFailsValidationWithWrongResponseType() {
         let refreshExpectation = XCTestExpectation(description: "mock server called for token refresh")
         let validateExpectation = XCTestExpectation(description: "mock server called for token validation")
@@ -175,6 +184,7 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
         wait(for: [getTokenExpectation, refreshExpectation, validateExpectation], timeout: 10.0)
     }
 
+    @Test
     func testExpiredTokenRefresh() {
         let refreshExpectation = XCTestExpectation(description: "refresh called"), validateExpectation = XCTestExpectation(description: "validate called")
         let getTokenExpectation = XCTestExpectation(description: "getToken completion")
@@ -215,6 +225,7 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
         XCTAssertEqual(mockCredentialStorage.read("refreshToken"), "r432432")
     }
 
+    @Test
     func testTokenInitMissingParameter() {
         let refreshExpectation = XCTestExpectation(description: "mock server called")
         let getTokenExpectation = XCTestExpectation(description: "getToken completion")
@@ -240,6 +251,7 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
 
     // MARK: - getToken with Username/Password/OTP
 
+    @Test
     func testGetTokenWithUsernamePasswordOTPSuccess() {
         let tokenExpectation = XCTestExpectation(description: "getToken completion"), mockExpectation = XCTestExpectation(description: "mock server called")
 
@@ -279,6 +291,7 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
         wait(for: [mockExpectation, tokenExpectation], timeout: 10.0)
     }
 
+    @Test
     func testGetTokenWithUsernamePasswordOTPNetworkFailure() {
         let tokenExpectation = XCTestExpectation(description: "getToken completion")
         let serverExpectation = XCTestExpectation(description: "mock server called")
@@ -307,6 +320,7 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
         wait(for: [tokenExpectation, serverExpectation], timeout: 10.0)
     }
 
+    @Test
     func testGetTokenWithWrongResponseType() {
         let tokenExpectation = XCTestExpectation(description: "getToken completion")
         let serverExpectation = XCTestExpectation(description: "mock server called")
@@ -335,6 +349,7 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
         wait(for: [tokenExpectation, serverExpectation], timeout: 10.0)
     }
 
+    @Test
     func testGetTokenWithInvalidJSON() {
         let tokenExpectation = XCTestExpectation(description: "getToken completion")
         let serverExpectation = XCTestExpectation(description: "mock server called")

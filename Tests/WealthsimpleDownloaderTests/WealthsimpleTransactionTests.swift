@@ -11,8 +11,9 @@ import Foundation
 import FoundationNetworking
 #endif
 @testable import WealthsimpleDownloader
-import XCTest
+import Testing
 
+@Suite
 final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disable:this type_body_length
 
     private struct TestAccount: Account {
@@ -282,6 +283,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
     // MARK: - Successful REST Tests
 
     // swiftlint:disable:next function_body_length
+    @Test
     func testGetTransactionsSuccess() throws {
         let expectation = XCTestExpectation(description: "getTransactions completion")
         let mockExpectation = XCTestExpectation(description: "mock server called")
@@ -323,6 +325,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         wait(for: [expectation, mockExpectation], timeout: 10.0)
     }
 
+    @Test
     func testGetTransactionsEmptyResults() throws {
         let expectation = XCTestExpectation(description: "getTransactions completion")
         let mockExpectation = XCTestExpectation(description: "mock server called")
@@ -342,6 +345,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         wait(for: [expectation, mockExpectation], timeout: 10.0)
     }
 
+    @Test
     func testGetTransactionsMultipleTransactionTypes() throws {
         let expectation = XCTestExpectation(description: "getTransactions completion")
         let mockExpectation = XCTestExpectation(description: "mock server called")
@@ -381,6 +385,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         wait(for: [expectation, mockExpectation], timeout: 10.0)
     }
 
+    @Test
     func testGetTransactionsAppendsStartDateQueryItems() throws {
         let startDate = Date(timeIntervalSince1970: 1_700_000_000)
         let dateFormatter = DateFormatter()
@@ -425,6 +430,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
 // see https://github.com/swiftlang/swift-corelibs-foundation/issues/3199
 #else
     // swiftlint:disable:next function_body_length
+    @Test
     func testGraphQLTransactionsSuccess() throws {
         let expectation = XCTestExpectation(description: "getTransactions completion")
         let mockExpectation = XCTestExpectation(description: "mock server called")
@@ -472,6 +478,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         wait(for: [expectation, mockExpectation], timeout: 10.0)
     }
 
+    @Test
     func testGraphQLPaginationSuccess() throws {
         let expectation = XCTestExpectation(description: "getTransactions completion")
         let mockExpectation = XCTestExpectation(description: "mock server called")
@@ -519,6 +526,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
     // MARK: - Network Error Tests
 
 #if canImport(FoundationNetworking)
+    @Test
     func testGetTransactionsNetworkFailure() throws {
         try testRESTTransactionsFailure(
             response: { _, _ in
@@ -527,6 +535,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         )
     }
 #else
+    @Test
     func testGetTransactionsNetworkFailure() throws {
         try testRESTTransactionsFailure(
             response: { _, _ in
@@ -536,6 +545,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
     }
 #endif
 
+    @Test
     func testGetTransactionsEmptyData() throws {
         try testRESTTransactionsFailure(response: (
                 HTTPURLResponse(url: URL(string: "http://test.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)!,
@@ -544,6 +554,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         )
     }
 
+    @Test
     func testGetTransactionsWrongResponseType() throws {
         try testRESTTransactionsFailure(response: (
             URLResponse(url: URL(string: "http://test.com")!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil),
@@ -551,6 +562,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         ), expectedError: TransactionError.httpError(error: "No HTTPURLResponse"))
     }
 
+    @Test
     func testGetTransactionsHTTPError() throws {
         try testRESTTransactionsFailure(response: (
             HTTPURLResponse(url: URL(string: "http://test.com")!, statusCode: 401, httpVersion: nil, headerFields: nil)!,
@@ -558,6 +570,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         ), expectedError: TransactionError.httpError(error: "Status code 401"))
     }
 
+    @Test
     func testInvalidGraphQLURL() throws {
         URLConfiguration.shared.setGraphQLURL("Not a valid URL:::///")
         let expectation = XCTestExpectation(description: "getTransactions completion")
@@ -566,6 +579,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         wait(for: [expectation], timeout: 10.0)
     }
 
+    @Test
     func testInvalidGraphQLURLFx() throws {
         let expectation = XCTestExpectation(description: "getTransactions completion")
         let mockExpectation = XCTestExpectation(description: "mock server called")
@@ -590,6 +604,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         wait(for: [expectation, mockExpectation], timeout: 10.0)
     }
 
+    @Test
     func testGraphQLRequestErrorFx() throws {
         let expectation = XCTestExpectation(description: "getTransactions completion")
         let mockExpectation = XCTestExpectation(description: "mock server called")
@@ -618,11 +633,13 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
 
     // MARK: - REST JSON Parsing Error Tests
 
+    @Test
     func testGetTransactionsInvalidJSON() throws {
         let data = Data("NOT VALID JSON".utf8)
         try testRESTJSONParsingFailure(jsonData: data, expectedError: TransactionError.invalidJson(json: data))
     }
 
+    @Test
     func testGetTransactionsInvalidJSONType() throws {
         guard let jsonData = try? JSONSerialization.data(withJSONObject: ["not", "a", "dictionary"], options: []) else {
             XCTFail("Failed to create test JSON data")
@@ -631,6 +648,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         try testRESTJSONParsingFailure(jsonData: jsonData, expectedError: TransactionError.invalidJson(json: jsonData))
     }
 
+    @Test
     func testGetTransactionsMissingResults() throws {
         let json = ["object": "transaction"]
         try testRESTJSONParsingFailure(
@@ -639,6 +657,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         )
     }
 
+    @Test
     func testGetTransactionsInvalidObject() throws {
         let json: [String: Any] = ["object": "not_transaction", "results": []]
         try testRESTJSONParsingFailure(
@@ -647,6 +666,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         )
     }
 
+    @Test
     func testTransactionMissingId() throws {
         var transaction = Self.transactionJSON
         transaction.removeValue(forKey: "id")
@@ -656,6 +676,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         )
     }
 
+    @Test
     func testTransactionMissingProcessDate() throws {
         var transaction = Self.transactionJSON
         transaction.removeValue(forKey: "process_date")
@@ -665,6 +686,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         )
     }
 
+    @Test
     func testTransactionMissingEffectiveDate() throws {
         var transaction = Self.transactionJSON
         transaction.removeValue(forKey: "effective_date")
@@ -674,6 +696,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         )
     }
 
+    @Test
     func testTransactionInvalidProcessDate() throws {
         var transaction = Self.transactionJSON
         transaction["process_date"] = "invalid-date"
@@ -683,6 +706,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         )
     }
 
+    @Test
     func testTransactionInvalidEffectiveDate() throws {
         var transaction = Self.transactionJSON
         transaction["effective_date"] = "invalid-date"
@@ -692,6 +716,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         )
     }
 
+    @Test
     func testTransactionInvalidType() throws {
         var transaction = Self.transactionJSON
         transaction["type"] = "invalid_transaction_type"
@@ -701,6 +726,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         )
     }
 
+    @Test
     func testTransactionInvalidObject() throws {
         var transaction = Self.transactionJSON
         transaction["object"] = "not_transaction"
@@ -712,6 +738,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
 
     // MARK: - GraphQL JSON Parsing Error Tests
 
+    @Test
     func testGraphQLInvalidJSON() throws {
         let mockExpectation = XCTestExpectation(description: "mock server called")
         let expectation = XCTestExpectation(description: "getTransactions completion")
@@ -731,6 +758,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         wait(for: [mockExpectation, expectation], timeout: 10.0)
     }
 
+    @Test
     func testGraphQLInvalidJSONFx() throws {
         let mockExpectation = XCTestExpectation(description: "mock server called")
         let expectation = XCTestExpectation(description: "getTransactions completion")
@@ -764,6 +792,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
 // see https://github.com/swiftlang/swift-corelibs-foundation/issues/3199
 #else
 
+    @Test
     func testGraphQLErrorSecondPage() throws {
         let expectation = XCTestExpectation(description: "getTransactions completion")
         let mockExpectation = XCTestExpectation(description: "mock server called")
@@ -793,6 +822,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         wait(for: [expectation, mockExpectation], timeout: 10.0)
     }
 
+    @Test
     func testGraphQLWrongInnerStructure() throws {
         let response1 = [
             "data": [
@@ -811,6 +841,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: nil, expectedError: error)
     }
 
+    @Test
     func testGraphQLMissingPageInfo() throws {
         let response1 = [
             "data": [
@@ -825,12 +856,14 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: nil, expectedError: error)
     }
 
+    @Test
     func testGraphQLWrongStructure() throws {
         let response1 = Self.graphQLTransactionJSON
         let error = TransactionError.missingResultParameter(json: (Self.graphQLTransactionJSON))
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: nil, expectedError: error)
     }
 
+    @Test
     func testGraphQLWrongStructureFx() throws {
         let response1 = graphQLResponse(for: Self.graphQLTransactionJSON)
         let response2 = Self.graphQLFxJSON
@@ -839,6 +872,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: response2, expectedError: error)
     }
 
+    @Test
     func testGraphQLWrongStructureFx2() throws {
         let response1 = graphQLResponse(for: Self.graphQLTransactionJSON)
         let response2 = [
@@ -851,6 +885,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: response2, expectedError: error)
     }
 
+    @Test
     func testGraphQLMissingRequiredField() throws {
         var transaction = Self.graphQLTransactionJSON
         transaction.removeValue(forKey: "amount")
@@ -862,6 +897,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: response2, expectedError: error)
     }
 
+    @Test
     func testGraphQLMissingRequiredFieldForFx() throws {
         var transaction = Self.graphQLTransactionJSON
         transaction.removeValue(forKey: "externalCanonicalId")
@@ -872,6 +908,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: nil, expectedError: error)
     }
 
+    @Test
     func testGraphQLInvalidType() throws {
         var transaction = Self.graphQLTransactionJSON
         transaction["subType"] = "fun"
@@ -883,6 +920,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: response2, expectedError: error)
     }
 
+    @Test
     func testGraphQLMissingSettlementDate() throws {
         var transaction = Self.graphQLFxJSON
         transaction.removeValue(forKey: "settledAt")
@@ -894,6 +932,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: response2, expectedError: error)
     }
 
+    @Test
     func testGraphQLInvalidDate() throws {
         var transaction = Self.graphQLFxJSON
         transaction["settledAt"] = "invalid-date"
@@ -905,6 +944,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: response2, expectedError: error)
     }
 
+    @Test
     func testGraphQLMissingFxRate() throws {
         var transaction = Self.graphQLFxJSON
         transaction.removeValue(forKey: "foreignExchangeRate")

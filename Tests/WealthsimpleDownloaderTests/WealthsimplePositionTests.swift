@@ -10,8 +10,9 @@ import Foundation
 import FoundationNetworking
 #endif
 @testable import WealthsimpleDownloader
-import XCTest
+import Testing
 
+@Suite
 final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable:this type_body_length
 
     private static let mockAccount = MockAccount(id: "account-123", accountType: .tfsa, currency: "CAD", number: "12345-67890")
@@ -140,6 +141,7 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
 
     // MARK: - Successful getPositions Tests
 
+    @Test
     func testGetPositionsSuccess() throws {
         let expectation = XCTestExpectation(description: "getPositions completion")
         let mockExpectation = XCTestExpectation(description: "mock server called")
@@ -174,6 +176,7 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
         wait(for: [expectation, mockExpectation], timeout: 10.0)
     }
 
+    @Test
     func testGetPositionsSuccessWithDate() throws {
         let expectation = XCTestExpectation(description: "getPositions completion")
         let mockExpectation = XCTestExpectation(description: "mock server called")
@@ -203,6 +206,7 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
         wait(for: [expectation, mockExpectation], timeout: 10.0)
     }
 
+    @Test
     func testGetPositionsSuccessMultiplePositions() throws {
         let expectation = XCTestExpectation(description: "getPositions completion")
         let mockExpectation = XCTestExpectation(description: "mock server called")
@@ -235,7 +239,8 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
     // MARK: - Network Failure Tests
 
 #if canImport(FoundationNetworking)
-        func testGetPositionsNetworkFailure() throws {
+    @Test
+    func testGetPositionsNetworkFailure() throws {
         try testPositionsFailure(
             response: { _, _ in
                 throw URLError(.networkConnectionLost)
@@ -243,6 +248,7 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
         )
     }
 #else
+    @Test
     func testGetPositionsNetworkFailure() throws {
         try testPositionsFailure(
             response: { _, _ in
@@ -252,18 +258,21 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
     }
 #endif
 
+    @Test
     func testGetPositionsEmptyData() throws {
         try testPositionsFailure(response: { url, _ in
             (HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!, Data())
         }, expectedError: PositionError.invalidJson(json: Data()))
     }
 
+    @Test
     func testGetPositionsWrongResponseType() throws {
         try testPositionsFailure(response: { url, _ in
             (URLResponse(url: url, mimeType: nil, expectedContentLength: 0, textEncodingName: nil), Data("test".utf8))
         }, expectedError: PositionError.httpError(error: "No HTTPURLResponse"))
     }
 
+    @Test
     func testGetPositionsHTTPError() throws {
         try testPositionsFailure(response: { url, _ in
             (HTTPURLResponse(url: url, statusCode: 401, httpVersion: nil, headerFields: nil)!, Data())
@@ -272,11 +281,13 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
 
     // MARK: - JSON Parsing Error Tests
 
+    @Test
     func testGetPositionsInvalidJSON() throws {
         let data = Data("NOT VALID JSON".utf8)
         try testJSONParsingFailure(jsonData: data, expectedError: PositionError.invalidJson(json: data))
     }
 
+    @Test
     func testGetPositionsInvalidJSONType() throws {
         guard let jsonData = try? JSONSerialization.data(withJSONObject: ["not", "a", "dictionary"], options: []) else {
             XCTFail("Failed to create test JSON data")
@@ -288,10 +299,12 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
         )
     }
 
+    @Test
     func testGetPositionsMissingResults() throws {
         try testJSONParsingFailure(jsonObject: ["object": "position"], expectedError: PositionError.missingResultParamenter(json: "{\"object\":\"position\"}"))
     }
 
+    @Test
     func testGetPositionsInvalidObject() throws {
         try testJSONParsingFailure(
             jsonObject: ["object": "not_position", "results": []],
@@ -299,6 +312,7 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
         )
     }
 
+    @Test
     func testGetPositionsMissingQuantity() throws {
         var json = Self.positionJSON
         json.removeValue(forKey: "quantity")
@@ -310,6 +324,7 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
         )
     }
 
+    @Test
     func testGetPositionsWrongObject() throws {
         var json = Self.positionJSON
         json["object"] = "not_position"
@@ -321,6 +336,7 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
         )
     }
 
+    @Test
     func testGetPositionsInvalidDate() throws {
         var json = Self.positionJSON
         json["position_date"] = "invalid-date"
@@ -332,6 +348,7 @@ final class WealthsimplePositionTests: DownloaderTestCase { // swiftlint:disable
         )
     }
 
+    @Test
     func testGetPositionsInvalidAsset() throws {
         var json = Self.positionJSON
         json["asset"] = [

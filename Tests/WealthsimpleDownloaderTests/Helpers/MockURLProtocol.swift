@@ -10,7 +10,7 @@ import Foundation
 import FoundationNetworking
 #endif
 @testable import WealthsimpleDownloader
-import XCTest
+import Testing
 
 /// A mock URLProtocol implementation for intercepting HTTP requests during testing.
 class MockURLProtocol: URLProtocol {

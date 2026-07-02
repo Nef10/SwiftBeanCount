@@ -7,10 +7,12 @@
 
 import Foundation
 @testable import WealthsimpleDownloader
-import XCTest
+import Testing
 
-final class StringCamelCaseTests: XCTestCase {
+@Suite
+final class StringCamelCaseTests {
 
+    @Test
     func testCamelCase() {
         XCTAssertEqual("".camelCase, "")
 

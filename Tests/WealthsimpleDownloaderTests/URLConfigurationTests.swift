@@ -7,23 +7,25 @@
 
 import Foundation
 @testable import WealthsimpleDownloader
-import XCTest
+import Testing
 
-final class URLConfigurationTests: XCTestCase {
+@Suite
+final class URLConfigurationTests {
 
-    override func setUp() {
-        super.setUp()
+    init() {
         // Reset to default base URL before each test
         URLConfiguration.shared.setBaseURL("https://api.production.wealthsimple.com/v1/")
         URLConfiguration.shared.setGraphQLURL("https://my.wealthsimple.com/graphql")
     }
 
+    @Test
     func testDefaultBaseURL() {
         let config = URLConfiguration.shared
         XCTAssertEqual(config.base, "https://api.production.wealthsimple.com/v1/")
         XCTAssertEqual(config.graphQL, "https://my.wealthsimple.com/graphql")
     }
 
+    @Test
     func testSetBaseURL() {
         let config = URLConfiguration.shared
         let testURL = "https://test.example.com/api/v2/"
@@ -33,6 +35,7 @@ final class URLConfigurationTests: XCTestCase {
         XCTAssertEqual(config.base, testURL)
     }
 
+    @Test
     func testSetGraphQLURL() {
         let config = URLConfiguration.shared
         let testURL = "https://test.example.com/graphql"
@@ -42,6 +45,7 @@ final class URLConfigurationTests: XCTestCase {
         XCTAssertEqual(config.graphQL, testURL)
     }
 
+    @Test
     func testURLForPath() {
         let config = URLConfiguration.shared
         let result = config.url(for: "accounts")
@@ -49,6 +53,7 @@ final class URLConfigurationTests: XCTestCase {
         XCTAssertEqual(result, "https://api.production.wealthsimple.com/v1/accounts")
     }
 
+    @Test
     func testURLForPathWithCustomBase() {
         let config = URLConfiguration.shared
         config.setBaseURL("https://test.example.com/api/v2/")
@@ -58,6 +63,7 @@ final class URLConfigurationTests: XCTestCase {
         XCTAssertEqual(result, "https://test.example.com/api/v2/positions")
     }
 
+    @Test
     func testURLObjectForPath() {
         let config = URLConfiguration.shared
         let result = config.urlObject(for: "transactions")
@@ -66,6 +72,7 @@ final class URLConfigurationTests: XCTestCase {
         XCTAssertEqual(result?.absoluteString, "https://api.production.wealthsimple.com/v1/transactions")
     }
 
+    @Test
     func testURLComponentsForPath() {
         let config = URLConfiguration.shared
         let result = config.urlComponents(for: "oauth/v2/token")
@@ -74,6 +81,7 @@ final class URLConfigurationTests: XCTestCase {
         XCTAssertEqual(result?.string, "https://api.production.wealthsimple.com/v1/oauth/v2/token")
     }
 
+    @Test
     func testSingletonPattern() {
         let config1 = URLConfiguration.shared
         let config2 = URLConfiguration.shared
@@ -81,6 +89,7 @@ final class URLConfigurationTests: XCTestCase {
         XCTAssertIdentical(config1, config2)
     }
 
+    @Test
     func testConfigurationPersistsBetweenAccesses() {
         let config = URLConfiguration.shared
         let testURL = "https://mock.server.test/v1/"
@@ -92,6 +101,7 @@ final class URLConfigurationTests: XCTestCase {
         XCTAssertEqual(newConfig.base, testURL)
     }
 
+    @Test
     func testResetBaseURL() {
         let config = URLConfiguration.shared
         let testURL = "https://mock.server.test/v1/"
@@ -108,6 +118,7 @@ final class URLConfigurationTests: XCTestCase {
         XCTAssertEqual(config.graphQL, "https://my.wealthsimple.com/graphql")
     }
 
+    @Test
     func testGraphQLURLRequest() {
         let config = URLConfiguration.shared
         let testGraphQLURL = "https://mock.server.test/graphql"
@@ -123,6 +134,7 @@ final class URLConfigurationTests: XCTestCase {
         XCTAssertEqual(request.allHTTPHeaderFields?["Content-Type"], "application/json")
     }
 
+    @Test
     func testInvalidGraphQLURLRequest() {
         let config = URLConfiguration.shared
         let testGraphQLURL = "Not a valid URL::::////"

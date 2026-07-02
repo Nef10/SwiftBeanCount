@@ -10,21 +10,19 @@ import Foundation
 import FoundationNetworking
 #endif
 @testable import WealthsimpleDownloader
-import XCTest
+import Testing
 
-class DownloaderTestCase: XCTestCase { // swiftlint:disable:this final_test_case
+class DownloaderTestCase { // swiftlint:disable:this final_test_case
 
     var mockCredentialStorage: MockCredentialStorage! // swiftlint:disable:this test_case_accessibility
 
-    override func setUp() {
-        super.setUp()
+    init() {
         mockCredentialStorage = MockCredentialStorage()
         MockURLProtocol.setup()
     }
 
-    override func tearDown() {
+    deinit {
         MockURLProtocol.reset()
-        super.tearDown()
     }
 
 }
