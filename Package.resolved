@@ -1,5 +1,5 @@
 {
-  "originHash" : "67417239ec85e82855409a0773d573dac7b2ce8559d69ea597ee79213be096bb",
+  "originHash" : "5e946f210be894888c97f92ae10b3e777a47b6f9ae61f53f04df92fae375479d",
   "pins" : [
     {
       "identity" : "brightfutures",
@@ -8,15 +8,6 @@
       "state" : {
         "revision" : "fa66fa183dce7196d431244d0215748cd14c5758",
         "version" : "8.2.0"
-      }
-    },
-    {
-      "identity" : "compasscarddownloader",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Nef10/CompassCardDownloader.git",
-      "state" : {
-        "revision" : "cba3c97127fa60620893feda57c63c108405ad70",
-        "version" : "0.0.2"
       }
     },
     {
