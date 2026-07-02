@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftBeanCountModel
-import Wealthsimple
+import WealthsimpleDownloader
 
 // MARK: - Helper Methods for Transaction Processing
 

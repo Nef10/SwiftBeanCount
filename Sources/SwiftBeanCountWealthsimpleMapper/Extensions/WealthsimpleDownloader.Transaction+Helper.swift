@@ -1,5 +1,5 @@
 //
-//  WealthsimpleTransaction.swift
+//  WealthsimpleDownloader.Transaction+Helper.swift
 //  SwiftBeanCountWealthsimpleMapper
 //
 //  Created by Steffen Kötte on 2020-07-31.
@@ -7,9 +7,9 @@
 
 import Foundation
 import SwiftBeanCountModel
-import Wealthsimple
+import WealthsimpleDownloader
 
-extension Wealthsimple.Transaction {
+extension WealthsimpleDownloader.Transaction {
 
     var marketPrice: Amount {
         Amount(for: marketPriceAmount, in: marketPriceCurrency)

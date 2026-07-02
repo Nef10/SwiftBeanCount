@@ -3,7 +3,7 @@ import Foundation
 import SwiftBeanCountModel
 @testable import SwiftBeanCountWealthsimpleMapper
 import Testing
-import Wealthsimple
+import WealthsimpleDownloader
 
 @Suite
 struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_length
@@ -344,7 +344,7 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         [SwiftBeanCountModel.AccountType.asset, .income, .expense],
         [
             [
-                Wealthsimple.TransactionType.deposit,
+                WealthsimpleDownloader.TransactionType.deposit,
                 .withdrawal,
                 .paymentTransferOut,
                 .transferIn,
@@ -374,7 +374,7 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
             ]
         ])
     )
-    func mapTransactionsTransfers(accountType: SwiftBeanCountModel.AccountType, transactionTypes: [Wealthsimple.TransactionType]) throws {
+    func mapTransactionsTransfers(accountType: SwiftBeanCountModel.AccountType, transactionTypes: [WealthsimpleDownloader.TransactionType]) throws {
         var count = 1
         for transactionType in transactionTypes {
             let accountName = try AccountName("\(accountType.rawValue):Test\(count)")
@@ -876,7 +876,7 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
 
     private func transferTransaction(
         id: String,
-        transactionType: Wealthsimple.TransactionType,
+        transactionType: WealthsimpleDownloader.TransactionType,
         amount: String,
         date: Date,
         description: String

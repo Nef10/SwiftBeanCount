@@ -8,7 +8,7 @@
 import Foundation
 import SwiftBeanCountModel
 import SwiftBeanCountParserUtils
-import Wealthsimple
+import WealthsimpleDownloader
 
 extension WealthsimpleLedgerMapper {
 

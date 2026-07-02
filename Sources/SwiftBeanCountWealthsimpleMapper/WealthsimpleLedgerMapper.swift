@@ -8,14 +8,14 @@
 import Foundation
 import SwiftBeanCountModel
 import SwiftBeanCountParserUtils
-import Wealthsimple
+import WealthsimpleDownloader
 
 /// Functions to transform downloaded Wealthsimple data into SwiftBeanCountModel types
 public struct WealthsimpleLedgerMapper {
 
-    typealias WTransaction = Wealthsimple.Transaction
+    typealias WTransaction = WealthsimpleDownloader.Transaction
     typealias STransaction = SwiftBeanCountModel.Transaction
-    typealias WAccount = Wealthsimple.Account
+    typealias WAccount = WealthsimpleDownloader.Account
 
     private struct CategorizedTransactions {
         var currencyConversions: [WTransaction]
@@ -76,7 +76,7 @@ public struct WealthsimpleLedgerMapper {
     /// Downloaded Wealthsimple accounts
     ///
     /// Need to be set before attempting to map positions or transactions
-    public var accounts = [Wealthsimple.Account]()
+    public var accounts = [WealthsimpleDownloader.Account]()
 
     /// Create a WealthsimpleLedgerMapper
     /// - Parameter ledger: Ledger to look up accounts, commodities or duplicate entries in
@@ -137,7 +137,7 @@ public struct WealthsimpleLedgerMapper {
     /// - Throws: WealthsimpleConversionError
     /// - Returns: Prices and Transactions
     public func mapTransactionsToPriceAndTransactions(
-        _ wealthsimpleTransactions: [Wealthsimple.Transaction]
+        _ wealthsimpleTransactions: [WealthsimpleDownloader.Transaction]
     ) throws -> ([Price], [SwiftBeanCountModel.Transaction]) {
         guard !wealthsimpleTransactions.isEmpty else {
             return ([], [])

@@ -2,7 +2,7 @@ import Foundation
 import SwiftBeanCountModel
 @testable import SwiftBeanCountWealthsimpleMapper
 import Testing
-import Wealthsimple
+import WealthsimpleDownloader
 
 @Suite
 struct TransactionHelperTests {

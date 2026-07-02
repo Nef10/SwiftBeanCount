@@ -1,6 +1,6 @@
 import Foundation
 import SwiftBeanCountModel
-import Wealthsimple
+import WealthsimpleDownloader
 
 struct TestAsset: Asset {
     var name: String = ""
@@ -40,7 +40,7 @@ struct TestPositon: Position {
     }
 }
 
-struct TestTransaction: Wealthsimple.Transaction {
+struct TestTransaction: WealthsimpleDownloader.Transaction {
     var id = ""
     var accountId = ""
     var transactionType: TransactionType = .buy

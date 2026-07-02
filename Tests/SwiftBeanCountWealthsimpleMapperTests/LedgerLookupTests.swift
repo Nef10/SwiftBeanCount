@@ -2,10 +2,10 @@ import Foundation
 import SwiftBeanCountModel
 @testable import SwiftBeanCountWealthsimpleMapper
 import Testing
-import Wealthsimple
+import WealthsimpleDownloader
 
-struct TestAccount: Wealthsimple.Account {
-    var accountType = Wealthsimple.AccountType.nonRegistered
+struct TestAccount: WealthsimpleDownloader.Account {
+    var accountType = WealthsimpleDownloader.AccountType.nonRegistered
     var number = ""
     var id = ""
     var currency = ""

@@ -9,17 +9,21 @@
 import Foundation
 import SwiftBeanCountModel
 import SwiftBeanCountWealthsimpleMapper
-import Wealthsimple
+import WealthsimpleDownloader
 
 protocol WealthsimpleDownloaderProvider {
-    init(authenticationCallback: @escaping WealthsimpleDownloader.AuthenticationCallback, credentialStorage: CredentialStorage)
+    init(authenticationCallback: @escaping WealthsimpleAPI.AuthenticationCallback, credentialStorage: CredentialStorage)
     func authenticate(completion: @escaping (Error?) -> Void)
-    func getAccounts(completion: @escaping (Result<[Wealthsimple.Account], Wealthsimple.AccountError>) -> Void)
-    func getPositions(in account: Wealthsimple.Account, date: Date?, completion: @escaping (Result<[Wealthsimple.Position], Wealthsimple.PositionError>) -> Void)
+    func getAccounts(completion: @escaping (Result<[WealthsimpleDownloader.Account], WealthsimpleDownloader.AccountError>) -> Void)
+    func getPositions(
+        in account: WealthsimpleDownloader.Account,
+        date: Date?,
+        completion: @escaping (Result<[WealthsimpleDownloader.Position], WealthsimpleDownloader.PositionError>) -> Void
+    )
     func getTransactions(
-        in account: Wealthsimple.Account,
+        in account: WealthsimpleDownloader.Account,
         startDate: Date,
-        completion: @escaping (Result<[Wealthsimple.Transaction], Wealthsimple.TransactionError>) -> Void
+        completion: @escaping (Result<[WealthsimpleDownloader.Transaction], WealthsimpleDownloader.TransactionError>) -> Void
     )
 }
 
@@ -100,7 +104,7 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlin
     }
 
     override var importName: String { "Wealthsimple Download" }
-    var downloaderClass: WealthsimpleDownloaderProvider.Type = WealthsimpleDownloader.self
+    var downloaderClass: WealthsimpleDownloaderProvider.Type = WealthsimpleAPI.self
 
     private let existingLedger: Ledger
     private let sixtyTwoDays = -60 * 60 * 24 * 62.0
@@ -110,7 +114,7 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlin
     private var downloader: WealthsimpleDownloaderProvider!
     private var mapper: WealthsimpleLedgerMapper
 
-    private var downloadedAccounts = [Wealthsimple.Account]()
+    private var downloadedAccounts = [WealthsimpleDownloader.Account]()
 
     /// Results
     private var transactions = [ImportedTransaction]()
@@ -209,7 +213,7 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlin
 
     private func downloadTransactions(_ completion: @escaping () -> Void) { // swiftlint:disable:this function_body_length
         let group = DispatchGroup()
-        var allWealthsimpleTransactions = [Wealthsimple.Transaction]()
+        var allWealthsimpleTransactions = [WealthsimpleDownloader.Transaction]()
         var errorOccurred = false
 
         downloadedAccounts.forEach { account in
@@ -342,5 +346,5 @@ extension WealthsimpleDownloadImporter: CredentialStorage {
 
 }
 
-extension WealthsimpleDownloader: WealthsimpleDownloaderProvider {
+extension WealthsimpleAPI: WealthsimpleDownloaderProvider {
 }

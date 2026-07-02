@@ -11,28 +11,28 @@ import Foundation
 import SwiftBeanCountModel
 import SwiftBeanCountWealthsimpleMapper
 import Testing
-import Wealthsimple
+import WealthsimpleDownloader
 
 private typealias STransaction = SwiftBeanCountModel.Transaction
 
 private var authenticateClosure: (() -> Error?)?
-private var getAccountsClosure: (() -> Result<[Wealthsimple.Account], Wealthsimple.AccountError>)?
-private var getPositionsClosure: ((Wealthsimple.Account, Date?) -> Result<[Position], PositionError>)?
-private var getTransactionsClosure: ((Wealthsimple.Account, Date?) -> Result<[Wealthsimple.Transaction], TransactionError>)?
-private var authenticationCallbackClosure: WealthsimpleDownloader.AuthenticationCallback?
+private var getAccountsClosure: (() -> Result<[WealthsimpleDownloader.Account], WealthsimpleDownloader.AccountError>)?
+private var getPositionsClosure: ((WealthsimpleDownloader.Account, Date?) -> Result<[WealthsimpleDownloader.Position], WealthsimpleDownloader.PositionError>)?
+private var getTransactionsClosure: ((WealthsimpleDownloader.Account, Date?) -> Result<[WealthsimpleDownloader.Transaction], WealthsimpleDownloader.TransactionError>)?
+private var authenticationCallbackClosure: WealthsimpleAPI.AuthenticationCallback?
 private var credentialStorageClosure: CredentialStorage?
 
-private struct TestAccount: Wealthsimple.Account {
-    var accountType = Wealthsimple.AccountType.nonRegistered
+private struct TestAccount: WealthsimpleDownloader.Account {
+    var accountType = WealthsimpleDownloader.AccountType.nonRegistered
     var currency = "CAD"
     var id = "id123"
     var number = "A1B2"
 }
 
-private struct TestTransaction: Wealthsimple.Transaction {
+private struct TestTransaction: WealthsimpleDownloader.Transaction {
     var id = "transID"
     var accountId = "id123"
-    var transactionType = Wealthsimple.TransactionType.buy
+    var transactionType = WealthsimpleDownloader.TransactionType.buy
     var description = ""
     var symbol = "ETF"
     var quantity = "5.25"
@@ -47,16 +47,16 @@ private struct TestTransaction: Wealthsimple.Transaction {
     var processDate = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
 }
 
-private struct TestAsset: Wealthsimple.Asset {
+private struct TestAsset: WealthsimpleDownloader.Asset {
     var symbol = "XGRO"
     var name = "Grow ETF"
     var currency = "CAD"
     var type = AssetType.exchangeTradedFund
 }
 
-private struct TestPosition: Wealthsimple.Position {
+private struct TestPosition: WealthsimpleDownloader.Position {
     var accountId = "AccountIDPosition"
-    var asset: Wealthsimple.Asset = TestAsset()
+    var asset: WealthsimpleDownloader.Asset = TestAsset()
     var quantity = "2"
     var priceAmount = "1.11"
     var priceCurrency = "CAD"
@@ -65,7 +65,7 @@ private struct TestPosition: Wealthsimple.Position {
 
 private struct TestDownloader: WealthsimpleDownloaderProvider {
 
-    init(authenticationCallback: @escaping WealthsimpleDownloader.AuthenticationCallback, credentialStorage: CredentialStorage) {
+    init(authenticationCallback: @escaping WealthsimpleAPI.AuthenticationCallback, credentialStorage: CredentialStorage) {
         authenticationCallbackClosure = authenticationCallback
         credentialStorageClosure = credentialStorage
     }
@@ -74,18 +74,18 @@ private struct TestDownloader: WealthsimpleDownloaderProvider {
         completion(authenticateClosure?())
     }
 
-    func getAccounts(completion: (Result<[Wealthsimple.Account], Wealthsimple.AccountError>) -> Void) {
+    func getAccounts(completion: (Result<[WealthsimpleDownloader.Account], WealthsimpleDownloader.AccountError>) -> Void) {
         completion(getAccountsClosure?() ?? .success([]))
     }
 
-    func getPositions(in account: Wealthsimple.Account, date: Date?, completion: (Result<[Position], PositionError>) -> Void) {
+    func getPositions(in account: WealthsimpleDownloader.Account, date: Date?, completion: (Result<[Position], PositionError>) -> Void) {
         completion(getPositionsClosure?(account, date) ?? .success([]))
     }
 
     func getTransactions(
-        in account: Wealthsimple.Account,
+        in account: WealthsimpleDownloader.Account,
         startDate: Date,
-        completion: (Result<[Wealthsimple.Transaction], Wealthsimple.TransactionError>) -> Void
+        completion: (Result<[WealthsimpleDownloader.Transaction], WealthsimpleDownloader.TransactionError>) -> Void
     ) {
         completion(getTransactionsClosure?(account, startDate) ?? .success([]))
     }
@@ -438,8 +438,8 @@ struct WealthsimpleDownloadImporterTests { // swiftlint:disable:this type_body_l
 }
 }
 
-extension Wealthsimple.AccountError: EquatableError {
-    public static func == (lhs: Wealthsimple.AccountError, rhs: Wealthsimple.AccountError) -> Bool {
+extension WealthsimpleDownloader.AccountError: EquatableError {
+    public static func == (lhs: WealthsimpleDownloader.AccountError, rhs: WealthsimpleDownloader.AccountError) -> Bool {
         if case let .httpError(lhsString) = lhs, case let .httpError(rhsString) = rhs {
             return lhsString == rhsString
         }
@@ -447,8 +447,8 @@ extension Wealthsimple.AccountError: EquatableError {
     }
 }
 
-extension Wealthsimple.PositionError: EquatableError {
-    public static func == (lhs: Wealthsimple.PositionError, rhs: Wealthsimple.PositionError) -> Bool {
+extension WealthsimpleDownloader.PositionError: EquatableError {
+    public static func == (lhs: WealthsimpleDownloader.PositionError, rhs: WealthsimpleDownloader.PositionError) -> Bool {
         if case let .httpError(lhsString) = lhs, case let .httpError(rhsString) = rhs {
             return lhsString == rhsString
         }
@@ -456,8 +456,8 @@ extension Wealthsimple.PositionError: EquatableError {
     }
 }
 
-extension Wealthsimple.TransactionError: EquatableError {
-    public static func == (lhs: Wealthsimple.TransactionError, rhs: Wealthsimple.TransactionError) -> Bool {
+extension WealthsimpleDownloader.TransactionError: EquatableError {
+    public static func == (lhs: WealthsimpleDownloader.TransactionError, rhs: WealthsimpleDownloader.TransactionError) -> Bool {
         if case let .httpError(lhsString) = lhs, case let .httpError(rhsString) = rhs {
             return lhsString == rhsString
         }

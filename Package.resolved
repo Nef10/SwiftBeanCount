@@ -1,5 +1,5 @@
 {
-  "originHash" : "dc9165b53f6c2bbb4d86bb13e04d8c2026ee7c3e3fed44c5300e84cfe7bf0ba3",
+  "originHash" : "67417239ec85e82855409a0773d573dac7b2ce8559d69ea597ee79213be096bb",
   "pins" : [
     {
       "identity" : "brightfutures",
@@ -170,15 +170,6 @@
       "state" : {
         "revision" : "c05d790d4768372952bc69c7dcc095b12a7f9b64",
         "version" : "0.1.0"
-      }
-    },
-    {
-      "identity" : "wealthsimpledownloader",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Nef10/WealthsimpleDownloader.git",
-      "state" : {
-        "revision" : "663c7aca3f5a564d8e1d0f99f026544ee62098cf",
-        "version" : "3.1.1"
       }
     }
   ],
