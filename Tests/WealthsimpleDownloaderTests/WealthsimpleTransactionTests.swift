@@ -281,7 +281,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
 
     // MARK: - Successful REST Tests
 
-        // swiftlint:disable:next function_body_length
+    // swiftlint:disable:next function_body_length
     func testGetTransactionsSuccess() throws {
         let expectation = XCTestExpectation(description: "getTransactions completion")
         let mockExpectation = XCTestExpectation(description: "mock server called")
@@ -421,6 +421,9 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
 
     // MARK: - Successful GraphQL Tests
 
+#if canImport(FoundationNetworking)
+// see https://github.com/swiftlang/swift-corelibs-foundation/issues/3199
+#else
     // swiftlint:disable:next function_body_length
     func testGraphQLTransactionsSuccess() throws {
         let expectation = XCTestExpectation(description: "getTransactions completion")
@@ -510,6 +513,8 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
 
         wait(for: [expectation, mockExpectation], timeout: 10.0)
     }
+
+#endif
 
     // MARK: - Network Error Tests
 
@@ -755,6 +760,10 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         wait(for: [mockExpectation, expectation], timeout: 10.0)
     }
 
+#if canImport(FoundationNetworking)
+// see https://github.com/swiftlang/swift-corelibs-foundation/issues/3199
+#else
+
     func testGraphQLErrorSecondPage() throws {
         let expectation = XCTestExpectation(description: "getTransactions completion")
         let mockExpectation = XCTestExpectation(description: "mock server called")
@@ -782,12 +791,6 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         try testGraphQLFailure(expectation: expectation, expectedError: expectedError)
 
         wait(for: [expectation, mockExpectation], timeout: 10.0)
-    }
-
-    func testGraphQLWrongStructure() throws {
-        let response1 = Self.graphQLTransactionJSON
-        let error = TransactionError.missingResultParameter(json: (Self.graphQLTransactionJSON))
-        try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: nil, expectedError: error)
     }
 
     func testGraphQLWrongInnerStructure() throws {
@@ -819,6 +822,12 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
             ]
         ]
         let error = TransactionError.invalidResultParameter(json: ["edges": [["node": Self.graphQLTransactionJSON]]])
+        try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: nil, expectedError: error)
+    }
+
+    func testGraphQLWrongStructure() throws {
+        let response1 = Self.graphQLTransactionJSON
+        let error = TransactionError.missingResultParameter(json: (Self.graphQLTransactionJSON))
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: nil, expectedError: error)
     }
 
@@ -906,5 +915,7 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
 
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: response2, expectedError: error)
     }
+
+#endif
 
 }
