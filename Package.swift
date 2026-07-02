@@ -38,16 +38,18 @@ let package = Package(
         .library(name: "WealthsimpleDownloader", targets: ["WealthsimpleDownloader"]),
         .library(name: "CompassCardDownloader", targets: ["CompassCardDownloader"]),
         .library(name: "TangerineDownloader", targets: ["TangerineDownloader"]),
+        .library(name: "GoogleAuthentication", targets: ["GoogleAuthentication"])
     ],
     dependencies: [
-        .package(url: "https://github.com/Nef10/GoogleAuthentication.git", from: "1.1.0"),
         .package(url: "https://github.com/yaslab/CSV.swift.git", from: "2.5.2"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.7.0"),
         .package(url: "https://github.com/onevcat/Rainbow", from: "4.2.1"),
         .package(url: "https://github.com/scottrhoyt/SwiftyTextTable.git", exact: "0.9.0"),
         .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", exact: "0.64.1"),
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.4.5"),
-        .package(url: "https://github.com/Nef10/SwiftScraper.git", exact: "0.7.0")
+        .package(url: "https://github.com/Nef10/SwiftScraper.git", exact: "0.7.0"),
+        .package(url: "https://github.com/OAuthSwift/OAuthSwift.git", .upToNextMajor(from: "2.2.0")),
+        .package(url: "https://github.com/kishikawakatsumi/KeychainAccess.git", .upToNextMajor(from: "4.2.1")),
     ],
     targets: [
         .executableTarget(
@@ -136,7 +138,7 @@ let package = Package(
             dependencies: [
                 "SwiftBeanCountModel",
                 "SwiftBeanCountParser",
-                .product(name: "GoogleAuthentication", package: "GoogleAuthentication", condition: .when(platforms: [.macOS, .iOS])),
+                .byName(name: "GoogleAuthentication", condition: .when(platforms: [.macOS, .iOS])),
             ],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
@@ -188,6 +190,15 @@ let package = Package(
             ],
             resources: [
                 .process("Resources/TangerineDownload.js")
+            ],
+            swiftSettings: swiftSettings,
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .target(
+            name: "GoogleAuthentication",
+            dependencies: [
+                .product(name: "OAuthSwift", package: "OAuthSwift", condition: .when(platforms: [.macOS, .iOS])),
+                .product(name: "KeychainAccess", package: "KeychainAccess", condition: .when(platforms: [.macOS, .iOS]))
             ],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
@@ -287,6 +298,12 @@ let package = Package(
         .testTarget(
             name: "TangerineDownloaderTests",
             dependencies: ["TangerineDownloader"],
+            swiftSettings: swiftSettings,
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .testTarget(
+            name: "GoogleAuthenticationTests",
+            dependencies: ["GoogleAuthentication"],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
