@@ -173,7 +173,7 @@ let package = Package(
         .target(
             name: "CompassCardDownloader",
             dependencies: [
-                "SwiftScraper",
+                .product(name: "SwiftScraper", package: "SwiftScraper", condition: .when(platforms: [.macOS, .iOS])),
             ],
             resources: [
                 .process("Resources/CompassCardDownload.js")
