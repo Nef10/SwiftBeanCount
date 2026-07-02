@@ -1,5 +1,7 @@
 import Foundation
+#if canImport(SwiftScraper)
 import SwiftScraper
+#endif
 
 /// Class to download the current balance and transactions from your CompassCard
 ///
