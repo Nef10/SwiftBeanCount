@@ -303,7 +303,7 @@ struct WealthsimpleDownloadImporterTests { // swiftlint:disable:this type_body_l
     }
 
     @Test
-    func loadTransactionsSuppressesMergedCashbackDuplicate() throws {
+    func loadTransactionsSuppressesMergedCashbackDuplicate() throws { // swiftlint:disable:this function_body_length
         let ledger = Ledger()
         try ledger.add(SwiftBeanCountModel.Account(name: try AccountName("Assets:W:Cash"), metaData: ["importer-type": "wealthsimple", "number": "A1B2"]))
         try ledger.add(SwiftBeanCountModel.Account(name: try AccountName("Income:Cashback"), metaData: ["wealthsimple-cashback-bonus": "A1B2"]))
