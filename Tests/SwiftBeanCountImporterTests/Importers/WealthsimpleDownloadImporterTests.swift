@@ -272,6 +272,81 @@ struct WealthsimpleDownloadImporterTests { // swiftlint:disable:this type_body_l
     }
 
     @Test
+    func loadTransactionsSuppressesPostedCardActivityDuplicate() throws {
+        let pendingID = "card-activity-12345678901234567890-MC-01-1234567890123456-TESTABC"
+        let postedID = "\(pendingID)-0tifr2if9xlg"
+
+        let ledger = Ledger()
+        try ledger.add(SwiftBeanCountModel.Account(name: try AccountName("Assets:W:Cash"), metaData: ["importer-type": "wealthsimple", "number": "A1B2"]))
+        try ledger.add(Commodity(symbol: "CAD"))
+        ledger.add(STransaction(metaData: TransactionMetaData(date: Date(), metaData: ["wealthsimple-id": pendingID]), postings: []))
+
+        let importer = WealthsimpleDownloadImporter(ledger: ledger)
+        let account = TestAccount()
+        var transaction = TestTransaction()
+        transaction.id = postedID
+        transaction.transactionType = .paymentSpend
+        transaction.symbol = "CAD"
+        transaction.quantity = "-11.76"
+        transaction.netCashAmount = "-11.76"
+
+        getAccountsClosure = { .success([account]) }
+        getPositionsClosure = { _, _ in .success([]) }
+        getTransactionsClosure = { _, _ in .success([transaction]) }
+
+        importer.downloaderClass = TestDownloader.self
+        importer.load()
+
+        #expect(importer.nextTransaction() == nil)
+        #expect(importer.pricesToImport().isEmpty)
+        #expect(importer.balancesToImport().isEmpty)
+    }
+
+    @Test
+    func loadTransactionsSuppressesMergedCashbackDuplicate() throws {
+        let ledger = Ledger()
+        try ledger.add(SwiftBeanCountModel.Account(name: try AccountName("Assets:W:Cash"), metaData: ["importer-type": "wealthsimple", "number": "A1B2"]))
+        try ledger.add(SwiftBeanCountModel.Account(name: try AccountName("Income:Cashback"), metaData: ["wealthsimple-cashback-bonus": "A1B2"]))
+        try ledger.add(Commodity(symbol: "CAD"))
+
+        let existingID = "transaction-7oaJAJOSvSMGndrXgKGYahyYDRM transaction-IxPwJZB66GTF2x0X7HIE1BQLu4 transaction-cWzbd9e2iy8ys9jJJamDO1D3rwI"
+        ledger.add(STransaction(metaData: TransactionMetaData(date: Date(), metaData: ["wealthsimple-id": existingID]), postings: []))
+
+        let importer = WealthsimpleDownloadImporter(ledger: ledger)
+        let account = TestAccount()
+        let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
+        let description = "Cashback credit paid at 2026-01-26 for $23.1700"
+        var transaction1 = TestTransaction()
+        transaction1.id = "transaction-7oaJAJOSvSMGndrXgKGYahyYDRM"
+        transaction1.transactionType = .cashbackBonus
+        transaction1.description = description
+        transaction1.symbol = "CAD"
+        transaction1.quantity = "-23.17"
+        transaction1.netCashAmount = "-23.17"
+        transaction1.marketValueAmount = "-23.17"
+        transaction1.processDate = date
+        transaction1.effectiveDate = date
+        var transaction2 = transaction1
+        transaction2.id = "transaction-IxPwJZB66GTF2x0X7HIE1BQLu4"
+        transaction2.quantity = "23.17"
+        transaction2.netCashAmount = "23.17"
+        transaction2.marketValueAmount = "23.17"
+        var transaction3 = transaction2
+        transaction3.id = "transaction-cWzbd9e2iy8ys9jJJamDO1D3rwI"
+
+        getAccountsClosure = { .success([account]) }
+        getPositionsClosure = { _, _ in .success([]) }
+        getTransactionsClosure = { _, _ in .success([transaction1, transaction2, transaction3]) }
+
+        importer.downloaderClass = TestDownloader.self
+        importer.load()
+
+        #expect(importer.nextTransaction() == nil)
+        #expect(importer.pricesToImport().isEmpty)
+        #expect(importer.balancesToImport().isEmpty)
+    }
+
+    @Test
     func loadPositions() throws {
         let ledger = Ledger()
         try ledger.add(SwiftBeanCountModel.Account(name: try AccountName("Assets:W:Cash"), metaData: ["importer-type": "wealthsimple", "number": "A1B2"]))
