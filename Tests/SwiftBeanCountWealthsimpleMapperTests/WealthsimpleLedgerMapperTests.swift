@@ -246,6 +246,44 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
     }
 
     @Test
+    func mapTransactionsPendingCardActivityMatchesPostedID() throws {
+        let pendingID = "card-activity-12345678901234567890-MC-01-1234567890123456-TESTABC"
+        let postedID = "\(pendingID)-0tifr2if9xlg"
+        ledger.add(Transaction(metaData: TransactionMetaData(date: Date(), metaData: [MetaDataKeys.id: pendingID]), postings: []))
+
+        var transaction = testTransaction
+        transaction.id = postedID
+        transaction.transactionType = .paymentSpend
+        transaction.symbol = "CAD"
+        transaction.quantity = "-11.76"
+        transaction.netCashAmount = "-11.76"
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction])
+
+        #expect(prices.isEmpty)
+        #expect(transactions.isEmpty)
+    }
+
+    @Test
+    func mapTransactionsPostedCardActivityStoresNormalizedID() throws {
+        let pendingID = "card-activity-12345678901234567890-MC-01-1234567890123456-TESTABC"
+        let postedID = "\(pendingID)-0tifr2if9xlg"
+
+        var transaction = testTransaction
+        transaction.id = postedID
+        transaction.transactionType = .paymentSpend
+        transaction.symbol = "CAD"
+        transaction.quantity = "-11.76"
+        transaction.netCashAmount = "-11.76"
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction])
+
+        #expect(prices.isEmpty)
+        #expect(transactions.count == 1)
+        #expect(transactions.first?.metaData.metaData[MetaDataKeys.id] == pendingID)
+    }
+
+    @Test
     func mapTransactionsNRWT() throws {
         var nrwt = testTransaction
         nrwt.transactionType = .nonResidentWithholdingTax
@@ -562,6 +600,26 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         #expect(transactions.count == 1)
         #expect(transactions.first?.metaData.metaData[MetaDataKeys.id] == mergedId)
         #expect(transactions == [expectedTransaction])
+    }
+
+    @Test
+    func mapCashbackTransactionsAlreadyExisting() throws {
+        let incomeAccount = try AccountName("Income:Cashback")
+        try ledger.add(SAccount(name: incomeAccount, metaData: ["\(MetaDataKeys.prefix)cashback-bonus": accountNumber]))
+
+        let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
+        let description = "Cashback credit paid at 2026-01-26 for $23.1700"
+        let transaction1 = cashbackTransaction(id: "transaction-7oaJAJOSvSMGndrXgKGYahyYDRM", quantity: "-23.17", netCash: "-23.17", date: date, description: description)
+        let transaction2 = cashbackTransaction(id: "transaction-IxPwJZB66GTF2x0X7HIE1BQLu4", quantity: "23.17", netCash: "23.17", date: date, description: description)
+        let transaction3 = cashbackTransaction(id: "transaction-cWzbd9e2iy8ys9jJJamDO1D3rwI", quantity: "23.17", netCash: "23.17", date: date, description: description)
+        let mergedId = "transaction-7oaJAJOSvSMGndrXgKGYahyYDRM transaction-IxPwJZB66GTF2x0X7HIE1BQLu4 transaction-cWzbd9e2iy8ys9jJJamDO1D3rwI"
+
+        ledger.add(Transaction(metaData: TransactionMetaData(date: date, metaData: [MetaDataKeys.id: mergedId]), postings: []))
+
+        let (prices, transactions) = try mapper.mapTransactionsToPriceAndTransactions([transaction1, transaction2, transaction3])
+
+        #expect(prices.isEmpty)
+        #expect(transactions.isEmpty)
     }
 
     @Test

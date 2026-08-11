@@ -13,6 +13,14 @@ import WealthsimpleDownloader
 
 extension WealthsimpleLedgerMapper {
 
+    func normalizedTransactionID(_ id: String) -> String {
+        WealthsimpleTransactionID.normalized(id)
+    }
+
+    func mergedTransactionIDs(_ transactions: [WTransaction]) -> String {
+        transactions.map { normalizedTransactionID($0.id) }.sorted().joined(separator: " ")
+    }
+
     func processRegularTransactions(_ regular: [WTransaction], nrwt: [WTransaction]) throws -> RegularTransactionsResult {
         var prices = [Price](), transactions = [STransaction]()
         var mergedNRWTIds = Set<String>()
@@ -126,7 +134,7 @@ extension WealthsimpleLedgerMapper {
             Posting(accountName: outAccountName, amount: outTransaction.netCash)
         ]
 
-        let mergedId = group.map(\.id).sorted().joined(separator: " ")
+        let mergedId = mergedTransactionIDs(group)
         let meta = TransactionMetaData(
             date: inTransaction.processDate,
             metaData: [MetaDataKeys.id: mergedId]
@@ -147,7 +155,7 @@ extension WealthsimpleLedgerMapper {
         let sourceAmount = Amount(for: sellTransaction.quantity, in: try lookup.commoditySymbol(for: sellTransaction.symbol))
         let targetAmount = Amount(for: buyTransaction.quantity, in: try lookup.commoditySymbol(for: buyTransaction.symbol))
         let totalPrice = Amount(for: sellTransaction.marketValueAmount, in: try lookup.commoditySymbol(for: sellTransaction.symbol))
-        let mergedId = group.map(\.id).sorted().joined(separator: " ")
+        let mergedId = mergedTransactionIDs(group)
 
         return try STransaction(
             metaData: TransactionMetaData(date: buyTransaction.processDate, metaData: [MetaDataKeys.id: mergedId]),
