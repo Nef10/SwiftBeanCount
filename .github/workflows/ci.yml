@@ -107,7 +107,7 @@ jobs:
         done
 
         # Combine all .lcov files into a single lcov.info
-        find . -maxdepth 1 -name "*.lcov" -exec echo -a {} \; | xargs lcov -o "${OUTPUT_FILE}"
+        find . -maxdepth 1 -name "*.lcov" -exec echo -a {} \; | xargs lcov --ignore-errors empty -o "${OUTPUT_FILE}"
     - name: Normalize file paths in coverage report
       run: |
         sed -i.bak "s|^SF:${GITHUB_WORKSPACE}/|SF:|g" "${OUTPUT_FILE}"
