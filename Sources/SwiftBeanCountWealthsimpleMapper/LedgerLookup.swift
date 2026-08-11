@@ -36,9 +36,16 @@ struct LedgerLookup {
         guard let id = transaction.metaData.metaData[MetaDataKeys.id] else {
             return false
         }
+        let normalizedIDs = WealthsimpleTransactionID.normalizedIDs(in: id)
         return ledger.transactions.contains {
-            $0.metaData.metaData[MetaDataKeys.id]?.contains(id) ?? false ||
-            $0.metaData.metaData[MetaDataKeys.nrwtId] == id
+            $0.metaData.metaData[MetaDataKeys.id].map {
+                let storedIDs = WealthsimpleTransactionID.normalizedIDs(in: $0)
+                if normalizedIDs.count == 1 {
+                    return storedIDs.isSuperset(of: normalizedIDs)
+                }
+                return storedIDs == normalizedIDs
+            } ?? false ||
+            $0.metaData.metaData[MetaDataKeys.nrwtId].map { normalizedIDs == [WealthsimpleTransactionID.normalized($0)] } ?? false
         }
     }
 

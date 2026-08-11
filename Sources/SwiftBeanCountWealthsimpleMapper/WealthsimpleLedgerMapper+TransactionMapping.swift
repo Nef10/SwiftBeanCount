@@ -43,7 +43,8 @@ extension WealthsimpleLedgerMapper {
     }
 
     func mapBuy(_ transaction: WTransaction, in account: WAccount) throws -> (Price, STransaction) {
-        let result = STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [
+        let metaData = TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: normalizedTransactionID(transaction.id)])
+        let result = STransaction(metaData: metaData, postings: [
             Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash, price: transaction.useFx ? transaction.fxAmount : nil),
             Posting(accountName: try lookup.ledgerAccountName(of: account, symbol: transaction.symbol),
                     amount: Amount(for: transaction.quantity, in: try lookup.commoditySymbol(for: transaction.symbol)),
@@ -53,7 +54,8 @@ extension WealthsimpleLedgerMapper {
     }
 
     func mapSell(_ transaction: WTransaction, in account: WAccount) throws -> (Price, STransaction) {
-        let result = STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [
+        let metaData = TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: normalizedTransactionID(transaction.id)])
+        let result = STransaction(metaData: metaData, postings: [
             Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash, price: transaction.useFx ? transaction.fxAmount : nil),
             Posting(accountName: try lookup.ledgerAccountName(of: account, symbol: transaction.symbol),
                     amount: Amount(for: transaction.quantity, in: try lookup.commoditySymbol(for: transaction.symbol)),
@@ -78,8 +80,13 @@ extension WealthsimpleLedgerMapper {
         let posting1 = Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash)
         let posting2 = try Posting(accountName: accountName, amount: amount, price: price, priceType: hasFX ? .total : nil)
         let narration = includeDescription ? transaction.description : ""
-        return STransaction(metaData: TransactionMetaData(date: transaction.processDate, payee: payee, narration: narration, metaData: [MetaDataKeys.id: transaction.id]),
-                            postings: [posting1, posting2])
+        let metaData = TransactionMetaData(
+            date: transaction.processDate,
+            payee: payee,
+            narration: narration,
+            metaData: [MetaDataKeys.id: normalizedTransactionID(transaction.id)]
+        )
+        return STransaction(metaData: metaData, postings: [posting1, posting2])
     }
 
     func mapContribution(_ transaction: WTransaction, in account: WAccount) throws -> STransaction {
@@ -96,7 +103,8 @@ extension WealthsimpleLedgerMapper {
             postings.append(Posting(accountName: contributionAsset, amount: amount1))
             postings.append(Posting(accountName: contributionExpense, amount: amount2))
         }
-        return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: postings)
+        let metaData = TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: normalizedTransactionID(transaction.id)])
+        return STransaction(metaData: metaData, postings: postings)
     }
 
     func mapDividend(_ transaction: WTransaction, in account: WAccount, manufactured: Bool = false) throws(WealthsimpleConversionError) -> STransaction {
@@ -109,7 +117,7 @@ extension WealthsimpleLedgerMapper {
         }
         let posting1 = Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash, price: price)
         let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: .dividend(transaction.symbol), in: account, ofType: [.income]), amount: income)
-        var metaDataDict = [MetaDataKeys.id: transaction.id]
+        var metaDataDict = [MetaDataKeys.id: normalizedTransactionID(transaction.id)]
         if let date {
             metaDataDict[MetaDataKeys.dividendRecordDate] = date
         }
@@ -121,7 +129,8 @@ extension WealthsimpleLedgerMapper {
     }
 
     func mapStockDividend(_ transaction: WTransaction, in account: WAccount) throws -> (Price, STransaction) {
-        let result = STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [
+        let metaData = TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: normalizedTransactionID(transaction.id)])
+        let result = STransaction(metaData: metaData, postings: [
             Posting(accountName: try lookup.ledgerAccountName(for: .dividend(transaction.symbol), in: account, ofType: [.income]), amount: transaction.negatedMarketValue),
             Posting(accountName: try lookup.ledgerAccountName(of: account, symbol: transaction.symbol),
                     amount: Amount(for: transaction.quantity, in: try lookup.commoditySymbol(for: transaction.symbol)),
@@ -135,7 +144,8 @@ extension WealthsimpleLedgerMapper {
         let price = Amount(number: transaction.fxAmount.number, commoditySymbol: amount.commoditySymbol, decimalDigits: transaction.fxAmount.decimalDigits)
         let posting1 = Posting(accountName: try lookup.ledgerAccountName(of: account), amount: transaction.netCash, price: price)
         let posting2 = Posting(accountName: try lookup.ledgerAccountName(for: .transactionType(transaction.transactionType), in: account, ofType: [.expense]), amount: amount)
-        return STransaction(metaData: TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: transaction.id]), postings: [posting1, posting2])
+        let metaData = TransactionMetaData(date: transaction.processDate, metaData: [MetaDataKeys.id: normalizedTransactionID(transaction.id)])
+        return STransaction(metaData: metaData, postings: [posting1, posting2])
     }
 
     func mapStockSplits(_ transactions: [WTransaction], in account: WAccount) throws -> [STransaction] {
@@ -158,7 +168,11 @@ extension WealthsimpleLedgerMapper {
               let sellTransaction = transactions.first(where: { $0.quantity.starts(with: "-") }) else {
             throw WealthsimpleConversionError.unexpectedStockSplit(transactions.first!.description)
         }
-        let metaData = TransactionMetaData(date: buyTransaction.processDate, narration: buyTransaction.description, metaData: [MetaDataKeys.id: buyTransaction.id])
+        let metaData = TransactionMetaData(
+            date: buyTransaction.processDate,
+            narration: buyTransaction.description,
+            metaData: [MetaDataKeys.id: normalizedTransactionID(buyTransaction.id)]
+        )
         return STransaction(metaData: metaData, postings: [
             Posting(accountName: try lookup.ledgerAccountName(of: account, symbol: sellTransaction.symbol),
                     amount: Amount(for: sellTransaction.quantity, in: try lookup.commoditySymbol(for: sellTransaction.symbol)),
