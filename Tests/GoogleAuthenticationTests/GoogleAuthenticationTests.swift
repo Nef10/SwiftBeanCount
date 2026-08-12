@@ -1,6 +1,6 @@
 @testable import GoogleAuthentication
-import XCTest
+import Testing
 
-final class GoogleAuthenticationTests: XCTestCase {
-
+@Suite
+struct GoogleAuthenticationTests {
 }

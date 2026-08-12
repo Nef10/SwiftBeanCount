@@ -6,28 +6,28 @@
 //
 
 import Foundation
+import Testing
 @testable import WealthsimpleDownloader
-import XCTest
 
-final class StringCamelCaseTests: XCTestCase {
+@Suite
+final class StringCamelCaseTests {
+   @Test
+   func camelCase() {
+       #expect("".camelCase.isEmpty)
 
-    func testCamelCase() {
-        XCTAssertEqual("".camelCase, "")
+       #expect("ABC".camelCase == "aBC")
+       #expect("abc".camelCase == "abc")
+       #expect("aBc".camelCase == "aBc")
 
-        XCTAssertEqual("ABC".camelCase, "aBC")
-        XCTAssertEqual("abc".camelCase, "abc")
-        XCTAssertEqual("aBc".camelCase, "aBc")
+       #expect("abc def".camelCase == "abcDef")
+       #expect("ABC DEF".camelCase == "aBCDEF")
+       #expect("aBc dEf".camelCase == "aBcDEf")
 
-        XCTAssertEqual("abc def".camelCase, "abcDef")
-        XCTAssertEqual("ABC DEF".camelCase, "aBCDEF")
-        XCTAssertEqual("aBc dEf".camelCase, "aBcDEf")
+       #expect("abc def ghi jkl".camelCase == "abcDefGhiJkl")
+       #expect("a b c d e".camelCase == "aBCDE")
 
-        XCTAssertEqual("abc def ghi jkl".camelCase, "abcDefGhiJkl")
-        XCTAssertEqual("a b c d e".camelCase, "aBCDE")
+       #expect("a1a b c3c d e4e".camelCase == "a1aBC3cDE4e")
 
-        XCTAssertEqual("a1a b c3c d e4e".camelCase, "a1aBC3cDE4e")
-
-        XCTAssertEqual("abc-def&ghi+jkl%mno_pqr".camelCase, "abcDefGhiJklMnoPqr")
-    }
-
+       #expect("abc-def&ghi+jkl%mno_pqr".camelCase == "abcDefGhiJklMnoPqr")
+   }
 }
