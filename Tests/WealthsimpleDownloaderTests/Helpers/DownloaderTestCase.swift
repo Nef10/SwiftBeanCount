@@ -4,27 +4,87 @@
 //
 //  Created by Steffen Kötte on 2025-09-03.
 //
-
 import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
+import Testing
 @testable import WealthsimpleDownloader
-import XCTest
 
-class DownloaderTestCase: XCTestCase { // swiftlint:disable:this final_test_case
+private actor DownloaderTestLock {
+    static let shared = DownloaderTestLock()
 
-    var mockCredentialStorage: MockCredentialStorage! // swiftlint:disable:this test_case_accessibility
+    private var isLocked = false
+    private var waiters: [CheckedContinuation<Void, Never>] = []
 
-    override func setUp() {
-        super.setUp()
-        mockCredentialStorage = MockCredentialStorage()
+    func lock() async {
+        guard !isLocked else {
+            await withCheckedContinuation { waiters.append($0) }
+            return
+        }
+        isLocked = true
+    }
+
+    func unlock() {
+        guard let waiter = waiters.first else {
+            isLocked = false
+            return
+        }
+        waiters.removeFirst()
+        waiter.resume()
+    }
+}
+
+struct MockURLProtocolSerialTrait: SuiteTrait, TestTrait, TestScoping {
+    var isRecursive: Bool { false }
+
+
+    func provideScope(
+        for _: Test,
+        testCase _: Test.Case?,
+        performing function: @Sendable () async throws -> Void
+    ) async throws {
+        await DownloaderTestLock.shared.lock()
         MockURLProtocol.setup()
+        do {
+            try await function()
+            MockURLProtocol.reset()
+            await DownloaderTestLock.shared.unlock()
+        } catch {
+            MockURLProtocol.reset()
+            await DownloaderTestLock.shared.unlock()
+            throw error
+        }
     }
+}
 
-    override func tearDown() {
-        MockURLProtocol.reset()
-        super.tearDown()
+extension Trait where Self == MockURLProtocolSerialTrait {
+    static var mockURLProtocolSerialized: Self { Self() }
+}
+
+struct URLConfigurationSerialTrait: SuiteTrait, TestTrait, TestScoping {
+    var isRecursive: Bool { false }
+
+    func provideScope(
+        for _: Test,
+        testCase _: Test.Case?,
+        performing function: @Sendable () async throws -> Void
+    ) async throws {
+        await DownloaderTestLock.shared.lock()
+        do {
+            try await function()
+            await DownloaderTestLock.shared.unlock()
+        } catch {
+            await DownloaderTestLock.shared.unlock()
+            throw error
+        }
     }
+}
 
+extension Trait where Self == URLConfigurationSerialTrait {
+    static var urlConfigurationSerialized: Self { Self() }
+}
+
+class DownloaderTestCase { // swiftlint:disable:this final_test_case
+   var mockCredentialStorage = MockCredentialStorage()
 }

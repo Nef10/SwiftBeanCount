@@ -4,7 +4,6 @@
 //
 //  Created by Steffen Kötte on 2025-09-03.
 //
-
 import Foundation
 @testable import WealthsimpleDownloader
 
