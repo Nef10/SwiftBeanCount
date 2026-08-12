@@ -62,6 +62,21 @@ private let transaction = """
 
     """
 
+private let transactionWithInterestNote = """
+
+    Transaction details
+    July 15, 2025 Contribution (Ref.# 12345678)
+
+    To:\t\t\tAmount($)
+    ../Images/colour10.gif\t 1234 ML Sample Balanced Fund a1 b2
+    Contribution 3.50000 units @ $20.000/unit (includes $0.01 interest)\t70.00
+    Total\t\t70.00
+    ../Images/colour4.gif\t 5678 ML Sample Equity Fund c3 d4
+    Contribution 2.00000 units @ $15.000/unit (includes $0.01 interest)\t30.00
+    Total\t\t30.00
+
+    """
+
 private let transactionInvalidDate = """
     Transaction details
     May -0, 2020 Contribution (Ref.# 12345678)
@@ -208,6 +223,15 @@ struct ManuLifeImporterTests { // swiftlint:disable:this type_body_length
             "\(transactionResult())\n\n\(transactionPricesResult())"
         )
         #expect(parkingAccountDelegate.verified)
+    }
+
+    @Test
+    func parseTransactionWithInterestNote() throws {
+        let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), transaction: transactionWithInterestNote)
+
+        #expect(importer.nextTransaction() != nil)
+        #expect(importer.pricesToImport().count == 2)
+        #expect(importer.nextTransaction() == nil)
     }
 
     @Test
