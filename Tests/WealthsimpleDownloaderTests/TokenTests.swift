@@ -209,7 +209,7 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
    }
    // MARK: - getToken with Username/Password/OTP
    @Test
-   func getTokenWithUsernamePasswordOTPSuccess() { // swiftlint:disable:this function_body_length
+   func getTokenWithUsernamePasswordOTPSuccess() {
        let tokenExpectation = DispatchSemaphore(value: 0), mockExpectation = DispatchSemaphore(value: 0)
        MockURLProtocol.newTokenRequestHandler = { url, request in
            #expect(request.value(forHTTPHeaderField: "x-wealthsimple-otp") == "123456")

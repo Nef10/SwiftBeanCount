@@ -38,7 +38,6 @@ private actor DownloaderTestLock {
 struct MockURLProtocolSerialTrait: SuiteTrait, TestTrait, TestScoping {
     var isRecursive: Bool { false }
 
-
     func provideScope(
         for _: Test,
         testCase _: Test.Case?,
@@ -56,10 +55,6 @@ struct MockURLProtocolSerialTrait: SuiteTrait, TestTrait, TestScoping {
             throw error
         }
     }
-}
-
-extension Trait where Self == MockURLProtocolSerialTrait {
-    static var mockURLProtocolSerialized: Self { Self() }
 }
 
 struct URLConfigurationSerialTrait: SuiteTrait, TestTrait, TestScoping {
@@ -81,10 +76,14 @@ struct URLConfigurationSerialTrait: SuiteTrait, TestTrait, TestScoping {
     }
 }
 
+class DownloaderTestCase {
+   var mockCredentialStorage = MockCredentialStorage()
+}
+
 extension Trait where Self == URLConfigurationSerialTrait {
     static var urlConfigurationSerialized: Self { Self() }
 }
 
-class DownloaderTestCase { // swiftlint:disable:this final_test_case
-   var mockCredentialStorage = MockCredentialStorage()
+extension Trait where Self == MockURLProtocolSerialTrait {
+    static var mockURLProtocolSerialized: Self { Self() }
 }

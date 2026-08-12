@@ -7,6 +7,7 @@
 import Foundation
 import Testing
 @testable import WealthsimpleDownloader
+
 @Suite
 final class StringCamelCaseTests {
    @Test

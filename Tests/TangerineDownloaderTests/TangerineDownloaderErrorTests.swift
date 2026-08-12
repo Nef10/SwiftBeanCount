@@ -1,5 +1,6 @@
 @testable import TangerineDownloader
 import Testing
+
 @Suite
 struct TangerineDownloaderErrorTests {
    @Test

@@ -4,12 +4,14 @@
 //
 //  Created by Steffen Kötte on 2025-08-31.
 //
+
 import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
 import Testing
 @testable import WealthsimpleDownloader
+
 /// A mock URLProtocol implementation for intercepting HTTP requests during testing.
 class MockURLProtocol: URLProtocol {
    static var newTokenRequestHandler: ((URL, URLRequest) throws -> (URLResponse, Data)) = failTest

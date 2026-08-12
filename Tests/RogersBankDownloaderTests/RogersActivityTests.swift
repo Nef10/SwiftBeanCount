@@ -1,6 +1,7 @@
-@testable import RogersBankDownloader
 import Foundation
+@testable import RogersBankDownloader
 import Testing
+
 @Suite
 struct RogersActivityTests {
    private static let dateFormatter: DateFormatter = {
