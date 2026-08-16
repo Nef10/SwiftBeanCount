@@ -15,6 +15,23 @@ struct WealthsimpleTransaction: Transaction { // swiftlint:disable:this type_bod
 
     public typealias TransactionsCompletion = (Result<[Transaction], TransactionError>) -> Void
 
+    private final class TransactionsResultBox: @unchecked Sendable {
+        private let lock = NSLock()
+        private var result: Result<[Transaction], TransactionError>?
+
+        func set(_ result: Result<[Transaction], TransactionError>) {
+            lock.lock()
+            self.result = result
+            lock.unlock()
+        }
+
+        func value() -> Result<[Transaction], TransactionError>? {
+            lock.lock()
+            defer { lock.unlock() }
+            return result
+        }
+    }
+
     private static let path = "transactions"
 
     private static let graphQLQuery = """
@@ -406,23 +423,6 @@ struct WealthsimpleTransaction: Transaction { // swiftlint:disable:this type_bod
             throw TransactionError.missingResultParameter(json: json)
         }
         return results
-    }
-
-    private final class TransactionsResultBox: @unchecked Sendable {
-        private let lock = NSLock()
-        private var result: Result<[Transaction], TransactionError>?
-
-        func set(_ result: Result<[Transaction], TransactionError>) {
-            lock.lock()
-            self.result = result
-            lock.unlock()
-        }
-
-        func value() -> Result<[Transaction], TransactionError>? {
-            lock.lock()
-            defer { lock.unlock() }
-            return result
-        }
     }
 
 }
