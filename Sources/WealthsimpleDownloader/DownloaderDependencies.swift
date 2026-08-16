@@ -11,6 +11,14 @@ protocol HTTPClient {
     )
 }
 
+private final class HTTPCompletionBox: @unchecked Sendable {
+    let completion: (Data?, URLResponse?, Error?) -> Void
+
+    init(_ completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        self.completion = completion
+    }
+}
+
 struct URLSessionHTTPClient: HTTPClient {
     let session: URLSession
 
@@ -25,7 +33,11 @@ struct URLSessionHTTPClient: HTTPClient {
     ) {
         var request = request
         request.httpBody = body
-        session.dataTask(with: request, completionHandler: completion).resume()
+        let completionBox = HTTPCompletionBox(completion)
+        session.dataTask(with: request) { data, response, error in
+            completionBox.completion(data, response, error)
+        }
+        .resume()
     }
 }
 
