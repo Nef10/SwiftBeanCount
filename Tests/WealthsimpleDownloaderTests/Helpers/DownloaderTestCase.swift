@@ -9,22 +9,19 @@ import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
+import Testing
 @testable import WealthsimpleDownloader
-import XCTest
 
-class DownloaderTestCase: XCTestCase { // swiftlint:disable:this final_test_case
+class DownloaderTestCase {
+    let mockCredentialStorage = MockCredentialStorage()
+    let mockHTTPClient = MockHTTPClient()
+    let dependencies: DownloaderDependencies
 
-    var mockCredentialStorage: MockCredentialStorage! // swiftlint:disable:this test_case_accessibility
-
-    override func setUp() {
-        super.setUp()
-        mockCredentialStorage = MockCredentialStorage()
-        MockURLProtocol.setup()
+    init() {
+        let configuration = URLConfiguration(
+            baseURL: "http://localhost:8080/v1/",
+            graphQLURL: "http://localhost:8080/graphql"
+        )
+        dependencies = DownloaderDependencies(httpClient: mockHTTPClient, configuration: configuration)
     }
-
-    override func tearDown() {
-        MockURLProtocol.reset()
-        super.tearDown()
-    }
-
 }

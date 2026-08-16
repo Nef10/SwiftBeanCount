@@ -70,7 +70,7 @@ public protocol Account {
 
 struct WealthsimpleAccount: Account {
 
-    private static var url: URL { URLConfiguration.shared.urlObject(for: "accounts")! }
+    private static let path = "accounts"
 
     let accountType: AccountType
     let currency: String
@@ -94,15 +94,13 @@ struct WealthsimpleAccount: Account {
         self.number = number
     }
 
-    static func getAccounts(token: Token, completion: @escaping (Result<[Account], AccountError>) -> Void) {
-        var request = URLRequest(url: url)
-        let session = URLSession.shared
+    static func getAccounts(token: Token, dependencies: DownloaderDependencies = .live, completion: @escaping (Result<[Account], AccountError>) -> Void) {
+        var request = URLRequest(url: dependencies.configuration.urlObject(for: Self.path)!)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         token.authenticateRequest(request) { request in
-            let task = session.dataTask(with: request) { data, response, error in
+            dependencies.httpClient.send(request, body: nil) { data, response, error in
                 handleResponse(data: data, response: response, error: error, completion: completion)
             }
-            task.resume()
         }
     }
 

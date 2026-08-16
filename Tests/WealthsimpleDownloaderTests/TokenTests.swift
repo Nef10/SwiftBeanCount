@@ -9,17 +9,19 @@ import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
+import Testing
 @testable import WealthsimpleDownloader
-import XCTest
 
+@Suite
 final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body_length
 
     // MARK: - getToken with Credential Storage
 
-    func testGetTokenFromCredentialStorageWithValidToken() {
-        let expectation = XCTestExpectation(description: "getToken completion")
+    @Test
+    func getTokenFromCredentialStorageWithValidToken() {
+        let expectation = DispatchSemaphore(value: 0)
 
-        MockURLProtocol.tokenValidationRequestHandler = { url, _ in
+        mockHTTPClient.tokenValidationRequestHandler = { url, _ in
             let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
             return (response, Data())
         }
@@ -30,77 +32,82 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
         mockCredentialStorage.storage["expiry"] = String(Date().addingTimeInterval(3_600).timeIntervalSince1970)
 
         // This will just locally check expiry and do not do any network calls
-        Token.getToken(from: mockCredentialStorage) { token in
-            XCTAssertNotNil(token)
-            expectation.fulfill()
+        Token.getToken(from: mockCredentialStorage, dependencies: dependencies) { token in
+            #expect(token != nil)
+            expectation.signal()
         }
 
-        wait(for: [expectation], timeout: 10.0)
+        #expect(expectation.wait(timeout: .now() + 10.0) == .success)
     }
 
-    func testGetTokenFromCredentialStorageWithMissingAccessToken() {
-        let expectation = XCTestExpectation(description: "getToken completion")
+    @Test
+    func getTokenFromCredentialStorageWithMissingAccessToken() {
+        let expectation = DispatchSemaphore(value: 0)
 
         mockCredentialStorage.storage["refreshToken"] = "test_refresh_token"
         mockCredentialStorage.storage["expiry"] = String(Date().addingTimeInterval(3_600).timeIntervalSince1970)
 
-        Token.getToken(from: mockCredentialStorage) { token in
-            XCTAssertNil(token)
-            expectation.fulfill()
+        Token.getToken(from: mockCredentialStorage, dependencies: dependencies) { token in
+            #expect(token == nil)
+            expectation.signal()
         }
 
-        wait(for: [expectation], timeout: 1.0)
+        #expect(expectation.wait(timeout: .now() + 1.0) == .success)
     }
 
-    func testGetTokenFromCredentialStorageWithMissingRefreshToken() {
-        let expectation = XCTestExpectation(description: "getToken completion")
+    @Test
+    func getTokenFromCredentialStorageWithMissingRefreshToken() {
+        let expectation = DispatchSemaphore(value: 0)
 
         mockCredentialStorage.storage["accessToken"] = "test_access_token"
         mockCredentialStorage.storage["expiry"] = String(Date().addingTimeInterval(3_600).timeIntervalSince1970)
 
-        Token.getToken(from: mockCredentialStorage) { token in
-            XCTAssertNil(token)
-            expectation.fulfill()
+        Token.getToken(from: mockCredentialStorage, dependencies: dependencies) { token in
+            #expect(token == nil)
+            expectation.signal()
         }
 
-        wait(for: [expectation], timeout: 1.0)
+        #expect(expectation.wait(timeout: .now() + 1.0) == .success)
     }
 
-    func testGetTokenFromCredentialStorageWithMissingExpiry() {
-        let expectation = XCTestExpectation(description: "getToken completion")
+    @Test
+    func getTokenFromCredentialStorageWithMissingExpiry() {
+        let expectation = DispatchSemaphore(value: 0)
 
         mockCredentialStorage.storage["accessToken"] = "test_access_token"
         mockCredentialStorage.storage["refreshToken"] = "test_refresh_token"
 
-        Token.getToken(from: mockCredentialStorage) { token in
-            XCTAssertNil(token)
-            expectation.fulfill()
+        Token.getToken(from: mockCredentialStorage, dependencies: dependencies) { token in
+            #expect(token == nil)
+            expectation.signal()
         }
 
-        wait(for: [expectation], timeout: 1.0)
+        #expect(expectation.wait(timeout: .now() + 1.0) == .success)
     }
 
-    func testGetTokenFromCredentialStorageWithInvalidExpiry() {
-        let expectation = XCTestExpectation(description: "getToken completion")
+    @Test
+    func getTokenFromCredentialStorageWithInvalidExpiry() {
+        let expectation = DispatchSemaphore(value: 0)
 
         mockCredentialStorage.storage["accessToken"] = "test_access_token"
         mockCredentialStorage.storage["refreshToken"] = "test_refresh_token"
         mockCredentialStorage.storage["expiry"] = "invalid_date"
 
-        Token.getToken(from: mockCredentialStorage) { token in
-            XCTAssertNil(token)
-            expectation.fulfill()
+        Token.getToken(from: mockCredentialStorage, dependencies: dependencies) { token in
+            #expect(token == nil)
+            expectation.signal()
         }
 
-        wait(for: [expectation], timeout: 1.0)
+        #expect(expectation.wait(timeout: .now() + 1.0) == .success)
     }
 
-    func testExpiredTokenFailsRefresh() {
-        let requestExpectation = XCTestExpectation(description: "mock server called")
-        let getTokenExpectation = XCTestExpectation(description: "getToken completion")
+    @Test
+    func expiredTokenFailsRefresh() {
+        let requestExpectation = DispatchSemaphore(value: 0)
+        let getTokenExpectation = DispatchSemaphore(value: 0)
 
-        MockURLProtocol.newTokenRequestHandler = { url, _ in
-            requestExpectation.fulfill()
+        mockHTTPClient.newTokenRequestHandler = { url, _ in
+            requestExpectation.signal()
             let response = HTTPURLResponse(url: url, statusCode: 401, httpVersion: nil, headerFields: nil)!
             return (response, Data())
         }
@@ -109,28 +116,30 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
         mockCredentialStorage.storage["refreshToken"] = "refresh_token"
         mockCredentialStorage.storage["expiry"] = String(Date().addingTimeInterval(-3_600).timeIntervalSince1970)
 
-        Token.getToken(from: mockCredentialStorage) { token in
-            XCTAssertNil(token)
-            getTokenExpectation.fulfill()
+        Token.getToken(from: mockCredentialStorage, dependencies: dependencies) { token in
+            #expect(token == nil)
+            getTokenExpectation.signal()
         }
 
-        wait(for: [getTokenExpectation, requestExpectation], timeout: 10.0)
+        #expect(getTokenExpectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(requestExpectation.wait(timeout: .now() + 10.0) == .success)
     }
 
-    func testExpiredTokenRefreshFailsValidation() {
-        let refreshExpectation = XCTestExpectation(description: "mock server called")
-        let validateExpectation = XCTestExpectation(description: "mock server called")
-        let getTokenExpectation = XCTestExpectation(description: "getToken completion")
+    @Test
+    func expiredTokenRefreshFailsValidation() {
+        let refreshExpectation = DispatchSemaphore(value: 0)
+        let validateExpectation = DispatchSemaphore(value: 0)
+        let getTokenExpectation = DispatchSemaphore(value: 0)
 
-        MockURLProtocol.newTokenRequestHandler = { url, _ in
-            refreshExpectation.fulfill()
+        mockHTTPClient.newTokenRequestHandler = { url, _ in
+            refreshExpectation.signal()
             let jsonResponse = [
                 "access_token": "atoken12345", "refresh_token": "rtoken67890", "expires_in": 3_600, "created_at": Int(Date().timeIntervalSince1970), "token_type": "Bearer"
             ]
             return (HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!, try JSONSerialization.data(withJSONObject: jsonResponse, options: []))
         }
-        MockURLProtocol.tokenValidationRequestHandler = { _, _ in
-            validateExpectation.fulfill()
+        mockHTTPClient.tokenValidationRequestHandler = { _, _ in
+            validateExpectation.signal()
             throw URLError(.networkConnectionLost)
         }
 
@@ -138,28 +147,31 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
         mockCredentialStorage.storage["refreshToken"] = "refresh_token"
         mockCredentialStorage.storage["expiry"] = String(Date().addingTimeInterval(-3_600).timeIntervalSince1970)
 
-        Token.getToken(from: mockCredentialStorage) { token in
-            XCTAssertNil(token)
-            getTokenExpectation.fulfill()
+        Token.getToken(from: mockCredentialStorage, dependencies: dependencies) { token in
+            #expect(token == nil)
+            getTokenExpectation.signal()
         }
 
-        wait(for: [getTokenExpectation, refreshExpectation, validateExpectation], timeout: 10.0)
+        #expect(getTokenExpectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(refreshExpectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(validateExpectation.wait(timeout: .now() + 10.0) == .success)
     }
 
-    func testExpiredTokenRefreshFailsValidationWithWrongResponseType() {
-        let refreshExpectation = XCTestExpectation(description: "mock server called for token refresh")
-        let validateExpectation = XCTestExpectation(description: "mock server called for token validation")
-        let getTokenExpectation = XCTestExpectation(description: "getToken completion")
+    @Test
+    func expiredTokenRefreshFailsValidationWithWrongResponseType() {
+        let refreshExpectation = DispatchSemaphore(value: 0)
+        let validateExpectation = DispatchSemaphore(value: 0)
+        let getTokenExpectation = DispatchSemaphore(value: 0)
 
-        MockURLProtocol.newTokenRequestHandler = { url, _ in
-            refreshExpectation.fulfill()
+        mockHTTPClient.newTokenRequestHandler = { url, _ in
+            refreshExpectation.signal()
             let jsonResponse = [
                 "access_token": "atoken12345", "refresh_token": "rtoken67890", "expires_in": 3_600, "created_at": Int(Date().timeIntervalSince1970), "token_type": "Bearer"
             ]
             return (HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!, try JSONSerialization.data(withJSONObject: jsonResponse, options: []))
         }
-        MockURLProtocol.tokenValidationRequestHandler = { url, _ in
-            validateExpectation.fulfill()
+        mockHTTPClient.tokenValidationRequestHandler = { url, _ in
+            validateExpectation.signal()
             return (URLResponse(url: url, mimeType: nil, expectedContentLength: 0, textEncodingName: nil), Data())
         }
 
@@ -167,36 +179,40 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
         mockCredentialStorage.storage["refreshToken"] = "refresh_token"
         mockCredentialStorage.storage["expiry"] = String(Date().addingTimeInterval(-3_600).timeIntervalSince1970)
 
-        Token.getToken(from: mockCredentialStorage) { token in
-            XCTAssertNil(token)
-            getTokenExpectation.fulfill()
+        Token.getToken(from: mockCredentialStorage, dependencies: dependencies) { token in
+            #expect(token == nil)
+            getTokenExpectation.signal()
         }
 
-        wait(for: [getTokenExpectation, refreshExpectation, validateExpectation], timeout: 10.0)
+        #expect(getTokenExpectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(refreshExpectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(validateExpectation.wait(timeout: .now() + 10.0) == .success)
     }
 
-    func testExpiredTokenRefresh() {
-        let refreshExpectation = XCTestExpectation(description: "refresh called"), validateExpectation = XCTestExpectation(description: "validate called")
-        let getTokenExpectation = XCTestExpectation(description: "getToken completion")
+    @Test
+    func expiredTokenRefresh() { // swiftlint:disable:this function_body_length
+        let refreshExpectation = DispatchSemaphore(value: 0)
+        let validateExpectation = DispatchSemaphore(value: 0)
+        let getTokenExpectation = DispatchSemaphore(value: 0)
 
-        MockURLProtocol.newTokenRequestHandler = { url, request in
+        mockHTTPClient.newTokenRequestHandler = { url, request in
             #if canImport(FoundationNetworking)
             // body seems to be missing?
             #else
             // get JSON from POST request body stream
             let inputData = try Data(reading: request.httpBodyStream!), json = try JSONSerialization.jsonObject(with: inputData, options: []) as? [String: Any]
-            XCTAssertEqual(json?["grant_type"] as? String, "refresh_token")
-            XCTAssertEqual(json?["refresh_token"] as? String, "refresh_token_234")
-            XCTAssertEqual(json?["client_id"] as? String, "4da53ac2b03225bed1550eba8e4611e086c7b905a3855e6ed12ea08c246758fa")
+            #expect(json?["grant_type"] as? String == "refresh_token")
+            #expect(json?["refresh_token"] as? String == "refresh_token_234")
+            #expect(json?["client_id"] as? String == "4da53ac2b03225bed1550eba8e4611e086c7b905a3855e6ed12ea08c246758fa")
             #endif
-            refreshExpectation.fulfill()
+            refreshExpectation.signal()
             return (HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!, try JSONSerialization.data(withJSONObject: [
                 "access_token": "a34324532", "refresh_token": "r432432", "expires_in": 3_600, "created_at": Int(Date().timeIntervalSince1970), "token_type": "Bearer"
             ], options: []))
         }
-        MockURLProtocol.tokenValidationRequestHandler = { url, request in
-            XCTAssertEqual(request.value(forHTTPHeaderField: "Authorization"), "Bearer a34324532")
-            validateExpectation.fulfill()
+        mockHTTPClient.tokenValidationRequestHandler = { url, request in
+            #expect(request.value(forHTTPHeaderField: "Authorization") == "Bearer a34324532")
+            validateExpectation.signal()
             return (HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!, Data())
         }
 
@@ -204,23 +220,26 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
         mockCredentialStorage.storage["refreshToken"] = "refresh_token_234"
         mockCredentialStorage.storage["expiry"] = String(Date().addingTimeInterval(-3_600).timeIntervalSince1970)
 
-        Token.getToken(from: mockCredentialStorage) { token in
-            XCTAssertNotNil(token)
-            getTokenExpectation.fulfill()
+        Token.getToken(from: mockCredentialStorage, dependencies: dependencies) { token in
+            #expect(token != nil)
+            getTokenExpectation.signal()
         }
 
-        wait(for: [getTokenExpectation, refreshExpectation, validateExpectation], timeout: 10.0)
+        #expect(getTokenExpectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(refreshExpectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(validateExpectation.wait(timeout: .now() + 10.0) == .success)
 
-        XCTAssertEqual(mockCredentialStorage.read("accessToken"), "a34324532")
-        XCTAssertEqual(mockCredentialStorage.read("refreshToken"), "r432432")
+        #expect(mockCredentialStorage.read("accessToken") == "a34324532")
+        #expect(mockCredentialStorage.read("refreshToken") == "r432432")
     }
 
-    func testTokenInitMissingParameter() {
-        let refreshExpectation = XCTestExpectation(description: "mock server called")
-        let getTokenExpectation = XCTestExpectation(description: "getToken completion")
+    @Test
+    func tokenInitMissingParameter() {
+        let refreshExpectation = DispatchSemaphore(value: 0)
+        let getTokenExpectation = DispatchSemaphore(value: 0)
 
-        MockURLProtocol.newTokenRequestHandler = { url, _ in
-            refreshExpectation.fulfill()
+        mockHTTPClient.newTokenRequestHandler = { url, _ in
+            refreshExpectation.signal()
             let jsonResponse = [
                 "refresh_token": "rtoken67890", "expires_in": 3_600, "created_at": Int(Date().timeIntervalSince1970), "token_type": "Bearer"
             ]
@@ -230,62 +249,65 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
         mockCredentialStorage.storage["refreshToken"] = "refresh_token"
         mockCredentialStorage.storage["expiry"] = String(Date().addingTimeInterval(-3_600).timeIntervalSince1970)
 
-        Token.getToken(from: mockCredentialStorage) { token in
-            XCTAssertNil(token)
-            getTokenExpectation.fulfill()
+        Token.getToken(from: mockCredentialStorage, dependencies: dependencies) { token in
+            #expect(token == nil)
+            getTokenExpectation.signal()
         }
 
-        wait(for: [getTokenExpectation, refreshExpectation], timeout: 10.0)
+        #expect(getTokenExpectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(refreshExpectation.wait(timeout: .now() + 10.0) == .success)
     }
 
     // MARK: - getToken with Username/Password/OTP
 
-    func testGetTokenWithUsernamePasswordOTPSuccess() {
-        let tokenExpectation = XCTestExpectation(description: "getToken completion"), mockExpectation = XCTestExpectation(description: "mock server called")
+    @Test
+    func getTokenWithUsernamePasswordOTPSuccess() {
 
-        MockURLProtocol.newTokenRequestHandler = { url, request in
-            XCTAssertEqual(request.value(forHTTPHeaderField: "x-wealthsimple-otp"), "123456")
+        let tokenExpectation = DispatchSemaphore(value: 0), mockExpectation = DispatchSemaphore(value: 0)
+        mockHTTPClient.newTokenRequestHandler = { url, request in
+            #expect(request.value(forHTTPHeaderField: "x-wealthsimple-otp") == "123456")
             #if canImport(FoundationNetworking)
             // body seems to be missing?
             #else
             // get JSON from POST request body stream
             let inputData = try Data(reading: request.httpBodyStream!), json = try JSONSerialization.jsonObject(with: inputData, options: []) as? [String: Any]
-            XCTAssertEqual(json?["username"] as? String, "test@example.com")
-            XCTAssertEqual(json?["password"] as? String, "password1")
-            XCTAssertEqual(json?["grant_type"] as? String, "password")
-            XCTAssertEqual(json?["client_id"] as? String, "4da53ac2b03225bed1550eba8e4611e086c7b905a3855e6ed12ea08c246758fa")
-            XCTAssertEqual(json?["scope"] as? String, "read")
+            #expect(json?["username"] as? String == "test@example.com")
+            #expect(json?["password"] as? String == "password1")
+            #expect(json?["grant_type"] as? String == "password")
+            #expect(json?["client_id"] as? String == "4da53ac2b03225bed1550eba8e4611e086c7b905a3855e6ed12ea08c246758fa")
+            #expect(json?["scope"] as? String == "read")
             #endif
             let jsonResponse = [
                 "access_token": "atoken12345", "refresh_token": "rtoken67890", "expires_in": 3_600, "created_at": Int(Date().timeIntervalSince1970), "token_type": "Bearer"
             ]
-            mockExpectation.fulfill()
+            mockExpectation.signal()
             return (HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!, try JSONSerialization.data(withJSONObject: jsonResponse, options: []))
         }
 
-        Token.getToken(username: "test@example.com", password: "password1", otp: "123456", credentialStorage: mockCredentialStorage) { result in
-            if case .success(let token) = result {
-                XCTAssertNotNil(token)
+        Token.getToken(username: "test@example.com", password: "password1", otp: "123456", credentialStorage: mockCredentialStorage, dependencies: dependencies) { result in
+            if case .success = result {
                 // Verify token was saved to credential storage
-                XCTAssertEqual(self.mockCredentialStorage.read("accessToken"), "atoken12345")
-                XCTAssertEqual(self.mockCredentialStorage.read("refreshToken"), "rtoken67890")
-                XCTAssertNotNil(self.mockCredentialStorage.read("expiry"))
-                tokenExpectation.fulfill()
+                #expect(self.mockCredentialStorage.read("accessToken") == "atoken12345")
+                #expect(self.mockCredentialStorage.read("refreshToken") == "rtoken67890")
+                #expect(self.mockCredentialStorage.read("expiry") != nil)
+                tokenExpectation.signal()
             } else {
-                XCTFail("Expected success but got error")
+                Issue.record("Expected success but got error")
             }
         }
 
-        wait(for: [mockExpectation, tokenExpectation], timeout: 10.0)
+        #expect(mockExpectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(tokenExpectation.wait(timeout: .now() + 10.0) == .success)
     }
 
-    func testGetTokenWithUsernamePasswordOTPNetworkFailure() {
-        let tokenExpectation = XCTestExpectation(description: "getToken completion")
-        let serverExpectation = XCTestExpectation(description: "mock server called")
+    @Test
+    func getTokenWithUsernamePasswordOTPNetworkFailure() {
+        let tokenExpectation = DispatchSemaphore(value: 0)
+        let serverExpectation = DispatchSemaphore(value: 0)
 
         // Set up the mock to throw an error for this test
-        MockURLProtocol.newTokenRequestHandler = { _, _ in
-            serverExpectation.fulfill()
+        mockHTTPClient.newTokenRequestHandler = { _, _ in
+            serverExpectation.signal()
             throw URLError(.networkConnectionLost)
         }
 
@@ -293,27 +315,30 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
             username: "test@example.com",
             password: "password",
             otp: "123456",
-            credentialStorage: mockCredentialStorage
+            credentialStorage: mockCredentialStorage,
+            dependencies: dependencies
         ) { result in
             switch result {
             case .success:
-                XCTFail("Expected failure due to network error")
-            case .failure(let error):
-                XCTAssertNotNil(error)
+                Issue.record("Expected failure due to network error")
+            case .failure:
+                break
             }
-            tokenExpectation.fulfill()
+            tokenExpectation.signal()
         }
 
-        wait(for: [tokenExpectation, serverExpectation], timeout: 10.0)
+        #expect(tokenExpectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(serverExpectation.wait(timeout: .now() + 10.0) == .success)
     }
 
-    func testGetTokenWithWrongResponseType() {
-        let tokenExpectation = XCTestExpectation(description: "getToken completion")
-        let serverExpectation = XCTestExpectation(description: "mock server called")
+    @Test
+    func getTokenWithWrongResponseType() {
+        let tokenExpectation = DispatchSemaphore(value: 0)
+        let serverExpectation = DispatchSemaphore(value: 0)
 
         // Set up the mock to return an URLResponse which is not a HTTPURLResponse for this test
-        MockURLProtocol.newTokenRequestHandler = { url, _ in
-            serverExpectation.fulfill()
+        mockHTTPClient.newTokenRequestHandler = { url, _ in
+            serverExpectation.signal()
             return (URLResponse(url: url, mimeType: nil, expectedContentLength: 0, textEncodingName: nil), Data())
         }
 
@@ -321,27 +346,30 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
             username: "test@example.com",
             password: "password",
             otp: "123456",
-            credentialStorage: mockCredentialStorage
+            credentialStorage: mockCredentialStorage,
+            dependencies: dependencies
         ) { result in
             switch result {
             case .success:
-                XCTFail("Expected failure due to wrong response type")
-            case .failure(let error):
-                XCTAssertNotNil(error)
+                Issue.record("Expected failure due to wrong response type")
+            case .failure:
+                break
             }
-            tokenExpectation.fulfill()
+            tokenExpectation.signal()
         }
 
-        wait(for: [tokenExpectation, serverExpectation], timeout: 10.0)
+        #expect(tokenExpectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(serverExpectation.wait(timeout: .now() + 10.0) == .success)
     }
 
-    func testGetTokenWithInvalidJSON() {
-        let tokenExpectation = XCTestExpectation(description: "getToken completion")
-        let serverExpectation = XCTestExpectation(description: "mock server called")
+    @Test
+    func getTokenWithInvalidJSON() {
+        let tokenExpectation = DispatchSemaphore(value: 0)
+        let serverExpectation = DispatchSemaphore(value: 0)
 
         // Set up the mock to throw return an URLResponse which is not a HTTPURLResponse for this test
-        MockURLProtocol.newTokenRequestHandler = { url, _ in
-            serverExpectation.fulfill()
+        mockHTTPClient.newTokenRequestHandler = { url, _ in
+            serverExpectation.signal()
             return (HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!, Data("NOT JSON".utf8))
         }
 
@@ -349,18 +377,20 @@ final class TokenTests: DownloaderTestCase { // swiftlint:disable:this type_body
             username: "test@example.com",
             password: "password",
             otp: "123456",
-            credentialStorage: mockCredentialStorage
+            credentialStorage: mockCredentialStorage,
+            dependencies: dependencies
         ) { result in
             switch result {
             case .success:
-                XCTFail("Expected failure due to wrong response type")
-            case .failure(let error):
-                XCTAssertNotNil(error)
+                Issue.record("Expected failure due to wrong response type")
+            case .failure:
+                break
             }
-            tokenExpectation.fulfill()
+            tokenExpectation.signal()
         }
 
-        wait(for: [tokenExpectation, serverExpectation], timeout: 10.0)
+        #expect(tokenExpectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(serverExpectation.wait(timeout: .now() + 10.0) == .success)
     }
 
 }

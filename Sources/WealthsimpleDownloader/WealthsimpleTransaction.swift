@@ -1,3 +1,4 @@
+// swiftlint:disable file_length
 //
 //  Transaction.swift
 //
@@ -14,7 +15,7 @@ struct WealthsimpleTransaction: Transaction { // swiftlint:disable:this type_bod
 
     public typealias TransactionsCompletion = (Result<[Transaction], TransactionError>) -> Void
 
-    private static var baseUrl: URLComponents { URLConfiguration.shared.urlComponents(for: "transactions")! }
+    private static let path = "transactions"
 
     private static let graphQLQuery = """
         query FetchActivityFeedItems($cursor: Cursor, $condition: ActivityCondition) { \
@@ -140,27 +141,35 @@ struct WealthsimpleTransaction: Transaction { // swiftlint:disable:this type_bod
         self.processDate = processDate
     }
 
-    static func getTransactions(token: Token, account: Account, startDate: Date, completion: @escaping TransactionsCompletion) {
+    static func getTransactions(token: Token, account: Account, startDate: Date, dependencies: DownloaderDependencies = .live, completion: @escaping TransactionsCompletion) {
         // Call internal version with curser = nil. This prevents setting the curser from outside this class
-        getTransactions(token: token, account: account, startDate: startDate, cursor: nil, completion: completion)
+        getTransactions(token: token, account: account, startDate: startDate, dependencies: dependencies, cursor: nil, completion: completion)
     }
 
-    private static func getTransactions(token: Token, account: Account, startDate: Date, cursor: String? = nil, completion: @escaping TransactionsCompletion) {
+    private static func getTransactions(
+        token: Token,
+        account: Account,
+        startDate: Date,
+        dependencies: DownloaderDependencies,
+        cursor: String? = nil,
+        completion: @escaping TransactionsCompletion
+    ) {
         let endDate = Calendar.current.date(byAdding: .day, value: 7, to: Date())!
         let isGraphQL = account.accountType == .creditCard
         do {
             guard isGraphQL || cursor == nil else { // Curser is only for GraphQL
-               throw TransactionError.invalidParameter
+                throw TransactionError.invalidParameter
             }
-            let request = isGraphQL ? try getTransactionsGraphQLRequest(accountID: account.id, startDate: startDate, endDate: endDate, cursor: cursor) :
-                getTransactionsRESTRequest(accountID: account.id, startDate: startDate, endDate: endDate)
+            let request = isGraphQL ?
+                try getTransactionsGraphQLRequest(accountID: account.id, startDate: startDate, endDate: endDate, cursor: cursor, dependencies: dependencies)
+                : getTransactionsRESTRequest(accountID: account.id, startDate: startDate, endDate: endDate, dependencies: dependencies)
             token.authenticateRequest(request) { request in
-                let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                dependencies.httpClient.send(request, body: request.httpBody) { data, response, error in
                     handleResponse(data: data, response: response, error: error) {
                         switch $0 {
                         case .success(let data):
                             if isGraphQL {
-                                processGraphQLTransactions(data: data, token: token, account: account, startDate: startDate, completion: completion)
+                                processGraphQLTransactions(data: data, token: token, account: account, startDate: startDate, dependencies: dependencies) { completion($0) }
                             } else {
                                 completion(parseREST(data: data))
                             }
@@ -169,7 +178,6 @@ struct WealthsimpleTransaction: Transaction { // swiftlint:disable:this type_bod
                         }
                     }
                 }
-                task.resume()
             }
         } catch {
             completion(.failure(error as! TransactionError)) // swiftlint:disable:this force_cast
@@ -177,7 +185,7 @@ struct WealthsimpleTransaction: Transaction { // swiftlint:disable:this type_bod
         }
     }
 
-    private static func fxRequest(json: [[String: Any]]) throws -> URLRequest {
+    private static func fxRequest(json: [[String: Any]], dependencies: DownloaderDependencies) throws -> URLRequest {
         var queryPart1 = "query CreditCardActivity(", queryPart2 = "", variables = ""
         var index = 0
         for result in json {
@@ -194,14 +202,14 @@ struct WealthsimpleTransaction: Transaction { // swiftlint:disable:this type_bod
         variables.removeLast(2)
         let query = queryPart1 + ") { " + queryPart2 + "} " + Self.graphQLQueryDetailsFragment
         let requestData: String = #"{"query": "\#(query)", "operationName": "\#(Self.graphQLOperationDetails)", "variables": { \#(variables) } }"#
-        guard var request = URLConfiguration.shared.graphQLURLRequest() else {
+        guard var request = dependencies.configuration.graphQLURLRequest() else {
             throw TransactionError.httpError(error: "Invalid URL")
         }
         request.httpBody = Data(requestData.utf8)
         return request
     }
 
-    private static func enrichWithFXInfo(edges: [[String: Any]], token: Token) throws -> [[String: Any]] {
+    private static func enrichWithFXInfo(edges: [[String: Any]], token: Token, dependencies: DownloaderDependencies) throws -> [[String: Any]] {
         var results = [[String: Any]]() // Invididual JSON Objects, without node wrapper
         for result in edges {
             guard let node = result["node"] as? [String: Any] else {
@@ -210,13 +218,13 @@ struct WealthsimpleTransaction: Transaction { // swiftlint:disable:this type_bod
             results.append(node)
         }
 
-        let request = try fxRequest(json: results)
+        let request = try fxRequest(json: results, dependencies: dependencies)
         var resultError: Error?, resultData: Data?
 
         let group = DispatchGroup()
         group.enter()
         token.authenticateRequest(request) { request in
-            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            dependencies.httpClient.send(request, body: request.httpBody) { data, response, error in
                 handleResponse(data: data, response: response, error: error) { result in
                     switch result {
                     case .failure(let failure):
@@ -227,7 +235,6 @@ struct WealthsimpleTransaction: Transaction { // swiftlint:disable:this type_bod
                     group.leave()
                 }
             }
-            task.resume()
         }
         group.wait()
 
@@ -260,12 +267,12 @@ struct WealthsimpleTransaction: Transaction { // swiftlint:disable:this type_bod
         return result
     }
 
-    private static func loadNextPage(cursor: String, token: Token, account: Account, startDate: Date) throws -> [Transaction] {
+    private static func loadNextPage(cursor: String, token: Token, account: Account, startDate: Date, dependencies: DownloaderDependencies) throws -> [Transaction] {
         var nextResult: Result<[Transaction], TransactionError>!
         let group = DispatchGroup()
         group.enter()
         DispatchQueue.global(qos: .userInitiated).async {
-            getTransactions(token: token, account: account, startDate: startDate, cursor: cursor) {
+            getTransactions(token: token, account: account, startDate: startDate, dependencies: dependencies, cursor: cursor) {
                 nextResult = $0
                 group.leave()
             }
@@ -281,7 +288,15 @@ struct WealthsimpleTransaction: Transaction { // swiftlint:disable:this type_bod
         }
     }
 
-    private static func processGraphQLTransactions(data: Data, token: Token, account: Account, startDate: Date, completion: TransactionsCompletion) {
+    // swiftlint:disable:next function_parameter_count
+    private static func processGraphQLTransactions(
+        data: Data,
+        token: Token,
+        account: Account,
+        startDate: Date,
+        dependencies: DownloaderDependencies,
+        completion: TransactionsCompletion
+     ) {
         do {
             let json = try parseGraphQL(data: data)
             guard let page = json["pageInfo"] as? [String: Any], let edges = json["edges"] as? [[String: Any]],
@@ -290,14 +305,14 @@ struct WealthsimpleTransaction: Transaction { // swiftlint:disable:this type_bod
                 throw TransactionError.invalidResultParameter(json: json)
             }
 
-            let transactionInfo = try enrichWithFXInfo(edges: edges, token: token)
+            let transactionInfo = try enrichWithFXInfo(edges: edges, token: token, dependencies: dependencies)
 
             var transactions = [Transaction]()
             for transaction in transactionInfo {
                 transactions.append(try Self(graphQL: transaction))
             }
             if hasNextPage {
-                let nextTransactions = try loadNextPage(cursor: cursor, token: token, account: account, startDate: startDate)
+                let nextTransactions = try loadNextPage(cursor: cursor, token: token, account: account, startDate: startDate, dependencies: dependencies)
                 transactions.append(contentsOf: nextTransactions)
             }
             completion(.success(transactions))
@@ -307,8 +322,14 @@ struct WealthsimpleTransaction: Transaction { // swiftlint:disable:this type_bod
         }
     }
 
-    private static func getTransactionsGraphQLRequest(accountID: String, startDate: Date, endDate: Date, cursor: String?) throws -> URLRequest {
-        guard var request = URLConfiguration.shared.graphQLURLRequest() else {
+    private static func getTransactionsGraphQLRequest(
+        accountID: String,
+        startDate: Date,
+        endDate: Date,
+        cursor: String?,
+        dependencies: DownloaderDependencies
+    ) throws -> URLRequest {
+        guard var request = dependencies.configuration.graphQLURLRequest() else {
             throw TransactionError.httpError(error: "Invalid URL")
         }
         let startDateString = dateFormatterGraphQLRequest.string(from: startDate)
@@ -320,8 +341,8 @@ struct WealthsimpleTransaction: Transaction { // swiftlint:disable:this type_bod
         return request
     }
 
-    private static func getTransactionsRESTRequest(accountID: String, startDate: Date, endDate: Date) -> URLRequest {
-        var url = baseUrl
+    private static func getTransactionsRESTRequest(accountID: String, startDate: Date, endDate: Date, dependencies: DownloaderDependencies) -> URLRequest {
+        var url = dependencies.configuration.urlComponents(for: Self.path)!
         url.queryItems = [
             URLQueryItem(name: "account_id", value: accountID),
             URLQueryItem(name: "limit", value: "250"),
