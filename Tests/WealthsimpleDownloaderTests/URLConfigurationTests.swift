@@ -6,129 +6,98 @@
 //
 
 import Foundation
+import Testing
+
 @testable import WealthsimpleDownloader
-import XCTest
 
-final class URLConfigurationTests: XCTestCase {
-
-    override func setUp() {
-        super.setUp()
-        // Reset to default base URL before each test
-        URLConfiguration.shared.setBaseURL("https://api.production.wealthsimple.com/v1/")
-        URLConfiguration.shared.setGraphQLURL("https://my.wealthsimple.com/graphql")
+@Suite
+final class URLConfigurationTests {
+    @Test
+    func defaultBaseURL() {
+        let config = URLConfiguration()
+        #expect(config.base == "https://api.production.wealthsimple.com/v1/")
+        #expect(config.graphQL == "https://my.wealthsimple.com/graphql")
     }
 
-    func testDefaultBaseURL() {
-        let config = URLConfiguration.shared
-        XCTAssertEqual(config.base, "https://api.production.wealthsimple.com/v1/")
-        XCTAssertEqual(config.graphQL, "https://my.wealthsimple.com/graphql")
-    }
-
-    func testSetBaseURL() {
-        let config = URLConfiguration.shared
+    @Test
+    func customBaseURL() {
         let testURL = "https://test.example.com/api/v2/"
-
-        config.setBaseURL(testURL)
-
-        XCTAssertEqual(config.base, testURL)
+        let config = URLConfiguration(baseURL: testURL)
+        #expect(config.base == testURL)
     }
 
-    func testSetGraphQLURL() {
-        let config = URLConfiguration.shared
+    @Test
+    func customGraphQLURL() {
         let testURL = "https://test.example.com/graphql"
-
-        config.setGraphQLURL(testURL)
-
-        XCTAssertEqual(config.graphQL, testURL)
+        let config = URLConfiguration(graphQLURL: testURL)
+        #expect(config.graphQL == testURL)
     }
 
-    func testURLForPath() {
-        let config = URLConfiguration.shared
+    @Test
+    func bothURLsCustom() {
+        let testURL = "https://mock.server.test/v1/"
+        let testGraphQLURL = "https://mock.server.test/graphql"
+        let config = URLConfiguration(baseURL: testURL, graphQLURL: testGraphQLURL)
+        #expect(config.base == testURL)
+        #expect(config.graphQL == testGraphQLURL)
+    }
+
+    @Test
+    func uRLForPath() {
+        let config = URLConfiguration()
         let result = config.url(for: "accounts")
-
-        XCTAssertEqual(result, "https://api.production.wealthsimple.com/v1/accounts")
+        #expect(result == "https://api.production.wealthsimple.com/v1/accounts")
     }
 
-    func testURLForPathWithCustomBase() {
-        let config = URLConfiguration.shared
-        config.setBaseURL("https://test.example.com/api/v2/")
-
+    @Test
+    func uRLForPathWithCustomBase() {
+        let config = URLConfiguration(baseURL: "https://test.example.com/api/v2/")
         let result = config.url(for: "positions")
-
-        XCTAssertEqual(result, "https://test.example.com/api/v2/positions")
+        #expect(result == "https://test.example.com/api/v2/positions")
     }
 
-    func testURLObjectForPath() {
-        let config = URLConfiguration.shared
+    @Test
+    func uRLObjectForPath() {
+        let config = URLConfiguration()
         let result = config.urlObject(for: "transactions")
-
-        XCTAssertNotNil(result)
-        XCTAssertEqual(result?.absoluteString, "https://api.production.wealthsimple.com/v1/transactions")
+        #expect(result != nil)
+        #expect(result?.absoluteString == "https://api.production.wealthsimple.com/v1/transactions")
     }
 
-    func testURLComponentsForPath() {
-        let config = URLConfiguration.shared
+    @Test
+    func uRLComponentsForPath() {
+        let config = URLConfiguration()
         let result = config.urlComponents(for: "oauth/v2/token")
-
-        XCTAssertNotNil(result)
-        XCTAssertEqual(result?.string, "https://api.production.wealthsimple.com/v1/oauth/v2/token")
+        #expect(result != nil)
+        #expect(result?.string == "https://api.production.wealthsimple.com/v1/oauth/v2/token")
     }
 
-    func testSingletonPattern() {
-        let config1 = URLConfiguration.shared
-        let config2 = URLConfiguration.shared
-
-        XCTAssertIdentical(config1, config2)
+    @Test
+    func configurationsAreIndependent() {
+        let config1 = URLConfiguration(baseURL: "https://mock.server.test/v1/")
+        let config2 = URLConfiguration()
+        #expect(config1 !== config2)
+        #expect(config1.base == "https://mock.server.test/v1/")
+        #expect(config2.base == "https://api.production.wealthsimple.com/v1/")
     }
 
-    func testConfigurationPersistsBetweenAccesses() {
-        let config = URLConfiguration.shared
-        let testURL = "https://mock.server.test/v1/"
-
-        config.setBaseURL(testURL)
-
-        // Access through different references
-        let newConfig = URLConfiguration.shared
-        XCTAssertEqual(newConfig.base, testURL)
-    }
-
-    func testResetBaseURL() {
-        let config = URLConfiguration.shared
-        let testURL = "https://mock.server.test/v1/"
+    @Test
+    func graphQLURLRequest() {
         let testGraphQLURL = "https://mock.server.test/graphql"
-
-        config.setBaseURL(testURL)
-        XCTAssertEqual(config.base, testURL)
-
-        config.setGraphQLURL(testGraphQLURL)
-        XCTAssertEqual(config.graphQL, testGraphQLURL)
-
-        config.reset()
-        XCTAssertEqual(config.base, "https://api.production.wealthsimple.com/v1/")
-        XCTAssertEqual(config.graphQL, "https://my.wealthsimple.com/graphql")
-    }
-
-    func testGraphQLURLRequest() {
-        let config = URLConfiguration.shared
-        let testGraphQLURL = "https://mock.server.test/graphql"
-        config.setGraphQLURL(testGraphQLURL)
-
+        let config = URLConfiguration(graphQLURL: testGraphQLURL)
         guard let request = config.graphQLURLRequest() else {
-            XCTFail("Expected valid URLRequest")
+            Issue.record("Expected valid URLRequest")
             return
         }
-
-        XCTAssertEqual(request.url?.absoluteString, testGraphQLURL)
-        XCTAssertEqual(request.httpMethod, "POST")
-        XCTAssertEqual(request.allHTTPHeaderFields?["Content-Type"], "application/json")
+        #expect(request.url?.absoluteString == testGraphQLURL)
+        #expect(request.httpMethod == "POST")
+        #expect(request.allHTTPHeaderFields?["Content-Type"] == "application/json")
     }
 
-    func testInvalidGraphQLURLRequest() {
-        let config = URLConfiguration.shared
+    @Test
+    func invalidGraphQLURLRequest() {
         let testGraphQLURL = "Not a valid URL::::////"
-        config.setGraphQLURL(testGraphQLURL)
-
-        XCTAssertNil(config.graphQLURLRequest())
+        let config = URLConfiguration(graphQLURL: testGraphQLURL)
+        #expect(config.graphQLURLRequest() == nil)
     }
-
 }

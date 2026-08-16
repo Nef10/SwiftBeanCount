@@ -48,7 +48,7 @@ public protocol Position {
 
 struct WealthsimplePosition: Position {
 
-    private static var baseUrl: URLComponents { URLConfiguration.shared.urlComponents(for: "positions")! }
+    private static let path = "positions"
 
     private static var dateFormatter: DateFormatter = {
         var dateFormatter = DateFormatter()
@@ -123,21 +123,33 @@ struct WealthsimplePosition: Position {
         self.asset = WealthsimpleAsset(currency: account.currency)
     }
 
-    static func getPositions(token: Token, account: Account, date: Date?, completion: @escaping (Result<[Position], PositionError>) -> Void) {
+    static func getPositions(
+        token: Token,
+        account: Account,
+        date: Date?,
+        dependencies: DownloaderDependencies = .live,
+        completion: @escaping (Result<[Position], PositionError>) -> Void
+    ) {
         if account.accountType == .creditCard {
             if date != nil {
                 // Credit card positions do not support date parameter
                 completion(.failure(.invalidRequestParameter(error: "Date parameter is not supported for credit card accounts")))
                 return
             }
-            getCreditCardPosition(token: token, account: account, completion: completion)
+            getCreditCardPosition(token: token, account: account, dependencies: dependencies, completion: completion)
         } else {
-            getRESTPositions(token: token, account: account, date: date, completion: completion)
+            getRESTPositions(token: token, account: account, date: date, dependencies: dependencies, completion: completion)
         }
     }
 
-    private static func getRESTPositions(token: Token, account: Account, date: Date?, completion: @escaping (Result<[Position], PositionError>) -> Void) {
-        var url = baseUrl
+    private static func getRESTPositions(
+        token: Token,
+        account: Account,
+        date: Date?,
+        dependencies: DownloaderDependencies,
+        completion: @escaping (Result<[Position], PositionError>) -> Void
+    ) {
+        var url = dependencies.configuration.urlComponents(for: Self.path)!
         url.queryItems = [
             URLQueryItem(name: "account_id", value: account.id),
             URLQueryItem(name: "limit", value: "250")
@@ -146,18 +158,21 @@ struct WealthsimplePosition: Position {
             url.queryItems?.append(URLQueryItem(name: "date", value: dateFormatter.string(from: date)))
         }
         var request = URLRequest(url: url.url!)
-        let session = URLSession.shared
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         token.authenticateRequest(request) { request in
-            let task = session.dataTask(with: request) { data, response, error in
+            dependencies.httpClient.send(request, body: nil) { data, response, error in
                 handleResponse(data: data, response: response, error: error, completion: completion)
             }
-            task.resume()
         }
     }
 
-    private static func getCreditCardPosition(token: Token, account: Account, completion: @escaping (Result<[Position], PositionError>) -> Void) {
-        guard var request = URLConfiguration.shared.graphQLURLRequest() else {
+    private static func getCreditCardPosition(
+        token: Token,
+        account: Account,
+        dependencies: DownloaderDependencies,
+        completion: @escaping (Result<[Position], PositionError>) -> Void
+    ) {
+        guard var request = dependencies.configuration.graphQLURLRequest() else {
             completion(.failure(PositionError.httpError(error: "Invalid GraphQL URL")))
             return
         }
@@ -171,12 +186,10 @@ struct WealthsimplePosition: Position {
             return
         }
         request.httpBody = jsonData
-        let session = URLSession.shared
         token.authenticateRequest(request) { request in
-            let task = session.dataTask(with: request) { data, response, error in
+            dependencies.httpClient.send(request, body: request.httpBody) { data, response, error in
                 handleCreditCardResponse(data: data, response: response, error: error, account: account, completion: completion)
             }
-            task.resume()
         }
     }
 

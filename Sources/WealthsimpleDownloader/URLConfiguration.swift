@@ -10,19 +10,16 @@ import Foundation
 import FoundationNetworking
 #endif
 
-/// Singleton class that manages the base URL configuration for all Wealthsimple API endpoints
+/// Configures the REST and GraphQL endpoints used by Wealthsimple requests.
 final class URLConfiguration {
 
     private static let defaultBaseURL = "https://api.production.wealthsimple.com/v1/"
     private static let defaultGraphQLURL = "https://my.wealthsimple.com/graphql"
 
-    /// Shared singleton instance
-    static let shared = URLConfiguration()
-
     /// Base URL for all Wealthsimple API endpoints
-    private var baseURL: String = URLConfiguration.defaultBaseURL
+    private let baseURL: String
     /// GraphQL URL for Wealthsimple
-    private var graphQLURL: String = URLConfiguration.defaultGraphQLURL
+    private let graphQLURL: String
 
     /// Get the current base URL
     var base: String {
@@ -34,21 +31,13 @@ final class URLConfiguration {
         graphQLURL
     }
 
-    /// Private initializer to enforce singleton pattern
-    private init() {
-        // Singleton initialization
-    }
-
-    /// Set a new base URL (internal access for testing)
-    /// - Parameter url: The new base URL to use
-    func setBaseURL(_ url: String) {
-        baseURL = url
-    }
-
-    /// Set a new graphQL URL (internal access for testing)
-    /// - Parameter url: The new base URL to use
-    func setGraphQLURL(_ url: String) {
-        graphQLURL = url
+    /// Creates a configuration for the provided REST and GraphQL endpoints.
+    init(
+        baseURL: String = URLConfiguration.defaultBaseURL,
+        graphQLURL: String = URLConfiguration.defaultGraphQLURL
+    ) {
+        self.baseURL = baseURL
+        self.graphQLURL = graphQLURL
     }
 
     /// Create a full URL by appending a path to the base URL
@@ -83,11 +72,6 @@ final class URLConfiguration {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         return request
-    }
-
-    func reset() {
-        baseURL = Self.defaultBaseURL
-        graphQLURL = Self.defaultGraphQLURL
     }
 
 }

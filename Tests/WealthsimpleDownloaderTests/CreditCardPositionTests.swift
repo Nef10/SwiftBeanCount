@@ -9,9 +9,10 @@ import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
+import Testing
 @testable import WealthsimpleDownloader
-import XCTest
 
+@Suite
 final class CreditCardPositionTests: DownloaderTestCase {
 
     private static let creditCardAccount = MockAccount(
@@ -24,10 +25,10 @@ final class CreditCardPositionTests: DownloaderTestCase {
     // MARK: - Helper Methods
 
     private func createValidToken() throws -> Token {
-        let expectation = XCTestExpectation(description: "createValidToken completion")
+        let expectation = DispatchSemaphore(value: 0)
         var resultToken: Token?
 
-        MockURLProtocol.tokenValidationRequestHandler = { url, _ in
+        mockHTTPClient.tokenValidationRequestHandler = { url, _ in
             let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
             return (response, Data())
         }
@@ -36,21 +37,21 @@ final class CreditCardPositionTests: DownloaderTestCase {
         mockCredentialStorage.storage["refreshToken"] = "valid_refresh_token"
         mockCredentialStorage.storage["expiry"] = String(Date().addingTimeInterval(3_600).timeIntervalSince1970)
 
-        Token.getToken(from: mockCredentialStorage) { token in
+        Token.getToken(from: mockCredentialStorage, dependencies: dependencies) { token in
             resultToken = token
-            expectation.fulfill()
+            expectation.signal()
         }
 
-        wait(for: [expectation], timeout: 10.0)
-        return try XCTUnwrap(resultToken)
+        #expect(expectation.wait(timeout: .now() + 10.0) == .success)
+        return try #require(resultToken)
     }
 
-    private func setupMockForSuccess(balance: String, expectation: XCTestExpectation) {
-        MockURLProtocol.graphQLRequestHandler = { url, request in
-            XCTAssertEqual(request.httpMethod, "POST")
-            XCTAssertEqual(request.value(forHTTPHeaderField: "Authorization"), "Bearer valid_access_token3")
-            XCTAssertEqual(request.value(forHTTPHeaderField: "Content-Type"), "application/json")
-            expectation.fulfill()
+    private func setupMockForSuccess(balance: String, expectation: DispatchSemaphore) {
+        mockHTTPClient.graphQLRequestHandler = { url, request in
+            #expect(request.httpMethod == "POST")
+            #expect(request.value(forHTTPHeaderField: "Authorization") == "Bearer valid_access_token3")
+            #expect(request.value(forHTTPHeaderField: "Content-Type") == "application/json")
+            expectation.signal()
             let responseJSON: [String: Any] = [
                 "data": [
                     "creditCardAccount": [
@@ -66,74 +67,75 @@ final class CreditCardPositionTests: DownloaderTestCase {
     }
 
     private func assertCreditCardPosition(_ position: Position, balance: String) {
-        XCTAssertEqual(position.accountId, Self.creditCardAccount.id)
-        XCTAssertEqual(position.quantity, balance)
-        XCTAssertEqual(position.priceAmount, "1")
-        XCTAssertEqual(position.priceCurrency, "CAD")
-        XCTAssertEqual(position.asset.symbol, "CAD")
-        XCTAssertEqual(position.asset.name, "CAD")
-        XCTAssertEqual(position.asset.currency, "CAD")
-        XCTAssertEqual(position.asset.type, .currency)
+        #expect(position.accountId == Self.creditCardAccount.id)
+        #expect(position.quantity == balance)
+        #expect(position.priceAmount == "1")
+        #expect(position.priceCurrency == "CAD")
+        #expect(position.asset.symbol == "CAD")
+        #expect(position.asset.name == "CAD")
+        #expect(position.asset.currency == "CAD")
+        #expect(position.asset.type == .currency)
     }
 
     private func testCreditCardFailure(
         handler: @escaping (URL, URLRequest) throws -> (URLResponse, Data),
-        validate: @escaping (PositionError) -> Void,
-        file: StaticString = #file,
-        line: UInt = #line
+        validate: @escaping (PositionError) -> Void
     ) throws {
-        let expectation = XCTestExpectation(description: "getPositions completion")
-        MockURLProtocol.graphQLRequestHandler = handler
-        WealthsimplePosition.getPositions(token: try createValidToken(), account: Self.creditCardAccount, date: nil) { result in
+        let expectation = DispatchSemaphore(value: 0)
+        mockHTTPClient.graphQLRequestHandler = handler
+        WealthsimplePosition.getPositions(token: try createValidToken(), account: Self.creditCardAccount, date: nil, dependencies: dependencies) { result in
             switch result {
             case .success:
-                XCTFail("Expected failure", file: file, line: line)
+                Issue.record("Expected failure")
             case .failure(let error):
                 validate(error)
             }
-            expectation.fulfill()
+            expectation.signal()
         }
-        wait(for: [expectation], timeout: 10.0)
+        #expect(expectation.wait(timeout: .now() + 10.0) == .success)
     }
 
     // MARK: - Successful Tests
 
-    func testGetCreditCardPositionSuccess() throws {
-        let expectation = XCTestExpectation(description: "getPositions completion")
-        let mockExpectation = XCTestExpectation(description: "mock GraphQL server called")
+    @Test
+    func getCreditCardPositionSuccess() throws {
+        let expectation = DispatchSemaphore(value: 0)
 
+        let mockExpectation = DispatchSemaphore(value: 0)
         setupMockForSuccess(balance: "1234.56", expectation: mockExpectation)
 
-        WealthsimplePosition.getPositions(token: try createValidToken(), account: Self.creditCardAccount, date: nil) { result in
+        WealthsimplePosition.getPositions(token: try createValidToken(), account: Self.creditCardAccount, date: nil, dependencies: dependencies) { result in
             switch result {
             case .success(let positions):
-                XCTAssertEqual(positions.count, 1)
+                #expect(positions.count == 1)
                 self.assertCreditCardPosition(positions[0], balance: "-1234.56")
             case .failure(let error):
-                XCTFail("Expected success but got error: \(error)")
+                Issue.record("Expected success but got error: \(error)")
             }
-            expectation.fulfill()
+            expectation.signal()
         }
 
-        wait(for: [expectation, mockExpectation], timeout: 10.0)
+        #expect(expectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(mockExpectation.wait(timeout: .now() + 10.0) == .success)
     }
 
-    func testGetCreditCardPositionVerifiesRequestBody() throws {
-        let expectation = XCTestExpectation(description: "getPositions completion")
-        let mockExpectation = XCTestExpectation(description: "mock GraphQL server called")
+    @Test
+    func getCreditCardPositionVerifiesRequestBody() throws {
+        let expectation = DispatchSemaphore(value: 0)
 
-        MockURLProtocol.graphQLRequestHandler = { url, request in
+        let mockExpectation = DispatchSemaphore(value: 0)
+        mockHTTPClient.graphQLRequestHandler = { url, request in
             #if canImport(FoundationNetworking)
             // body seems to be missing?
             #else
             let inputData = try Data(reading: request.httpBodyStream!)
             let json = try JSONSerialization.jsonObject(with: inputData, options: []) as? [String: Any]
-            XCTAssertEqual(json?["operationName"] as? String, "FetchCreditCardAccountSummary")
+            #expect(json?["operationName"] as? String == "FetchCreditCardAccountSummary")
             let variables = json?["variables"] as? [String: Any]
-            XCTAssertEqual(variables?["id"] as? String, Self.creditCardAccount.id)
-            XCTAssertNotNil(json?["query"] as? String)
+            #expect(variables?["id"] as? String == Self.creditCardAccount.id)
+            #expect(json?["query"] is String)
             #endif
-            mockExpectation.fulfill()
+            mockExpectation.signal()
             let creditCardData: [String: Any] = [
                 "id": Self.creditCardAccount.id,
                 "balance": ["current": "42.00", "__typename": "Balance"],
@@ -146,55 +148,62 @@ final class CreditCardPositionTests: DownloaderTestCase {
                     try JSONSerialization.data(withJSONObject: responseJSON, options: []))
         }
 
-        WealthsimplePosition.getPositions(token: try createValidToken(), account: Self.creditCardAccount, date: nil) { _ in
-            expectation.fulfill()
+        WealthsimplePosition.getPositions(token: try createValidToken(), account: Self.creditCardAccount, date: nil, dependencies: dependencies) { _ in
+            expectation.signal()
         }
 
-        wait(for: [expectation, mockExpectation], timeout: 10.0)
+        #expect(expectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(mockExpectation.wait(timeout: .now() + 10.0) == .success)
     }
 
     // MARK: - Failure Tests
 
-    func testGetCreditCardPositionNetworkError() throws {
+    @Test
+    func getCreditCardPositionNetworkError() throws {
         try testCreditCardFailure(
             handler: { _, _ in throw URLError(.networkConnectionLost) },
             validate: {
                 guard case .httpError = $0 else {
-                    return XCTFail("Expected httpError but got \($0)")
+                    Issue.record("Expected httpError but got \($0)")
+                    return
                 }
             }
         )
     }
 
-    func testGetCreditCardPositionHTTPError() throws {
+    @Test
+    func getCreditCardPositionHTTPError() throws {
         try testCreditCardFailure(
             handler: { url, _ in
                 (HTTPURLResponse(url: url, statusCode: 500, httpVersion: nil, headerFields: nil)!, Data())
             },
-            validate: { XCTAssertEqual($0, PositionError.httpError(error: "Status code 500")) }
+            validate: { #expect($0 == PositionError.httpError(error: "Status code 500")) }
         )
     }
 
-    func testGetCreditCardPositionWrongResponseType() throws {
+    @Test
+    func getCreditCardPositionWrongResponseType() throws {
         try testCreditCardFailure(
             handler: { url, _ in
                 (URLResponse(url: url, mimeType: nil, expectedContentLength: 0, textEncodingName: nil), Data("test".utf8))
             },
-            validate: { XCTAssertEqual($0, PositionError.httpError(error: "No HTTPURLResponse")) }
+            validate: { #expect($0 == PositionError.httpError(error: "No HTTPURLResponse")) }
         )
     }
 
-    func testGetCreditCardPositionInvalidJSON() throws {
+    @Test
+    func getCreditCardPositionInvalidJSON() throws {
         let data = Data("NOT VALID JSON".utf8)
         try testCreditCardFailure(
             handler: { url, _ in
                 (HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!, data)
             },
-            validate: { XCTAssertEqual($0, PositionError.invalidJson(json: data)) }
+            validate: { #expect($0 == PositionError.invalidJson(json: data)) }
         )
     }
 
-    func testGetCreditCardPositionMissingData() throws {
+    @Test
+    func getCreditCardPositionMissingData() throws {
         try testCreditCardFailure(
             handler: { url, _ in
                 let responseJSON: [String: Any] = ["errors": []]
@@ -203,33 +212,37 @@ final class CreditCardPositionTests: DownloaderTestCase {
             },
             validate: {
                 guard case .missingResultParamenter = $0 else {
-                    return XCTFail("Expected missingResultParamenter but got \($0)")
+                    Issue.record("Expected missingResultParamenter but got \($0)")
+                    return
                 }
             }
         )
     }
 
-    func testGetCreditCardPositionDate() throws {
-        let expectation = XCTestExpectation(description: "getPositions completion")
+    @Test
+    func getCreditCardPositionDate() throws {
 
+        let expectation = DispatchSemaphore(value: 0)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let testDate = dateFormatter.date(from: "2023-12-01")!
 
-        WealthsimplePosition.getPositions(token: try createValidToken(), account: Self.creditCardAccount, date: testDate) { result in
+        WealthsimplePosition.getPositions(token: try createValidToken(), account: Self.creditCardAccount, date: testDate, dependencies: dependencies) { result in
             switch result {
             case .success:
-                return XCTFail("Expected failure")
+                Issue.record("Expected failure")
+                return
             case .failure(let error):
-                XCTAssertEqual(error, PositionError.invalidRequestParameter(error: "Date parameter is not supported for credit card accounts"))
+                #expect(error == PositionError.invalidRequestParameter(error: "Date parameter is not supported for credit card accounts"))
             }
-            expectation.fulfill()
+            expectation.signal()
         }
 
-        wait(for: [expectation], timeout: 10.0)
+        #expect(expectation.wait(timeout: .now() + 10.0) == .success)
     }
 
-    func testGetCreditCardPositionMissingBalance() throws {
+    @Test
+    func getCreditCardPositionMissingBalance() throws {
         try testCreditCardFailure(
             handler: { url, _ in
                 let responseJSON: [String: Any] = [
@@ -242,18 +255,20 @@ final class CreditCardPositionTests: DownloaderTestCase {
             },
             validate: {
                 guard case .missingResultParamenter = $0 else {
-                    return XCTFail("Expected missingResultParamenter but got \($0)")
+                    Issue.record("Expected missingResultParamenter but got \($0)")
+                    return
                 }
             }
         )
     }
 
-    func testGetCreditCardPositionEmptyData() throws {
+    @Test
+    func getCreditCardPositionEmptyData() throws {
         try testCreditCardFailure(
             handler: { url, _ in
                 (HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!, Data())
             },
-            validate: { XCTAssertEqual($0, PositionError.invalidJson(json: Data())) }
+            validate: { #expect($0 == PositionError.invalidJson(json: Data())) }
         )
     }
 

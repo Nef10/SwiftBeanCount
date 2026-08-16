@@ -33,9 +33,9 @@ struct Token {
     private static let credentialStorageKeyAccessToken = "accessToken"
     private static let credentialStorageKeyRefreshToken = "refreshToken"
     private static let credentialStorageKeyExpiry = "expiry"
+    private static let tokenPath = "oauth/v2/token"
+    private static let tokenValidationPath = "oauth/v2/token/info"
 
-    private static var url: URL { URLConfiguration.shared.urlObject(for: "oauth/v2/token")! }
-    private static var testUrl: URL { URLConfiguration.shared.urlObject(for: "oauth/v2/token/info")! }
     private static var clientId = "4da53ac2b03225bed1550eba8e4611e086c7b905a3855e6ed12ea08c246758fa" // From the website
     private static var scope = "read" // the clientId supports some write scopes, but as this library only reads we limit it for safety
 
@@ -43,15 +43,17 @@ struct Token {
     private let refreshToken: String
     private let expiry: Date
     private let credentialStorage: CredentialStorage
+    private let dependencies: DownloaderDependencies
 
-    private init(accessToken: String, refreshToken: String, expiry: Date, credentialStorage: CredentialStorage) {
+    private init(accessToken: String, refreshToken: String, expiry: Date, credentialStorage: CredentialStorage, dependencies: DownloaderDependencies) {
         self.accessToken = accessToken
         self.refreshToken = refreshToken
         self.expiry = expiry
         self.credentialStorage = credentialStorage
+        self.dependencies = dependencies
     }
 
-    private init(json: [String: Any], credentialStorage: CredentialStorage) throws {
+    private init(json: [String: Any], credentialStorage: CredentialStorage, dependencies: DownloaderDependencies) throws {
         guard let accessToken = json["access_token"] as? String,
               let expiresIn = json["expires_in"] as? Int,
               let createdAt = json["created_at"] as? Int,
@@ -63,10 +65,18 @@ struct Token {
         let expiresAt = createdAt + expiresIn
         self.expiry = Date(timeIntervalSince1970: TimeInterval(expiresAt))
         self.credentialStorage = credentialStorage
+        self.dependencies = dependencies
     }
 
-    static func getToken(username: String, password: String, otp: String, credentialStorage: CredentialStorage, completion: @escaping (Result<Self, TokenError>) -> Void) {
-        var request = URLRequest(url: url)
+    static func getToken(
+        username: String,
+        password: String,
+        otp: String,
+        credentialStorage: CredentialStorage,
+        dependencies: DownloaderDependencies = .live,
+        completion: @escaping (Result<Self, TokenError>) -> Void
+    ) {
+        var request = URLRequest(url: dependencies.configuration.urlObject(for: Self.tokenPath)!)
         request.setValue(otp, forHTTPHeaderField: "x-wealthsimple-otp")
         let json = [
             "grant_type": "password",
@@ -75,10 +85,10 @@ struct Token {
             "scope": scope,
             "client_id": clientId
         ]
-        sendTokenRequest(parameters: json, request: request, credentialStorage: credentialStorage, completion: completion)
+        sendTokenRequest(parameters: json, request: request, credentialStorage: credentialStorage, dependencies: dependencies, completion: completion)
     }
 
-    static func getToken(from credentialStorage: CredentialStorage, completion: @escaping (Self?) -> Void) {
+    static func getToken(from credentialStorage: CredentialStorage, dependencies: DownloaderDependencies = .live, completion: @escaping (Self?) -> Void) {
         guard let accessToken = credentialStorage.read(credentialStorageKeyAccessToken),
               let refreshToken = credentialStorage.read(credentialStorageKeyRefreshToken),
               let expiryString = credentialStorage.read(credentialStorageKeyExpiry),
@@ -86,7 +96,13 @@ struct Token {
             completion(nil)
             return
         }
-        let token = Self(accessToken: accessToken, refreshToken: refreshToken, expiry: Date(timeIntervalSince1970: expiryDouble), credentialStorage: credentialStorage)
+        let token = Self(
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+            expiry: Date(timeIntervalSince1970: expiryDouble),
+            credentialStorage: credentialStorage,
+            dependencies: dependencies
+        )
         token.refreshIfNeeded {
             switch $0 {
             case .failure:
@@ -107,27 +123,28 @@ struct Token {
         parameters json: [String: String],
         request urlRequest: URLRequest,
         credentialStorage: CredentialStorage,
+        dependencies: DownloaderDependencies,
         completion: @escaping (Result<Self, TokenError>) -> Void
     ) {
         var request = urlRequest
-        let session = URLSession.shared
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         guard let jsonData = try? JSONSerialization.data(withJSONObject: json, options: []) else {
             completion(.failure(TokenError.invalidParameters(parameters: json)))
             return
         }
-        let task = session.uploadTask(with: request, from: jsonData) { data, response, error in
-            handleTokenResponse(data: data, response: response, error: error, credentialStorage: credentialStorage, completion: completion)
+        dependencies.httpClient.send(request, body: jsonData) { data, response, error in
+            handleTokenResponse(data: data, response: response, error: error, credentialStorage: credentialStorage, dependencies: dependencies, completion: completion)
         }
-        task.resume()
     }
 
+    // swiftlint:disable:next function_parameter_count
     private static func handleTokenResponse(
         data: Data?,
         response: URLResponse?,
         error: Error?,
         credentialStorage: CredentialStorage,
+        dependencies: DownloaderDependencies,
         completion: (Result<Self, TokenError>) -> Void
     ) {
         guard let data else {
@@ -146,15 +163,15 @@ struct Token {
             completion(.failure(TokenError.httpError(error: "Status code \(httpResponse.statusCode)")))
             return
         }
-        completion(parse(data: data, credentialStorage: credentialStorage))
+        completion(parse(data: data, credentialStorage: credentialStorage, dependencies: dependencies))
     }
 
-    private static func parse(data: Data, credentialStorage: CredentialStorage) -> Result<Self, TokenError> {
+    private static func parse(data: Data, credentialStorage: CredentialStorage, dependencies: DownloaderDependencies) -> Result<Self, TokenError> {
         guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
             return .failure(TokenError.invalidJsonType(json: data))
         }
         do {
-            let token = try Self(json: json, credentialStorage: credentialStorage)
+            let token = try Self(json: json, credentialStorage: credentialStorage, dependencies: dependencies)
             token.saveToken()
             return .success(token)
         } catch {
@@ -163,11 +180,10 @@ struct Token {
     }
 
     private func testIfValid(completion: @escaping (Bool) -> Void) {
-        var request = URLRequest(url: Self.testUrl)
-        let session = URLSession.shared
+        var request = URLRequest(url: dependencies.configuration.urlObject(for: Self.tokenValidationPath)!)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         authenticateRequest(request) { request in
-            let task = session.dataTask(with: request) { _, response, error in
+            dependencies.httpClient.send(request, body: nil) { _, response, error in
                 guard error == nil else {
                     completion(false)
                     return
@@ -178,7 +194,6 @@ struct Token {
                 }
                 completion(httpResponse.statusCode == 200)
             }
-            task.resume()
         }
     }
 
@@ -201,13 +216,13 @@ struct Token {
     }
 
     private func refresh(completion: @escaping (Result<Self, TokenError>) -> Void) {
-        let request = URLRequest(url: Self.url)
+        let request = URLRequest(url: dependencies.configuration.urlObject(for: Self.tokenPath)!)
         let json = [
             "grant_type": "refresh_token",
             "refresh_token": refreshToken,
             "client_id": Self.clientId
         ]
-        Self.sendTokenRequest(parameters: json, request: request, credentialStorage: credentialStorage, completion: completion)
+        Self.sendTokenRequest(parameters: json, request: request, credentialStorage: credentialStorage, dependencies: dependencies, completion: completion)
     }
 
     private func saveToken() {

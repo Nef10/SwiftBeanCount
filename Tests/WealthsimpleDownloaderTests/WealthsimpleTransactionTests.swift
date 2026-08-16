@@ -10,9 +10,10 @@ import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
+import Testing
 @testable import WealthsimpleDownloader
-import XCTest
 
+@Suite
 final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disable:this type_body_length
 
     private struct TestAccount: Account {
@@ -68,10 +69,10 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
     // MARK: - Helper Methods
 
     private func createValidToken() throws -> Token {
-        let expectation = XCTestExpectation(description: "createValidToken completion")
+        let expectation = DispatchSemaphore(value: 0)
         var resultToken: Token?
 
-        MockURLProtocol.tokenValidationRequestHandler = { url, _ in
+        mockHTTPClient.tokenValidationRequestHandler = { url, _ in
             let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
             return (response, Data())
         }
@@ -80,14 +81,14 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         mockCredentialStorage.storage["refreshToken"] = "valid_refresh_token"
         mockCredentialStorage.storage["expiry"] = String(Date().addingTimeInterval(3_600).timeIntervalSince1970)
 
-        Token.getToken(from: mockCredentialStorage) { token in
+        Token.getToken(from: mockCredentialStorage, dependencies: dependencies) { token in
             resultToken = token
-            expectation.fulfill()
+            expectation.signal()
         }
 
-        wait(for: [expectation], timeout: 10.0)
+        #expect(expectation.wait(timeout: .now() + 10.0) == .success)
         guard let resultToken else {
-            XCTFail("Did not get valid token")
+            Issue.record("Did not get valid token")
             throw TokenError.noToken
         }
         return resultToken
@@ -101,126 +102,129 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         TestAccount(id: "credit-test-account-4321", accountType: .creditCard, currency: "CAD", number: "4321")
     }
 
-    private func setupRESTMockForSuccess(transactions: [[String: Any]], expectation: XCTestExpectation) {
-        MockURLProtocol.transactionsRequestHandler = { url, request in
-            XCTAssertEqual(request.value(forHTTPHeaderField: "Content-Type"), "application/json")
-            XCTAssertEqual(request.value(forHTTPHeaderField: "Authorization"), "Bearer valid_access_token3")
-            XCTAssertTrue(url.query()?.contains("effective_date_start") ?? false)
-            XCTAssertTrue(url.query()?.contains("process_date_start") ?? false)
+    private func setupRESTMockForSuccess(transactions: [[String: Any]], expectation: DispatchSemaphore) {
+        mockHTTPClient.transactionsRequestHandler = { url, request in
+            #expect(request.value(forHTTPHeaderField: "Content-Type") == "application/json")
+            #expect(request.value(forHTTPHeaderField: "Authorization") == "Bearer valid_access_token3")
+            #expect(url.query()?.contains("effective_date_start") ?? false)
+            #expect(url.query()?.contains("process_date_start") ?? false)
 
             let jsonResponse = [
                 "object": "transaction",
                 "results": transactions
             ]
-            expectation.fulfill()
+            expectation.signal()
             return (HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!,
                     try JSONSerialization.data(withJSONObject: jsonResponse, options: []))
         }
     }
 
     private func setupGraphQLMockForSuccess(
-        activityResponses: [[String: Any]], fxResponses: [[String: Any]], expectation: XCTestExpectation, file: StaticString = #file, line: UInt = #line
+        activityResponses: [[String: Any]], fxResponses: [[String: Any]], expectation: DispatchSemaphore
     ) throws {
         var callCount = 0
-        MockURLProtocol.graphQLRequestHandler = { _, request in
+        mockHTTPClient.graphQLRequestHandler = { _, request in
             callCount += 1
-            XCTAssertEqual(request.value(forHTTPHeaderField: "Content-Type"), "application/json", file: file, line: line)
-            XCTAssertEqual(request.value(forHTTPHeaderField: "Authorization"), "Bearer valid_access_token3", file: file, line: line)
+            #expect(request.value(forHTTPHeaderField: "Content-Type") == "application/json")
+            #expect(request.value(forHTTPHeaderField: "Authorization") == "Bearer valid_access_token3")
 
             guard let url = request.url else {
-                XCTFail("Request URL is empty", file: file, line: line)
+                Issue.record("Request URL is empty")
                 throw TransactionError.httpError(error: "Request URL is empty")
             }
             guard let stream = request.httpBodyStream, let inputData = try? Data(reading: stream), let requestString = String(data: inputData, encoding: .utf8) else {
-                XCTFail("Request body is empty", file: file, line: line)
+                Issue.record("Request body is empty")
                 throw TransactionError.noDataReceived
             }
 
             var response = [String: Any]()
             if requestString.contains("query FetchActivityFeedItems") {
-                XCTAssertEqual(callCount % 2, 1)
+                #expect(!callCount.isMultiple(of: 2))
                 response = activityResponses[(callCount - 1) / 2]
             } else if requestString.contains("query CreditCardActivity") {
-                XCTAssertEqual(callCount % 2, 0)
+                #expect(callCount.isMultiple(of: 2))
                 response = fxResponses[(callCount / 2) - 1]
             } else {
-                XCTFail("Unexpected GraphQL query", file: file, line: line)
+                Issue.record("Unexpected GraphQL query")
             }
             if callCount == activityResponses.count + fxResponses.count {
-                expectation.fulfill()
+                expectation.signal()
             } else if callCount > activityResponses.count + fxResponses.count {
-                XCTFail("Too many GraphQL calls", file: file, line: line)
+                Issue.record("Too many GraphQL calls")
             }
 
             return (HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!, try JSONSerialization.data(withJSONObject: response, options: []))
         }
     }
 
-    private func testRESTTransactionsFailure(response: (URLResponse, Data), expectedError: TransactionError, file: StaticString = #file, line: UInt = #line) throws {
-        let mockExpectation = XCTestExpectation(description: "mock server called")
+    private func testRESTTransactionsFailure(response: (URLResponse, Data), expectedError: TransactionError) throws {
 
+        let mockExpectation = DispatchSemaphore(value: 0)
         try testRESTTransactionsFailure(
             response: { _, _ in
-                mockExpectation.fulfill()
+                mockExpectation.signal()
                 return response
             },
-            expectedError: expectedError,
-            file: file,
-            line: line
+            expectedError: expectedError
         )
 
-        wait(for: [mockExpectation], timeout: 10.0)
+        #expect(mockExpectation.wait(timeout: .now() + 10.0) == .success)
     }
 
     private func testRESTTransactionsFailure(
         response: @escaping ((URL, URLRequest) throws -> (URLResponse, Data)),
-        expectedError: TransactionError,
-        file: StaticString = #file,
-        line: UInt = #line
+        expectedError: TransactionError
     ) throws {
-        let expectation = XCTestExpectation(description: "getTransactions completion")
+        let expectation = DispatchSemaphore(value: 0)
 
-        MockURLProtocol.transactionsRequestHandler = response
+        mockHTTPClient.transactionsRequestHandler = response
 
-        WealthsimpleTransaction.getTransactions(token: try createValidToken(), account: createValidAccount(), startDate: Self.startDate) { result in
-            switch result {
+        WealthsimpleTransaction.getTransactions(token: try createValidToken(), account: createValidAccount(), startDate: Self.startDate, dependencies: dependencies) {
+            switch $0 {
             case .success:
-                XCTFail("Expected failure", file: file, line: line)
+                Issue.record("Expected failure")
             case .failure(let error):
-                XCTAssertEqual(error, expectedError, file: file, line: line)
+                #expect(error == expectedError)
             }
-            expectation.fulfill()
+            expectation.signal()
         }
 
-        wait(for: [expectation], timeout: 10.0)
+        #expect(expectation.wait(timeout: .now() + 10.0) == .success)
     }
 
-    private func testRESTJSONParsingFailure(jsonData: Data, expectedError: TransactionError, file: StaticString = #file, line: UInt = #line) throws {
+    private func testRESTJSONParsingFailure(jsonData: Data, expectedError: TransactionError) throws {
         try testRESTTransactionsFailure(response: (
                 HTTPURLResponse(url: URL(string: "http://test.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)!,
                 jsonData
             ),
-            expectedError: expectedError,
-            file: file,
-            line: line
+            expectedError: expectedError
         )
     }
 
-    private func testRESTJSONParsingFailure(jsonObject: [String: Any], expectedError: TransactionError, file: StaticString = #file, line: UInt = #line) throws {
+    private func testRESTJSONParsingFailure(jsonObject: [String: Any], expectedError: TransactionError) throws {
         guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: []) else {
-            XCTFail("Failed to create JSON data", file: file, line: line)
+            Issue.record("Failed to create JSON data")
             return
         }
-        try testRESTJSONParsingFailure(jsonData: jsonData, expectedError: expectedError, file: file, line: line)
+        try testRESTJSONParsingFailure(jsonData: jsonData, expectedError: expectedError)
     }
 
-    private func testGraphQLFailure(expectation: XCTestExpectation, expectedError: TransactionError, file: StaticString = #file, line: UInt = #line) throws {
-        WealthsimpleTransaction.getTransactions(token: try createValidToken(), account: createGraphQLAccount(), startDate: Self.startDate) { result in
+    private func testGraphQLFailure(
+        expectation: DispatchSemaphore,
+        expectedError: TransactionError,
+        dependencies: DownloaderDependencies? = nil
+    ) throws {
+        WealthsimpleTransaction.getTransactions(
+            token: try createValidToken(),
+            account: createGraphQLAccount(),
+            startDate: Self.startDate,
+            dependencies: dependencies ?? self.dependencies
+        ) { result in
             switch result {
             case .success(let transactions):
-                XCTFail("Expected failure but got success with transactions: \(transactions)", file: file, line: line)
+                Issue.record("Expected failure but got success with transactions: \(transactions)")
             case .failure(let error):
-                XCTAssertEqual(error, expectedError, file: file, line: line)
+                #expect(error == expectedError)
                 if error != expectedError { // Helper to debug test failures
                     switch error {
                     case .missingResultParameter(let json), .invalidResultParameter(let json):
@@ -238,21 +242,22 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
                     }
                 }
             }
-            expectation.fulfill()
+            expectation.signal()
         }
     }
 
     private func testGraphQLJSONParsingFailure( // swiftlint:disable:next discouraged_optional_collection
-        activityResponse: [String: Any], fxResponse: [String: Any]?, expectedError: TransactionError, file: StaticString = #file, line: UInt = #line
+        activityResponse: [String: Any], fxResponse: [String: Any]?, expectedError: TransactionError
     ) throws {
-        let expectation = XCTestExpectation(description: "getTransactions completion")
-        let mockExpectation = XCTestExpectation(description: "mock server called")
+        let expectation = DispatchSemaphore(value: 0)
+        let mockExpectation = DispatchSemaphore(value: 0)
 
         let fxResponses = fxResponse != nil ? [fxResponse!] : []
         try setupGraphQLMockForSuccess(activityResponses: [activityResponse], fxResponses: fxResponses, expectation: mockExpectation)
-        try testGraphQLFailure(expectation: expectation, expectedError: expectedError, file: file, line: line)
+        try testGraphQLFailure(expectation: expectation, expectedError: expectedError)
 
-        wait(for: [expectation, mockExpectation], timeout: 10.0)
+        #expect(expectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(mockExpectation.wait(timeout: .now() + 10.0) == .success)
     }
 
     private func graphQLResponse(for transaction: [String: Any]) -> [String: Any] {
@@ -281,70 +286,74 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
 
     // MARK: - Successful REST Tests
 
-    // swiftlint:disable:next function_body_length
-    func testGetTransactionsSuccess() throws {
-        let expectation = XCTestExpectation(description: "getTransactions completion")
-        let mockExpectation = XCTestExpectation(description: "mock server called")
+    @Test
+    func getTransactionsSuccess() throws { // swiftlint:disable:this function_body_length
+        let expectation = DispatchSemaphore(value: 0)
+        let mockExpectation = DispatchSemaphore(value: 0)
 
         let transactionJSON = Self.transactionJSON
         setupRESTMockForSuccess(transactions: [transactionJSON], expectation: mockExpectation)
 
-        WealthsimpleTransaction.getTransactions(token: try createValidToken(), account: createValidAccount(), startDate: Self.startDate) { result in
-            switch result {
+        WealthsimpleTransaction.getTransactions(token: try createValidToken(), account: createValidAccount(), startDate: Self.startDate, dependencies: dependencies) {
+            switch $0 {
             case .success(let transactions):
-                XCTAssertEqual(transactions.count, 1)
+                #expect(transactions.count == 1)
 
                 let transaction = transactions[0]
-                XCTAssertEqual(transaction.id, "transaction-123")
-                XCTAssertEqual(transaction.accountId, "account-456")
-                XCTAssertEqual(transaction.transactionType, .buy)
-                XCTAssertEqual(transaction.description, "Buy AAPL")
-                XCTAssertEqual(transaction.symbol, "AAPL")
-                XCTAssertEqual(transaction.quantity, "10.0")
-                XCTAssertEqual(transaction.marketPriceAmount, "150.00")
-                XCTAssertEqual(transaction.marketPriceCurrency, "USD")
-                XCTAssertEqual(transaction.marketValueAmount, "1500.00")
-                XCTAssertEqual(transaction.marketValueCurrency, "USD")
-                XCTAssertEqual(transaction.netCashAmount, "-1500.00")
-                XCTAssertEqual(transaction.netCashCurrency, "USD")
-                XCTAssertEqual(transaction.fxRate, "1.0")
+                #expect(transaction.id == "transaction-123")
+                #expect(transaction.accountId == "account-456")
+                #expect(transaction.transactionType == .buy)
+                #expect(transaction.description == "Buy AAPL")
+                #expect(transaction.symbol == "AAPL")
+                #expect(transaction.quantity == "10.0")
+                #expect(transaction.marketPriceAmount == "150.00")
+                #expect(transaction.marketPriceCurrency == "USD")
+                #expect(transaction.marketValueAmount == "1500.00")
+                #expect(transaction.marketValueCurrency == "USD")
+                #expect(transaction.netCashAmount == "-1500.00")
+                #expect(transaction.netCashCurrency == "USD")
+                #expect(transaction.fxRate == "1.0")
 
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd"
-                XCTAssertEqual(transaction.processDate, dateFormatter.date(from: "2023-01-15"))
-                XCTAssertEqual(transaction.effectiveDate, dateFormatter.date(from: "2023-01-16"))
+                #expect(transaction.processDate == dateFormatter.date(from: "2023-01-15"))
+                #expect(transaction.effectiveDate == dateFormatter.date(from: "2023-01-16"))
 
             case .failure(let error):
-                XCTFail("Expected success but got error: \(error)")
+                Issue.record("Expected success but got error: \(error)")
             }
-            expectation.fulfill()
+            expectation.signal()
         }
 
-        wait(for: [expectation, mockExpectation], timeout: 10.0)
+        #expect(expectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(mockExpectation.wait(timeout: .now() + 10.0) == .success)
     }
 
-    func testGetTransactionsEmptyResults() throws {
-        let expectation = XCTestExpectation(description: "getTransactions completion")
-        let mockExpectation = XCTestExpectation(description: "mock server called")
+    @Test
+    func getTransactionsEmptyResults() throws {
+        let expectation = DispatchSemaphore(value: 0)
+        let mockExpectation = DispatchSemaphore(value: 0)
 
         setupRESTMockForSuccess(transactions: [], expectation: mockExpectation)
 
-        WealthsimpleTransaction.getTransactions(token: try createValidToken(), account: createValidAccount(), startDate: Self.startDate) { result in
-            switch result {
+        WealthsimpleTransaction.getTransactions(token: try createValidToken(), account: createValidAccount(), startDate: Self.startDate, dependencies: dependencies) {
+            switch $0 {
             case .success(let transactions):
-                XCTAssertEqual(transactions.count, 0)
+                #expect(transactions.isEmpty)
             case .failure(let error):
-                XCTFail("Expected success but got error: \(error)")
+                Issue.record("Expected success but got error: \(error)")
             }
-            expectation.fulfill()
+            expectation.signal()
         }
 
-        wait(for: [expectation, mockExpectation], timeout: 10.0)
+        #expect(expectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(mockExpectation.wait(timeout: .now() + 10.0) == .success)
     }
 
-    func testGetTransactionsMultipleTransactionTypes() throws {
-        let expectation = XCTestExpectation(description: "getTransactions completion")
-        let mockExpectation = XCTestExpectation(description: "mock server called")
+    @Test
+    func getTransactionsMultipleTransactionTypes() throws {
+        let expectation = DispatchSemaphore(value: 0)
+        let mockExpectation = DispatchSemaphore(value: 0)
 
         var buyTransaction = Self.transactionJSON
         buyTransaction["type"] = "buy"
@@ -364,59 +373,61 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
 
         setupRESTMockForSuccess(transactions: [buyTransaction, dividendTransaction, feeTransaction, paymentTransaction], expectation: mockExpectation)
 
-        WealthsimpleTransaction.getTransactions(token: try createValidToken(), account: createValidAccount(), startDate: Self.startDate) { result in
-            switch result {
+        WealthsimpleTransaction.getTransactions(token: try createValidToken(), account: createValidAccount(), startDate: Self.startDate, dependencies: dependencies) {
+            switch $0 {
             case .success(let transactions):
-                XCTAssertEqual(transactions.count, 4)
-                XCTAssertEqual(transactions[0].transactionType, .buy)
-                XCTAssertEqual(transactions[1].transactionType, .dividend)
-                XCTAssertEqual(transactions[2].transactionType, .custodianFee)
-                XCTAssertEqual(transactions[3].transactionType, .paymentTransferIn)
+                #expect(transactions.count == 4)
+                #expect(transactions[0].transactionType == .buy)
+                #expect(transactions[1].transactionType == .dividend)
+                #expect(transactions[2].transactionType == .custodianFee)
+                #expect(transactions[3].transactionType == .paymentTransferIn)
             case .failure(let error):
-                XCTFail("Expected success but got error: \(error)")
+                Issue.record("Expected success but got error: \(error)")
             }
-            expectation.fulfill()
+            expectation.signal()
         }
 
-        wait(for: [expectation, mockExpectation], timeout: 10.0)
+        #expect(expectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(mockExpectation.wait(timeout: .now() + 10.0) == .success)
     }
 
-    func testGetTransactionsAppendsStartDateQueryItems() throws {
+    @Test
+    func getTransactionsAppendsStartDateQueryItems() throws {
         let startDate = Date(timeIntervalSince1970: 1_700_000_000)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let expectedDateString = dateFormatter.string(from: startDate)
 
-        let expectation = XCTestExpectation(description: "getTransactions completion")
-        let mockExpectation = XCTestExpectation(description: "mock server called")
+        let expectation = DispatchSemaphore(value: 0)
+        let mockExpectation = DispatchSemaphore(value: 0)
 
-        MockURLProtocol.transactionsRequestHandler = { url, request in
-            XCTAssertEqual(request.value(forHTTPHeaderField: "Content-Type"), "application/json")
-            XCTAssertEqual(request.value(forHTTPHeaderField: "Authorization"), "Bearer valid_access_token3")
-            XCTAssert(url.query()?.contains("effective_date_start=\(expectedDateString)") ?? false)
-            XCTAssert(url.query()?.contains("process_date_start=\(expectedDateString)") ?? false)
+        mockHTTPClient.transactionsRequestHandler = { url, request in
+            #expect(request.value(forHTTPHeaderField: "Content-Type") == "application/json")
+            #expect(request.value(forHTTPHeaderField: "Authorization") == "Bearer valid_access_token3")
+            #expect(url.query()?.contains("effective_date_start=\(expectedDateString)") ?? false)
+            #expect(url.query()?.contains("process_date_start=\(expectedDateString)") ?? false)
 
             let jsonResponse = [
                 "object": "transaction",
                 "results": [Self.transactionJSON]
             ]
-            mockExpectation.fulfill()
+            mockExpectation.signal()
             return (HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!,
                     try JSONSerialization.data(withJSONObject: jsonResponse, options: []))
         }
 
-        WealthsimpleTransaction.getTransactions(token: try createValidToken(), account: createValidAccount(), startDate: startDate) { result in
+        WealthsimpleTransaction.getTransactions(token: try createValidToken(), account: createValidAccount(), startDate: startDate, dependencies: dependencies) { result in
             switch result {
             case .success(let transactions):
-                XCTAssertEqual(transactions.count, 1)
+                #expect(transactions.count == 1)
             case .failure(let error):
-                XCTFail("Expected success but got error: \(error)")
+                Issue.record("Expected success but got error: \(error)")
             }
-            expectation.fulfill()
+            expectation.signal()
         }
 
-        wait(for: [expectation, mockExpectation], timeout: 10.0)
-
+        #expect(expectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(mockExpectation.wait(timeout: .now() + 10.0) == .success)
     }
 
     // MARK: - Successful GraphQL Tests
@@ -424,57 +435,63 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
 #if canImport(FoundationNetworking)
 // see https://github.com/swiftlang/swift-corelibs-foundation/issues/3199
 #else
-    // swiftlint:disable:next function_body_length
-    func testGraphQLTransactionsSuccess() throws {
-        let expectation = XCTestExpectation(description: "getTransactions completion")
-        let mockExpectation = XCTestExpectation(description: "mock server called")
+    @Test
+    func graphQLTransactionsSuccess() throws { // swiftlint:disable:this function_body_length
+        let expectation = DispatchSemaphore(value: 0)
+        let mockExpectation = DispatchSemaphore(value: 0)
 
         let response1 = graphQLResponse(for: Self.graphQLTransactionJSON)
         let response2 = graphQLFxResponse(for: Self.graphQLFxJSON)
 
         try setupGraphQLMockForSuccess(activityResponses: [response1], fxResponses: [response2], expectation: mockExpectation)
 
-        WealthsimpleTransaction.getTransactions(token: try createValidToken(), account: createGraphQLAccount(), startDate: Self.startDate) { result in
+        WealthsimpleTransaction.getTransactions(
+            token: try createValidToken(),
+            account: createGraphQLAccount(),
+            startDate: Self.startDate,
+            dependencies: dependencies
+        ) { result in
             switch result {
             case .success(let transactions):
-                XCTAssertEqual(transactions.count, 1)
+                #expect(transactions.count == 1)
                 let transaction = transactions[0]
 
                 // Check basic fields
-                XCTAssertEqual(transaction.id, "cc-transaction-123")
-                XCTAssertEqual(transaction.accountId, "credit-test-account-4321")
-                XCTAssertEqual(transaction.description, "Foreign Merchant")
-                XCTAssertEqual(transaction.transactionType, .purchase)
-                XCTAssertEqual(transaction.symbol, "USD")
-                XCTAssertEqual(transaction.quantity, "75.00")
-                XCTAssertEqual(transaction.marketPriceAmount, "1.00")
-                XCTAssertEqual(transaction.marketPriceCurrency, "CAD")
-                XCTAssertEqual(transaction.marketValueAmount, "100.00")
-                XCTAssertEqual(transaction.marketValueCurrency, "CAD")
-                XCTAssertEqual(transaction.netCashAmount, "-100.00")
-                XCTAssertEqual(transaction.netCashCurrency, "CAD")
-                XCTAssertEqual(transaction.fxRate, "1.33333")
+                #expect(transaction.id == "cc-transaction-123")
+                #expect(transaction.accountId == "credit-test-account-4321")
+                #expect(transaction.description == "Foreign Merchant")
+                #expect(transaction.transactionType == .purchase)
+                #expect(transaction.symbol == "USD")
+                #expect(transaction.quantity == "75.00")
+                #expect(transaction.marketPriceAmount == "1.00")
+                #expect(transaction.marketPriceCurrency == "CAD")
+                #expect(transaction.marketValueAmount == "100.00")
+                #expect(transaction.marketValueCurrency == "CAD")
+                #expect(transaction.netCashAmount == "-100.00")
+                #expect(transaction.netCashCurrency == "CAD")
+                #expect(transaction.fxRate == "1.33333")
 
                 // Check dates
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX"
-                XCTAssertEqual(transaction.processDate, dateFormatter.date(from: "2023-01-15T10:30:45.123456-05:00"))
+                #expect(transaction.processDate == dateFormatter.date(from: "2023-01-15T10:30:45.123456-05:00"))
 
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss z"
-                XCTAssertEqual(transaction.effectiveDate, dateFormatter.date(from: "2023-01-16 15:45:30 EST"))
+                #expect(transaction.effectiveDate == dateFormatter.date(from: "2023-01-16 15:45:30 EST"))
 
             case .failure(let error):
-                XCTFail("Expected success but got error: \(error)")
+                Issue.record("Expected success but got error: \(error)")
             }
-            expectation.fulfill()
+            expectation.signal()
         }
 
-        wait(for: [expectation, mockExpectation], timeout: 10.0)
+        #expect(expectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(mockExpectation.wait(timeout: .now() + 10.0) == .success)
     }
 
-    func testGraphQLPaginationSuccess() throws {
-        let expectation = XCTestExpectation(description: "getTransactions completion")
-        let mockExpectation = XCTestExpectation(description: "mock server called")
+    @Test
+    func graphQLPaginationSuccess() throws {
+        let expectation = DispatchSemaphore(value: 0), mockExpectation = DispatchSemaphore(value: 0)
 
         var transaction2 = Self.graphQLTransactionJSON
         transaction2["externalCanonicalId"] = "cc-transaction-page2"
@@ -498,20 +515,21 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
 
         try setupGraphQLMockForSuccess(activityResponses: [responsePage1, responsePage2], fxResponses: [fxResponse, fxResponse], expectation: mockExpectation)
 
-        WealthsimpleTransaction.getTransactions(token: try createValidToken(), account: createGraphQLAccount(), startDate: Self.startDate) { result in
-            switch result {
+        WealthsimpleTransaction.getTransactions(token: try createValidToken(), account: createGraphQLAccount(), startDate: Self.startDate, dependencies: dependencies) {
+            switch $0 {
             case .success(let transactions):
                 // Expect two transactions (one from each page)
-                XCTAssertEqual(transactions.count, 2)
-                XCTAssertEqual(transactions[0].id, "cc-transaction-123")
-                XCTAssertEqual(transactions[1].id, "cc-transaction-page2")
+                #expect(transactions.count == 2)
+                #expect(transactions[0].id == "cc-transaction-123")
+                #expect(transactions[1].id == "cc-transaction-page2")
             case .failure(let error):
-                XCTFail("Expected success but got error: \(error)")
+                Issue.record("Expected success but got error: \(error)")
             }
-            expectation.fulfill()
+            expectation.signal()
         }
 
-        wait(for: [expectation, mockExpectation], timeout: 10.0)
+        #expect(expectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(mockExpectation.wait(timeout: .now() + 10.0) == .success)
     }
 
 #endif
@@ -519,7 +537,8 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
     // MARK: - Network Error Tests
 
 #if canImport(FoundationNetworking)
-    func testGetTransactionsNetworkFailure() throws {
+    @Test
+    func getTransactionsNetworkFailure() throws {
         try testRESTTransactionsFailure(
             response: { _, _ in
                 throw URLError(.networkConnectionLost)
@@ -527,7 +546,8 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         )
     }
 #else
-    func testGetTransactionsNetworkFailure() throws {
+    @Test
+    func getTransactionsNetworkFailure() throws {
         try testRESTTransactionsFailure(
             response: { _, _ in
                 throw URLError(.networkConnectionLost)
@@ -536,7 +556,8 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
     }
 #endif
 
-    func testGetTransactionsEmptyData() throws {
+    @Test
+    func getTransactionsEmptyData() throws {
         try testRESTTransactionsFailure(response: (
                 HTTPURLResponse(url: URL(string: "http://test.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)!,
                 Data()
@@ -544,60 +565,51 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         )
     }
 
-    func testGetTransactionsWrongResponseType() throws {
+    @Test
+    func getTransactionsWrongResponseType() throws {
         try testRESTTransactionsFailure(response: (
             URLResponse(url: URL(string: "http://test.com")!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil),
             Data()
         ), expectedError: TransactionError.httpError(error: "No HTTPURLResponse"))
     }
 
-    func testGetTransactionsHTTPError() throws {
+    @Test
+    func getTransactionsHTTPError() throws {
         try testRESTTransactionsFailure(response: (
             HTTPURLResponse(url: URL(string: "http://test.com")!, statusCode: 401, httpVersion: nil, headerFields: nil)!,
             Data()
         ), expectedError: TransactionError.httpError(error: "Status code 401"))
     }
 
-    func testInvalidGraphQLURL() throws {
-        URLConfiguration.shared.setGraphQLURL("Not a valid URL:::///")
-        let expectation = XCTestExpectation(description: "getTransactions completion")
+    @Test
+    func invalidGraphQLURL() throws {
+        let invalidDependencies = DownloaderDependencies(
+            httpClient: mockHTTPClient,
+            configuration: URLConfiguration(
+                baseURL: "http://localhost:8080/v1/",
+                graphQLURL: "Not a valid URL:::///"
+            )
+        )
+        let expectation = DispatchSemaphore(value: 0)
         let expectedError = TransactionError.httpError(error: "Invalid URL")
-        try testGraphQLFailure(expectation: expectation, expectedError: expectedError)
-        wait(for: [expectation], timeout: 10.0)
+        try testGraphQLFailure(
+            expectation: expectation,
+            expectedError: expectedError,
+            dependencies: invalidDependencies
+        )
+        #expect(expectation.wait(timeout: .now() + 10.0) == .success)
     }
 
-    func testInvalidGraphQLURLFx() throws {
-        let expectation = XCTestExpectation(description: "getTransactions completion")
-        let mockExpectation = XCTestExpectation(description: "mock server called")
+    @Test
+    func graphQLRequestErrorFx() throws {
+        let expectation = DispatchSemaphore(value: 0)
+        let mockExpectation = DispatchSemaphore(value: 0)
         var callCount = 0
-        MockURLProtocol.graphQLRequestHandler = { _, request in
+        mockHTTPClient.graphQLRequestHandler = { _, request in
             callCount += 1
             guard let url = request.url else {
-                XCTFail("Request URL is empty")
-                throw TransactionError.httpError(error: "Request URL is empty")
-            }
-            if callCount == 1 {
-                let response = self.graphQLResponse(for: Self.graphQLTransactionJSON)
-                URLConfiguration.shared.setGraphQLURL("Not a valid URL:::///")
-                mockExpectation.fulfill()
-                return (HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!, try JSONSerialization.data(withJSONObject: response, options: []))
-            }
-            XCTFail("Too many GraphQL calls")
-            throw TransactionError.httpError(error: "Too many GraphQL calls")
-        }
-        let expectedError = TransactionError.httpError(error: "Invalid URL")
-        try testGraphQLFailure(expectation: expectation, expectedError: expectedError)
-        wait(for: [expectation, mockExpectation], timeout: 10.0)
-    }
+                Issue.record("Request URL is empty")
 
-    func testGraphQLRequestErrorFx() throws {
-        let expectation = XCTestExpectation(description: "getTransactions completion")
-        let mockExpectation = XCTestExpectation(description: "mock server called")
-        var callCount = 0
-        MockURLProtocol.graphQLRequestHandler = { _, request in
-            callCount += 1
-            guard let url = request.url else {
-                XCTFail("Request URL is empty")
                 throw TransactionError.httpError(error: "Request URL is empty")
             }
             if callCount == 1 {
@@ -605,33 +617,37 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
                 return (HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!, try JSONSerialization.data(withJSONObject: response, options: []))
             }
             if callCount == 2 {
-                mockExpectation.fulfill()
+                mockExpectation.signal()
                 return (HTTPURLResponse(url: url, statusCode: 401, httpVersion: nil, headerFields: nil)!, Data())
             }
-            XCTFail("Too many GraphQL calls")
+            Issue.record("Too many GraphQL calls")
             throw TransactionError.httpError(error: "Too many GraphQL calls")
         }
         let expectedError = TransactionError.httpError(error: "Status code 401")
         try testGraphQLFailure(expectation: expectation, expectedError: expectedError)
-        wait(for: [expectation, mockExpectation], timeout: 10.0)
+        #expect(expectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(mockExpectation.wait(timeout: .now() + 10.0) == .success)
     }
 
     // MARK: - REST JSON Parsing Error Tests
 
-    func testGetTransactionsInvalidJSON() throws {
+    @Test
+    func getTransactionsInvalidJSON() throws {
         let data = Data("NOT VALID JSON".utf8)
         try testRESTJSONParsingFailure(jsonData: data, expectedError: TransactionError.invalidJson(json: data))
     }
 
-    func testGetTransactionsInvalidJSONType() throws {
+    @Test
+    func getTransactionsInvalidJSONType() throws {
         guard let jsonData = try? JSONSerialization.data(withJSONObject: ["not", "a", "dictionary"], options: []) else {
-            XCTFail("Failed to create test JSON data")
+            Issue.record("Failed to create test JSON data")
             return
         }
         try testRESTJSONParsingFailure(jsonData: jsonData, expectedError: TransactionError.invalidJson(json: jsonData))
     }
 
-    func testGetTransactionsMissingResults() throws {
+    @Test
+    func getTransactionsMissingResults() throws {
         let json = ["object": "transaction"]
         try testRESTJSONParsingFailure(
             jsonObject: json,
@@ -639,7 +655,8 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         )
     }
 
-    func testGetTransactionsInvalidObject() throws {
+    @Test
+    func getTransactionsInvalidObject() throws {
         let json: [String: Any] = ["object": "not_transaction", "results": []]
         try testRESTJSONParsingFailure(
             jsonObject: json,
@@ -647,7 +664,8 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         )
     }
 
-    func testTransactionMissingId() throws {
+    @Test
+    func transactionMissingId() throws {
         var transaction = Self.transactionJSON
         transaction.removeValue(forKey: "id")
         try testRESTJSONParsingFailure(
@@ -656,7 +674,8 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         )
     }
 
-    func testTransactionMissingProcessDate() throws {
+    @Test
+    func transactionMissingProcessDate() throws {
         var transaction = Self.transactionJSON
         transaction.removeValue(forKey: "process_date")
         try testRESTJSONParsingFailure(
@@ -665,7 +684,8 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         )
     }
 
-    func testTransactionMissingEffectiveDate() throws {
+    @Test
+    func transactionMissingEffectiveDate() throws {
         var transaction = Self.transactionJSON
         transaction.removeValue(forKey: "effective_date")
         try testRESTJSONParsingFailure(
@@ -674,7 +694,8 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         )
     }
 
-    func testTransactionInvalidProcessDate() throws {
+    @Test
+    func transactionInvalidProcessDate() throws {
         var transaction = Self.transactionJSON
         transaction["process_date"] = "invalid-date"
         try testRESTJSONParsingFailure(
@@ -683,7 +704,8 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         )
     }
 
-    func testTransactionInvalidEffectiveDate() throws {
+    @Test
+    func transactionInvalidEffectiveDate() throws {
         var transaction = Self.transactionJSON
         transaction["effective_date"] = "invalid-date"
         try testRESTJSONParsingFailure(
@@ -692,7 +714,8 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         )
     }
 
-    func testTransactionInvalidType() throws {
+    @Test
+    func transactionInvalidType() throws {
         var transaction = Self.transactionJSON
         transaction["type"] = "invalid_transaction_type"
         try testRESTJSONParsingFailure(
@@ -701,7 +724,8 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         )
     }
 
-    func testTransactionInvalidObject() throws {
+    @Test
+    func transactionInvalidObject() throws {
         var transaction = Self.transactionJSON
         transaction["object"] = "not_transaction"
         try testRESTJSONParsingFailure(
@@ -712,34 +736,37 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
 
     // MARK: - GraphQL JSON Parsing Error Tests
 
-    func testGraphQLInvalidJSON() throws {
-        let mockExpectation = XCTestExpectation(description: "mock server called")
-        let expectation = XCTestExpectation(description: "getTransactions completion")
+    @Test
+    func graphQLInvalidJSON() throws {
+        let mockExpectation = DispatchSemaphore(value: 0)
+        let expectation = DispatchSemaphore(value: 0)
 
-        MockURLProtocol.graphQLRequestHandler = { _, request in
+        mockHTTPClient.graphQLRequestHandler = { _, request in
             guard let url = request.url else {
-                XCTFail("Request URL is empty")
+                Issue.record("Request URL is empty")
                 throw TransactionError.httpError(error: "Request URL is empty")
             }
-            mockExpectation.fulfill()
+            mockExpectation.signal()
             return (HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!, Data("NOT VALID JSON".utf8))
         }
 
         let error = TransactionError.invalidJson(json: Data("NOT VALID JSON".utf8))
         try testGraphQLFailure(expectation: expectation, expectedError: error)
 
-        wait(for: [mockExpectation, expectation], timeout: 10.0)
+        #expect(mockExpectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(expectation.wait(timeout: .now() + 10.0) == .success)
     }
 
-    func testGraphQLInvalidJSONFx() throws {
-        let mockExpectation = XCTestExpectation(description: "mock server called")
-        let expectation = XCTestExpectation(description: "getTransactions completion")
+    @Test
+    func graphQLInvalidJSONFx() throws {
+        let mockExpectation = DispatchSemaphore(value: 0)
+        let expectation = DispatchSemaphore(value: 0)
 
         var callCount = 0
-        MockURLProtocol.graphQLRequestHandler = { _, request in
+        mockHTTPClient.graphQLRequestHandler = { _, request in
             callCount += 1
             guard let url = request.url else {
-                XCTFail("Request URL is empty")
+                Issue.record("Request URL is empty")
                 throw TransactionError.httpError(error: "Request URL is empty")
             }
             if callCount == 1 {
@@ -747,26 +774,28 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
                 return (HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!, try JSONSerialization.data(withJSONObject: response, options: []))
             }
             if callCount == 2 {
-                mockExpectation.fulfill()
+                mockExpectation.signal()
                 return (HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!, Data("NOT VALID JSON".utf8))
             }
-            XCTFail("Too many GraphQL calls")
+            Issue.record("Too many GraphQL calls")
             throw TransactionError.httpError(error: "Too many GraphQL calls")
         }
 
         let error = TransactionError.invalidJson(json: Data("NOT VALID JSON".utf8))
         try testGraphQLFailure(expectation: expectation, expectedError: error)
 
-        wait(for: [mockExpectation, expectation], timeout: 10.0)
+        #expect(mockExpectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(expectation.wait(timeout: .now() + 10.0) == .success)
     }
 
 #if canImport(FoundationNetworking)
 // see https://github.com/swiftlang/swift-corelibs-foundation/issues/3199
 #else
 
-    func testGraphQLErrorSecondPage() throws {
-        let expectation = XCTestExpectation(description: "getTransactions completion")
-        let mockExpectation = XCTestExpectation(description: "mock server called")
+    @Test
+    func graphQLErrorSecondPage() throws {
+        let expectation = DispatchSemaphore(value: 0)
+        let mockExpectation = DispatchSemaphore(value: 0)
 
         var transaction2 = Self.graphQLTransactionJSON
         transaction2["externalCanonicalId"] = "cc-transaction-page2"
@@ -790,10 +819,12 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         let expectedError = TransactionError.missingResultParameter(json: transaction2)
         try testGraphQLFailure(expectation: expectation, expectedError: expectedError)
 
-        wait(for: [expectation, mockExpectation], timeout: 10.0)
+        #expect(expectation.wait(timeout: .now() + 10.0) == .success)
+        #expect(mockExpectation.wait(timeout: .now() + 10.0) == .success)
     }
 
-    func testGraphQLWrongInnerStructure() throws {
+    @Test
+    func graphQLWrongInnerStructure() throws {
         let response1 = [
             "data": [
                 "activityFeedItems": [
@@ -811,7 +842,8 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: nil, expectedError: error)
     }
 
-    func testGraphQLMissingPageInfo() throws {
+    @Test
+    func graphQLMissingPageInfo() throws {
         let response1 = [
             "data": [
                 "activityFeedItems": [
@@ -825,13 +857,15 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: nil, expectedError: error)
     }
 
-    func testGraphQLWrongStructure() throws {
+    @Test
+    func graphQLWrongStructure() throws {
         let response1 = Self.graphQLTransactionJSON
         let error = TransactionError.missingResultParameter(json: (Self.graphQLTransactionJSON))
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: nil, expectedError: error)
     }
 
-    func testGraphQLWrongStructureFx() throws {
+    @Test
+    func graphQLWrongStructureFx() throws {
         let response1 = graphQLResponse(for: Self.graphQLTransactionJSON)
         let response2 = Self.graphQLFxJSON
         let error = TransactionError.missingResultParameter(json: Self.graphQLFxJSON)
@@ -839,7 +873,8 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: response2, expectedError: error)
     }
 
-    func testGraphQLWrongStructureFx2() throws {
+    @Test
+    func graphQLWrongStructureFx2() throws {
         let response1 = graphQLResponse(for: Self.graphQLTransactionJSON)
         let response2 = [
             "data": [
@@ -851,7 +886,8 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: response2, expectedError: error)
     }
 
-    func testGraphQLMissingRequiredField() throws {
+    @Test
+    func graphQLMissingRequiredField() throws {
         var transaction = Self.graphQLTransactionJSON
         transaction.removeValue(forKey: "amount")
 
@@ -862,7 +898,8 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: response2, expectedError: error)
     }
 
-    func testGraphQLMissingRequiredFieldForFx() throws {
+    @Test
+    func graphQLMissingRequiredFieldForFx() throws {
         var transaction = Self.graphQLTransactionJSON
         transaction.removeValue(forKey: "externalCanonicalId")
 
@@ -872,7 +909,8 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: nil, expectedError: error)
     }
 
-    func testGraphQLInvalidType() throws {
+    @Test
+    func graphQLInvalidType() throws {
         var transaction = Self.graphQLTransactionJSON
         transaction["subType"] = "fun"
 
@@ -883,7 +921,8 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: response2, expectedError: error)
     }
 
-    func testGraphQLMissingSettlementDate() throws {
+    @Test
+    func graphQLMissingSettlementDate() throws {
         var transaction = Self.graphQLFxJSON
         transaction.removeValue(forKey: "settledAt")
 
@@ -894,7 +933,8 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: response2, expectedError: error)
     }
 
-    func testGraphQLInvalidDate() throws {
+    @Test
+    func graphQLInvalidDate() throws {
         var transaction = Self.graphQLFxJSON
         transaction["settledAt"] = "invalid-date"
 
@@ -905,7 +945,8 @@ final class WealthsimpleTransactionTests: DownloaderTestCase { // swiftlint:disa
         try testGraphQLJSONParsingFailure(activityResponse: response1, fxResponse: response2, expectedError: error)
     }
 
-    func testGraphQLMissingFxRate() throws {
+    @Test
+    func graphQLMissingFxRate() throws {
         var transaction = Self.graphQLFxJSON
         transaction.removeValue(forKey: "foreignExchangeRate")
 

@@ -34,6 +34,7 @@ public final class WealthsimpleAPI {
 
     private let authenticationCallback: AuthenticationCallback
     private let credentialStorage: CredentialStorage
+    private let dependencies: DownloaderDependencies
     private var token: Token?
 
     /// Creates the Downloader instance
@@ -45,9 +46,14 @@ public final class WealthsimpleAPI {
     ///     Needs to return username, password, and one time password. Might be called during any call.
     ///   - credentialStorage: A CredentialStore to save API tokens to. Implementation can be empty,
     ///     in this case the authenticationCallback will be called every time and not only when the refresh token expired
-    public init(authenticationCallback: @escaping AuthenticationCallback, credentialStorage: CredentialStorage) {
+    public convenience init(authenticationCallback: @escaping AuthenticationCallback, credentialStorage: CredentialStorage) {
+        self.init(authenticationCallback: authenticationCallback, credentialStorage: credentialStorage, dependencies: .live)
+    }
+
+    init(authenticationCallback: @escaping AuthenticationCallback, credentialStorage: CredentialStorage, dependencies: DownloaderDependencies) {
         self.authenticationCallback = authenticationCallback
         self.credentialStorage = credentialStorage
+        self.dependencies = dependencies
     }
 
     /// Authneticates against the API. Call before calling any other method.
@@ -65,7 +71,7 @@ public final class WealthsimpleAPI {
             }
             return
         }
-        Token.getToken(from: credentialStorage) {
+        Token.getToken(from: credentialStorage, dependencies: dependencies) {
             if let token = $0 {
                 self.token = token
                 completion(nil)
@@ -84,7 +90,7 @@ public final class WealthsimpleAPI {
             completion(.failure(.tokenError(.noToken)))
             return
         }
-        WealthsimpleAccount.getAccounts(token: token) {
+        WealthsimpleAccount.getAccounts(token: token, dependencies: dependencies) {
             completion($0)
         }
     }
@@ -99,7 +105,7 @@ public final class WealthsimpleAPI {
             completion(.failure(.tokenError(.noToken)))
             return
         }
-        WealthsimplePosition.getPositions(token: token, account: account, date: date) {
+        WealthsimplePosition.getPositions(token: token, account: account, date: date, dependencies: dependencies) {
             completion($0)
         }
     }
@@ -114,14 +120,14 @@ public final class WealthsimpleAPI {
             completion(.failure(.tokenError(.noToken)))
             return
         }
-        WealthsimpleTransaction.getTransactions(token: token, account: account, startDate: startDate) {
+        WealthsimpleTransaction.getTransactions(token: token, account: account, startDate: startDate, dependencies: dependencies) {
             completion($0)
         }
     }
 
     private func getNewToken(completion: @escaping (Error?) -> Void) {
         authenticationCallback { username, password, otp in
-            Token.getToken(username: username, password: password, otp: otp, credentialStorage: self.credentialStorage) {
+            Token.getToken(username: username, password: password, otp: otp, credentialStorage: self.credentialStorage, dependencies: self.dependencies) {
                 switch $0 {
                 case let .failure(error):
                     completion(error)
