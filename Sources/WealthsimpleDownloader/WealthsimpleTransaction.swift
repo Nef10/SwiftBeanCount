@@ -267,23 +267,6 @@ struct WealthsimpleTransaction: Transaction { // swiftlint:disable:this type_bod
         return result
     }
 
-    private final class TransactionsResultBox: @unchecked Sendable {
-        private let lock = NSLock()
-        private var result: Result<[Transaction], TransactionError>?
-
-        func set(_ result: Result<[Transaction], TransactionError>) {
-            lock.lock()
-            self.result = result
-            lock.unlock()
-        }
-
-        func value() -> Result<[Transaction], TransactionError>? {
-            lock.lock()
-            defer { lock.unlock() }
-            return result
-        }
-    }
-
     private static func loadNextPage(cursor: String, token: Token, account: Account, startDate: Date, dependencies: DownloaderDependencies) throws -> [Transaction] {
         let resultBox = TransactionsResultBox()
         let group = DispatchGroup()
@@ -423,6 +406,23 @@ struct WealthsimpleTransaction: Transaction { // swiftlint:disable:this type_bod
             throw TransactionError.missingResultParameter(json: json)
         }
         return results
+    }
+
+    private final class TransactionsResultBox: @unchecked Sendable {
+        private let lock = NSLock()
+        private var result: Result<[Transaction], TransactionError>?
+
+        func set(_ result: Result<[Transaction], TransactionError>) {
+            lock.lock()
+            self.result = result
+            lock.unlock()
+        }
+
+        func value() -> Result<[Transaction], TransactionError>? {
+            lock.lock()
+            defer { lock.unlock() }
+            return result
+        }
     }
 
 }
