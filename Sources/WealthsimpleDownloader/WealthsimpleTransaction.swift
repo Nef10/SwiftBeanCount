@@ -267,18 +267,35 @@ struct WealthsimpleTransaction: Transaction { // swiftlint:disable:this type_bod
         return result
     }
 
+    private final class TransactionsResultBox: @unchecked Sendable {
+        private let lock = NSLock()
+        private var result: Result<[Transaction], TransactionError>?
+
+        func set(_ result: Result<[Transaction], TransactionError>) {
+            lock.lock()
+            self.result = result
+            lock.unlock()
+        }
+
+        func value() -> Result<[Transaction], TransactionError>? {
+            lock.lock()
+            defer { lock.unlock() }
+            return result
+        }
+    }
+
     private static func loadNextPage(cursor: String, token: Token, account: Account, startDate: Date, dependencies: DownloaderDependencies) throws -> [Transaction] {
-        var nextResult: Result<[Transaction], TransactionError>!
+        let resultBox = TransactionsResultBox()
         let group = DispatchGroup()
         group.enter()
         DispatchQueue.global(qos: .userInitiated).async {
             getTransactions(token: token, account: account, startDate: startDate, dependencies: dependencies, cursor: cursor) {
-                nextResult = $0
+                resultBox.set($0)
                 group.leave()
             }
         }
         group.wait()
-        switch nextResult {
+        switch resultBox.value() {
         case .success(let nextTransactions):
             return nextTransactions
         case .failure(let error):
