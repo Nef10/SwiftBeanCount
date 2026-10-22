@@ -24,7 +24,7 @@ jobs:
           - platform: iOS
             os: macos-26
             destination: 'platform=iOS Simulator,OS=26.5,name=iPhone 17 Pro'
-            xcode-version: '26.4' # Need to match Xcode version to iOS + Swift version
+            xcode-version: '26.5' # Need to match Xcode version to iOS + Swift version
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout code

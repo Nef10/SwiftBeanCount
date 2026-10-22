@@ -53,6 +53,8 @@ The code is split up in several internal libraries, which allows functionality t
 * [SwiftBeanCountRogersBankMapper](https://github.com/Nef10/SwiftBeanCountRogersBankMapper): Library to convert downloaded data from Rogers Bank
 * [TangerineDownloader](https://github.com/Nef10/TangerineDownloader): Library to download data from Tangerine
 * [SwiftBeanCountTangerineMapper](https://github.com/Nef10/SwiftBeanCountTangerineMapper): Library to convert downloaded data from Tangerine
+* [RitualDownloader](Sources/RitualDownloader/RitualDownloader.docc/RitualDownloader.md): Library to sign in using phone and SMS/email verification and download Ritual receipts
+* [SwiftBeanCountRitualMapper](Sources/SwiftBeanCountRitualMapper/SwiftBeanCountRitualMapper.docc/SwiftBeanCountRitualMapper.md): Library to map Ritual receipts and review matching bank payments
 * [CompassCardDownloader](https://github.com/Nef10/CompassCardDownloader): Library to download data from the CompassCard website
 * [SwiftBeanCountCompassCardMapper](https://github.com/Nef10/SwiftBeanCountCompassCardMapper): Library to convert downloaded data from the CompassCard website
 
@@ -89,6 +91,11 @@ flowchart LR
     RogersBankDownloader
     RogersBankDownloader --> SwiftBeanCountRogersBankMapper
   end
+  subgraph Ritual
+    RitualDownloader --> SwiftBeanCountRitualMapper
+  end
+  Ritual --> SwiftBeanCountImporter
+  Core --> SwiftBeanCountRitualMapper
   subgraph GoogleSheets
     SwiftBeanCountSheetSync
     GoogleAuthentication
@@ -149,7 +156,7 @@ flowchart LR
   classDef app fill:#99FF99;
   classDef external fill:#FF99FF;
   classDef cli fill:#FFCC99;
-  class Core,Rogers,Wealthsimple,Tangerine,CompassCard,GoogleSheets box;
+  class Core,Rogers,Wealthsimple,Tangerine,CompassCard,GoogleSheets,Ritual box;
   class SwiftBeanCountImporterApp,App app;
   class CSV,OAuthSwift,KeychainAccess,External,swift-argument-parser,SwiftyTextTable,Rainbow external;
   class SwiftBeanCountCLI cli;
@@ -223,4 +230,4 @@ Contributions in form of bug reports or pull requests are very welcome!
 
 # Copyright
 
-While my code is licensed under the [MIT License](https://github.com/Nef10/SwiftBeanCount/blob/main/LICENSE), the source repository may include names or other trademarks of TransLink, CompassCard, Rogers, Rogers Bank, Tangerine, Scotiabank, Wealthsimple, RBC, N26, Google, EquatePlus, flatexDEGIRO Bank, Simplii or other entities; potential usage restrictions for these elements still apply and are not touched by the software license. Same applies for the API design. I am in no way affiliated with them other than being customer.
+While my code is licensed under the [MIT License](https://github.com/Nef10/SwiftBeanCount/blob/main/LICENSE), the source repository may include names or other trademarks of TransLink, CompassCard, Rogers, Rogers Bank, Tangerine, Scotiabank, Wealthsimple, RBC, N26, Google, EquatePlus, flatexDEGIRO Bank, Ritual, Simplii or other entities; potential usage restrictions for these elements still apply and are not touched by the software license. Same applies for the API design. I am in no way affiliated with them other than being customer.

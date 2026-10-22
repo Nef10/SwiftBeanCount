@@ -18,12 +18,12 @@ struct DownloadImporterTests {
     func importers() {
         #if canImport(UIKit) || canImport(AppKit)
             #if os(macOS)
-                #expect(DownloadImporterFactory.importers.count == 5)
+                #expect(DownloadImporterFactory.importers.count == 6)
             #else
-                #expect(DownloadImporterFactory.importers.count == 4)
+                #expect(DownloadImporterFactory.importers.count == 5)
             #endif
         #else
-            #expect(DownloadImporterFactory.importers.count == 2)
+            #expect(DownloadImporterFactory.importers.count == 3)
         #endif
     }
 
