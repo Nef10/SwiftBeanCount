@@ -10,7 +10,11 @@ import AppKit
 
 @testable import RitualDownloader
 
+#if canImport(UIKit)
+@Suite(.disabled("WKWebView requires a UIApplication-hosted test process on iOS"))
+#else
 @Suite(.serialized)
+#endif
 struct RitualVerificationViewTests {
     @MainActor
     private func configuration() async throws -> WKWebViewConfiguration {
