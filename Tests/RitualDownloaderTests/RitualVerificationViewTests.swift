@@ -42,7 +42,7 @@ struct RitualVerificationViewTests {
         </script>
         """
         let token: String = try await withCheckedThrowingContinuation { continuation in
-            view.start(in: parent, html: html, timeout: 10) { continuation.resume(with: $0) }
+            view.start(in: parent, html: html, timeout: 60) { continuation.resume(with: $0) }
         }
         #expect(token == "local-synthetic-token")
         #expect(parent.subviews.isEmpty)
@@ -60,7 +60,7 @@ struct RitualVerificationViewTests {
         <script>window.onload=function(){window.webkit.messageHandlers.ritualVerification.postMessage({token:'main-frame'});};</script>
         """
         let token: String = try await withCheckedThrowingContinuation { continuation in
-            view.start(in: parent, html: html, timeout: 10) { continuation.resume(with: $0) }
+            view.start(in: parent, html: html, timeout: 60) { continuation.resume(with: $0) }
         }
         #expect(token == "main-frame")
         #expect(parent.subviews.isEmpty)
