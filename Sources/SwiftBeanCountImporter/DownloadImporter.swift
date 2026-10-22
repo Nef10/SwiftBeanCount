@@ -18,15 +18,22 @@ enum DownloadImporterFactory {
                 return [
                     WealthsimpleDownloadImporter.self,
                     RogersDownloadImporter.self,
+                    RitualDownloadImporter.self,
                     TangerineDownloadImporter.self,
                     CompassCardDownloadImporter.self,
                     GoogleSheetDownloadImporter.self
                 ]
             #else
-                return [WealthsimpleDownloadImporter.self, RogersDownloadImporter.self, TangerineDownloadImporter.self, CompassCardDownloadImporter.self]
+                return [
+                    WealthsimpleDownloadImporter.self,
+                    RogersDownloadImporter.self,
+                    RitualDownloadImporter.self,
+                    TangerineDownloadImporter.self,
+                    CompassCardDownloadImporter.self
+                ]
             #endif
         #else
-            [WealthsimpleDownloadImporter.self, RogersDownloadImporter.self]
+            [WealthsimpleDownloadImporter.self, RogersDownloadImporter.self, RitualDownloadImporter.self]
         #endif
     }
 

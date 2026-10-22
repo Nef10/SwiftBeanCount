@@ -32,6 +32,8 @@ let package = Package(
         .library(name: "SwiftBeanCountCompassCardMapper", targets: ["SwiftBeanCountCompassCardMapper"]),
         .library(name: "SwiftBeanCountTangerineMapper", targets: ["SwiftBeanCountTangerineMapper"]),
         .library(name: "SwiftBeanCountWealthsimpleMapper", targets: ["SwiftBeanCountWealthsimpleMapper"]),
+        .library(name: "RitualDownloader", targets: ["RitualDownloader"]),
+        .library(name: "SwiftBeanCountRitualMapper", targets: ["SwiftBeanCountRitualMapper"]),
         .library(name: "SwiftBeanCountSheetSync", targets: ["SwiftBeanCountSheetSync"]),
         .library(name: "SwiftBeanCountImporter", targets: ["SwiftBeanCountImporter"]),
         .library(name: "RogersBankDownloader", targets: ["RogersBankDownloader"]),
@@ -134,6 +136,17 @@ let package = Package(
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .target(
+            name: "RitualDownloader",
+            swiftSettings: swiftSettings,
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .target(
+            name: "SwiftBeanCountRitualMapper",
+            dependencies: ["SwiftBeanCountModel", "RitualDownloader"],
+            swiftSettings: swiftSettings,
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .target(
             name: "SwiftBeanCountSheetSync",
             dependencies: [
                 "SwiftBeanCountModel",
@@ -154,6 +167,8 @@ let package = Package(
                 "SwiftBeanCountWealthsimpleMapper",
                 "SwiftBeanCountCompassCardMapper",
                 "SwiftBeanCountTangerineMapper",
+                "RitualDownloader",
+                "SwiftBeanCountRitualMapper",
                 "WealthsimpleDownloader",
                 .byName(name: "SwiftBeanCountSheetSync", condition: .when(platforms: [.macOS, .iOS])),
                 .byName(name: "CompassCardDownloader", condition: .when(platforms: [.macOS, .iOS])),
@@ -273,7 +288,20 @@ let package = Package(
         ),
         .testTarget(
             name: "SwiftBeanCountImporterTests",
-            dependencies: ["SwiftBeanCountImporter"],
+            dependencies: ["SwiftBeanCountImporter", "RitualDownloader", "SwiftBeanCountRitualMapper"],
+            swiftSettings: swiftSettings,
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .testTarget(
+            name: "RitualDownloaderTests",
+            dependencies: ["RitualDownloader"],
+            resources: [.copy("Fixtures")],
+            swiftSettings: swiftSettings,
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountRitualMapperTests",
+            dependencies: ["SwiftBeanCountRitualMapper", "RitualDownloader", "SwiftBeanCountParser"],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
