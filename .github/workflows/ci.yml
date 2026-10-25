@@ -83,8 +83,11 @@ jobs:
           fi
         done
     - name: Install lcov
-      if: ${{ matrix.platform == 'iOS' }}
+      if: ${{ matrix.platform != 'ubuntu' }}
       run: brew install lcov
+    - name: Install lcov on Ubuntu
+      if: ${{ matrix.platform == 'ubuntu' }}
+      run: sudo apt-get update && sudo apt-get install -y lcov
     - name: Create coverage directory
       run: |
         mkdir -p ./${{matrix.platform}}-coverage
@@ -144,17 +147,34 @@ jobs:
           exit 1
         fi
 
-        COV_OBJECT_ARGS=()
-        for test_product in "${COV_BINARIES[@]:1}"; do
-          COV_OBJECT_ARGS+=(-object "${test_product}")
+        LCOV_REPORTS=()
+        index=0
+        for test_product in "${COV_BINARIES[@]}"; do
+          coverage_binary="${test_product}"
+          if [[ "${coverage_binary}" == *.xctest && "${{matrix.platform}}" == "macOS" && -d "${coverage_binary}" ]]; then
+            test_name="$(basename "${coverage_binary}" .xctest)"
+            coverage_binary="${coverage_binary}/Contents/MacOS/${test_name}"
+          fi
+
+          report="${RUNNER_TEMP}/coverage-${index}.info"
+          echo "Exporting coverage for ${coverage_binary}"
+          ${LLVM_COV_CMD} export "${coverage_binary}" ${LLVM_COV_ARGS} --instr-profile="${INSTR_PROFILE_PATH}" > "${report}"
+          if [[ -s "${report}" ]]; then
+            LCOV_REPORTS+=("${report}")
+          fi
+          index=$((index + 1))
         done
 
-        echo "Coverage executables: ${COV_BINARIES[*]}"
-        ${LLVM_COV_CMD} export "${COV_BINARIES[0]}" "${COV_OBJECT_ARGS[@]}" ${LLVM_COV_ARGS} --instr-profile="${INSTR_PROFILE_PATH}" > "${OUTPUT_FILE}"
-        if [[ ! -s "${OUTPUT_FILE}" ]]; then
-          echo "llvm-cov produced an empty coverage report" >&2
+        if [[ ${#LCOV_REPORTS[@]} -eq 0 ]]; then
+          echo "llvm-cov produced no coverage reports" >&2
           exit 1
         fi
+
+        LCOV_ARGS=()
+        for report in "${LCOV_REPORTS[@]}"; do
+          LCOV_ARGS+=(-a "${report}")
+        done
+        lcov "${LCOV_ARGS[@]}" --ignore-errors empty -o "${OUTPUT_FILE}"
     - name: Generate iOS test coverage report
       if: ${{ matrix.platform == 'iOS' }}
       run: |
