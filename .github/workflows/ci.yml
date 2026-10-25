@@ -15,16 +15,16 @@ jobs:
       fail-fast: false
       matrix:
         platform: ["macOS", "ubuntu", "iOS"]
-        swift: ["6.3.2"]
+        swift: ["6.4.1"]
         include:
           - platform: macOS
             os: macOS-latest
           - platform: ubuntu
             os: ubuntu-latest
           - platform: iOS
-            os: macos-26
-            destination: 'platform=iOS Simulator,OS=26.5,name=iPhone 17 Pro'
-            xcode-version: '26.5' # Need to match Xcode version to iOS + Swift version
+            os: xcode-27
+            destination: 'platform=iOS Simulator,OS=27.1,name=iPhone Duo'
+            xcode-version: '27.1' # Need to match Xcode version to iOS + Swift version
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout code
@@ -83,45 +83,111 @@ jobs:
           fi
         done
     - name: Install lcov
-      if: ${{ matrix.platform == 'iOS' }}
-      run: brew install lcov
+      run: |
+        if [[ "${{ matrix.platform }}" == "ubuntu" ]]; then
+          sudo apt-get update && sudo apt-get install -y lcov
+        else
+          brew install lcov
+        fi
     - name: Create coverage directory
       run: |
         mkdir -p ./${{matrix.platform}}-coverage
         echo "${{ github.event.number }}" > "./${{matrix.platform}}-coverage/PR_NUMBER-${{matrix.platform}}"
     - name: Determine llvm command
       run: |
-        LLVM_COV_CMD="llvm-cov"
-
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-          PATH="/usr/local/opt/llvm/bin:${PATH}"
-        else
-          # Workaround for GitHub Actions ubuntu image missing llvm-cov in PATH, if swift is pre-installed
-          # If it is installed via swift-actions/setup-swift, llvm-cov is in PATH
-          PATH="/usr/share/swift/usr/bin:${PATH}"
-        fi
-
-        if ! command -v "${LLVM_COV_CMD}" &> /dev/null; then
+        if [[ "${{matrix.platform}}" == "iOS" ]]; then
           LLVM_COV_CMD="xcrun llvm-cov"
+          LLVM_PROFDATA_CMD="xcrun llvm-profdata"
+        else
+          SWIFT_TOOLCHAIN_PATH="$(swiftly use --print-location)"
+          LLVM_COV_CMD="${SWIFT_TOOLCHAIN_PATH}/usr/bin/llvm-cov"
+          LLVM_PROFDATA_CMD="${SWIFT_TOOLCHAIN_PATH}/usr/bin/llvm-profdata"
+          if [[ ! -x "${LLVM_COV_CMD}" || ! -x "${LLVM_PROFDATA_CMD}" ]]; then
+            echo "Could not find LLVM coverage tools in the selected Swift toolchain: ${SWIFT_TOOLCHAIN_PATH}" >&2
+            exit 1
+          fi
         fi
 
+        echo "Using coverage tool: ${LLVM_COV_CMD}"
+        ${LLVM_COV_CMD} --version
         echo "LLVM_COV_CMD=${LLVM_COV_CMD}" >> ${GITHUB_ENV}
-        echo "PATH=${PATH}" >> ${GITHUB_ENV}
+        echo "LLVM_PROFDATA_CMD=${LLVM_PROFDATA_CMD}" >> ${GITHUB_ENV}
         echo "LLVM_COV_ARGS=--skip-functions --skip-branches --ignore-filename-regex=.build|Tests|SourcePackages --format=lcov" >> ${GITHUB_ENV}
         echo "OUTPUT_FILE=${{matrix.platform}}-coverage/${{matrix.platform}}.info" >> ${GITHUB_ENV}
     - name: Generate test coverage report
       if: ${{ matrix.platform != 'iOS' }}
       run: |
-        INSTR_PROFILE_PATH=".build/debug/codecov/default.profdata"
-        XCTEST_PATH="$(find $(swift build --show-bin-path) -name '*.xctest')"
+        COV_BUILD_PATH=".build"
 
-        if [[ "${{matrix.platform}}" == "macOS" ]]; then
-          COV_BIN="${XCTEST_PATH}/Contents/MacOS/$(basename ${XCTEST_PATH} .xctest)"
-        elif [[ "${{matrix.platform}}" == "ubuntu" ]]; then
-          COV_BIN="${XCTEST_PATH}"
+        PROFILE_FILES=()
+        while IFS= read -r -d '' profile; do
+          PROFILE_FILES+=("${profile}")
+        done < <(find "${COV_BUILD_PATH}" -type f -name 'default.profdata' -print0)
+
+        if [[ ${#PROFILE_FILES[@]} -eq 0 ]]; then
+          echo "Could not find SwiftPM coverage profiles under .build" >&2
+          exit 1
         fi
 
-        ${LLVM_COV_CMD} export "${COV_BIN}" ${LLVM_COV_ARGS} --instr-profile="${INSTR_PROFILE_PATH}" > "${OUTPUT_FILE}"
+        INSTR_PROFILE_PATH="${RUNNER_TEMP}/merged-coverage.profdata"
+        echo "Merging ${#PROFILE_FILES[@]} SwiftPM coverage profiles"
+        ${LLVM_PROFDATA_CMD} merge -sparse "${PROFILE_FILES[@]}" -o "${INSTR_PROFILE_PATH}"
+
+        COV_BINARIES=()
+        while IFS= read -r -d '' test_product; do
+          if [[ "${test_product}" == *.xctest && "${{matrix.platform}}" == "macOS" && -d "${test_product}" ]]; then
+            test_name="$(basename "${test_product}" .xctest)"
+            COV_BINARIES+=("${test_product}/Contents/MacOS/${test_name}")
+          else
+            COV_BINARIES+=("${test_product}")
+          fi
+        done < <(find "${COV_BUILD_PATH}" \( -name '*-test-runner' -o -name '*.xctest' \) -print0)
+
+        if [[ ${#COV_BINARIES[@]} -eq 0 ]]; then
+          echo "Could not find any SwiftPM test executables under .build" >&2
+          exit 1
+        fi
+
+        COV_OBJECTS=()
+        if [[ "${{matrix.platform}}" == "ubuntu" ]]; then
+          while IFS= read -r -d '' object_file; do
+            COV_OBJECTS+=("${object_file}")
+          done < <(find .build/out/Products -type f \( -name '*.a' -o -name '*.so' -o -name '*.dylib' \) -print0)
+          echo "Coverage libraries: ${COV_OBJECTS[*]}"
+        fi
+
+        LCOV_REPORTS=()
+        index=0
+        for test_product in "${COV_BINARIES[@]}"; do
+          coverage_binary="${test_product}"
+          if [[ "${coverage_binary}" == *.xctest && "${{matrix.platform}}" == "macOS" && -d "${coverage_binary}" ]]; then
+            test_name="$(basename "${coverage_binary}" .xctest)"
+            coverage_binary="${coverage_binary}/Contents/MacOS/${test_name}"
+          fi
+
+          report="${RUNNER_TEMP}/coverage-${index}.info"
+          echo "Exporting coverage for ${coverage_binary}"
+          COV_OBJECT_ARGS=()
+          for object_file in "${COV_OBJECTS[@]}"; do
+            COV_OBJECT_ARGS+=(-object "${object_file}")
+          done
+          ${LLVM_COV_CMD} export "${coverage_binary}" "${COV_OBJECT_ARGS[@]}" ${LLVM_COV_ARGS} --instr-profile="${INSTR_PROFILE_PATH}" > "${report}"
+          if [[ -s "${report}" ]]; then
+            LCOV_REPORTS+=("${report}")
+          fi
+          index=$((index + 1))
+        done
+
+        if [[ ${#LCOV_REPORTS[@]} -eq 0 ]]; then
+          echo "llvm-cov produced no coverage reports" >&2
+          exit 1
+        fi
+
+        LCOV_ARGS=()
+        for report in "${LCOV_REPORTS[@]}"; do
+          LCOV_ARGS+=(-a "${report}")
+        done
+        lcov "${LCOV_ARGS[@]}" --ignore-errors empty -o "${OUTPUT_FILE}"
     - name: Generate iOS test coverage report
       if: ${{ matrix.platform == 'iOS' }}
       run: |
@@ -164,7 +230,7 @@ jobs:
       matrix:
         platform:  ['macOS', 'iOS']
       fail-fast: false
-    runs-on: macOS-26
+    runs-on: xcode-27
     steps:
     - uses: actions/checkout@v7
     - name: Configure SwiftLint Reporter
@@ -172,7 +238,7 @@ jobs:
         echo "reporter: \"github-actions-logging\"" >> .swiftlint.yml
     - uses: maxim-lobanov/setup-xcode@v1
       with:
-        xcode-version: latest-stable
+        xcode-version: '27.1'
     - name: Build
       uses: sersoft-gmbh/xcodebuild-action@v4
       env:
