@@ -202,6 +202,75 @@ struct RitualAuthenticatorTests {
         #expect(!RitualAuthenticationError.rejected(403).localizedDescription.contains("private"))
     }
 
+    @Test
+    func invalidDeviceIdentifierSendsNothing() async throws {
+        let client = LoginHTTPClient { _, _ in
+            Issue.record("An invalid device identifier must fail before sending a request")
+            return (Data(), 500)
+        }
+        let auth = RitualAuthenticator(dependencies: DownloaderDependencies(client: client, sleep: noPause, now: Date.init, progress: discardProgress))
+        await #expect(throws: RitualDownloadError.invalidContext("Invalid device UUID")) {
+            try await auth.login(
+                phone: RitualPhoneNumber(number: "5555550123"),
+                deviceID: "not-a-uuid",
+                getCaptchaHandler: { Issue.record("CAPTCHA must not be requested"); return "unused" },
+                getOTPHandler: { _ in Issue.record("OTP must not be requested"); return "unused" }
+            )
+        }
+        #expect(client.requests.isEmpty)
+    }
+
+    @Test
+    func malformedAuthorizationResponseDoesNotAskForOTP() async throws {
+        let client = LoginHTTPClient { _, _ in (Data(#"{"token":"","last_four":"0123"}"#.utf8), 200) }
+        let auth = RitualAuthenticator(dependencies: DownloaderDependencies(client: client, sleep: noPause, now: Date.init, progress: discardProgress))
+        var requestedCode = false
+        await #expect(throws: RitualDownloadError.invalidResponse("Invalid sign-in authorization response")) {
+            try await auth.login(
+                phone: RitualPhoneNumber(number: "5555550123"),
+                deviceID: testDeviceID,
+                getCaptchaHandler: { "fresh" },
+                getOTPHandler: { _ in requestedCode = true; return "123456" }
+            )
+        }
+        #expect(!requestedCode)
+        #expect(client.requests.count == 1)
+    }
+
+    @Test
+    func rejectedCodeExchangeIsReported() async throws {
+        let client = LoginHTTPClient { _, number in number == 1 ? (authorization(), 200) : (Data(), 403) }
+        let auth = RitualAuthenticator(dependencies: DownloaderDependencies(client: client, sleep: noPause, now: Date.init, progress: discardProgress))
+        await #expect(throws: RitualAuthenticationError.rejected(403)) {
+            try await auth.login(
+                phone: RitualPhoneNumber(number: "5555550123"),
+                deviceID: testDeviceID,
+                getCaptchaHandler: { "fresh" },
+                getOTPHandler: { _ in "123456" }
+            )
+        }
+        #expect(client.requests.count == 2)
+    }
+
+    @Test(arguments: [
+        #"{"access_token":"","refresh_token":"refresh","expires_in":3600}"#,
+        #"{"access_token":"invalid","refresh_token":"refresh","expires_in":3600}"#,
+        #"{"access_token":"header.e30.signature","expires_in":3600}"#
+    ])
+    func malformedCodeExchangeTokenIsRejected(_ body: String) async throws {
+        let client = LoginHTTPClient { _, number in number == 1 ? (authorization(), 200) : (Data(body.utf8), 200) }
+        let auth = RitualAuthenticator(dependencies: DownloaderDependencies(client: client, sleep: noPause, now: Date.init, progress: discardProgress))
+        await #expect(throws: RitualDownloadError.invalidResponse("Invalid sign-in token response")) {
+            try await auth.login(
+                phone: RitualPhoneNumber(number: "5555550123"),
+                deviceID: testDeviceID,
+                getCaptchaHandler: { "fresh" },
+                getOTPHandler: { _ in "123456" }
+            )
+        }
+        #expect(client.requests.count == 2)
+    }
+
     @Test(arguments: ["f:provider:wrong", "not-a-user-id"])
     func malformedUserIdentityIsRejected(_ subject: String) async throws {
         let client = LoginHTTPClient { _, number in (number == 1 ? authorization() : try signInToken(subject: subject), 200) }

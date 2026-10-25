@@ -59,6 +59,7 @@ private final class TestRitualAuthenticator: RitualAuthenticatorProvider {
 
 private final class SessionHTTPClient: HTTPClient {
     var failures: [Error] = []
+    var apiStatuses: [Int] = []
     var tokens: [String] = []
     var requests = 0
 
@@ -78,6 +79,11 @@ private final class SessionHTTPClient: HTTPClient {
                 return response(Data(), request: request, status: 401)
             }
             throw error
+        }
+        if !request.url!.path.hasSuffix("/token"), !apiStatuses.isEmpty {
+            let status = apiStatuses.removeFirst()
+            let data = try Data(contentsOf: Bundle.module.resourceURL!.appendingPathComponent("Fixtures/history-old.pb"))
+            return response(data, request: request, status: status)
         }
         if request.url!.path.hasSuffix("/token") {
             return response(Data(#"{"access_token":"access","refresh_token":"rotated-token","expires_in":3600}"#.utf8), request: request)
@@ -162,6 +168,21 @@ struct RitualSessionTests {
         #expect(Set(delegate.credentials.keys) == ["ritual-device-id", "ritual-phone-number", "ritual-authorization"])
         #expect(waits.allSatisfy { $0 > 0 && $0 <= 500_000_000 })
         #expect(client.tokens.isEmpty)
+    }
+
+    @Test
+    func secondUnauthorizedResponseExpiresFreshSession() async throws {
+        let client = SessionHTTPClient()
+        client.apiStatuses = [401, 401]
+        let authenticator = TestRitualAuthenticator()
+        let delegate = SessionDelegate()
+        let downloader = sessionDownloader(client: client, authenticator: authenticator, delegate: delegate)
+        await #expect(throws: RitualAuthenticationError.sessionExpired) {
+            try await downloader.download(since: Date(), knownReceiptIDs: [])
+        }
+        #expect(client.requests == 3)
+        #expect(client.tokens == ["initial-token"])
+        #expect(authenticator.calls == 1)
     }
 
     @Test

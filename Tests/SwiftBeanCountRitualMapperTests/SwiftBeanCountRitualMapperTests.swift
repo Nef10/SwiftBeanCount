@@ -25,7 +25,14 @@ private func ledgerWithRoles() -> Ledger {
     )
 }
 
-private func receipt(vouchers: [String] = ["10.00", "5.00"], credits: String = "2.00", paid: String = "6.00", status: String = "Order Completed")
+private func receipt(
+    vouchers: [String] = ["10.00", "5.00"],
+    credits: String = "2.00",
+    paid: String = "6.00",
+    status: String? = "Order Completed",
+    merchantName: String = "Test Café",
+    totals customTotals: [RitualTotalsLine] = []
+)
     throws -> RitualReceipt {
     var totals = [RitualTotalsLine(label: "Subtotal", amount: "22.00"), RitualTotalsLine(label: "Tax", amount: "1.00")]
     totals += vouchers.map { RitualTotalsLine(label: "Voucher", amount: "-" + $0) }
@@ -33,13 +40,13 @@ private func receipt(vouchers: [String] = ["10.00", "5.00"], credits: String = "
     return try RitualReceipt(
         receiptID: String(repeating: "a", count: 32),
         dateTime: "Oct. 7, 2026 | 12:30 PM",
-        merchantName: "Test Café",
+        merchantName: merchantName,
         status: status,
         items: [
             RitualReceiptItem(quantity: 2, itemName: " 6) MANGO CALIFORNIA ROLL [GF] ", price: "13.00", variants: ["Extra sauce"]),
             RitualReceiptItem(quantity: 1, itemName: " Hawaiian - Personal 10\" ", price: "9.00")
         ],
-        totals: totals
+        totals: customTotals.isEmpty ? totals : customTotals
     )
 }
 
@@ -156,6 +163,73 @@ struct SwiftBeanCountRitualMapperTests {
         #expect(throws: RitualMappingError.invalidRole("expense")) { try SwiftBeanCountRitualMapper(ledger: ledger) }
         let valid = ledgerWithRoles()
         #expect(throws: RitualMappingError.self) { try SwiftBeanCountRitualMapper(ledger: valid).map([receipt(paid: "7.00")]) }
+    }
+
+    @Test
+    func missingStatusIsRejected() throws {
+        #expect(throws: RitualMappingError.invalidReceipt("Missing status")) {
+            try SwiftBeanCountRitualMapper(ledger: ledgerWithRoles()).map([receipt(status: nil)])
+        }
+    }
+
+    @Test
+    func invalidFundingRowsAreRejected() throws { // swiftlint:disable:this function_body_length
+        let cases: [([RitualTotalsLine], RitualMappingError)] = [
+            (
+                [
+                    RitualTotalsLine(label: "Subtotal", amount: "10.00"),
+                    RitualTotalsLine(label: "Total", amount: "10.00"),
+                    RitualTotalsLine(label: "Total", amount: "10.00")
+                ],
+                .invalidReceipt("Duplicated Total")
+            ),
+            (
+                [
+                    RitualTotalsLine(label: "Subtotal", amount: "10.00"),
+                    RitualTotalsLine(label: "Voucher", amount: "1.00"),
+                    RitualTotalsLine(label: "Total", amount: "11.00")
+                ],
+                .invalidReceipt("Positive Voucher / Credit amount")
+            ),
+            (
+                [RitualTotalsLine(label: "Subtotal", amount: nil), RitualTotalsLine(label: "Total", amount: "0.00")],
+                .invalidReceipt("Amount not present")
+            ),
+            (
+                [RitualTotalsLine(label: "Subtotal", amount: "CAD 1.00"), RitualTotalsLine(label: "Total", amount: "0.00")],
+                .invalidReceipt("Invalid CAD amount")
+            )
+        ]
+        for (totals, expectedError) in cases {
+            #expect(throws: expectedError) {
+                try SwiftBeanCountRitualMapper(ledger: ledgerWithRoles()).map([receipt(totals: totals)])
+            }
+        }
+    }
+
+    @Test
+    func unsuitableBankTransactionsAreNotMatched() throws {
+        let ledger = ledgerWithRoles()
+        let item = try receipt()
+        ledger.add(Transaction(
+            metaData: TransactionMetaData(date: item.timestamp, payee: item.merchantName),
+            postings: [
+                Posting(accountName: try AccountName("Liabilities:Card"), amount: Amount(number: -6, commoditySymbol: "CAD", decimalDigits: 2)),
+                Posting(accountName: try AccountName("Expenses:Food"), amount: Amount(number: 6, commoditySymbol: "USD", decimalDigits: 2))
+            ]
+        ))
+        #expect(try SwiftBeanCountRitualMapper(ledger: ledger).map([item]).first?.possibleDuplicate == nil)
+
+        let punctuationLedger = ledgerWithRoles()
+        let punctuationReceipt = try receipt(merchantName: "---")
+        punctuationLedger.add(Transaction(
+            metaData: TransactionMetaData(date: punctuationReceipt.timestamp, payee: "---"),
+            postings: [
+                Posting(accountName: try AccountName("Liabilities:Card"), amount: Amount(number: -6, commoditySymbol: "CAD", decimalDigits: 2)),
+                Posting(accountName: try AccountName("Expenses:Food"), amount: Amount(number: 6, commoditySymbol: "CAD", decimalDigits: 2))
+            ]
+        ))
+        #expect(try SwiftBeanCountRitualMapper(ledger: punctuationLedger).map([punctuationReceipt]).first?.possibleDuplicate == nil)
     }
 
     @Test

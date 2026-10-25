@@ -1,5 +1,5 @@
 import Foundation
-import RitualDownloader
+@testable import RitualDownloader
 import SwiftBeanCountModel
 import SwiftBeanCountParser
 import Testing
@@ -9,13 +9,17 @@ import Testing
 private final class TestRitualDownloader: RitualDownloaderProvider {
     weak var delegate: RitualDownloaderDelegate?
     let receipts: [RitualReceipt]
+    let failures: [RitualReceiptFailure]
     var since: Date?
     var knownIDs: Set<String> = []
     var calls = 0
     var onDownload: ((RitualDownloaderDelegate) -> Void)?
     var error: Error?
 
-    init(receipts: [RitualReceipt] = []) { self.receipts = receipts }
+    init(receipts: [RitualReceipt] = [], failures: [RitualReceiptFailure] = []) {
+        self.receipts = receipts
+        self.failures = failures
+    }
 
     func download(since: Date, knownReceiptIDs: Set<String>) async throws -> RitualDownloadResult {
         self.since = since
@@ -23,7 +27,7 @@ private final class TestRitualDownloader: RitualDownloaderProvider {
         calls += 1
         if let error { throw error }
         onDownload?(try #require(delegate))
-        return RitualDownloadResult(receipts: receipts)
+        return RitualDownloadResult(receipts: receipts, failures: failures)
     }
 }
 
@@ -74,6 +78,11 @@ extension TestsUsingStorage {
     @Suite
     struct RitualDownloadImporterTests {
         @Test
+        func helpText() {
+            #expect(RitualDownloadImporter.helpText.starts(with: "Downloads completed Ritual receipts."))
+        }
+
+        @Test
         func mappingAndTransactionIteration() throws {
             let receipt = try RitualReceipt(
                 receiptID: String(repeating: "a", count: 32),
@@ -99,6 +108,19 @@ extension TestsUsingStorage {
             #expect(importer.balancesToImport().isEmpty)
             #expect(importer.pricesToImport().isEmpty)
             #expect(delegate.errors.isEmpty)
+        }
+
+        @Test
+        func partialReceiptFailuresAreReportedToHost() {
+            let failure = RitualReceiptFailure(receiptID: String(repeating: "f", count: 32), message: "HTTP 410: receipt unavailable")
+            let downloader = TestRitualDownloader(failures: [failure])
+            let importer = RitualDownloadImporter(ledger: configuredLedger(), downloader: downloader)
+            let delegate = RitualTestDelegate()
+            importer.delegate = delegate
+            importer.load()
+            #expect(delegate.errors.count == 1)
+            #expect(delegate.errors.first as? RitualReceiptFailure == failure)
+            #expect(importer.nextTransaction() == nil)
         }
 
         @Test

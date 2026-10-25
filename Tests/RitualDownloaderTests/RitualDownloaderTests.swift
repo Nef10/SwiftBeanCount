@@ -53,6 +53,26 @@ private actor SleepProbe {
     }
 }
 
+private actor CancellationProbe {
+    private var started = false
+    private var waiters: [CheckedContinuation<Void, Never>] = []
+
+    func waitUntilStarted() async {
+        if started {
+            return
+        }
+        await withCheckedContinuation { waiters.append($0) }
+    }
+
+    func sleep(_ duration: UInt64) async throws {
+        started = true
+        let pending = waiters
+        waiters = []
+        pending.forEach { $0.resume() }
+        try await Task.sleep(nanoseconds: duration)
+    }
+}
+
 private func fixture(_ name: String) throws -> Data { try Data(contentsOf: Bundle.module.resourceURL!.appendingPathComponent("Fixtures/" + name)) }
 
 private func deviceContext() throws -> RitualDeviceContext {
@@ -130,7 +150,9 @@ struct RitualDownloaderTests {
     func protobufPreservationAndMalformedData() throws {
         let data = ProtoMessage(fields: [.string(300, "Café 😀"), .varint(1, UInt64.max)]).encoded
         #expect(try ProtoMessage(data).encoded == data)
-        for bytes: [UInt8] in [[0], [8, 128], [18, 255], [15], [8] + Array(repeating: 255, count: 10)] {
+        let fixedFields = Data([9, 0, 1, 2, 3, 4, 5, 6, 7, 21, 8, 9, 10, 11])
+        #expect(try ProtoMessage(fixedFields).encoded == fixedFields)
+        for bytes: [UInt8] in [[0], [8, 128], [18, 255], [18, 2, 0], [9, 0], [21, 0], [15], [8] + Array(repeating: 255, count: 10)] {
             #expect(throws: RitualDownloadError.self) { try ProtoMessage(Data(bytes)) }
         }
     }
@@ -164,6 +186,22 @@ struct RitualDownloaderTests {
         #expect(fourth == 4)
         #expect(durations == [500_000_000, 500_000_000])
         #expect(maximumActiveSleeps == 1)
+    }
+
+    @Test
+    func cancellingAQueuedRequestDoesNotBlockTheGate() async throws {
+        let gate = RequestGate()
+        let probe = CancellationProbe()
+        #expect(try await gate.acquire(sleep: noWait) { 0 } == 1)
+        let waiting = Task {
+            try await gate.acquire(sleep: probe.sleep) { 0 }
+        }
+        await probe.waitUntilStarted()
+        waiting.cancel()
+        await #expect(throws: CancellationError.self) {
+            try await waiting.value
+        }
+        #expect(try await gate.acquire(sleep: noWait) { 1 } == 3)
     }
 
     // Exercise the complete two-page request sequence and its observable side effects.
@@ -322,12 +360,23 @@ struct RitualDownloaderTests {
         #expect(!RitualAuthenticationError.sessionExpired.localizedDescription.contains("private"))
     }
 
+    @Test
+    func malformedRefreshResponseIsRejected() async throws {
+        let client = MockHTTPClient { _, _ in (Data(#"{"access_token":""}"#.utf8), 200) }
+        let dependencies = DownloaderDependencies(client: client, sleep: noWait, now: Date.init, progress: ignore)
+        let credentials = try authorization()
+        await #expect(throws: RitualDownloadError.invalidResponse("Invalid refreshed access token response")) {
+            try await credentials.refresh(dependencies: dependencies)
+        }
+        #expect(client.requests.count == 1)
+    }
+
     @Test(arguments: ["Mon., Oct. 5, 2026 at 12:11 PM", "Monday, October 5, 2026 at 12:11 PM", "Oct. 5, 2026 | 12:11 PM"])
     func observedDateFormats(_ text: String) throws {
         #expect(try RitualDateParser.date(from: text) == RitualDateParser.date(from: "Oct. 5, 2026"))
     }
 
-    @Test(arguments: ["Feb. 30, 2026", "garbage", "Oct. 0, 2026"])
+    @Test(arguments: ["Feb. 30, 2026", "garbage", "Oct. 0, 2026", "Foo. 5, 2026"])
     func invalidDates(_ text: String) {
         #expect(throws: RitualDownloadError.self) { try RitualDateParser.date(from: text) }
     }
