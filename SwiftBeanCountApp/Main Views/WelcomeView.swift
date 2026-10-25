@@ -18,7 +18,7 @@ struct WelcomeView<Content: View>: View {
                 .padding()
             Image(.icon)
                 .resizable()
-                .aspectRatio(contentMode: .fit)
+                .scaledToFit()
                 .frame(maxWidth: 400)
                 .padding()
                 .accessibilityLabel(Text("Logo of the SwiftBeanCount app"))
