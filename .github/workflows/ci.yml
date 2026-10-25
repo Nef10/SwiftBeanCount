@@ -52,6 +52,13 @@ jobs:
         mkdir -p ../DerivedData
         DERIVED_DATA_PATH=$PWD/../DerivedData
         echo "DERIVED_DATA_PATH=$DERIVED_DATA_PATH" >> $GITHUB_ENV
+        APP_PROJECT_BACKUP_DIR=$(mktemp -d)
+        APP_PROJECT_BACKUP_PATH="$APP_PROJECT_BACKUP_DIR/SwiftBeanCountApp.xcodeproj"
+        mv SwiftBeanCountApp.xcodeproj "$APP_PROJECT_BACKUP_PATH"
+        restore_app_project() {
+          mv "$APP_PROJECT_BACKUP_PATH" SwiftBeanCountApp.xcodeproj
+        }
+        trap restore_app_project EXIT
         SCHEME=$(xcodebuild test -list -json | jq -r "if .workspace.schemes | length == 1 then .workspace.schemes.[0] else .workspace.schemes | map(select(.|endswith(\"-Package\"))) | .[0] end")
         xcodebuild test -skipPackagePluginValidation -enableCodeCoverage YES -scheme "$SCHEME" -destination "${{ matrix.destination }}" -derivedDataPath "$DERIVED_DATA_PATH"
     - name: Install lcov
