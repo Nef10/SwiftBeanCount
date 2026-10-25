@@ -46,7 +46,7 @@ jobs:
       if : ${{ matrix.platform != 'iOS' }}
       run: |
         for attempt in 1 2; do
-          if swift test --build-system swiftbuild --enable-code-coverage; then
+          if swift test --enable-code-coverage; then
             break
           fi
 
