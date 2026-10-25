@@ -113,10 +113,17 @@ jobs:
     - name: Generate test coverage report
       if: ${{ matrix.platform != 'iOS' }}
       run: |
+        COV_BUILD_PATH=".build"
+        if [[ "${{matrix.platform}}" == "ubuntu" ]]; then
+          echo "Generating Linux coverage with the native backend because Swift Build coverage is not yet supported reliably on Linux"
+          swift test --build-system native --enable-code-coverage
+          COV_BUILD_PATH="$(swift build --build-system native --show-bin-path)"
+        fi
+
         PROFILE_FILES=()
         while IFS= read -r -d '' profile; do
           PROFILE_FILES+=("${profile}")
-        done < <(find .build -type f -name 'default.profdata' -print0)
+        done < <(find "${COV_BUILD_PATH}" -type f -name 'default.profdata' -print0)
 
         if [[ ${#PROFILE_FILES[@]} -eq 0 ]]; then
           echo "Could not find SwiftPM coverage profiles under .build" >&2
@@ -135,7 +142,7 @@ jobs:
           else
             COV_BINARIES+=("${test_product}")
           fi
-        done < <(find .build \( -name '*-test-runner' -o -name '*.xctest' \) -print0)
+        done < <(find "${COV_BUILD_PATH}" \( -name '*-test-runner' -o -name '*.xctest' \) -print0)
 
         if [[ ${#COV_BINARIES[@]} -eq 0 ]]; then
           echo "Could not find any SwiftPM test executables under .build" >&2
