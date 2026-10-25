@@ -142,8 +142,13 @@ jobs:
           exit 1
         fi
 
+        COV_OBJECT_ARGS=()
+        for test_product in "${COV_BINARIES[@]:1}"; do
+          COV_OBJECT_ARGS+=(-object "${test_product}")
+        done
+
         echo "Coverage executables: ${COV_BINARIES[*]}"
-        ${LLVM_COV_CMD} export "${COV_BINARIES[@]}" ${LLVM_COV_ARGS} --instr-profile="${INSTR_PROFILE_PATH}" > "${OUTPUT_FILE}"
+        ${LLVM_COV_CMD} export "${COV_BINARIES[0]}" "${COV_OBJECT_ARGS[@]}" ${LLVM_COV_ARGS} --instr-profile="${INSTR_PROFILE_PATH}" > "${OUTPUT_FILE}"
         if [[ ! -s "${OUTPUT_FILE}" ]]; then
           echo "llvm-cov produced an empty coverage report" >&2
           exit 1
