@@ -130,3 +130,28 @@ jobs:
       with:
         name: ${{matrix.platform}}-coverage
         path: ${{matrix.platform}}-coverage/
+  build_app:
+    name: Build
+    strategy:
+      matrix:
+        platform:  ['macOS', 'iOS']
+      fail-fast: false
+    runs-on: macOS-26
+    steps:
+    - uses: actions/checkout@v7
+    - name: Configure SwiftLint Reporter
+      run: |
+        echo "reporter: \"github-actions-logging\"" >> .swiftlint.yml
+    - uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+    - name: Build
+      uses: sersoft-gmbh/xcodebuild-action@v4
+      env:
+        SKIP_WARNINGS_SWIFTBEANCOUNT: true
+      with:
+        project: SwiftBeanCountApp.xcodeproj
+        scheme: SwiftBeanCountApp
+        destination: ${{ matrix.platform == 'iOS' && 'generic/platform=iOS Simulator' || format('platform={0}', matrix.platform) }}
+        action: build
+        build-settings: -skipPackagePluginValidation -skipMacroValidation
