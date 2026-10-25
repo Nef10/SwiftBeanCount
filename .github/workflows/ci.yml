@@ -151,7 +151,7 @@ jobs:
         if [[ "${{matrix.platform}}" == "ubuntu" ]]; then
           while IFS= read -r -d '' object_file; do
             COV_OBJECTS+=("${object_file}")
-          done < <(find .build/out/Products -type f \\( -name '*.a' -o -name '*.so' -o -name '*.dylib' \\) -print0)
+          done < <(find .build/out/Products -type f \( -name '*.a' -o -name '*.so' -o -name '*.dylib' \) -print0)
           echo "Coverage libraries: ${COV_OBJECTS[*]}"
         fi
 
