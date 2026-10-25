@@ -445,7 +445,7 @@
 			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
 			requirement = {
 				kind = exactVersion;
-				version = 0.65.0;
+				version = 0.65.1;
 			};
 		};
 		F99BF6C82F131945003ED89A /* XCLocalSwiftPackageReference "SwiftBeanCount" */ = {
