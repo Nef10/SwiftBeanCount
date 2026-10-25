@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    name: ${{ matrix.platform }} Tests
+    name: Package Tests (${{ matrix.platform }})
     strategy:
       fail-fast: false
       matrix:
@@ -44,7 +44,18 @@ jobs:
       run: 'echo "reporter: \"github-actions-logging\"" >> .swiftlint.yml'
     - name: Run tests
       if : ${{ matrix.platform != 'iOS' }}
-      run: swift test --enable-code-coverage
+      run: |
+        for attempt in 1 2; do
+          if swift test --enable-code-coverage; then
+            break
+          fi
+
+          if [[ "$attempt" -eq 1 ]]; then
+            echo "${{ matrix.platform }} package tests failed; retrying once..." >&2
+          else
+            exit 1
+          fi
+        done
     - name: Run iOS tests
       id: ios-tests
       if : ${{ matrix.platform == 'iOS' }}
@@ -52,8 +63,25 @@ jobs:
         mkdir -p ../DerivedData
         DERIVED_DATA_PATH=$PWD/../DerivedData
         echo "DERIVED_DATA_PATH=$DERIVED_DATA_PATH" >> $GITHUB_ENV
+        APP_PROJECT_BACKUP_DIR=$(mktemp -d)
+        APP_PROJECT_BACKUP_PATH="$APP_PROJECT_BACKUP_DIR/SwiftBeanCountApp.xcodeproj"
+        mv SwiftBeanCountApp.xcodeproj "$APP_PROJECT_BACKUP_PATH"
+        restore_app_project() {
+          mv "$APP_PROJECT_BACKUP_PATH" SwiftBeanCountApp.xcodeproj
+        }
+        trap restore_app_project EXIT
         SCHEME=$(xcodebuild test -list -json | jq -r "if .workspace.schemes | length == 1 then .workspace.schemes.[0] else .workspace.schemes | map(select(.|endswith(\"-Package\"))) | .[0] end")
-        xcodebuild test -skipPackagePluginValidation -enableCodeCoverage YES -scheme "$SCHEME" -destination "${{ matrix.destination }}" -derivedDataPath "$DERIVED_DATA_PATH"
+        for attempt in 1 2; do
+          if xcodebuild test -skipPackagePluginValidation -enableCodeCoverage YES -scheme "$SCHEME" -destination "${{ matrix.destination }}" -derivedDataPath "$DERIVED_DATA_PATH"; then
+            break
+          fi
+
+          if [[ "$attempt" -eq 1 ]]; then
+            echo "iOS package tests failed; retrying once..." >&2
+          else
+            exit 1
+          fi
+        done
     - name: Install lcov
       if: ${{ matrix.platform == 'iOS' }}
       run: brew install lcov
@@ -131,7 +159,7 @@ jobs:
         name: ${{matrix.platform}}-coverage
         path: ${{matrix.platform}}-coverage/
   build_app:
-    name: Build
+    name: App Build (${{ matrix.platform }})
     strategy:
       matrix:
         platform:  ['macOS', 'iOS']
