@@ -147,6 +147,14 @@ jobs:
           exit 1
         fi
 
+        COV_OBJECTS=()
+        if [[ "${{matrix.platform}}" == "ubuntu" ]]; then
+          while IFS= read -r -d '' object_file; do
+            COV_OBJECTS+=("${object_file}")
+          done < <(find .build/out/Products -type f \\( -name '*.a' -o -name '*.so' -o -name '*.dylib' \\) -print0)
+          echo "Coverage libraries: ${COV_OBJECTS[*]}"
+        fi
+
         LCOV_REPORTS=()
         index=0
         for test_product in "${COV_BINARIES[@]}"; do
@@ -158,7 +166,11 @@ jobs:
 
           report="${RUNNER_TEMP}/coverage-${index}.info"
           echo "Exporting coverage for ${coverage_binary}"
-          ${LLVM_COV_CMD} export "${coverage_binary}" ${LLVM_COV_ARGS} --instr-profile="${INSTR_PROFILE_PATH}" > "${report}"
+          COV_OBJECT_ARGS=()
+          for object_file in "${COV_OBJECTS[@]}"; do
+            COV_OBJECT_ARGS+=(-object "${object_file}")
+          done
+          ${LLVM_COV_CMD} export "${coverage_binary}" "${COV_OBJECT_ARGS[@]}" ${LLVM_COV_ARGS} --instr-profile="${INSTR_PROFILE_PATH}" > "${report}"
           if [[ -s "${report}" ]]; then
             LCOV_REPORTS+=("${report}")
           fi
