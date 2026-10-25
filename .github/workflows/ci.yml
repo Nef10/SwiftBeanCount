@@ -46,7 +46,7 @@ jobs:
       if : ${{ matrix.platform != 'iOS' }}
       run: |
         for attempt in 1 2; do
-          if swift test --enable-code-coverage; then
+          if swift test --build-system swiftbuild --enable-code-coverage; then
             break
           fi
 
@@ -93,11 +93,13 @@ jobs:
       run: |
         if [[ "${{matrix.platform}}" == "iOS" ]]; then
           LLVM_COV_CMD="xcrun llvm-cov"
+          LLVM_PROFDATA_CMD="xcrun llvm-profdata"
         else
           SWIFT_TOOLCHAIN_PATH="$(swiftly use --print-location)"
           LLVM_COV_CMD="${SWIFT_TOOLCHAIN_PATH}/usr/bin/llvm-cov"
-          if [[ ! -x "${LLVM_COV_CMD}" ]]; then
-            echo "Could not find llvm-cov in the selected Swift toolchain: ${SWIFT_TOOLCHAIN_PATH}" >&2
+          LLVM_PROFDATA_CMD="${SWIFT_TOOLCHAIN_PATH}/usr/bin/llvm-profdata"
+          if [[ ! -x "${LLVM_COV_CMD}" || ! -x "${LLVM_PROFDATA_CMD}" ]]; then
+            echo "Could not find LLVM coverage tools in the selected Swift toolchain: ${SWIFT_TOOLCHAIN_PATH}" >&2
             exit 1
           fi
         fi
@@ -105,16 +107,25 @@ jobs:
         echo "Using coverage tool: ${LLVM_COV_CMD}"
         ${LLVM_COV_CMD} --version
         echo "LLVM_COV_CMD=${LLVM_COV_CMD}" >> ${GITHUB_ENV}
+        echo "LLVM_PROFDATA_CMD=${LLVM_PROFDATA_CMD}" >> ${GITHUB_ENV}
         echo "LLVM_COV_ARGS=--skip-functions --skip-branches --ignore-filename-regex=.build|Tests|SourcePackages --format=lcov" >> ${GITHUB_ENV}
         echo "OUTPUT_FILE=${{matrix.platform}}-coverage/${{matrix.platform}}.info" >> ${GITHUB_ENV}
     - name: Generate test coverage report
       if: ${{ matrix.platform != 'iOS' }}
       run: |
-        INSTR_PROFILE_PATH="$(find .build -type f -name 'default.profdata' -print -quit)"
-        if [[ -z "${INSTR_PROFILE_PATH}" ]]; then
-          echo "Could not find SwiftPM's merged coverage profile under .build" >&2
+        PROFILE_FILES=()
+        while IFS= read -r -d '' profile; do
+          PROFILE_FILES+=("${profile}")
+        done < <(find .build -type f -name 'default.profdata' -print0)
+
+        if [[ ${#PROFILE_FILES[@]} -eq 0 ]]; then
+          echo "Could not find SwiftPM coverage profiles under .build" >&2
           exit 1
         fi
+
+        INSTR_PROFILE_PATH="${RUNNER_TEMP}/merged-coverage.profdata"
+        echo "Merging ${#PROFILE_FILES[@]} SwiftPM coverage profiles"
+        ${LLVM_PROFDATA_CMD} merge -sparse "${PROFILE_FILES[@]}" -o "${INSTR_PROFILE_PATH}"
 
         COV_BINARIES=()
         while IFS= read -r -d '' test_product; do
