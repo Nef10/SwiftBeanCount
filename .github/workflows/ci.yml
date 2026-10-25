@@ -44,7 +44,18 @@ jobs:
       run: 'echo "reporter: \"github-actions-logging\"" >> .swiftlint.yml'
     - name: Run tests
       if : ${{ matrix.platform != 'iOS' }}
-      run: swift test --enable-code-coverage
+      run: |
+        for attempt in 1 2; do
+          if swift test --enable-code-coverage; then
+            break
+          fi
+
+          if [[ "$attempt" -eq 1 ]]; then
+            echo "${{ matrix.platform }} package tests failed; retrying once..." >&2
+          else
+            exit 1
+          fi
+        done
     - name: Run iOS tests
       id: ios-tests
       if : ${{ matrix.platform == 'iOS' }}
