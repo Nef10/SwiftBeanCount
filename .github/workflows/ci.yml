@@ -24,7 +24,7 @@ jobs:
           - platform: iOS
             os: xcode-27
             destination: 'platform=iOS Simulator,OS=27.1,name=iPhone Duo'
-            xcode-version: '27.1' # Xcode 27.1 includes Swift 6.4
+            xcode-version: '27.1' # Need to match Xcode version to iOS + Swift version
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout code
@@ -46,7 +46,7 @@ jobs:
       if : ${{ matrix.platform != 'iOS' }}
       run: |
         for attempt in 1 2; do
-          if swift test --build-system native --enable-code-coverage; then
+          if swift test --enable-code-coverage; then
             break
           fi
 
@@ -91,22 +91,20 @@ jobs:
         echo "${{ github.event.number }}" > "./${{matrix.platform}}-coverage/PR_NUMBER-${{matrix.platform}}"
     - name: Determine llvm command
       run: |
-        LLVM_COV_CMD="llvm-cov"
-
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-          PATH="/usr/local/opt/llvm/bin:${PATH}"
-        else
-          # Workaround for GitHub Actions ubuntu image missing llvm-cov in PATH, if swift is pre-installed
-          # If it is installed via swift-actions/setup-swift, llvm-cov is in PATH
-          PATH="/usr/share/swift/usr/bin:${PATH}"
-        fi
-
-        if ! command -v "${LLVM_COV_CMD}" &> /dev/null; then
+        if [[ "${{matrix.platform}}" == "iOS" ]]; then
           LLVM_COV_CMD="xcrun llvm-cov"
+        else
+          SWIFT_TOOLCHAIN_PATH="$(swiftly use --print-location)"
+          LLVM_COV_CMD="${SWIFT_TOOLCHAIN_PATH}/usr/bin/llvm-cov"
+          if [[ ! -x "${LLVM_COV_CMD}" ]]; then
+            echo "Could not find llvm-cov in the selected Swift toolchain: ${SWIFT_TOOLCHAIN_PATH}" >&2
+            exit 1
+          fi
         fi
 
+        echo "Using coverage tool: ${LLVM_COV_CMD}"
+        ${LLVM_COV_CMD} --version
         echo "LLVM_COV_CMD=${LLVM_COV_CMD}" >> ${GITHUB_ENV}
-        echo "PATH=${PATH}" >> ${GITHUB_ENV}
         echo "LLVM_COV_ARGS=--skip-functions --skip-branches --ignore-filename-regex=.build|Tests|SourcePackages --format=lcov" >> ${GITHUB_ENV}
         echo "OUTPUT_FILE=${{matrix.platform}}-coverage/${{matrix.platform}}.info" >> ${GITHUB_ENV}
     - name: Generate test coverage report
@@ -133,7 +131,12 @@ jobs:
           exit 1
         fi
 
+        echo "Coverage executables: ${COV_BINARIES[*]}"
         ${LLVM_COV_CMD} export "${COV_BINARIES[@]}" ${LLVM_COV_ARGS} --instr-profile="${INSTR_PROFILE_PATH}" > "${OUTPUT_FILE}"
+        if [[ ! -s "${OUTPUT_FILE}" ]]; then
+          echo "llvm-cov produced an empty coverage report" >&2
+          exit 1
+        fi
     - name: Generate iOS test coverage report
       if: ${{ matrix.platform == 'iOS' }}
       run: |
