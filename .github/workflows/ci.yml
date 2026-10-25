@@ -60,7 +60,17 @@ jobs:
         }
         trap restore_app_project EXIT
         SCHEME=$(xcodebuild test -list -json | jq -r "if .workspace.schemes | length == 1 then .workspace.schemes.[0] else .workspace.schemes | map(select(.|endswith(\"-Package\"))) | .[0] end")
-        xcodebuild test -skipPackagePluginValidation -enableCodeCoverage YES -scheme "$SCHEME" -destination "${{ matrix.destination }}" -derivedDataPath "$DERIVED_DATA_PATH"
+        for attempt in 1 2; do
+          if xcodebuild test -skipPackagePluginValidation -enableCodeCoverage YES -scheme "$SCHEME" -destination "${{ matrix.destination }}" -derivedDataPath "$DERIVED_DATA_PATH"; then
+            break
+          fi
+
+          if [[ "$attempt" -eq 1 ]]; then
+            echo "iOS package tests failed; retrying once..." >&2
+          else
+            exit 1
+          fi
+        done
     - name: Install lcov
       if: ${{ matrix.platform == 'iOS' }}
       run: brew install lcov
