@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    name: ${{ matrix.platform }} Tests
+    name: Package Tests (${{ matrix.platform }})
     strategy:
       fail-fast: false
       matrix:
@@ -131,7 +131,7 @@ jobs:
         name: ${{matrix.platform}}-coverage
         path: ${{matrix.platform}}-coverage/
   build_app:
-    name: Build
+    name: App Build (${{ matrix.platform }})
     strategy:
       matrix:
         platform:  ['macOS', 'iOS']
