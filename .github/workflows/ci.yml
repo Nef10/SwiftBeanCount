@@ -114,11 +114,6 @@ jobs:
       if: ${{ matrix.platform != 'iOS' }}
       run: |
         COV_BUILD_PATH=".build"
-        if [[ "${{matrix.platform}}" == "ubuntu" ]]; then
-          echo "Generating Linux coverage with the native backend because Swift Build coverage is not yet supported reliably on Linux"
-          swift test --build-system native --enable-code-coverage
-          COV_BUILD_PATH="$(swift build --build-system native --show-bin-path)"
-        fi
 
         PROFILE_FILES=()
         while IFS= read -r -d '' profile; do
