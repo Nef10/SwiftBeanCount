@@ -99,11 +99,13 @@ jobs:
           LLVM_COV_CMD="xcrun llvm-cov"
           LLVM_PROFDATA_CMD="xcrun llvm-profdata"
         else
-          SWIFT_TOOLCHAIN_PATH="$(swiftly use --print-location)"
-          LLVM_COV_CMD="${SWIFT_TOOLCHAIN_PATH}/usr/bin/llvm-cov"
-          LLVM_PROFDATA_CMD="${SWIFT_TOOLCHAIN_PATH}/usr/bin/llvm-profdata"
+          # Ask Swift for its toolchain location, even when invoked through a shim.
+          SWIFT_RESOURCE_PATH="$(swift -print-target-info | jq -er '.paths.runtimeResourcePath')"
+          SWIFT_BIN_PATH="$(dirname "$(dirname "${SWIFT_RESOURCE_PATH}")")/bin"
+          LLVM_COV_CMD="${SWIFT_BIN_PATH}/llvm-cov"
+          LLVM_PROFDATA_CMD="${SWIFT_BIN_PATH}/llvm-profdata"
           if [[ ! -x "${LLVM_COV_CMD}" || ! -x "${LLVM_PROFDATA_CMD}" ]]; then
-            echo "Could not find LLVM coverage tools in the selected Swift toolchain: ${SWIFT_TOOLCHAIN_PATH}" >&2
+            echo "Could not find LLVM coverage tools alongside Swift: ${SWIFT_BIN_PATH}" >&2
             exit 1
           fi
         fi
