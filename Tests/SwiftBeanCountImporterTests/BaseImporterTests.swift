@@ -90,8 +90,8 @@ struct BaseImporterTests {
 
     @Test
     func configuredAccountName() throws {
-        let ledger = TestUtils.ledger
-        var importer = BaseImporter(ledger: ledger)
+        let ledger = TestUtils.ledgerBuilder
+        var importer = BaseImporter(ledger: ledger.build())
         var delegate = AccountNameSuggestionVerifier(expectedValues: [])
         importer.delegate = delegate
         _ = importer.configuredAccountName
@@ -99,13 +99,13 @@ struct BaseImporterTests {
 
         var account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.usd, metaData: [Settings.importerTypeKey: ""])
         try ledger.add(account)
-        importer = BaseImporter(ledger: ledger)
+        importer = BaseImporter(ledger: ledger.build())
         importer.delegate = TestUtils.noInputDelegate
         #expect(importer.configuredAccountName == TestUtils.cash)
 
         account = Account(name: TestUtils.chequing, commoditySymbol: TestUtils.usd, metaData: [Settings.importerTypeKey: ""])
         try ledger.add(account)
-        importer = BaseImporter(ledger: ledger)
+        importer = BaseImporter(ledger: ledger.build())
         delegate = AccountNameSuggestionVerifier(expectedValues: [TestUtils.cash, TestUtils.chequing])
         importer.delegate = delegate
         _ = importer.configuredAccountName
@@ -115,7 +115,7 @@ struct BaseImporterTests {
         importer.delegate = TestUtils.noInputDelegate
         _ = importer.configuredAccountName
 
-        importer = BaseImporter(ledger: ledger)
+        importer = BaseImporter(ledger: ledger.build())
         let delegate2 = InvalidAccountNameProvider()
         importer.delegate = delegate2
         _ = importer.configuredAccountName
@@ -159,11 +159,11 @@ struct BaseImporterTests {
     func getPossibleDuplicateFor() {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
-        let ledger = TestUtils.lederAccounts
+        let ledger = TestUtils.ledgerAccountsBuilder
         let transaction = TestUtils.transaction
         ledger.add(transaction)
 
-        let importer = BaseImporter(ledger: ledger)
+        let importer = BaseImporter(ledger: ledger.build())
         #expect(importer.getPossibleDuplicateFor(transaction) == transaction)
     }
 
@@ -171,11 +171,11 @@ struct BaseImporterTests {
     func getPossibleDuplicateForDateToleranceInside() {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
-        let ledger = TestUtils.lederAccounts
+        let ledger = TestUtils.ledgerAccountsBuilder
         let transaction = TestUtils.transaction
         ledger.add(transaction)
 
-        let importer = BaseImporter(ledger: ledger)
+        let importer = BaseImporter(ledger: ledger.build())
 
         var importedTransactionMetaData = TransactionMetaData(date: transaction.metaData.date - Settings.dateTolerance,
                                                               payee: "",
@@ -200,11 +200,11 @@ struct BaseImporterTests {
     func getPossibleDuplicateForDateToleranceOutside() {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
-        let ledger = TestUtils.lederAccounts
+        let ledger = TestUtils.ledgerAccountsBuilder
         let transaction = TestUtils.transaction
         ledger.add(transaction)
 
-        let importer = BaseImporter(ledger: ledger)
+        let importer = BaseImporter(ledger: ledger.build())
 
         var importedTransactionMetaData = TransactionMetaData(date: transaction.metaData.date - (Settings.dateTolerance + 1),
                                                               payee: "",

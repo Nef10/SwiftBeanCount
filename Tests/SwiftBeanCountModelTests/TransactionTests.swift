@@ -21,7 +21,7 @@ struct TransactionTests { // swiftlint:disable:this type_body_length
     private var transaction2WithPosting1And2: Transaction!
     private var account1: Account?
     private var account2: Account?
-    private let ledger = Ledger()
+    private let ledger = LedgerBuilder()
 
     init() throws {
         account1 = Account(name: TestUtils.cash, opening: TestUtils.date20170608)
@@ -103,7 +103,7 @@ struct TransactionTests { // swiftlint:disable:this type_body_length
 
     @Test
     func isValid() {
-        guard case .valid = transaction2WithPosting1And2!.validate(in: ledger) else {
+        guard case .valid = transaction2WithPosting1And2!.validate(in: ledger.build()) else {
             Issue.record("\(transaction2WithPosting1And2!) is not valid")
             return
         }
@@ -111,8 +111,8 @@ struct TransactionTests { // swiftlint:disable:this type_body_length
 
     @Test
     func isValidFromOutsideLedger() {
-        let ledger = Ledger()
-        guard case .invalid = transaction2WithPosting1And2!.validate(in: ledger) else {
+        let ledger = LedgerBuilder()
+        guard case .invalid = transaction2WithPosting1And2!.validate(in: ledger.build()) else {
             Issue.record("\(transaction2WithPosting1And2!) is valid")
             return
         }
@@ -120,7 +120,7 @@ struct TransactionTests { // swiftlint:disable:this type_body_length
 
     @Test
     func isValidWithoutPosting() {
-        if case .invalid(let error) = transaction1WithoutPosting!.validate(in: ledger) {
+        if case .invalid(let error) = transaction1WithoutPosting!.validate(in: ledger.build()) {
             #expect(error == "2017-06-08 * \"Payee\" \"Narration\" has no postings")
         } else {
             Issue.record("\(transaction1WithoutPosting!) is valid")
@@ -130,11 +130,11 @@ struct TransactionTests { // swiftlint:disable:this type_body_length
     @Test
     func isValidInvalidPosting() throws {
         // Accounts are not opened
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         try ledger.add(Account(name: TestUtils.cash))
         try ledger.add(Account(name: TestUtils.chequing, opening: TestUtils.date20170608))
         ledger.add(transaction1WithPosting1And2)
-        if case .invalid(let error) = transaction1WithPosting1And2.validate(in: ledger) {
+        if case .invalid(let error) = transaction1WithPosting1And2.validate(in: ledger.build()) {
             #expect(error == """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash 10 EUR
@@ -147,7 +147,7 @@ struct TransactionTests { // swiftlint:disable:this type_body_length
 
     @Test
     func isValidUnbalanced() {
-        if case .invalid(let error) = transaction1WithPosting1!.validate(in: ledger) {
+        if case .invalid(let error) = transaction1WithPosting1!.validate(in: ledger.build()) {
             #expect(error == """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash 10 EUR is not balanced - 10 EUR too much (0 tolerance)
@@ -175,7 +175,7 @@ struct TransactionTests { // swiftlint:disable:this type_body_length
         // -1 EUR has 0 decimal digits -> tolerance is 0 !
         // (Percision of price is irrelevant, percision of CAD is not used because no posting in CAD)
         // 0.01 > 0 -> is invalid
-        if case .invalid(let error) = transaction.validate(in: ledger) {
+        if case .invalid(let error) = transaction.validate(in: ledger.build()) {
             #expect(error == """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash -1 EUR
@@ -206,7 +206,7 @@ struct TransactionTests { // swiftlint:disable:this type_body_length
         // -8.52 EUR has 2 decimal digits -> tolerance is 0.005
         // (Percision of price is irrelevant, percision of CAD is not used because no posting in CAD)
         // 0.0051 > 0.005 -> is invalid
-        if case .invalid(let error) = transaction.validate(in: ledger) {
+        if case .invalid(let error) = transaction.validate(in: ledger.build()) {
             #expect(error == """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash -8.52 EUR
@@ -228,7 +228,7 @@ struct TransactionTests { // swiftlint:disable:this type_body_length
         let posting1 = Posting(accountName: TestUtils.cash, amount: amount1, price: price)
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting1])
 
-        if case .invalid(let error) = transaction.validate(in: ledger) {
+        if case .invalid(let error) = transaction.validate(in: ledger.build()) {
             #expect(error == """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash 10.00000 CAD @ 0.85251 EUR is not balanced - 8.5251 EUR too much (0 tolerance)
@@ -257,7 +257,7 @@ struct TransactionTests { // swiftlint:disable:this type_body_length
         // -8.52 EUR has 2 decimal digits -> tolerance is 0.005
         // (Percision of price is irrelevant, percision of CAD is not used because no posting in CAD)
         // 0.005 <= 0.005 -> is valid
-        guard case .valid = transaction.validate(in: ledger) else {
+        guard case .valid = transaction.validate(in: ledger.build()) else {
             Issue.record("\(transaction) is not valid")
             return
         }
@@ -285,7 +285,7 @@ struct TransactionTests { // swiftlint:disable:this type_body_length
         // -8.52 EUR has 2 decimal digits -> tolerance is 0.005
         // (Percision of price is irrelevant, percision of CAD is not used because no posting in CAD)
         // 0.005 <= 0.005 -> is valid
-        guard case .valid = transaction.validate(in: ledger) else {
+        guard case .valid = transaction.validate(in: ledger.build()) else {
             Issue.record("\(transaction) is not valid")
             return
         }
@@ -314,7 +314,7 @@ struct TransactionTests { // swiftlint:disable:this type_body_length
         // -8.52 EUR has 2 decimal digits -> tolerance is 0.005
         // (Percision of cost is irrelevant, percision of CAD is not used because no posting in CAD)
         // 0.0051 > 0.005 -> is invalid
-        if case .invalid(let error) = transaction.validate(in: ledger) {
+        if case .invalid(let error) = transaction.validate(in: ledger.build()) {
             #expect(error == """
                 2017-06-08 * "Payee" "Narration"
                   Assets:Cash -8.52 EUR
@@ -339,7 +339,7 @@ struct TransactionTests { // swiftlint:disable:this type_body_length
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting1, posting2])
         ledger.add(transaction)
 
-        guard case .valid = try transaction.effect(in: ledger).validateZeroWithTolerance() else {
+        guard case .valid = try transaction.effect(in: ledger.build()).validateZeroWithTolerance() else {
             Issue.record("\(transaction) effect is not zero")
             return
         }
@@ -362,7 +362,7 @@ struct TransactionTests { // swiftlint:disable:this type_body_length
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting1, posting2])
         ledger.add(transaction)
 
-        let effect = try transaction.effect(in: ledger)
+        let effect = try transaction.effect(in: ledger.build())
         #expect(effect.amounts.count == 1)
         guard case .valid = effect.validateOneAmountWithTolerance(amount: amount1) else {
             Issue.record("\(transaction) effect is not the expected value")

@@ -15,6 +15,7 @@ import Testing
 @Suite
 struct InventoryTests {
 
+    private static let transactionStoreLock = NSLock()
     private static var transactionStore = [Transaction]() // required because the posting reference is unowned
 
     private let date = TestUtils.date20170608
@@ -742,7 +743,9 @@ extension InventoryTests { // Test Reduce
                                                                     flag: Flag.complete,
                                                                     tags: []),
                                       postings: [posting])
-        Self.transactionStore.append(transaction)
+        Self.transactionStoreLock.withLock {
+            Self.transactionStore.append(transaction)
+        }
         return transaction.postings[0]
 
     }

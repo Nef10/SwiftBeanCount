@@ -26,10 +26,10 @@ struct SwiftBeanCountCompassCardMapperTests {
     private var mapper: SwiftBeanCountCompassCardMapper
 
     init() {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
          // swiftlint:disable:next force_try
         try! ledger.add(Account(name: try! AccountName(accountName), metaData: ["card-number": cardNumber, "importer-type": "compass-card"]))
-        mapper = SwiftBeanCountCompassCardMapper(ledger: ledger)
+        mapper = SwiftBeanCountCompassCardMapper(ledger: ledger.build())
     }
 
     @Test
@@ -145,11 +145,11 @@ struct SwiftBeanCountCompassCardMapperTests {
     @Test
     func autoLoadTransactionNonDefaultAccount() throws {
         let loadAccountName = "Assets:Checking"
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         try ledger.add(Account(name: try AccountName(accountName), metaData: ["card-number": cardNumber, "importer-type": "compass-card"]))
         try ledger.add(Account(name: try AccountName(loadAccountName), metaData: ["compass-card-load": cardNumber]))
         try ledger.add(Account(name: try AccountName("Assets:WrongAccount"), metaData: ["compass-card-load": "123456789"]))
-        let mapper = SwiftBeanCountCompassCardMapper(ledger: ledger)
+        let mapper = SwiftBeanCountCompassCardMapper(ledger: ledger.build())
 
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.autoLoad)")
         #expect(result.count == 1)
@@ -236,11 +236,11 @@ struct SwiftBeanCountCompassCardMapperTests {
     @Test
     func createTransactionNonDefaultAccount() throws {
         let expenseAccountName = "Expenses:Transit"
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         try ledger.add(Account(name: try AccountName(accountName), metaData: ["card-number": cardNumber, "importer-type": "compass-card"]))
         try ledger.add(Account(name: try AccountName(expenseAccountName), metaData: ["compass-card-expense": cardNumber]))
         try ledger.add(Account(name: try AccountName("Assets:WrongAccount"), metaData: ["compass-card-expense": "123456789"]))
-        let mapper = SwiftBeanCountCompassCardMapper(ledger: ledger)
+        let mapper = SwiftBeanCountCompassCardMapper(ledger: ledger.build())
 
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.transaction1)")
         #expect(result.count == 1)
@@ -255,7 +255,7 @@ struct SwiftBeanCountCompassCardMapperTests {
     @Test
     func createTransactionAlreadyInLedger() throws {
         let expenseAccountName = "Expenses:Transit"
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         try ledger.add(Account(name: try AccountName(accountName), metaData: ["card-number": cardNumber, "importer-type": "compass-card"]))
         try ledger.add(Account(name: try AccountName(expenseAccountName), metaData: ["compass-card-expense": cardNumber]))
 
@@ -264,7 +264,7 @@ struct SwiftBeanCountCompassCardMapperTests {
         let metaData = TransactionMetaData(date: Date(), narration: "", metaData: ["journey-id": "2022-11-18T04:39:00.0000000Z"])
         ledger.add(Transaction(metaData: metaData, postings: [posting, posting2]))
 
-        let mapper = SwiftBeanCountCompassCardMapper(ledger: ledger)
+        let mapper = SwiftBeanCountCompassCardMapper(ledger: ledger.build())
 
         let result = try mapper.createTransactions(cardNumber: cardNumber, transactions: "\(CSV.header)\(CSV.transaction1)")
         #expect(result.isEmpty)
@@ -302,7 +302,7 @@ struct SwiftBeanCountCompassCardMapperTests {
 }
 
 private func loadTransactionLedger(accountName: String, cardNumber: String, loadAccountName: String, date: Date) throws -> Ledger {
-    let ledger = Ledger()
+    let ledger = LedgerBuilder()
     try ledger.add(Account(name: try AccountName(accountName), metaData: ["card-number": cardNumber, "importer-type": "compass-card"]))
     try ledger.add(Account(name: try AccountName(loadAccountName)))
 
@@ -310,7 +310,7 @@ private func loadTransactionLedger(accountName: String, cardNumber: String, load
     let posting2 = Posting(accountName: try AccountName(loadAccountName), amount: Amount(number: Decimal(-20), commoditySymbol: "CAD", decimalDigits: 2))
     let metaData = TransactionMetaData(date: date, payee: "Existing", narration: "Transaction", metaData: ["source": "credit-card"])
     ledger.add(Transaction(metaData: metaData, postings: [posting, posting2]))
-    return ledger
+    return ledger.build()
 }
 
 private func expectLoadTransaction(_ transaction: Transaction, accountName: String, loadAccountName: String) {

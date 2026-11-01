@@ -8,7 +8,7 @@ struct TaxCalculatorTaxSlipTests {
 
     @Test
     func generateTaxSlips() throws {
-        let ledger = try basicLedger()
+        let ledger = try basicLedger().build()
 
         // Calculate tax slips
         let taxSlips = try TaxCalculator.generateTaxSlips(from: ledger, for: 2_022)
@@ -66,7 +66,7 @@ struct TaxCalculatorTaxSlipTests {
 
     @Test
     func generateTaxSlipsWithSymbol() throws {
-        let taxSlips = try TaxCalculator.generateTaxSlips(from: try symbolLedger(), for: 2_022)
+        let taxSlips = try TaxCalculator.generateTaxSlips(from: try symbolLedger().build(), for: 2_022)
         #expect(taxSlips.count == 2)
 
         // Check tax slip 1
@@ -120,7 +120,7 @@ struct TaxCalculatorTaxSlipTests {
     @Test
     func generateTaxSlipWithDifferentCurrencies() throws {
 
-        let ledger = try currencyLedger()
+        let ledger = try currencyLedger().build()
 
         // Calculate tax slips
         let taxSlips = try TaxCalculator.generateTaxSlips(from: ledger, for: 2_022)
@@ -158,7 +158,7 @@ struct TaxCalculatorTaxSlipTests {
 
     @Test
     func generateTaxSlipsWithSplitAccounts() throws {
-        let taxSlips = try TaxCalculator.generateTaxSlips(from: splitAccountLedger(), for: 2_022)
+        let taxSlips = try TaxCalculator.generateTaxSlips(from: splitAccountLedger().build(), for: 2_022)
 
         // Check the generated tax slips
         #expect(taxSlips.count == 2)
@@ -208,7 +208,7 @@ struct TaxCalculatorTaxSlipTests {
 
     @Test
     func generateSplitTaxSlipsWithSymbol() throws {
-        let taxSlips = try TaxCalculator.generateTaxSlips(from: try splitSymbolLedger(), for: 2_022)
+        let taxSlips = try TaxCalculator.generateTaxSlips(from: try splitSymbolLedger().build(), for: 2_022)
         #expect(taxSlips.count == 1)
 
         // Check tax slip
@@ -262,7 +262,7 @@ struct TaxCalculatorTaxSlipTests {
 
     @Test
     func splitAccountError() throws {
-        let ledger = try splitSymbolErrorLedger()
+        let ledger = try splitSymbolErrorLedger().build()
         #expect(throws: (any Error).self) { try TaxCalculator.generateTaxSlips(from: ledger, for: 2_022) }
     }
 

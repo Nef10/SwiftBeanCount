@@ -61,7 +61,7 @@ struct BalanceTests {
     @Test
     func validateWithoutPlugin() throws {
         // Test that balance validation is skipped when plugin is not enabled
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
 
         // Add commodity with opening date after the balance date
         let cadCommodity = Commodity(symbol: TestUtils.cad, opening: TestUtils.date20170609)
@@ -72,7 +72,7 @@ struct BalanceTests {
         let balance = Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: amount)
 
         // Should be valid since plugin is not enabled
-        guard case .valid = balance.validate(in: ledger) else {
+        guard case .valid = balance.validate(in: ledger.build()) else {
             Issue.record("Balance should be valid when check_commodity plugin is not enabled")
             return
         }
@@ -81,7 +81,7 @@ struct BalanceTests {
     @Test
     func validateWithPlugin() throws {
         // Test that balance validation works when plugin is enabled
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.plugins.append("beancount.plugins.check_commodity")
 
         // Add commodity with opening date after the balance date
@@ -93,7 +93,7 @@ struct BalanceTests {
         let balance = Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: amount)
 
         // Should be invalid since CAD commodity is used before opening
-        if case .invalid(let error) = balance.validate(in: ledger) {
+        if case .invalid(let error) = balance.validate(in: ledger.build()) {
             #expect(error.contains("CAD used on 2017-06-08 before its opening date of 2017-06-09"))
         } else {
             Issue.record("Balance should be invalid when commodity is used before opening date")
@@ -103,7 +103,7 @@ struct BalanceTests {
     @Test
     func validateValid() throws {
         // Test that validation passes when commodity is used on or after opening date
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.plugins.append("beancount.plugins.check_commodity")
 
         // Add commodity with opening date before or on the balance date
@@ -115,7 +115,7 @@ struct BalanceTests {
         let balance = Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: amount)
 
         // Should be valid since commodity is used on or after opening date
-        guard case .valid = balance.validate(in: ledger) else {
+        guard case .valid = balance.validate(in: ledger.build()) else {
             Issue.record("Balance should be valid when commodity is used on or after opening date")
             return
         }
@@ -124,7 +124,7 @@ struct BalanceTests {
     @Test
     func validateWithAutoCreatedCommodity() {
         // Test with auto-created commodity (no explicit opening date)
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.plugins.append("beancount.plugins.check_commodity")
 
         // Auto-created commodity doesn't have opening date
@@ -133,7 +133,7 @@ struct BalanceTests {
         let balance = Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: amount)
 
         // Should be valid since auto-created commodity is not in the ledger commodities collection
-        guard case .valid = balance.validate(in: ledger) else {
+        guard case .valid = balance.validate(in: ledger.build()) else {
             Issue.record("Balance should be valid when commodity is auto-created")
             return
         }

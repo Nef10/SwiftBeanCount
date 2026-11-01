@@ -202,27 +202,28 @@ public class Account: AccountItem {
     /// - Parameter ledger: ledger with the Transactions
     /// - Returns: `ValidationResult`
     func validateInventory(in ledger: Ledger) -> ValidationResult {
+        inventoryBooking(in: ledger).0
+    }
+
+    func inventoryBooking(in ledger: Ledger) -> (ValidationResult, [TransactionPosting: MultiCurrencyAmount]) {
         var postingIterator = postings(in: ledger).makeIterator()
         var nextPosting = postingIterator.next()
         let inventory = Inventory(bookingMethod: bookingMethod)
+        var weights = [TransactionPosting: MultiCurrencyAmount]()
         while let posting = nextPosting {
             if posting.cost != nil {
                 do {
                     let pricePaid = try inventory.book(posting: posting)
                     if let pricePaid {
-                        if ledger.postingPrices[posting.transaction] != nil {
-                            ledger.postingPrices[posting.transaction]![posting] = pricePaid
-                        } else {
-                            ledger.postingPrices[posting.transaction] = [posting: pricePaid]
-                        }
+                        weights[posting] = pricePaid
                     }
                 } catch {
-                    return .invalid(error.localizedDescription)
+                    return (.invalid(error.localizedDescription), weights)
                 }
             }
             nextPosting = postingIterator.next()
         }
-        return .valid
+        return (.valid, weights)
     }
 
     /// Returns all posting for this account ordered by date from the oldest to the newest

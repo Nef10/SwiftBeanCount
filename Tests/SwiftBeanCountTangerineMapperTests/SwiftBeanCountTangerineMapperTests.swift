@@ -20,7 +20,7 @@ struct SwiftBeanCountTangerineMapperTests { // swiftlint:disable:this type_body_
     @Test
     func createBalances() throws {
         let accounts = [creditCard, chequing, loan, savings, ["type": "SAVINGS", "display_name": "1001"]]
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let date = Date()
         let creditCardAccountName = try AccountName("Liabilities:CreditCard:Tangerine")
         try ledger.add(Account(name: creditCardAccountName, metaData: ["last-four": "1583", "importer-type": "tangerine-card"]))
@@ -32,7 +32,7 @@ struct SwiftBeanCountTangerineMapperTests { // swiftlint:disable:this type_body_
         try ledger.add(Account(name: savingsAccountName, commoditySymbol: "USD", metaData: ["number": "9876543", "importer-type": "tangerine-account"]))
         let emptyAccountName = try AccountName("Assets:Savings:Tangerine2")
         try ledger.add(Account(name: emptyAccountName, metaData: ["number": "1001", "importer-type": "tangerine-account"]))
-        let mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        let mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
         let result = try mapper.createBalances(accounts: accounts, date: date)
         #expect(result.count == 5)
         var amount = Amount(number: Decimal(-10.50), commoditySymbol: "CAD", decimalDigits: 2)
@@ -79,7 +79,7 @@ struct SwiftBeanCountTangerineMapperTests { // swiftlint:disable:this type_body_
     @Test
     func createTransactionsAlreadyExists() throws {
         let transactions = [ "account": [["id": 12_345]]]
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let posting = Posting(accountName: try AccountName("Assets:Checking"), amount: Amount(number: Decimal(1), commoditySymbol: "CAD", decimalDigits: 2))
         let posting2 = Posting(accountName: try AccountName("Assets:Savings"), amount: Amount(number: Decimal(-1), commoditySymbol: "CAD", decimalDigits: 2))
         let metaData = TransactionMetaData(date: Date(), narration: "description", metaData: ["tangerine-id": "12345"])
@@ -88,7 +88,7 @@ struct SwiftBeanCountTangerineMapperTests { // swiftlint:disable:this type_body_
         let transaction2 = Transaction(metaData: metaData2, postings: [posting, posting2])
         ledger.add(transaction2)
         ledger.add(transaction)
-        let mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        let mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
         #expect(try mapper.createTransactions(transactions).isEmpty)
     }
 
@@ -123,14 +123,14 @@ struct SwiftBeanCountTangerineMapperTests { // swiftlint:disable:this type_body_
 
     @Test
     func createTransactionCreditCardReward() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let accountName1 = try AccountName("Assets:Savings:Tangerine")
         try ledger.add(Account(name: accountName1, metaData: ["number": "1001"]))
         let accountName2 = try AccountName("Income:CashBack:Tangerine")
         try ledger.add(Account(name: accountName2, metaData: ["tangerine-rewards": "1001"]))
         let accountName3 = try AccountName("Income:CashBack:Tangerine1")
         try ledger.add(Account(name: accountName3, metaData: ["tangerine-rewards": "1002"]))
-        let mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        let mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
 
         let transactions: [String: [[String: Any]]] =
             ["Assets:Savings:Tangerine": [["id": 852_254, "posted_date": "2022-10-10T10:10:10", "description": "ABC", "amount": 10.50, "type": "CC_RE"] as [String: Any]]]
@@ -146,10 +146,10 @@ struct SwiftBeanCountTangerineMapperTests { // swiftlint:disable:this type_body_
 
     @Test
     func createInterestTransactionNotSetup() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let accountName1 = try AccountName("Assets:Savings:Tangerine")
         try ledger.add(Account(name: accountName1, metaData: ["number": "1001"]))
-        let mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        let mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
 
         let transactions: [String: [[String: Any]]] =
             ["Assets:Savings:Tangerine": [["posted_date": "2022-10-10T10:10:10", "description": "Interest Paid", "amount": 10.50, "type": "INTEREST"] as [String: Any]]]
@@ -165,14 +165,14 @@ struct SwiftBeanCountTangerineMapperTests { // swiftlint:disable:this type_body_
 
     @Test
     func createInterestTransaction() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let accountName1 = try AccountName("Assets:Savings:Tangerine")
         try ledger.add(Account(name: accountName1, metaData: ["number": "1001"]))
         let accountName2 = try AccountName("Income:Interest:Tangerine")
         try ledger.add(Account(name: accountName2, metaData: ["tangerine-interest": "1001"]))
         let accountName3 = try AccountName("Income:Interest:Tangerine1")
         try ledger.add(Account(name: accountName3, metaData: ["tangerine-interest": "1002"]))
-        let mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        let mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
 
         let transactions: [String: [[String: Any]]] =
             [
@@ -192,9 +192,9 @@ struct SwiftBeanCountTangerineMapperTests { // swiftlint:disable:this type_body_
     @Test
     func createTransactionsCommoditySymbol() throws {
         let transactions = [ "Assets:Checking": [["posted_date": "2022-10-10T10:10:10", "description": "ABC", "amount": 10.50] as [String: Any]]]
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         try ledger.add(Account(name: try AccountName("Assets:Checking"), commoditySymbol: "USD"))
-        let mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        let mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
         let result = try mapper.createTransactions(transactions)
         #expect(result.count == 1)
         #expect(result[0].description == """
@@ -208,14 +208,14 @@ struct SwiftBeanCountTangerineMapperTests { // swiftlint:disable:this type_body_
     @Test
     func createTransactionsEmpty() throws {
         let transactions = [ "Assets:Checking": [["posted_date": "2022-10-10T10:10:10"]]]
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let posting = Posting(accountName: try AccountName("Assets:Checking"), amount: Amount(number: Decimal(1), commoditySymbol: "CAD", decimalDigits: 2))
         let posting2 = Posting(accountName: try AccountName("Assets:Savings"), amount: Amount(number: Decimal(-1), commoditySymbol: "CAD", decimalDigits: 2))
         let metaData = TransactionMetaData(date: Date(), narration: "description", metaData: ["tangerine-id": "12345"])
         let transaction = Transaction(metaData: metaData, postings: [posting, posting2])
         ledger.add(transaction)
 
-        let mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        let mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
         let result = try mapper.createTransactions(transactions)
         #expect(result.count == 1)
         #expect(result[0].description == """
@@ -241,27 +241,27 @@ struct SwiftBeanCountTangerineMapperTests { // swiftlint:disable:this type_body_
         expectAccountNotFound(thrownError: error, account: creditCard)
 
         // Asset instead of Liability
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         try ledger.add(Account(name: try AccountName("Assets:CreditCard:Tangerine"), metaData: ["last-four": "1583", "importer-type": "tangerine-card"]))
-        mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
         error = #expect(throws: (any Error).self) { try mapper.ledgerAccountName(account: creditCard) }
         expectAccountNotFound(thrownError: error, account: creditCard)
 
         // Wrong last four
         try ledger.add(Account(name: try AccountName("Liabilities:CreditCard:Tangerine2"), metaData: ["last-four": "1585", "importer-type": "tangerine-card"]))
-        mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
         error = #expect(throws: (any Error).self) { try mapper.ledgerAccountName(account: creditCard) }
         expectAccountNotFound(thrownError: error, account: creditCard)
 
         // No importer type
         try ledger.add(Account(name: try AccountName("Liabilities:CreditCard:Tangerine3"), metaData: ["last-four": "1583"]))
-        mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
         error = #expect(throws: (any Error).self) { try mapper.ledgerAccountName(account: creditCard) }
         expectAccountNotFound(thrownError: error, account: creditCard)
 
         let accountName = try AccountName("Liabilities:CreditCard:Tangerine")
         try ledger.add(Account(name: accountName, metaData: ["last-four": "1583", "importer-type": "tangerine-card"]))
-        mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
         #expect(try mapper.ledgerAccountName(account: creditCard) == accountName)
     }
 
@@ -274,27 +274,27 @@ struct SwiftBeanCountTangerineMapperTests { // swiftlint:disable:this type_body_
         expectAccountNotFound(thrownError: error, account: loan)
 
         // Asset instead of Liability
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         try ledger.add(Account(name: try AccountName("Assets:LOC:Tangerine"), metaData: ["number": "654321", "importer-type": "tangerine-account"]))
-        mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
         error = #expect(throws: (any Error).self) { try mapper.ledgerAccountName(account: loan) }
         expectAccountNotFound(thrownError: error, account: loan)
 
         // Wrong number
         try ledger.add(Account(name: try AccountName("Liabilities:LOC:Tangerine2"), metaData: ["number": "654322", "importer-type": "tangerine-account"]))
-        mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
         error = #expect(throws: (any Error).self) { try mapper.ledgerAccountName(account: loan) }
         expectAccountNotFound(thrownError: error, account: loan)
 
         // No importer type
         try ledger.add(Account(name: try AccountName("Liabilities:LOC:Tangerine3"), metaData: ["number": "654321"]))
-        mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
         error = #expect(throws: (any Error).self) { try mapper.ledgerAccountName(account: loan) }
         expectAccountNotFound(thrownError: error, account: loan)
 
         let accountName = try AccountName("Liabilities:LOC:Tangerine")
         try ledger.add(Account(name: accountName, metaData: ["number": "654321", "importer-type": "tangerine-account"]))
-        mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
         #expect(try mapper.ledgerAccountName(account: loan) == accountName)
     }
 
@@ -306,27 +306,27 @@ struct SwiftBeanCountTangerineMapperTests { // swiftlint:disable:this type_body_
         expectAccountNotFound(thrownError: error, account: chequing)
 
         // Liability instead of Asset
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         try ledger.add(Account(name: try AccountName("Liabilities:Checking:Tangerine"), metaData: ["number": "123456", "importer-type": "tangerine-account"]))
-        mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
         error = #expect(throws: (any Error).self) { try mapper.ledgerAccountName(account: chequing) }
         expectAccountNotFound(thrownError: error, account: chequing)
 
         // Wrong number
         try ledger.add(Account(name: try AccountName("Assets:Checking:Tangerine2"), metaData: ["number": "1234567", "importer-type": "tangerine-account"]))
-        mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
         error = #expect(throws: (any Error).self) { try mapper.ledgerAccountName(account: chequing) }
         expectAccountNotFound(thrownError: error, account: chequing)
 
         // No importer type
         try ledger.add(Account(name: try AccountName("Assets:Checking:Tangerine3"), metaData: ["number": "123456"]))
-        mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
         error = #expect(throws: (any Error).self) { try mapper.ledgerAccountName(account: chequing) }
         expectAccountNotFound(thrownError: error, account: chequing)
 
         let accountName = try AccountName("Assets:Checking:Tangerine")
         try ledger.add(Account(name: accountName, metaData: ["number": "123456", "importer-type": "tangerine-account"]))
-        mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
         #expect(try mapper.ledgerAccountName(account: chequing) == accountName)
     }
 
@@ -339,27 +339,27 @@ struct SwiftBeanCountTangerineMapperTests { // swiftlint:disable:this type_body_
         expectAccountNotFound(thrownError: error, account: savings)
 
         // Liability instead of Asset
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         try ledger.add(Account(name: try AccountName("Liabilities:Savings:Tangerine"), metaData: ["number": "9876543", "importer-type": "tangerine-account"]))
-        mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
         error = #expect(throws: (any Error).self) { try mapper.ledgerAccountName(account: savings) }
         expectAccountNotFound(thrownError: error, account: savings)
 
         // Wrong number
         try ledger.add(Account(name: try AccountName("Assets:Savings:Tangerine2"), metaData: ["number": "98765433", "importer-type": "tangerine-account"]))
-        mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
         error = #expect(throws: (any Error).self) { try mapper.ledgerAccountName(account: savings) }
         expectAccountNotFound(thrownError: error, account: savings)
 
         // No importer type
         try ledger.add(Account(name: try AccountName("Assets:Savings:Tangerine3"), metaData: ["number": "9876543"]))
-        mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
         error = #expect(throws: (any Error).self) { try mapper.ledgerAccountName(account: savings) }
         expectAccountNotFound(thrownError: error, account: savings)
 
         let accountName = try AccountName("Assets:Savings:Tangerine")
         try ledger.add(Account(name: accountName, metaData: ["number": "9876543", "importer-type": "tangerine-account"]))
-        mapper = SwiftBeanCountTangerineMapper(ledger: ledger)
+        mapper = SwiftBeanCountTangerineMapper(ledger: ledger.build())
         #expect(try mapper.ledgerAccountName(account: savings) == accountName)
     }
 

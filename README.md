@@ -58,6 +58,10 @@ The code is split up in several internal libraries, which allows functionality t
 * [CompassCardDownloader](https://github.com/Nef10/CompassCardDownloader): Library to download data from the CompassCard website
 * [SwiftBeanCountCompassCardMapper](https://github.com/Nef10/SwiftBeanCountCompassCardMapper): Library to convert downloaded data from the CompassCard website
 
+### Ledger construction
+
+`Ledger` is an immutable snapshot. Use `LedgerBuilder` to assemble entries before calling `build()`. Direct ledger mutation has been replaced by the builder API; see the [migration guide](Documentation/LedgerBuilder.md).
+
 ### Dependency Diagram
 
 A simplified diagram of the package dependencies:

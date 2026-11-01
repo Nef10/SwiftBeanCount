@@ -8,7 +8,7 @@ struct LedgerReaderTests {
 
     @Test
     func readLedgerSettingsAndTransactionsWithValidLedger() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let date = Date()
 
         // Add custom settings
@@ -29,7 +29,7 @@ struct LedgerReaderTests {
         )
         ledger.add(transaction)
 
-        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger)
+        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger.build())
 
         switch result {
         case .success(let (transactions, settings)):
@@ -49,7 +49,7 @@ struct LedgerReaderTests {
 
     @Test
     func readLedgerSettingsAndTransactionsWithNegateRunningTotalEnabled() {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let date = Date()
 
         ledger.custom.append(Custom(date: date, name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.commoditySymbolKey, "USD"]))
@@ -59,7 +59,7 @@ struct LedgerReaderTests {
         ledger.custom.append(Custom(date: date, name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.dateToleranceKey, "1"]))
         ledger.custom.append(Custom(date: date, name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.negateRunningTotalKey, "true"]))
 
-        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger)
+        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger.build())
 
         switch result {
         case .success(let (_, settings)):
@@ -71,13 +71,13 @@ struct LedgerReaderTests {
 
     @Test
     func readLedgerSettingsWithMissingCommoditySymbol() {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.tagKey, "shared"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.accountKey, "Assets:SharedAccount"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.nameKey, "Alice"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.dateToleranceKey, "1"]))
 
-        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger)
+        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger.build())
 
         switch result {
         case .success:
@@ -93,13 +93,13 @@ struct LedgerReaderTests {
 
     @Test
     func readLedgerSettingsWithMissingTag() {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.commoditySymbolKey, "USD"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.accountKey, "Assets:SharedAccount"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.nameKey, "Alice"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.dateToleranceKey, "1"]))
 
-        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger)
+        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger.build())
 
         switch result {
         case .success:
@@ -115,13 +115,13 @@ struct LedgerReaderTests {
 
     @Test
     func readLedgerSettingsWithMissingAccount() {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.commoditySymbolKey, "USD"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.tagKey, "shared"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.nameKey, "Alice"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.dateToleranceKey, "1"]))
 
-        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger)
+        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger.build())
 
         switch result {
         case .success:
@@ -137,14 +137,14 @@ struct LedgerReaderTests {
 
     @Test
     func readLedgerSettingsWithInvalidAccount() {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.commoditySymbolKey, "USD"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.tagKey, "shared"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.accountKey, "InvalidAccountName"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.nameKey, "Alice"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.dateToleranceKey, "1"]))
 
-        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger)
+        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger.build())
 
         switch result {
         case .success:
@@ -160,13 +160,13 @@ struct LedgerReaderTests {
 
     @Test
     func readLedgerSettingsWithMissingName() {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.commoditySymbolKey, "USD"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.tagKey, "shared"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.accountKey, "Assets:SharedAccount"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.dateToleranceKey, "1"]))
 
-        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger)
+        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger.build())
 
         switch result {
         case .success:
@@ -182,13 +182,13 @@ struct LedgerReaderTests {
 
     @Test
     func readLedgerSettingsWithMissingDateTolerance() {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.commoditySymbolKey, "USD"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.tagKey, "shared"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.accountKey, "Assets:SharedAccount"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.nameKey, "Alice"]))
 
-        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger)
+        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger.build())
 
         switch result {
         case .success:
@@ -204,14 +204,14 @@ struct LedgerReaderTests {
 
     @Test
     func readLedgerSettingsWithInvalidDateTolerance() {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.commoditySymbolKey, "USD"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.tagKey, "shared"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.accountKey, "Assets:SharedAccount"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.nameKey, "Alice"]))
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.dateToleranceKey, "invalid"]))
 
-        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger)
+        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger.build())
 
         switch result {
         case .success:
@@ -227,7 +227,7 @@ struct LedgerReaderTests {
 
     @Test
     func readLedgerFiltersByTag() {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
 
         // Add custom settings
         ledger.custom.append(Custom(date: Date(), name: LedgerSettingsConstants.settingsKey, values: [LedgerSettingsConstants.commoditySymbolKey, "USD"]))
@@ -248,7 +248,7 @@ struct LedgerReaderTests {
         ledger.add(sharedTransaction)
         ledger.add(otherTransaction)
 
-        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger)
+        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger.build())
 
         switch result {
         case .success(let (transactions, _)):
@@ -261,7 +261,7 @@ struct LedgerReaderTests {
 
     @Test
     func readLedgerSettingsAndTransactionsUsesLatestSettingsForTransactionDate() { // swiftlint:disable:this function_body_length
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let calendar = Calendar(identifier: .gregorian)
         let initialDate = calendar.date(from: DateComponents(year: 2_024, month: 1, day: 1))!
         let updatedDate = calendar.date(from: DateComponents(year: 2_024, month: 2, day: 1))!
@@ -293,7 +293,7 @@ struct LedgerReaderTests {
             postings: []
         ))
 
-        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger)
+        let result = LedgerReader.readLedgerSettingsAndTransactions(ledger: ledger.build())
 
         switch result {
         case .success(let (transactions, settings)):

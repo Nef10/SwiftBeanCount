@@ -16,7 +16,7 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
 
     @Test
     func commodities() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         #expect(ledger.commodities.isEmpty)
 
         let commodity1 = Commodity(symbol: "EUR", metaData: ["A": "B"])
@@ -36,7 +36,7 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
 
     @Test
     func accounts() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         #expect(ledger.accounts.isEmpty)
 
         let account1 = Account(name: TestUtils.chequing, metaData: ["A": "B"])
@@ -63,7 +63,7 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
 
     @Test
     func accountGroups() {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         #expect(ledger.accountGroups.count == AccountType.allValues().count)
         for accountGroup in ledger.accountGroups {
             #expect(AccountType.allValues().map(\.rawValue).contains(accountGroup.nameItem))
@@ -72,7 +72,7 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
 
     @Test
     func accountGroup() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let account1 = try Account(name: AccountName("Assets:Checking:RBC"))
         try ledger.add(account1)
         let account2 = Account(name: TestUtils.cash)
@@ -90,7 +90,7 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
 
     @Test
     func transactions() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170609,
                                                       payee: "Payee",
                                                       narration: "Narration",
@@ -113,7 +113,7 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
         #expect(ledger.tags.count == 1)
 
         // Test that properties on accounts are not overridden
-        let ledger2 = Ledger()
+        let ledger2 = LedgerBuilder()
         let account2 = Account(name: TestUtils.cash, opening: TestUtils.date20170610)
         try ledger2.add(account2)
         ledger2.add(transaction)
@@ -122,7 +122,7 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
 
     @Test
     func prices() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
 
         let amount = Amount(number: Decimal(1), commoditySymbol: TestUtils.cad)
         let price = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount, metaData: ["A": "B"])
@@ -162,7 +162,7 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
 
     @Test
     func balances() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let account = Account(name: TestUtils.cash)
         let amount = Amount(number: Decimal(1), commoditySymbol: TestUtils.cad)
         let balance = Balance(date: TestUtils.date20170608, accountName: TestUtils.cash, amount: amount, metaData: ["A": "B"])
@@ -177,19 +177,19 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
     @Test
     func parsingErrors() {
         let error = "TEST"
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.parsingErrors.append(error)
-        #expect(ledger.errors.count == 1)
+        #expect(ledger.build().errors.count == 1)
         #expect(ledger.parsingErrors.count == 1)
-        #expect(ledger.errors[0] == error)
+        #expect(ledger.build().errors[0] == error)
         #expect(ledger.parsingErrors[0] == error)
-        #expect(String(describing: ledger).isEmpty)
+        #expect(String(describing: ledger.build()).isEmpty)
     }
 
     @Test
     func validateTransactions() {
-        let ledger = Ledger()
-        #expect(ledger.errors.isEmpty)
+        let ledger = LedgerBuilder()
+        #expect(ledger.build().errors.isEmpty)
 
         // add invalid transaction without postings
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170609,
@@ -199,12 +199,12 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
                                                       tags: [Tag(name: "test")])
         let transaction = Transaction(metaData: transactionMetaData, postings: [])
         ledger.add(transaction)
-        #expect(!ledger.errors.isEmpty)
+        #expect(!ledger.build().errors.isEmpty)
     }
 
     @Test
     func validateTransactionsAtCost() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
 
         let commodity1 = Commodity(symbol: "STOCK", opening: TestUtils.date20170608)
         let commodity2 = Commodity(symbol: "CAD", opening: TestUtils.date20170608)
@@ -225,7 +225,7 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
                                        postings: [posting1, posting2])
 
         ledger.add(transaction1)
-        #expect(ledger.errors.isEmpty)
+        #expect(ledger.build().errors.isEmpty)
 
         let amount3 = Amount(number: -2.0, commoditySymbol: commodity1.symbol, decimalDigits: 1)
         let amount4 = Amount(number: 6.0, commoditySymbol: commodity2.symbol, decimalDigits: 1)
@@ -235,7 +235,7 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
                                        postings: [posting3, posting4])
 
         ledger.add(transaction2)
-        #expect(ledger.errors.isEmpty)
+        #expect(ledger.build().errors.isEmpty)
     }
 
     @Test
@@ -243,38 +243,38 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
         var account = Account(name: TestUtils.cash)
 
         // valid account
-        let validLedger = Ledger()
+        let validLedger = LedgerBuilder()
         try validLedger.add(account)
-        #expect(validLedger.errors.isEmpty)
+        #expect(validLedger.build().errors.isEmpty)
 
         // invalid account with only a closing date
-        let invalidLedger = Ledger()
+        let invalidLedger = LedgerBuilder()
         account = Account(name: TestUtils.cash, closing: TestUtils.date20170609)
         try invalidLedger.add(account)
-        #expect(!invalidLedger.errors.isEmpty)
+        #expect(!invalidLedger.build().errors.isEmpty)
     }
 
     @Test
     func validateAccountBalance() throws {
         let account = Account(name: TestUtils.cash)
 
-        let validLedger = Ledger()
+        let validLedger = LedgerBuilder()
         try validLedger.add(account)
-        #expect(validLedger.errors.isEmpty)
+        #expect(validLedger.build().errors.isEmpty)
 
-        let invalidLedger = Ledger()
+        let invalidLedger = LedgerBuilder()
         account.balances = [
             Balance(date: TestUtils.date20170608,
                     accountName: TestUtils.cash,
                     amount: Amount(number: 1, commoditySymbol: TestUtils.cad))
         ]
         try invalidLedger.add(account)
-        #expect(!invalidLedger.errors.isEmpty)
+        #expect(!invalidLedger.build().errors.isEmpty)
     }
 
     @Test
     func validateAccountInventory() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let account = Account(name: TestUtils.cash, commoditySymbol: TestUtils.cad)
         let amount = Amount(number: 1.1, commoditySymbol: TestUtils.cad, decimalDigits: 1)
         let cost = try Cost(amount: Amount(number: 5, commoditySymbol: TestUtils.cad), date: nil, label: "1")
@@ -297,35 +297,35 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
         transaction = Transaction(metaData: TransactionMetaData(date: TestUtils.date20170610, payee: "", narration: "", flag: .complete, tags: []),
                                   postings: [posting])
         ledger.add(transaction)
-        #expect(!ledger.errors.isEmpty)
+        #expect(!ledger.build().errors.isEmpty)
     }
 
     @Test
     func validateCommodities() throws {
         // Test with commodity that has opening date - should always be valid
         let validCommodity = Commodity(symbol: "EUR", opening: TestUtils.date20170608)
-        let validLedger = Ledger()
+        let validLedger = LedgerBuilder()
         try validLedger.add(validCommodity)
-        #expect(validLedger.errors.isEmpty)
+        #expect(validLedger.build().errors.isEmpty)
 
         // Test without check_commodity plugin - should be valid even without opening date
         let invalidCommodity = TestUtils.eurCommodity
-        let ledgerWithoutPlugin = Ledger()
+        let ledgerWithoutPlugin = LedgerBuilder()
         try ledgerWithoutPlugin.add(invalidCommodity)
-        #expect(ledgerWithoutPlugin.errors.isEmpty, "Commodity without opening date should be valid when check_commodity plugin is not enabled")
+        #expect(ledgerWithoutPlugin.build().errors.isEmpty, "Commodity without opening date should be valid when check_commodity plugin is not enabled")
 
         // Test with check_commodity plugin enabled - should be invalid without opening date
-        let ledgerWithPlugin = Ledger()
+        let ledgerWithPlugin = LedgerBuilder()
         ledgerWithPlugin.plugins.append("beancount.plugins.check_commodity")
         try ledgerWithPlugin.add(TestUtils.eurCommodity)
-        #expect(!ledgerWithPlugin.errors.isEmpty, "Commodity without opening date should be invalid when check_commodity plugin is enabled")
-        #expect(ledgerWithPlugin.errors.contains("Commodity EUR does not have an opening date"), "Should contain specific error message for EUR commodity")
+        #expect(!ledgerWithPlugin.build().errors.isEmpty, "Commodity without opening date should be invalid when check_commodity plugin is enabled")
+        #expect(ledgerWithPlugin.build().errors.contains("Commodity EUR does not have an opening date"), "Should contain specific error message for EUR commodity")
     }
 
     @Test
     func commodityValidationWithAutoCreatedCommodities() {
         // Test auto-created commodities without plugin
-        let ledgerWithoutPlugin = Ledger()
+        let ledgerWithoutPlugin = LedgerBuilder()
         let posting = Posting(accountName: TestUtils.cash, amount: Amount(number: Decimal(100), commoditySymbol: "USD"))
         let transaction = Transaction(
             metaData: TransactionMetaData(date: TestUtils.date20170609, payee: "Test", narration: "Test", flag: .complete, tags: []),
@@ -334,17 +334,17 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
         ledgerWithoutPlugin.add(transaction)
 
         // Should have transaction validation error (unbalanced) but no commodity errors
-        let commodityErrors = ledgerWithoutPlugin.errors.filter { $0.contains("does not have an opening date") }
+        let commodityErrors = ledgerWithoutPlugin.build().errors.filter { $0.contains("does not have an opening date") }
         #expect(commodityErrors.isEmpty, "Auto-created commodities should not generate errors when plugin is not enabled")
 
         // Test auto-created commodities with plugin
-        let ledgerWithPlugin = Ledger()
+        let ledgerWithPlugin = LedgerBuilder()
         ledgerWithPlugin.plugins.append("beancount.plugins.check_commodity")
         ledgerWithPlugin.add(transaction)
 
         // Should have both transaction validation error and commodity error
         let expectedError = "Commodity USD does not have an opening date"
-        #expect(ledgerWithPlugin.errors.contains(expectedError), "Auto-created commodities should generate errors when plugin is enabled")
+        #expect(ledgerWithPlugin.build().errors.contains(expectedError), "Auto-created commodities should generate errors when plugin is enabled")
     }
 
     @Test
@@ -355,131 +355,131 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
         var account = Account(name: accountName, opening: TestUtils.date20170609)
         let posting = Posting(accountName: accountName, amount: Amount(number: Decimal(10), commoditySymbol: commodity.symbol))
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting])
-        var ledger = Ledger()
+        var ledger = LedgerBuilder()
 
         // Empty ledger
-        #expect(String(describing: ledger).isEmpty)
+        #expect(String(describing: ledger.build()).isEmpty)
 
         // Ledger with commodity only
         try ledger.add(commodity)
-        #expect(String(describing: ledger) == String(describing: commodity))
+        #expect(String(describing: ledger.build()) == String(describing: commodity))
 
         // Ledger with account opening and commodity
         try ledger.add(account)
-        #expect(String(describing: ledger) == "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))")
+        #expect(String(describing: ledger.build()) == "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))")
 
         // Ledger with transactions, account opening and commodity
         ledger.add(transaction)
-        #expect(String(describing: ledger)
+        #expect(String(describing: ledger.build())
             == "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
 
         // Ledger with transaction, account opening as well as closing and commodity
-        ledger = Ledger()
+        ledger = LedgerBuilder()
         try ledger.add(commodity)
         account = Account(name: accountName, opening: TestUtils.date20170609, closing: TestUtils.date20170610)
         try ledger.add(account)
         ledger.add(transaction)
-        #expect(String(describing: ledger)
+        #expect(String(describing: ledger.build())
             == "\(String(describing: commodity))\n\(String(describing: ledger.accounts.first { $0.name == accountName }!))\n\(String(describing: transaction))")
 
         // ledger with only account opening
-        ledger = Ledger()
+        ledger = LedgerBuilder()
         let account2 = Account(name: accountName, opening: TestUtils.date20170609)
         try ledger.add(account2)
-        #expect(String(describing: ledger) == String(describing: ledger.accounts.first!))
+        #expect(String(describing: ledger.build()) == String(describing: ledger.accounts.first!))
 
         // Test new line after account
         let price = try Price(date: TestUtils.date20170609, commoditySymbol: TestUtils.eur, amount: Amount(number: 10, commoditySymbol: TestUtils.cad, decimalDigits: 2))
         try ledger.add(price)
-        #expect(String(describing: ledger) == "\(String(describing: ledger.accounts.first!))\n\(String(describing: price))")
+        #expect(String(describing: ledger.build()) == "\(String(describing: ledger.accounts.first!))\n\(String(describing: price))")
     }
 
     @Test
     func descriptionPrice() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let price1 = try Price(date: TestUtils.date20170609, commoditySymbol: TestUtils.eur, amount: Amount(number: 10, commoditySymbol: TestUtils.cad, decimalDigits: 2))
         let price2 = try Price(date: TestUtils.date20170610, commoditySymbol: TestUtils.eur, amount: Amount(number: 10, commoditySymbol: TestUtils.cad, decimalDigits: 2))
         try ledger.add(price1)
-        #expect(String(describing: ledger) == String(describing: price1))
+        #expect(String(describing: ledger.build()) == String(describing: price1))
         try ledger.add(price2)
-        #expect(String(describing: ledger) == "\(String(describing: price1))\n\(String(describing: price2))")
+        #expect(String(describing: ledger.build()) == "\(String(describing: price1))\n\(String(describing: price2))")
     }
 
     @Test
     func descriptionOptions() {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let option1 = Option(name: "a", value: "b")
         ledger.option.append(option1)
-        #expect(String(describing: ledger) == String(describing: option1))
+        #expect(String(describing: ledger.build()) == String(describing: option1))
         let option2 = Option(name: "z", value: "y")
         ledger.option.append(option2)
-        #expect(String(describing: ledger) == "\(String(describing: option1))\n\(String(describing: option2))")
+        #expect(String(describing: ledger.build()) == "\(String(describing: option1))\n\(String(describing: option2))")
         ledger.plugins.append("p") // Test new line after options
-        #expect(String(describing: ledger) == "\(String(describing: option1))\n\(String(describing: option2))\nplugin \"p\"")
+        #expect(String(describing: ledger.build()) == "\(String(describing: option1))\n\(String(describing: option2))\nplugin \"p\"")
     }
 
     @Test
     func descriptionPlugins() {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.plugins.append("p")
-        #expect(String(describing: ledger) == "plugin \"p\"")
+        #expect(String(describing: ledger.build()) == "plugin \"p\"")
         ledger.plugins.append("p1")
-        #expect(String(describing: ledger) == "plugin \"p\"\nplugin \"p1\"")
+        #expect(String(describing: ledger.build()) == "plugin \"p\"\nplugin \"p1\"")
         let custom = Custom(date: TestUtils.date20170610, name: "a", values: ["b"])
         ledger.custom.append(custom) // Test new line after plugins
-        #expect(String(describing: ledger) == "plugin \"p\"\nplugin \"p1\"\n\(String(describing: custom))")
+        #expect(String(describing: ledger.build()) == "plugin \"p\"\nplugin \"p1\"\n\(String(describing: custom))")
     }
 
     @Test
     func descriptionCustoms() {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let custom1 = Custom(date: TestUtils.date20170610, name: "a", values: ["b"])
         let custom2 = Custom(date: TestUtils.date20170609, name: "c", values: ["d", "e"])
         ledger.custom.append(custom1)
-        #expect(String(describing: ledger) == String(describing: custom1))
+        #expect(String(describing: ledger.build()) == String(describing: custom1))
         ledger.custom.append(custom2)
-        #expect(String(describing: ledger) == "\(String(describing: custom1))\n\(String(describing: custom2))")
+        #expect(String(describing: ledger.build()) == "\(String(describing: custom1))\n\(String(describing: custom2))")
         let event = Event(date: TestUtils.date20170610, name: "e", value: "e1")
         ledger.events.append(event) // Test new line after customs
-        #expect(String(describing: ledger) == "\(String(describing: custom1))\n\(String(describing: custom2))\n\(String(describing: event))")
+        #expect(String(describing: ledger.build()) == "\(String(describing: custom1))\n\(String(describing: custom2))\n\(String(describing: event))")
     }
 
     @Test
     func descriptionEvents() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let event1 = Event(date: TestUtils.date20170610, name: "e", value: "e1")
         let event2 = Event(date: TestUtils.date20170609, name: "c", value: "d")
         ledger.events.append(event1)
-        #expect(String(describing: ledger) == String(describing: event1))
+        #expect(String(describing: ledger.build()) == String(describing: event1))
         ledger.events.append(event2)
-        #expect(String(describing: ledger) == "\(String(describing: event1))\n\(String(describing: event2))")
+        #expect(String(describing: ledger.build()) == "\(String(describing: event1))\n\(String(describing: event2))")
         let commodity = Commodity(symbol: "EUR", opening: TestUtils.date20170609)
         try ledger.add(commodity) // Test new line after events
-        #expect(String(describing: ledger) == "\(String(describing: event1))\n\(String(describing: event2))\n\(String(describing: commodity))")
+        #expect(String(describing: ledger.build()) == "\(String(describing: event1))\n\(String(describing: event2))\n\(String(describing: commodity))")
     }
 
     @Test
     func equalEmpty() {
-        let ledger1 = Ledger()
-        let ledger2 = Ledger()
+        let ledger1 = LedgerBuilder()
+        let ledger2 = LedgerBuilder()
 
-        #expect(ledger1 == ledger2)
+        #expect(ledger1.build() == ledger2.build())
     }
 
     @Test
     func equalErrors() {
-        let ledger1 = Ledger()
-        let ledger2 = Ledger()
+        let ledger1 = LedgerBuilder()
+        let ledger2 = LedgerBuilder()
 
         // test errors are ignored
         ledger1.parsingErrors.append("String")
-        #expect(ledger1 == ledger2)
+        #expect(ledger1.build() == ledger2.build())
     }
 
     @Test
     func equalTransactions() {
-        let ledger1 = Ledger()
-        let ledger2 = Ledger()
+        let ledger1 = LedgerBuilder()
+        let ledger2 = LedgerBuilder()
 
         let accountName = TestUtils.cash
         let amount1 = Amount(number: 1, commoditySymbol: TestUtils.cad, decimalDigits: 1)
@@ -493,52 +493,52 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
         let transaction2 = Transaction(metaData: transactionMetaData, postings: [posting2])
 
         ledger1.add(transaction1)
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         ledger2.add(transaction2)
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         ledger1.add(transaction2)
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         ledger2.add(transaction1)
-        #expect(ledger1 == ledger2)
+        #expect(ledger1.build() == ledger2.build())
     }
 
     @Test
     func equalCommodities() throws {
-        let ledger1 = Ledger()
-        let ledger2 = Ledger()
+        let ledger1 = LedgerBuilder()
+        let ledger2 = LedgerBuilder()
 
         try ledger1.add(TestUtils.cadCommodity)
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         try ledger2.add(TestUtils.eurCommodity)
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         try ledger1.add(TestUtils.eurCommodity)
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         try ledger2.add(TestUtils.cadCommodity)
-        #expect(ledger1 == ledger2)
+        #expect(ledger1.build() == ledger2.build())
     }
 
     @Test
     func equalAccounts() throws {
-        let ledger1 = Ledger()
-        let ledger2 = Ledger()
+        let ledger1 = LedgerBuilder()
+        let ledger2 = LedgerBuilder()
 
         let account1 = Account(name: TestUtils.cash)
         let account2 = Account(name: TestUtils.chequing)
 
         try ledger1.add(account1)
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         try ledger2.add(account2)
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         try ledger1.add(account2)
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         try ledger2.add(account1)
-        #expect(ledger1 == ledger2)
+        #expect(ledger1.build() == ledger2.build())
     }
 
     @Test
     func equalPrices() throws {
-        let ledger1 = Ledger()
-        let ledger2 = Ledger()
+        let ledger1 = LedgerBuilder()
+        let ledger2 = LedgerBuilder()
 
         let amount1 = Amount(number: 1, commoditySymbol: TestUtils.cad, decimalDigits: 1)
         let amount2 = Amount(number: 1, commoditySymbol: TestUtils.cad, decimalDigits: 2)
@@ -546,109 +546,109 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
         let price2 = try Price(date: Date() + 1, commoditySymbol: TestUtils.eur, amount: amount2)
 
         try ledger1.add(price1)
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         try ledger2.add(price2)
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         try ledger1.add(price2)
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         try ledger2.add(price1)
-        #expect(ledger1 == ledger2)
+        #expect(ledger1.build() == ledger2.build())
     }
 
     @Test
     func equalCustom() {
-        let ledger1 = Ledger()
-        let ledger2 = Ledger()
+        let ledger1 = LedgerBuilder()
+        let ledger2 = LedgerBuilder()
 
         let custom1 = Custom(date: Date(), name: "test", values: ["test1"])
         let custom2 = Custom(date: Date(), name: "test", values: ["test1", "test2"])
 
         ledger1.custom.append(custom1)
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         ledger2.custom.append(custom2)
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         ledger1.custom.append(custom2)
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         ledger2.custom.append(custom1)
-        #expect(ledger1 == ledger2)
+        #expect(ledger1.build() == ledger2.build())
     }
 
     @Test
     func equalOptions() {
-        let ledger1 = Ledger()
-        let ledger2 = Ledger()
+        let ledger1 = LedgerBuilder()
+        let ledger2 = LedgerBuilder()
 
         let option1 = Option(name: "a", value: "b")
         let option2 = Option(name: "a", value: "c")
 
         ledger1.option.append(option1)
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         ledger2.option.append(option2)
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         ledger2.option.append(option1)
         ledger1.option.append(option2)
-        #expect(ledger1 == ledger2)
+        #expect(ledger1.build() == ledger2.build())
     }
 
     @Test
     func equalEvents() {
-        let ledger1 = Ledger()
-        let ledger2 = Ledger()
+        let ledger1 = LedgerBuilder()
+        let ledger2 = LedgerBuilder()
 
         let event1 = Event(date: Date(), name: "event", value: "event_value1")
         let event2 = Event(date: Date(), name: "event", value: "event_value2")
 
         ledger1.events.append(event1)
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         ledger2.events.append(event2)
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         ledger1.events.append(event2)
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         ledger2.events.append(event1)
-        #expect(ledger1 == ledger2)
+        #expect(ledger1.build() == ledger2.build())
     }
 
     @Test
     func equalPlugins() {
-        let ledger1 = Ledger()
-        let ledger2 = Ledger()
+        let ledger1 = LedgerBuilder()
+        let ledger2 = LedgerBuilder()
 
         ledger1.plugins.append("New Plugin")
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         ledger2.plugins.append("New Plugin1")
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         ledger1.plugins.append("New Plugin1")
-        #expect(ledger1 != ledger2)
+        #expect(ledger1.build() != ledger2.build())
         ledger2.plugins.append("New Plugin")
-        #expect(ledger1 == ledger2)
+        #expect(ledger1.build() == ledger2.build())
     }
 
     @Test
     func validateUnusedAccountsWithoutPlugin() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let account = Account(name: TestUtils.cash)
         try ledger.add(account)
 
         // Without the nounused plugin, no errors should be generated for unused accounts
-        #expect(ledger.errors.isEmpty)
+        #expect(ledger.build().errors.isEmpty)
     }
 
     @Test
     func validateUnusedAccountsWithPlugin() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.plugins.append("beancount.plugins.nounused")
         let account = Account(name: TestUtils.cash)
         try ledger.add(account)
 
         // With the nounused plugin, unused accounts should generate errors
-        #expect(!ledger.errors.isEmpty)
-        #expect(ledger.errors.count == 1)
-        #expect(ledger.errors[0] == "Account Assets:Cash has no postings")
+        #expect(!ledger.build().errors.isEmpty)
+        #expect(ledger.build().errors.count == 1)
+        #expect(ledger.build().errors[0] == "Account Assets:Cash has no postings")
     }
 
     @Test
     func validateUsedAccountsWithPlugin() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.plugins.append("beancount.plugins.nounused")
 
         // Add commodity with opening date
@@ -668,12 +668,12 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
         ledger.add(transaction)
 
         // With the nounused plugin, used accounts should not generate errors
-        #expect(ledger.errors.isEmpty)
+        #expect(ledger.build().errors.isEmpty)
     }
 
     @Test
     func validateMultipleUnusedAccountsWithPlugin() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.plugins.append("beancount.plugins.nounused")
 
         let account1 = Account(name: TestUtils.cash)
@@ -682,15 +682,15 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
         try ledger.add(account2)
 
         // Both accounts should generate errors
-        #expect(!ledger.errors.isEmpty)
-        #expect(ledger.errors.count == 2)
-        #expect(ledger.errors.contains("Account Assets:Cash has no postings"))
-        #expect(ledger.errors.contains("Account Assets:Chequing has no postings"))
+        #expect(!ledger.build().errors.isEmpty)
+        #expect(ledger.build().errors.count == 2)
+        #expect(ledger.build().errors.contains("Account Assets:Cash has no postings"))
+        #expect(ledger.build().errors.contains("Account Assets:Chequing has no postings"))
     }
 
     @Test
     func validateMixedAccountsWithPlugin() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.plugins.append("beancount.plugins.nounused")
 
         // Add commodity with opening date
@@ -711,15 +711,15 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
         ledger.add(transaction)
 
         // Only the unused account should generate an error
-        #expect(!ledger.errors.isEmpty)
-        #expect(ledger.errors.count == 1)
-        #expect(ledger.errors[0] == "Account Assets:Cash has no postings")
+        #expect(!ledger.build().errors.isEmpty)
+        #expect(ledger.build().errors.count == 1)
+        #expect(ledger.build().errors[0] == "Account Assets:Cash has no postings")
     }
 
     @Test
     func validateCommodityUsageDatesIntegration() throws {
         // Integration test for commodity usage date validation across different entities
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.plugins.append("beancount.plugins.check_commodity")
 
         // Add commodity with opening date
@@ -743,7 +743,7 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
         ledger.add(balance)
 
         // Check that all validation errors are present
-        let errors = ledger.errors
+        let errors = ledger.build().errors
         let commodityUsageErrors = errors.filter { $0.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09") }
 
         // Should have commodity usage errors showing that the validation is working
@@ -753,7 +753,7 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
     @Test
     func validateCommodityUsageDatesIntegrationValid() throws {
         // Integration test for valid commodity usage dates
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.plugins.append("beancount.plugins.check_commodity")
 
         // Add commodity with opening date before usage
@@ -778,7 +778,7 @@ struct LedgerTests { // swiftlint:disable:this type_body_length
         ledger.add(balance)
 
         // Check that no commodity usage errors are present
-        let errors = ledger.errors
+        let errors = ledger.build().errors
         let commodityUsageErrors = errors.filter { $0.contains("used on") && $0.contains("before its opening date") }
 
         // Should have no commodity usage errors (balance error is expected due to transaction not being balanced)

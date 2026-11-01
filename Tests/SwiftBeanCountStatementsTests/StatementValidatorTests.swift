@@ -37,19 +37,19 @@ struct StatementValidatorTests {
             name: "statements-settings",
             values: ["root-folder", "/path/to/statements"]
         )
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.custom.append(custom)
 
-        let rootFolder = try StatementValidator.getRootFolder(from: ledger)
+        let rootFolder = try StatementValidator.getRootFolder(from: ledger.build())
         #expect(rootFolder == "/path/to/statements")
     }
 
     @Test
     func getRootFolderNoRootFolder() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
 
         #expect(throws: StatementValidatorError.noRootFolder) {
-            try StatementValidator.getRootFolder(from: ledger)
+            try StatementValidator.getRootFolder(from: ledger.build())
         }
     }
 
@@ -65,11 +65,11 @@ struct StatementValidatorTests {
             name: "statements-settings",
             values: ["root-folder", "/new/path"]
         )
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.custom.append(custom1)
         ledger.custom.append(custom2)
 
-        let rootFolder = try StatementValidator.getRootFolder(from: ledger)
+        let rootFolder = try StatementValidator.getRootFolder(from: ledger.build())
         #expect(rootFolder == "/new/path")
     }
 
@@ -80,11 +80,11 @@ struct StatementValidatorTests {
             name: "statements-settings",
             values: ["root-folder", "/path/to/statements"]
         )
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.custom.append(customFileNames)
         ledger.custom.append(custom)
 
-        let rootFolder = try StatementValidator.getRootFolder(from: ledger)
+        let rootFolder = try StatementValidator.getRootFolder(from: ledger.build())
         #expect(rootFolder == "/path/to/statements")
     }
 
@@ -98,12 +98,12 @@ struct StatementValidatorTests {
             metaData: ["folder": "Resource"]
         )
 
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.custom.append(customFileNames)
         try ledger.add(account)
 
         let results = try await StatementValidator.validate(
-            ledger,
+            ledger.build(),
             securityScopedRootURL: parentURL,
             includeClosedAccounts: false,
             includeStartEndDateWarning: false,
@@ -127,12 +127,12 @@ struct StatementValidatorTests {
             metaData: ["folder": "Resource"]
         )
 
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.custom.append(customFileNames)
         try ledger.add(closedAccount)
 
         var results = try await StatementValidator.validate(
-            ledger,
+            ledger.build(),
             securityScopedRootURL: parentURL,
             includeClosedAccounts: false, // exclude closed accounts
             includeStartEndDateWarning: false,
@@ -142,7 +142,7 @@ struct StatementValidatorTests {
         #expect(results.isEmpty)
 
         results = try await StatementValidator.validate(
-            ledger,
+            ledger.build(),
             securityScopedRootURL: parentURL,
             includeClosedAccounts: true, // include closed accounts
             includeStartEndDateWarning: false,
@@ -161,12 +161,12 @@ struct StatementValidatorTests {
             metaData: ["folder": "Resource", "statements": "disable"]
         )
 
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.custom.append(customFileNames)
         try ledger.add(disabledAccount)
 
         let results = try await StatementValidator.validate(
-            ledger,
+            ledger.build(),
             securityScopedRootURL: parentURL,
             includeClosedAccounts: false,
             includeStartEndDateWarning: false,
@@ -183,12 +183,12 @@ struct StatementValidatorTests {
             opening: Date(timeIntervalSince1970: 1_672_531_200)
         )
 
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.custom.append(customFileNames)
         try ledger.add(accountWithoutFolder)
 
         let results = try await StatementValidator.validate(
-            ledger,
+            ledger.build(),
             securityScopedRootURL: parentURL,
             includeClosedAccounts: false,
             includeStartEndDateWarning: false,
@@ -206,12 +206,12 @@ struct StatementValidatorTests {
             metaData: ["folder": "Resource"]
         )
 
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.custom.append(customFileNames)
         try ledger.add(account)
 
         let results = try await StatementValidator.validate(
-            ledger,
+            ledger.build(),
             securityScopedRootURL: parentURL,
             includeClosedAccounts: false,
             includeStartEndDateWarning: true,
@@ -231,12 +231,12 @@ struct StatementValidatorTests {
             metaData: ["folder": "Resource"]
         )
 
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.custom.append(customFileNames)
         try ledger.add(account)
 
         let results = try await StatementValidator.validate(
-            ledger,
+            ledger.build(),
             securityScopedRootURL: parentURL,
             includeClosedAccounts: false,
             includeStartEndDateWarning: false,
@@ -251,10 +251,10 @@ struct StatementValidatorTests {
     @Test
     func emptyLedger() async throws {
         let tempDir = FileManager.default.temporaryDirectory
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
 
         let results = try await StatementValidator.validate(
-            ledger,
+            ledger.build(),
             securityScopedRootURL: tempDir,
             includeClosedAccounts: false,
             includeStartEndDateWarning: false,
@@ -267,12 +267,12 @@ struct StatementValidatorTests {
     @Test
     func ledgerWithoutAccounts() async throws {
         let tempDir = FileManager.default.temporaryDirectory
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
 
         ledger.custom.append(customFileNames)
 
         let results = try await StatementValidator.validate(
-            ledger,
+            ledger.build(),
             securityScopedRootURL: tempDir,
             includeClosedAccounts: false,
             includeStartEndDateWarning: false,

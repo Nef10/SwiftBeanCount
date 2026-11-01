@@ -185,7 +185,7 @@ public enum Parser {
     /// - Parameter result: parsed data which should be added to the ledger
     /// - Returns: Ledger
     private static func importParsedData(_ result: ParsingResult) -> Ledger {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
 
         // no dependencies
         addSimpleContent(result, to: ledger)
@@ -227,7 +227,7 @@ public enum Parser {
             ledger.add(transaction)
         }
 
-        return ledger
+        return ledger.build()
     }
 
     /// Adds all the parsed objects objects which do not have dependencies to the ledger.
@@ -236,7 +236,7 @@ public enum Parser {
     /// - Parameters
     ///   - result: parsed data which should be added to the ledger
     ///   - ledger: ledger to add the parsed data to
-    private static func addSimpleContent(_ result: ParsingResult, to ledger: Ledger) {
+    private static func addSimpleContent(_ result: ParsingResult, to ledger: LedgerBuilder) {
         ledger.parsingErrors.append(contentsOf: result.parsingErrors)
         ledger.option.append(contentsOf: result.options)
         ledger.plugins.append(contentsOf: result.plugins)

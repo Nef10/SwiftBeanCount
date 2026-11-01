@@ -24,7 +24,7 @@ private enum ImportPhase {
 
 class ImportManager: ObservableObject {
 
-    @Published var resultLedger = Ledger()
+    @Published var resultLedger = LedgerBuilder()
     @Published var showLoadingIndicator = true
     @Published var loadingMessage: String? = "Organizing imports"
     @Published var showErrorAlert = false

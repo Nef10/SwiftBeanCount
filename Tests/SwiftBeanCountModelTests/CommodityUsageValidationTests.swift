@@ -16,7 +16,7 @@ struct CommodityUsageValidationTests {
     @Test
     func validateCommodityUsageDatesWithoutPlugin() throws {
         // Test that commodity usage dates are not validated when plugin is not enabled
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
 
         // Add commodities with opening dates after the transaction date
         let eurCommodity = Commodity(symbol: TestUtils.eur, opening: TestUtils.date20170609)
@@ -37,7 +37,7 @@ struct CommodityUsageValidationTests {
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting1, posting2])
 
         // Should be valid since plugin is not enabled
-        guard case .valid = transaction.validate(in: ledger) else {
+        guard case .valid = transaction.validate(in: ledger.build()) else {
             Issue.record("Transaction should be valid when check_commodity plugin is not enabled")
             return
         }
@@ -46,7 +46,7 @@ struct CommodityUsageValidationTests {
     @Test
     func validateCommodityUsageDatesWithPlugin() throws {
         // Test that commodity usage dates are validated when plugin is enabled
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.plugins.append("beancount.plugins.check_commodity")
 
         // Add commodities with opening dates after the transaction date
@@ -68,7 +68,7 @@ struct CommodityUsageValidationTests {
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting1, posting2])
 
         // Should be invalid since commodity is used before opening
-        if case .invalid(let error) = transaction.validate(in: ledger) {
+        if case .invalid(let error) = transaction.validate(in: ledger.build()) {
             #expect(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
         } else {
             Issue.record("Transaction should be invalid when commodity is used before opening date")
@@ -78,7 +78,7 @@ struct CommodityUsageValidationTests {
     @Test
     func validatePriceCommodityUsageDates() throws {
         // Test validation of price commodity usage dates
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.plugins.append("beancount.plugins.check_commodity")
 
         // Add commodities with opening dates
@@ -101,7 +101,7 @@ struct CommodityUsageValidationTests {
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting1, posting2])
 
         // Should be invalid since EUR (price commodity) is used before opening
-        if case .invalid(let error) = transaction.validate(in: ledger) {
+        if case .invalid(let error) = transaction.validate(in: ledger.build()) {
             #expect(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
         } else {
             Issue.record("Transaction should be invalid when price commodity is used before opening date")
@@ -111,7 +111,7 @@ struct CommodityUsageValidationTests {
     @Test
     func validateCostCommodityUsageDates() throws {
         // Test validation of cost commodity usage dates
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.plugins.append("beancount.plugins.check_commodity")
 
         // Add commodities with opening dates
@@ -135,7 +135,7 @@ struct CommodityUsageValidationTests {
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting1, posting2])
 
         // Should be invalid since EUR (cost commodity) is used before opening
-        if case .invalid(let error) = transaction.validate(in: ledger) {
+        if case .invalid(let error) = transaction.validate(in: ledger.build()) {
             #expect(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
         } else {
             Issue.record("Transaction should be invalid when cost commodity is used before opening date")
@@ -145,7 +145,7 @@ struct CommodityUsageValidationTests {
     @Test
     func validateCommodityUsageDatesValid() throws {
         // Test that validation passes when commodities are used on or after opening dates
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.plugins.append("beancount.plugins.check_commodity")
 
         // Add commodities with opening dates before or on the transaction date
@@ -167,7 +167,7 @@ struct CommodityUsageValidationTests {
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting1, posting2])
 
         // Should be valid since commodities are used on or after opening dates
-        guard case .valid = transaction.validate(in: ledger) else {
+        guard case .valid = transaction.validate(in: ledger.build()) else {
             Issue.record("Transaction should be valid when commodities are used on or after opening dates")
             return
         }

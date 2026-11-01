@@ -161,7 +161,7 @@ struct TangerineDownloadImporterTests {
 
     @Test
     func pastDaysToLoad() {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.custom.append(Custom(date: Date(), name: "tangerine-download-importer", values: ["pastDaysToLoad", "3"]))
         ledger.custom.append(Custom(date: Date(timeIntervalSinceNow: sixtyTwoDays), name: "tangerine-download-importer", values: ["pastDaysToLoad", "200"]))
         let downloader = MockDownloader()
@@ -175,7 +175,7 @@ struct TangerineDownloadImporterTests {
             #expect(Calendar.current.compare(date, to: Date(timeIntervalSinceNow: threeDays), toGranularity: .minute) == .orderedSame)
             return .success([:])
         }
-        runImport(downloader: downloader, ledger: ledger)
+        runImport(downloader: downloader, ledger: ledger.build())
     }
 
     @Test
