@@ -7,14 +7,10 @@ import Foundation
 
 /// Mutable assembly object. Call `build()` to publish a stable snapshot.
 public final class LedgerBuilder {
+
     /// Diagnostics collected while parsing or assembling the ledger.
     public var parsingErrors = [String]()
-    var commodity = [String: Commodity]()
-    var account = [String: Account]()
-    var tag = [String: Tag]()
-    var price = [CommoditySymbol: [CommoditySymbol: [Date: Price]]]()
-    var accountGroup: [String: AccountGroup]
-    var storedTransactions = [Transaction]()
+
     /// Plugins configured for this ledger.
     public var plugins = [String]()
 
@@ -44,6 +40,13 @@ public final class LedgerBuilder {
 
     /// Top-level account groups currently assembled by this builder.
     public var accountGroups: [AccountGroup] { Array(accountGroup.values) }
+
+    var commodity = [String: Commodity]()
+    var account = [String: Account]()
+    var tag = [String: Tag]()
+    var price = [CommoditySymbol: [CommoditySymbol: [Date: Price]]]()
+    var accountGroup: [String: AccountGroup]
+    var storedTransactions = [Transaction]()
 
     /// Creates an empty builder with the five top-level account groups.
     public init() {
@@ -103,7 +106,9 @@ public final class LedgerBuilder {
     }
 
     /// Creates and returns a completed processed snapshot.
-    public func build() -> Ledger { Ledger(builder: self).finalizeAccounting() }
+    public func build() -> Ledger {
+        Ledger(builder: self).finalizeAccounting()
+    }
 
     private func addAccountToStructure(_ account: Account) {
         let parts = account.name.fullName.split(separator: Account.nameSeperator).map(String.init)
