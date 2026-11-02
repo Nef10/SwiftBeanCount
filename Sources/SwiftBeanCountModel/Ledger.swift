@@ -15,7 +15,7 @@ public enum LedgerError: Error, Equatable {
 }
 
 /// An immutable, completed view of a ledger.
-public final class Ledger {
+public final class Ledger: LedgerContext {
     /// Array of all `Transaction`s in this ledger
     public let transactions: [Transaction]
 
@@ -57,177 +57,32 @@ public final class Ledger {
 
     let postingPrices: [Transaction: [Posting: MultiCurrencyAmount]]
 
-    init(builder: LedgerBuilder) {
-        transactions = builder.storedTransactions
-        parsingErrors = builder.parsingErrors
-        plugins = builder.plugins
-        option = builder.option
-        events = builder.events
-        custom = builder.custom
-
-        let accountCopies = Self.copyAccounts(builder.account.values)
-        accounts = Array(accountCopies.values)
-        commodities = Array(builder.commodity.values)
-        tags = Array(builder.tag.values)
-        prices = builder.price.values.flatMap { $0.values.flatMap(\.values) }
-        accountGroups = Self.copyGroups(builder.accountGroup, accounts: accountCopies)
-        postingPrices = [:]
-
-        ledgerErrors = []
-        errors = []
-    }
-
-    init(
-        copying ledger: Ledger,
-        postingPrices: [Transaction: [Posting: MultiCurrencyAmount]],
-        ledgerErrors: [String]
-    ) {
-        transactions = ledger.transactions
-        parsingErrors = ledger.parsingErrors
-        plugins = ledger.plugins
-        option = ledger.option
-        events = ledger.events
-        custom = ledger.custom
-        accounts = ledger.accounts
-        commodities = ledger.commodities
-        tags = ledger.tags
-        prices = ledger.prices
-        accountGroups = ledger.accountGroups
-        self.postingPrices = postingPrices
-        self.ledgerErrors = ledgerErrors
+    /// Installs completed accounting results; does not copy or process builder contents.
+    private init(completed context: LedgerBuildContext) {
+        transactions = context.transactions
+        parsingErrors = context.parsingErrors
+        plugins = context.plugins
+        option = context.option
+        events = context.events
+        custom = context.custom
+        accounts = context.accounts
+        commodities = context.commodities
+        tags = context.tags
+        prices = context.prices
+        accountGroups = context.accountGroups
+        postingPrices = context.postingPrices
+        ledgerErrors = context.ledgerErrors
         errors = parsingErrors + ledgerErrors
     }
 
-    /// Creates an empty immutable ledger with its account groups set up.
+    /// Creates a completed empty ledger with the five account groups.
     public convenience init() {
-        self.init(builder: LedgerBuilder())
+        self.init(completed: LedgerBuildContext(builder: LedgerBuilder()))
     }
 
-    private static func copyAccounts(_ accounts: Dictionary<String, Account>.Values) -> [String: Account] {
-        Dictionary(uniqueKeysWithValues: accounts.map { account in
-            let copy = Account(
-                name: account.name,
-                bookingMethod: account.bookingMethod,
-                commoditySymbol: account.commoditySymbol,
-                opening: account.opening,
-                closing: account.closing,
-                metaData: account.metaData
-            )
-            copy.balances = account.balances
-            return (account.name.fullName, copy)
-        })
-    }
-
-    private static func copyGroups(_ source: [String: AccountGroup], accounts: [String: Account]) -> [AccountGroup] {
-        func copy(_ group: AccountGroup) -> AccountGroup {
-            let result = AccountGroup(nameItem: group.nameItem, accountType: group.accountType, baseGroup: group.baseGroup)
-            for (name, account) in group.accounts {
-                result.accounts[name] = accounts[account.name.fullName]
-            }
-            for (name, child) in group.accountGroups {
-                result.accountGroups[name] = copy(child)
-            }
-            return result
-        }
-        return source.values.map(copy)
-    }
-
-    func finalizeAccounting() -> Ledger {
-        var weights = [Transaction: [Posting: MultiCurrencyAmount]]()
-        for account in accounts {
-            let (_, accountWeights) = account.inventoryBooking(in: self)
-            for (posting, amount) in accountWeights {
-                weights[posting.transaction, default: [:]][posting] = amount
-            }
-        }
-        let intermediate = Ledger(copying: self, postingPrices: weights, ledgerErrors: [])
-        let errors = intermediate.validate()
-        return Ledger(copying: intermediate, postingPrices: weights, ledgerErrors: errors)
-    }
-
-}
-
-extension Ledger {
-    func validate() -> [String] {
-        var result = [String]()
-        result.append(contentsOf: validateAccounts())
-        result.append(contentsOf: validateTransactions())
-        result.append(contentsOf: validateCommodities())
-        result.append(contentsOf: validatePrices())
-        result.append(contentsOf: validateBalanceAssertions())
-        return result
-    }
-
-    /// Validates all accounts
-    func validateAccounts() -> [String] {
-        var result = [String]()
-        accounts.forEach {
-            if case .invalid(let error) = $0.validate() {
-                result.append(error)
-            }
-            if case .invalid(let error) = $0.validateBalance(in: self) {
-                result.append(error)
-            }
-            if case .invalid(let error) = $0.validateInventory(in: self) {
-                result.append(error)
-            }
-        }
-
-        // Check for unused accounts if the nounused plugin is enabled
-        if plugins.contains("beancount.plugins.nounused") {
-            accounts.forEach { account in
-                if !account.hasPostings(in: self) {
-                    result.append("Account \(account.name) has no postings")
-                }
-            }
-        }
-        return result
-    }
-
-    /// Validates all transactions
-    func validateTransactions() -> [String] {
-        var result = [String]()
-        transactions.forEach {
-            if case .invalid(let error) = $0.validate(in: self) {
-                result.append(error)
-            }
-        }
-        return result
-    }
-
-    /// Validates all commodities
-    func validateCommodities() -> [String] {
-        var result = [String]()
-        commodities.forEach {
-            if case .invalid(let error) = $0.validate(in: self) {
-                result.append(error)
-            }
-        }
-        return result
-    }
-
-    /// Validates all prices
-    func validatePrices() -> [String] {
-        var result = [String]()
-        prices.forEach {
-            if case .invalid(let error) = $0.validate(in: self) {
-                result.append(error)
-            }
-        }
-        return result
-    }
-
-    /// Validates all balance assertions
-    func validateBalanceAssertions() -> [String] {
-        var result = [String]()
-        accounts.forEach { account in
-            account.balances.forEach { balance in
-                if case .invalid(let error) = balance.validate(in: self) {
-                    result.append(error)
-                }
-            }
-        }
-        return result
+    /// Completes accounting on isolated builder contents, then creates the snapshot once.
+    static func build(from builder: LedgerBuilder) -> Ledger {
+        Ledger(completed: LedgerBuildContext(builder: builder))
     }
 
 }

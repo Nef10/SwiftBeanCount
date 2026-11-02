@@ -180,7 +180,7 @@ public class Account: AccountItem {
     ///
     /// - Parameter ledger: ledger with the Transactions
     /// - Returns: `ValidationResult`
-    func validateBalance(in ledger: Ledger) -> ValidationResult {
+    func validateBalance(in ledger: any LedgerContext) -> ValidationResult {
         var postingIterator = postings(in: ledger).makeIterator()
         var nextPosting = postingIterator.next()
         var amount = MultiCurrencyAmount(amounts: [:], decimalDigits: [:])
@@ -201,11 +201,11 @@ public class Account: AccountItem {
     ///
     /// - Parameter ledger: ledger with the Transactions
     /// - Returns: `ValidationResult`
-    func validateInventory(in ledger: Ledger) -> ValidationResult {
+    func validateInventory(in ledger: any LedgerContext) -> ValidationResult {
         inventoryBooking(in: ledger).0
     }
 
-    func inventoryBooking(in ledger: Ledger) -> (ValidationResult, [TransactionPosting: MultiCurrencyAmount]) {
+    func inventoryBooking(in ledger: any LedgerContext) -> (ValidationResult, [TransactionPosting: MultiCurrencyAmount]) {
         var postingIterator = postings(in: ledger).makeIterator()
         var nextPosting = postingIterator.next()
         let inventory = Inventory(bookingMethod: bookingMethod)
@@ -230,7 +230,7 @@ public class Account: AccountItem {
     ///
     /// - Parameter ledger: leder with the transactions with the postings
     /// - Returns: all posting for this account ordered by date from the oldest to the newest
-    private func postings(in ledger: Ledger) -> [TransactionPosting] {
+    private func postings(in ledger: any LedgerContext) -> [TransactionPosting] {
         var postings = [TransactionPosting]()
         ledger.transactions.forEach { postings.append(contentsOf: $0.postings.filter { $0.accountName == self.name }) }
         postings.sort { $0.transaction.metaData.date < $1.transaction.metaData.date }
@@ -241,7 +241,7 @@ public class Account: AccountItem {
     ///
     /// - Parameter ledger: ledger with the transactions with the postings
     /// - Returns: true if the account has any postings, false otherwise
-    func hasPostings(in ledger: Ledger) -> Bool {
+    func hasPostings(in ledger: any LedgerContext) -> Bool {
         for transaction in ledger.transactions where transaction.postings.contains(where: { $0.accountName == self.name }) {
             return true
         }

@@ -48,7 +48,7 @@ public final class LedgerBuilder {
     var accountGroup: [String: AccountGroup]
     var storedTransactions = [Transaction]()
 
-    /// Creates an empty builder with the five top-level account groups.
+    /// Creates an empty builder with five account groups; does not process a ledger.
     public init() {
         var groups = [String: AccountGroup]()
         for type in AccountType.allValues() {
@@ -105,9 +105,9 @@ public final class LedgerBuilder {
         addCommodityIfNecessary(symbol: balance.amount.commoditySymbol)
     }
 
-    /// Creates and returns a completed processed snapshot.
+    /// Returns a booked, validated snapshot without changing this builder.
     public func build() -> Ledger {
-        Ledger(builder: self).finalizeAccounting()
+        Ledger.build(from: self)
     }
 
     private func addAccountToStructure(_ account: Account) {

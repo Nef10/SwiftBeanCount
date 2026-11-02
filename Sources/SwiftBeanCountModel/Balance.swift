@@ -40,7 +40,7 @@ public struct Balance {
     ///
     /// - Parameter ledger: The ledger context
     /// - Returns: `ValidationResult`
-    func validate(in ledger: Ledger) -> ValidationResult {
+    func validate(in ledger: any LedgerContext) -> ValidationResult {
         if let commodity = ledger.commodities.first(where: { $0.symbol == amount.commoditySymbol }) {
             return commodity.validateUsageDate(date, in: ledger)
         }
