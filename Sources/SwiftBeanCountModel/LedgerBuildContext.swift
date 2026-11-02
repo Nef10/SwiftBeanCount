@@ -50,16 +50,7 @@ final class LedgerBuildContext: LedgerContext {
 
     private static func copyAccounts(_ accounts: Dictionary<String, Account>.Values) -> [String: Account] {
         Dictionary(uniqueKeysWithValues: accounts.map { account in
-            let copy = Account(
-                name: account.name,
-                bookingMethod: account.bookingMethod,
-                commoditySymbol: account.commoditySymbol,
-                opening: account.opening,
-                closing: account.closing,
-                metaData: account.metaData
-            )
-            copy.balances = account.balances
-            return (account.name.fullName, copy)
+            (account.name.fullName, Account(copying: account))
         })
     }
 

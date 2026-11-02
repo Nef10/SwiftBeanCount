@@ -4,6 +4,38 @@ import Testing
 
 struct LedgerSnapshotTests {
     @Test
+    func reusingSnapshotAccountDoesNotMutateItsBalancesOrDiagnostics() throws {
+        let source = LedgerBuilder()
+        try source.add(Account(name: TestUtils.cash))
+        let originalBalance = Balance(
+            date: TestUtils.date20170608,
+            accountName: TestUtils.cash,
+            amount: Amount(number: 0, commoditySymbol: TestUtils.cad)
+        )
+        source.add(originalBalance)
+        let snapshot = source.build()
+        let snapshotAccount = try #require(snapshot.accounts.first)
+        #expect(snapshot.errors.isEmpty)
+
+        let reused = LedgerBuilder()
+        try reused.add(snapshotAccount)
+        let failingBalance = Balance(
+            date: TestUtils.date20170609,
+            accountName: TestUtils.cash,
+            amount: Amount(number: 1, commoditySymbol: TestUtils.cad)
+        )
+        reused.add(failingBalance)
+
+        #expect(snapshotAccount.balances == [originalBalance])
+        #expect(snapshotAccount.validateBalance(in: snapshot) == .valid)
+        #expect(snapshot.errors.isEmpty)
+        #expect(reused.accounts.first?.balances == [originalBalance, failingBalance])
+        let reusedAssets = try #require(reused.accountGroups.first { $0.nameItem == "Assets" })
+        #expect(reusedAssets.accounts["Cash"] === reused.accounts.first)
+        #expect(!reused.build().errors.isEmpty)
+    }
+
+    @Test
     func builderReuseDoesNotMutatePublishedAccountsOrGroups() throws {
         let builder = LedgerBuilder()
         let cash = Account(name: TestUtils.cash)
@@ -16,7 +48,7 @@ struct LedgerSnapshotTests {
         builder.add(firstBalance)
         let firstSnapshot = builder.build()
 
-        cash.balances.append(Balance(
+        builder.add(Balance(
             date: TestUtils.date20170609,
             accountName: TestUtils.cash,
             amount: Amount(number: 2, commoditySymbol: TestUtils.cad)

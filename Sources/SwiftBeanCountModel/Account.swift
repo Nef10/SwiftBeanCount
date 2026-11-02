@@ -141,6 +141,19 @@ public class Account: AccountItem {
         self.metaData = metaData
     }
 
+    /// Copies account fields and balance assertions into an independent account.
+    convenience init(copying account: Account) {
+        self.init(
+            name: account.name,
+            bookingMethod: account.bookingMethod,
+            commoditySymbol: account.commoditySymbol,
+            opening: account.opening,
+            closing: account.closing,
+            metaData: account.metaData
+        )
+        balances = account.balances
+    }
+
     /// Checks if the given `Posting` is a valid posting for this account.
     /// This includes that the account of the posting is this one, the commodity matches and the account was open at the day of posting
     ///

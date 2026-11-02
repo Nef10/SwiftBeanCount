@@ -70,12 +70,12 @@ public final class LedgerBuilder {
         }
     }
 
-    /// Adds an account to the builder.
+    /// Adds an independent copy of the account and its balance assertions to the builder.
     /// - Parameter account: The account to add.
     /// - Throws: `LedgerError.alreadyExists` when the account name is already present.
     public func add(_ account: Account) throws(LedgerError) {
         guard self.account[account.name.fullName] == nil else { throw .alreadyExists(String(describing: account)) }
-        addAccountToStructure(account)
+        addAccountToStructure(Account(copying: account))
         if let symbol = account.commoditySymbol { addCommodityIfNecessary(symbol: symbol) }
     }
 
