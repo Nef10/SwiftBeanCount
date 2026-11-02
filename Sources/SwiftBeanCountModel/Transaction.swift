@@ -35,7 +35,7 @@ public class Transaction {
         self.internalPostings = postings.map { TransactionPosting(posting: $0, transaction: self) }
     }
 
-    func validate(in ledger: Ledger) -> ValidationResult {
+    func validate(in ledger: any LedgerContext) -> ValidationResult {
         guard !postings.isEmpty else {
             return .invalid("\(self) has no postings")
         }
@@ -66,7 +66,7 @@ public class Transaction {
     ///
     /// - Parameter ledger: The ledger context
     /// - Returns: `ValidationResult`
-    private func validateCommodityUsageDates(in ledger: Ledger) -> ValidationResult {
+    private func validateCommodityUsageDates(in ledger: any LedgerContext) -> ValidationResult {
         let transactionDate = metaData.date
 
         for posting in postings {
@@ -110,6 +110,10 @@ public class Transaction {
     /// - Throws: if the balances cannot be calculated
     /// - Returns: MultiCurrencyAmount
     public func balance(in ledger: Ledger) throws -> MultiCurrencyAmount {
+        try balance(in: ledger as any LedgerContext)
+    }
+
+    private func balance(in ledger: any LedgerContext) throws -> MultiCurrencyAmount {
         try postings.map { try $0.balance(in: ledger) }.reduce(MultiCurrencyAmount(), +)
     }
 
@@ -135,7 +139,7 @@ public class Transaction {
     ///
     /// - Parameter ledger: ledger to calculate in
     /// - Returns: `ValidationResult`
-    private func validateBalance(in ledger: Ledger) -> ValidationResult {
+    private func validateBalance(in ledger: any LedgerContext) -> ValidationResult {
         let amount: MultiCurrencyAmount
         do {
             amount = try balance(in: ledger)

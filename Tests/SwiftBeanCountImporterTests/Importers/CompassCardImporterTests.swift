@@ -51,11 +51,11 @@ struct CompassCardImporterTests {
         let transactions = "DateTime,Transaction,Product,LineItem,Amount,BalanceDetails,JourneyId,LocationDisplay,TransactonTime,OrderDate,Payment,OrderNumber,AuthCode,Total\nNov-17-2022 08:39 PM,Tap in at Bus Stop 60572,Stored Value,,-$2.50,$7.45,2022-11-18T04:39:00.0000000Z,\"Tap in at Bus Stop 60572 Stored Value\",08:39 PM,,,,,\n"
         let reader = try CSVReader(string: transactions, hasHeaderRow: true)
         let accountName = try AccountName("Assets:CompassCard")
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         try ledger.add(Account(name: accountName, metaData: ["importer-type": "compass-card"]))
 
         let delegate = BaseTestImporterDelegate()
-        let importer = CompassCardImporter(ledger: ledger, csvReader: reader, fileName: "")
+        let importer = CompassCardImporter(ledger: ledger.build(), csvReader: reader, fileName: "")
         importer.delegate = delegate
         importer.load()
 

@@ -41,7 +41,7 @@ public class Commodity {
     ///
     /// - Parameter ledger: The ledger context containing enabled plugins
     /// - Returns: `ValidationResult`
-    func validate(in ledger: Ledger) -> ValidationResult {
+    func validate(in ledger: any LedgerContext) -> ValidationResult {
         // Only check for opening date if the check_commodity plugin is enabled
         if ledger.plugins.contains("beancount.plugins.check_commodity") {
             guard opening != nil else {
@@ -60,7 +60,7 @@ public class Commodity {
     ///   - date: The date when the commodity is being used
     ///   - ledger: The ledger context containing enabled plugins
     /// - Returns: `ValidationResult`
-    func validateUsageDate(_ date: Date, in ledger: Ledger) -> ValidationResult {
+    func validateUsageDate(_ date: Date, in ledger: any LedgerContext) -> ValidationResult {
         // Only check if opening date is set. If it is not set, the validate will ouput an error
         // already, so we do not need to do this again.
         // Also only check usage dates if the check_commodity plugin is enabled

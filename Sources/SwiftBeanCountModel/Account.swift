@@ -141,6 +141,19 @@ public class Account: AccountItem {
         self.metaData = metaData
     }
 
+    /// Copies account fields and balance assertions into an independent account.
+    convenience init(copying account: Account) {
+        self.init(
+            name: account.name,
+            bookingMethod: account.bookingMethod,
+            commoditySymbol: account.commoditySymbol,
+            opening: account.opening,
+            closing: account.closing,
+            metaData: account.metaData
+        )
+        balances = account.balances
+    }
+
     /// Checks if the given `Posting` is a valid posting for this account.
     /// This includes that the account of the posting is this one, the commodity matches and the account was open at the day of posting
     ///
@@ -180,7 +193,7 @@ public class Account: AccountItem {
     ///
     /// - Parameter ledger: ledger with the Transactions
     /// - Returns: `ValidationResult`
-    func validateBalance(in ledger: Ledger) -> ValidationResult {
+    func validateBalance(in ledger: any LedgerContext) -> ValidationResult {
         var postingIterator = postings(in: ledger).makeIterator()
         var nextPosting = postingIterator.next()
         var amount = MultiCurrencyAmount(amounts: [:], decimalDigits: [:])
@@ -201,35 +214,36 @@ public class Account: AccountItem {
     ///
     /// - Parameter ledger: ledger with the Transactions
     /// - Returns: `ValidationResult`
-    func validateInventory(in ledger: Ledger) -> ValidationResult {
+    func validateInventory(in ledger: any LedgerContext) -> ValidationResult {
+        inventoryBooking(in: ledger).0
+    }
+
+    func inventoryBooking(in ledger: any LedgerContext) -> (ValidationResult, [TransactionPosting: MultiCurrencyAmount]) {
         var postingIterator = postings(in: ledger).makeIterator()
         var nextPosting = postingIterator.next()
         let inventory = Inventory(bookingMethod: bookingMethod)
+        var weights = [TransactionPosting: MultiCurrencyAmount]()
         while let posting = nextPosting {
             if posting.cost != nil {
                 do {
                     let pricePaid = try inventory.book(posting: posting)
                     if let pricePaid {
-                        if ledger.postingPrices[posting.transaction] != nil {
-                            ledger.postingPrices[posting.transaction]![posting] = pricePaid
-                        } else {
-                            ledger.postingPrices[posting.transaction] = [posting: pricePaid]
-                        }
+                        weights[posting] = pricePaid
                     }
                 } catch {
-                    return .invalid(error.localizedDescription)
+                    return (.invalid(error.localizedDescription), weights)
                 }
             }
             nextPosting = postingIterator.next()
         }
-        return .valid
+        return (.valid, weights)
     }
 
     /// Returns all posting for this account ordered by date from the oldest to the newest
     ///
     /// - Parameter ledger: leder with the transactions with the postings
     /// - Returns: all posting for this account ordered by date from the oldest to the newest
-    private func postings(in ledger: Ledger) -> [TransactionPosting] {
+    private func postings(in ledger: any LedgerContext) -> [TransactionPosting] {
         var postings = [TransactionPosting]()
         ledger.transactions.forEach { postings.append(contentsOf: $0.postings.filter { $0.accountName == self.name }) }
         postings.sort { $0.transaction.metaData.date < $1.transaction.metaData.date }
@@ -240,7 +254,7 @@ public class Account: AccountItem {
     ///
     /// - Parameter ledger: ledger with the transactions with the postings
     /// - Returns: true if the account has any postings, false otherwise
-    func hasPostings(in ledger: Ledger) -> Bool {
+    func hasPostings(in ledger: any LedgerContext) -> Bool {
         for transaction in ledger.transactions where transaction.postings.contains(where: { $0.accountName == self.name }) {
             return true
         }

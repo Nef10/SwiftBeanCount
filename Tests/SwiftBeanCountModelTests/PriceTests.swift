@@ -69,7 +69,7 @@ struct PriceTests {
     @Test
     func validateWithoutPlugin() throws {
         // Test that price validation is skipped when plugin is not enabled
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
 
         // Add commodities with opening dates after the price date
         let eurCommodity = Commodity(symbol: TestUtils.eur, opening: TestUtils.date20170609)
@@ -82,7 +82,7 @@ struct PriceTests {
         let price = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount)
 
         // Should be valid since plugin is not enabled
-        guard case .valid = price.validate(in: ledger) else {
+        guard case .valid = price.validate(in: ledger.build()) else {
             Issue.record("Price should be valid when check_commodity plugin is not enabled")
             return
         }
@@ -91,7 +91,7 @@ struct PriceTests {
     @Test
     func validateWithPlugin() throws {
         // Test that price validation works when plugin is enabled
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.plugins.append("beancount.plugins.check_commodity")
 
         // Add commodities with opening dates after the price date
@@ -105,7 +105,7 @@ struct PriceTests {
         let price = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount)
 
         // Should be invalid since EUR commodity is used before opening
-        if case .invalid(let error) = price.validate(in: ledger) {
+        if case .invalid(let error) = price.validate(in: ledger.build()) {
             #expect(error.contains("EUR used on 2017-06-08 before its opening date of 2017-06-09"))
         } else {
             Issue.record("Price should be invalid when commodity is used before opening date")
@@ -115,7 +115,7 @@ struct PriceTests {
     @Test
     func validateAmountCommodityUsageDate() throws {
         // Test validation of amount commodity usage date
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.plugins.append("beancount.plugins.check_commodity")
 
         // Add commodities with different opening dates
@@ -129,7 +129,7 @@ struct PriceTests {
         let price = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount)
 
         // Should be invalid since CAD (amount commodity) is used before opening
-        if case .invalid(let error) = price.validate(in: ledger) {
+        if case .invalid(let error) = price.validate(in: ledger.build()) {
             #expect(error.contains("CAD used on 2017-06-08 before its opening date of 2017-06-09"))
         } else {
             Issue.record("Price should be invalid when amount commodity is used before opening date")
@@ -139,7 +139,7 @@ struct PriceTests {
     @Test
     func validateValid() throws {
         // Test that validation passes when commodities are used on or after opening dates
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.plugins.append("beancount.plugins.check_commodity")
 
         // Add commodities with opening dates before or on the price date
@@ -153,7 +153,7 @@ struct PriceTests {
         let price = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount)
 
         // Should be valid since commodities are used on or after opening dates
-        guard case .valid = price.validate(in: ledger) else {
+        guard case .valid = price.validate(in: ledger.build()) else {
             Issue.record("Price should be valid when commodities are used on or after opening dates")
             return
         }
@@ -162,7 +162,7 @@ struct PriceTests {
     @Test
     func validateWithAutoCreatedCommodities() throws {
         // Test with auto-created commodities (no explicit opening date)
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.plugins.append("beancount.plugins.check_commodity")
 
         // Auto-created commodities don't have opening dates
@@ -171,7 +171,7 @@ struct PriceTests {
         let price = try Price(date: TestUtils.date20170608, commoditySymbol: TestUtils.eur, amount: amount)
 
         // Should be valid since auto-created commodities are not in the ledger commodities collection
-        guard case .valid = price.validate(in: ledger) else {
+        guard case .valid = price.validate(in: ledger.build()) else {
             Issue.record("Price should be valid when commodities are auto-created")
             return
         }

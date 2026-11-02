@@ -128,7 +128,7 @@ struct TransactionPostingTests {
 
     @Test
     func balanceTotalPrice() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170609, payee: "", narration: "", flag: .complete, tags: [])
 
         // Test with total price: 10 units @@ 155.5 EUR total
@@ -139,7 +139,7 @@ struct TransactionPostingTests {
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting])
         let transactionPosting = TransactionPosting(posting: posting, transaction: transaction)
 
-        let balance = try transactionPosting.balance(in: ledger)
+        let balance = try transactionPosting.balance(in: ledger.build())
 
         // Should be 155.5 EUR total (not 10 * 155.5 = 1555)
         #expect(balance.amounts[TestUtils.eur] == Decimal(155.5))
@@ -147,7 +147,7 @@ struct TransactionPostingTests {
 
     @Test
     func balancePerUnitPrice() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170609, payee: "", narration: "", flag: .complete, tags: [])
 
         // Test with per-unit price: 10 units @ 15.55 EUR per unit
@@ -158,7 +158,7 @@ struct TransactionPostingTests {
         let transaction = Transaction(metaData: transactionMetaData, postings: [posting])
         let transactionPosting = TransactionPosting(posting: posting, transaction: transaction)
 
-        let balance = try transactionPosting.balance(in: ledger)
+        let balance = try transactionPosting.balance(in: ledger.build())
 
         // Should be 10 * 15.55 = 155.5 EUR
         #expect(balance.amounts[TestUtils.eur] == Decimal(155.5))
@@ -167,7 +167,7 @@ struct TransactionPostingTests {
     @Test
     func integrationPerUnitAndTotalPrices() throws {
         // Integration test showing @ and @@ working together
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         let transactionMetaData = TransactionMetaData(date: TestUtils.date20170609, payee: "Test", narration: "Integration test", flag: .complete, tags: [])
 
         // Simple test: 10 USD @ 1.5 CAD per unit should equal 5 EUR @@ 7.5 CAD total
@@ -198,8 +198,8 @@ struct TransactionPostingTests {
         let transactionPosting1 = TransactionPosting(posting: posting1, transaction: transaction)
         let transactionPosting2 = TransactionPosting(posting: posting2, transaction: transaction)
 
-        let balance1 = try transactionPosting1.balance(in: ledger)
-        let balance2 = try transactionPosting2.balance(in: ledger)
+        let balance1 = try transactionPosting1.balance(in: ledger.build())
+        let balance2 = try transactionPosting2.balance(in: ledger.build())
 
         // Verify posting 1: 10 USD @ 1.5 CAD = 15 CAD
         #expect(balance1.amounts[TestUtils.cad] == Decimal(15))

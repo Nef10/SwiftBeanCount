@@ -61,8 +61,8 @@ private final class RitualTestDelegate: BaseTestImporterDelegate {
     }
 }
 
-private func configuredLedger() -> Ledger {
-    Parser.parse(
+private func configuredLedger() throws -> LedgerBuilder {
+    let parsed = Parser.parse(
         string: """
             2020-01-01 open Expenses:Food CAD
               ritual-role: "expense"
@@ -72,6 +72,11 @@ private func configuredLedger() -> Ledger {
               ritual-role: "bonus-program"
             """
     )
+    let builder = LedgerBuilder()
+    for account in parsed.accounts {
+        try builder.add(account)
+    }
+    return builder
 }
 
 extension TestsUsingStorage {
@@ -97,7 +102,7 @@ extension TestsUsingStorage {
             )
             let downloader = TestRitualDownloader(receipts: [receipt])
             let today = Date.now
-            let importer = RitualDownloadImporter(ledger: configuredLedger(), downloader: downloader) { today }
+            let importer = RitualDownloadImporter(ledger: try configuredLedger().build(), downloader: downloader) { today }
             let delegate = RitualTestDelegate()
             importer.delegate = delegate
             importer.load()
@@ -111,10 +116,10 @@ extension TestsUsingStorage {
         }
 
         @Test
-        func partialReceiptFailuresAreReportedToHost() {
+        func partialReceiptFailuresAreReportedToHost() throws {
             let failure = RitualReceiptFailure(receiptID: String(repeating: "f", count: 32), message: "HTTP 410: receipt unavailable")
             let downloader = TestRitualDownloader(failures: [failure])
-            let importer = RitualDownloadImporter(ledger: configuredLedger(), downloader: downloader)
+            let importer = RitualDownloadImporter(ledger: try configuredLedger().build(), downloader: downloader)
             let delegate = RitualTestDelegate()
             importer.delegate = delegate
             importer.load()
@@ -124,11 +129,11 @@ extension TestsUsingStorage {
         }
 
         @Test
-        func knownReceiptIDs() {
-            let ledger = configuredLedger()
+        func knownReceiptIDs() throws {
+            let ledger = try configuredLedger()
             ledger.add(Transaction(metaData: TransactionMetaData(date: Date(), metaData: ["ritual-id": String(repeating: "b", count: 32)]), postings: []))
             let downloader = TestRitualDownloader()
-            let importer = RitualDownloadImporter(ledger: ledger, downloader: downloader)
+            let importer = RitualDownloadImporter(ledger: ledger.build(), downloader: downloader)
             let delegate = RitualTestDelegate()
             importer.delegate = delegate
             importer.load()
@@ -138,22 +143,24 @@ extension TestsUsingStorage {
 
         @Test
         func newestDayWindowAndInvalidSettings() throws {
-            let ledger = configuredLedger()
+            let ledger = try configuredLedger()
             let today = Date.now
             ledger.custom = [
                 Custom(date: today.addingTimeInterval(-1), name: "ritual-download-importer", values: ["pastDaysToLoad", "20"]),
                 Custom(date: today, name: "ritual-download-importer", values: ["pastDaysToLoad", "5"])
             ]
             let downloader = TestRitualDownloader()
-            let importer = RitualDownloadImporter(ledger: ledger, downloader: downloader) { today }
+            let importer = RitualDownloadImporter(ledger: ledger.build(), downloader: downloader) { today }
             #expect(try importer.dateToLoadFrom() == Calendar.current.date(byAdding: .day, value: -5, to: Calendar.current.startOfDay(for: today)))
             ledger.custom = [Custom(date: today, name: "ritual-download-importer", values: ["pastDaysToLoad", "0"])]
-            #expect(try importer.dateToLoadFrom() == Calendar.current.startOfDay(for: today))
+            let zeroDayImporter = RitualDownloadImporter(ledger: ledger.build(), downloader: downloader) { today }
+            #expect(try zeroDayImporter.dateToLoadFrom() == Calendar.current.startOfDay(for: today))
             let delegate = RitualTestDelegate()
-            importer.delegate = delegate
             for values in [["pastDaysToLoad"], ["pastDaysToLoad", "-1"], ["pastDaysToLoad", "junk"]] {
                 ledger.custom = [Custom(date: today, name: "ritual-download-importer", values: values)]
-                importer.load()
+                let invalidSettingsImporter = RitualDownloadImporter(ledger: ledger.build(), downloader: downloader) { today }
+                invalidSettingsImporter.delegate = delegate
+                invalidSettingsImporter.load()
             }
             #expect(delegate.errors.count == 3)
             #expect(downloader.calls == 0)
@@ -162,7 +169,7 @@ extension TestsUsingStorage {
 
         @Test
         func duplicateIsExposedWithoutChangingExistingBankTransaction() throws { // swiftlint:disable:this function_body_length
-            let ledger = configuredLedger()
+            let ledger = try configuredLedger()
             let date = Calendar.current.date(from: DateComponents(year: 2_026, month: 10, day: 7))!
             let bank = Transaction(
                 metaData: TransactionMetaData(date: date, payee: "Test Cafe", narration: "Bank description", metaData: ["bank-id": "saved"]),
@@ -183,7 +190,7 @@ extension TestsUsingStorage {
                     RitualTotalsLine(label: "Total", amount: "5.00")
                 ]
             )
-            let importer = RitualDownloadImporter(ledger: ledger, downloader: TestRitualDownloader(receipts: [receipt])) { date }
+            let importer = RitualDownloadImporter(ledger: ledger.build(), downloader: TestRitualDownloader(receipts: [receipt])) { date }
             let delegate = RitualTestDelegate()
             importer.delegate = delegate
             importer.load()
@@ -207,9 +214,9 @@ extension TestsUsingStorage {
             #expect(downloader.calls == 0)
         }
         @Test
-        func hostInputAndCredentialCallbacksAreForwarded() {
+        func hostInputAndCredentialCallbacksAreForwarded() throws {
             let downloader = TestRitualDownloader()
-            let importer = RitualDownloadImporter(ledger: configuredLedger(), downloader: downloader)
+            let importer = RitualDownloadImporter(ledger: try configuredLedger().build(), downloader: downloader)
             let delegate = RitualTestDelegate()
             delegate.credentials["ritual-refresh-token"] = "saved-token"
             delegate.codePrompt = "Email verification code (sent to s***@example.test)"
@@ -227,10 +234,10 @@ extension TestsUsingStorage {
         }
 
         @Test
-        func downloadErrorIsReportedToHost() {
+        func downloadErrorIsReportedToHost() throws {
             let downloader = TestRitualDownloader()
             downloader.error = RitualAuthenticationError.cancelled
-            let importer = RitualDownloadImporter(ledger: configuredLedger(), downloader: downloader)
+            let importer = RitualDownloadImporter(ledger: try configuredLedger().build(), downloader: downloader)
             let delegate = RitualTestDelegate()
             importer.delegate = delegate
             importer.load()

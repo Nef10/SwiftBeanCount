@@ -184,7 +184,7 @@ public class TransactionPosting: Posting {
     /// - Parameter ledger: ledger to calculate in
     /// - Throws: PostingError if the balance could not be calculated
     /// - Returns: MultiCurrencyAmount
-    func balance(in ledger: Ledger) throws(PostingError) -> MultiCurrencyAmount {
+    func balance(in ledger: any LedgerContext) throws(PostingError) -> MultiCurrencyAmount {
         if let cost {
             if let postingAmount = ledger.postingPrices[transaction]?[self] {
                 return MultiCurrencyAmount(amounts: postingAmount.amounts,

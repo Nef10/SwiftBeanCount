@@ -15,6 +15,7 @@ import Testing
 @Suite
 struct InventoryTests {
 
+    private static let transactionStoreLock = NSLock()
     private static var transactionStore = [Transaction]() // required because the posting reference is unowned
 
     private let date = TestUtils.date20170608
@@ -210,6 +211,23 @@ extension InventoryTests { // Test Adding
 }
 
 extension InventoryTests { // Test Reduce
+
+    @Test(arguments: BookingMethod.allCases, [-2, -1, 1, 2])
+    func reducingLotWithoutCostReportsError(bookingMethod: BookingMethod, reduction: Int) throws {
+        let inventory = Inventory(bookingMethod: bookingMethod)
+        let cost = try Cost(amount: nil, date: date, label: nil)
+        let units = Amount(number: reduction < 0 ? 2 : -2, commoditySymbol: TestUtils.eur)
+        let addition = transactionPosting(Posting(accountName: TestUtils.cash, amount: units, cost: cost))
+        #expect(try inventory.book(posting: addition) == nil)
+        let originalLots = inventory.inventory
+        let amount = Amount(number: Decimal(reduction), commoditySymbol: TestUtils.eur)
+        let posting = transactionPosting(Posting(accountName: TestUtils.cash, amount: amount, cost: cost))
+
+        #expect(throws: InventoryError.missingCost("Cannot reduce \(amount) \(cost): matching lot \(units) \(cost) has no cost amount")) {
+            try inventory.book(posting: posting)
+        }
+        #expect(inventory.inventory == originalLots)
+    }
 
     @Test(arguments: BookingMethod.allCases)
     func reduce(bookingMethod: BookingMethod) throws {
@@ -742,7 +760,9 @@ extension InventoryTests { // Test Reduce
                                                                     flag: Flag.complete,
                                                                     tags: []),
                                       postings: [posting])
-        Self.transactionStore.append(transaction)
+        Self.transactionStoreLock.withLock {
+            Self.transactionStore.append(transaction)
+        }
         return transaction.postings[0]
 
     }

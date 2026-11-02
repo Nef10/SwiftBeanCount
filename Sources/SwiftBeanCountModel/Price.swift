@@ -50,7 +50,7 @@ public struct Price {
     ///
     /// - Parameter ledger: The ledger context
     /// - Returns: `ValidationResult`
-    func validate(in ledger: Ledger) -> ValidationResult {
+    func validate(in ledger: any LedgerContext) -> ValidationResult {
         // Validate the main commodity
         if let commodity = ledger.commodities.first(where: { $0.symbol == commoditySymbol }) {
             let validation = commodity.validateUsageDate(date, in: ledger)

@@ -26,6 +26,8 @@ public enum InventoryError: Error, Equatable {
     case lotNotBigEnough(String)
     /// no matching lot to reduce was found
     case noLotFound(String)
+    /// a matching lot has no cost amount to use for its reduction
+    case missingCost(String)
 }
 
 /// Inventory of lots for things held at cost
@@ -114,6 +116,9 @@ class Inventory {
     /// - Throws: InventoryError if the lot cannot be reduced (e.g. ambiguous lot match)
     private func reduce(_ lot: Lot) throws(InventoryError) -> MultiCurrencyAmount {
         let matches = inventory.indices.filter { inventory[$0].units.commoditySymbol == lot.units.commoditySymbol && lot.cost.matches(cost: inventory[$0].cost) }
+        for index in matches where inventory[index].cost.amount == nil {
+            throw .missingCost("Cannot reduce \(lot): matching lot \(inventory[index]) has no cost amount")
+        }
         let isTotalReduction = matches.reduce(Decimal()) { $0 + inventory[$1].units.number } == -lot.units.number
         if isTotalReduction {
             let result = matches.reduce(MultiCurrencyAmount(amounts: [:], decimalDigits: [:])) {
@@ -201,7 +206,7 @@ class Inventory {
 extension InventoryError: LocalizedError {
     public var errorDescription: String? {
         switch self {
-        case let .ambiguousBooking(error), let .lotNotBigEnough(error), let .noLotFound(error):
+        case let .ambiguousBooking(error), let .lotNotBigEnough(error), let .noLotFound(error), let .missingCost(error):
             return error
         }
     }

@@ -218,10 +218,10 @@ struct WealthsimpleDownloadImporterTests { // swiftlint:disable:this type_body_l
 
     @Test
     func pastDaysToLoad() {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.custom.append(Custom(date: Date(), name: "wealthsimple-importer", values: ["pastDaysToLoad", "3"]))
         ledger.custom.append(Custom(date: Date(timeIntervalSinceNow: sixtyTwoDays), name: "wealthsimple-importer", values: ["pastDaysToLoad", "200"]))
-        let importer = WealthsimpleDownloadImporter(ledger: ledger)
+        let importer = WealthsimpleDownloadImporter(ledger: ledger.build())
         var verifiedTransactions = false
         let account = TestAccount()
         let threeDays = threeDays
@@ -239,11 +239,11 @@ struct WealthsimpleDownloadImporterTests { // swiftlint:disable:this type_body_l
 
     @Test
     func loadTransactions() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         try ledger.add(SwiftBeanCountModel.Account(name: try AccountName("Assets:W:Cash"), metaData: ["importer-type": "wealthsimple", "number": "A1B2"]))
         try ledger.add(Commodity(symbol: "ETF"))
         try ledger.add(Commodity(symbol: "CAD"))
-        let importer = WealthsimpleDownloadImporter(ledger: ledger), account = TestAccount(), transaction1 = TestTransaction()
+        let importer = WealthsimpleDownloadImporter(ledger: ledger.build()), account = TestAccount(), transaction1 = TestTransaction()
         var transaction2 = TestTransaction()
         transaction2.transactionType = .paymentSpend
         transaction2.quantity = "-5.25"
@@ -276,12 +276,12 @@ struct WealthsimpleDownloadImporterTests { // swiftlint:disable:this type_body_l
         let pendingID = "card-activity-12345678901234567890-MC-01-1234567890123456-TESTABC"
         let postedID = "\(pendingID)-0tifr2if9xlg"
 
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         try ledger.add(SwiftBeanCountModel.Account(name: try AccountName("Assets:W:Cash"), metaData: ["importer-type": "wealthsimple", "number": "A1B2"]))
         try ledger.add(Commodity(symbol: "CAD"))
         ledger.add(STransaction(metaData: TransactionMetaData(date: Date(), metaData: ["wealthsimple-id": pendingID]), postings: []))
 
-        let importer = WealthsimpleDownloadImporter(ledger: ledger)
+        let importer = WealthsimpleDownloadImporter(ledger: ledger.build())
         let account = TestAccount()
         var transaction = TestTransaction()
         transaction.id = postedID
@@ -304,7 +304,7 @@ struct WealthsimpleDownloadImporterTests { // swiftlint:disable:this type_body_l
 
     @Test
     func loadTransactionsSuppressesMergedCashbackDuplicate() throws { // swiftlint:disable:this function_body_length
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         try ledger.add(SwiftBeanCountModel.Account(name: try AccountName("Assets:W:Cash"), metaData: ["importer-type": "wealthsimple", "number": "A1B2"]))
         try ledger.add(SwiftBeanCountModel.Account(name: try AccountName("Income:Cashback"), metaData: ["wealthsimple-cashback-bonus": "A1B2"]))
         try ledger.add(Commodity(symbol: "CAD"))
@@ -312,7 +312,7 @@ struct WealthsimpleDownloadImporterTests { // swiftlint:disable:this type_body_l
         let existingID = "transaction-7oaJAJOSvSMGndrXgKGYahyYDRM transaction-IxPwJZB66GTF2x0X7HIE1BQLu4 transaction-cWzbd9e2iy8ys9jJJamDO1D3rwI"
         ledger.add(STransaction(metaData: TransactionMetaData(date: Date(), metaData: ["wealthsimple-id": existingID]), postings: []))
 
-        let importer = WealthsimpleDownloadImporter(ledger: ledger)
+        let importer = WealthsimpleDownloadImporter(ledger: ledger.build())
         let account = TestAccount()
         let date = Date(timeIntervalSinceReferenceDate: 5_645_145_697)
         let description = "Cashback credit paid at 2026-01-26 for $23.1700"
@@ -348,12 +348,12 @@ struct WealthsimpleDownloadImporterTests { // swiftlint:disable:this type_body_l
 
     @Test
     func loadPositions() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         try ledger.add(SwiftBeanCountModel.Account(name: try AccountName("Assets:W:Cash"), metaData: ["importer-type": "wealthsimple", "number": "A1B2"]))
         try ledger.add(Commodity(symbol: "XGRO"))
         try ledger.add(Commodity(symbol: "CAD"))
         let delegate = BaseTestImporterDelegate()
-        let importer = WealthsimpleDownloadImporter(ledger: ledger)
+        let importer = WealthsimpleDownloadImporter(ledger: ledger.build())
         importer.delegate = delegate
         var account = TestAccount()
         let position = TestPosition()

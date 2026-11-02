@@ -112,7 +112,7 @@ struct CompassCardDownloadImporterTests {
 
     @Test
     func pastDaysToLoad() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         ledger.custom.append(Custom(date: Date(), name: "compass-card-download-importer", values: ["pastDaysToLoad", "3"]))
         ledger.custom.append(Custom(date: Date(timeIntervalSinceNow: sixtyTwoDays), name: "compass-card-download-importer", values: ["pastDaysToLoad", "200"]))
         let downloader = MockDownloader()
@@ -167,14 +167,14 @@ struct CompassCardDownloadImporterTests {
     private func runImport(
         downloader: MockDownloader,
         success: Bool = true,
-        ledger: Ledger = Ledger(),
+        ledger: LedgerBuilder = LedgerBuilder(),
         delegate: CredentialInputAndViewDelegate? = nil,
         verify: ((CompassCardDownloadImporter) -> Void)? = nil
     ) throws {
         let delegate = delegate ?? defaultDelegate()
         let accountName = try AccountName("Assets:CompassCard")
         try ledger.add(Account(name: accountName, metaData: ["card-number": "123456789", "importer-type": "compass-card"]))
-        let importer = CompassCardDownloadImporter(ledger: ledger, downloader: downloader)
+        let importer = CompassCardDownloadImporter(ledger: ledger.build(), downloader: downloader)
         importer.delegate = delegate
         importer.load()
         #expect(importer.pricesToImport().isEmpty)

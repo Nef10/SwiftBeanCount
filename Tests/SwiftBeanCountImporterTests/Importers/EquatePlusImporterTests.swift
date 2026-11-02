@@ -187,11 +187,11 @@ struct EquatePlusImporterTests {
 
     @Test
     func ledgerMapping() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         try ledger.add(Account(name: try AccountName("Assets:EP:Cash"), commoditySymbol: "STOCK", metaData: [
             Settings.importerTypeKey: EquatePlusImporter.importerType, "stock": "STOCK", "purchase-currency": "USD", "contribution-currency": "EUR"
         ]))
-        let importer = loadedImporter(ledger: ledger, transaction: fullString, balance: "")
+        let importer = loadedImporter(ledger: ledger.build(), transaction: fullString, balance: "")
         let transaction1 = importer.nextTransaction()
         #expect(transaction1 != nil)
         let transaction2 = importer.nextTransaction()
@@ -219,11 +219,11 @@ struct EquatePlusImporterTests {
 
     @Test
     func invalidStockName() throws {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         try ledger.add(Account(name: try AccountName("Assets:EP:Cash"), commoditySymbol: "STOCK", metaData: [
             Settings.importerTypeKey: EquatePlusImporter.importerType, "stock": "TEST:", "purchase-currency": "USD", "contribution-currency": "EUR"
         ]))
-        let importer = EquatePlusImporter(ledger: ledger, transaction: fullString, balance: "")
+        let importer = EquatePlusImporter(ledger: ledger.build(), transaction: fullString, balance: "")
         let delegate = ErrorDelegate(error: AccountNameError.invalidName("Assets:TEST:"))
         importer.delegate = delegate
         importer.load()

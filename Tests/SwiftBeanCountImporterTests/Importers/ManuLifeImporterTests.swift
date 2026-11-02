@@ -191,7 +191,7 @@ struct ManuLifeImporterTests { // swiftlint:disable:this type_body_length
 
     @Test
     func parseBalance() throws {
-        let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), balance: balance)
+        let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife().build(), balance: balance)
         #expect(importer.nextTransaction() == nil)
         let balances = importer.balancesToImport()
         let prices = importer.pricesToImport()
@@ -207,7 +207,7 @@ struct ManuLifeImporterTests { // swiftlint:disable:this type_body_length
 
     @Test
     func parseTransaction() throws {
-        let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), transaction: transaction)
+        let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife().build(), transaction: transaction)
         let transaction = importer.nextTransaction()
         #expect(transaction != nil)
         #expect(transaction!.originalDescription.isEmpty)
@@ -227,7 +227,7 @@ struct ManuLifeImporterTests { // swiftlint:disable:this type_body_length
 
     @Test
     func parseTransactionWithInterestNote() throws {
-        let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), transaction: transactionWithInterestNote)
+        let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife().build(), transaction: transactionWithInterestNote)
 
         #expect(importer.nextTransaction() != nil)
         #expect(importer.pricesToImport().count == 2)
@@ -236,7 +236,7 @@ struct ManuLifeImporterTests { // swiftlint:disable:this type_body_length
 
     @Test
     func parseBalanceAndTransaction() throws {
-        let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), transaction: transaction, balance: balance)
+        let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife().build(), transaction: transaction, balance: balance)
         let transaction = importer.nextTransaction()
         #expect(transaction != nil)
         let balances = importer.balancesToImport()
@@ -283,7 +283,7 @@ struct ManuLifeImporterTests { // swiftlint:disable:this type_body_length
         let priceAmount2 = Amount(number: Decimal(9.148), commoditySymbol: TestUtils.usd, decimalDigits: 3)
         let price2 = try Price(date: TestUtils.date20200605, commoditySymbol: TestUtils.fundSymbol, amount: priceAmount2)
         try ledger.add(price2)
-        let importer = loadedImporter(ledger: ledger, transaction: transaction, balance: balance)
+        let importer = loadedImporter(ledger: ledger.build(), transaction: transaction, balance: balance)
         _ = importer.nextTransaction()
         let balances = importer.balancesToImport()
         let prices = importer.pricesToImport()
@@ -297,7 +297,7 @@ struct ManuLifeImporterTests { // swiftlint:disable:this type_body_length
     @Test
     func transactionSettings() throws {
         let ledger = try TestUtils.ledgerManuLife(employeeBasic: "2.5", employerBasic: "3.25", employerMatch: "2.5", employeeVoluntary: "1.75")
-        let importer = loadedImporter(ledger: ledger, transaction: transaction)
+        let importer = loadedImporter(ledger: ledger.build(), transaction: transaction)
         let transaction = importer.nextTransaction()
         #expect(transaction != nil)
         #expect(importer.balancesToImport().isEmpty)
@@ -318,7 +318,7 @@ struct ManuLifeImporterTests { // swiftlint:disable:this type_body_length
     @Test
     func transactionSettingsZero1() throws {
         let ledger = try TestUtils.ledgerManuLife(employeeBasic: "2.5", employerBasic: "5", employerMatch: "2.5", employeeVoluntary: "0")
-        let importer = loadedImporter(ledger: ledger, transaction: transaction)
+        let importer = loadedImporter(ledger: ledger.build(), transaction: transaction)
         let transaction = importer.nextTransaction()
         #expect(transaction != nil)
         #expect(importer.balancesToImport().isEmpty)
@@ -339,7 +339,7 @@ struct ManuLifeImporterTests { // swiftlint:disable:this type_body_length
     @Test
     func transactionSettingsZero2() throws {
         let ledger = try TestUtils.ledgerManuLife(employeeBasic: "0", employerBasic: "0", employerMatch: "0", employeeVoluntary: "1")
-        let importer = loadedImporter(ledger: ledger, transaction: transaction)
+        let importer = loadedImporter(ledger: ledger.build(), transaction: transaction)
         let transaction = importer.nextTransaction()
         #expect(transaction != nil)
         #expect(importer.balancesToImport().isEmpty)
@@ -366,7 +366,7 @@ struct ManuLifeImporterTests { // swiftlint:disable:this type_body_length
                 return false
             }
             let ledger = try TestUtils.ledgerManuLife()
-            let importer = ManuLifeImporter(ledger: ledger, transaction: string, balance: "")
+            let importer = ManuLifeImporter(ledger: ledger.build(), transaction: string, balance: "")
             importer.delegate = errorDelegate
             importer.load()
             #expect(errorDelegate.verified, "Expected error to be reported for invalid transaction: \(string)")
@@ -391,7 +391,7 @@ struct ManuLifeImporterTests { // swiftlint:disable:this type_body_length
         let transaction1 = Transaction(metaData: metaData, postings: [posting1, posting2])
         ledger.add(transaction1)
 
-        let importer = loadedImporter(ledger: ledger, transaction: transaction)
+        let importer = loadedImporter(ledger: ledger.build(), transaction: transaction)
         let importedTransaction = importer.nextTransaction()
         #expect(importedTransaction != nil)
         #expect(importedTransaction!.possibleDuplicate == transaction1)
@@ -405,7 +405,7 @@ struct ManuLifeImporterTests { // swiftlint:disable:this type_body_length
         let transaction1 = TestUtils.transaction
         ledger.add(transaction1)
 
-        let importer = loadedImporter(ledger: ledger, transaction: transaction)
+        let importer = loadedImporter(ledger: ledger.build(), transaction: transaction)
         let importedTransaction = importer.nextTransaction()
         #expect(importedTransaction != nil)
         #expect(importedTransaction!.possibleDuplicate == nil)
@@ -415,7 +415,7 @@ struct ManuLifeImporterTests { // swiftlint:disable:this type_body_length
     func invalidTransaction() throws {
         let errorDelegate = ErrorDelegate<ManuLifeImporterError>(error: .failedToParseTransaction(invalidTransactionText))
         let ledger = try TestUtils.ledgerManuLife()
-        let importer = ManuLifeImporter(ledger: ledger, transaction: invalidTransactionText, balance: "")
+        let importer = ManuLifeImporter(ledger: ledger.build(), transaction: invalidTransactionText, balance: "")
         importer.delegate = errorDelegate
         importer.load()
         #expect(errorDelegate.verified)
@@ -428,7 +428,7 @@ struct ManuLifeImporterTests { // swiftlint:disable:this type_body_length
     func invalidBalance() throws {
         let errorDelegate = ErrorDelegate<ManuLifeImporterError>(error: .failedToParseBalance(invalidBalanceText))
         let ledger = try TestUtils.ledgerManuLife()
-        let importer = ManuLifeImporter(ledger: ledger, transaction: "", balance: invalidBalanceText)
+        let importer = ManuLifeImporter(ledger: ledger.build(), transaction: "", balance: invalidBalanceText)
         importer.delegate = errorDelegate
         importer.load()
         #expect(errorDelegate.verified)
@@ -440,7 +440,7 @@ struct ManuLifeImporterTests { // swiftlint:disable:this type_body_length
     @Test
     func onlyBalanceTextPassedNoTransactionError() throws {
         // When only balance text is passed, should not error for missing transaction
-        let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), balance: balance)
+        let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife().build(), balance: balance)
         #expect(importer.nextTransaction() == nil)
         let balances = importer.balancesToImport()
         #expect(balances.count == 4)
@@ -450,7 +450,7 @@ struct ManuLifeImporterTests { // swiftlint:disable:this type_body_length
     @Test
     func onlyTransactionTextPassedNoBalanceError() throws {
         // When only transaction text is passed, should not error for missing balance
-        let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife(), transaction: transaction)
+        let importer = loadedImporter(ledger: try TestUtils.ledgerManuLife().build(), transaction: transaction)
         let importedTransaction = importer.nextTransaction()
         #expect(importedTransaction != nil)
         #expect(importer.balancesToImport().isEmpty)
@@ -469,7 +469,7 @@ struct ManuLifeImporterTests { // swiftlint:disable:this type_body_length
             return false
         }
         let ledger = try TestUtils.ledgerManuLife()
-        let importer = ManuLifeImporter(ledger: ledger, transaction: invalidTransactionText, balance: invalidBalanceText)
+        let importer = ManuLifeImporter(ledger: ledger.build(), transaction: invalidTransactionText, balance: invalidBalanceText)
         importer.delegate = errorDelegate
         importer.load()
 

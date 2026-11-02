@@ -13,19 +13,19 @@ struct SwiftBeanCountRogersBankMapperTests {
         return dateFormatter
     }()
 
-    private var ledger: Ledger
+    private var ledger: LedgerBuilder
     private var mapper: SwiftBeanCountRogersBankMapper
 
     init() {
-        ledger = Ledger()
-        mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        ledger = LedgerBuilder()
+        mapper = SwiftBeanCountRogersBankMapper(ledger: ledger.build())
     }
 
     @Test
     func mapAccount() throws {
         let accountName = try AccountName("Liabilities:CC:Rogers")
         try ledger.add(Account(name: accountName, metaData: ["last-four": "4862", "importer-type": "rogers"]))
-        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger.build())
         var account = TestAccount()
         var balance = TestAmount()
         balance.value = "205.25"
@@ -51,7 +51,7 @@ struct SwiftBeanCountRogersBankMapperTests {
         account.currentBalance = balanceAmount
 
         // First mapping should succeed
-        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger.build())
         var result = try mapper.mapAccountToBalance(account: account)
         #expect(result != nil)
 
@@ -59,7 +59,7 @@ struct SwiftBeanCountRogersBankMapperTests {
         ledger.add(result!)
 
         // Create a new mapper with the updated ledger and try to map the same account again
-        let mapper2 = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        let mapper2 = SwiftBeanCountRogersBankMapper(ledger: ledger.build())
         result = try mapper2.mapAccountToBalance(account: account)
 
         // Second mapping should return nil because it's a duplicate
@@ -77,7 +77,7 @@ struct SwiftBeanCountRogersBankMapperTests {
         account.currentBalance = balanceAmount
 
         // First mapping should succeed
-        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger.build())
         var result = try mapper.mapAccountToBalance(account: account)
         #expect(result != nil)
 
@@ -89,7 +89,7 @@ struct SwiftBeanCountRogersBankMapperTests {
         account.currentBalance = balanceAmount
 
         // Create a new mapper with the updated ledger and try to map with different amount
-        let mapper2 = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        let mapper2 = SwiftBeanCountRogersBankMapper(ledger: ledger.build())
         result = try mapper2.mapAccountToBalance(account: account)
 
         // Mapping should succeed because the balance is different
@@ -139,7 +139,7 @@ struct SwiftBeanCountRogersBankMapperTests {
         var activity = TestActivity()
         activity.activityStatus = .approved
         activity.postedDate = Date()
-        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger.build())
         #expect(throws: RogersBankMappingError.missingAccount(lastFour: "1234")) { try mapper.mapActivitiesToTransactions(activities: [activity]) }
         // different number
         try ledger.add(Account(name: try AccountName("Liabilities:CC:Rogers"), metaData: ["last-four": "4862", "importer-type": "rogers"]))
@@ -168,7 +168,7 @@ struct SwiftBeanCountRogersBankMapperTests {
         var foreign = TestForeignCurrency()
         foreign.originalAmount = amount
         activity.foreign = foreign
-        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger.build())
         let result = try mapper.mapActivitiesToTransactions(activities: [activity])
         #expect(result.count == 1)
         let postings = [
@@ -189,7 +189,7 @@ struct SwiftBeanCountRogersBankMapperTests {
         var activity = TestActivity()
         activity.activityStatus = .approved
         activity.postedDate = Date()
-        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger.build())
         let result = try mapper.mapActivitiesToTransactions(activities: [activity])
         #expect(result.count == 1)
         let postings = [
@@ -214,6 +214,7 @@ struct SwiftBeanCountRogersBankMapperTests {
         var activity = TestActivity()
         activity.activityStatus = .approved
         activity.postedDate = Date()
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger.build())
         let result = try mapper.mapActivitiesToTransactions(activities: [activity])
         #expect(result.count == 1)
         #expect(result[0].postings[1].accountName == paymentAccountName)
@@ -227,7 +228,7 @@ struct SwiftBeanCountRogersBankMapperTests {
         activity.activityStatus = .approved
         activity.activityCategory = .overlimitFee
         activity.postedDate = Date()
-        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger.build())
         let result = try mapper.mapActivitiesToTransactions(activities: [activity])
         #expect(result.count == 1)
         let postings = [
@@ -253,6 +254,7 @@ struct SwiftBeanCountRogersBankMapperTests {
         activity.activityStatus = .approved
         activity.activityCategory = .overlimitFee
         activity.postedDate = Date()
+        let mapper = SwiftBeanCountRogersBankMapper(ledger: ledger.build())
         let result = try mapper.mapActivitiesToTransactions(activities: [activity])
         #expect(result.count == 1)
         #expect(result[0].postings[1].accountName == feeAccountName)
@@ -267,13 +269,13 @@ struct SwiftBeanCountRogersBankMapperTests {
         activity.activityCategory = .purchase
         activity.postedDate = Date()
         activity.referenceNumber = "852741963"
-        var mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        var mapper = SwiftBeanCountRogersBankMapper(ledger: ledger.build())
         var result = try mapper.mapActivitiesToTransactions(activities: [activity])
         #expect(result.count == 1)
 
         ledger.add(Transaction(metaData: TransactionMetaData(date: activity.postedDate!, narration: "Test Merchant Name", metaData: [MetaDataKeys.activityId: "852741963"]),
                                postings: []))
-        mapper = SwiftBeanCountRogersBankMapper(ledger: ledger)
+        mapper = SwiftBeanCountRogersBankMapper(ledger: ledger.build())
         result = try mapper.mapActivitiesToTransactions(activities: [activity])
         #expect(result.isEmpty)
     }

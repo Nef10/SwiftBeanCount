@@ -11,12 +11,12 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
     private typealias SAccount = SwiftBeanCountModel.Account
 
     private var mapper: WealthsimpleLedgerMapper {
-        var wealthsimpleLedgerMapper = WealthsimpleLedgerMapper(ledger: ledger)
+        var wealthsimpleLedgerMapper = WealthsimpleLedgerMapper(ledger: ledger.build())
         wealthsimpleLedgerMapper.accounts = [TestAccount(number: accountNumber, id: accountId, currency: "CAD")]
         return wealthsimpleLedgerMapper
     }
 
-    private var ledger = Ledger()
+    private var ledger = LedgerBuilder()
 
     private let transactionId = "id23"
     private let accountId = "abc123"
@@ -43,7 +43,7 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
     }
 
     init() {
-        ledger = Ledger()
+        ledger = LedgerBuilder()
         try? ledger.add(SAccount(name: cashAccountName, metaData: [MetaDataKeys.importerType: MetaData.importerType, MetaDataKeys.number: accountNumber]))
         try? ledger.add(Commodity(symbol: "ETF"))
         try? ledger.add(Commodity(symbol: "CAD"))
@@ -69,9 +69,9 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         #expect(throws: WealthsimpleConversionError.missingCommodity("CAD")) { try mapper.mapPositionsToPriceAndBalance([position]) }
 
         // missing account in ledger
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         try ledger.add(Commodity(symbol: "CAD"))
-        mapper = WealthsimpleLedgerMapper(ledger: ledger)
+        mapper = WealthsimpleLedgerMapper(ledger: ledger.build())
         mapper.accounts = [TestAccount(number: accountNumber, id: accountId)]
         position.quantity = "9.871"
         #expect(throws: WealthsimpleConversionError.missingWealthsimpleAccount(accountNumber)) { try mapper.mapPositionsToPriceAndBalance([position]) }
@@ -125,9 +125,9 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         #expect(throws: WealthsimpleConversionError.missingWealthsimpleAccount(accountNumber)) { try mapper.mapTransactionsToPriceAndTransactions([transaction]) }
 
         // missing commodity
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         try ledger.add(SAccount(name: cashAccountName, metaData: [MetaDataKeys.importerType: MetaData.importerType, MetaDataKeys.number: accountNumber]))
-        mapper = WealthsimpleLedgerMapper(ledger: ledger)
+        mapper = WealthsimpleLedgerMapper(ledger: ledger.build())
         mapper.accounts = [TestAccount(number: accountNumber, id: accountId)]
         #expect(throws: WealthsimpleConversionError.missingCommodity("CAD")) { try mapper.mapTransactionsToPriceAndTransactions([transaction]) }
 
@@ -1036,15 +1036,15 @@ struct WealthsimpleLedgerMapperTests { // swiftlint:disable:this type_body_lengt
         let inAccountNumber = "NON_REGISTERED_123"
         let outAccountId = "account-out-id"
         let outAccountNumber = "CASH_DD_456"
-        var testMapper = WealthsimpleLedgerMapper(ledger: ledger)
-        testMapper.accounts = [
-            TestAccount(number: inAccountNumber, id: inAccountId, currency: "CAD"),
-            TestAccount(number: outAccountNumber, id: outAccountId, currency: "CAD")
-        ]
         let cashInAccount = try AccountName("Assets:W:Cash:In")
         let cashOutAccount = try AccountName("Assets:W:Cash:Out")
         try ledger.add(SAccount(name: cashInAccount, metaData: [MetaDataKeys.importerType: MetaData.importerType, MetaDataKeys.number: inAccountNumber]))
         try ledger.add(SAccount(name: cashOutAccount, metaData: [MetaDataKeys.importerType: MetaData.importerType, MetaDataKeys.number: outAccountNumber]))
+        var testMapper = WealthsimpleLedgerMapper(ledger: ledger.build())
+        testMapper.accounts = [
+            TestAccount(number: inAccountNumber, id: inAccountId, currency: "CAD"),
+            TestAccount(number: outAccountNumber, id: outAccountId, currency: "CAD")
+        ]
         return CrossAccountSetup(
             mapper: testMapper,
             inAccountId: inAccountId,

@@ -2,8 +2,8 @@ import Foundation
 import SwiftBeanCountModel
 @testable import SwiftBeanCountTax
 
-func basicLedger() throws -> Ledger {
-    let ledger = Ledger()
+func basicLedger() throws -> LedgerBuilder {
+    let ledger = LedgerBuilder()
     let date = Date(timeIntervalSince1970: 1_650_013_015)
 
     try ledger.add(Account(name: try AccountName("Assets:Account1:A"), metaData: [MetaDataKeys.issuer: "Issuer 1", "Taxslip1": "TaxBox1"]))
@@ -38,8 +38,8 @@ func basicLedger() throws -> Ledger {
     return ledger
 }
 
-func symbolLedger() throws -> Ledger {
-    let ledger = Ledger()
+func symbolLedger() throws -> LedgerBuilder {
+    let ledger = LedgerBuilder()
     let date = Date(timeIntervalSince1970: 1_650_013_015)
 
     try ledger.add(Account(name: try AccountName("Assets:Account1:SYM"), metaData: ["Taxslip1": "TaxBox1"]))
@@ -70,8 +70,8 @@ func symbolLedger() throws -> Ledger {
     return ledger
 }
 
-func currencyLedger() throws -> Ledger {
-    let ledger = Ledger()
+func currencyLedger() throws -> LedgerBuilder {
+    let ledger = LedgerBuilder()
     let date = Date(timeIntervalSince1970: 1_650_013_015)
 
     try ledger.add(Account(name: try AccountName("Assets:Account1"), metaData: [ "Taxslip1": "TaxBox1"]))
@@ -104,8 +104,8 @@ func currencyLedger() throws -> Ledger {
     return ledger
 }
 
-func splitAccountLedger() throws -> Ledger {
-    let ledger = Ledger()
+func splitAccountLedger() throws -> LedgerBuilder {
+    let ledger = LedgerBuilder()
     let date = Date(timeIntervalSince1970: 1_650_013_015)
 
     try ledger.add(Account(name: try AccountName("Assets:Account1:A"), metaData: [MetaDataKeys.issuer: "Issuer 1", "Taxslip1": "TaxBox1"]))
@@ -137,8 +137,8 @@ func splitAccountLedger() throws -> Ledger {
     return ledger
 }
 
-func splitSymbolLedger() throws -> Ledger {
-    let ledger = Ledger()
+func splitSymbolLedger() throws -> LedgerBuilder {
+    let ledger = LedgerBuilder()
     let date = Date(timeIntervalSince1970: 1_650_013_015)
 
     try ledger.add(Account(name: try AccountName("Assets:Account1:SYM"), metaData: ["Taxslip1": "TaxBox1"]))
@@ -172,8 +172,8 @@ func splitSymbolLedger() throws -> Ledger {
     return ledger
 }
 
-func splitSymbolErrorLedger() throws -> Ledger {
-    let ledger = Ledger()
+func splitSymbolErrorLedger() throws -> LedgerBuilder {
+    let ledger = LedgerBuilder()
     let date = Date(timeIntervalSince1970: 1_650_013_015)
 
     try ledger.add(Account(name: try AccountName("Assets:Account1:SYM"), metaData: ["Taxslip1": "TaxBox1"]))

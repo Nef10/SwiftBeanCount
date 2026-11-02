@@ -86,25 +86,27 @@ enum TestUtils {
         Calendar.current.date(from: DateComponents(calendar: Calendar.current, timeZone: nil, era: nil, year: 2_023, month: 12, day: 31, hour: 0, minute: 0, second: 0))!
     }()
 
-    static var ledger: Ledger = {
-        let ledger = Ledger()
+    static var ledgerBuilder: LedgerBuilder {
+        let ledger = LedgerBuilder()
         let option = Option(name: "a", value: "b")
         ledger.option.append(option)
         return ledger
-    }()
+    }
+
+    static var ledger: Ledger = ledgerBuilder.build()
 
     // swiftlint:disable force_try
     static var ledgerCashUSD: Ledger = {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         try! ledger.add(Self.usdCommodity)
         let account = Account(name: Self.cash, commoditySymbol: Self.usd)
         try! ledger.add(account)
-        return ledger
+        return ledger.build()
 
     }()
 
     static var lederAccountNumers: Ledger = {
-        let ledger = Ledger()
+        let ledger = LedgerBuilder()
         try! ledger.add(Self.usdCommodity)
         let account1 = Account(name: Self.chequing,
                                commoditySymbol: Self.usd,
@@ -114,17 +116,17 @@ enum TestUtils {
                                metaData: ["number": "\(accountNumberCash)", Settings.importerTypeKey: TangerineAccountImporter.importerType] )
         try! ledger.add(account1)
         try! ledger.add(account2)
-        return ledger
+        return ledger.build()
     }()
 
-    static var lederAccounts: Ledger = {
-        let ledger = Ledger()
+    static var ledgerAccountsBuilder: LedgerBuilder {
+        let ledger = LedgerBuilder()
         let account1 = Account(name: Self.chequing, commoditySymbol: Self.usd)
         let account2 = Account(name: Self.cash, commoditySymbol: Self.usd)
         try! ledger.add(account1)
         try! ledger.add(account2)
         return ledger
-    }()
+    }
 
     static var transaction: Transaction = {
         let metaData = TransactionMetaData(date: Date(), payee: "a", narration: "b", flag: .incomplete, tags: [])
@@ -179,8 +181,8 @@ enum TestUtils {
         employerBasic: String? = nil,
         employerMatch: String? = nil,
         employeeVoluntary: String? = nil
-    ) throws -> Ledger {
-        let ledger = Ledger()
+    ) throws -> LedgerBuilder {
+        let ledger = LedgerBuilder()
         try ledger.add(Commodity(symbol: fundSymbol, metaData: ["name": fundName]))
         var metaData = [String: String]()
         if let employeeBasic {

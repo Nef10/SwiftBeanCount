@@ -25,6 +25,15 @@ private func ledgerWithRoles() -> Ledger {
     )
 }
 
+private func ledgerBuilderWithRoles() throws -> LedgerBuilder {
+    let ledger = ledgerWithRoles()
+    let builder = LedgerBuilder()
+    for account in ledger.accounts {
+        try builder.add(account)
+    }
+    return builder
+}
+
 private func receipt(
     vouchers: [String] = ["10.00", "5.00"],
     credits: String = "2.00",
@@ -54,8 +63,8 @@ private func receipt(
 struct SwiftBeanCountRitualMapperTests {
     @Test
     func fullReceiptFallbackPaymentAndNarration() throws {
-        let ledger = ledgerWithRoles()
-        let mapped = try #require(SwiftBeanCountRitualMapper(ledger: ledger).map([receipt()]).first)
+        let ledger = try ledgerBuilderWithRoles()
+        let mapped = try #require(SwiftBeanCountRitualMapper(ledger: ledger.build()).map([receipt()]).first)
         let transaction = mapped.transaction
         #expect(mapped.possibleDuplicate == nil)
         #expect(transaction.metaData.narration == "2 × Mango California Roll; Hawaiian - Personal")
@@ -63,7 +72,7 @@ struct SwiftBeanCountRitualMapperTests {
         #expect(transaction.metaData.metaData["ritual-ordered-at"] == nil)
         #expect(transaction.postings.map(\.amount.number) == [23, -6, -10, -7])
         #expect(transaction.postings[1].accountName.fullName == "Assets:TODO")
-        #expect(try transaction.balance(in: ledger).isZeroWithTolerance())
+        #expect(try transaction.balance(in: ledger.build()).isZeroWithTolerance())
         let reparsed = Parser.parse(string: transaction.description)
         #expect(reparsed.parsingErrors.isEmpty)
         #expect(reparsed.transactions.first?.metaData.narration == transaction.metaData.narration)
@@ -71,7 +80,7 @@ struct SwiftBeanCountRitualMapperTests {
 
     @Test
     func matchedBankDataAndSharedPostingsArePreserved() throws { // swiftlint:disable:this function_body_length
-        let ledger = ledgerWithRoles()
+        let ledger = try ledgerBuilderWithRoles()
         let date = Calendar.current.date(from: DateComponents(year: 2_026, month: 10, day: 8))!
         let bank = Transaction(
             metaData: TransactionMetaData(
@@ -97,7 +106,7 @@ struct SwiftBeanCountRitualMapperTests {
             ]
         )
         ledger.add(bank)
-        let mapped = try #require(SwiftBeanCountRitualMapper(ledger: ledger).map([receipt()]).first)
+        let mapped = try #require(SwiftBeanCountRitualMapper(ledger: ledger.build()).map([receipt()]).first)
         let updated = mapped.transaction
         #expect(mapped.possibleDuplicate === bank)
         #expect(updated.metaData.date == bank.metaData.date)
@@ -111,7 +120,7 @@ struct SwiftBeanCountRitualMapperTests {
         #expect(updated.postings[1].amount.number == 21)
         #expect(updated.postings[1].accountName == bank.postings[1].accountName)
         #expect(updated.postings[1].metaData == bank.postings[1].metaData)
-        #expect(try updated.balance(in: ledger).isZeroWithTolerance())
+        #expect(try updated.balance(in: ledger.build()).isZeroWithTolerance())
         #expect(bank.postings[1].amount.number == 4)
     }
 
@@ -145,22 +154,22 @@ struct SwiftBeanCountRitualMapperTests {
 
     @Test
     func alreadyImportedAndExcludedStatuses() throws {
-        let ledger = ledgerWithRoles()
-        let transaction = try #require(SwiftBeanCountRitualMapper(ledger: ledger).map([receipt()]).first?.transaction)
+        let ledger = try ledgerBuilderWithRoles()
+        let transaction = try #require(SwiftBeanCountRitualMapper(ledger: ledger.build()).map([receipt()]).first?.transaction)
         ledger.add(transaction)
-        #expect(try SwiftBeanCountRitualMapper(ledger: ledger).map([receipt()]).isEmpty)
+        #expect(try SwiftBeanCountRitualMapper(ledger: ledger.build()).map([receipt()]).isEmpty)
         for status in ["Order Canceled", "Order Rejected", "Order Refunded"] {
-            #expect(try SwiftBeanCountRitualMapper(ledger: ledger).map([receipt(status: status)]).isEmpty)
+            #expect(try SwiftBeanCountRitualMapper(ledger: ledger.build()).map([receipt(status: status)]).isEmpty)
         }
-        #expect(try SwiftBeanCountRitualMapper(ledger: ledger).knownReceiptIDs == [receipt().receiptID])
+        #expect(try SwiftBeanCountRitualMapper(ledger: ledger.build()).knownReceiptIDs == [receipt().receiptID])
     }
 
     @Test
     func missingAndAmbiguousRolesOrTotalsFail() throws {
         #expect(throws: RitualMappingError.invalidRole("expense")) { try SwiftBeanCountRitualMapper(ledger: Ledger()) }
-        let ledger = ledgerWithRoles()
+        let ledger = try ledgerBuilderWithRoles()
         try ledger.add(Account(name: AccountName("Expenses:Other"), metaData: ["ritual-role": "expense"]))
-        #expect(throws: RitualMappingError.invalidRole("expense")) { try SwiftBeanCountRitualMapper(ledger: ledger) }
+        #expect(throws: RitualMappingError.invalidRole("expense")) { try SwiftBeanCountRitualMapper(ledger: ledger.build()) }
         let valid = ledgerWithRoles()
         #expect(throws: RitualMappingError.self) { try SwiftBeanCountRitualMapper(ledger: valid).map([receipt(paid: "7.00")]) }
     }
@@ -209,7 +218,7 @@ struct SwiftBeanCountRitualMapperTests {
 
     @Test
     func unsuitableBankTransactionsAreNotMatched() throws {
-        let ledger = ledgerWithRoles()
+        let ledger = try ledgerBuilderWithRoles()
         let item = try receipt()
         ledger.add(Transaction(
             metaData: TransactionMetaData(date: item.timestamp, payee: item.merchantName),
@@ -218,9 +227,9 @@ struct SwiftBeanCountRitualMapperTests {
                 Posting(accountName: try AccountName("Expenses:Food"), amount: Amount(number: 6, commoditySymbol: "USD", decimalDigits: 2))
             ]
         ))
-        #expect(try SwiftBeanCountRitualMapper(ledger: ledger).map([item]).first?.possibleDuplicate == nil)
+        #expect(try SwiftBeanCountRitualMapper(ledger: ledger.build()).map([item]).first?.possibleDuplicate == nil)
 
-        let punctuationLedger = ledgerWithRoles()
+        let punctuationLedger = try ledgerBuilderWithRoles()
         let punctuationReceipt = try receipt(merchantName: "---")
         punctuationLedger.add(Transaction(
             metaData: TransactionMetaData(date: punctuationReceipt.timestamp, payee: "---"),
@@ -229,13 +238,13 @@ struct SwiftBeanCountRitualMapperTests {
                 Posting(accountName: try AccountName("Expenses:Food"), amount: Amount(number: 6, commoditySymbol: "CAD", decimalDigits: 2))
             ]
         ))
-        #expect(try SwiftBeanCountRitualMapper(ledger: punctuationLedger).map([punctuationReceipt]).first?.possibleDuplicate == nil)
+        #expect(try SwiftBeanCountRitualMapper(ledger: punctuationLedger.build()).map([punctuationReceipt]).first?.possibleDuplicate == nil)
     }
 
     @Test
     func ambiguousBankPaymentsReturnsNilInsteadOfChoosingOne() throws {
-        let ledger = ledgerWithRoles()
-        let first = try #require(SwiftBeanCountRitualMapper(ledger: ledger).map([receipt()]).first?.transaction)
+        let ledger = try ledgerBuilderWithRoles()
+        let first = try #require(SwiftBeanCountRitualMapper(ledger: ledger.build()).map([receipt()]).first?.transaction)
         let bankHeader = TransactionMetaData(date: first.metaData.date, payee: first.metaData.payee)
         let postings = [
             Posting(accountName: try AccountName("Liabilities:CreditCard:Bank"), amount: Amount(number: -6, commoditySymbol: "CAD", decimalDigits: 2)),
@@ -243,12 +252,12 @@ struct SwiftBeanCountRitualMapperTests {
         ]
         ledger.add(Transaction(metaData: bankHeader, postings: postings))
         ledger.add(Transaction(metaData: bankHeader, postings: postings))
-        #expect(try SwiftBeanCountRitualMapper(ledger: ledger).map([receipt()]).first!.possibleDuplicate == nil)
+        #expect(try SwiftBeanCountRitualMapper(ledger: ledger.build()).map([receipt()]).first!.possibleDuplicate == nil)
     }
 
     @Test
     func outputUsesPreservedBankDateForOrdering() throws {
-        let ledger = ledgerWithRoles()
+        let ledger = try ledgerBuilderWithRoles()
         let first = try receipt()
         let bankDate = Calendar.current.date(from: DateComponents(year: 2_026, month: 10, day: 8))!
         ledger.add(Transaction(
@@ -266,7 +275,7 @@ struct SwiftBeanCountRitualMapperTests {
             items: first.items,
             totals: first.totals
         )
-        let output = try SwiftBeanCountRitualMapper(ledger: ledger).map([first, other])
+        let output = try SwiftBeanCountRitualMapper(ledger: ledger.build()).map([first, other])
         #expect(output.map { $0.transaction.metaData.metaData["ritual-id"] } == [other.receiptID, first.receiptID])
         #expect(output.last?.transaction.metaData.date == bankDate)
     }

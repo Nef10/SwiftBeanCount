@@ -14,291 +14,75 @@ public enum LedgerError: Error, Equatable {
     case alreadyExists(String)
 }
 
-/// A Ledger is the main part of the model, it contains all necessary information.
-public class Ledger {
-
+/// An immutable, completed view of a ledger.
+public final class Ledger: LedgerContext {
     /// Array of all `Transaction`s in this ledger
-    public private(set) var transactions = [Transaction]()
+    public let transactions: [Transaction]
 
     /// Errors from the ledger and the parsing
-    ///
-    /// Returns `ledgerErrors` and `parsingErrors`
-    /// Note: This property is computed, so please cache the result
-    public var errors: [String] { parsingErrors + ledgerErrors }
+    public let errors: [String]
 
     /// Errors which this ledger contains
-    ///
-    /// This includes failed balances assertions, ...
-    /// Note: This property is computed, so please cache the result
-    public var ledgerErrors: [String] { validate() }
+    public let ledgerErrors: [String]
 
     /// Errors while reading the ledger
-    ///
-    /// This can be used by a parser to store errors which occurred while trying
-    /// to fill in the ledger. The ledger itself will not put anything inside.
-    public var parsingErrors = [String]()
+    public let parsingErrors: [String]
 
     /// Array of all `Commodity`s in this ledger
-    public var commodities: [Commodity] { Array(commodity.values) }
+    public let commodities: [Commodity]
 
     /// Array of all `Account`s in this ledger
-    public var accounts: [Account] { Array(account.values) }
+    public let accounts: [Account]
 
     /// Array of all `Tag`s in this ledger
-    public var tags: [Tag] { Array(tag.values) }
+    public let tags: [Tag]
 
-    ///  Array of all `Price`s in this ledger
-    public var prices: [Price] {
-        Array(price.values.map { Array($0.values) }.map { $0.map { Array($0.values) } }.joined().joined())
-    }
+    /// Array of all `Price`s in this ledger
+    public let prices: [Price]
 
-    /// Array of the main `AccountGroup`s (all five `AccountType`s) in this ledger
-    public var accountGroups: [AccountGroup] { Array(accountGroup.values) }
+    /// Array of the main `AccountGroup`s in this ledger
+    public let accountGroups: [AccountGroup]
 
     /// Array of all plugins
-    public var plugins = [String]()
+    public let plugins: [String]
 
     /// Array of all options
-    public var option = [Option]()
+    public let option: [Option]
 
     /// Array of all events
-    public var events = [Event]()
+    public let events: [Event]
 
     /// Array of all Custom directives
-    public var custom = [Custom]()
+    public let custom: [Custom]
 
-    private var commodity = [String: Commodity]()
-    private var account = [String: Account]()
-    private var tag = [String: Tag]()
-    private var price = [CommoditySymbol: [CommoditySymbol: [Date: Price]]]()
-    private let accountGroup: [String: AccountGroup]
+    let postingPrices: [Transaction: [Posting: MultiCurrencyAmount]]
 
-    var postingPrices = [Transaction: [Posting: MultiCurrencyAmount]]()
-
-    /// Creates an empty ledger with the `accountGroups` set up
-    public init() {
-        var groups = [String: AccountGroup]()
-        for accountType in AccountType.allValues() {
-            groups[accountType.rawValue] = AccountGroup(nameItem: accountType.rawValue, accountType: accountType, baseGroup: true)
-        }
-        accountGroup = groups
+    /// Installs completed accounting results; does not copy or process builder contents.
+    private init(completed context: LedgerBuildContext) {
+        transactions = context.transactions
+        parsingErrors = context.parsingErrors
+        plugins = context.plugins
+        option = context.option
+        events = context.events
+        custom = context.custom
+        accounts = context.accounts
+        commodities = context.commodities
+        tags = context.tags
+        prices = context.prices
+        accountGroups = context.accountGroups
+        postingPrices = context.postingPrices
+        ledgerErrors = context.ledgerErrors
+        errors = parsingErrors + ledgerErrors
     }
 
-    /// Adds a `Transcaction` to the ledger
-    ///
-    /// - Parameter transaction: transaction to add
-    public func add(_ transaction: Transaction) {
-        transactions.append(transaction)
-        transaction.metaData.tags.forEach {
-            addTagIfNeccessary($0)
-        }
-        transaction.postings.forEach {
-            addAccountIfNeccessary(name: $0.accountName)
-            addCommodityIfNeccessary(symbol: $0.amount.commoditySymbol)
-            if let price = $0.price {
-                addCommodityIfNeccessary(symbol: price.commoditySymbol)
-            }
-            if let costAmount = $0.cost?.amount {
-                addCommodityIfNeccessary(symbol: costAmount.commoditySymbol)
-            }
-        }
+    /// Creates a completed empty ledger with the five account groups.
+    public convenience init() {
+        self.init(completed: LedgerBuildContext(builder: LedgerBuilder()))
     }
 
-    /// Adds an `Account` to the ledger
-    ///
-    /// - Parameter account: account to add
-    /// - Throws: If the account already exists
-    public func add(_ account: Account) throws(LedgerError) {
-        guard self.account[account.name.fullName] == nil else {
-            throw LedgerError.alreadyExists(String(describing: account))
-        }
-        addAccountToStructure(account)
-        if let commoditySymbol = account.commoditySymbol {
-            addCommodityIfNeccessary(symbol: commoditySymbol)
-        }
-    }
-
-    /// Adds a `Commodity` to the ledger
-    ///
-    /// - Parameter commodity: commodity to add
-    /// - Throws: If the commodity already exists
-    public func add(_ commodity: Commodity) throws(LedgerError) {
-        guard self.commodity[commodity.symbol] == nil else {
-            throw LedgerError.alreadyExists(String(describing: commodity))
-        }
-        self.commodity[commodity.symbol] = commodity
-    }
-
-    /// Adds a `Price` to the ledger
-    ///
-    /// - Parameter price: `Price` to add
-    /// - Throws: If the price already exists
-    public func add(_ price: Price) throws(LedgerError) {
-        guard self.price[price.commoditySymbol]?[price.amount.commoditySymbol]?[price.date] == nil else {
-            throw LedgerError.alreadyExists(String(describing: price))
-        }
-        if self.price[price.commoditySymbol] == nil {
-            self.price[price.commoditySymbol] = [CommoditySymbol: [Date: Price]]()
-        }
-        if self.price[price.commoditySymbol]![price.amount.commoditySymbol] == nil {
-            self.price[price.commoditySymbol]![price.amount.commoditySymbol] = [Date: Price]()
-        }
-        self.price[price.commoditySymbol]![price.amount.commoditySymbol]![price.date] = price
-        addCommodityIfNeccessary(symbol: price.commoditySymbol)
-    }
-
-    /// Adds a `Balance` to the ledger
-    ///
-    /// - Parameter balance: `Balance` to add
-    public func add(_ balance: Balance) {
-        getAccount(by: balance.accountName).balances.append(balance)
-        addCommodityIfNeccessary(symbol: balance.amount.commoditySymbol)
-    }
-
-    /// Validates ledger and returns all validation errors
-    private func validate() -> [String] {
-        var result = [String]()
-        result.append(contentsOf: validateAccounts())
-        result.append(contentsOf: validateTransactions())
-        result.append(contentsOf: validateCommodities())
-        result.append(contentsOf: validatePrices())
-        result.append(contentsOf: validateBalanceAssertions())
-        return result
-    }
-
-    /// Validates all accounts
-    private func validateAccounts() -> [String] {
-        var result = [String]()
-        accounts.forEach {
-            if case .invalid(let error) = $0.validate() {
-                result.append(error)
-            }
-            if case .invalid(let error) = $0.validateBalance(in: self) {
-                result.append(error)
-            }
-            if case .invalid(let error) = $0.validateInventory(in: self) {
-                result.append(error)
-            }
-        }
-
-        // Check for unused accounts if the nounused plugin is enabled
-        if plugins.contains("beancount.plugins.nounused") {
-            accounts.forEach { account in
-                if !account.hasPostings(in: self) {
-                    result.append("Account \(account.name) has no postings")
-                }
-            }
-        }
-        return result
-    }
-
-    /// Validates all transactions
-    private func validateTransactions() -> [String] {
-        var result = [String]()
-        transactions.forEach {
-            if case .invalid(let error) = $0.validate(in: self) {
-                result.append(error)
-            }
-        }
-        return result
-    }
-
-    /// Validates all commodities
-    private func validateCommodities() -> [String] {
-        var result = [String]()
-        commodities.forEach {
-            if case .invalid(let error) = $0.validate(in: self) {
-                result.append(error)
-            }
-        }
-        return result
-    }
-
-    /// Validates all prices
-    private func validatePrices() -> [String] {
-        var result = [String]()
-        prices.forEach {
-            if case .invalid(let error) = $0.validate(in: self) {
-                result.append(error)
-            }
-        }
-        return result
-    }
-
-    /// Validates all balance assertions
-    private func validateBalanceAssertions() -> [String] {
-        var result = [String]()
-        accounts.forEach { account in
-            account.balances.forEach { balance in
-                if case .invalid(let error) = balance.validate(in: self) {
-                    result.append(error)
-                }
-            }
-        }
-        return result
-    }
-
-    /// Adds an account the the account structure in the ledger
-    /// - Parameter account: account to add
-    private func addAccountToStructure(_ account: Account) {
-        let name = account.name.fullName
-        var group: AccountGroup!
-        let nameItems = name.split(separator: Account.nameSeperator).map { String($0) }
-        for (index, nameItem) in nameItems.enumerated() {
-            switch index {
-            case 0:
-                group = accountGroup[nameItem]
-            case nameItems.count - 1:
-                group.accounts[nameItem] = account
-            default:
-                if group.accountGroups[nameItem] == nil {
-                    group.accountGroups[nameItem] = AccountGroup(nameItem: nameItem, accountType: group.accountType)
-                }
-                group = group.accountGroups[nameItem]!
-            }
-        }
-        self.account[name] = account
-    }
-
-    /// Gets an `Account` so that all accounts exists only once in a ledger, create a new one if it doesn't exist yet
-    ///
-    /// - Parameters:
-    ///   - accountName: accountName to get
-    /// - Returns: Account from the ledger
-    private func getAccount(by name: AccountName) -> Account {
-        addAccountIfNeccessary(name: name)
-        return account[name.fullName]!
-    }
-
-    /// Adds an `Account` to the structure if it does not exist yet
-    ///
-    /// - Parameters:
-    ///   - name: accountName of the account to add
-    private func addAccountIfNeccessary(name: AccountName) {
-        if account[name.fullName] == nil {
-            let account = Account(name: name)
-            addAccountToStructure(account)
-        }
-    }
-
-    /// Adds a `Tag` if it does not exist yet
-    ///
-    /// - Parameters:
-    ///   - tag: Tag to add
-    private func addTagIfNeccessary(_ tag: Tag) {
-        if self.tag[tag.name] == nil {
-            self.tag[tag.name] = tag
-        }
-    }
-
-    /// Adds a `Commodity` if it does not exist yet
-    ///
-    /// - Parameters:
-    ///   - symbol: Symbol of Commodity to add
-    private func addCommodityIfNeccessary(symbol: CommoditySymbol) {
-        if commodity[symbol] == nil {
-            commodity[symbol] = Commodity(symbol: symbol)
-        }
+    /// Completes accounting on isolated builder contents, then creates the snapshot once.
+    static func build(from builder: LedgerBuilder) -> Ledger {
+        Ledger(completed: LedgerBuildContext(builder: builder))
     }
 
 }
@@ -364,15 +148,25 @@ extension Ledger: Equatable {
     ///   - rhs: ledger two
     /// - Returns: true if they hold the same information, otherwise false
     public static func == (lhs: Ledger, rhs: Ledger) -> Bool {
-        lhs.account == rhs.account
-            && rhs.commodity == lhs.commodity
-            && rhs.tag == lhs.tag
+        lhs.accounts.sorted { $0.name.fullName < $1.name.fullName } == rhs.accounts.sorted { $0.name.fullName < $1.name.fullName }
+            && lhs.commodities.sorted { $0.symbol < $1.symbol } == rhs.commodities.sorted { $0.symbol < $1.symbol }
+            && lhs.tags.sorted { $0.name < $1.name } == rhs.tags.sorted { $0.name < $1.name }
             && rhs.transactions.sorted() == lhs.transactions.sorted()
-            && rhs.price == lhs.price
+            && lhs.prices.sorted(by: Self.priceSort) == rhs.prices.sorted(by: Self.priceSort)
             && rhs.custom.sorted() == lhs.custom.sorted()
             && rhs.option.sorted() == lhs.option.sorted()
             && rhs.events.sorted() == lhs.events.sorted()
             && rhs.plugins.sorted() == lhs.plugins.sorted()
+    }
+
+    private static func priceSort(_ lhs: Price, _ rhs: Price) -> Bool {
+        if lhs.commoditySymbol != rhs.commoditySymbol {
+            return lhs.commoditySymbol < rhs.commoditySymbol
+        }
+        if lhs.amount.commoditySymbol != rhs.amount.commoditySymbol {
+            return lhs.amount.commoditySymbol < rhs.amount.commoditySymbol
+        }
+        return lhs.date < rhs.date
     }
 
 }

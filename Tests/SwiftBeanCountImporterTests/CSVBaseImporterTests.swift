@@ -156,11 +156,12 @@ struct CSVBaseImporterTests {
     func getPossibleDuplicateFor() throws {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
-        let ledger = TestUtils.lederAccounts
+        let ledger = TestUtils.ledgerAccountsBuilder
         let transaction = TestUtils.transaction
         ledger.add(transaction)
 
-        let importer = TestCSVBaseImporter(ledger: ledger, csvReader: try TestUtils.csvReader(description: "a", payee: "b", date: transaction.metaData.date), fileName: "")
+        let reader = try TestUtils.csvReader(description: "a", payee: "b", date: transaction.metaData.date)
+        let importer = TestCSVBaseImporter(ledger: ledger.build(), csvReader: reader, fileName: "")
         importer.delegate = cashAccountDelegate
         importer.load()
         let importedTransaction = importer.nextTransaction()
@@ -172,11 +173,12 @@ struct CSVBaseImporterTests {
     func getPossibleDuplicateForNone() throws {
         Settings.storage = TestStorage()
         Settings.dateToleranceInDays = 2
-        let ledger = TestUtils.lederAccounts
+        let ledger = TestUtils.ledgerAccountsBuilder
         let transaction = TestUtils.transaction
         ledger.add(transaction)
 
-        let importer = TestCSVBaseImporter(ledger: ledger, csvReader: try TestUtils.csvReader(description: "a", payee: "b", date: transaction.metaData.date), fileName: "")
+        let reader = try TestUtils.csvReader(description: "a", payee: "b", date: transaction.metaData.date)
+        let importer = TestCSVBaseImporter(ledger: ledger.build(), csvReader: reader, fileName: "")
         let delegate = InputProviderDelegate(names: ["Account"], types: [.text([])], returnValues: [TestUtils.chequing.fullName])
         importer.delegate = delegate
         importer.load()

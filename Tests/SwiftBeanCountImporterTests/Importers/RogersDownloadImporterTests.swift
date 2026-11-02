@@ -133,7 +133,7 @@ extension TestsUsingStorage {
 struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
 
     private let accountName: AccountName
-    private let ledger: Ledger
+    private let ledger: LedgerBuilder
     private var user: TestUser
 
     private var delegate: CredentialInputDelegate
@@ -147,7 +147,7 @@ struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
                                            readKeys: ["rogers-username", "rogers-password", "rogers-deviceId"],
                                            readReturnValues: ["", "", ""])
         accountName = try AccountName("Liabilities:CC:Rogers")
-        ledger = Ledger()
+        ledger = LedgerBuilder()
         user = TestUser()
         let defaultUser = user
         loginCallback = { _, _, _ in .success(defaultUser) }
@@ -216,7 +216,7 @@ struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
         user.accounts = [account]
         loginCallback = { _, _, _ in .success(user) }
         let delegate = errorDelegate(error: DownloadError.invalidParameters(parameters: ["b": "cd"]))
-        let importer = loadedImporter(delegate: delegate, ledger: ledger)
+        let importer = loadedImporter(delegate: delegate, ledger: ledger.build())
         let balances = importer.balancesToImport()
         #expect(importer.nextTransaction() == nil)
         #expect(balances.count == 1)
@@ -251,7 +251,7 @@ struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
         var user = user
         user.accounts = [account]
         loginCallback = { _, _, _ in .success(user) }
-        let importer = loadedImporter(ledger: ledger)
+        let importer = loadedImporter(ledger: ledger.build())
         let balances = importer.balancesToImport()
         #expect(importer.nextTransaction() == nil)
         #expect(balances.count == 1)
@@ -274,7 +274,7 @@ struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
         var user = user
         user.accounts = [account]
         loginCallback = { _, _, _ in .success(user) }
-        let importer = loadedImporter(ledger: ledger)
+        let importer = loadedImporter(ledger: ledger.build())
         let balances = importer.balancesToImport()
         #expect(importer.nextTransaction() == nil)
         #expect(balances.count == 1)
@@ -298,7 +298,7 @@ struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
         var user = user
         user.accounts = [account1, account2]
         loginCallback = { _, _, _ in .success(user) }
-        let importer = loadedImporter(ledger: ledger)
+        let importer = loadedImporter(ledger: ledger.build())
         let balances = importer.balancesToImport()
         #expect(importer.nextTransaction() == nil)
         #expect(balances.count == 2)
@@ -319,7 +319,7 @@ struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
         user.accounts = [TestAccount { _ in .success([activity]) }]
         loginCallback = { _, _, _ in .success(user) }
         let delegate = errorDelegate(error: RogersBankMappingError.missingActivityData(activity: activity, key: "referenceNumber"))
-        let importer = loadedImporter(delegate: delegate, ledger: ledger)
+        let importer = loadedImporter(delegate: delegate, ledger: ledger.build())
         #expect(importer.nextTransaction() == nil)
         #expect(importer.balancesToImport().count == 1)
     }
@@ -339,7 +339,7 @@ struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
         var user = user
         user.accounts = [TestAccount { $0 == 0 ? .success([activity1, activity2, activity3]) : .success([]) }]
         loginCallback = { _, _, _ in .success(user) }
-        let importer = loadedImporter(ledger: ledger)
+        let importer = loadedImporter(ledger: ledger.build())
         var metaData = TransactionMetaData(date: activity1.postedDate!, narration: activity1.merchant.name, metaData: ["rogers-bank-id": activity1.referenceNumber!])
         var transaction = Transaction(metaData: metaData, postings: [
             Posting(accountName: accountName, amount: Amount(number: Decimal(string: "-\(amount.value)")!, commoditySymbol: "CAD", decimalDigits: 2)),
@@ -393,7 +393,7 @@ struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
                                                saveValues: [],
                                                readKeys: [],
                                                readReturnValues: [])
-        let importer = RogersDownloadImporter(ledger: ledger)
+        let importer = RogersDownloadImporter(ledger: ledger.build())
         importer.authenticatorClass = TestAuthenticator.self
         importer.delegate = delegate
         #expect(importer.getTwoFactorCode() == "123456")
@@ -409,7 +409,7 @@ struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
                                                saveValues: [],
                                                readKeys: [],
                                                readReturnValues: [])
-        let importer = RogersDownloadImporter(ledger: ledger)
+        let importer = RogersDownloadImporter(ledger: ledger.build())
         importer.authenticatorClass = TestAuthenticator.self
         importer.delegate = delegate
         let pref = try JSONDecoder().decode(TwoFactorPreference.self, from: Data("{\"type\":\"SMS\",\"value\":\"123456789\"}".utf8))
@@ -426,7 +426,7 @@ struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
                                                saveValues: [],
                                                readKeys: [],
                                                readReturnValues: [])
-        let importer = RogersDownloadImporter(ledger: ledger)
+        let importer = RogersDownloadImporter(ledger: ledger.build())
         importer.authenticatorClass = TestAuthenticator.self
         importer.delegate = delegate
         let pref1 = try JSONDecoder().decode(TwoFactorPreference.self, from: Data("{\"type\":\"SMS\",\"value\":\"123456789\"}".utf8))
@@ -444,7 +444,7 @@ struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
                                                saveValues: ["qwerty1223654"],
                                                readKeys: [],
                                                readReturnValues: [])
-        let importer = RogersDownloadImporter(ledger: ledger)
+        let importer = RogersDownloadImporter(ledger: ledger.build())
         importer.authenticatorClass = TestAuthenticator.self
         importer.delegate = delegate
         importer.saveDeviceId("qwerty1223654")
@@ -469,7 +469,7 @@ struct RogersDownloadImporterTests { // swiftlint:disable:this type_body_length
         var user = user
         user.accounts = [TestAccount { $0 == 0 ? .success([activity]) : .success([]) }]
         loginCallback = { _, _, _ in .success(user) }
-        let importer = loadedImporter(ledger: ledger)
+        let importer = loadedImporter(ledger: ledger.build())
         let metaData = TransactionMetaData(date: activity.postedDate!, payee: payee, narration: description, metaData: ["rogers-bank-id": activity.referenceNumber!])
         let transaction = Transaction(metaData: metaData, postings: [
             Posting(accountName: accountName, amount: Amount(number: Decimal(string: "-\(amount.value)")!, commoditySymbol: "CAD", decimalDigits: 2)),
