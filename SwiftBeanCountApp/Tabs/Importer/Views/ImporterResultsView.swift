@@ -19,16 +19,16 @@ struct ImporterResultsView: View {
 
     var resultText: String {
         """
-            \(importManager.resultLedger.transactions.sorted { $0.metaData.date < $1.metaData.date }.map { "\($0)" }.joined(separator: "\n\n"))
+            \(importManager.resultBatch.transactions.sorted { $0.metaData.date < $1.metaData.date }.map { "\($0)" }.joined(separator: "\n\n"))
 
-            \(importManager.resultLedger.accounts.flatMap(\.balances)
+            \(importManager.resultBatch.balances
                 .sorted { (balance1: Balance, balance2: Balance) in
                     balance1.date == balance2.date ? balance1.accountName.fullName < balance2.accountName.fullName : balance1.date < balance2.date
                 }
                 .map { "\($0)" }
                 .joined(separator: "\n"))
 
-            \(importManager.resultLedger.prices
+            \(importManager.resultBatch.prices
                 .sorted { $0.date == $1.date ? $0.commoditySymbol < $1.commoditySymbol : $0.date < $1.date }
                 .map { "\($0)" }
                 .joined(separator: "\n"))
