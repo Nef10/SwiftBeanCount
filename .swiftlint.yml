@@ -4,6 +4,7 @@ strict: true
 
 excluded:
   - ".build"
+  - "Artifacts"
   - "**/*pb.swift"
 
 opt_in_rules:

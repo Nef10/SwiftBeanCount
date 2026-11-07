@@ -15,6 +15,8 @@ enum LedgerManagerError: Error {
     case noLedgerSpecified
     case noTask
     case noAccess
+    case sourceChangedDuringLoad
+    case fileCoordinationFailed
 }
 
 struct RecentFile: Hashable {
@@ -48,6 +50,7 @@ class LedgerManager: ObservableObject {
 
     private var ledgerLoaded = false
     private var task: Task<(SHA256.Digest, Ledger), Error>?
+    private var loadID = UUID()
 
     // paramters only used for previews
     init(_ ledgerURL: URL? = nil, waitingForLedgerLoad: Bool = false) {
@@ -103,6 +106,41 @@ class LedgerManager: ObservableObject {
 #endif
     }
 
+    private static func parseSnapshot(at url: URL) throws -> (SHA256.Digest, Ledger) {
+        guard url.startAccessingSecurityScopedResource() else {
+            throw LedgerManagerError.noAccess
+        }
+        defer { url.stopAccessingSecurityScopedResource() }
+        saveLastURL(url)
+        var coordinationError: NSError?
+        var result: Result<(SHA256.Digest, Ledger), Error>?
+        NSFileCoordinator().coordinate(readingItemAt: url, error: &coordinationError) { coordinatedURL in
+            result = Result { try parseStableSnapshot(at: coordinatedURL) }
+        }
+        if let coordinationError {
+            throw coordinationError
+        }
+        guard let result else {
+            throw LedgerManagerError.fileCoordinationFailed
+        }
+        return try result.get()
+    }
+
+    private static func parseStableSnapshot(at url: URL) throws -> (SHA256.Digest, Ledger) {
+        for _ in 0..<3 {
+            try Task.checkCancellation()
+            let before = try LedgerSourceSnapshot(url: url)
+            // Hold the file grant throughout include loading and synchronous native processing.
+            let ledger = try Parser.parse(contentOf: url)
+            try Task.checkCancellation()
+            let after = try LedgerSourceSnapshot(url: url)
+            if before.hash == after.hash {
+                return (after.hash, ledger)
+            }
+        }
+        throw LedgerManagerError.sourceChangedDuringLoad
+    }
+
     /// Re-reads the ledger file from disk and checks if the hash
     /// changed. If so it will parse again, otherwise it won't.
     /// If the loading is stil ongoing, it cancles and re-starts.
@@ -115,7 +153,7 @@ class LedgerManager: ObservableObject {
             Task.detached(priority: .background) {
                 do {
                     let (hash, _) = try await task.value
-                    let (newHash, _) = try self.getHashAndText()
+                    let newHash = try self.getSourceHash()
                     if hash != newHash {
                         Logger.ledger.info("Found file change during refresh")
                         self.loadLedger()
@@ -145,21 +183,21 @@ class LedgerManager: ObservableObject {
         guard let task else {
             throw LedgerManagerError.noTask
         }
+        let expectedLoadID = loadID
         if !ledgerLoaded || skipHashCheck {
             Task { @MainActor in
                 self.waitingForLedgerLoad = true
             }
         }
-        defer {
-            Task { @MainActor in
-                self.waitingForLedgerLoad = false
-            }
-        }
+        defer { Task { @MainActor in self.waitingForLedgerLoad = false } }
         let (hash, ledger) = try await task.value
+        if loadID != expectedLoadID {
+            return try await getLedgerContent(skipHashCheck: skipHashCheck)
+        }
         if skipHashCheck {
             return ledger
         }
-        let (newHash, _) = try getHashAndText()
+        let newHash = try getSourceHash()
         if hash != newHash {
             Logger.ledger.info("File changed")
             loadLedger()
@@ -171,48 +209,53 @@ class LedgerManager: ObservableObject {
     @discardableResult
     private func loadLedger() -> Task<(SHA256.Digest, Ledger), Error>? {
         task?.cancel()
+        let currentLoadID = UUID()
+        loadID = currentLoadID
         Task { @MainActor in
             self.ledgerLoaded = false
         }
-        guard url != nil else {
+        guard let sourceURL = url else {
             return nil
         }
         Task { @MainActor in
             self.loadingLedger = true
         }
-        task = Task.detached(priority: .background) { () -> (SHA256.Digest, Ledger) in
+        task = Task.detached(priority: .high) { () -> (SHA256.Digest, Ledger) in
             Logger.ledger.info("Start loading ledger")
-            defer {
-                if !Task.isCancelled {
-                    Task { @MainActor in
-                        self.loadingLedger = false
-                    }
-                }
-            }
-            let (hash, text) = try self.getHashAndText()
-            try Task.checkCancellation()
-            let ledger = Parser.parse(string: text)
+            defer { self.finishLoad(currentLoadID) }
+            let (hash, ledger) = try Self.parseSnapshot(at: sourceURL)
             Logger.ledger.debug("Done parsing")
             try Task.checkCancellation()
-            self.ledgerLoaded = true
+            await MainActor.run {
+                if self.loadID == currentLoadID {
+                    self.ledgerLoaded = true
+                }
+            }
             return (hash, ledger)
         }
         return task
     }
 
-    private func getHashAndText() throws -> (SHA256.Digest, String) {
+    private func finishLoad(_ completedLoadID: UUID) {
+        guard !Task.isCancelled else {
+            return
+        }
+        Task { @MainActor in
+            if self.loadID == completedLoadID {
+                self.loadingLedger = false
+            }
+        }
+    }
+
+    private func getSourceHash() throws -> SHA256.Digest {
         guard let url else {
             throw LedgerManagerError.noLedgerSpecified
         }
         guard url.startAccessingSecurityScopedResource() else {
             throw LedgerManagerError.noAccess
         }
-        Self.saveLastURL(url)
-        let text = try String(contentsOf: url, encoding: .utf8)
-        url.stopAccessingSecurityScopedResource()
-        let data = Data(text.utf8)
-        let hash = SHA256.hash(data: data)
-        return (hash, text)
+        defer { url.stopAccessingSecurityScopedResource() }
+        return try LedgerSourceSnapshot(url: url).hash
     }
 
 }

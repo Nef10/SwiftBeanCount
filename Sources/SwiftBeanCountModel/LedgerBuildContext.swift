@@ -12,10 +12,13 @@ protocol LedgerContext {
     var commodities: [Commodity] { get }
     var plugins: [String] { get }
     var postingPrices: [Transaction: [Posting: MultiCurrencyAmount]] { get }
+
+    func processedExactWeight(for posting: TransactionPosting) throws(PostingError) -> MultiCurrencyAmount?
 }
 
 /// Isolates builder contents and completes accounting before a Ledger is created.
 final class LedgerBuildContext: LedgerContext {
+    let processedState: ProcessedLedgerState?
     let transactions: [Transaction]
     let parsingErrors: [String]
     let commodities: [Commodity]
@@ -30,8 +33,8 @@ final class LedgerBuildContext: LedgerContext {
     private(set) var postingPrices = [Transaction: [Posting: MultiCurrencyAmount]]()
     private(set) var ledgerErrors = [String]()
 
-    /// Copies builder contents, books inventory, and validates without changing the builder.
-    init(builder: LedgerBuilder) {
+    /// Copies builder contents and completes accounting, or installs already processed Rust results.
+    init(builder: LedgerBuilder, processed projection: ProcessedLedgerProjection? = nil) {
         transactions = builder.storedTransactions
         parsingErrors = builder.parsingErrors
         plugins = builder.plugins
@@ -44,8 +47,13 @@ final class LedgerBuildContext: LedgerContext {
         tags = Array(builder.tag.values)
         prices = builder.price.values.flatMap { $0.values.flatMap(\.values) }
         accountGroups = Self.copyGroups(builder.accountGroup, accounts: accountCopies)
-        bookInventory()
-        ledgerErrors = validate()
+        processedState = projection.map(ProcessedLedgerState.init)
+        if let projection {
+            ledgerErrors = projection.diagnostics
+        } else {
+            bookInventory()
+            ledgerErrors = validate()
+        }
     }
 
     private static func copyAccounts(_ accounts: Dictionary<String, Account>.Values) -> [String: Account] {
@@ -77,6 +85,10 @@ final class LedgerBuildContext: LedgerContext {
         }
     }
 
+}
+
+extension LedgerContext {
+    func processedExactWeight(for _: TransactionPosting) -> MultiCurrencyAmount? { nil }
 }
 
 extension LedgerBuildContext {

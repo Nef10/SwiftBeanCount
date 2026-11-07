@@ -1,7 +1,30 @@
 // swift-tools-version:6.2
 
-import class Foundation.ProcessInfo
+import Foundation
 import PackageDescription
+
+// Xcode needs the binary in its package graph before any build phases run.
+// Keep the system-library path for unprepared/Swift-only checkouts and for the
+// source-build wrapper (including Linux), which explicitly supplies its bindings.
+let rustLedgerArtifacts = "Artifacts/RustLedger/current"
+let packageDirectory = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
+let rustLedgerFFITarget: Target = {
+    #if os(macOS)
+    if ProcessInfo.processInfo.environment["SWIFTBEANCOUNT_RUST_BINDINGS"] == nil,
+       FileManager.default.fileExists(atPath: packageDirectory.appendingPathComponent("\(rustLedgerArtifacts)/manifest.json").path),
+       FileManager.default.fileExists(atPath: packageDirectory.appendingPathComponent("\(rustLedgerArtifacts)/RustLedger.xcframework/Info.plist").path) {
+        return .binaryTarget(
+            name: "swiftbeancount_rust_ledgerFFI",
+            path: "\(rustLedgerArtifacts)/RustLedger.xcframework"
+        )
+    }
+    #endif
+    return .systemLibrary(
+        name: "swiftbeancount_rust_ledgerFFI",
+        path: "Sources/SwiftBeanCountRustLedgerFFI",
+        pkgConfig: "swiftbeancount-rustledger"
+    )
+}()
 
 var swiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v5),
@@ -42,6 +65,9 @@ let package = Package(
         .library(name: "TangerineDownloader", targets: ["TangerineDownloader"]),
         .library(name: "GoogleAuthentication", targets: ["GoogleAuthentication"])
     ],
+    traits: [
+        .trait(name: "RustLedger", description: "Use rustledger for parsing, interpolation, booking and validation"),
+    ],
     dependencies: [
         .package(url: "https://github.com/yaslab/CSV.swift.git", from: "2.5.2"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.7.0"),
@@ -75,12 +101,31 @@ let package = Package(
         ),
         .target(
             name: "SwiftBeanCountParser",
-            dependencies: ["SwiftBeanCountModel", "SwiftBeanCountParserUtils"],
+            dependencies: [
+                "SwiftBeanCountModel",
+                "SwiftBeanCountParserUtils",
+                .target(name: "SwiftBeanCountRustLedger", condition: .when(traits: ["RustLedger"])),
+            ],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .target(
             name: "SwiftBeanCountParserUtils",
+            swiftSettings: swiftSettings,
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        rustLedgerFFITarget,
+        .target(
+            name: "SwiftBeanCountRustLedgerBindings",
+            dependencies: ["swiftbeancount_rust_ledgerFFI"],
+            swiftSettings: swiftSettings,
+            linkerSettings: [.linkedLibrary("iconv", .when(platforms: [.macOS, .iOS]))],
+            plugins: [.plugin(name: "RustLedgerBindingsPlugin")]
+        ),
+        .plugin(name: "RustLedgerBindingsPlugin", capability: .buildTool()),
+        .target(
+            name: "SwiftBeanCountRustLedger",
+            dependencies: ["SwiftBeanCountModel", "SwiftBeanCountRustLedgerBindings"],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
@@ -234,6 +279,17 @@ let package = Package(
             name: "SwiftBeanCountParserTests",
             dependencies: ["SwiftBeanCountParser"],
             resources: [.copy("Resource")],
+            swiftSettings: swiftSettings,
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountRustLedgerTests",
+            dependencies: [
+                "SwiftBeanCountParser",
+                "SwiftBeanCountModel",
+                "SwiftBeanCountTax",
+                .target(name: "SwiftBeanCountRustLedger", condition: .when(traits: ["RustLedger"])),
+            ],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
