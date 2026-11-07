@@ -162,7 +162,7 @@
 			packageReferences = (
 				F9A2C0F92D1189FA00E925F4 /* XCRemoteSwiftPackageReference "SimpleKeychain" */,
 				F98C060A2EF2173700159521 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
-				F99BF6C82F131945003ED89A /* XCLocalSwiftPackageReference "SwiftBeanCount" */,
+				F99BF6C82F131945003ED89A /* XCLocalSwiftPackageReference "." */,
 			);
 			productRefGroup = F95DEA702B81443A0070E8EC /* Products */;
 			projectDirPath = "";
@@ -439,6 +439,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		F99BF6C82F131945003ED89A /* XCLocalSwiftPackageReference "." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = .;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		F98C060A2EF2173700159521 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -447,10 +454,6 @@
 				kind = exactVersion;
 				version = 0.65.1;
 			};
-		};
-		F99BF6C82F131945003ED89A /* XCLocalSwiftPackageReference "SwiftBeanCount" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = .;
 		};
 		F9A2C0F92D1189FA00E925F4 /* XCRemoteSwiftPackageReference "SimpleKeychain" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -465,7 +468,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		F96640622F131CB600A95FBA /* SwiftBeanCountStatements */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F99BF6C82F131945003ED89A /* XCLocalSwiftPackageReference "SwiftBeanCount" */;
+			package = F99BF6C82F131945003ED89A /* XCLocalSwiftPackageReference "." */;
 			productName = SwiftBeanCountStatements;
 		};
 		F98C060B2EF2174A00159521 /* SwiftLintBuildToolPlugin */ = {
@@ -475,22 +478,22 @@
 		};
 		F99BF6C92F131945003ED89A /* SwiftBeanCountImporter */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F99BF6C82F131945003ED89A /* XCLocalSwiftPackageReference "SwiftBeanCount" */;
+			package = F99BF6C82F131945003ED89A /* XCLocalSwiftPackageReference "." */;
 			productName = SwiftBeanCountImporter;
 		};
 		F99BF6CB2F131945003ED89A /* SwiftBeanCountModel */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F99BF6C82F131945003ED89A /* XCLocalSwiftPackageReference "SwiftBeanCount" */;
+			package = F99BF6C82F131945003ED89A /* XCLocalSwiftPackageReference "." */;
 			productName = SwiftBeanCountModel;
 		};
 		F99BF6CD2F131945003ED89A /* SwiftBeanCountParser */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F99BF6C82F131945003ED89A /* XCLocalSwiftPackageReference "SwiftBeanCount" */;
+			package = F99BF6C82F131945003ED89A /* XCLocalSwiftPackageReference "." */;
 			productName = SwiftBeanCountParser;
 		};
 		F99BF6CF2F131945003ED89A /* SwiftBeanCountTax */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F99BF6C82F131945003ED89A /* XCLocalSwiftPackageReference "SwiftBeanCount" */;
+			package = F99BF6C82F131945003ED89A /* XCLocalSwiftPackageReference "." */;
 			productName = SwiftBeanCountTax;
 		};
 		F9A2C0FA2D1189FA00E925F4 /* SimpleKeychain */ = {
@@ -500,7 +503,7 @@
 		};
 		F9B5AA122FEFE00100AA0001 /* SwiftBeanCountSheetSync */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F99BF6C82F131945003ED89A /* XCLocalSwiftPackageReference "SwiftBeanCount" */;
+			package = F99BF6C82F131945003ED89A /* XCLocalSwiftPackageReference "." */;
 			productName = SwiftBeanCountSheetSync;
 		};
 /* End XCSwiftPackageProductDependency section */
