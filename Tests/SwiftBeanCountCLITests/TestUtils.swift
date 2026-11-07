@@ -15,10 +15,12 @@ struct ExecutionResult {
     let exitCode: Int32
 }
 
+private final class TestBundleMarker: NSObject { /* Identifies this test bundle's build directory. */ }
+
 enum TestUtils {
 
     private static var executableURL: URL {
-        let buildDir = URL(fileURLWithPath: ".build/debug")
+        let buildDir = Bundle(for: TestBundleMarker.self).bundleURL.deletingLastPathComponent()
         return buildDir.appendingPathComponent("swiftbeancount")
     }
 
