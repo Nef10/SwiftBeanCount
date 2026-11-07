@@ -1,0 +1,4 @@
+module swiftbeancount_rust_ledgerFFI {
+    header "swiftbeancount_rust_ledgerFFI.h"
+    export *
+}

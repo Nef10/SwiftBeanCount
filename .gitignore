@@ -1,5 +1,8 @@
 .DS_Store
 /.build
+/.build-*
+/Rust/SwiftBeanCountRustLedger/target
+/SwiftBeanCountRustLedgerApp.xcodeproj
 /Packages
 .swiftpm
 swiftlint/

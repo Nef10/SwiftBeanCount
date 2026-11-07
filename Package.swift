@@ -42,6 +42,9 @@ let package = Package(
         .library(name: "TangerineDownloader", targets: ["TangerineDownloader"]),
         .library(name: "GoogleAuthentication", targets: ["GoogleAuthentication"])
     ],
+    traits: [
+        .trait(name: "RustLedger", description: "Use rustledger for parsing, interpolation, booking and validation"),
+    ],
     dependencies: [
         .package(url: "https://github.com/yaslab/CSV.swift.git", from: "2.5.2"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.7.0"),
@@ -75,12 +78,35 @@ let package = Package(
         ),
         .target(
             name: "SwiftBeanCountParser",
-            dependencies: ["SwiftBeanCountModel", "SwiftBeanCountParserUtils"],
+            dependencies: [
+                "SwiftBeanCountModel",
+                "SwiftBeanCountParserUtils",
+                .target(name: "SwiftBeanCountRustLedger", condition: .when(traits: ["RustLedger"])),
+            ],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .target(
             name: "SwiftBeanCountParserUtils",
+            swiftSettings: swiftSettings,
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .systemLibrary(
+            name: "swiftbeancount_rust_ledgerFFI",
+            path: "Sources/SwiftBeanCountRustLedgerFFI",
+            pkgConfig: "swiftbeancount-rustledger"
+        ),
+        .target(
+            name: "SwiftBeanCountRustLedgerBindings",
+            dependencies: ["swiftbeancount_rust_ledgerFFI"],
+            swiftSettings: swiftSettings,
+            linkerSettings: [.linkedLibrary("iconv", .when(platforms: [.macOS, .iOS]))],
+            plugins: [.plugin(name: "RustLedgerBindingsPlugin")]
+        ),
+        .plugin(name: "RustLedgerBindingsPlugin", capability: .buildTool()),
+        .target(
+            name: "SwiftBeanCountRustLedger",
+            dependencies: ["SwiftBeanCountModel", "SwiftBeanCountRustLedgerBindings"],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
@@ -234,6 +260,17 @@ let package = Package(
             name: "SwiftBeanCountParserTests",
             dependencies: ["SwiftBeanCountParser"],
             resources: [.copy("Resource")],
+            swiftSettings: swiftSettings,
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
+        .testTarget(
+            name: "SwiftBeanCountRustLedgerTests",
+            dependencies: [
+                "SwiftBeanCountParser",
+                "SwiftBeanCountModel",
+                "SwiftBeanCountTax",
+                .target(name: "SwiftBeanCountRustLedger", condition: .when(traits: ["RustLedger"])),
+            ],
             swiftSettings: swiftSettings,
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),

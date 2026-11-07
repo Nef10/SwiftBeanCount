@@ -55,6 +55,8 @@ public final class Ledger: LedgerContext {
     /// Array of all Custom directives
     public let custom: [Custom]
 
+    let postingIdentities: Set<ObjectIdentifier>
+    let processedState: ProcessedLedgerState?
     let postingPrices: [Transaction: [Posting: MultiCurrencyAmount]]
 
     /// Installs completed accounting results; does not copy or process builder contents.
@@ -70,6 +72,8 @@ public final class Ledger: LedgerContext {
         tags = context.tags
         prices = context.prices
         accountGroups = context.accountGroups
+        postingIdentities = Set(transactions.flatMap(\.postings).map(ObjectIdentifier.init))
+        processedState = context.processedState
         postingPrices = context.postingPrices
         ledgerErrors = context.ledgerErrors
         errors = parsingErrors + ledgerErrors
@@ -81,8 +85,8 @@ public final class Ledger: LedgerContext {
     }
 
     /// Completes accounting on isolated builder contents, then creates the snapshot once.
-    static func build(from builder: LedgerBuilder) -> Ledger {
-        Ledger(completed: LedgerBuildContext(builder: builder))
+    static func build(from builder: LedgerBuilder, processed projection: ProcessedLedgerProjection? = nil) -> Ledger {
+        Ledger(completed: LedgerBuildContext(builder: builder, processed: projection))
     }
 
 }
@@ -102,6 +106,11 @@ extension Ledger: CustomStringConvertible {
     ///
     /// It consists of all `Account` and `Transaction` statements, but does not include `errors`
     public var description: String {
+        #if RustLedger
+        if let source = retainedSourceDescription {
+            return source
+        }
+        #endif
         var string = ""
         string.append(option.map { String(describing: $0) }.joined(separator: "\n"))
         if !string.isEmpty && !plugins.isEmpty {

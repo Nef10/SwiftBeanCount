@@ -1,0 +1,33 @@
+[package]
+name = "swiftbeancount_rust_ledger"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.96"
+license = "MIT"
+publish = false
+
+[lib]
+crate-type = ["staticlib", "cdylib", "lib"]
+
+[[bin]]
+name = "uniffi-bindgen"
+path = "src/uniffi-bindgen.rs"
+required-features = ["uniffi-cli"]
+
+[features]
+uniffi-cli = ["uniffi/cli"]
+
+[dependencies]
+rustledger-booking = { git = "https://github.com/rustledger/rustledger", rev = "c01a3fbb4316c525db7a18275822ab5b0fceff31" }
+rustledger-core = { git = "https://github.com/rustledger/rustledger", rev = "c01a3fbb4316c525db7a18275822ab5b0fceff31" }
+rustledger-loader = { git = "https://github.com/rustledger/rustledger", rev = "c01a3fbb4316c525db7a18275822ab5b0fceff31", default-features = false, features = ["native-plugins", "validation"] }
+rustledger-parser = { git = "https://github.com/rustledger/rustledger", rev = "c01a3fbb4316c525db7a18275822ab5b0fceff31" }
+rust_decimal = "1.42"
+serde_json = "1"
+thiserror = "2"
+uniffi = "=0.29.5"
+
+[profile.release]
+codegen-units = 1
+lto = "thin"
+strip = true
