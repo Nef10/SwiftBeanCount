@@ -11,7 +11,7 @@ permissions: # The workflow does not need speific permissions as we use a differ
 jobs:
   test:
     name: Update Swift Dependencies
-    runs-on: ubuntu-latest # The action supports macOS-latest as well
+    runs-on: ubuntu-24.04 # The action supports macOS-latest as well
     steps:
     - name: Generate token
       id: generate_token
