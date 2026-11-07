@@ -22,9 +22,31 @@ private enum ImportPhase {
     case done
 }
 
+/// Proposed directives collected during an import. These are not a processed ledger.
+struct ImportBatch {
+    private struct PriceKey: Hashable {
+        let commodity: CommoditySymbol
+        let quoteCommodity: CommoditySymbol
+        let date: Date
+    }
+
+    var transactions = [Transaction]()
+    var balances = [Balance]()
+    private(set) var prices = [Price]()
+    private var priceKeys = Set<PriceKey>()
+
+    mutating func add(_ price: Price) {
+        let key = PriceKey(commodity: price.commoditySymbol, quoteCommodity: price.amount.commoditySymbol, date: price.date)
+        guard priceKeys.insert(key).inserted else {
+            return
+        }
+        prices.append(price)
+    }
+}
+
 class ImportManager: ObservableObject {
 
-    @Published var resultLedger = LedgerBuilder()
+    @Published var resultBatch = ImportBatch()
     @Published var showLoadingIndicator = true
     @Published var loadingMessage: String? = "Organizing imports"
     @Published var showErrorAlert = false
@@ -136,7 +158,7 @@ class ImportManager: ObservableObject {
     @MainActor
     func importTransaction(_ transaction: Transaction) {
         dataEntryVM = nil
-        resultLedger.add(transaction)
+        resultBatch.transactions.append(transaction)
         Task {
             await nextTransaction()
         }
@@ -263,10 +285,10 @@ class ImportManager: ObservableObject {
             return
         }
         for balance in importer.balancesToImport() {
-            resultLedger.add(balance)
+            resultBatch.balances.append(balance)
         }
         for price in importer.pricesToImport() {
-            try? resultLedger.add(price)
+            resultBatch.add(price)
         }
         Task {
             await nextImporter()
