@@ -185,6 +185,11 @@ public class TransactionPosting: Posting {
     /// - Throws: PostingError if the balance could not be calculated
     /// - Returns: MultiCurrencyAmount
     func balance(in ledger: any LedgerContext) throws(PostingError) -> MultiCurrencyAmount {
+        #if RustLedger
+        if let exactWeight = try ledger.processedExactWeight(for: self) {
+            return exactWeight
+        }
+        #endif
         if let cost {
             if let postingAmount = ledger.postingPrices[transaction]?[self] {
                 return MultiCurrencyAmount(amounts: postingAmount.amounts,

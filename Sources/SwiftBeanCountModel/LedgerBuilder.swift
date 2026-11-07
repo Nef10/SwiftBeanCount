@@ -110,6 +110,13 @@ public final class LedgerBuilder {
         Ledger.build(from: self)
     }
 
+    #if RustLedger
+    /// Publishes completed Rust results without rerunning Swift accounting.
+    package func build(processed projection: ProcessedLedgerProjection) -> Ledger {
+        Ledger.build(from: self, processed: projection)
+    }
+    #endif
+
     private func addAccountToStructure(_ account: Account) {
         let parts = account.name.fullName.split(separator: Account.nameSeperator).map(String.init)
         var group: AccountGroup!

@@ -10,11 +10,12 @@ on:
 
 jobs:
   test:
-    name: Package Tests (${{ matrix.platform }})
+    name: Package Tests (${{ matrix.platform }}, ${{ matrix.parser }})
     strategy:
       fail-fast: false
       matrix:
         platform: ["macOS", "ubuntu", "iOS"]
+        parser: [SwiftParser, RustParser]
         swift: ["6.4.1"]
         include:
           - platform: macOS
@@ -26,6 +27,9 @@ jobs:
             destination: 'platform=iOS Simulator,OS=27.1,name=iPhone Duo'
             xcode-version: '27.1' # Need to match Xcode version to iOS + Swift version
     runs-on: ${{ matrix.os }}
+    env:
+      PARSER: ${{ matrix.parser }}
+      COVERAGE_DIRECTORY: ${{ matrix.platform }}-${{ matrix.parser }}-coverage
     steps:
     - name: Checkout code
       uses: actions/checkout@v7
@@ -42,46 +46,106 @@ jobs:
         xcode-version: ${{ matrix.xcode-version }}
     - name: Configure SwiftLint Reporter
       run: 'echo "reporter: \"github-actions-logging\"" >> .swiftlint.yml'
+    - name: Install pinned Rust toolchain
+      if: ${{ matrix.parser == 'RustParser' }}
+      run: rustup toolchain install 1.99.1 --profile minimal
+    - name: Verify native wrapper and pinned dependency graph
+      if: ${{ matrix.parser == 'RustParser' }}
+      run: |
+        python3 -B -m unittest discover -s Scripts/tests -v
+        mkdir -p .build/verification
+        (cd Rust/SwiftBeanCountRustLedger && cargo test --locked)
+        (cd Rust/SwiftBeanCountRustLedger && cargo tree --locked -e features) > .build/verification/rustledger-features.txt
+        if grep -E 'rustledger-loader feature "(python-plugins|wasm-plugins)"' .build/verification/rustledger-features.txt; then
+          exit 1
+        fi
+    - name: Select simulator architecture
+      if: ${{ matrix.platform == 'iOS' }}
+      run: |
+        case "$(uname -m)" in
+          arm64) simulator_triple=aarch64-apple-ios-sim ;;
+          x86_64) simulator_triple=x86_64-apple-ios ;;
+          *) exit 1 ;;
+        esac
+        echo "SIMULATOR_TRIPLE=$simulator_triple" >> "$GITHUB_ENV"
+        echo "SIMULATOR_ARCH=$(uname -m)" >> "$GITHUB_ENV"
+    - name: Install simulator Rust target
+      if: ${{ matrix.platform == 'iOS' && matrix.parser == 'RustParser' }}
+      run: |
+        rustup target add "$SIMULATOR_TRIPLE"
     - name: Run tests
       if : ${{ matrix.platform != 'iOS' }}
       run: |
+        traits=(--disable-default-traits)
+        swift_command=(swift)
+        if [[ "$PARSER" == RustParser ]]; then
+          traits+=(--traits RustLedger)
+          swift_command=(python3 Scripts/with-rustledger.py -- swift)
+        fi
         for attempt in 1 2; do
-          if swift test --enable-code-coverage; then
+          if "${swift_command[@]}" test "${traits[@]}" --enable-code-coverage; then
             break
           fi
 
           if [[ "$attempt" -eq 1 ]]; then
-            echo "${{ matrix.platform }} package tests failed; retrying once..." >&2
+            echo "${{ matrix.platform }} $PARSER package tests failed; retrying once..." >&2
           else
             exit 1
           fi
         done
+        mkdir -p .build/verification
+        if [[ "$PARSER" == SwiftParser ]]; then
+          binary_directory=$(swift build "${traits[@]}" --show-bin-path)
+          nm -g "$binary_directory/swiftbeancount" > .build/verification/symbols.txt
+          if grep -Ei '(uniffi_|rustledger|swiftbeancount_rust_ledger)' .build/verification/symbols.txt; then
+            echo 'SwiftParser unexpectedly linked native Rust symbols.' >&2
+            exit 1
+          fi
+        fi
+    - name: Create selected iOS package fixture
+      if: ${{ matrix.platform == 'iOS' }}
+      run: python3 Scripts/create-ios-test-fixture.py --parser "$PARSER"
     - name: Run iOS tests
       id: ios-tests
       if : ${{ matrix.platform == 'iOS' }}
       run: |
-        mkdir -p ../DerivedData
-        DERIVED_DATA_PATH=$PWD/../DerivedData
-        echo "DERIVED_DATA_PATH=$DERIVED_DATA_PATH" >> $GITHUB_ENV
-        APP_PROJECT_BACKUP_DIR=$(mktemp -d)
-        APP_PROJECT_BACKUP_PATH="$APP_PROJECT_BACKUP_DIR/SwiftBeanCountApp.xcodeproj"
-        mv SwiftBeanCountApp.xcodeproj "$APP_PROJECT_BACKUP_PATH"
-        restore_app_project() {
-          mv "$APP_PROJECT_BACKUP_PATH" SwiftBeanCountApp.xcodeproj
-        }
-        trap restore_app_project EXIT
-        SCHEME=$(xcodebuild test -list -json | jq -r "if .workspace.schemes | length == 1 then .workspace.schemes.[0] else .workspace.schemes | map(select(.|endswith(\"-Package\"))) | .[0] end")
+        DERIVED_DATA_PATH="$RUNNER_TEMP/DerivedData-$PARSER"
+        echo "DERIVED_DATA_PATH=$DERIVED_DATA_PATH" >> "$GITHUB_ENV"
+        workspace="$GITHUB_WORKSPACE/.build/rustledger/ios-fixtures/$PARSER/.swiftpm/xcode/package.xcworkspace"
+        mkdir -p .build/verification
+        xcode_command=(xcodebuild)
+        if [[ "$PARSER" == RustParser ]]; then
+          xcode_command=(python3 Scripts/with-rustledger.py --target "$SIMULATOR_TRIPLE" -- xcodebuild)
+        fi
         for attempt in 1 2; do
-          if xcodebuild test -skipPackagePluginValidation -enableCodeCoverage YES -scheme "$SCHEME" -destination "${{ matrix.destination }}" -derivedDataPath "$DERIVED_DATA_PATH"; then
+          if "${xcode_command[@]}" test -workspace "$workspace" -scheme SwiftBeanCountAllTests \
+            -skipPackagePluginValidation -skipMacroValidation -enableCodeCoverage YES \
+            -destination "${{ matrix.destination }}" -derivedDataPath "$DERIVED_DATA_PATH" \
+            -resultBundlePath ".build/verification/ios-$attempt.xcresult" \
+            ARCHS="$SIMULATOR_ARCH" CODE_SIGNING_ALLOWED=NO; then
             break
           fi
 
           if [[ "$attempt" -eq 1 ]]; then
-            echo "iOS package tests failed; retrying once..." >&2
+            echo "iOS $PARSER package tests failed; retrying once..." >&2
           else
             exit 1
           fi
         done
+    - name: Upload package verification
+      if: ${{ always() && matrix.platform != 'iOS' }}
+      uses: actions/upload-artifact@v7
+      with:
+        name: package-verification-${{ matrix.platform }}-${{ matrix.parser }}
+        include-hidden-files: true
+        path: .build/verification/
+    - name: Upload iOS test results
+      if: ${{ always() && matrix.platform == 'iOS' }}
+      uses: actions/upload-artifact@v7
+      with:
+        name: test-results-iOS-${{ matrix.parser }}
+        include-hidden-files: true
+        path: .build/verification/
     - name: Install lcov
       run: |
         if [[ "${{ matrix.platform }}" == "ubuntu" ]]; then
@@ -91,8 +155,7 @@ jobs:
         fi
     - name: Create coverage directory
       run: |
-        mkdir -p ./${{matrix.platform}}-coverage
-        echo "${{ github.event.number }}" > "./${{matrix.platform}}-coverage/PR_NUMBER-${{matrix.platform}}"
+        mkdir -p "${COVERAGE_DIRECTORY}"
     - name: Determine llvm command
       run: |
         if [[ "${{matrix.platform}}" == "iOS" ]]; then
@@ -114,25 +177,36 @@ jobs:
         ${LLVM_COV_CMD} --version
         echo "LLVM_COV_CMD=${LLVM_COV_CMD}" >> ${GITHUB_ENV}
         echo "LLVM_PROFDATA_CMD=${LLVM_PROFDATA_CMD}" >> ${GITHUB_ENV}
-        echo "LLVM_COV_ARGS=--skip-functions --skip-branches --ignore-filename-regex=.build|Tests|SourcePackages --format=lcov" >> ${GITHUB_ENV}
-        echo "OUTPUT_FILE=${{matrix.platform}}-coverage/${{matrix.platform}}.info" >> ${GITHUB_ENV}
+        ignored_sources='(^|/)(Tests|SourcePackages|DerivedSources|Intermediates\.noindex|checkouts|artifacts|plugins)/|/SwiftBeanCountRustLedgerBindings/'
+        # The full SwiftParser backend is inactive when the facade selects RustParser.
+        # Its shared fragment helpers remain part of both coverage reports.
+        if [[ "$PARSER" == RustParser ]]; then
+          ignored_sources+='|/Sources/SwiftBeanCountParser/SwiftParser\.swift$'
+        fi
+        echo "LLVM_COV_ARGS=--skip-functions --skip-branches --ignore-filename-regex=$ignored_sources --format=lcov" >> "$GITHUB_ENV"
+        echo "OUTPUT_FILE=${COVERAGE_DIRECTORY}/${{matrix.platform}}-${PARSER}.info" >> ${GITHUB_ENV}
     - name: Generate test coverage report
-      if: ${{ matrix.platform != 'iOS' }}
       run: |
-        COV_BUILD_PATH=".build"
+        if [[ "${{matrix.platform}}" == "iOS" ]]; then
+          COV_BUILD_PATH="${DERIVED_DATA_PATH}"
+          COV_PRODUCTS_PATH="${DERIVED_DATA_PATH}/Build/Products"
+        else
+          COV_BUILD_PATH=".build"
+          COV_PRODUCTS_PATH="${COV_BUILD_PATH}"
+        fi
 
         PROFILE_FILES=()
         while IFS= read -r -d '' profile; do
           PROFILE_FILES+=("${profile}")
-        done < <(find "${COV_BUILD_PATH}" -type f -name 'default.profdata' -print0)
+        done < <(find "${COV_BUILD_PATH}" -type f -name '*.profdata' -print0)
 
         if [[ ${#PROFILE_FILES[@]} -eq 0 ]]; then
-          echo "Could not find SwiftPM coverage profiles under .build" >&2
+          echo "Could not find coverage profiles under ${COV_BUILD_PATH}" >&2
           exit 1
         fi
 
         INSTR_PROFILE_PATH="${RUNNER_TEMP}/merged-coverage.profdata"
-        echo "Merging ${#PROFILE_FILES[@]} SwiftPM coverage profiles"
+        echo "Merging ${#PROFILE_FILES[@]} coverage profiles"
         ${LLVM_PROFDATA_CMD} merge -sparse "${PROFILE_FILES[@]}" -o "${INSTR_PROFILE_PATH}"
 
         COV_BINARIES=()
@@ -140,13 +214,16 @@ jobs:
           if [[ "${test_product}" == *.xctest && "${{matrix.platform}}" == "macOS" && -d "${test_product}" ]]; then
             test_name="$(basename "${test_product}" .xctest)"
             COV_BINARIES+=("${test_product}/Contents/MacOS/${test_name}")
+          elif [[ "${test_product}" == *.xctest && -d "${test_product}" ]]; then
+            test_name="$(basename "${test_product}" .xctest)"
+            COV_BINARIES+=("${test_product}/${test_name}")
           else
             COV_BINARIES+=("${test_product}")
           fi
-        done < <(find "${COV_BUILD_PATH}" \( -name '*-test-runner' -o -name '*.xctest' \) -print0)
+        done < <(find "${COV_PRODUCTS_PATH}" \( -name '*-test-runner' -o -name '*.xctest' \) -print0)
 
         if [[ ${#COV_BINARIES[@]} -eq 0 ]]; then
-          echo "Could not find any SwiftPM test executables under .build" >&2
+          echo "Could not find test executables under ${COV_PRODUCTS_PATH}" >&2
           exit 1
         fi
 
@@ -190,24 +267,51 @@ jobs:
           LCOV_ARGS+=(-a "${report}")
         done
         lcov "${LCOV_ARGS[@]}" --ignore-errors empty -o "${OUTPUT_FILE}"
-    - name: Generate iOS test coverage report
-      if: ${{ matrix.platform == 'iOS' }}
-      run: |
-        INSTR_PROFILE_PATH="$(find "${DERIVED_DATA_PATH}" -name "*.profdata")"
-
-        # Run llvm-cov for each .xctest bundle found in DerivedData, one per test target
-        find "${DERIVED_DATA_PATH}" -name '*.xctest' -print0 | while IFS= read -r -d '' file; do
-          FILE_NAME="$(basename "${file}" .xctest)"
-          COV_BIN="${file}/${FILE_NAME}"
-          ${LLVM_COV_CMD} export "${COV_BIN}" ${LLVM_COV_ARGS} --instr-profile="${INSTR_PROFILE_PATH}" > "${FILE_NAME}.lcov"
-        done
-
-        # Combine all .lcov files into a single lcov.info
-        find . -maxdepth 1 -name "*.lcov" -exec echo -a {} \; | xargs lcov --ignore-errors empty -o "${OUTPUT_FILE}"
     - name: Normalize file paths in coverage report
       run: |
-        sed -i.bak "s|^SF:${GITHUB_WORKSPACE}/|SF:|g" "${OUTPUT_FILE}"
+        sed -i.bak \
+          -e "s|^SF:${GITHUB_WORKSPACE}/.build/rustledger/ios-fixtures/$PARSER/|SF:|g" \
+          -e "s|^SF:${GITHUB_WORKSPACE}/|SF:|g" "${OUTPUT_FILE}"
         rm -f "${OUTPUT_FILE}.bak"
+    - name: Upload parser coverage information
+      uses: actions/upload-artifact@v7
+      with:
+        name: coverage-input-${{ matrix.platform }}-${{ matrix.parser }}
+        path: ${{ env.COVERAGE_DIRECTORY }}/
+        if-no-files-found: error
+
+  coverage:
+    name: Combined Code Coverage
+    needs: test
+    runs-on: ubuntu-latest
+    env:
+      COVERAGE_DIRECTORY: combined-coverage
+      OUTPUT_FILE: combined-coverage/combined.info
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Download parser and platform coverage reports
+      uses: actions/download-artifact@v8
+      with:
+        pattern: coverage-input-*
+        path: coverage-input
+        merge-multiple: true
+    - name: Install lcov
+      run: sudo apt-get update && sudo apt-get install -y lcov
+    - name: Merge parser and platform coverage reports
+      id: merge-coverage
+      run: |
+        mkdir -p "$COVERAGE_DIRECTORY"
+        echo "${{ github.event.number }}" > "$COVERAGE_DIRECTORY/PR_NUMBER"
+        # Summing execution counts counts each line once, covered by any test run.
+        # Require all six inputs so a missing report cannot silently reduce coverage.
+        LCOV_ARGS=()
+        for platform in macOS ubuntu iOS; do
+          for parser in SwiftParser RustParser; do
+            LCOV_ARGS+=(-a "coverage-input/$platform-$parser.info")
+          done
+        done
+        lcov "${LCOV_ARGS[@]}" --ignore-errors empty -o "$OUTPUT_FILE"
     - name: Read minimum test coverage threshhold
       id: read-minimum-coverage
       run: echo "MINIMUM_COVERAGE=$(cat ./.github/minimum_coverage.txt)" >> $GITHUB_ENV
@@ -219,20 +323,23 @@ jobs:
         min_coverage: ${{ env.MINIMUM_COVERAGE }}
     - name: Save failed minimum coverage info
       if: ${{ failure() && steps.enforce-minimum-coverage.outcome == 'failure' && steps.read-minimum-coverage.outcome == 'success' }}
-      run: echo "failed" > "./${{matrix.platform}}-coverage/${{matrix.platform}}-min-coverage-failed"
+      run: echo "failed" > "${COVERAGE_DIRECTORY}/combined-min-coverage-failed"
     - name: Upload Coverage Information
       uses: actions/upload-artifact@v7
       if: ${{ !cancelled() && steps.read-minimum-coverage.outcome == 'success' }}
       with:
-        name: ${{matrix.platform}}-coverage
-        path: ${{matrix.platform}}-coverage/
+        name: combined-coverage
+        path: ${{ env.COVERAGE_DIRECTORY }}/
   build_app:
-    name: App Build (${{ matrix.platform }})
+    name: App Build (${{ matrix.platform }}, ${{ matrix.parser }})
     strategy:
       matrix:
         platform:  ['macOS', 'iOS']
+        parser: [SwiftParser, RustParser]
       fail-fast: false
     runs-on: xcode-27
+    env:
+      PARSER: ${{ matrix.parser }}
     steps:
     - uses: actions/checkout@v7
     - name: Configure SwiftLint Reporter
@@ -241,13 +348,48 @@ jobs:
     - uses: maxim-lobanov/setup-xcode@v1
       with:
         xcode-version: '27.1'
+    - name: Install pinned Rust toolchain
+      if: ${{ matrix.parser == 'RustParser' }}
+      run: rustup toolchain install 1.99.1 --profile minimal
+    - name: Install Rust targets and select RustParser app project
+      if: ${{ matrix.parser == 'RustParser' }}
+      run: |
+        if [[ "${{ matrix.platform }}" == iOS ]]; then
+          case "$(uname -m)" in
+            arm64) simulator_triple=aarch64-apple-ios-sim ;;
+            x86_64) simulator_triple=x86_64-apple-ios ;;
+            *) exit 1 ;;
+          esac
+          rustup target add aarch64-apple-ios "$simulator_triple"
+        fi
+        python3 Scripts/create-rustledger-app-project.py
     - name: Build
-      uses: sersoft-gmbh/xcodebuild-action@v4
       env:
         SKIP_WARNINGS_SWIFTBEANCOUNT: true
-      with:
-        project: SwiftBeanCountApp.xcodeproj
-        scheme: SwiftBeanCountApp
-        destination: ${{ matrix.platform == 'iOS' && 'generic/platform=iOS Simulator' || format('platform={0}', matrix.platform) }}
-        action: build
-        build-settings: -skipPackagePluginValidation -skipMacroValidation
+      run: |
+        project=SwiftBeanCountApp.xcodeproj
+        if [[ "$PARSER" == RustParser ]]; then
+          project=SwiftBeanCountRustLedgerApp.xcodeproj
+        fi
+        args=(-project "$project" -scheme SwiftBeanCountApp -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO)
+        xcode_command=(xcodebuild)
+        if [[ "$PARSER" == RustParser ]]; then
+          xcode_command=(python3 Scripts/with-rustledger.py -- xcodebuild)
+        fi
+        if [[ "${{ matrix.platform }}" == macOS ]]; then
+          "${xcode_command[@]}" "${args[@]}" -destination 'platform=macOS' -derivedDataPath .build/app-macos build
+        else
+          if [[ "$PARSER" == RustParser ]]; then
+            case "$(uname -m)" in
+              arm64) simulator_triple=aarch64-apple-ios-sim ;;
+              x86_64) simulator_triple=x86_64-apple-ios ;;
+              *) exit 1 ;;
+            esac
+            xcode_command=(python3 Scripts/with-rustledger.py --target "$simulator_triple" -- xcodebuild)
+          fi
+          "${xcode_command[@]}" "${args[@]}" -destination 'generic/platform=iOS Simulator' -derivedDataPath .build/app-simulator ARCHS="$(uname -m)" build
+          if [[ "$PARSER" == RustParser ]]; then
+            xcode_command=(python3 Scripts/with-rustledger.py --target aarch64-apple-ios -- xcodebuild)
+          fi
+          "${xcode_command[@]}" "${args[@]}" -destination 'generic/platform=iOS' -derivedDataPath .build/app-device ARCHS=arm64 build
+        fi

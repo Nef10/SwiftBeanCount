@@ -25,6 +25,7 @@ jobs:
               run_id: ${{github.event.workflow_run.id }},
             });
             for (const artifact of artifacts.data.artifacts) {
+              if (artifact.name !== 'combined-coverage') continue;
               var download = await github.rest.actions.downloadArtifact({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -42,18 +43,16 @@ jobs:
         uses: Nef10/lcov-reporter-action@v0.6.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          lcov-file: macOS.info
+          lcov-file: combined.info
           pr-number: ${{ env.PR_NUMBER }}
           hide-branch-coverage: true
           output-file: comment.html
       - name: Prepend minimum coverage required
         run: 'sed -i "1iMinimum coverage required: <b>$(cat ./.github/minimum_coverage.txt)%</b>\n<br />\n" comment.html'
-      - name: Prepand failure info if needed
+      - name: Prepend failure info if needed
         run: |
-          files=($(find . -maxdepth 1 -type f -name '*-min-coverage-failed'))
-          if (( ${#files[@]} )); then
-            list=$(printf "%s\n" "${files[@]}" | sed 's|^\./||; s|-min-coverage-failed$||' | awk '{a[NR]=$0} END{for(i=1;i<=NR;i++){printf "%s%s", a[i], (i<NR?", ":"\n")}}')
-            sed -i "1i❌ <b>Minimum coverage check failed on: ${list}!</b>\n<br />\n" comment.html
+          if [[ -f combined-min-coverage-failed ]]; then
+            sed -i "1i❌ <b>Minimum coverage check failed!</b>\n<br />\n" comment.html
           fi
       - name: Post code coverage report
         uses: marocchino/sticky-pull-request-comment@v3.0.5
