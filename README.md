@@ -26,6 +26,11 @@ The goal is to supplement my usage of beancount and [fava](https://github.com/be
 
 ## How
 
+For the optional RustLedger backend in this branch, run
+`python3 Scripts/prepare-rustledger-xcode.py` before building the app in Xcode.
+See the [RustLedger build instructions](Rust/SwiftBeanCountRustLedger/README.md#build-in-xcode)
+for toolchain requirements, supported destinations, and command-line builds.
+
 The project is split across several repositories, please consult their readmes to get more instructions:
 
 ### Apps

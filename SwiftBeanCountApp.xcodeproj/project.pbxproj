@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 100;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,7 +23,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		F9AA6EE52D187BBF002087EB /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		F9AA6EE52D187BBF002087EB /* Exceptions for "Supporting Files" folder in "SwiftBeanCountApp" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -33,18 +33,44 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		F9A2C1112D12AC6500E925F4 /* Main Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Main Views"; sourceTree = "<group>"; };
-		F9A2C1122D12AC8400E925F4 /* LedgerManagement */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LedgerManagement; sourceTree = "<group>"; };
-		F9A2C1132D12AC9200E925F4 /* Tabs */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Tabs; sourceTree = "<group>"; };
-		F9A2C1202D12ACAC00E925F4 /* Helper */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Helper; sourceTree = "<group>"; };
-		F9A2C1212D12AD2E00E925F4 /* Supporting Files */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (F9AA6EE52D187BBF002087EB /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "Supporting Files"; sourceTree = "<group>"; };
-		F9AA6E772D162D7C002087EB /* Settings */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Settings; sourceTree = "<group>"; };
+		F9A2C1112D12AC6500E925F4 /* Main Views */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Main Views";
+			sourceTree = "<group>";
+		};
+		F9A2C1122D12AC8400E925F4 /* LedgerManagement */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = LedgerManagement;
+			sourceTree = "<group>";
+		};
+		F9A2C1132D12AC9200E925F4 /* Tabs */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Tabs;
+			sourceTree = "<group>";
+		};
+		F9A2C1202D12ACAC00E925F4 /* Helper */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		F9A2C1212D12AD2E00E925F4 /* Supporting Files */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F9AA6EE52D187BBF002087EB /* Exceptions for "Supporting Files" folder in "SwiftBeanCountApp" target */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F9AA6E772D162D7C002087EB /* Settings */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Settings;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		F95DEA6C2B81443A0070E8EC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				F9B5AA112FEFE00100AA0001 /* SwiftBeanCountSheetSync in Frameworks */,
 				F99BF6CA2F131945003ED89A /* SwiftBeanCountImporter in Frameworks */,
@@ -54,7 +80,6 @@
 				F9A2C0FB2D1189FA00E925F4 /* SimpleKeychain in Frameworks */,
 				F99BF6CC2F131945003ED89A /* SwiftBeanCountModel in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -151,7 +176,6 @@
 				};
 			};
 			buildConfigurationList = F95DEA6A2B81443A0070E8EC /* Build configuration list for PBXProject "SwiftBeanCountApp" */;
-			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -164,6 +188,7 @@
 				F98C060A2EF2173700159521 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 				F99BF6C82F131945003ED89A /* XCLocalSwiftPackageReference "." */,
 			);
+			preferredProjectObjectVersion = 56;
 			productRefGroup = F95DEA702B81443A0070E8EC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -176,21 +201,17 @@
 /* Begin PBXResourcesBuildPhase section */
 		F95DEA6D2B81443A0070E8EC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F95DEA6B2B81443A0070E8EC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				F95DEA732B81443A0070E8EC /* SwiftBeanCountApp.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -202,7 +223,7 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		F95DEA7C2B81443B0070E8EC /* Debug */ = {
+		F95DEA7C2B81443B0070E8EC /* Debug configuration for PBXProject "SwiftBeanCountApp" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -265,7 +286,7 @@
 			};
 			name = Debug;
 		};
-		F95DEA7D2B81443B0070E8EC /* Release */ = {
+		F95DEA7D2B81443B0070E8EC /* Release configuration for PBXProject "SwiftBeanCountApp" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -320,7 +341,7 @@
 			};
 			name = Release;
 		};
-		F95DEA7F2B81443B0070E8EC /* Debug */ = {
+		F95DEA7F2B81443B0070E8EC /* Debug configuration for PBXNativeTarget "SwiftBeanCountApp" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -368,7 +389,7 @@
 			};
 			name = Debug;
 		};
-		F95DEA802B81443B0070E8EC /* Release */ = {
+		F95DEA802B81443B0070E8EC /* Release configuration for PBXNativeTarget "SwiftBeanCountApp" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -422,19 +443,17 @@
 		F95DEA6A2B81443A0070E8EC /* Build configuration list for PBXProject "SwiftBeanCountApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F95DEA7C2B81443B0070E8EC /* Debug */,
-				F95DEA7D2B81443B0070E8EC /* Release */,
+				F95DEA7C2B81443B0070E8EC /* Debug configuration for PBXProject "SwiftBeanCountApp" */,
+				F95DEA7D2B81443B0070E8EC /* Release configuration for PBXProject "SwiftBeanCountApp" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		F95DEA7E2B81443B0070E8EC /* Build configuration list for PBXNativeTarget "SwiftBeanCountApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F95DEA7F2B81443B0070E8EC /* Debug */,
-				F95DEA802B81443B0070E8EC /* Release */,
+				F95DEA7F2B81443B0070E8EC /* Debug configuration for PBXNativeTarget "SwiftBeanCountApp" */,
+				F95DEA802B81443B0070E8EC /* Release configuration for PBXNativeTarget "SwiftBeanCountApp" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
@@ -443,6 +462,9 @@
 		F99BF6C82F131945003ED89A /* XCLocalSwiftPackageReference "." */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = .;
+			traits = (
+				RustLedger,
+			);
 		};
 /* End XCLocalSwiftPackageReference section */
 
